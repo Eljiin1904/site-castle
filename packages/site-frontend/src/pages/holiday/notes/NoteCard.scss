@@ -1,0 +1,15 @@
+
+.HolidayPage .NoteCard {
+  .AppMain.mobile & {
+    width: 100%;
+  }
+  .AppMain.tablet & {
+    width: calc((100% / 2) - (12px * 1 / 2));
+  }
+  .AppMain.laptop & {
+    width: calc((100% / 5) - (12px * 4 / 5));
+  }
+  .AppMain.desktop & {
+    width: calc((100% / 5) - (12px * 4 / 5));
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "scripts": {
+    "init": "node ./scripts/init.js",
+    "dev": "node ./scripts/dev.js",
+    "deploy": "node ./scripts/deploy.js",
+    "eslint": "eslint ./packages --ext .ts,.tsx",
+    "prettier-check": "prettier ./**/*.{ts,tsx} --check",
+    "prettier-write": "prettier **/*.{ts,tsx} --write"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-react": "^7.35.2",
+    "prettier": "^3.3.3",
+    "typescript": "5.3.3"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "endOfLine": "auto",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false,
+    "singleAttributePerLine": true
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "prettier",
+      "standard-with-typescript",
+      "plugin:react/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "react"
+    ],
+    "settings": {
+      "react": {
+        "version": "^18.2.0"
+      }
+    },
+    "rules": {
+      "no-multiple-empty-lines": "off",
+      "multiline-ternary": "off",
+      "n/handle-callback-err": "off",
+      "@typescript-eslint/indent": "off",
+      "@typescript-eslint/quotes": "off",
+      "@typescript-eslint/semi": "off",
+      "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/comma-dangle": "off",
+      "@typescript-eslint/array-type": "off",
+      "@typescript-eslint/dot-notation": "off",
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/brace-style": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/promise-function-async": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/consistent-type-imports": "off",
+      "@typescript-eslint/space-before-function-paren": "off",
+      "@typescript-eslint/no-dynamic-delete": "off",
+      "@typescript-eslint/no-misused-promises": "off",
+      "@typescript-eslint/method-signature-style": "off",
+      "@typescript-eslint/prefer-optional-chain": "off",
+      "@typescript-eslint/consistent-type-assertions": "off",
+      "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "@typescript-eslint/strict-boolean-expressions": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/no-unescaped-entities": "off"
+    },
+    "ignorePatterns": [
+      "node_modules",
+      "build",
+      "vite.config.ts",
+      "vite-env.d.ts"
+    ]
+  }
+}

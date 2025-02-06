@@ -1,0 +1,21 @@
+
+.CaseBattlePlayerPage .BattlePlayers {  
+  
+  >* {
+    border-bottom: 1px solid var(--brown-8-color);
+  }
+
+  >*:not(:first-child) {
+    border-left: 2px solid var(--brown-8-color);
+  }
+
+  &.players-2 >* {
+    width: 50%;
+  }
+  &.players-3 >* {
+    width: 33.333%;
+  }
+  &.players-4 >* {
+    width: 25%;
+  }
+}

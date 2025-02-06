@@ -1,0 +1,25 @@
+
+.AppFooter .FooterPill {
+  height: 80px;  
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--brown-6-color);
+    border: 1px solid var(--dark-brown-color);
+  }
+
+  .AppMain.mobile & {
+    height: 68px;  
+    width: 100%;
+  }
+
+  .AppMain.tablet & {
+    width: calc(33.33% - 12px * 2 / 3);
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      width: calc(50% - 12px / 2);
+    }
+  }
+}

@@ -1,0 +1,26 @@
+
+.RewardBoostModal {
+
+  .boost-box {
+    height: 200px;
+  }
+
+  .boost-icon {    
+
+    &.bounce {      
+      animation: RewardBoostBounce 1s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes RewardBoostBounce {
+  0% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.1); 
+  }
+  100% { 
+    transform: scale(1); 
+  } 
+}

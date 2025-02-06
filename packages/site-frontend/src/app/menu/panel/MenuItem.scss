@@ -1,0 +1,23 @@
+
+.AppMenuPanel .MenuItem {
+  height: 48px;
+  border-left: 4px solid transparent;
+
+  .Span {
+    white-space: nowrap;
+  }
+  
+  &:hover,
+  &.active {
+    border-left-color: var(--sand-color);
+    background-color: var(--brown-5-color);
+  
+    .icon {
+      color: var(--sand-color);
+    }
+
+    .label {
+      color: var(--sand-color);
+    }
+  }
+}

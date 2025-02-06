@@ -1,0 +1,72 @@
+
+.AppMenuPanel {
+  --menu-width: 220px;
+  --menu-collapsed-width: 64px;
+
+  .menu-list {    
+    padding: 1rem 0;
+    height: 100%;
+  }
+
+  &.closed {  
+    width: var(--menu-collapsed-width);
+    min-width: var(--menu-collapsed-width);
+  
+    .fade-content {
+      opacity: 0;
+    }
+  
+    &.animate {  
+      animation: AppMenuPanel-close 0.3s ease-in;
+    }
+  }
+  
+  &.opened {
+    width: var(--menu-width);
+    min-width: var(--menu-width);
+  
+    .fade-content {
+      opacity: 1;
+    }
+  
+    &.animate {
+      animation: AppMenuPanel-open 0.3s ease-in;
+    
+      .fade-content {
+        animation: AppMenuPanel-content-fade-in 0.3s ease-in;
+      }
+    }
+  }
+}
+
+@keyframes AppMenuPanel-open {
+  0% { 
+    width: var(--menu-collapsed-width);
+    min-width: var(--menu-collapsed-width);
+  }
+  100% { 
+    width: var(--menu-width); 
+    min-width: var(--menu-width); 
+  }
+}
+
+@keyframes AppMenuPanel-close {
+  0% { 
+    min-width: var(--menu-width); 
+  }
+  100% {    
+    min-width: var(--menu-collapsed-width);
+  }
+}
+
+@keyframes AppMenuPanel-content-fade-in {
+  0% { 
+    opacity: 0%; 
+  }
+  50% { 
+    opacity: 0%; 
+  }
+  100% { 
+    opacity: 100%; 
+  }
+}

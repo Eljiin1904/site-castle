@@ -1,0 +1,78 @@
+import { Div } from "@client/comps/div/Div";
+import { Span } from "@client/comps/span/Span";
+import { Chat } from "#app/services/chat";
+import { useUsernames } from "../hooks/useUsernames";
+
+export const MentionPopout = ({
+  text,
+  onMentionClick,
+}: {
+  text: string;
+  onMentionClick: (newText: string) => void;
+}) => {
+  const usernames = useUsernames(text);
+
+  const handleClick = (username: string) => {
+    const mentions = Chat.parseMentions(text);
+
+    const regex = new RegExp(`@${mentions[mentions.length - 1]}\\b`);
+    const updatedText = text.replace(regex, `@${username} `);
+
+    onMentionClick(updatedText);
+  };
+
+  const lastAtIndex = text.lastIndexOf("@");
+  const lastSpaceIndex = text.lastIndexOf(" ");
+
+  if (
+    lastAtIndex === -1 ||
+    lastAtIndex === text.length - 1 ||
+    lastAtIndex <= lastSpaceIndex
+  ) {
+    return null;
+  }
+
+  return (
+    <Div
+      fx
+      column
+      p={8}
+      bg="brown-7"
+      border
+    >
+      {usernames.map((username, i) => (
+        <Div
+          key={i}
+          fx
+          px={12}
+          py={8}
+          bg="brown-6"
+          hover="highlight"
+          onClick={() => handleClick(username)}
+        >
+          <Span
+            size={12}
+            color="gray"
+          >
+            {username}
+          </Span>
+        </Div>
+      ))}
+      {usernames.length === 0 && (
+        <Div
+          fx
+          px={12}
+          py={8}
+          bg="brown-6"
+        >
+          <Span
+            size={12}
+            color="dark-gray"
+          >
+            {"No users found."}
+          </Span>
+        </Div>
+      )}
+    </Div>
+  );
+};

@@ -1,0 +1,24 @@
+
+.DicePage .DiceViewResult {
+  padding: 0 44px;
+  bottom: calc(50% + 32px);
+  z-index: 1;
+
+  .ctn {  
+    left: 0;  
+    bottom: 0;
+    transition: left ease 250ms;
+  }
+
+  .inner {
+    left: -50%;
+  }
+
+  .icon {
+    transition: color ease 250ms;
+  }
+
+  .label {
+    transition: color ease 250ms;
+  }
+}

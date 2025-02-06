@@ -1,0 +1,47 @@
+
+.DicePage .DiceViewSlider {
+  .rc-slider {
+    height: 32px;
+    padding: 0;
+    border-radius: 0;
+    border: 12px solid var(--brown-6-color);
+  }
+  
+  .rc-slider-track {
+    height: 8px;
+  }
+
+  .rc-slider-rail {
+    height: 8px;
+  }
+
+  .rc-slider-handle {
+    margin-top: -10px;
+    background-color: unset;
+    border: unset !important;
+    border-radius: unset;
+    box-shadow: unset !important;
+  }
+  
+  .rc-slider-disabled {
+    background-color: unset;
+  }
+
+  &.over {
+    .rc-slider-track {
+      background-color: #e9113c;
+    }  
+    .rc-slider-rail {
+      background-color: #02c252;
+    }    
+  }
+
+  &.under {
+    .rc-slider-track {
+      background-color: #02c252;
+    }  
+    .rc-slider-rail {
+      background-color: #e9113c;
+    }    
+  }
+}

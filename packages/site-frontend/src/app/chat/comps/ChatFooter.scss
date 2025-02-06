@@ -1,0 +1,27 @@
+
+.ChatFooter {
+
+  .footer-buttons {
+
+    .Button {
+      height: 36px;
+      padding: 0 10px;
+      gap: 6px;
+
+      .label {
+        font-size: 13px;
+      }
+    }
+
+    .DropdownButton {
+      height: 36px;
+      min-width: unset;
+      padding: 0 10px;
+      gap: 6px;
+
+      .label {
+        font-size: 13px;
+      }
+    }
+  }
+}

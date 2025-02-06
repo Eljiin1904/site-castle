@@ -1,0 +1,18 @@
+
+.DoublePage .BetBoardTicketCard {
+  
+  .inner-content {
+    animation: DoublePageCard-in 0.2s ease-in;
+  }
+}
+
+@keyframes DoublePageCard-in {
+  0% { 
+    top: -10px;
+    z-index: 1;
+  }
+  100% { 
+    top: 0px;
+    z-index: 0;
+  }
+}

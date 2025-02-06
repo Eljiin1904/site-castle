@@ -1,0 +1,23 @@
+
+.ChestReel {
+  height: 278px;
+
+  &.layout-horizontal {
+
+    .inner-content {
+      height: 100%;
+    }
+  }
+
+  &.layout-vertical {
+
+    &:not(:first-child) {
+      border-left: 2px solid var(--brown-8-color);
+    }
+
+    .inner-content {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+}

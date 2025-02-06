@@ -1,0 +1,25 @@
+
+.CaseBattleIndexPage .BattleCard {
+  height: 100px;
+  
+  .AppMain.mobile & {
+    height: 180px;
+  }
+  .AppMain.tablet & {
+    height: 200px;
+  }
+  .AppMain.laptop & {
+    height: 100px;
+  }
+  .AppMain.desktop & {
+    height: 100px;
+  }
+
+  .left-box {
+    min-width: 300px;
+  }
+
+  .right-box {
+    min-width: 244px;
+  }
+}

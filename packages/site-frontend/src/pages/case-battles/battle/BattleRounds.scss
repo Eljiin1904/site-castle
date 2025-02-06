@@ -1,0 +1,22 @@
+
+.CaseBattlePlayerPage .BattleRounds {
+  height: 64px;
+
+  .left-box {
+    width: 30%;
+  }
+  
+  .middle-box {
+    width: 40%;
+  }
+
+  .chests {
+    min-width: 136px;
+    max-width: 306px;
+    overflow: hidden;
+  }
+
+  .right-box {
+    width: 30%;
+  }
+}

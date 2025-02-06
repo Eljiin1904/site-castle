@@ -1,0 +1,20 @@
+
+.ActivityFeed {
+
+  .AppMain.mobile & {
+    height: 68px;
+    --card-width: calc((100% / 2) - (8px * 1 / 2));
+  }
+  .AppMain.tablet & {
+    height: 68px;
+    --card-width: calc((100% / 4) - (8px * 3 / 4));
+  }
+  .AppMain.laptop & {
+    height: 80px;
+    --card-width: calc((100% / 5) - (8px * 4 / 5));
+  }
+  .AppMain.desktop & {
+    height: 80px;
+    --card-width: calc((100% / 6) - (8px * 5 / 6));
+  }
+}

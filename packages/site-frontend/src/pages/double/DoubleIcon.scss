@@ -1,0 +1,30 @@
+
+.DoublePage .DoubleIcon {  
+
+  &.green {
+    background: linear-gradient(180deg, #217c43 0%, #33a15c 100%);
+    border: 1px solid #217c43;
+
+    .icon {
+      color: var(--white-color);
+    }
+  }
+
+  &.red {
+    background: linear-gradient(180deg, #9e8569 0%, #b39c80 100%);
+    border: 1px solid #9e8569;
+    
+    .icon {
+      color: var(--brown-8-color);
+    }
+  }
+
+  &.black {
+    background: linear-gradient(180deg, #404453 0%, #4E525F 100%);
+    border: 1px solid #404453;
+    
+    .icon {
+      color: #7BBFCE;
+    }
+  }
+}

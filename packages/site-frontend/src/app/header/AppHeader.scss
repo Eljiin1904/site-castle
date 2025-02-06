@@ -1,0 +1,10 @@
+
+.AppHeader {
+  height: 64px;
+  min-height: 64px;
+  z-index: 13;  
+
+  .inner-content {    
+    max-width: var(--max-width);
+  }
+}

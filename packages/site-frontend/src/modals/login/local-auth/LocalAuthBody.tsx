@@ -1,0 +1,109 @@
+import { Validation } from "@core/services/validation";
+import { Button } from "@client/comps/button/Button";
+import { Input } from "@client/comps/input/Input";
+import { ModalLabel } from "@client/comps/modal/ModalLabel";
+import { ModalSection } from "@client/comps/modal/ModalSection";
+import { Dialogs } from "@client/services/dialogs";
+import { Toasts } from "@client/services/toasts";
+import { Link } from "@client/comps/link/Link";
+import { Div } from "@client/comps/div/Div";
+import { ModalDivider } from "@client/comps/modal/ModalDivider";
+import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
+import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Security } from "#app/services/security";
+import { Users } from "#app/services/users";
+import { AuthenticatorLoginModal } from "../../security/AuthenticatorLoginModal";
+import { SSOButtons } from "../SSOButtons";
+import { LoginAction } from "../LoginAction";
+
+export const LocalAuthBody = ({
+  setAction,
+}: {
+  setAction: (x: LoginAction) => void;
+}) => {
+  const dispatch = useAppDispatch();
+
+  const form = useCaptchaForm({
+    schema: Validation.object({
+      username: Validation.string().required("Email or username is required."),
+      password: Validation.string().required("Password is required."),
+    }),
+    onSubmit: async (values) => {
+      const res = await Security.authLocal(values);
+      if (res.action === "2fa") {
+        Dialogs.open(
+          "primary",
+          <AuthenticatorLoginModal
+            userId={res.userId}
+            loginToken={res.loginToken}
+          />,
+        );
+      } else if (res.action === "login") {
+        dispatch(Users.initUser({ authenticated: true, user: res.user }));
+        Toasts.success(`Welcome back, ${res.user.username}!`);
+        Dialogs.close("primary");
+      }
+    },
+  });
+
+  return (
+    <Div
+      fx
+      column
+      gap={16}
+    >
+      <CaptchaForm form={form}>
+        <ModalSection>
+          <ModalLabel>{"Email or Username"}</ModalLabel>
+          <Input
+            type="text"
+            id="username"
+            autoComplete="username"
+            placeholder="Enter email or username..."
+            disabled={form.loading}
+            error={form.errors.username}
+            value={form.values.username}
+            onChange={(x) => form.setValue("username", x)}
+          />
+        </ModalSection>
+        <ModalSection>
+          <ModalLabel>
+            {"Password"}
+            <Link
+              type="action"
+              flexGrow
+              justifyContent="flex-end"
+              onClick={() => setAction("recover")}
+            >
+              {"Forgot Password?"}
+            </Link>
+          </ModalLabel>
+          <Input
+            type="password"
+            id="current-password"
+            autoComplete="current-password"
+            placeholder="Enter password..."
+            disabled={form.loading}
+            error={form.errors.password}
+            value={form.values.password}
+            onChange={(x) => form.setValue("password", x)}
+          />
+        </ModalSection>
+        <Button
+          type="submit"
+          kind="primary"
+          label="Login"
+          fx
+          mt={4}
+          loading={form.loading}
+        />
+      </CaptchaForm>
+      <ModalDivider
+        label="Or"
+        my={8}
+      />
+      <SSOButtons />
+    </Div>
+  );
+};

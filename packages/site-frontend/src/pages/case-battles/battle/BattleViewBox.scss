@@ -1,0 +1,19 @@
+
+.CaseBattlePlayerPage .BattleViewBox {
+  height: 280px;
+
+  background: linear-gradient(
+    180deg, 
+    var(--brown-8-color) 0%, 
+    var(--brown-6-color) 50%, 
+    var(--brown-8-color) 100%
+  );
+
+  .shadow {
+    background: linear-gradient(180deg, #161924 0%, rgba(22, 25, 36, 0) 151.3%);
+  }
+
+  .section:not(:first-child) {
+    border-left: 2px solid var(--brown-8-color);
+  }
+}

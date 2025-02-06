@@ -1,0 +1,14 @@
+
+.ChatMessageCard .MessageReply {
+  opacity: 0.8;
+
+  .reply-connector {
+    width: 26px;
+    height: 12px;
+    left: 16px;
+  }
+
+  .text {
+    max-width: 140px;
+  }
+}

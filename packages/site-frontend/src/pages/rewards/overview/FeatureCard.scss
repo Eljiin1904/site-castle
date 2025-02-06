@@ -1,0 +1,23 @@
+
+.RewardsPage .FeatureCard {
+
+  .Img {    
+    transform: scale(1); 
+    transition: ease 250ms;
+  }
+
+  &:hover {
+    .Img {
+      transform: scale(1.1);
+    }
+  }
+
+  .AppMain.mobile & {
+    width: 100%;
+  }
+  .AppMain.tablet &,
+  .AppMain.laptop &,
+  .AppMain.desktop & {
+    width: calc((100% / 3) - (12px * 2 / 3));
+  }
+}

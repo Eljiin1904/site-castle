@@ -1,0 +1,37 @@
+
+.ChestReelBox {
+  height: 280px;
+
+  background: linear-gradient(
+    180deg, 
+    var(--brown-8-color) 0%, 
+    var(--brown-6-color) 50%, 
+    var(--brown-8-color) 100%
+  );
+
+  .arrow {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .arrow-left {
+    left: -5px;
+    top: 0;
+    bottom: 0;
+  }
+
+  .arrow-right {
+    right: -5px;
+    top: 0;
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  .arrow-top {
+    left: 0;
+    right: 0;
+    top: -12.5px;
+    transform: rotate(90deg);
+  }
+}

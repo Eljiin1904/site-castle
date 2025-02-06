@@ -1,0 +1,7 @@
+
+.AppMaintenanceOverlay {  
+  pointer-events: none;
+  background-color: rgba(255, 128, 0, 0.1);
+  border: 2px solid rgb(255, 128, 0);
+  z-index: 1000;
+}

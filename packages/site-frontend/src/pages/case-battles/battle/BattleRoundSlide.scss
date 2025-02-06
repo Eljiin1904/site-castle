@@ -1,0 +1,38 @@
+
+.CaseBattlePlayerPage .BattleRoundSlide {
+  height: 40px;
+  transition: transform ease 1000ms;
+
+  &.index-0 {
+    transform: translateX(-170px);
+  }
+  &.index-1 {
+    transform: translateX(-130px);
+  }
+  &.index-2 {
+    transform: translateX(-90px);
+  }
+  &.index-3 {
+    transform: translateX(-50px);
+  }
+  &.index-4 {
+    transform: translateX(0);
+
+    .Img {
+      transform: scale(1.5);
+      transition: transform ease 1000ms;
+    }
+  }
+  &.index-5 {
+    transform: translateX(50px);
+  }  
+  &.index-6 {
+    transform: translateX(90px);
+  }  
+  &.index-7 {
+    transform: translateX(130px);
+  }  
+  &.index-8 {
+    transform: translateX(170px);
+  }
+}

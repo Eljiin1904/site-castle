@@ -1,0 +1,18 @@
+
+.CaseBattlePlayerPage .BattleReelDivider {
+  width: 0;
+  left: 1px;
+
+  .bg {
+    width: 30px;
+    height: 30px;
+    transform: rotate(45deg);
+  }
+
+  .AppMain.mobile & {
+    .bg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+}

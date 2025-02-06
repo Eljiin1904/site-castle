@@ -1,0 +1,31 @@
+
+.CaseBattleCreatePage .ModeCard {
+
+  .button-group .Button {
+    width: 76px;
+  }
+  
+  .AppMain.mobile & {
+    width: 100%;
+  }
+
+  .AppMain.tablet &,
+  .AppMain.laptop &,
+  .AppMain.desktop & {
+    width: calc((100% / 3) - (12px * 2 / 3));
+  }
+
+  .AppMain.mobile &,
+  .AppMain.tablet & {
+    .button-group .Button {
+      width: 52px;
+      height: 26px;
+      padding: 0;
+
+      .label {
+        font-size: 11px;
+        font-weight: 400;
+      }
+    }
+  }
+}

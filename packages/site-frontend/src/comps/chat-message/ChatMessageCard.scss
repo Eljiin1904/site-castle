@@ -1,0 +1,20 @@
+.ChatMessageCard {
+  .rich-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: var(--brown-7-color);
+  }
+
+  &.highlight {
+    background: #302d29;
+    
+    &:hover {
+      cursor: pointer;
+      background: #22201d;
+    }
+  }
+}

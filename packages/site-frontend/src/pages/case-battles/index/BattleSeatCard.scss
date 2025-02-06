@@ -1,0 +1,8 @@
+
+.CaseBattleIndexPage .BattleSeatCard {
+  &:hover {
+    cursor: pointer;
+    top: -2px;
+    border-color: var(-light-yellow-color);
+  }
+}

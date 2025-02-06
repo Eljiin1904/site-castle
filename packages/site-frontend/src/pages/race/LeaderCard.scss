@@ -1,0 +1,77 @@
+
+.RacePage .LeaderCard {  
+
+  .rank-icon-1 {
+    color: #efbf04;
+  }
+  .rank-icon-2 {
+    color: #c7d0e2;
+  }
+  .rank-icon-3 {
+    color: #CD7F32;
+  }
+
+  .AppMain.mobile & {
+
+    .rank {
+      width: 54px;
+    }
+
+    .user {
+      width: 110px;
+
+      .Span {
+        max-width: 80px;
+      }
+    }
+
+    .wager {
+      width: 68px;
+    }
+  }
+
+  .AppMain.tablet & {
+
+    .rank {
+      width: 100px;
+    }
+  
+    .user {
+      width: 240px;
+    }
+  
+    .wager {
+      width: 120px;
+    }
+  }
+
+  .AppMain.laptop & {
+
+    .rank {
+      width: 120px;
+    }
+  
+    .user {
+      width: 280px;
+    }
+  
+    .wager {
+      width: 140px;
+    }
+  }
+
+  .AppMain.desktop & {
+
+    .rank {
+      width: 140px;
+    }
+  
+    .user {
+      width: 400px;
+    }
+  
+    .wager {
+      width: 200px;
+    }
+  }
+}

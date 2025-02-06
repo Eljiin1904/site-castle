@@ -1,0 +1,17 @@
+
+.CaseBattleIndexPage .BattleRoundCard {
+
+  .chest-icon { 
+    opacity: 0.5;
+    transition: 
+      opacity ease 1000ms,
+      transform ease 1000ms;
+  }
+
+  &.active {
+    .chest-icon {    
+      opacity: 1.0;
+      transform: scale(1.2);
+    }
+  }
+}

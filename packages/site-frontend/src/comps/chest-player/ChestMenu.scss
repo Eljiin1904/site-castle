@@ -1,0 +1,13 @@
+
+.ChestPlayer .ChestMenu {
+
+  .count-menu .option-button {
+    width: 40px;
+  }
+
+  .AppMain.mobile & {
+    .count-menu .option-button {
+      width: inherit;
+    }
+  }
+}

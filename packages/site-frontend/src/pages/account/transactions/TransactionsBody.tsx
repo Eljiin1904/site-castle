@@ -1,0 +1,62 @@
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
+import { Div } from "@client/comps/div/Div";
+import { PageNotice } from "@client/comps/page/PageNotice";
+import { Errors } from "@client/services/errors";
+import { Users } from "#app/services/users";
+import { TransactionsHeader } from "./TransactionsHeader";
+import { TransactionsTable } from "./TransactionsTable";
+import { TransactionsFooter } from "./TransactionsFooter";
+
+export const TransactionsBody = () => {
+  const limit = 10;
+  const [category, setCategory] = useState<TransactionCategory | undefined>();
+  const [page, setPage] = useState(1);
+
+  useEffect(() => setPage(1), [category]);
+
+  const query = useQuery({
+    queryKey: ["transactions", category, limit, page],
+    queryFn: () =>
+      Users.getTransactions({ category, limit, page, game: false }),
+    placeholderData: (prev) => prev,
+  });
+
+  const transactions = query.data?.transactions || [];
+
+  if (query.error) {
+    return (
+      <PageNotice
+        image="/graphics/notice-chicken-error"
+        title="Error"
+        message="Something went wrong, please refetch your transactions."
+        buttonLabel="Refetch Transactions"
+        description={Errors.getMessage(query.error)}
+        onButtonClick={query.refetch}
+      />
+    );
+  }
+  return (
+    <Div
+      fx
+      column
+    >
+      <TransactionsHeader
+        category={category}
+        isLoading={query.isLoading}
+        setCategory={setCategory}
+        onRefreshClick={() => (page === 1 ? query.refetch() : setPage(1))}
+      />
+      <TransactionsTable
+        transactions={transactions}
+        isLoading={query.isLoading}
+      />
+      <TransactionsFooter
+        page={page}
+        hasNext={transactions.length !== 0 && transactions.length % limit === 0}
+        setPage={setPage}
+      />
+    </Div>
+  );
+};

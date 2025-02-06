@@ -1,0 +1,11 @@
+
+.CaseBattleCreatePage .CaseAddCard {
+
+  &:hover {
+    cursor: pointer;
+    border: 1px solid;
+    border-image-source: linear-gradient(180deg, var(--brown-5-color) 0.01%, var(--yellow-color) 100%);
+    border-image-slice: 1;
+    border-image-repeat: stretch;
+  }
+}

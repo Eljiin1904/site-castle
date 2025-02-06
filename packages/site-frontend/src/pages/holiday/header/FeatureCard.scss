@@ -1,0 +1,45 @@
+
+.HolidayPage .FeatureCard {
+  background-color: #243044;
+
+  .icon {    
+    transform: scale(1); 
+    transition: ease 250ms;
+  }
+
+  &:hover {
+    .Img {
+      transform: scale(1.1);
+    }
+  }
+
+  &.active {    
+    border: 1px solid;
+    border-image-source: linear-gradient(180deg, var(--brown-5-color) 0.01%, var(--yellow-color) 100%);
+    border-image-slice: 1;
+    border-image-repeat: stretch;
+
+    .heading {
+      color: var(--yellow-color);
+    }
+  }
+
+  .AppMain.mobile & {
+    width: 100%;
+    height: 60px;
+
+    .icon {    
+      margin-top: -40px;
+    }
+  }
+  .AppMain.tablet &,
+  .AppMain.laptop &,
+  .AppMain.desktop & {
+    width: 100%;
+    height: 100px;
+
+    .icon {    
+      margin-top: -100px;
+    }
+  }
+}

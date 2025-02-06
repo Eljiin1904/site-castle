@@ -1,0 +1,11 @@
+
+.ChestPlayer .DropFeed {
+
+  .drop-list {
+    height: 202px;
+
+    .AppMain.mobile & {
+      height: 164px;
+    }
+  }
+}

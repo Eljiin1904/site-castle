@@ -1,0 +1,15 @@
+
+.WalletModal .OptionPill {
+  width: calc(50% - 6px);
+  height: 64px;
+  min-height: 64px;
+
+  .icon-box {
+    width: 64px; 
+    min-width: 64px;
+  }
+
+  .AppBody.mobile & {
+    width: 100%;
+  }
+}

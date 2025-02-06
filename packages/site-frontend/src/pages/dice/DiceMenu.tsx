@@ -1,0 +1,72 @@
+import { DiceMode } from "@core/types/dice/DiceMode";
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { Div } from "@client/comps/div/Div";
+import { ButtonNav } from "@client/comps/button/ButtonNav";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Dice } from "#app/services/dice";
+import { DiceMenuAuto } from "./DiceMenuAuto";
+import { DiceMenuManual } from "./DiceMenuManual";
+
+export const DiceMenu = () => {
+  const layout = useAppSelector((x) => x.style.mainLayout);
+  const mode = useAppSelector((x) => x.dice.mode);
+  const sm = layout === "mobile";
+
+  return (
+    <Div
+      column
+      p={16}
+      gap={12}
+      bg="brown-6"
+      border
+      style={
+        sm
+          ? undefined
+          : {
+              minWidth: "320px",
+              maxWidth: "320px",
+              minHeight: "608px",
+              maxHeight: "608px",
+            }
+      }
+    >
+      {!sm && <ModeMenu />}
+      <Conditional
+        value={mode}
+        manual={<DiceMenuManual />}
+        auto={<DiceMenuAuto />}
+      />
+      {sm && <ModeMenu />}
+    </Div>
+  );
+};
+
+const ModeMenu = () => {
+  const mode = useAppSelector((x) => x.dice.mode);
+  const processing = useAppSelector((x) => x.dice.processing);
+  const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
+  const dispatch = useAppDispatch();
+
+  const modeHandler = (x: DiceMode) => {
+    return () => dispatch(Dice.setMode(x));
+  };
+
+  return (
+    <ButtonNav
+      disabled={processing || autoPlaying}
+      options={[
+        {
+          label: "Manual",
+          active: mode === "manual",
+          onClick: modeHandler("manual"),
+        },
+        {
+          label: "Auto",
+          active: mode === "auto",
+          onClick: modeHandler("auto"),
+        },
+      ]}
+    />
+  );
+};

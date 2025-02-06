@@ -1,0 +1,34 @@
+
+.WalletModal {
+  
+  .modal-inner {
+    padding: 0;
+    width: unset;
+    max-width: unset !important;
+    height: 604px;
+    overflow: hidden;
+  }
+
+  .wallet-banner {
+    width: 320px;
+    min-width: 320px;
+  }
+
+  .wallet-content {
+    width: 536px;
+    max-width: 536px;
+    overflow: hidden;
+  }
+
+  .AppBody.mobile & {
+    .modal-inner {
+      width: 100%;
+      height: unset;
+    }
+
+    .wallet-content {
+      width: 100%;
+      max-width: unset;
+    }
+  }
+}

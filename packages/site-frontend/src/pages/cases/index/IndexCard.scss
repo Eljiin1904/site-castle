@@ -1,0 +1,28 @@
+
+.CaseIndexPage .IndexCard {
+  height: 240px;
+
+  .Img {    
+    transform: scale(1); 
+    transition: ease 250ms;
+  }
+
+  &:hover {
+    .Img {
+      transform: scale(1.1);
+    }
+  }
+
+  .AppMain.mobile & {
+    width: calc((100% / 2) - (12px * 1 / 2));
+  }
+  .AppMain.tablet & {
+    width: calc((100% / 4) - (12px * 3 / 4));
+  }
+  .AppMain.laptop & {
+    width: calc((100% / 6) - (12px * 5 / 6));
+  }
+  .AppMain.desktop & {
+    width: calc((100% / 6) - (12px * 5 / 6));
+  }
+}

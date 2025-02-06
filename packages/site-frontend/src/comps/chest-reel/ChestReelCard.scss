@@ -1,0 +1,98 @@
+
+.ChestReelCard {
+
+  &.popout {
+    .ItemIcon {
+      transform: translateY(-32px);
+      transition: transform 500ms ease;
+    }
+  }
+
+  &.fade {
+    opacity: 0.3;
+    transition: opacity 100ms ease;
+  }
+
+  .ChestReel.layout-horizontal & {
+    width: var(--slide-size);
+    height: 100%;
+
+    .item-info {
+      padding-bottom: 16px;
+    }
+
+    &.popout {
+      border-left: 2px solid var(--brown-8-color);
+      border-right: 2px solid var(--brown-8-color);
+    }
+  }
+
+  .ChestReel.layout-vertical & {
+    width: 100%;
+    height: var(--slide-size);
+
+    .item-info {
+      bottom: -16px;
+    }
+
+    .AppMain.tablet & {
+      .ItemIcon {
+        width: 80px !important;
+        height: 80px !important;
+      }
+
+      .special-icon,
+      .special-icon img {
+        width: 100px !important;
+        height: 100px !important;
+      }
+    }
+
+    .AppMain.mobile & {
+      .ItemIcon {
+        width: 48px !important;
+        height: 48px !important;
+
+        .glow {
+          filter: blur(8px);
+        }
+      }
+
+      .special-icon,
+      .special-icon img {
+        width: 52px !important;
+        height: 52px !important;
+      }
+
+      &.popout .ItemIcon {
+        transform: translateY(-16px);
+      }
+
+      .item-info {
+        bottom: -24px;
+
+        .base-name {
+          font-size: 11px;
+        }
+
+        .style-name {          
+          font-size: 10px;
+          margin-top: 4px;
+        }
+
+        .Tokens {
+          margin-top: 6px;
+        }
+
+        .Tokens svg {
+          width: 10px;
+          height: 10px;
+        }
+
+        .Tokens .Span {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}

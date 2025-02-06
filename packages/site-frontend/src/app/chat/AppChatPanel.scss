@@ -1,0 +1,48 @@
+
+.AppChatPanel {
+  --chat-width: 320px;
+
+  .chat-inner {
+    width: var(--chat-width);
+  }
+  
+  &.closed {  
+    width: 0;
+    min-width: 0;
+
+    &.animate {
+      animation: AppChatPanel-close 0.4s ease-in;
+    }
+  }
+  
+  &.opened {
+    width: var(--chat-width);
+    min-width: var(--chat-width);
+
+    &.animate {
+      animation: AppChatPanel-open 0.4s ease-in;
+    }
+  }
+}
+
+@keyframes AppChatPanel-open {
+  0% { 
+    min-width: 0;
+    width: 0;
+  }
+  100% { 
+    min-width: var(--chat-width);
+    width: var(--chat-width); 
+  }
+}
+
+@keyframes AppChatPanel-close {
+  0% { 
+    width: var(--chat-width); 
+    min-width: var(--chat-width); 
+  }
+  100% {   
+    width: 0; 
+    min-width: 0;
+  }
+}

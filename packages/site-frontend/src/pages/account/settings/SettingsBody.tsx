@@ -1,0 +1,35 @@
+import { Div } from "@client/comps/div/Div";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { UserCard } from "./UserCard";
+import { LinkCard } from "./LinkCard";
+import { ToggleCard } from "./ToggleCard";
+import { TradeUrlCard } from "./TradeUrlCard";
+
+export const SettingsBody = () => {
+  const layout = useAppSelector((x) => x.style.mainLayout);
+  const small = layout === "mobile" || layout === "tablet";
+
+  return (
+    <Div
+      gap={16}
+      flow={small ? "row-wrap" : undefined}
+    >
+      <Div
+        fx
+        column
+        gap={16}
+      >
+        <UserCard />
+        <LinkCard />
+      </Div>
+      <Div
+        fx
+        column
+        gap={16}
+      >
+        <TradeUrlCard />
+        <ToggleCard />
+      </Div>
+    </Div>
+  );
+};

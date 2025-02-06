@@ -1,0 +1,22 @@
+
+.CasePickerModal .PickerCard {
+  height: 260px;
+
+  .image-ctn {
+    width: 136px;
+    height: 120px;
+  }
+
+  .AppBody.mobile & {
+    width: calc((100% / 2) - (12px * 1 / 2));
+  }
+  .AppBody.tablet & {
+    width: calc((100% / 4) - (12px * 3 / 4));
+  }
+  .AppBody.laptop & {
+    width: calc((100% / 4) - (12px * 3 / 4));
+  }
+  .AppBody.desktop & {
+    width: calc((100% / 4) - (12px * 3 / 4));
+  }
+}

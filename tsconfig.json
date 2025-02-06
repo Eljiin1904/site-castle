@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "compilerOptions": {},
+  "references": [
+    { "path": "./packages/shared-client" },
+    { "path": "./packages/shared-core" },
+    { "path": "./packages/shared-server" },
+  ]
+}

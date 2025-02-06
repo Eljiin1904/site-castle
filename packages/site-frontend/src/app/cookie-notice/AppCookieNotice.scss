@@ -1,0 +1,15 @@
+
+.AppCookieNotice {
+  pointer-events: none;
+  z-index: 20;
+
+  .inner-content {
+    max-width: 600px;
+    pointer-events: all;
+    border: 2px solid var(--brown-8-color);
+  }
+
+  .Button {
+    max-width: 140px;
+  }
+}

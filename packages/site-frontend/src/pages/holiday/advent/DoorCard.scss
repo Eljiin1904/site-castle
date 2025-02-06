@@ -1,0 +1,55 @@
+
+.HolidayPage .DoorCard {
+  background-color: #411619;
+  border-color: #8a373b;
+
+  &:nth-child(24),
+  &:nth-child(25),
+  &:nth-child(26),
+  &:nth-child(31) {
+    background-color: #3b2e0e;
+    border-color: rgb(104, 87, 50);
+  }
+
+  .image-ctn {
+    width: 140px;
+    height: 140px;
+
+    .Img {    
+      transform: scale(1); 
+      transition: ease 250ms;
+    }
+  }
+
+  &:hover {
+    .Img {
+      transform: scale(1.1);
+    }
+  }
+
+  .AppMain.mobile & {
+    height: 150px;
+    width: calc((100% / 2) - (8px * 1 / 2));
+
+    &:nth-child(31) {
+      width: 100%;
+    }
+  }
+  .AppMain.tablet & {
+    height: 150px;
+    width: calc((100% / 4) - (8px * 3 / 4));
+
+    &:nth-child(31) {
+      width: calc((100% / 2) - 4px);
+    }
+  }
+  .AppMain.laptop &,
+  .AppMain.desktop & {
+    height: 150px;
+    width: calc((100% / 8) - (8px * 7 / 8));
+
+    &:nth-child(31) {
+      width: calc((100% / 4) - 6px);
+    }
+  }
+}

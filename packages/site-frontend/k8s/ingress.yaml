@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: site-frontend-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+spec:
+  ingressClassName: nginx  # Modify if using a different ingress controller
+  tls:
+   - hosts:
+       - dev.brickrax.com
+     secretName: cloudflare-tls  # Use the secret you created
+  rules:
+    - host: dev.brickrax.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: site-frontend
+                port:
+                  number: 443
+    - host: dev8.brickrax.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: site-frontend
+                port:
+                  number: 80
+    - host: k8s-ingressb-nginxing-30ae712882-f965233a31d30e87.elb.us-east-2.amazonaws.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: site-frontend
+                port:
+                  number: 80

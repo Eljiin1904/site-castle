@@ -1,0 +1,14 @@
+
+.ChatHeader {
+  .AppBody.mobile &,
+  .AppBody.tablet &  {
+    height: 48px;
+    min-height: 48px;
+  }
+
+  .AppBody.laptop &,
+  .AppBody.desktop &  {
+    height: 64px;
+    min-height: 64px;
+  }
+}

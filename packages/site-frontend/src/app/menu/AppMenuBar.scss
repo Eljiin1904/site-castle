@@ -1,0 +1,21 @@
+
+.AppMenuBar {
+  flex: 0 0 auto;
+  height: 64px;
+
+  .menu-item.tactive,
+  .menu-item:hover {
+
+    .label {
+      color: var(--white-color);
+    }
+
+    .icon {
+      color: var(--yellow-color);
+    }
+  }
+
+  .menu-item {
+    cursor: pointer;
+  }
+}

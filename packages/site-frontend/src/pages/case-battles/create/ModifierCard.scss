@@ -1,0 +1,58 @@
+
+.CaseBattleCreatePage .ModifierCard {
+  
+  .AppMain.mobile & {
+    width: 100%;
+  }
+  .AppMain.tablet & {
+    width: calc((100% / 2) - (16px * 1 / 2));
+  }
+  .AppMain.laptop & {
+    width: calc((100% / 3) - (16px * 2 / 3));
+  }
+  .AppMain.desktop & {
+    width: calc((100% / 3) - (16px * 2 / 3));
+  }
+  
+  &.enabled.crazy {
+    border-color: var(--orange-color);
+
+    .icon, .title {
+      color: var(--orange-color);
+    }
+    .toggle {
+      background: var(--orange-color);
+    }  
+    .toggle:hover {
+      background: var(--dark-orange-color);
+    }
+  }
+  
+  &.enabled.first-draw {
+    border-color: var(--blue-color);
+
+    .icon, .title {
+      color: var(--blue-color);
+    }
+    .toggle {
+      background: var(--blue-color);
+    }  
+    .toggle:hover {
+      background: var(--dark-blue-color);
+    }
+  }
+  
+  &.enabled.final-draw {
+    border-color: var(--purple-color);
+
+    .icon, .title {
+      color: var(--purple-color);
+    }
+    .toggle {
+      background: var(--purple-color);
+    }  
+    .toggle:hover {
+      background: var(--dark-purple-color);
+    }
+  }
+}

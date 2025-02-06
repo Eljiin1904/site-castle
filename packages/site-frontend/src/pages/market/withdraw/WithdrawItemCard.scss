@@ -1,0 +1,33 @@
+
+.MarketWithdrawPage .WithdrawItemCard {
+  height: 192px;
+
+  .Img {
+    transform: scale(1); 
+    transition: ease 250ms;
+
+    img {
+      width: 85px;
+    }
+  }
+
+  &:hover {
+    .Img {
+      transform: scale(1.2);
+    }
+  }
+
+  .AppMain.mobile & {
+    height: 164px;
+    width: calc((100% / 3) - (8px * 2 / 3));
+  }
+  .AppMain.tablet & {
+    width: calc((100% / 5) - (8px * 4 / 5));
+  }
+  .AppMain.laptop & {
+    width: calc((100% / 8) - (8px * 7 / 8));
+  }
+  .AppMain.desktop & {
+    width: calc((100% / 8) - (8px * 7 / 8));
+  }
+}

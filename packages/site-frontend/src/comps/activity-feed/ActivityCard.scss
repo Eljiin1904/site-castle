@@ -1,0 +1,74 @@
+
+.ActivityFeed .ActivityCardPlaceholder {
+  min-width: var(--card-width);
+  height: 100%;
+}
+
+.ActivityFeed .ActivityCard {
+  width: var(--card-width);
+  height: 100%;
+
+  .username-text {
+    max-width: 76px;
+  }
+
+  .overlay-box {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: var(--brown-8-color);
+    opacity: 0.95;
+  }
+
+  &.animate {    
+    transition: left ease 200ms;
+
+    &:nth-child(1) {
+      &.inserted {
+      animation: ActivityCard-first 200ms ease;
+      }
+    }
+  }
+
+  &:nth-child(1) {
+    left: 0;
+  }
+  &:nth-child(2) {
+    left: calc(var(--card-width) * 1 + 8px * 1);
+  }
+  &:nth-child(3) {
+    left: calc(var(--card-width) * 2 + 8px * 2);
+  }
+  &:nth-child(4) {
+    left: calc(var(--card-width) * 3 + 8px * 3);
+  }
+  &:nth-child(5) {
+    left: calc(var(--card-width) * 4 + 8px * 4);
+  }
+  &:nth-child(6) {
+    left: calc(var(--card-width) * 5 + 8px * 5);
+  }
+  &:nth-child(7) {
+    left: calc(var(--card-width) * 6 + 8px * 6);
+  }
+  &:nth-child(8) {
+    left: calc(var(--card-width) * 7 + 8px * 7);
+  }
+  &:nth-child(9) {
+    left: calc(var(--card-width) * 8 + 8px * 8);
+  }
+  &:nth-child(10) {
+    left: calc(var(--card-width) * 9 + 8px * 9);
+  }
+}
+
+@keyframes ActivityCard-first {
+  0% { 
+    left: calc(var(--card-width) * -1);
+  }
+  100% { 
+    left: 0;
+  }
+}

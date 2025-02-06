@@ -1,0 +1,18 @@
+
+.ChestLootCard {
+  height: 192px;
+
+  &.mobile {
+    height: 150px;
+    width: calc((100% / 3) - (2px * 2 / 3));
+  }
+  &.tablet {
+    width: calc((100% / 5) - (2px * 4 / 5));
+  }
+  &.laptop {
+    width: calc((100% / 8) - (2px * 7 / 8));
+  }
+  &.desktop {
+    width: calc((100% / 8) - (2px * 7 / 8));
+  }
+}

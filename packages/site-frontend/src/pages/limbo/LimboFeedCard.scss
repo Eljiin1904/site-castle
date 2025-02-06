@@ -1,0 +1,79 @@
+.LimboPage  {
+  .AppMain.mobile & {
+    --slide-width: calc((100% / 3) - (2px * 2 / 3));
+  }
+  .AppMain.tablet & {
+    --slide-width: calc((100% / 5) - (2px * 4 / 5));
+  }
+  .AppMain.laptop & {
+    --slide-width: calc((100% / 8) - (2px * 7 / 8));
+  }
+  .AppMain.desktop & {
+    --slide-width: calc((100% / 8) - (2px * 7 / 8));
+  }
+}
+
+.LimboPage .LimboFeedCardPlaceholder {
+  min-width: var(--slide-width);
+  height: 100%;
+}
+
+.LimboPage .LimboFeedCard {
+  left: calc(var(--slide-width) * -1);
+  width: var(--slide-width);
+  height: 100%;
+  transition: left ease 250ms;
+  background-color: var(--brown-6-color);
+
+  &:nth-child(1) {
+    left: 0;
+    &.inserted {
+      animation: LimboFeedCard-first 250ms ease;
+    }
+  }
+  &:nth-child(2) {
+    left: calc(var(--slide-width) * 1 + 2px * 1);
+  }
+  &:nth-child(3) {
+    left: calc(var(--slide-width) * 2 + 2px * 2);
+  }
+  &:nth-child(4) {
+    left: calc(var(--slide-width) * 3 + 2px * 3);
+  }
+  &:nth-child(5) {
+    left: calc(var(--slide-width) * 4 + 2px * 4);
+  }
+  &:nth-child(6) {
+    left: calc(var(--slide-width) * 5 + 2px * 5);
+  }
+  &:nth-child(7) {
+    left: calc(var(--slide-width) * 6 + 2px * 6);
+  }
+  &:nth-child(8) {
+    left: calc(var(--slide-width) * 7 + 2px * 7);
+  }
+  &:nth-child(9) {
+    left: calc(var(--slide-width) * 8 + 2px * 8);
+  }
+  &:nth-child(10) {
+    left: calc(var(--slide-width) * 9 + 2px * 9);
+  }
+
+  &.lost {
+    border-color: rgb(140, 151, 182);
+    background-image: linear-gradient(to bottom, rgb(140, 151, 182, 0.05), rgb(140, 151, 182, 0.1));
+  }
+  &.won {
+    border-color: rgb(0, 161, 67);
+    background-image: linear-gradient(to bottom, rgb(0, 161, 67, 0.05), rgb(0, 161, 67, 0.1));
+  }
+}
+
+@keyframes LimboFeedCard-first {
+  0% {
+    left: calc(var(--slide-width) * -1 - 2px * 1);
+  }
+  100% {
+    left: 0;
+  }
+}

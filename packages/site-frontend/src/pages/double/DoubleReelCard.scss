@@ -1,0 +1,29 @@
+
+.DoublePage .DoubleReelCard {
+  width: 100px;
+  height: 100px;
+
+  &.green {
+    background: linear-gradient(180deg, #217c43 0%, #33a15c 100%);
+
+    .icon {
+      color: var(--white-color);
+    }
+  }
+
+  &.red {
+    background: linear-gradient(180deg, #b49878 0%, #c7a884 100%);
+    
+    .icon {
+      color: var(--brown-8-color);
+    }
+  }
+
+  &.black {
+    background: linear-gradient(180deg, #404453 0%, #4E525F 100%);
+    
+    .icon {
+      color: #7BBFCE;
+    }
+  }
+}
