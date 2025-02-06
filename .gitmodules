@@ -1,0 +1,36 @@
+[submodule "packages/shared-admin-backend"]
+	path = packages/shared-admin-backend
+	url = git@github.com:Pidwin/shared-admin-backend.git
+[submodule "packages/shared-admin-frontend"]
+	path = packages/shared-admin-frontend
+	url = git@github.com:Pidwin/shared-admin-frontend
+[submodule "packages/shared-admin-scripts"]
+	path = packages/shared-admin-scripts
+	url = git@github.com:Pidwin/shared-admin-scripts
+[submodule "packages/shared-affiliate-api"]
+	path = packages/shared-affiliate-api
+	url = git@github.com:Pidwin/shared-affiliate-api
+[submodule "packages/shared-backend"]
+	path = packages/shared-backend
+	url = git@github.com:Pidwin/shared-backend
+[submodule "packages/shared-client"]
+	path = packages/shared-client
+	url = git@github.com:Pidwin/shared-client
+[submodule "packages/shared-core"]
+	path = packages/shared-core
+	url = git@github.com:Pidwin/shared-core
+[submodule "packages/shared-discord-bot"]
+	path = packages/shared-discord-bot
+	url = git@github.com:Pidwin/shared-discord-bot
+[submodule "packages/shared-game-server"]
+	path = packages/shared-game-server
+	url = git@github.com:Pidwin/shared-game-server
+[submodule "packages/shared-ipn-server"]
+	path = packages/shared-ipn-server
+	url = git@github.com:Pidwin/shared-ipn-server
+[submodule "packages/shared-reporting-server"]
+	path = packages/shared-reporting-server
+	url = git@github.com:Pidwin/shared-reporting-server
+[submodule "packages/shared-server"]
+	path = packages/shared-server
+	url = git@github.com:Pidwin/shared-server
