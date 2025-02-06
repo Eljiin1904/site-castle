@@ -62,25 +62,25 @@ const spawn = ({ prefix, command, doneText }) => new Promise((resolve, reject) =
     await Promise.all([
       spawn({
         prefix: `[${cyan("Master")}]`,
-        command: "cd ./packages/master-server && npm run dev-start",
+        command: "cd ./packages/shared-shared-reporting-server && npm run dev-start",
         doneText: "server running"
       }),
 
       spawn({
         prefix: `[${cyan("Game")}]`,
-        command: "cd ./packages/game-server && npm run dev-start",
+        command: "cd ./packages/shared-shared-game-server && npm run dev-start",
         doneText: "server running"
       }),
 
       spawn({
         prefix: `[${cyan("Admin")}]`,
-        command: "cd ./packages/admin-backend && npm run dev-start",
+        command: "cd ./packages/shared-admin-backend && npm run dev-start",
         doneText: "listening on port"
       }),
 
       spawn({
         prefix: `[${cyan("Site")}]`,
-        command: "cd ./packages/site-backend && npm run dev-start",
+        command: "cd ./packages/shared-site-backend && npm run dev-start",
         doneText: "listening on port"
       }),
 
@@ -90,7 +90,7 @@ const spawn = ({ prefix, command, doneText }) => new Promise((resolve, reject) =
     await Promise.all([
       spawn({
         prefix: `[${magenta("Admin")}]`,
-        command: "cd ./packages/admin-frontend && npm run dev-start",
+        command: "cd ./packages/shared-admin-frontend && npm run dev-start",
         // doneText: "Local:" skipping for vite
       }),
       spawn({

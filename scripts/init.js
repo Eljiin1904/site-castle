@@ -13,14 +13,14 @@ run("cd ./packages/shared-client && npm run build");
 run("cd ./packages/shared-server && npm install");
 run("cd ./packages/shared-server && npm run build");
 
-run("cd ./packages/admin-backend && npm install");
-run("cd ./packages/admin-frontend && npm install");
-run("cd ./packages/affiliate-api && npm install");
-run("cd ./packages/discord-bot && npm install");
-run("cd ./packages/game-server && npm install");
-run("cd ./packages/ipn-server && npm install");
-run("cd ./packages/master-server && npm install");
-run("cd ./packages/site-backend && npm install");
+run("cd ./packages/shared-admin-backend && npm install");
+run("cd ./packages/shared-admin-frontend && npm install");
+run("cd ./packages/shared-affiliate-api && npm install");
+run("cd ./packages/shared-discord-bot && npm install");
+run("cd ./packages/shared-game-server && npm install");
+run("cd ./packages/shared-ipn-server && npm install");
+run("cd ./packages/shared-shared-reporting-server && npm install");
+run("cd ./packages/shared-site-backend && npm install");
 run("cd ./packages/site-frontend && npm install");
 
 process.exit();

@@ -51,11 +51,11 @@ This will start the following processes in parallel:
 - Watch `shared-core`
 - Watch `shared-client`
 - Watch `shared-server`
-- Watch/Run `master-server`
-- Watch/Run `game-server`
-- Watch/Run `admin-backend`
-- Watch/Run `site-backend`
-- Watch/Run `admin-frontend`
+- Watch/Run `shared-reporting-server`
+- Watch/Run `shared-game-server`
+- Watch/Run `shared-admin-backend`
+- Watch/Run `shared-site-backend`
+- Watch/Run `shared-admin-fronten\"`
 - Watch/Run `site-frontend`
 
 Once you see the `site-frontend` running in the console, you are ready to start developing!

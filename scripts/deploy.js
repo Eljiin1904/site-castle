@@ -18,24 +18,24 @@ const services = [];
 
 if (command === "all") {
   services.push(
-    "master-server",
-    "admin-backend",
-    "affiliate-api",
-    "discord-bot",
-    "game-server",
-    "ipn-server",
-    "site-backend",
-    "admin-frontend",
+    "shared-reporting-server",
+    "shared-admin-backend",
+    "shared-affiliate-api",
+    "shared-discord-bot",
+    "shared-game-server",
+    "shared-ipn-server",
+    "shared-site-backend",
+    "shared-admin-frontend",
     "site-frontend",
   );
 } else if (command === "admin") {
   services.push(
-    "admin-backend",
+    "shared-admin-backend",
     "admin-frontend",
   );
 } else if (command === "site") {
   services.push(
-    "site-backend",
+    "shared-site-backend",
     "site-frontend",
   );
 } else {
