@@ -1,0 +1,17 @@
+{
+  "files.eol": "\n",
+  "files.associations": {
+    ".env.*": ".env"
+  },
+  "editor.tabSize": 2,
+  "explorer.compactFolders": false,
+  "explorer.sortOrderLexicographicOptions": "lower",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
+}

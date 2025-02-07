@@ -24,7 +24,7 @@ if (command === "all") {
     "shared-discord-bot",
     "shared-game-server",
     "shared-ipn-server",
-    "shared-site-backend",
+    "shared-backend",
     "shared-admin-frontend",
     "site-frontend",
   );
@@ -35,7 +35,7 @@ if (command === "all") {
   );
 } else if (command === "site") {
   services.push(
-    "shared-site-backend",
+    "shared-backend",
     "site-frontend",
   );
 } else {

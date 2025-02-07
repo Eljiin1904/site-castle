@@ -1,6 +1,5 @@
 
 const child = require("child_process");
-
 const green = (str) => `\x1b[32m${str}\x1b[0m`;
 const cyan = (str) => `\x1b[36m${str}\x1b[0m`;
 const magenta = (str) => `\x1b[35m${str}\x1b[0m`;
@@ -62,7 +61,7 @@ const spawn = ({ prefix, command, doneText }) => new Promise((resolve, reject) =
     await Promise.all([
       spawn({
         prefix: `[${cyan("Master")}]`,
-        command: "cd ./packages/shared-shared-reporting-server && npm run dev-start",
+        command: "cd ./packages/shared-reporting-server && npm run dev-start",
         doneText: "server running"
       }),
 
@@ -80,23 +79,33 @@ const spawn = ({ prefix, command, doneText }) => new Promise((resolve, reject) =
 
       spawn({
         prefix: `[${cyan("Site")}]`,
-        command: "cd ./packages/shared-site-backend && npm run dev-start",
+        command: "cd ./packages/shared-backend && npm run dev-start",
         doneText: "listening on port"
       }),
 
-    ])
-
-    // frontend servers
-    await Promise.all([
       spawn({
         prefix: `[${magenta("Admin")}]`,
         command: "cd ./packages/shared-admin-frontend && npm run dev-start",
         // doneText: "Local:" skipping for vite
       }),
+
       spawn({
         prefix: `[${magenta("Site")}]`,
         command: "cd ./packages/site-frontend && npm run dev-start",
       })
+    ])
+
+    // frontend servers
+    await Promise.all([
+      // spawn({
+      //   prefix: `[${magenta("Admin")}]`,
+      //   command: "cd ./packages/shared-admin-frontend && npm run dev-start",
+      //   // doneText: "Local:" skipping for vite
+      // }),
+      // spawn({
+      //   prefix: `[${magenta("Site")}]`,
+      //   command: "cd ./packages/site-frontend && npm run dev-start",
+      // })
     ])
 
 

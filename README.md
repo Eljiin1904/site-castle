@@ -54,7 +54,7 @@ This will start the following processes in parallel:
 - Watch/Run `shared-reporting-server`
 - Watch/Run `shared-game-server`
 - Watch/Run `shared-admin-backend`
-- Watch/Run `shared-site-backend`
+- Watch/Run `shared-backend`
 - Watch/Run `shared-admin-fronten\"`
 - Watch/Run `site-frontend`
 
