@@ -1,6 +1,12 @@
-# Chicken
+# Castle
 
-The Castle.com web stack.
+The Castle.com web stack uses Git submodules to expose shared libraries/components that compile into the site.  To clone the Castle repo and fetch the contents of all submodules, run the following command:
+
+```bash
+git clone --recurse-submodules git@github.com:Pidwin/site-castle.git
+```
+
+This will pull everything down that you need to follow the directions below.
 
 ## Setup
 
