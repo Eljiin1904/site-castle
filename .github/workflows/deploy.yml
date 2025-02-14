@@ -14,6 +14,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: 'true'
+          token: ${{ secrets.PIDWIN_READ_ONLY_PAT }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -62,6 +63,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: 'true'
+          token: ${{ secrets.PIDWIN_READ_ONLY_PAT }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
