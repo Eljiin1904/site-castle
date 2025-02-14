@@ -1,0 +1,106 @@
+name: Build and Push to AWS ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Recursively pull git submodules
+        run: git clone --recurse-submodules https://github.com/Pidwin/site-castle.git
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Adjust as needed
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run init
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t pidwin/castle-backend -f ./packages/shared-backend/Dockerfile .
+          docker tag pidwin/castle-backend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
+
+      - name: Output ECR Image URL
+        run: | 
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest"
+
+  build-and-push-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Recursively pull git submodules
+        run: git clone --recurse-submodules https://github.com/Pidwin/site-castle.git
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Adjust as needed
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run init
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .
+          docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          echo "Pushing image to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"  
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
+
+      - name: Output ECR Image URL
+        run: | 
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
