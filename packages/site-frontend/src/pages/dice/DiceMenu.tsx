@@ -13,25 +13,32 @@ export const DiceMenu = () => {
   const mode = useAppSelector((x) => x.dice.mode);
   const sm = layout === "mobile";
 
-  return (
-    <Div
+  return (<Div wrap style={
+    sm
+      ? undefined
+      : {
+          minWidth: "320px",
+          maxWidth: "320px",
+        }
+  }>
+   {!sm && <ModeMenu />}
+   <Div
       column
-      p={16}
-      gap={12}
+      p={24}
+      gap={16}
       bg="brown-6"
-      border
+      borderColor="brown-4"
+      borderTop
+      fx
       style={
         sm
           ? undefined
           : {
-              minWidth: "320px",
-              maxWidth: "320px",
               minHeight: "608px",
               maxHeight: "608px",
             }
       }
     >
-      {!sm && <ModeMenu />}
       <Conditional
         value={mode}
         manual={<DiceMenuManual />}
@@ -39,6 +46,7 @@ export const DiceMenu = () => {
       />
       {sm && <ModeMenu />}
     </Div>
+   </Div>
   );
 };
 

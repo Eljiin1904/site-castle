@@ -6,7 +6,6 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { Input } from "@client/comps/input/Input";
 import { SvgInfinity } from "@client/svgs/common/SvgInfinity";
 import { ButtonGroup } from "@client/comps/button/ButtonGroup";
-import { SvgPercent } from "@client/svgs/common/SvgPercent";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Dice } from "#app/services/dice";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
@@ -82,10 +81,12 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="primary"
+        kind="secondary"
         label={overMax ? "Exceeds Max Profit" : "Start Auto Play"}
         disabled={overMax || processing}
         onClick={handleStartAuto}
+        labelWeight="semi-bold"
+        labelSize={16}
       />
     );
   }
@@ -114,6 +115,7 @@ const BaseFields = () => {
           iconRight={gameCount ? undefined : SvgInfinity}
           disabled={autoPlaying}
           onChange={(x) => dispatch(Dice.setGameCount(x))}
+          iconColor="dark-sand"
         />
       </ModalSection>
       <ModalSection>
@@ -121,24 +123,13 @@ const BaseFields = () => {
         <Div
           fx
           align="center"
+          gap={8}
         >
-          <Input
-            type="decimal"
-            placeholder="0.00"
-            value={winIncreaseBy}
-            iconRight={SvgPercent}
-            disabled={autoPlaying || winAction !== "increase"}
-            onChange={(x) => dispatch(Dice.setWinIncreaseBy(x))}
-            style={{ paddingLeft: "182px" }}
-          />
-          <Div
-            position="absolute"
-            left={4}
-          >
+          <Div>
             <ButtonGroup
-              options={["Reset", "Increase By"]}
-              size="xs"
-              labelSize={13}
+              options={["Reset", "Increase"]}
+              size="md"
+              labelSize={12}
               value={["reset", "increase"].indexOf(winAction)}
               disabled={autoPlaying}
               setValue={(x) =>
@@ -146,31 +137,30 @@ const BaseFields = () => {
               }
             />
           </Div>
+          <Input
+            type="decimal"
+            placeholder="0.00"
+            value={winIncreaseBy}
+            iconRight={gameCount ? undefined : SvgInfinity}
+            iconColor="dark-sand"
+            disabled={autoPlaying || winAction !== "increase"}
+            onChange={(x) => dispatch(Dice.setWinIncreaseBy(x))}
+            
+          />          
         </Div>
       </ModalSection>
       <ModalSection>
         <ModalLabel>{"On Loss"}</ModalLabel>
         <Div
-          fx
-          align="center"
+         fx
+         align="center"
+         gap={8}
         >
-          <Input
-            type="decimal"
-            placeholder="0.00"
-            value={lossIncreaseBy}
-            iconRight={SvgPercent}
-            disabled={autoPlaying || lossAction !== "increase"}
-            onChange={(x) => dispatch(Dice.setLossIncreaseBy(x))}
-            style={{ paddingLeft: "182px" }}
-          />
-          <Div
-            position="absolute"
-            left={4}
-          >
+          <Div>
             <ButtonGroup
-              options={["Reset", "Increase By"]}
-              size="xs"
-              labelSize={13}
+              options={["Reset", "Increase"]}
+              size="md"
+              labelSize={12}
               value={["reset", "increase"].indexOf(lossAction)}
               disabled={autoPlaying}
               setValue={(x) =>
@@ -178,6 +168,15 @@ const BaseFields = () => {
               }
             />
           </Div>
+          <Input
+            type="decimal"
+            placeholder="0.00"
+            value={lossIncreaseBy}
+            iconRight={gameCount ? undefined : SvgInfinity}
+            iconColor="dark-sand"
+            disabled={autoPlaying || lossAction !== "increase"}
+            onChange={(x) => dispatch(Dice.setLossIncreaseBy(x))}
+          />
         </Div>
       </ModalSection>
       <ModalSection>

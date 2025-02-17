@@ -35,7 +35,6 @@ const NotMobileContent = () => {
   return (
     <Fragment>
       <BaseFields />
-      <Div grow />
       <Div
         fx
         borderTop
@@ -55,11 +54,13 @@ const ActionButton = () => {
   return (
     <Button
       fx
-      kind="primary"
-      label={overMax ? "Exceeds Max Profit" : "Play"}
+      kind="secondary"
+      label={overMax ? "Exceeds Max Profit" : "Place Bet"}
       loading={processing}
       disabled={overMax || processing}
       onClick={handleBet}
+      labelSize={16}
+      labelWeight={"semi-bold"}
     />
   );
 };
