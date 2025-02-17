@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { DiceFeedRoll } from "@core/types/dice/DiceRoll";
 import { Numbers } from "@core/services/numbers";
-import { Strings } from "@core/services/strings";
 import { Div } from "@client/comps/div/Div";
 import { UserBadge } from "@client/comps/user/UserBadge";
 import { Span } from "@client/comps/span/Span";
