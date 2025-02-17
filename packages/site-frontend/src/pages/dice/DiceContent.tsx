@@ -48,7 +48,6 @@ const NotMobileContent = () => {
       column
       gap={24}
     >
-      <DiceHeader />
       <Div
         fx
         gap={24}
