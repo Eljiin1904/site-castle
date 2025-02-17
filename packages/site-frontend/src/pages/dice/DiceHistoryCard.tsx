@@ -13,13 +13,15 @@ export const DiceHistoryCard = ({ roll }: { roll: DiceRoll }) => {
       width={64}
       center
       py={8}
-      bg={isWin ? "green" : "brown-5"}
+      px={12}
+      bg={isWin ? "yellow" : "brown-9"}
     >
       <Span
-        weight="semi-bold"
-        color={isWin ? "black" : "gray"}
+        weight="medium"
+        fontSize={12}
+        color={isWin ? "black" : "white"}
       >
-        {`${Intimal.toLocaleString(rollValue, 2, 2)}`}
+        {`${Intimal.toLocaleString(rollValue, 2, 2)}`}X
       </Span>
     </Div>
   );

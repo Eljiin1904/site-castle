@@ -7,8 +7,6 @@ import { UserBadge } from "@client/comps/user/UserBadge";
 import { Span } from "@client/comps/span/Span";
 import { Placeholder } from "@client/comps/placeholder/Placeholder";
 import { Tokens } from "@client/comps/tokens/Tokens";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgChicken } from "@client/svgs/common/SvgChicken";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useHiddenInfo } from "#app/hooks/users/useHiddenInfo";
 import "./DiceFeedCard.scss";
@@ -24,26 +22,21 @@ export const DiceFeedCard = ({ roll }: { roll: DiceFeedRoll }) => {
 
   return (
     <Div
-      className={classNames("DiceFeedCard", {
-        inserted: roll.inserted,
-        won: roll.won,
-        lost: !roll.won,
-      })}
-      position="absolute"
-      fy
-      fx
-      column
-      align="center"
-      px={16}
-      py={12}
-      bg="brown-6"
-      borderBottom
-      borderWidth={2}
+    className={classNames("BetCard")}
+    position="relative"
+    fx
+    align="center"
+    gap={24}
+    py={12}
+    height={56}
+    borderWidth={1}
+    borderColor="brown-4"
+    borderBottom
     >
       <Div
-        align="center"
+        flexBasis={0}
+        grow={4}
         gap={4}
-        mt={6}
       >
         {!hideInfo && (
           <UserBadge
@@ -52,53 +45,75 @@ export const DiceFeedCard = ({ roll }: { roll: DiceFeedRoll }) => {
           />
         )}
         <Span
-          size={small ? 11 : 13}
+          size={small ? 11 : 14}
           weight="medium"
-          color={hideInfo ? "gray" : "white"}
+          color={hideInfo ? "gray" : "light-sand"}
           textOverflow="ellipsis"
         >
           {username}
         </Span>
       </Div>
-      <Div
-        center
-        mt={12}
-      >
-        <Vector
-          as={SvgChicken}
-          size={64}
-          color={roll.won ? "green" : "brown-4"}
-        />
-        <Span
-          position="absolute"
-          color={roll.won ? "black" : "gray"}
-          weight="semi-bold"
-          size={12}
+
+      {["tablet", "laptop", "desktop"].includes(layout) && (
+        <Div
+          className="time"
+          flexBasis={0}
+          grow={4}
         >
-          {Numbers.round(roll.rollValue / 100, 2).toFixed(2)}
-        </Span>
+           {roll.inserted}
+        </Div>
+      )}      
+      {["laptop", "desktop"].includes(layout) && (
+        <Div
+          className="amount"
+          flexBasis={0}
+          grow={4}
+        >
+          <Span
+            weight="medium"
+            size={small ? 11 : 14}
+            color="white"
+            textTransform="uppercase"
+          >
+             <Tokens
+                value={roll.betAmount ? roll.wonAmount : 0}
+                fontSize={small ? 11 : 14}
+              />
+          </Span>
+        </Div>
+      )}
+      <Div
+          className="multiplier"
+          flexBasis={0}
+          grow={2}
+        >
+          <Span
+            weight="medium"
+            size={small ? 11 : 14}
+            color="white"
+          >
+            {`${Numbers.floor(roll.multiplier, 2).toFixed(2)} x`}
+          </Span>
       </Div>
-      <Span
-        fontSize={13}
-        fontWeight="medium"
-        color="white"
-        textAlign="center"
-        mt={12}
+      <Div
+        className="result"
+        flexBasis={0}
+        grow={3}
+        justify="flex-end"
       >
-        {`${Numbers.floor(roll.multiplier, 2).toFixed(2)}x`}
-      </Span>
-      <Span
-        fontSize={12}
-        textAlign="center"
-        mt={4}
-      >
-        {Strings.kebabToTitle(roll.targetKind)}
-      </Span>
-      <Tokens
+        <Span
+          weight="medium"
+          size={12}
+          color={!roll.won ? "green" : "brown-4"}
+          textTransform="uppercase"
+        >
+         <Tokens
         value={roll.won ? roll.wonAmount : 0}
         fontSize={small ? 11 : 14}
-        mt={12}
+        accent={roll.won ? "positive" : undefined}
       />
+        </Span>
+      </Div>
     </Div>
   );
 };
