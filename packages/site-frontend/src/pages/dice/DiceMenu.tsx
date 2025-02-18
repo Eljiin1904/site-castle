@@ -21,10 +21,10 @@ export const DiceMenu = () => {
           maxWidth: "320px",
         }
   }>
-   {!sm && <ModeMenu />}
+   <ModeMenu />
    <Div
       column
-      p={24}
+      p={sm? 20 : 24}
       gap={16}
       bg="brown-6"
       borderColor="brown-4"
@@ -44,7 +44,6 @@ export const DiceMenu = () => {
         manual={<DiceMenuManual />}
         auto={<DiceMenuAuto />}
       />
-      {sm && <ModeMenu />}
     </Div>
    </Div>
   );
