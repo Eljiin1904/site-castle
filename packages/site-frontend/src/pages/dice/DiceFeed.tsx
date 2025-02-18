@@ -9,6 +9,7 @@ import "./DiceFeed.scss";
 
 export const DiceFeed = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
+  const small = layout === "mobile";
   const diceFeed = useAppSelector((x) => x.dice.feed);
   return (
     <Div
@@ -16,12 +17,12 @@ export const DiceFeed = () => {
       column
       fx
       gap={24}
-      mt={layout === "mobile" ? undefined : 56}
+      mt={layout === "mobile" ? 40 : 56}
       px={layout === "mobile" ? 20 : undefined}
     >
       <PageTitle
         heading="DICE GAME BETS"
-        mb={16}
+        mb={small ? 0 : 16}
       />
       <ButtonGroup
           options={["About", "All Bets","High Rollers","Lucky Bets"]}

@@ -3,7 +3,7 @@ import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 export const DiceFeedHeader = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
-
+  const small = layout === "mobile";
   return (
     <Div  
       fx
@@ -73,7 +73,7 @@ export const DiceFeedHeader = () => {
             color="dark-sand"
             textTransform="uppercase"
           >
-            {"Multiplier"}
+            {small ? "Multi": "Multiplier"}
           </Span>
       </Div>
       <Div
