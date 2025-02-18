@@ -10,8 +10,10 @@ import { useDelete } from "./useDelete";
 
 export const NotificationCard = ({
   notification,
+  last
 }: {
   notification: NotificationDocument;
+  last?: boolean;
 }) => {
   const [hovered, setHovered] = useState(false);
   const message = Notifications.getMessage(notification);
@@ -21,19 +23,22 @@ export const NotificationCard = ({
   return (
     <Card
       column
-      p={8}
+      bg="brown-4"
+      border={false}
+      borderBottom={!last}
+      borderColor="darker-sand"
+      py={16}
       justify="space-between"
       cursor="pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Paragraph>{message}</Paragraph>
+      <Paragraph color="light-sand">{message}</Paragraph>
       <Timestamp
         date={notification.timestamp}
         format="elapsed"
-        color="dark-gray"
+        color="dark-sand"
         size={12}
-        mt={6}
       />
       {hovered && (
         <Vector
