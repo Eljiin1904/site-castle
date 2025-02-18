@@ -32,6 +32,7 @@ export const DiceViewFooter = () => {
           type="decimal"
           decimals={4}
           iconRight={SvgTimes}
+          iconColor="dark-sand"
           placeholder="Enter multiplier..."
           value={Dice.getMultiplier({ targetValue, targetKind })}
           disabled={processing || autoPlaying}
@@ -60,6 +61,7 @@ export const DiceViewFooter = () => {
           type="decimal"
           decimals={2}
           iconRight={SvgRedo}
+          iconColor="dark-sand"
           placeholder="Enter target..."
           value={targetValue / 100}
           disabled={processing || autoPlaying}
@@ -80,6 +82,7 @@ export const DiceViewFooter = () => {
           type="decimal"
           decimals={2}
           iconRight={SvgPercent}
+          iconColor="dark-sand"
           placeholder="Enter win chance..."
           value={Dice.getWinChance({ targetValue, targetKind })}
           disabled={processing || autoPlaying}
