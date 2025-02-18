@@ -76,7 +76,7 @@ const NotMobileHeader = () => {
       <Div
         className="inner-content"
         fx
-        px={pad ? 24 : undefined}
+        px={pad ? 40 : undefined}
       >
         <Div
           grow

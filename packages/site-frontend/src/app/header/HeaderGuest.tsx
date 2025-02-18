@@ -8,20 +8,24 @@ export const HeaderGuest = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
 
   return (
-    <Div gap={12}>
+    <Div gap={16}>
       <Button
         kind="primary"
-        size="sm"
+        size="md"
         label="Log In"
+        labelWeight="medium"
+        labelSize={16}
         style={{
           minWidth: layout === "mobile" ? "75px" : "90px",
         }}
         onClick={() => Dialogs.open("primary", <LoginModal initialAction="login" />)}
       />
       <Button
-        kind="primary"
-        size="sm"
+        kind="secondary"
+        size="md"
         label="Register"
+        labelWeight="medium"
+        labelSize={16}
         style={{
           minWidth: layout === "mobile" ? "75px" : "90px",
         }}
