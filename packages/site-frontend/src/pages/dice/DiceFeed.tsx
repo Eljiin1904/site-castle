@@ -17,6 +17,7 @@ export const DiceFeed = () => {
       fx
       gap={24}
       mt={layout === "mobile" ? undefined : 32}
+      px={layout === "mobile" ? 20 : undefined}
     >
       <PageTitle
         heading="DICE GAME BETS"
