@@ -64,8 +64,8 @@ const MobileHeader = () => {
 const NotMobileHeader = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const layout = useAppSelector((x) => x.style.mainLayout);
-  const pad = ["tablet", "laptop"].includes(layout);
-
+  const pad = ["laptop", "desktop"].includes(layout);
+  const small = layout === "mobile";
   return (
     <Div
       fx
@@ -76,7 +76,7 @@ const NotMobileHeader = () => {
       <Div
         className="inner-content"
         fx
-        px={pad ? 40 : undefined}
+        px={pad ? 40 : (small ? 20: 24)}
       >
         <Div
           grow
