@@ -9,11 +9,11 @@ export const HeaderUser = () => {
     <Div
       className="HeaderUser"
       align="center"
-      gap={12}
+      gap={8}
     >
       <SiteBalance />
-      <AppNotifications />
       <ChatToggle />
+      <AppNotifications />      
       <UserMenu />
     </Div>
   );

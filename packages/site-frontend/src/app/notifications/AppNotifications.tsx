@@ -29,7 +29,7 @@ export const AppNotifications = () => {
       }}
       button={
         <Button
-          kind="secondary"
+          kind="tertiary"
           size="sm"
           icon={SvgBell}
         >

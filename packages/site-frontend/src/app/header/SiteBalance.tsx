@@ -42,6 +42,7 @@ export const SiteBalance = () => {
         <Div gap={4}>
           <Vector
             className="icon"
+            color="white"
             as={SvgMoney}
             size={14}
           />
@@ -54,19 +55,18 @@ export const SiteBalance = () => {
           </Span>
         </Div>
         <Div
-          gap={4}
+          gap={16}
           align="center"
         >
-          <Span size={40}>&nbsp;</Span>
+          <Span size={40} width={1}>&nbsp;</Span>
           <Button
             className="wallet-button"
             icon={SvgAddFunds}
-            kind="primary"
+            kind="secondary"
             size="sm"
             onClick={() => Dialogs.open("primary", <WalletModal />)}
           />
-          <Span size={40}>&nbsp;</Span>
-          <Vector as={SvgDivider} />
+          <Vector as={SvgDivider} px={8} />
         </Div>
       </Div>
     </Div>
