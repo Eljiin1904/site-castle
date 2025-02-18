@@ -46,7 +46,7 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
         fx
         fy
         column
-        p={small ? 24 : 32}
+        p={small ? 20 : 40}
       >
         <Div
           column
@@ -74,10 +74,10 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
         >
           {button && (
             <Button
-              kind="primary"
+              kind="tertiary"
               label={button}
               size={small ? "sm" : "md"}
-              labelSize={small ? 13 : 14}
+              labelSize={16}
             />
           )}
           {accent && (
