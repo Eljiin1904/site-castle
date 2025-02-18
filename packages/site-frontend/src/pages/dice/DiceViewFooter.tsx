@@ -21,9 +21,9 @@ export const DiceViewFooter = () => {
   return (
     <Div
       fx
-      px={sm ? 10 : 16}
-      py={sm ? 12 : 16}
-      gap={sm ? 6 : 12}
+      px={sm ? 20 : 16}
+      py={sm ? 16 : 16}
+      gap={sm ? 8 : 12}
       bg="brown-6"
     >
       <ModalSection>
