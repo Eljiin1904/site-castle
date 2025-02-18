@@ -45,7 +45,7 @@ export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix }) => {
       }}
       button={
         <Button
-          kind="secondary"
+          kind="quinary"
           icon={getButtonIcon()}
         />
       }

@@ -72,11 +72,7 @@ const MobileHeader = () => {
 
 const NotMobileHeader = () => {
   return (
-    <Div fx>
-      <PageTitle
-        heading="Dice"
-        icon={SvgDice}
-      />
+    <Div fx position="absolute" top={0} right={0} zIndex={1} px={16} py={16}>
       <Div
         fx
         align="flex-start"
@@ -84,7 +80,7 @@ const NotMobileHeader = () => {
         gap={8}
       >
         <Button
-          kind="secondary"
+          kind="quinary"
           icon={SvgCheckCircle}
           label="Fairness"
           onClick={() =>
@@ -95,7 +91,7 @@ const NotMobileHeader = () => {
           }
         />
         <Button
-          kind="secondary"
+          kind="quinary"
           icon={SvgInfoCircle}
           onClick={() => Dialogs.open("primary", <DiceInfoModal />)}
         />

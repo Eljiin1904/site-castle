@@ -16,7 +16,7 @@ export const DiceFeed = () => {
       column
       fx
       gap={24}
-      mt={layout === "mobile" ? undefined : 32}
+      mt={layout === "mobile" ? undefined : 56}
       px={layout === "mobile" ? 20 : undefined}
     >
       <PageTitle
