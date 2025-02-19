@@ -12,7 +12,7 @@ export const DiceHeader = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
   const small = mainLayout === "mobile";
   return (
-    <Div fx position="absolute" top={0} right={0} zIndex={1} px={small ? 20: 16} py={16}>
+    <Div position="absolute" top={0} right={0} zIndex={1} px={small ? 20: 16} py={16}>
     <Div
       fx
       align="flex-start"
