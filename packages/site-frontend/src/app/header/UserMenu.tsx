@@ -7,14 +7,6 @@ import { ProgressBar } from "@client/comps/progress-bar/ProgressBar";
 import { Img } from "@client/comps/img/Img";
 import { Span } from "@client/comps/span/Span";
 import { Dialogs } from "@client/services/dialogs";
-import { SvgDeposit } from "@client/svgs/common/SvgDeposit";
-import { SvgHistory } from "@client/svgs/common/SvgHistory";
-import { SvgSignOut } from "@client/svgs/common/SvgSignOut";
-import { SvgUser } from "@client/svgs/common/SvgUser";
-import { SvgWithdraw } from "@client/svgs/common/SvgWithdraw";
-import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
-import { SvgCoinStack } from "@client/svgs/common/SvgCoinStack";
-import { SvgVault } from "@client/svgs/common/SvgVault";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useUserLevel } from "#app/hooks/users/useUserLevel";
@@ -23,6 +15,15 @@ import { WalletModal } from "#app/modals/wallet/WalletModal";
 import { Users } from "#app/services/users";
 import { VaultModal } from "#app/modals/vault/VaultModal";
 import { AffiliateReloadModal } from "#app/modals/affiliate/AffiliateReloadModal";
+import { SvgWallet } from "#app/svgs/common/SvgWallet";
+import { SvgProfile } from "#app/svgs/common/SvgProfile";
+import { SvgAvatar } from "#app/svgs/common/SvgAvatar";
+import { SvgBets } from "#app/svgs/common/SvgBets";
+import { SvgVIP } from "#app/svgs/common/SvgVIP";
+import { SvgSupport } from "#app/svgs/common/SvgSupport";
+import { SvgFAQs } from "#app/svgs/common/SvgFAQs";
+import { SvgLogout } from "#app/svgs/common/SvgLogout";
+
 
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ export const UserMenu = () => {
     <Dropdown
       className="user-dropdown"
       type="custom"
-      menuWidth="260px"
+      menuWidth="142px"
       forceAlign="right"
       open={open}
       onToggle={setOpen}
@@ -102,14 +103,22 @@ export const UserMenu = () => {
             type="nav"
             to="/account"
             end
-            iconLeft={SvgUser}
-            label="Account"
+            iconLeft={SvgWallet}
+            label="Wallet"
+            onClick={() => setOpen(false)}
+          />
+          <DropdownItem
+            type="nav"
+            to="/account"
+            end
+            iconLeft={SvgProfile}
+            label="Profile"
             onClick={() => setOpen(false)}
           />
           <DropdownItem
             type="action"
-            iconLeft={SvgDeposit}
-            label="Deposit"
+            iconLeft={SvgAvatar}
+            label="Avatar"
             onClick={() => {
               Dialogs.open("primary", <WalletModal initialAction="deposit" />);
               setOpen(false);
@@ -117,8 +126,8 @@ export const UserMenu = () => {
           />
           <DropdownItem
             type="action"
-            iconLeft={SvgWithdraw}
-            label="Withdraw"
+            iconLeft={SvgBets}
+            label="Bets"
             onClick={() => {
               Dialogs.open("primary", <WalletModal initialAction="withdraw" />);
               setOpen(false);
@@ -126,8 +135,8 @@ export const UserMenu = () => {
           />
           <DropdownItem
             type="action"
-            iconLeft={SvgVault}
-            label="Vault"
+            iconLeft={SvgVIP}
+            label="VIP"
             onClick={() => {
               Dialogs.open("primary", <VaultModal />);
               setOpen(false);
@@ -136,8 +145,8 @@ export const UserMenu = () => {
           {reloadsEnabled && (
             <DropdownItem
               type="action"
-              iconLeft={SvgCoinStack}
-              label="Reloads"
+              iconLeft={SvgSupport}
+              label="Support"
               onClick={async () => {
                 Dialogs.open("primary", <AffiliateReloadModal />);
                 setOpen(false);
@@ -147,21 +156,14 @@ export const UserMenu = () => {
           <DropdownItem
             type="nav"
             to="/account/transactions"
-            iconLeft={SvgTransaction}
-            label="Transactions"
-            onClick={() => setOpen(false)}
-          />
-          <DropdownItem
-            type="nav"
-            to="/account/game-history"
-            iconLeft={SvgHistory}
-            label="Game History"
+            iconLeft={SvgFAQs}
+            label="FAQ's"
             onClick={() => setOpen(false)}
           />
           <DropdownItem
             type="action"
-            iconLeft={SvgSignOut}
-            label="Sign Out"
+            iconLeft={SvgLogout}
+            label="Logout"
             onClick={() => {
               Dialogs.open("secondary", <UserLogoutModal />);
               setOpen(false);
