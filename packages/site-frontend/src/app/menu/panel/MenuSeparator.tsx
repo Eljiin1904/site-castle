@@ -10,6 +10,7 @@ export const MenuSeparator = () => {
       <Div
         fx
         borderTop
+        borderColor="brown-4"
       />
     </Div>
   );
