@@ -29,7 +29,7 @@ export const DiceViewSlider = () => {
       px={sm ? 16 : 40}
     >
       <Img
-        type="png"
+        type="jpg"
         path={"/graphics/dice-view-slider"}
         skeleton
         width="100%"
