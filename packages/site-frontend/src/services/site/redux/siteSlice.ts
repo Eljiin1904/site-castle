@@ -66,13 +66,13 @@ export const siteSlice = createSlice({
       state.initialized = true;
     }),
     updateMeta: reducer<MetaUpdate>((state, { payload }) => {
-      (state.meta as any)[payload.key] = payload.value;
+      (state.meta)[payload.key] = payload.value;
     }),
     initSettings: reducer<SiteSettingObject>((state, { payload }) => {
       state.settings = payload;
     }),
     updateSetting: reducer<SettingUpdate>((state, { payload }) => {
-      (state.settings as any)[payload.key] = payload.value;
+      (state.settings)[payload.key] = payload.value;
     }),
     initActivity: reducer<SiteActivityDocument[] | undefined>((state, { payload }) => {
       state.activity = payload;

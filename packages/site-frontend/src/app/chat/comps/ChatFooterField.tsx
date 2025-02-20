@@ -53,7 +53,7 @@ export const ChatFooterField = () => {
         message={
           <Div display="block">
             <Span color="dark-gray">
-              {`Muted: ${Strings.kebabToTitle(muteData.reason!)} `}
+              {`Muted: ${Strings.kebabToTitle(muteData.reason)} `}
             </Span>
             <Timestamp
               format="timer"

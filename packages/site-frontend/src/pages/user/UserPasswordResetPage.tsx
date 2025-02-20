@@ -30,7 +30,7 @@ export const UserPasswordResetPage = () => {
         onButtonClick={() =>
           Dialogs.open(
             "primary",
-            <UserResetPasswordModal recoverToken={recoverToken!} />,
+            <UserResetPasswordModal recoverToken={recoverToken} />,
           )
         }
       />

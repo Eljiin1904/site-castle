@@ -109,7 +109,7 @@ export const UserCard = () => {
         heading="Self-Exclusion"
         description={
           isSuspended
-            ? `Ends ${Dates.toTimestamp(suspension.endDate!)}`
+            ? `Ends ${Dates.toTimestamp(suspension.endDate)}`
             : "Need a break?"
         }
         buttonLabel={isSuspended ? "Enabled" : "Enable"}

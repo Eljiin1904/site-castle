@@ -33,7 +33,7 @@ const initialState = {
   mute: {},
   suspension: {},
   ban: {},
-  blockedUsers: new Array(),
+  blockedUsers: [],
   meta: {},
 } as UserState;
 

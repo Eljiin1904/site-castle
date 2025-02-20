@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DiceInitialState } from "@core/types/dice/DiceInitialState";
-import { DiceRoll } from "@core/types/dice/DiceRoll";
-import { DiceFeedRoll } from "@core/types/dice/DiceRoll";
+import { DiceRoll, DiceFeedRoll } from "@core/types/dice/DiceRoll";
 import { DiceMode } from "@core/types/dice/DiceMode";
 import { DiceTargetKind } from "@core/types/dice/DiceTargetKind";
 import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
