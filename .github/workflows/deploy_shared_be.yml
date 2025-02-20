@@ -1,13 +1,15 @@
-name: Build and Push to AWS ECR
+name: Build and Push SHared Backend to AWS ECR
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main 
+      - main
+    paths:
+      - "packages/shared-backend/**"
 
 jobs:
-  build-and-push-backend:
+  build-and-push-shared-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Adjust as needed
+          node-version: 18
           cache: 'npm'
  
       - name: Install dependencies
@@ -56,7 +58,6 @@ jobs:
         run: | 
           echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest"
 
-  build-and-push-frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -76,7 +77,7 @@ jobs:
         run: npm install
 
       - name: Build React app
-        run: npm run build
+        run: npm run init
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
