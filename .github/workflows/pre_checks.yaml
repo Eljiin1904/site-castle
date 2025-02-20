@@ -25,6 +25,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
 # ENABLE WHEN LINTING SCRIPT IS IN PLACE
       # - name: Lint Code
       #   run: npm run lint
@@ -33,11 +36,8 @@ jobs:
       # - name: Run Jest Tests
       #   run: npm test
 
-      - name: Tets Install dependencies
-        run: npm install
-
-      - name: Test Build React app
-        run: npm run init
+      - name: Check Build React app
+        run: npm run build
 
 # ENABLE WHEN HAVE SONAR ACCOUNT
       # - name: Install SonarScanner CLI
@@ -58,13 +58,10 @@ jobs:
       #       -Dsonar.login=$SONAR_TOKEN \
       #       -Dsonar.host.url=$SONAR_HOST_URL
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Test building Docker image for Shared Backend
+      - name: Check building Docker image for Shared Backend
         run: |
           docker build -t pidwin/castle-backend -f ./packages/shared-backend/Dockerfile .
 
-      - name: Test building Docker image for Shared Backend
+      - name: Check building Docker image for Front End
         run: |
           docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .

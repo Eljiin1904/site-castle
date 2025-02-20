@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 18  # Adjust as needed
           cache: 'npm'
-
+ 
       - name: Install dependencies
         run: npm install
 
@@ -69,14 +69,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Adjust as needed
+          node-version: 18 
           cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build React app
-        run: npm run init
+        run: npm run build
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
