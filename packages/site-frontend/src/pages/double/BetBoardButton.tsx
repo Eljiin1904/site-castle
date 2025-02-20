@@ -2,12 +2,12 @@ import classNames from "classnames";
 import { DoubleBetKind } from "@core/types/double/DoubleBetKind";
 import { Span } from "@client/comps/span/Span";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Double } from "#app/services/double";
 import { usePostTicket } from "./usePostTicket";
 import "./BetBoardButton.scss";
+import { Img } from "@client/comps/img/Img";
 
 export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
   const userId = useAppSelector((x) => x.user._id);
@@ -15,9 +15,7 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
   const processing = useAppSelector((x) => x.double.processing);
   const tickets = useAppSelector((x) => x.double.tickets);
   const layout = useAppSelector((x) => x.style.mainLayout);
-  const betPlaced = tickets.some(
-    (x) => x.betKind === betKind && x.user.id === userId,
-  );
+  const betPlaced = tickets.some((x) => x.betKind === betKind && x.user.id === userId);
   const disabled = betPlaced || processing || status !== "waiting";
 
   const handlePostTicket = usePostTicket();
@@ -59,14 +57,8 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
   );
 };
 
-const MobileContent = ({
-  betKind,
-  betPlaced,
-}: {
-  betKind: DoubleBetKind;
-  betPlaced: boolean;
-}) => {
-  const icon = Double.getIconFromBetKind(betKind);
+const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
+  const path = Double.getImageFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
 
   return (
@@ -78,10 +70,11 @@ const MobileContent = ({
       pb={8}
       gap={6}
     >
-      <Vector
+      <Img
+        type="png"
         className="label"
-        as={icon}
-        size={32}
+        path={path}
+        width="50px"
       />
       <Span
         className="label"
@@ -104,14 +97,8 @@ const MobileContent = ({
   );
 };
 
-const TabletContent = ({
-  betKind,
-  betPlaced,
-}: {
-  betKind: DoubleBetKind;
-  betPlaced: boolean;
-}) => {
-  const icon = Double.getIconFromBetKind(betKind);
+const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
+  const path = Double.getImageFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
 
   return (
@@ -122,10 +109,11 @@ const TabletContent = ({
       px={6}
       gap={6}
     >
-      <Vector
+      <Img
+        type="png"
         className="label"
-        as={icon}
-        size={18}
+        path={path}
+        width="45px"
       />
       <Span
         className="label"
@@ -155,7 +143,7 @@ const LaptopDesktopContent = ({
   betKind: DoubleBetKind;
   betPlaced: boolean;
 }) => {
-  const icon = Double.getIconFromBetKind(betKind);
+  const path = Double.getImageFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
 
   return (
@@ -166,10 +154,11 @@ const LaptopDesktopContent = ({
       px={8}
       gap={8}
     >
-      <Vector
+      <Img
+        type="png"
         className="label"
-        as={icon}
-        size={20}
+        path={path}
+        width="40px"
       />
       <Span
         className="label"

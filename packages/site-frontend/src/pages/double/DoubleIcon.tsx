@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { DoubleColor } from "@core/types/double/DoubleColor";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
 import { Double } from "#app/services/double";
 import "./DoubleIcon.scss";
+import { Img } from "@client/comps/img/Img";
 
 export const DoubleIcon = ({
   className,
@@ -14,7 +14,7 @@ export const DoubleIcon = ({
   color: DoubleColor;
   bait: boolean;
 }) => {
-  const icon = Double.getIconFromColor({ color, bait });
+  const path = Double.getImageFromColor({ color, bait });
 
   return (
     <Div
@@ -22,10 +22,11 @@ export const DoubleIcon = ({
       center
       p={8}
     >
-      <Vector
+      <Img
+        type="png"
         className="icon"
-        as={icon}
-        size={16}
+        path={path}
+        width="20px"
       />
     </Div>
   );

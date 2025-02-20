@@ -4,9 +4,9 @@ export const FooterCopyright = () => {
   return (
     <Span
       size={13}
-      color="gray"
+      color="dark-sand"
     >
-      {"2024 © Castle.com — All Rights Reserved"}
+      {"Copyright © 2025 SandCasino. All rights reserved"}
     </Span>
   );
 };

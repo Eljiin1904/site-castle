@@ -1,14 +1,99 @@
+import { Circle } from "@client/comps/circle/Circle";
+import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 
 export const FooterDisclaimer = () => {
   return (
     <Span
-      size={13}
-      color="gray"
+      size={12}
+      color="dark-sand"
     >
       {
-        "Castle.com is not affiliated, endorsed by, or in any way associated with Counter-Strike, Valve LLC, Steam or any of its subsidiaries or its affiliates."
+        "Sand Casino is a brand name of Bull Gaming N.V. Company Address: Abraham de Veerstraat 9, Willemstad, Curacao. Rollbit is licensed and authorized by the Government of Curaçao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ Bull Gaming N.V. payments can be processed by WINGAMING SUPPORT LIMITED (Registration Number HE406701). Company Address: Avlonos, 1, MARIA HOUSE, 1075, Nicosia, Cyprus Crypto trading is not gambling, and therefore not covered by our gaming license"
       }
+      <Div
+        gap={20}
+        my={20}
+        justify="space-around"
+      >
+        <Circle
+          as="div"
+          width={64}
+          height={64}
+          color="white"
+          alignItems="center"
+          justifyContent="center"
+          bg="brown-4"
+        >
+          <Div
+            color="white"
+            width={40}
+            fontSize={12}
+            height={80}
+            alignItems="center"
+            justifyContent="center"
+            column
+          >
+            Gamble
+            <Span
+              color="white"
+              fontSize={12}
+            >
+              Aware
+            </Span>
+          </Div>
+        </Circle>
+
+        <Circle
+          as="div"
+          width={64}
+          height={64}
+          color="white"
+          align="center"
+          justify="center"
+          bg="brown-4"
+        >
+          <Div
+            color="white"
+            width={40}
+            fontSize={20}
+            height={80}
+            alignItems="center"
+            justifyContent="center"
+            column
+          >
+            18+
+          </Div>
+        </Circle>
+
+        <Circle
+          as="div"
+          width={64}
+          height={64}
+          color="white"
+          align="center"
+          justify="center"
+          bg="brown-4"
+        >
+          <Div
+            color="white"
+            width={40}
+            fontSize={16}
+            height={80}
+            alignItems="center"
+            justifyContent="center"
+            column
+          >
+            RNG
+            <Span
+              color="white"
+              fontSize={10}
+            >
+              certified
+            </Span>
+          </Div>
+        </Circle>
+      </Div>
     </Span>
   );
 };

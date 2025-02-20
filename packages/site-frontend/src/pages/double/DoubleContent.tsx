@@ -9,6 +9,9 @@ import { DoubleView } from "./DoubleView";
 import { DoubleFairness } from "./DoubleFairness";
 import { LastRounds } from "./LastRounds";
 import { RecentRounds } from "./RecentRounds";
+import { Span } from "@client/comps/span/Span";
+import { DoubleReelOverlay } from "./DoubleReelOverlay";
+import { BetBoard } from "#app/comps/bet-board/BetBoard";
 
 export const DoubleContent = () => {
   const initialized = useAppSelector((x) => x.double.initialized);
@@ -34,14 +37,28 @@ const MobileContent = () => {
     <Div
       fx
       column
-      gap={20}
     >
-      <DoubleHeader />
-      <DoubleView />
-      <BetInputGroup />
-      <BetBoardGrid />
-      <RecentRounds />
-      <LastRounds />
+      <Div column>
+        <DoubleReelOverlay
+          path="/graphics/double-tile-overlay"
+          p={15}
+        >
+          <DoubleHeader />
+          <Span>
+            <DoubleView />
+          </Span>
+        </DoubleReelOverlay>
+      </Div>
+      <Div
+        column
+        p={10}
+        gap={20}
+        bg="brown-6"
+      >
+        <BetInputGroup />
+        <BetBoardGrid />
+        <BetBoard />
+      </Div>
       <DoubleFairness />
     </Div>
   );
@@ -52,19 +69,41 @@ const NotMobileContent = () => {
     <Div
       fx
       column
-      gap={24}
     >
-      <DoubleHeader />
-      <DoubleView />
       <Div
-        fx
-        justify="space-between"
+        pb={20}
+        pt={20}
+        column
       >
-        <RecentRounds />
-        <LastRounds />
+        <DoubleReelOverlay
+          path="/graphics/double-tile-overlay"
+          p={20}
+        >
+          <DoubleHeader />
+          <Span mt={10}>
+            <DoubleView />
+          </Span>
+          <Div
+            fx
+            justify="space-between"
+          >
+            <RecentRounds />
+            <LastRounds />
+          </Div>
+        </DoubleReelOverlay>
       </Div>
-      <BetInputGroup />
-      <BetBoardGrid />
+      <Div
+        column
+        p={20}
+        gap={20}
+        bg="brown-6"
+      >
+        <BetInputGroup />
+        <BetBoardGrid />
+      </Div>
+      <Div mt={20}>
+        <BetBoard />
+      </Div>
       <DoubleFairness />
     </Div>
   );

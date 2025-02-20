@@ -5,14 +5,12 @@ import { Div } from "@client/comps/div/Div";
 import { SiteLogo } from "#app/comps/site-logo/SiteLogo";
 import { FooterCopyright } from "./FooterCopyright";
 import { FooterDisclaimer } from "./FooterDisclaimer";
-import { FooterDropdowns } from "./FooterDropdowns";
-import { FooterLanguage } from "./FooterLanguage";
 import { FooterMenus } from "./FooterMenus";
 import { FooterPills } from "./FooterPills";
 import { FooterSocials } from "./FooterSocials";
-import { FooterNotices } from "./FooterNotices";
 import { FooterContacts } from "./FooterContacts";
 import "./AppFooter.scss";
+import { Divider } from "@client/comps/divider/Divider";
 
 export const AppFooter = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
@@ -48,56 +46,69 @@ const FooterMobile = () => {
       fx
     >
       <Div
-        py={24}
-        px={16}
-      >
-        <Div grow>
-          <SiteLogo scale={0.9} />
-        </Div>
-        <Div gap={8}>
-          <FooterSocials />
-        </Div>
-      </Div>
-      <Div px={16}>
-        <FooterDisclaimer />
-      </Div>
-      <Div py={24}>
-        <FooterDropdowns />
-      </Div>
-      <Div px={16}>
-        <FooterPills wrap />
-      </Div>
-      <Div
-        py={24}
-        px={16}
-      >
-        <FooterLanguage fx />
-      </Div>
-      <Div
-        pb={24}
-        px={16}
-      >
-        <FooterNotices />
-      </Div>
-      <Div
         column
-        gap={12}
-        px={16}
-        pt={16}
-        mt={16}
-        borderTop
-        color="brown-5"
+        bg="brown-6"
+        px={28}
       >
-        <FooterContacts />
+        <Div
+          fx
+          justify="space-between"
+          py={20}
+        >
+          <FooterMenus />
+        </Div>
+
+        <Divider
+          as={"div"}
+          px={16}
+          mt={10}
+          borderColor={"brown-4"}
+        />
+        <Div>
+          <FooterPills wrap />
+        </Div>
+        <Divider
+          as={"div"}
+          px={16}
+          mt={10}
+          borderColor={"brown-4"}
+        />
+        <Div
+          py={24}
+          px={16}
+        >
+          <Div grow>
+            <SiteLogo scale={0.9} />
+          </Div>
+        </Div>
+
+        <Div>
+          <FooterDisclaimer />
+        </Div>
+        <Divider
+          as={"div"}
+          px={16}
+          mt={10}
+          borderColor={"brown-4"}
+        />
+        <Div
+          py={4}
+          mt={16}
+        >
+          <FooterCopyright />
+        </Div>
+        <Div
+          column
+          gap={12}
+          mt={16}
+          mb={24}
+          color="brown-5"
+        >
+          <FooterContacts />
+        </Div>
       </Div>
-      <Div
-        px={16}
-        py={16}
-        mt={16}
-        borderTop
-      >
-        <FooterCopyright />
-      </Div>
+
+      <FooterSocials />
     </Div>
   );
 };
@@ -109,45 +120,63 @@ const FooterTablet = () => {
       fx
       px={32}
     >
-      <Div py={32}>
-        <Div grow>
-          <SiteLogo />
+      <Div
+        column
+        bg="brown-6"
+        px={28}
+      >
+        <Div
+          fx
+          justify="space-between"
+          py={32}
+        >
+          <FooterMenus />
         </Div>
-        <Div gap={8}>
-          <FooterSocials />
+
+        <Divider
+          as={"div"}
+          px={16}
+          mt={10}
+          borderColor={"brown-4"}
+        />
+        <FooterPills wrap />
+        <Divider
+          as={"div"}
+          px={16}
+          mt={10}
+          borderColor={"brown-4"}
+        />
+        <Div py={32}>
+          <Div grow>
+            <SiteLogo />
+          </Div>
+        </Div>
+        <Div>
+          <FooterDisclaimer />
+        </Div>
+        <Divider
+          as={"div"}
+          px={16}
+          mt={10}
+          pb={20}
+          borderColor={"brown-4"}
+        />
+        <Div
+          align="center"
+          justify="space-between"
+          py={4}
+        >
+          <FooterCopyright />
+        </Div>
+        <Div
+          gap={16}
+          py={24}
+          color="brown-5"
+        >
+          <FooterContacts />
         </Div>
       </Div>
-      <Div>
-        <FooterDisclaimer />
-      </Div>
-      <Div
-        fx
-        justify="space-between"
-        py={32}
-      >
-        <FooterMenus />
-      </Div>
-      <FooterPills wrap />
-      <Div py={32}>
-        <FooterNotices />
-      </Div>
-      <Div
-        gap={16}
-        py={24}
-        borderTop
-        color="brown-5"
-      >
-        <FooterContacts />
-      </Div>
-      <Div
-        align="center"
-        justify="space-between"
-        py={24}
-        borderTop
-      >
-        <FooterCopyright />
-        <FooterLanguage />
-      </Div>
+      <FooterSocials />
     </Div>
   );
 };
@@ -160,50 +189,54 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
       px={pad ? 16 : undefined}
     >
       <Div
-        fx
-        py={48}
+        column
+        bg="brown-6"
+        px={28}
       >
         <Div
-          column
-          align="flex-start"
-          gap={24}
-          style={{ width: "350px" }}
+          fx
+          py={48}
         >
-          <SiteLogo />
-          <FooterDisclaimer />
-          <Div gap={8}>
-            <FooterSocials />
+          <Div
+            column
+            align="flex-start"
+            gap={24}
+            style={{ width: "450px" }}
+          >
+            <SiteLogo />
+            <FooterDisclaimer />
+          </Div>
+          <Div
+            justify="space-around"
+            grow
+            ml={32}
+          >
+            <FooterMenus />
           </Div>
         </Div>
+
+        <Divider
+          as={"div"}
+          mt={10}
+          borderColor={"brown-4"}
+        />
+        <FooterPills />
+        <Divider
+          as={"div"}
+          mt={10}
+          borderColor={"brown-4"}
+        />
         <Div
-          justify="space-around"
-          grow
-          ml={32}
+          align="center"
+          justify="space-between"
+          py={24}
         >
-          <FooterMenus />
+          <FooterCopyright />
+          <FooterContacts />
         </Div>
       </Div>
-      <FooterPills />
-      <Div py={32}>
-        <FooterNotices />
-      </Div>
-      <Div
-        gap={16}
-        py={24}
-        borderTop
-        color="brown-5"
-      >
-        <FooterContacts />
-      </Div>
-      <Div
-        align="center"
-        justify="space-between"
-        py={24}
-        borderTop
-      >
-        <FooterCopyright />
-        <FooterLanguage />
-      </Div>
+
+      <FooterSocials />
     </Div>
   );
 };

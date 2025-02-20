@@ -1,8 +1,8 @@
 import { Div } from "@client/comps/div/Div";
 import { Button } from "@client/comps/button/Button";
-import { SvgHeadset } from "@client/svgs/common/SvgHeadset";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
+import { SvgQuestionCircle } from "@client/svgs/common/SvgQuestionCircle";
 
 export const SupportToggle = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -15,18 +15,21 @@ export const SupportToggle = () => {
 
   return (
     <Div
-      bottom={20}
-      right={64}
+      bottom={40}
+      right={80}
       boxShadow={3}
     >
       <Button
         kind="secondary"
         size="lg"
-        icon={SvgHeadset}
+        icon={SvgQuestionCircle}
         iconSize={20}
         loading={processing}
         disabled={processing}
         onClick={handleToggle}
+        style={{
+          borderRadius: 64,
+        }}
       />
     </Div>
   );

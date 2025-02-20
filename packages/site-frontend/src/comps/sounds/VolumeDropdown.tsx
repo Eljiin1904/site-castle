@@ -13,9 +13,24 @@ import { Slider } from "@client/comps/slider/Slider";
 
 export type VolumeDropdownProps = {
   prefix: string;
+  kind:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "quaternary"
+    | "quinary"
+    | "custom"
+    | "primary-black"
+    | "secondary-black"
+    | "primary-yellow"
+    | "secondary-yellow"
+    | "tertiary-grey"
+    | "tertiary-black-overlay"
+    | "tertiary-white-overlay";
+  iconColor: Color;
 };
 
-export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix }) => {
+export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColor }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [volume, setVolume] = useSoundVolume(prefix);
 
@@ -44,10 +59,12 @@ export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix }) => {
         setIsOpen(!isOpen);
       }}
       button={
-        <Button
-          kind="secondary"
-          icon={getButtonIcon()}
-        />
+        <Button kind={kind}>
+          <Vector
+            as={getButtonIcon()}
+            color={iconColor}
+          />
+        </Button>
       }
       body={
         <DropdownBody

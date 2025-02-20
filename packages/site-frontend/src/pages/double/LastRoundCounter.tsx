@@ -4,13 +4,7 @@ import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { DoubleIcon } from "./DoubleIcon";
 
-export const LastRoundCounter = ({
-  color,
-  bait,
-}: {
-  color: DoubleColor;
-  bait: boolean;
-}) => {
+export const LastRoundCounter = ({ color, bait }: { color: DoubleColor; bait: boolean }) => {
   const history = useAppSelector((x) => x.double.history);
 
   const matches = history.filter((roll) => {
@@ -30,6 +24,7 @@ export const LastRoundCounter = ({
       <Span
         ml={6}
         width={18}
+        color="white"
       >
         {matches.length.toString().padStart(2, "0")}
       </Span>
