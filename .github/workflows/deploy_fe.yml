@@ -6,7 +6,7 @@ on:
     branches:
       - main 
     paths:
-      - "packages/shared-frontend/**"
+      - "packages/site-frontend/**"
 
 jobs:
   build-and-push-frontend:
