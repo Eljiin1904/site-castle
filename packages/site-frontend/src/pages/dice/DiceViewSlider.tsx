@@ -30,7 +30,7 @@ export const DiceViewSlider = () => {
     >
       <Img
         type="jpg"
-        path={"/graphics/dice-view-slider"}
+        path={"/graphics/dice-view-slide"}
         skeleton
         width="100%"
         aspectRatio={"16 / 9"}

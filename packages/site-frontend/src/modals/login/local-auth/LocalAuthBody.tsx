@@ -112,11 +112,9 @@ export const LocalAuthBody = ({
         <Button
           type="submit"
           label="Log In"
-          kind="secondary"
-          labelWeight="medium"
+          kind="primary-yellow"
           fx
           mt={4}
-          labelSize={16}
           loading={form.loading}
         />
       </CaptchaForm>

@@ -15,7 +15,7 @@ export const NotificationHeader = ({heading}: {heading: string}) => {
           py={16}
           px={24}          
           borderBottom
-          borderColor="darker-sand"
+          borderColor="dark-brown-hover"
         >
           <Heading
               as="h2"
@@ -29,7 +29,7 @@ export const NotificationHeader = ({heading}: {heading: string}) => {
               kind="custom"
               bg="brown-4"
               label="Clear"
-              borderColor="darker-sand"
+              borderColor="dark-brown-hover"
               labelColor="dark-sand"
               border
               onClick={() => {}}
