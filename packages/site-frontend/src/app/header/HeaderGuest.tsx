@@ -2,28 +2,32 @@ import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { Dialogs } from "@client/services/dialogs";
 import { LoginModal } from "#app/modals/login/LoginModal";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const HeaderGuest = () => {
-  const layout = useAppSelector((x) => x.style.bodyLayout);
+  const small = useIsMobileLayout();
 
   return (
-    <Div gap={12}>
+    <Div gap={16}>
       <Button
         kind="primary"
-        size="sm"
+        size={small ? "sm" : "md"}
         label="Log In"
+        labelWeight="medium"
+        labelSize={16}
         style={{
-          minWidth: layout === "mobile" ? "75px" : "90px",
+          minWidth: small ? "75px" : "90px",
         }}
         onClick={() => Dialogs.open("primary", <LoginModal initialAction="login" />)}
       />
       <Button
-        kind="primary"
-        size="sm"
+        kind="secondary"
+        size={small ? "sm" : "md"}
         label="Register"
+        labelWeight="medium"
+        labelSize={16}
         style={{
-          minWidth: layout === "mobile" ? "75px" : "90px",
+          minWidth: small ? "75px" : "90px",
         }}
         onClick={() => Dialogs.open("primary", <LoginModal initialAction="register" />)}
       />

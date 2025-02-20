@@ -4,12 +4,12 @@ export const MenuSeparator = () => {
   return (
     <Div
       fx
-      px={20}
-      py={8}
+      p={24}
     >
       <Div
         fx
         borderTop
+        borderColor="brown-4"
       />
     </Div>
   );

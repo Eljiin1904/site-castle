@@ -28,7 +28,7 @@ export const MenuItem = ({
       end={to === "/"}
       fx
       alignItems="center"
-      pl={18}
+      pl={20}
       hover="none"
     >
       {showLabel ? (
@@ -38,12 +38,13 @@ export const MenuItem = ({
             as={icon}
             size={20}
             color="light-gray"
-            mr={14}
+            mr={16}
           />
           <Div column>
             <Span
               className="label fade-content"
               color={labelColor}
+              fontWeight="medium"
             >
               {label}
             </Span>

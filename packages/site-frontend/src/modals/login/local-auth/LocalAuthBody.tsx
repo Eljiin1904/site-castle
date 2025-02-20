@@ -16,6 +16,9 @@ import { Users } from "#app/services/users";
 import { AuthenticatorLoginModal } from "../../security/AuthenticatorLoginModal";
 import { SSOButtons } from "../SSOButtons";
 import { LoginAction } from "../LoginAction";
+import { Heading } from "@client/comps/heading/Heading";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Checkbox } from "@client/comps/checkbox/Checkbox";
 
 export const LocalAuthBody = ({
   setAction,
@@ -23,11 +26,12 @@ export const LocalAuthBody = ({
   setAction: (x: LoginAction) => void;
 }) => {
   const dispatch = useAppDispatch();
-
+ const small = useIsMobileLayout();
   const form = useCaptchaForm({
     schema: Validation.object({
       username: Validation.string().required("Email or username is required."),
       password: Validation.string().required("Password is required."),
+      remember: Validation.boolean(),
     }),
     onSubmit: async (values) => {
       const res = await Security.authLocal(values);
@@ -53,14 +57,22 @@ export const LocalAuthBody = ({
       column
       gap={16}
     >
+      <Heading
+              as="h2"
+              size={small ? 20 : 24}
+              fontWeight="regular"
+              textTransform="uppercase"
+        >
+          Sign in to SandCasino
+      </Heading>
       <CaptchaForm form={form}>
         <ModalSection>
-          <ModalLabel>{"Email or Username"}</ModalLabel>
+          <ModalLabel>{"Username or email"}</ModalLabel>
           <Input
             type="text"
             id="username"
             autoComplete="username"
-            placeholder="Enter email or username..."
+            placeholder="Enter username or email..."
             disabled={form.loading}
             error={form.errors.username}
             value={form.values.username}
@@ -70,14 +82,6 @@ export const LocalAuthBody = ({
         <ModalSection>
           <ModalLabel>
             {"Password"}
-            <Link
-              type="action"
-              flexGrow
-              justifyContent="flex-end"
-              onClick={() => setAction("recover")}
-            >
-              {"Forgot Password?"}
-            </Link>
           </ModalLabel>
           <Input
             type="password"
@@ -90,10 +94,25 @@ export const LocalAuthBody = ({
             onChange={(x) => form.setValue("password", x)}
           />
         </ModalSection>
+        <ModalSection>
+          <Link
+            type="action"
+            flexGrow
+            onClick={() => setAction("recover")}>
+            {"Forgot Password?"}
+          </Link>
+        </ModalSection>
+        <ModalSection>
+          <Checkbox
+              label="Remember me"
+              value={form.values.remember}
+              onChange={(x) => form.setValue("remember", x)}
+            />
+        </ModalSection>
         <Button
           type="submit"
-          kind="primary"
-          label="Login"
+          label="Log In"
+          kind="primary-yellow"
           fx
           mt={4}
           loading={form.loading}

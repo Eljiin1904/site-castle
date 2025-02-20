@@ -4,6 +4,7 @@ import { ModalField } from "@client/comps/modal/ModalField";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
+import { Div } from "@client/comps/div/Div";
 
 export const ProfitSection = () => {
   const betAmount = useAppSelector((x) => x.dice.betAmount || 0);
@@ -17,11 +18,9 @@ export const ProfitSection = () => {
   });
 
   return (
-    <ModalSection>
+    <Div fx wrap gap={8} justify="space-between">
       <ModalLabel>{"Profit on Win"}</ModalLabel>
-      <ModalField>
-        <Tokens value={profit} />
-      </ModalField>
-    </ModalSection>
+      <Tokens value={profit} fontSize={12} vectorColor="white" />
+    </Div>
   );
 };

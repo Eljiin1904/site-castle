@@ -59,12 +59,10 @@ export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColo
         setIsOpen(!isOpen);
       }}
       button={
-        <Button kind={kind}>
-          <Vector
-            as={getButtonIcon()}
-            color={iconColor}
-          />
-        </Button>
+        <Button
+          kind="quinary"
+          icon={getButtonIcon()}
+        />
       }
       body={
         <DropdownBody

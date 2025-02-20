@@ -2,7 +2,6 @@ import { Fragment, useState } from "react";
 import { Validation } from "@core/services/validation";
 import { Button } from "@client/comps/button/Button";
 import { Input } from "@client/comps/input/Input";
-import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
@@ -11,6 +10,11 @@ import { Users } from "#app/services/users";
 import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import { LoginAction } from "../LoginAction";
+import { Vector } from "@client/comps/vector/Vector";
+import { SvgLock } from "#app/svgs/common/SvgLock";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Link } from "@client/comps/link/Link";
+import { SvgPlane } from "#app/svgs/common/SvgPlane";
 
 export const RecoverBody = ({
   setAction,
@@ -18,7 +22,7 @@ export const RecoverBody = ({
   setAction: (x: LoginAction) => void;
 }) => {
   const [sent, setSent] = useState(false);
-
+  const small = useIsMobileLayout();
   const form = useCaptchaForm({
     schema: Validation.object({
       email: Validation.email(),
@@ -37,16 +41,21 @@ export const RecoverBody = ({
         <Div
           column
           gap={16}
+          flexCenter
         >
-          <Heading as="h2">{"Forgot Password"}</Heading>
-          <Span size={13}>
-            {
-              "Enter the email address associated with your account and we will send you a link to reset your password."
-            }
+          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
+            <Vector fx as={SvgLock} size={40} color="dark-sand" />
+          </Div>          
+          <Heading  as="h2"
+            size={small ? 20 : 24}
+            fontWeight="regular"
+            textTransform="uppercase">Forgot Password?
+          </Heading>
+          <Span size={14} color="dark-sand" textAlign="center">
+          Please enter the email associated with your account.
           </Span>
         </Div>
         <ModalSection>
-          <ModalLabel>{"Email Address"}</ModalLabel>
           <Input
             type="email"
             id="new-email"
@@ -60,8 +69,10 @@ export const RecoverBody = ({
         </ModalSection>
         <Button
           type="submit"
-          kind="primary"
-          label="Send Password Reset Link"
+          kind="secondary"
+          label="Recover Password"
+          labelWeight="medium"
+          labelSize={16}
           fx
           loading={form.loading}
           mt={4}
@@ -71,11 +82,42 @@ export const RecoverBody = ({
   } else {
     content = (
       <Fragment>
-        <Heading as="h2">{"Email Sent"}</Heading>
-        <Div display="block">
-          <Span>{"We have sent a password reset link to "}</Span>
-          <Span color="white">{form.values.email}</Span>
-          <Span>{"."}</Span>
+        <Div
+          column
+          gap={32}
+          flexCenter
+        >
+          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
+            <Vector fx as={SvgPlane} size={40} color="dark-sand" />
+          </Div>
+          <Heading  as="h2"
+            size={small ? 20 : 24}
+            fontWeight="regular"
+            textTransform="uppercase">
+              Password Recovery Sent
+          </Heading>
+          <Span size={14} color="dark-sand" textAlign="center">
+            If you don't receive a password recovery link, please check your spam folder.
+          </Span>
+          <Div
+            className="disclaimer-box"
+            display="block"
+            left={0}
+            right={0}
+            bottom={0}
+            textAlign="center"
+            fontSize={12}
+            color="dark-sand"
+          >
+             <Link
+              type="action"
+              fontSize={14}
+              fontWeight="semi-bold"
+              onClick={() => form.handleSubmit()}
+            >
+              {"Didn’t Receive? Resend Password"}
+            </Link>
+          </Div>
         </Div>
       </Fragment>
     );
@@ -88,12 +130,6 @@ export const RecoverBody = ({
       gap={16}
     >
       <CaptchaForm form={form}>{content}</CaptchaForm>
-      <Button
-        kind="secondary"
-        label="Back to Login"
-        fx
-        onClick={() => setAction("login")}
-      />
     </Div>
   );
 };

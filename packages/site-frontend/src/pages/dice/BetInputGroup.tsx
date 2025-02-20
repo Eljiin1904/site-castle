@@ -30,7 +30,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   return (
     <ModalSection>
       <ModalLabel>{"Bet Amount"}</ModalLabel>
-      <Div align="center">
+      <Div align="center" justify="space-between" gap={8}>
         <Input
           type="currency"
           placeholder="Enter bet amount..."
@@ -38,26 +38,24 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
           disabled={disabled}
           onChange={(x) => setBetAmount(x)}
         />
-        <Div
-          position="absolute"
-          right={4}
-          gap={4}
-        >
+        <Div>
           <Button
-            kind="secondary"
-            size="xs"
+            kind="quaternary"
             label="1/2"
-            labelSize={13}
-            width={48}
+            labelSize={14}
+            labelColor="dark-sand"
+            labelWeight="medium"
+            width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x / 2)}
           />
           <Button
-            kind="secondary"
-            size="xs"
-            label="2x"
-            labelSize={13}
-            width={48}
+            kind="quaternary"
+            label="2X"
+            labelSize={14}
+            labelColor="dark-sand"
+            labelWeight="medium"
+            width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}
           />

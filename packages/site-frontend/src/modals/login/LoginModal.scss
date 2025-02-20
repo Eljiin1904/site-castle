@@ -17,10 +17,22 @@
     }
   }
 
-  .login-content {
+  .register-content {
     width: 450px;
     max-width: 450px;
     height: 728px;
+  }
+
+  .login-content {
+    width: 450px;
+    max-width: 450px;
+    height: 518px;
+  }
+
+  .recover-content {
+    width: 382px;
+    max-width: 382px;
+    // height: 332px;
   }
 
   .AppBody.mobile & {

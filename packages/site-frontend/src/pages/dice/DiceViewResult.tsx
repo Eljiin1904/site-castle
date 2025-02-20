@@ -2,10 +2,10 @@ import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgChicken } from "@client/svgs/common/SvgChicken";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
 import "./DiceViewResult.scss";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 export const DiceViewResult = () => {
   const ticket = useAppSelector((x) => x.dice.lastTicket);
@@ -31,24 +31,24 @@ export const DiceViewResult = () => {
           <Div
             className="inner"
             center
+            column
           >
-            <Vector
-              className="icon"
-              as={SvgChicken}
-              size={64}
-              color={ticket?.won ? "green" : "brown-5"}
-            />
             <Span
               className="label"
-              position="absolute"
-              color={ticket?.won ? "black" : "gray"}
-              weight="semi-bold"
-              size={12}
+              color={ticket?.won ? "green" : "red"}
+              fontWeight="regular"
+              size={32}
             >
               {ticket
                 ? Numbers.round(ticket.rollValue / 100, 2).toFixed(2)
                 : ""}
             </Span>
+            <Vector
+              className="icon"
+              as={SvgArrowRight}
+              size={16}
+              color={ticket?.won ? "green" : "red"}
+            />            
           </Div>
         </Div>
       </Div>
