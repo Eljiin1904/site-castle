@@ -13,7 +13,6 @@
 [submodule "packages/shared-backend"]
 	path = packages/shared-backend
 	url = git@github.com:Pidwin/shared-backend
-	branch = ci-cd
 [submodule "packages/shared-client"]
 	path = packages/shared-client
 	url = git@github.com:Pidwin/shared-client
