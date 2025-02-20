@@ -1,4 +1,4 @@
-name: Build and Push SHared Backend to AWS ECR
+name: Build and Push Shared Backend to AWS ECR
 
 on:
   workflow_dispatch:
