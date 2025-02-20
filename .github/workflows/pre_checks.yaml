@@ -30,7 +30,6 @@ jobs:
 
       - name: Lint Code
         run: npm run eslint
-        continue-on-error: true
 
 # ENABLE WHEN JEST TEST ARE READY
       # - name: Run Jest Tests

@@ -59,7 +59,7 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
     }
 
     await Fairness.rotateSeeds({
-      newClientSeed,
+      newClientSeed: newClientSeed,
     });
 
     queryClient.invalidateQueries({ queryKey: ["fairness-seeds"] });

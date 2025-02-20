@@ -3,7 +3,7 @@
     "init": "node ./scripts/init.js",
     "dev": "node ./scripts/dev.js",
     "deploy": "node ./scripts/deploy.js",
-    "eslint": "eslint ./packages --ext .ts,.tsx --fix",
+    "eslint": "eslint ./packages --ext .ts,.tsx",
     "prettier-check": "prettier ./**/*.{ts,tsx} --check",
     "prettier-write": "prettier **/*.{ts,tsx} --write"
   },

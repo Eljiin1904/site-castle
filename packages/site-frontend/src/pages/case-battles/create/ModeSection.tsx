@@ -45,21 +45,21 @@ export const ModeSection = () => {
           icon={SvgRifle}
           heading="FFA Battle"
           options={ffa}
-          value={ffa.indexOf(mode)}
+          value={ffa.indexOf(mode!)}
           setValue={(x) => setMode(ffa[x])}
         />
         <ModeCard
           icon={SvgUsers}
           heading="Team Battle"
           options={team}
-          value={team.indexOf(mode)}
+          value={team.indexOf(mode!)}
           setValue={(x) => setMode(team[x])}
         />
         <ModeCard
           icon={SvgTeam}
           heading="Group Unbox"
           options={group}
-          value={group.indexOf(mode)}
+          value={group.indexOf(mode!)}
           setValue={(x) => setMode(group[x])}
         />
       </Div>

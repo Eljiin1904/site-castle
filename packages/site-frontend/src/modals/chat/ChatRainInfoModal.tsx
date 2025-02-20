@@ -32,7 +32,7 @@ export const ChatRainInfoModal = () => {
             "Level Up. The higher your level, the higher your share.",
             "Deposit at least 20 tokens in the last 30 days.",
             "Wager at least 1,000 tokens in the last 30 days.",
-            // "Complete KYC tier 2.",
+            //"Complete KYC tier 2.",
           ]}
         />
         <Paragraph>
