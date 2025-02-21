@@ -1,4 +1,4 @@
-name: Build and Push to AWS ECR
+name: Castle Front-End CI
 
 on:
   workflow_dispatch:
