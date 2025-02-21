@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - "packages/shared-backend/**"
+      - ".github/workflows/deploy_shared_be.yml"
 
 jobs:
   build-and-push-shared-backend:
