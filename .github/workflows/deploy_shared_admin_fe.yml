@@ -1,4 +1,4 @@
-name: Build and Push Shared Admin Backend to AWS ECR
+name: Shared Admin FrontEnd CI
 
 on:
   workflow_dispatch:
@@ -46,15 +46,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and tag Docker image
-        run: |
-          docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
-          docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
+      # - name: Build and tag Docker image
+      #   run: |
+      #     docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
+      #     docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
-      - name: Push Docker image to ECR
-        run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
+      # - name: Push Docker image to ECR
+      #   run: |
+      #     docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
-      - name: Output ECR Image URL
-        run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
+      # - name: Output ECR Image URL
+      #   run: | 
+      #     echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
