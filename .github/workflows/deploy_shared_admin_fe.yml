@@ -1,0 +1,60 @@
+name: Build and Push Shared Admin Backend to AWS ECR
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/shared-admin-frontend/**"
+      - ".github/workflows/deploy_shared_admin_fe.yml"
+
+jobs:
+  admin-be-build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+          token: ${{ secrets.PIDWIN_READ_ONLY_PAT }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+ 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run init
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
+          docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
+
+      - name: Output ECR Image URL
+        run: | 
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
