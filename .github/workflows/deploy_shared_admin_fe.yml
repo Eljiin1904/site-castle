@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - "packages/shared-admin-backend/**"
-      - ".github/workflows/deploy_shared_admin_be.yml"
+      - "packages/shared-admin-frontend/**"
+      - ".github/workflows/deploy_shared_admin_fe.yml"
 
 jobs:
   admin-be-build-and-push:
@@ -48,13 +48,13 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t pidwin/castle-admin-backend -f ./packages/shared-admin-backend/Dockerfile .
-          docker tag pidwin/castle-admin-backend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-backend:latest
+          docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
+          docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
       - name: Push Docker image to ECR
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-backend:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
       - name: Output ECR Image URL
         run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-backend:latest"
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
