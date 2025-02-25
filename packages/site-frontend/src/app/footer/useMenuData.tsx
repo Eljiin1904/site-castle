@@ -6,7 +6,7 @@ import { SvgTwitter } from "@client/svgs/brands/SvgTwitter";
 import { SvgInstagram } from "@client/svgs/brands/SvgInstagram";
 import { SvgFacebook } from "@client/svgs/brands/SvgFacebook";
 
-export type MenuItem = LinkProps & { label: string };
+export type MenuItem = LinkProps & { label: string; href?: string; icon?: Svg };
 
 export type MenuData = {
   [key in "games" | "support" | "community"]: {

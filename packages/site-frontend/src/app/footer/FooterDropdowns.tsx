@@ -9,28 +9,22 @@ import { SvgCaretUp } from "@client/svgs/common/SvgCaretUp";
 import { MenuItem, useMenuData } from "./useMenuData";
 
 export const FooterDropdowns = () => {
-  const { games, support, community, about } = useMenuData();
+  // const { games, support, community, about } = useMenuData();
 
   return (
     <Div
       fx
       column
     >
-      <MenuDropdown {...games} />
+      {/* <MenuDropdown {...games} />
       <MenuDropdown {...support} />
       <MenuDropdown {...community} />
-      <MenuDropdown {...about} />
+      <MenuDropdown {...about} /> */}
     </Div>
   );
 };
 
-const MenuDropdown = ({
-  heading,
-  items,
-}: {
-  heading: string;
-  items: MenuItem[];
-}) => {
+const MenuDropdown = ({ heading, items }: { heading: string; items: MenuItem[] }) => {
   const [open, setOpen] = useState(false);
 
   return (

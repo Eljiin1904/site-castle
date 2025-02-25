@@ -52,10 +52,7 @@ const MobileHeader = () => {
               label: "Fairness",
               iconLeft: SvgCheckCircle,
               onClick: () =>
-                Dialogs.open(
-                  "primary",
-                  <FairnessSeedModal historyTo="/fairness/limbo" />,
-                ),
+                Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/limbo" />),
             },
             {
               type: "action",
@@ -87,12 +84,7 @@ const NotMobileHeader = () => {
           kind="secondary"
           icon={SvgCheckCircle}
           label="Fairness"
-          onClick={() =>
-            Dialogs.open(
-              "primary",
-              <FairnessSeedModal historyTo="/fairness/limbo" />,
-            )
-          }
+          onClick={() => Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/limbo" />)}
         />
         <Button
           kind="secondary"

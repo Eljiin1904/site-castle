@@ -42,12 +42,7 @@ export const ChestHeader: FC<ChestHeaderProps> = memo((props) => {
   );
 });
 
-const MobileHeader: FC<ChestHeaderProps> = ({
-  chest,
-  backTo,
-  fairnessTo,
-  description,
-}) => {
+const MobileHeader: FC<ChestHeaderProps> = ({ chest, backTo, fairnessTo, description }) => {
   return (
     <Div fx>
       <Link
@@ -107,11 +102,7 @@ const MobileHeader: FC<ChestHeaderProps> = ({
               type: "action",
               label: "Fairness",
               iconLeft: SvgCheckCircle,
-              onClick: () =>
-                Dialogs.open(
-                  "primary",
-                  <FairnessSeedModal historyTo={fairnessTo} />,
-                ),
+              onClick: () => Dialogs.open("primary", <FairnessSeedModal historyTo={fairnessTo} />),
             },
           ]}
         />
@@ -120,12 +111,7 @@ const MobileHeader: FC<ChestHeaderProps> = ({
   );
 };
 
-const NotMobileHeader: FC<ChestHeaderProps> = ({
-  chest,
-  backTo,
-  fairnessTo,
-  description,
-}) => {
+const NotMobileHeader: FC<ChestHeaderProps> = ({ chest, backTo, fairnessTo, description }) => {
   return (
     <Div fx>
       <Div
@@ -181,12 +167,7 @@ const NotMobileHeader: FC<ChestHeaderProps> = ({
           kind="secondary"
           icon={SvgCheckCircle}
           label="Fairness"
-          onClick={() =>
-            Dialogs.open(
-              "primary",
-              <FairnessSeedModal historyTo={fairnessTo} />,
-            )
-          }
+          onClick={() => Dialogs.open("primary", <FairnessSeedModal historyTo={fairnessTo} />)}
         />
       </Div>
     </Div>

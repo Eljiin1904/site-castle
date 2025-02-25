@@ -13,7 +13,7 @@ import { Slider } from "@client/comps/slider/Slider";
 
 export type VolumeDropdownProps = {
   prefix: string;
-  kind:
+  kind?:
     | "primary"
     | "secondary"
     | "tertiary"
@@ -27,7 +27,7 @@ export type VolumeDropdownProps = {
     | "tertiary-grey"
     | "tertiary-black-overlay"
     | "tertiary-white-overlay";
-  iconColor: Color;
+  iconColor?: Color;
 };
 
 export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColor }) => {
