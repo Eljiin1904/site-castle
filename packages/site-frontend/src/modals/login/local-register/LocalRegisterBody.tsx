@@ -9,9 +9,7 @@ import { ModalSection } from "@client/comps/modal/ModalSection";
 import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
 import { ModalDivider } from "@client/comps/modal/ModalDivider";
-import { SVGRegister } from "@client/svgs/common/SvgRegister";
 import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
@@ -23,12 +21,14 @@ import { UsernameField } from "#app/comps/username-field/UsernameField";
 import { SSOButtons } from "../SSOButtons";
 import { LoginAction } from "../LoginAction";
 import "./LocalRegisterBody.scss";
+import { Heading } from "@client/comps/heading/Heading";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) => void }) => {
   const [initReferralCode, , removeReferralCode] = useReferralCode();
   const [showReferralCode, setShowReferralCode] = useState(!initReferralCode);
   const dispatch = useAppDispatch();
-
+  const small = useIsMobileLayout();
   const form = useCaptchaForm({
     schema: Validation.object({
       username: Validation.username(),
@@ -72,12 +72,14 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
       gap={16}
       className="register-body"
     >
-      <Div
-        align="flex-start"
-        className="register-header"
-      >
-        <Vector as={SVGRegister} />
-      </Div>
+      <Heading
+              as="h2"
+              size={small ? 20 : 24}
+              fontWeight="regular"
+              textTransform="uppercase"
+        >
+          Register to SandCasino
+      </Heading>
       <CaptchaForm form={form}>
         <ModalSection>
           <ModalLabel>{"Username"}</ModalLabel>
@@ -146,6 +148,8 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
           type="submit"
           kind="secondary"
           label="Register"
+          labelWeight="medium"
+          labelSize={16}
           fx
           mt={4}
           loading={form.loading}

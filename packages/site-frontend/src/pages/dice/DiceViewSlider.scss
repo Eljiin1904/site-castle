@@ -1,10 +1,10 @@
 
 .DicePage .DiceViewSlider {
   .rc-slider {
-    height: 32px;
+    height: 24px;
     padding: 0;
     border-radius: 0;
-    border: 12px solid var(--brown-6-color);
+    border: 8px solid var(--brown-9-color);
   }
   
   .rc-slider-track {
@@ -16,7 +16,7 @@
   }
 
   .rc-slider-handle {
-    margin-top: -10px;
+    margin-top: -24px;
     background-color: unset;
     border: unset !important;
     border-radius: unset;

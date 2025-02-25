@@ -6,33 +6,45 @@ export const FooterContacts = () => {
   return (
     <Fragment>
       <Div gap={4}>
-        <Span size={13}>{"Support:"}</Span>
         <Span
           size={13}
-          weight="semi-bold"
+          color="brown-10"
+        >
+          {"Support:"}
+        </Span>
+        <Span
+          size={13}
           color="light-gray"
         >
-          {"support@chicken.gg"}
+          {"support@sandcasino.com"}
         </Span>
       </Div>
       <Div gap={4}>
-        <Span size={13}>{"Partners:"}</Span>
         <Span
           size={13}
-          weight="semi-bold"
+          color="brown-10"
+        >
+          {"Partners:"}
+        </Span>
+        <Span
+          size={13}
           color="light-gray"
         >
-          {"partners@chicken.gg"}
+          {"partners@sandcasino.com"}
         </Span>
       </Div>
       <Div gap={4}>
-        <Span size={13}>{"Legal:"}</Span>
         <Span
           size={13}
-          weight="semi-bold"
+          color="brown-10"
+        >
+          {"Press:"}
+        </Span>
+        <Span
+          size={13}
           color="light-gray"
         >
-          {"legal@chicken.gg"}
+          {"press@sandcasino.com"}
         </Span>
       </Div>
     </Fragment>

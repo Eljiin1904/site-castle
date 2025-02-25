@@ -4,7 +4,7 @@
   height: 100px;
 
   &.green {
-    background: linear-gradient(180deg, #217c43 0%, #33a15c 100%);
+    background:rgba(89, 207, 136, 1);
 
     .icon {
       color: var(--white-color);
@@ -12,7 +12,15 @@
   }
 
   &.red {
-    background: linear-gradient(180deg, #b49878 0%, #c7a884 100%);
+    background: rgba(255, 254, 252, 1);
+    
+    .icon {
+      color: var(--brown-8-color);
+    }
+  }
+
+  &.yellow {
+    background: rgba(241, 233, 160, 1);
     
     .icon {
       color: var(--brown-8-color);
@@ -20,7 +28,7 @@
   }
 
   &.black {
-    background: linear-gradient(180deg, #404453 0%, #4E525F 100%);
+    background: rgba(199, 197, 189, 1);
     
     .icon {
       color: #7BBFCE;

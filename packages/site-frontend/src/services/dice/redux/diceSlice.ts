@@ -63,7 +63,7 @@ export const diceSlice = createSlice({
         rollValue: payload.rollValue,
       });
 
-      if (history.length > 5) {
+      if (history.length > 12) {
         history.pop();
       }
 

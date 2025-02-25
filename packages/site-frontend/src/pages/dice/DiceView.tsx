@@ -19,12 +19,14 @@ export const DiceView = () => {
       bg="brown-8"
       overflow="hidden"
       style={{
-        height: sm ? "350px" : "608px",
+        height: sm ? "350px" : "660px",
       }}
     >
-      <DiceHistory />
-      <DiceViewResult />
-      <DiceViewSlider />
+      <Div fx position="relative" grow>
+        <DiceHistory />
+        <DiceViewResult />
+        <DiceViewSlider />
+      </Div>
       <DiceViewFooter />
       <AutoStatusView />
     </Div>

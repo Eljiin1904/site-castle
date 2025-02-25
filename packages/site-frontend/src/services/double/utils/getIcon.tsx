@@ -1,44 +1,33 @@
 import { DoubleBetKind } from "@core/types/double/DoubleBetKind";
 import { DoubleColor } from "@core/types/double/DoubleColor";
-import { SvgDoubleGreenIcon } from "#app/svgs/double/SvgDoubleGreenIcon";
-import { SvgDoubleBaitIcon } from "#app/svgs/double/SvgDoubleBaitIcon";
-import { SvgDoubleBlackIcon } from "#app/svgs/double/SvgDoubleBlackIcon";
-import { SvgDoubleRedIcon } from "#app/svgs/double/SvgDoubleRedIcon";
 
-export function getIconFromColor({
-  color,
-  bait,
-}: {
-  color: DoubleColor;
-  bait: boolean;
-}) {
-  let icon;
+export function getImageFromColor({ color, bait }: { color: DoubleColor; bait: boolean }) {
+  let path;
 
   if (color === "green") {
-    icon = SvgDoubleGreenIcon;
+    path = "/graphics/double-castle";
   } else if (bait) {
-    icon = SvgDoubleBaitIcon;
+    path = "/graphics/double-jewels";
   } else if (color === "red") {
-    icon = SvgDoubleRedIcon;
+    path = "/graphics/double-camel";
   } else {
-    icon = SvgDoubleBlackIcon;
+    path = "/graphics/double-man";
   }
 
-  return icon;
+  return path;
 }
 
-export function getIconFromBetKind(kind: DoubleBetKind) {
-  let icon;
+export function getImageFromBetKind(kind: DoubleBetKind) {
+  let path;
 
   if (kind === "green") {
-    icon = SvgDoubleGreenIcon;
+    path = "/graphics/double-castle";
   } else if (kind === "bait") {
-    icon = SvgDoubleBaitIcon;
+    path = "/graphics/double-jewels";
   } else if (kind === "red") {
-    icon = SvgDoubleRedIcon;
+    path = "/graphics/double-camel";
   } else {
-    icon = SvgDoubleBlackIcon;
+    path = "/graphics/double-man";
   }
-
-  return icon;
+  return path;
 }

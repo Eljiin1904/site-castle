@@ -15,7 +15,7 @@ export const ChatToggle = () => {
 
   return (
     <Button
-      kind="secondary"
+      kind="tertiary"
       size="sm"
       icon={SvgChat}
       onClick={() => dispatch(Chat.collapsePanel(!collapsed))}

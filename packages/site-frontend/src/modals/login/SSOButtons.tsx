@@ -9,7 +9,7 @@ import "./SSOButtons.scss";
 
 export const SSOButtons = () => {
   return (
-    <Div className="sso-buttons">
+    <Div className="sso-buttons" justifyContent="space-between">
       <Button
         width={100}
         height={40}

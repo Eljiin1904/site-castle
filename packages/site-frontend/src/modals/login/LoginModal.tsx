@@ -12,6 +12,7 @@ import { LocalAuthBody } from "./local-auth/LocalAuthBody";
 import { LocalRegisterBody } from "./local-register/LocalRegisterBody";
 import { RecoverBody } from "./recover/RecoverBody";
 import "./LoginModal.scss";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
 
 export const LoginModal = ({ initialAction }: { initialAction?: LoginAction }) => {
   const [action, setAction] = useState<LoginAction>(initialAction || "login");
@@ -26,14 +27,17 @@ export const LoginModal = ({ initialAction }: { initialAction?: LoginAction }) =
       className="LoginModal"
       onBackdropClick={() => Dialogs.close("primary")}
     >
+      <ModalHeader
+        onCloseClick={() => Dialogs.close("primary")}
+      />
       <Div fy>
         <Conditional
-          value={bodyLayout}
-          laptop={<LoginBanner />}
-          desktop={<LoginBanner />}
+          value={action}
+          login={['laptop','desktop'].includes(bodyLayout) ? <LoginBanner action={action}/> : null}
+          register={['laptop','desktop'].includes(bodyLayout) ? <LoginBanner action={action}/> : null}
         />
         <Div
-          className="login-content"
+          className={`${action}-content`}
           column
         >
           <ModalBody>

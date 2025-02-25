@@ -20,7 +20,7 @@ export const BetBoardGrid = () => {
 };
 
 const MobileContent = () => {
-  const kinds: DoubleBetKind[] = ["red", "green", "black", "bait"];
+  const kinds: DoubleBetKind[] = ["green", "red", "bait", "black"];
 
   return (
     <Div
@@ -54,7 +54,7 @@ const MobileContent = () => {
 };
 
 const TabletContent = () => {
-  const kinds: DoubleBetKind[] = ["red", "green", "black", "bait"];
+  const kinds: DoubleBetKind[] = ["green", "red", "bait", "black"];
 
   return (
     <Div
@@ -77,13 +77,13 @@ const TabletContent = () => {
 };
 
 const LaptopDesktopContent = () => {
-  const kinds: DoubleBetKind[] = ["red", "green", "black", "bait"];
+  const kinds: DoubleBetKind[] = ["green", "red", "bait", "black"];
 
   return (
     <Div
       fx
       gap={16}
-      style={{ minHeight: "400px" }}
+      style={{ minHeight: "200px" }}
     >
       {kinds.map((betKind) => (
         <Div

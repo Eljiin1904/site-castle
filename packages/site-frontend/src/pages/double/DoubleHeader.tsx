@@ -2,16 +2,15 @@ import { Button } from "@client/comps/button/Button";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Div } from "@client/comps/div/Div";
 import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
-import { SvgSlide } from "@client/svgs/common/SvgSlide";
 import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
 import { Link } from "@client/comps/link/Link";
-import { SvgCog } from "@client/svgs/common/SvgCog";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { PageTitle } from "@client/comps/page/PageTitle";
 import { Dialogs } from "@client/services/dialogs";
 import { VolumeDropdown } from "#app/comps/sounds/VolumeDropdown";
 import { DoubleInfoModal } from "#app/modals/double/DoubleInfoModal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { Vector } from "@client/comps/vector/Vector";
+import { DoubleStatus } from "./DoubleStatus";
 
 export const DoubleHeader = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
@@ -31,20 +30,28 @@ export const DoubleHeader = () => {
 
 const MobileHeader = () => {
   return (
-    <Div fx>
-      <PageTitle
-        heading="Double"
-        icon={SvgSlide}
-      />
-      <Div gap={8}>
-        <VolumeDropdown prefix="double" />
+    <Div
+      fx
+      flexFlow="row"
+      justify="space-between"
+      wrap
+      gap={4}
+    >
+      <Div>
+        <DoubleStatus status="Online" />
+      </Div>
+
+      <Div gap={4}>
         <Dropdown
           type="menu"
           button={
-            <Button
-              kind="secondary"
-              icon={SvgCog}
-            />
+            <Button kind="tertiary-black-overlay">
+              <Vector
+                as={SvgInfoCircle}
+                color="white"
+                size={20}
+              />
+            </Button>
           }
           options={[
             {
@@ -61,6 +68,11 @@ const MobileHeader = () => {
             },
           ]}
         />
+        <VolumeDropdown
+          prefix="double"
+          kind="tertiary-black-overlay"
+          iconColor="white"
+        />
       </Div>
     </Div>
   );
@@ -69,10 +81,7 @@ const MobileHeader = () => {
 const NotMobileHeader = () => {
   return (
     <Div fx>
-      <PageTitle
-        heading="Double"
-        icon={SvgSlide}
-      />
+      <DoubleStatus status="Online" />
       <Div
         fx
         align="flex-start"
@@ -84,18 +93,28 @@ const NotMobileHeader = () => {
           to="/fairness/double"
           hover="none"
         >
-          <Button
-            kind="secondary"
-            icon={SvgCheckCircle}
-            label="Fairness"
-          />
+          <Button kind="tertiary-black-overlay">
+            <Vector
+              as={SvgCheckCircle}
+              color="white"
+            />
+            <Div color="white">Fairness</Div>
+          </Button>
         </Link>
         <Button
-          kind="secondary"
-          icon={SvgInfoCircle}
+          kind="tertiary-black-overlay"
           onClick={() => Dialogs.open("primary", <DoubleInfoModal />)}
+        >
+          <Vector
+            as={SvgInfoCircle}
+            color="white"
+          />
+        </Button>
+        <VolumeDropdown
+          prefix="double"
+          kind="tertiary-black-overlay"
+          iconColor="white"
         />
-        <VolumeDropdown prefix="double" />
       </Div>
     </Div>
   );

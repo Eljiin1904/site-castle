@@ -11,6 +11,8 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Notifications } from "#app/services/notifications";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { NotificationCard } from "./NotificationCard";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
+import { NotificationHeader } from "./NotificationHeader";
 
 export const AppNotifications = () => {
   const open = useAppSelector((x) => x.notifications.open);
@@ -29,7 +31,7 @@ export const AppNotifications = () => {
       }}
       button={
         <Button
-          kind="secondary"
+          kind="tertiary"
           size="sm"
           icon={SvgBell}
         >
@@ -56,14 +58,15 @@ export const AppNotifications = () => {
 
 const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
   let content;
-
+  
   if (log.length === 0) {
     content = (
       <Div
         fx
-        p={16}
+        py={16}
+        px={24}
       >
-        <Span>{"You don't have any notifications."}</Span>
+        <Span color="white">{"You don't have any notifications."}</Span>
       </Div>
     );
   } else {
@@ -71,23 +74,25 @@ const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
       <Div
         fx
         column
-        p={8}
-        gap={8}
         overflow="auto"
       >
-        {log.slice(0, Math.min(10, log.length)).map((notification) => (
-          <NotificationCard
-            key={notification._id}
-            notification={notification}
-          />
-        ))}
+        <NotificationHeader heading="NOTIFICATIONS" />
+        <Div fx column px={24}>
+          {log.slice(0, Math.min(10, log.length)).map((notification) => (
+            <NotificationCard
+              key={notification._id}
+              notification={notification}
+              last={notification._id === log[log.length - 1]._id}
+            />
+          ))}
+        </Div>
       </Div>
     );
   }
 
   return (
     <DropdownBody
-      bg="brown-8"
+      bg="brown-4"
       borderColor="brown-4"
     >
       {content}

@@ -5,6 +5,7 @@ import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./GameBanner.scss";
+import { StyledProps } from "@client/comps/styled/Styled";
 
 export const GameBanner = ({
   image,
@@ -12,12 +13,16 @@ export const GameBanner = ({
   subheading,
   to,
   ratio,
+  objectPositionHorizontal ="center",
+  objectPositionVertical = "center"
 }: {
   image: string;
   heading?: string | undefined;
   subheading?: string | undefined;
   to: string;
   ratio?: string | undefined;
+  objectPositionHorizontal?: StyledProps["objectFitPosition"];
+  objectPositionVertical?: StyledProps["objectFitPosition"];
 }) => {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = ["mobile", "tablet"].includes(layout);
@@ -36,6 +41,8 @@ export const GameBanner = ({
         skeleton
         width="100%"
         aspectRatio={ratio || "186 / 260"}
+        objectPositionHorizontal={objectPositionHorizontal}
+        objectPositionVertical={objectPositionVertical}
       />
       <Div
         position="absolute"

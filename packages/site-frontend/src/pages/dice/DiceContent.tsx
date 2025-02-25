@@ -31,7 +31,7 @@ const MobileContent = () => {
     <Div
       fx
       column
-      gap={20}
+      gap={16}
     >
       <DiceHeader />
       <DiceView />
@@ -46,7 +46,7 @@ const NotMobileContent = () => {
     <Div
       fx
       column
-      gap={24}
+      gap={0}
     >
       <DiceHeader />
       <Div

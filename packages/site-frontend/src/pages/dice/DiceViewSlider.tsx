@@ -7,8 +7,9 @@ import { Span } from "@client/comps/span/Span";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
-import { SvgSliderHandle } from "./SvgSliderHandle";
+import { SvgSliderDiceHandle } from "./SvgSliderDiceHandle";
 import "./DiceViewSlider.scss";
+import { Img } from "@client/comps/img/Img";
 
 export const DiceViewSlider = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -25,8 +26,16 @@ export const DiceViewSlider = () => {
       fx
       grow
       center
-      px={sm ? 16 : 32}
+      px={sm ? 16 : 40}
     >
+      <Img
+        type="jpg"
+        path={"/graphics/dice-view-slide"}
+        skeleton
+        width="100%"
+        aspectRatio={"16 / 9"}
+        position="absolute"
+      />
       <Slider
         type="single"
         min={1}
@@ -38,8 +47,8 @@ export const DiceViewSlider = () => {
           <div {...node.props}>
             <Div center>
               <Vector
-                as={SvgSliderHandle}
-                size={28}
+                as={SvgSliderDiceHandle}
+                // size={28}
               />
               <TargetCard />
             </Div>
@@ -53,17 +62,18 @@ export const DiceViewSlider = () => {
 
 const TargetCard = () => {
   const targetValue = useAppSelector((x) => x.dice.targetValue);
-
+  const layout = useAppSelector((x) => x.style.mainLayout);
+  const sm = layout === "mobile";
   return (
     <Div
       position="absolute"
       p={8}
-      bg="brown-6"
+      // bg="brown-6"
       style={{
-        top: "40px",
+        top: "50px",
       }}
     >
-      <Span>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
+      <Span fontSize={sm ? 16: 24}>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
     </Div>
   );
 };
