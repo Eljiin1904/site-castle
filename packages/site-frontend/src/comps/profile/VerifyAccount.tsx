@@ -13,11 +13,12 @@ export const VerifyAccount = () => {
         textTransform="uppercase"
         color="white"
         fontSize={24}
+        mb={20}
       >
-        VERIFY YOUR ACCOUNT ( KYC )
+        VERIFY YOUR ACCOUNT
       </Span>
       <Div mt={20}>
-        <VerificationStepper />
+        <VerificationStepper whole={true} />
       </Div>
     </Div>
   );

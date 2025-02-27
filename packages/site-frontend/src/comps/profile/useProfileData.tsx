@@ -113,7 +113,7 @@ export const profileSettingOptions: {
   },
   {
     label: "Receive SMS notifications",
-    message: "Receive deposit and withdraw notifications",
+    message: "Receive your SMS notifications to mobile phone",
     name: "smsNotification",
     action: "toggle",
   },
@@ -125,14 +125,14 @@ export const profileSettingOptions: {
   },
   {
     label: "Set your own ban",
-    message: "Set your own ban for a period if time",
+    message: "Set your own ban for a period of time",
     name: "ban",
     action: "button",
     buttonDetails: "Set Ban",
   },
   {
     label: "Delete your account",
-    message: "Set your own ban for a period if time",
+    message: "Delete your account with all the data.",
     name: "delete",
     action: "button",
     buttonDetails: "Delete Account",

@@ -70,14 +70,15 @@ export const ChangePassword = () => {
           />
         </Div>
 
-        <Button
-          type="submit"
-          kind="primary-yellow"
-          label="Save Changes"
-          size="md"
-          // fx
-          loading={form.loading}
-        />
+        <Div>
+          <Button
+            type="submit"
+            kind="primary-yellow"
+            label="Save Changes"
+            size="md"
+            loading={form.loading}
+          />
+        </Div>
       </CaptchaForm>
     </Div>
   );

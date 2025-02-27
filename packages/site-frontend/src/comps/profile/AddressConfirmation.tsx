@@ -46,7 +46,6 @@ export const AddressConfirmation = () => {
           gap={20}
           width={"full"}
           style={{
-            // width: 320,
             height: 180,
           }}
         >

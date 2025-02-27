@@ -9,9 +9,15 @@ import { Span } from "@client/comps/span/Span";
 import { SvgCheck } from "@client/svgs/common/SvgCheck";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 import "./VerificationStepper.scss";
-export const VerificationStepper = () => {
+export const VerificationStepper = ({
+  disableClose,
+  whole,
+}: {
+  disableClose?: boolean;
+  whole?: boolean;
+}) => {
   const layout = useAppSelector((x) => x.style.mainLayout);
-  const [step, setStep] = useState(0);
+  // const [step, setStep] = useState(0);
 
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
 
@@ -22,10 +28,9 @@ export const VerificationStepper = () => {
     setKycStep(getVerificationOneStep({ tier: kycTier }));
     function getVerificationOneStep({ tier }: { tier: number }): number {
       let step: number;
-      // if (whole) {
-      //   step = tierOneSteps.indexOf("zero");
-      // } else
-      if (tier < 0.1) {
+      if (whole) {
+        step = tierOneSteps.indexOf("zero");
+      } else if (tier < 0.1) {
         step = tierOneSteps.indexOf("one");
       } else if (tier < 0.2) {
         step = tierOneSteps.indexOf("two");
@@ -41,26 +46,26 @@ export const VerificationStepper = () => {
       value={layout}
       mobile={
         <MobileContent
-          step={step}
-          setStep={setStep}
+          step={kycStep}
+          setStep={setKycStep}
         />
       }
       tablet={
         <NonMobileContent
-          step={step}
-          setStep={setStep}
+          step={kycStep}
+          setStep={setKycStep}
         />
       }
       laptop={
         <NonMobileContent
-          step={step}
-          setStep={setStep}
+          step={kycStep}
+          setStep={setKycStep}
         />
       }
       desktop={
         <NonMobileContent
-          step={step}
-          setStep={setStep}
+          step={kycStep}
+          setStep={setKycStep}
         />
       }
     />
@@ -136,7 +141,6 @@ const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => 
       <Div
         flexFlow="row"
         justify="space-between"
-        // width={"full"}
       >
         {verificationStepsData.map((stepperItem, index) => (
           <Div

@@ -8,6 +8,7 @@ import { Span } from "@client/comps/span/Span";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Divider } from "@client/comps/divider/Divider";
+import { SvgExternal } from "@client/svgs/common/SvgExternal";
 
 export const FooterSocials = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
@@ -56,8 +57,8 @@ const FooterSocialMobile = () => {
         >
           {community.items.map((item, index) => (
             <SocialButton
-              href={item.href}
-              icon={item.icon}
+              href={item.href || ""}
+              icon={item.icon || SvgExternal}
               label={item.label}
             />
           ))}
@@ -83,10 +84,10 @@ const FooterSocialNonMobile = () => {
         </Div>
 
         <Div gap={32}>
-          {community.items.map((item, index) => (
+          {community.items.map((item) => (
             <SocialButton
-              href={item.href}
-              icon={item.icon}
+              href={item.href || ""}
+              icon={item.icon || SvgExternal}
               label={item.label}
             />
           ))}

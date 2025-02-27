@@ -7,22 +7,15 @@ import { useState } from "react";
 import { profileSettingOptions } from "./useProfileData";
 import "./PublicSetting.scss";
 
-interface NotificationSettings {
-  marketing: boolean;
-  general: boolean;
-  transactionsNotification: boolean;
-  smsNotification: boolean;
-}
-
 export const ProfileSettings = () => {
-  const [settings, setSettings] = useState<NotificationSettings>({
+  const [settings, setSettings] = useState<Record<string, boolean>>({
     marketing: true,
     general: true,
     transactionsNotification: true,
     smsNotification: false,
   });
 
-  const handleToggle = (setting: keyof NotificationSettings) => {
+  const handleToggle = (setting: string) => {
     setSettings((prevState) => ({
       ...prevState,
       [setting]: !prevState[setting],
@@ -50,6 +43,7 @@ export const ProfileSettings = () => {
             column
             gap={20}
             className="container"
+            key={index}
           >
             <Span
               color="light-sand"
@@ -84,7 +78,7 @@ export const ProfileSettings = () => {
                 ) : (
                   <Button
                     kind="primary"
-                    label={option.buttonDetails}
+                    label={option.buttonDetails || ""}
                     size="lg"
                   />
                 )}

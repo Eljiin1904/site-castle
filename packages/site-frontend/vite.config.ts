@@ -1,11 +1,12 @@
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
+import { defineConfig as viteDefineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
+import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 
 export default ({ mode }) => {
-  return defineConfig({
+  return viteDefineConfig({
     server: {
       host: "127.0.0.1",
       port: 3000,
@@ -45,6 +46,11 @@ export default ({ mode }) => {
         { find: "#app", replacement: path.resolve(__dirname, "src") },
       ],
     },
-    plugins: [react()],
+    test: {
+      globals: true, // Use global testing functions like `describe` and `it`
+      environment: "jsdom", // Use jsdom as the test environment for frontend tests
+      setupFiles: "./setupTests.ts",
+    },
+    plugins: [react(), tsconfigPaths()],
   });
 };

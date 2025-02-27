@@ -2,6 +2,7 @@
 FROM node:18-alpine AS build
 
 # Declaring env
+# TODO: update the NODE_ENV
 ENV NODE_ENV=devcloud
 
 # Setting up the work directory
