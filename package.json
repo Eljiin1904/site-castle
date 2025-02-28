@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1692.0",
+    "loglevel": "^1.9.2",
     "winston": "^3.17.0",
     "winston-cloudwatch": "^6.3.0",
     "ws": "^8.18.0"
