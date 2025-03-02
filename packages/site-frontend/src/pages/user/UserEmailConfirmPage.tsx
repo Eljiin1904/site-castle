@@ -29,10 +29,7 @@ export const UserEmailConfirmPage = () => {
         message="To confirm your email, please click the button below."
         buttonLabel="Confirm Email"
         onButtonClick={() =>
-          Dialogs.open(
-            "primary",
-            <UserEmailConfirmModal confirmToken={confirmToken} />,
-          )
+          Dialogs.open("primary", <UserEmailConfirmModal confirmToken={confirmToken} />)
         }
       />
     </SitePage>
