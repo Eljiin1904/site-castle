@@ -10,7 +10,6 @@ import { Validation } from "@core/services/validation";
 import { Form } from "@client/comps/form/Form";
 import { useForm } from "@client/comps/form/useForm";
 import { Security } from "#app/services/security";
-import { TwoFactorEnabled } from "./TwoFactorEnabled";
 import { useMount } from "@client/hooks/system/useMount";
 import { Toasts } from "@client/services/toasts";
 import { Vector } from "@client/comps/vector/Vector";
@@ -19,6 +18,7 @@ import { Spinner } from "@client/comps/spinner/Spinner";
 import { Dialogs } from "@client/services/dialogs";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { AuthenticatorDisableModal } from "#app/modals/security/AuthenticatorDisableModal";
+import { TwoFactorEnabled } from "./TwoFactorEnabled";
 
 type SecretData = Awaited<ReturnType<typeof Security.getAuthenticatorSecret>>;
 

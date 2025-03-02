@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { SvgExternal } from "@client/svgs/common/SvgExternal";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
-import { Link } from "@client/comps/link/Link";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgCaretDown } from "@client/svgs/common/SvgCaretDown";
 import { SvgCaretUp } from "@client/svgs/common/SvgCaretUp";

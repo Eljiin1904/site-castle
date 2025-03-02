@@ -1,14 +1,16 @@
 import { Users } from "#app/services/users";
 import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
+import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Form } from "@client/comps/form/Form";
+import { FormLabel } from "@client/comps/form/FormLabel";
 import { useForm } from "@client/comps/form/useForm";
 import { Input } from "@client/comps/input/Input";
-import { Modal } from "@client/comps/modal/Modal";
-import { ModalLabel } from "@client/comps/modal/ModalLabel";
+import { Utility } from "@client/services/utility";
 import { Validation } from "@core/services/validation";
 
-export const PersonalInfo = () => {
+export const PersonalInfo = ({ layout }: { layout: string }) => {
+  const small = layout === "mobile";
   const form = useForm({
     schema: Validation.object({
       firstName: Validation.string()
@@ -34,7 +36,7 @@ export const PersonalInfo = () => {
         .required("Occupation is required."),
     }),
     onSubmit: async (values) => {
-      await Users.verifyTier1Part2(values);
+      await Users.verifyTier1(values);
     },
   });
   return (
@@ -60,13 +62,7 @@ export const PersonalInfo = () => {
               column
               width={"full"}
             >
-              <ModalLabel>{"First Name"}</ModalLabel>
-              {/* <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Enter First Name"
-              /> */}
+              <FormLabel color="dark-sand">{"First Name"}</FormLabel>
               <Input
                 type="text"
                 placeholder="Enter first name..."
@@ -80,7 +76,7 @@ export const PersonalInfo = () => {
               column
               width={"full"}
             >
-              <ModalLabel>{"Last Name"}</ModalLabel>
+              <FormLabel color="dark-sand">{"Last Name"}</FormLabel>
               <Input
                 type="text"
                 placeholder="Enter last name..."
@@ -93,143 +89,133 @@ export const PersonalInfo = () => {
           </Div>
 
           {/*  Date of Birth */}
-
-          <ModalLabel>{"Date of birth"}</ModalLabel>
+          <FormLabel color="dark-sand">{"Date of birth"}</FormLabel>
           <Div
-            width={"full"}
             gap={12}
             mb={20}
+            fx
+            width={"full"}
+            align="center"
+            justify="center"
           >
-            <Div
-              column
+            <Input
+              type="dob"
+              error={form.errors.dob}
+              value={form.values.dob}
+              onChange={(x) => form.setValue("dob", x)}
               width={"full"}
-            >
-              <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Day"
-              />
-            </Div>
-            <Div
-              column
-              width={"full"}
-            >
-              <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Month"
-              />
-            </Div>
-            <Div
-              column
-              width={"full"}
-            >
-              <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Year"
-              />
-            </Div>
+            />
           </Div>
 
           {/* Address */}
+          <Div
+            width={"full"}
+            gap={12}
+            mb={20}
+          >
+            <Div
+              column
+              width={"full"}
+            >
+              <FormLabel color="dark-sand">{"Resident Address"}</FormLabel>
+              <Input
+                type="text"
+                placeholder="Resident address..."
+                disabled={form.loading}
+                error={form.errors.address}
+                value={form.values.address}
+                onChange={(x) => form.setValue("address", x)}
+              />
+            </Div>
+          </Div>
 
           <Div
-            width={"full"}
-            gap={12}
+            gap={small ? 24 : 16}
             mb={20}
+            flexFlow={small ? "row-wrap" : undefined}
           >
             <Div
-              column
               width={"full"}
+              column
             >
-              <ModalLabel>{"Resident Address"}</ModalLabel>
+              <FormLabel color="dark-sand">{"City / Town"}</FormLabel>
               <Input
                 type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Resident Address"
+                placeholder="Enter city..."
+                disabled={form.loading}
+                error={form.errors.city}
+                value={form.values.city}
+                onChange={(x) => form.setValue("city", x)}
+              />
+            </Div>
+            <Div
+              width={"full"}
+              column
+            >
+              <FormLabel color="dark-sand">{"State"}</FormLabel>
+              <Input
+                type="text"
+                placeholder="Enter state..."
+                disabled={form.loading}
+                error={form.errors.state}
+                value={form.values.state}
+                onChange={(x) => form.setValue("state", x)}
               />
             </Div>
           </Div>
+
           <Div
-            width={"full"}
             gap={12}
-            mb={20}
+            flexFlow={small ? "row-wrap" : undefined}
           >
             <Div
-              column
               width={"full"}
+              column
             >
-              <ModalLabel>{"City"}</ModalLabel>
-              <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="City"
+              <FormLabel color="dark-sand">{"Country"}</FormLabel>
+              <Dropdown
+                forceDirection="top"
+                type="select"
+                placeholder="Select a country..."
+                buttonKind="secondary"
+                options={Utility.supportedCountries.map((x) => x.name)}
+                disabled={form.loading}
+                error={form.errors.countryIndex}
+                value={form.values.countryIndex}
+                onChange={(x, i) => form.setValue("countryIndex", i)}
               />
             </Div>
             <Div
-              column
               width={"full"}
+              column
             >
-              <ModalLabel>{"State"}</ModalLabel>
+              <FormLabel color="dark-sand">{"Postal / Zip Code"}</FormLabel>
               <Input
                 type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="State"
-              />
-            </Div>
-          </Div>
-          <Div
-            width={"full"}
-            gap={12}
-            mb={20}
-          >
-            <Div
-              column
-              width={"full"}
-            >
-              <ModalLabel>{"Zip Code"}</ModalLabel>
-              <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Zip Code"
-              />
-            </Div>
-            <Div
-              column
-              width={"full"}
-            >
-              <ModalLabel>{"Country"}</ModalLabel>
-              <Input
-                type="text"
-                value={""}
-                onChange={() => {}}
-                placeholder="Country"
+                placeholder="Enter zip code..."
+                disabled={form.loading}
+                error={form.errors.zipCode}
+                value={form.values.zipCode}
+                onChange={(x) => form.setValue("zipCode", x)}
               />
             </Div>
           </Div>
         </Div>
-        {/* Occupation */}
         <Div
           column
           width={"full"}
         >
-          <ModalLabel>{"Occupation"}</ModalLabel>
+          <FormLabel color="dark-sand">{"Occupation"}</FormLabel>
           <Input
             type="text"
-            value={""}
-            onChange={() => {}}
-            placeholder="Occupation"
+            placeholder="Enter occupation..."
+            disabled={form.loading}
+            error={form.errors.occupation}
+            value={form.values.occupation}
+            onChange={(x) => form.setValue("occupation", x)}
           />
         </Div>
-        <Div mt={28}>
+        <Div mt={10}>
           <Button
             type="submit"
             kind="primary-yellow"

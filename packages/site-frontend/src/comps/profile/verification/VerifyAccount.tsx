@@ -3,7 +3,6 @@ import { Span } from "@client/comps/span/Span";
 import { VerificationStepper } from "./VerificationStepper";
 
 export const VerifyAccount = () => {
-  // const statusInformation = verificationStatusDetails(status);
   return (
     <Div
       column

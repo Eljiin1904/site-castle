@@ -1,10 +1,10 @@
-import { ChangePassword } from "#app/comps/profile/ChangePassword";
+import { ChangePassword } from "#app/comps/profile/password/ChangePassword";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 // import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Profile Change Password Screen", () => {
-  test("value input change", async () => {
+  it("value input change", async () => {
     // Render the component
     render(<ChangePassword />); // Pass the mock as a prop
 

@@ -2,13 +2,13 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Div } from "@client/comps/div/Div";
 import { useEffect, useState } from "react";
-import { getVerificationComp, verificationStepsData } from "./useProfileData";
+import { getVerificationComp, verificationStepsData } from "../useProfileData";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
 import { Span } from "@client/comps/span/Span";
 import { SvgCheck } from "@client/svgs/common/SvgCheck";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 import "./VerificationStepper.scss";
+
 export const VerificationStepper = ({
   disableClose,
   whole,
@@ -17,15 +17,12 @@ export const VerificationStepper = ({
   whole?: boolean;
 }) => {
   const layout = useAppSelector((x) => x.style.mainLayout);
-  // const [step, setStep] = useState(0);
-
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
 
   const tierOneSteps = ["zero", "one", "two", "three"] as const;
   const [kycStep, setKycStep] = useState<number>(0);
 
   useEffect(() => {
-    setKycStep(getVerificationOneStep({ tier: kycTier }));
     function getVerificationOneStep({ tier }: { tier: number }): number {
       let step: number;
       if (whole) {
@@ -39,6 +36,7 @@ export const VerificationStepper = ({
       }
       return step;
     }
+    setKycStep(getVerificationOneStep({ tier: kycTier }));
   }, [kycTier]);
 
   return (
@@ -51,7 +49,7 @@ export const VerificationStepper = ({
         />
       }
       tablet={
-        <NonMobileContent
+        <MobileContent
           step={kycStep}
           setStep={setKycStep}
         />
@@ -85,17 +83,17 @@ const MobileContent = ({ step, setStep }: { step: number; setStep: any }) => {
       >
         {verificationStepsData.map((stepperItem, index) => (
           <Div
-            border
-            borderWidth={2}
-            borderColor={stepperItem.completed && step != index ? "yellow" : "brown-4"}
-            bg={step == index ? "yellow" : undefined}
-            py={6}
-            px={6}
-            onClick={() => setStep(index)}
+            width={"full"}
+            justify="space-around"
           >
             <Div
-              align="center"
-              justify="space-between"
+              border
+              borderWidth={2}
+              borderColor={stepperItem.completed && step != index ? "yellow" : "brown-4"}
+              bg={step == index ? "yellow" : undefined}
+              py={6}
+              px={6}
+              // onClick={() => setStep(index)}
             >
               {stepperItem.completed && step != index ? (
                 <Div>
@@ -119,12 +117,22 @@ const MobileContent = ({ step, setStep }: { step: number; setStep: any }) => {
                 </Div>
               )}
             </Div>
+
+            {index != verificationStepsData.length - 1 && (
+              <Div className="arrow-right">
+                <Vector
+                  as={SvgArrowRight}
+                  color="dark-sand"
+                  size={12}
+                />
+              </Div>
+            )}
           </Div>
         ))}
       </Div>
       <Div mt={20}>
         {verificationItem && verificationItem.name
-          ? getVerificationComp(verificationItem.name)
+          ? getVerificationComp(verificationItem.name, "mobile")
           : null}
       </Div>
     </Div>
@@ -150,7 +158,7 @@ const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => 
             <Div
               border
               borderColor="brown-4"
-              onClick={() => setStep(index)}
+              // onClick={() => setStep(index)}
             >
               <Div
                 bg={step == index ? "brown-4" : "brown-7"}
@@ -163,9 +171,13 @@ const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => 
                     p={2}
                     mr={3}
                     ml={10}
+                    border
+                    borderColor="sand"
                   >
                     <Vector
-                      as={SvgCheckCircle}
+                      p={3}
+                      size={12}
+                      as={SvgCheck}
                       color={"sand"}
                     />
                   </Div>
@@ -181,8 +193,8 @@ const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => 
                   >
                     {" "}
                     <Div
-                      py={2}
-                      px={3}
+                      py={3}
+                      px={5}
                       fontSize={13}
                       color={step == index ? "brown-5" : "sand"}
                     >
@@ -214,7 +226,7 @@ const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => 
       </Div>
       <Div mt={20}>
         {verificationItem && verificationItem.name
-          ? getVerificationComp(verificationItem.name)
+          ? getVerificationComp(verificationItem.name, "non-mobile")
           : null}
       </Div>
     </Div>

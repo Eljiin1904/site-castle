@@ -8,8 +8,8 @@ export const ProfileNavigator = ({
   selectedItem,
   setSelectedItem,
 }: {
-  selectedItem: any;
-  setSelectedItem: any;
+  selectedItem: string;
+  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const isActive = (navItem: string) => (selectedItem == navItem ? "sand" : "brown-10");
   return (

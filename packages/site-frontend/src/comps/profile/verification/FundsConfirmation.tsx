@@ -5,11 +5,11 @@ import { Div } from "@client/comps/div/Div";
 import { Divider } from "@client/comps/divider/Divider";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
-import { addressStatusDetails } from "./useProfileData";
+import { addressStatusDetails } from "../useProfileData";
 import { VerificationStatus } from "./VerificationStatus";
 
-export const AddressConfirmation = () => {
-  const uploadFiles = ["Proofofaddress1.png", "Proofofaddress2.png"];
+export const FundsConfirmation = () => {
+  const uploadFiles = ["workcontract.png"];
 
   const statusInformation = addressStatusDetails("pending");
   // if (statusInformation) return <VerificationStatus statusInformation={statusInformation} />;
@@ -23,13 +23,14 @@ export const AddressConfirmation = () => {
         color="white"
         fontSize={24}
       >
-        Upload Documents to Prove Your Address
+        UPLOAD DOCUMENTS TO PROVE YOUR SOURCE OF FUNDS
       </Span>
       <Span
         color="brown-10"
         mt={20}
       >
-        Any document providing a proof of address like electricity bill, bank statement or other.
+        Any document providing a proof of source of funds like work contract,loan or any other kind
+        of document
       </Span>
 
       <Div
@@ -46,6 +47,7 @@ export const AddressConfirmation = () => {
           gap={20}
           width={"full"}
           style={{
+            // width: 320,
             height: 180,
           }}
         >

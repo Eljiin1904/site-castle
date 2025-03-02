@@ -4,8 +4,12 @@ import { Divider } from "@client/comps/divider/Divider";
 import { Span } from "@client/comps/span/Span";
 import { Toggle } from "@client/comps/toggle/Toggle";
 import { useState } from "react";
-import { profileSettingOptions } from "./useProfileData";
-import "./PublicSetting.scss";
+import { profileSettingOptions } from "../useProfileData";
+import "./ProfileSetting.scss";
+import { usePost } from "@client/hooks/system/usePost";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { Toasts } from "@client/services/toasts";
+import { Users } from "#app/services/users";
 
 export const ProfileSettings = () => {
   const [settings, setSettings] = useState<Record<string, boolean>>({
@@ -15,11 +19,48 @@ export const ProfileSettings = () => {
     smsNotification: false,
   });
 
-  const handleToggle = (setting: string) => {
-    setSettings((prevState) => ({
-      ...prevState,
-      [setting]: !prevState[setting],
-    }));
+  // const settings = useAppSelector((x) => x.user.settings);
+  const [loading, setLoading] = useState(false);
+
+  // const handleToggle = (setting: string) => {
+  //   setSettings((prevState) => ({
+  //     ...prevState,
+  //     [setting]: !prevState[setting],
+  //   }));
+  // };
+
+  const handleToggle = (option: {
+    id: string;
+    label: string;
+    message: string;
+    name: string;
+    action: string;
+    buttonDetails?: string;
+  }) =>
+    usePost(async () => {
+      // const value = !isOn;
+      // if (requires2fa) {
+      //   const tfac = await waitForAuthenticatorCode();
+      //   if (!tfac) return;
+      //   await Security.toggleSetting({ id, value, tfac });
+      // } else {
+      // if(option){
+      // await Users.toggleSetting({ id, value });
+      // }
+      // setSettings((prevState) => ({
+      //   ...prevState,
+      //   [setting]: !prevState[setting],
+      // }));
+      // }
+      // Toasts.success(`${heading} is now ${value ? "enabled" : "disabled"}.`);
+    }, setLoading);
+
+  const handleButtonAction = (name: string) => {
+    if (name == "delete") {
+      console.log(name);
+    } else if (name == "ban") {
+      console.log(name);
+    }
   };
 
   return (
@@ -72,14 +113,15 @@ export const ProfileSettings = () => {
               >
                 {option.action == "toggle" ? (
                   <Toggle
-                    value={settings[option.name]}
-                    onChange={() => handleToggle(option.name)}
+                    value={settings[option.id]}
+                    onChange={() => handleToggle(option)}
                   />
                 ) : (
                   <Button
                     kind="primary"
                     label={option.buttonDetails || ""}
                     size="lg"
+                    onClick={() => handleButtonAction(option.name)}
                   />
                 )}
               </Div>

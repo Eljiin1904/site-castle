@@ -33,6 +33,7 @@ export const ProfileBanner = ({
         fontSize={font_size}
         textTransform="uppercase"
         fontWeight="bold"
+        fontFamily="title"
       >
         {label}
       </Div>

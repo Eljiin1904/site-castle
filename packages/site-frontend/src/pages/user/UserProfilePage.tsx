@@ -16,7 +16,7 @@ export const UserProfilePage: React.FC = () => {
     <Conditional
       value={layout}
       mobile={<MobileContent />}
-      tablet={<NonMobileContent />}
+      tablet={<MobileContent />}
       laptop={<NonMobileContent />}
       desktop={<NonMobileContent />}
     />
@@ -34,7 +34,7 @@ const MobileContent = () => {
         label="Profile"
         width="1250"
         height="82"
-        font_size={24}
+        font_size={36}
       />
       <ProfileDropdowns />
     </Div>
@@ -54,7 +54,7 @@ const NonMobileContent = () => {
         label="Profile"
         width="1500"
         height="150"
-        font_size={36}
+        font_size={64}
       />
       <Div
         pt={40}

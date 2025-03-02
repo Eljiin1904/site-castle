@@ -1,24 +1,25 @@
 import { LinkProps } from "@client/comps/link/Link";
 import { useMemo } from "react";
-import { ProfileInformation } from "./ProfileInformation";
-import { ChangePassword } from "./ChangePassword";
-import { ProfileSecurity } from "./ProfileSecurity";
+import { ProfileInformation } from "./information/ProfileInformation";
+import { ChangePassword } from "./password/ChangePassword";
 import { VerificationBody } from "#app/pages/account/verification/VerificationBody";
-import { ProfileSettings } from "./ProfileSettings";
+import { ProfileSettings } from "./settings/ProfileSettings";
 import { Div } from "@client/comps/div/Div";
 import { SvgProfile } from "#app/svgs/common/SvgProfile";
 import { SvgSecurity } from "#app/svgs/common/SvgSecurity";
 import { SvgUnLock } from "#app/svgs/common/SvgUnLock";
 import { SvgVerify } from "#app/svgs/common/SvgVerify";
 import { SvgCog } from "@client/svgs/common/SvgCog";
-import { VerifyAccount } from "./VerifyAccount";
-import { PersonalInfo } from "./PersonalInfo";
-import { IdentityConfirmation } from "./IdentityConfirmation";
-import { AddressConfirmation } from "./AddressConfirmation";
+import { VerifyAccount } from "./verification/VerifyAccount";
+import { PersonalInfo } from "./verification/PersonalInfo";
+import { IdentityConfirmation } from "./verification/IdentityConfirmation";
+
 import { SvgHourglass } from "@client/svgs/common/SvgHourglass";
 import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
 import { SvgCancel } from "@client/svgs/common/SvgCancel";
-import { FundsConfirmation } from "./FundsConfirmation";
+import { FundsConfirmation } from "./verification/FundsConfirmation";
+import { AddressConfirmation } from "./verification/AddressConfirmation";
+import { ProfileSecurity } from "./security/ProfileSecurity";
 
 // export type ProfileItem = LinkProps & { label: string };
 
@@ -87,6 +88,7 @@ export const getProfileComp = (selectedItem: string) => {
 };
 
 export const profileSettingOptions: {
+  id: string;
   label: string;
   message: string;
   name: string;
@@ -94,36 +96,42 @@ export const profileSettingOptions: {
   buttonDetails?: string;
 }[] = [
   {
+    id: "marketCommunication",
     label: "Marketing Communication",
     message: "Receive marketing email notifications to your email",
     name: "marketing",
     action: "toggle",
   },
   {
+    id: "genereralNotification",
     label: "General Notifications",
     message: "Receive general email notifications to your email",
     name: "general",
     action: "toggle",
   },
   {
+    id: "transactionsNotification",
     label: "Deposit and withdraw notifications",
     message: "Receive deposit and withdraw notifications",
     name: "transactionsNotification",
     action: "toggle",
   },
   {
+    id: "smsNotification",
     label: "Receive SMS notifications",
     message: "Receive your SMS notifications to mobile phone",
     name: "smsNotification",
     action: "toggle",
   },
   {
+    id: "hiddenAccount",
     label: "Hidden Account",
     message: "Hide information related to User",
     name: "hiddenAccount",
     action: "toggle",
   },
   {
+    id: "selfBan",
     label: "Set your own ban",
     message: "Set your own ban for a period of time",
     name: "ban",
@@ -131,6 +139,7 @@ export const profileSettingOptions: {
     buttonDetails: "Set Ban",
   },
   {
+    id: "deleteAccount",
     label: "Delete your account",
     message: "Delete your account with all the data.",
     name: "delete",
@@ -143,7 +152,7 @@ export const verificationStepsData = [
   {
     name: "personal",
     label: "Personal",
-    completed: true,
+    completed: false,
   },
   {
     name: "identify",
@@ -162,11 +171,11 @@ export const verificationStepsData = [
   },
 ];
 
-export const getVerificationComp = (selectedItem: string) => {
+export const getVerificationComp = (selectedItem: string, layout: string) => {
   let content;
   switch (selectedItem) {
     case "personal":
-      content = <PersonalInfo />;
+      content = <PersonalInfo layout={layout} />;
       break;
     case "identify":
       content = <IdentityConfirmation />;
@@ -184,13 +193,6 @@ export const getVerificationComp = (selectedItem: string) => {
   return content;
 };
 
-// {
-//   icon: Svg;
-//   label: string;
-//   description: string;
-//   name: string;
-//   size: number;
-// }
 export function identityStatusDetails(
   status: "pending" | "verified" | "denied" | "fully-verified",
 ): {
