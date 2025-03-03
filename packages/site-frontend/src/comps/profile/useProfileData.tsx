@@ -1,8 +1,5 @@
-import { LinkProps } from "@client/comps/link/Link";
-import { useMemo } from "react";
 import { ProfileInformation } from "./information/ProfileInformation";
 import { ChangePassword } from "./password/ChangePassword";
-import { VerificationBody } from "#app/pages/account/verification/VerificationBody";
 import { ProfileSettings } from "./settings/ProfileSettings";
 import { Div } from "@client/comps/div/Div";
 import { SvgProfile } from "#app/svgs/common/SvgProfile";
@@ -20,15 +17,7 @@ import { SvgCancel } from "@client/svgs/common/SvgCancel";
 import { FundsConfirmation } from "./verification/FundsConfirmation";
 import { AddressConfirmation } from "./verification/AddressConfirmation";
 import { ProfileSecurity } from "./security/ProfileSecurity";
-
-// export type ProfileItem = LinkProps & { label: string };
-
-// export type ProfileData = {
-//   [key in "games" | "support" | "community"]: {
-//     heading: string;
-//     items: ProfileItem[];
-//   };
-// };
+import { SvgAnnouncement } from "@client/svgs/common/SvgAnnouncement";
 
 export const navigationDetails: { icon: Svg; label: string; name: string; size: number }[] = [
   {
@@ -320,13 +309,12 @@ export function addressStatusDetails(
       break;
     default:
       data = {
-        icon: SvgCancel,
+        icon: SvgAnnouncement,
         color: undefined,
-        label: "YOUR SOURCE OF FUNDS WAS NOT VERIFIED",
-        description:
-          "Thangs for uploading your proof of source of funds! We were not able to verify your address. Please reupload your documents and try again.",
+        label: "NOT FOUND",
+        description: "Please reach out to a represenative",
 
-        name: "security",
+        name: "not-found",
         size: 16,
       };
   }
@@ -386,12 +374,12 @@ export function fundsStatusDetails(status: "pending" | "verified" | "denied" | "
       break;
     default:
       data = {
-        icon: SvgCancel,
-        label: "YOUR SOURCE OF FUNDS WAS NOT VERIFIED",
-        description:
-          "Thangs for uploading your proof of source of funds! We were not able to verify your address. Please reupload your documents and try again.",
+        icon: SvgAnnouncement,
 
-        name: "security",
+        label: "NOT FOUND",
+        description: "Please Contact Us",
+
+        name: "not-found",
         size: 16,
       };
   }

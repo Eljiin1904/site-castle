@@ -49,7 +49,6 @@ export const IdentityConfirmation = () => {
           gap={20}
           width={"full"}
           style={{
-            // width: 320,
             height: 180,
           }}
         >
@@ -80,15 +79,16 @@ export const IdentityConfirmation = () => {
           </Div>
         </Div>
       </Div>
-      {/* Show files Uploaded */}
 
+      {/* Show files Uploaded */}
       <Div
         wrap
         gap={20}
         mt={20}
       >
-        {uploadFiles.map((name, index) => (
+        {uploadFiles.map((name) => (
           <Div
+            key={name}
             bg="brown-4"
             p={12}
             align="center"

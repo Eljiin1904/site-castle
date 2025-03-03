@@ -5,14 +5,10 @@ import { Div } from "@client/comps/div/Div";
 import { Divider } from "@client/comps/divider/Divider";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
-import { addressStatusDetails } from "../useProfileData";
-import { VerificationStatus } from "./VerificationStatus";
 
 export const FundsConfirmation = () => {
   const uploadFiles = ["workcontract.png"];
 
-  const statusInformation = addressStatusDetails("pending");
-  // if (statusInformation) return <VerificationStatus statusInformation={statusInformation} />;
   return (
     <Div
       width={"full"}
@@ -47,7 +43,6 @@ export const FundsConfirmation = () => {
           gap={20}
           width={"full"}
           style={{
-            // width: 320,
             height: 180,
           }}
         >
@@ -78,15 +73,16 @@ export const FundsConfirmation = () => {
           </Div>
         </Div>
       </Div>
-      {/* Show files Uploaded */}
 
+      {/* Show files Uploaded */}
       <Div
         wrap
         gap={20}
         mt={20}
       >
-        {uploadFiles.map((name, index) => (
+        {uploadFiles.map((name) => (
           <Div
+            key={name}
             bg="brown-4"
             p={12}
             align="center"

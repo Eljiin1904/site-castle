@@ -10,8 +10,6 @@ import { addressStatusDetails } from "../useProfileData";
 export const AddressConfirmation = () => {
   const uploadFiles = ["Proofofaddress1.png", "Proofofaddress2.png"];
 
-  const statusInformation = addressStatusDetails("pending");
-  // if (statusInformation) return <VerificationStatus statusInformation={statusInformation} />;
   return (
     <Div
       width={"full"}
@@ -82,8 +80,9 @@ export const AddressConfirmation = () => {
         gap={20}
         mt={20}
       >
-        {uploadFiles.map((name, index) => (
+        {uploadFiles.map((name) => (
           <Div
+            key={name}
             bg="brown-4"
             p={12}
             align="center"

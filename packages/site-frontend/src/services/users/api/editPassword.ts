@@ -1,5 +1,4 @@
 import { Http } from "@client/services/http";
-import { values } from "lodash";
 
 export function editPassword(data: {
   currentPassword?: string | undefined;

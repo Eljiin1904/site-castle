@@ -97,7 +97,8 @@ describe("Profile Content Screen", () => {
           <ProfileContent selectedItem={"verify"} />
         </Provider>,
       );
-      const securityLabel = screen.getByText("VERIFY YOUR ACCOUNT");
+      const verifyLabel = screen.getByText("VERIFY YOUR ACCOUNT");
+      expect(verifyLabel).toBeInTheDocument();
     });
   });
 
@@ -111,7 +112,8 @@ describe("Profile Content Screen", () => {
           <ProfileContent selectedItem={"settings"} />
         </Provider>,
       );
-      const securityLabel = screen.getByText("Settings");
+      const settingLabel = screen.getByText("Settings");
+      expect(settingLabel).toBeInTheDocument();
       //   // Check for labels
       expect(screen.getByText("Marketing Communication")).toBeInTheDocument();
       expect(screen.getByText("General Notifications")).toBeInTheDocument();

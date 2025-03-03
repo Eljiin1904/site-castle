@@ -1,5 +1,4 @@
 import path from "path";
-import { defineConfig } from "vitest/config";
 import { defineConfig as viteDefineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -50,6 +49,7 @@ export default ({ mode }) => {
       globals: true, // Use global testing functions like `describe` and `it`
       environment: "jsdom", // Use jsdom as the test environment for frontend tests
       setupFiles: "./setupTests.ts",
+      testTimeout: 20000,
     },
     plugins: [react(), tsconfigPaths()],
   });

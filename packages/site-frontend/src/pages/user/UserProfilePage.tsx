@@ -1,6 +1,5 @@
 import { ProfileNavigator } from "#app/comps/profile/ProfileNavigator";
 import { Div } from "@client/comps/div/Div";
-import { Img } from "@client/comps/img/Img";
 import "./UserProfilePage.scss";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";

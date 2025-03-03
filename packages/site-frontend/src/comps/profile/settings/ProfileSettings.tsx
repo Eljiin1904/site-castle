@@ -7,9 +7,6 @@ import { useState } from "react";
 import { profileSettingOptions } from "../useProfileData";
 import "./ProfileSetting.scss";
 import { usePost } from "@client/hooks/system/usePost";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Toasts } from "@client/services/toasts";
-import { Users } from "#app/services/users";
 
 export const ProfileSettings = () => {
   const [settings, setSettings] = useState<Record<string, boolean>>({
@@ -126,14 +123,14 @@ export const ProfileSettings = () => {
                 )}
               </Div>
             </Div>
-            {index != profileSettingOptions.length - 1 && (
+            {index != profileSettingOptions.length - 1 ? (
               <Divider
                 as={"div"}
                 px={16}
                 my={5}
                 borderColor={"brown-4"}
               />
-            )}
+            ) : null}
           </Div>
         ))}
       </Div>
