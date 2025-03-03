@@ -9,7 +9,6 @@ import { FooterMenus } from "./FooterMenus";
 import { FooterPills } from "./FooterPills";
 import { FooterSocials } from "./FooterSocials";
 import { FooterContacts } from "./FooterContacts";
-import "./AppFooter.scss";
 import { Divider } from "@client/comps/divider/Divider";
 
 export const AppFooter = () => {
@@ -23,10 +22,7 @@ export const AppFooter = () => {
       bg="brown-8"
       borderTop
     >
-      <Div
-        className="inner-content"
-        fx
-      >
+      <Div fx>
         <Conditional
           value={mainLayout}
           mobile={<FooterMobile />}
@@ -118,7 +114,6 @@ const FooterTablet = () => {
     <Div
       column
       fx
-      px={32}
     >
       <Div
         column
@@ -186,7 +181,7 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
     <Div
       column
       fx
-      px={pad ? 16 : undefined}
+      width={"full"}
     >
       <Div
         column
