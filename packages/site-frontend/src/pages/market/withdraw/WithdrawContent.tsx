@@ -82,13 +82,11 @@ export const WithdrawContent = () => {
         hasNextPage={query.hasNextPage}
         fetchNextPage={query.fetchNextPage}
         placeholderRenderer={(key) => <WithdrawItemPlaceholder key={key} />}
-        itemRenderer={(x, i) => (
+        itemRenderer={(x) => (
           <WithdrawItemCard
             key={x._id}
             item={x}
-            onClick={() =>
-              Dialogs.open("primary", <MarketWithdrawModal item={x} />)
-            }
+            onClick={() => Dialogs.open("primary", <MarketWithdrawModal item={x} />)}
           />
         )}
       />

@@ -50,7 +50,7 @@ export const CaseIndexPage = () => {
         hasNextPage={query.hasNextPage}
         fetchNextPage={query.fetchNextPage}
         placeholderRenderer={(key) => <IndexCardPlaceholder key={key} />}
-        itemRenderer={(x, i) => (
+        itemRenderer={(x) => (
           <CaseCard
             key={x._id}
             chest={x}

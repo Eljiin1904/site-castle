@@ -39,8 +39,7 @@ const MobileTable = ({ results, isLoading }: DiceTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () =>
-          Dialogs.open("primary", <FairnessDiceModal result={x} />),
+        onClick: () => Dialogs.open("primary", <FairnessDiceModal result={x} />),
       })}
       columns={[
         {
@@ -104,8 +103,7 @@ export const TabletTable = ({ results, isLoading }: DiceTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () =>
-          Dialogs.open("primary", <FairnessDiceModal result={x} />),
+        onClick: () => Dialogs.open("primary", <FairnessDiceModal result={x} />),
       })}
       columns={[
         {
@@ -118,9 +116,7 @@ export const TabletTable = ({ results, isLoading }: DiceTableProps) => {
           heading: "Date",
           grow: 4,
           justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>
-          ),
+          rowRenderer: (x) => <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>,
         },
         {
           heading: "Target",
@@ -145,7 +141,7 @@ export const TabletTable = ({ results, isLoading }: DiceTableProps) => {
           heading: "Input",
           grow: 1,
           justify: "flex-end",
-          rowRenderer: (x) => (
+          rowRenderer: () => (
             <Button
               kind="secondary"
               size="xs"
@@ -166,8 +162,7 @@ export const LaptopDesktopTable = ({ results, isLoading }: DiceTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () =>
-          Dialogs.open("primary", <FairnessDiceModal result={x} />),
+        onClick: () => Dialogs.open("primary", <FairnessDiceModal result={x} />),
       })}
       columns={[
         {
@@ -180,9 +175,7 @@ export const LaptopDesktopTable = ({ results, isLoading }: DiceTableProps) => {
           heading: "Date",
           grow: 3,
           justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>
-          ),
+          rowRenderer: (x) => <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>,
         },
         {
           heading: "Target",

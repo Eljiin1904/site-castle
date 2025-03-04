@@ -83,7 +83,7 @@ export const limboSlice = createSlice({
 
       state.feed = feed;
     }),
-    clearLastTicket: reducer((state, { payload }) => {
+    clearLastTicket: reducer((state) => {
       state.lastTicket = undefined;
     }),
     setMode: reducer<LimboMode>((state, { payload }) => {

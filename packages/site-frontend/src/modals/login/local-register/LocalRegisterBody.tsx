@@ -19,12 +19,11 @@ import { Users } from "#app/services/users";
 import { Gtm } from "#app/services/gtm";
 import { UsernameField } from "#app/comps/username-field/UsernameField";
 import { SSOButtons } from "../SSOButtons";
-import { LoginAction } from "../LoginAction";
 import "./LocalRegisterBody.scss";
 import { Heading } from "@client/comps/heading/Heading";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
-export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) => void }) => {
+export const LocalRegisterBody = () => {
   const [initReferralCode, , removeReferralCode] = useReferralCode();
   const [showReferralCode, setShowReferralCode] = useState(!initReferralCode);
   const dispatch = useAppDispatch();
@@ -73,12 +72,12 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
       className="register-body"
     >
       <Heading
-              as="h2"
-              size={small ? 20 : 24}
-              fontWeight="regular"
-              textTransform="uppercase"
-        >
-          Register to SandCasino
+        as="h2"
+        size={small ? 20 : 24}
+        fontWeight="regular"
+        textTransform="uppercase"
+      >
+        Register to SandCasino
       </Heading>
       <CaptchaForm form={form}>
         <ModalSection>

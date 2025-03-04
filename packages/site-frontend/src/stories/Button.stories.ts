@@ -1,25 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import '@client/comps/button/Button.scss';
-import { ButtonProps } from '@client/comps/button/Button';
-import { Button } from '@client/comps/button/Button';
+import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
+import "@client/comps/button/Button.scss";
+import { Button } from "@client/comps/button/Button";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: 'Example/Button',
+  title: "Example/Button",
   component: Button,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: 'centered',
+    layout: "centered",
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   // argTypes: Button,
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: { onClick: fn() },
   argTypes: {
-    onClick: { action: 'clicked' },
+    onClick: { action: "clicked" },
   },
 } satisfies Meta<typeof Button>;
 
@@ -29,30 +28,30 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
   args: {
-    kind: 'primary',
-    label: 'Button',
+    kind: "primary",
+    label: "Button",
   },
 };
 
 export const Secondary: Story = {
   args: {
-    kind: 'secondary',
-    label: 'Button',
+    kind: "secondary",
+    label: "Button",
   },
 };
 
 export const Large: Story = {
   args: {
-    size: 'md',
-    label: 'Button',
-    kind: 'primary',
+    size: "md",
+    label: "Button",
+    kind: "primary",
   },
 };
 
 export const Small: Story = {
   args: {
-    size: 'sm',
-    label: 'Button',
-    kind: 'primary',
+    size: "sm",
+    label: "Button",
+    kind: "primary",
   },
 };

@@ -39,14 +39,13 @@ const GameSearch = () => {
         id="game-search"
         placeholder="Search for a game or provider"
         value=""
-        onChange={(x) => true}
+        onChange={() => true}
       />
     </Div>
   );
 };
 
 const OriginalGamesSection = () => {
-
   const small = useIsMobileLayout();
 
   return (
@@ -60,9 +59,7 @@ const OriginalGamesSection = () => {
         heading="Original Games"
         mt={small ? 0 : 16}
       />
-      <Div
-        gap={small ? 20 : 24}
-      >
+      <Div gap={small ? 20 : 24}>
         <GameBanner
           image="/graphics/crash-tile"
           to="/crash"
@@ -73,7 +70,7 @@ const OriginalGamesSection = () => {
           image="/graphics/duel-tile"
           to="/duel"
           ratio={small ? "150 / 160" : "552 / 240"}
-           objectPositionHorizontal="80%"
+          objectPositionHorizontal="80%"
         />
       </Div>
     </Div>
@@ -95,8 +92,8 @@ const HotGamesSection = () => {
         mt={small ? 0 : 16}
       />
       <Div
-       gap={small ? 20 : 24}
-       wrap={small}
+        gap={small ? 20 : 24}
+        wrap={small}
       >
         <GameBanner
           image="/graphics/case-battles-tile"

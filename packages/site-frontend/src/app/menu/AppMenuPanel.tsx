@@ -25,7 +25,6 @@ import { MenuItem } from "./panel/MenuItem";
 import { MenuRace } from "./panel/MenuRace";
 import { MenuSeparator } from "./panel/MenuSeparator";
 import "./AppMenuPanel.scss";
-import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 
 export const AppMenuPanel = () => {
@@ -89,7 +88,16 @@ const PanelContent = () => {
             showLabel={!collapsed}
           />
           <MenuSeparator />
-          <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>Games</Span>
+          <Span
+            textTransform="uppercase"
+            px={24}
+            mb={24}
+            fontWeight="medium"
+            color="dark-sand"
+            fontSize={10}
+          >
+            Games
+          </Span>
           <MenuItem
             icon={SvgAllGames}
             label="All Games"

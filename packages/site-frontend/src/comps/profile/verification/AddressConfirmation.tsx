@@ -5,7 +5,6 @@ import { Div } from "@client/comps/div/Div";
 import { Divider } from "@client/comps/divider/Divider";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
-import { addressStatusDetails } from "../useProfileData";
 
 export const AddressConfirmation = () => {
   const uploadFiles = ["Proofofaddress1.png", "Proofofaddress2.png"];

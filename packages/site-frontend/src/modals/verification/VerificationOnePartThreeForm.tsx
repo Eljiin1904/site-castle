@@ -10,13 +10,7 @@ import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
 import { Users } from "#app/services/users";
 
-export const VerificationOnePartThreeForm = ({
-  layout,
-  disableClose,
-}: {
-  layout: Layout;
-  disableClose?: boolean;
-}) => {
+export const VerificationOnePartThreeForm = ({ disableClose }: { disableClose?: boolean }) => {
   const form = useForm({
     schema: Validation.object({
       occupation: Validation.string()

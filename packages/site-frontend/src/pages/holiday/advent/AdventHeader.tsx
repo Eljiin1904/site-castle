@@ -4,8 +4,6 @@ import { Div } from "@client/comps/div/Div";
 import { Timestamp } from "@client/comps/timestamp/Timestamp";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgClock } from "@client/svgs/common/SvgClock";
-import { Button } from "@client/comps/button/Button";
-import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
 import { Dialogs } from "@client/services/dialogs";
 import { AdventInfoModal } from "#app/modals/rewards/AdventInfoModal";
 import { Rewards } from "#app/services/rewards";
