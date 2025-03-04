@@ -9,18 +9,13 @@ import { Div } from "@client/comps/div/Div";
 import { Users } from "#app/services/users";
 import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
-import { LoginAction } from "../LoginAction";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgLock } from "#app/svgs/common/SvgLock";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Link } from "@client/comps/link/Link";
 import { SvgPlane } from "#app/svgs/common/SvgPlane";
 
-export const RecoverBody = ({
-  setAction,
-}: {
-  setAction: (x: LoginAction) => void;
-}) => {
+export const RecoverBody = () => {
   const [sent, setSent] = useState(false);
   const small = useIsMobileLayout();
   const form = useCaptchaForm({
@@ -43,16 +38,36 @@ export const RecoverBody = ({
           gap={16}
           flexCenter
         >
-          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-            <Vector fx as={SvgLock} size={40} color="dark-sand" />
-          </Div>          
-          <Heading  as="h2"
+          <Div
+            width={40}
+            px={48}
+            py={28}
+            borderRadius={"full"}
+            border
+            borderColor="brown-4"
+            borderWidth={1}
+          >
+            <Vector
+              fx
+              as={SvgLock}
+              size={40}
+              color="dark-sand"
+            />
+          </Div>
+          <Heading
+            as="h2"
             size={small ? 20 : 24}
             fontWeight="regular"
-            textTransform="uppercase">Forgot Password?
+            textTransform="uppercase"
+          >
+            Forgot Password?
           </Heading>
-          <Span size={14} color="dark-sand" textAlign="center">
-          Please enter the email associated with your account.
+          <Span
+            size={14}
+            color="dark-sand"
+            textAlign="center"
+          >
+            Please enter the email associated with your account.
           </Span>
         </Div>
         <ModalSection>
@@ -87,16 +102,35 @@ export const RecoverBody = ({
           gap={32}
           flexCenter
         >
-          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-            <Vector fx as={SvgPlane} size={40} color="dark-sand" />
+          <Div
+            width={40}
+            px={48}
+            py={28}
+            borderRadius={"full"}
+            border
+            borderColor="brown-4"
+            borderWidth={1}
+          >
+            <Vector
+              fx
+              as={SvgPlane}
+              size={40}
+              color="dark-sand"
+            />
           </Div>
-          <Heading  as="h2"
+          <Heading
+            as="h2"
             size={small ? 20 : 24}
             fontWeight="regular"
-            textTransform="uppercase">
-              Password Recovery Sent
+            textTransform="uppercase"
+          >
+            Password Recovery Sent
           </Heading>
-          <Span size={14} color="dark-sand" textAlign="center">
+          <Span
+            size={14}
+            color="dark-sand"
+            textAlign="center"
+          >
             If you don't receive a password recovery link, please check your spam folder.
           </Span>
           <Div
@@ -109,7 +143,7 @@ export const RecoverBody = ({
             fontSize={12}
             color="dark-sand"
           >
-             <Link
+            <Link
               type="action"
               fontSize={14}
               fontWeight="semi-bold"

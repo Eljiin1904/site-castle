@@ -3,7 +3,6 @@ import { useIsMounted } from "usehooks-ts";
 import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
 import { DoubleRoll } from "@core/types/double/DoubleRoll";
 import { Div } from "@client/comps/div/Div";
-import { Sounds } from "@client/services/sounds";
 import { useAnimator } from "#app/hooks/animations/useAnimator";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Site } from "#app/services/site";
@@ -26,8 +25,7 @@ export const DoubleReel = () => {
   const playSound = useSoundPlayer("double");
 
   const getResultPos = (roll: DoubleRoll) => {
-    const resultPos =
-      origin - 15 * itemSize * revolutions - (roll.value - 1) * itemSize;
+    const resultPos = origin - 15 * itemSize * revolutions - (roll.value - 1) * itemSize;
     return resultPos;
   };
 
@@ -39,8 +37,7 @@ export const DoubleReel = () => {
     let lastTickTime = 0;
 
     const tickTimes = [
-      80, 80, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 80, 80,
-      80, 80, 80, 80, 80,
+      80, 80, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 80, 80, 80, 80, 80, 80, 80,
     ];
 
     await animator.play({

@@ -26,7 +26,7 @@ export const FooterSocials = () => {
 };
 
 const FooterSocialMobile = () => {
-  const { games, support, community } = useMenuData();
+  const { community } = useMenuData();
   return (
     <Fragment>
       <Div
@@ -55,7 +55,7 @@ const FooterSocialMobile = () => {
           alignItems="center"
           justifyContent="center"
         >
-          {community.items.map((item, index) => (
+          {community.items.map((item) => (
             <SocialButton
               href={item.href || ""}
               icon={item.icon || SvgExternal}
@@ -69,7 +69,7 @@ const FooterSocialMobile = () => {
 };
 
 const FooterSocialNonMobile = () => {
-  const { games, support, community } = useMenuData();
+  const { community } = useMenuData();
   return (
     <Fragment>
       <Div

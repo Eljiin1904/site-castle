@@ -1,0 +1,8 @@
+responses
+scripts
+node_modules
+dist
+*.min.js
+__test__
+test
+build

@@ -10,13 +10,7 @@ import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Utility } from "@client/services/utility";
 import { Users } from "#app/services/users";
 
-export const VerificationOnePartTwoForm = ({
-  layout,
-  disableClose,
-}: {
-  layout: Layout;
-  disableClose?: boolean;
-}) => {
+export const VerificationOnePartTwoForm = ({ layout }: { layout: Layout }) => {
   const small = layout === "mobile";
 
   const form = useForm({
@@ -24,12 +18,8 @@ export const VerificationOnePartTwoForm = ({
       address: Validation.string()
         .max(256, "Max characters is 256")
         .required("Address is required."),
-      city: Validation.string()
-        .max(32, "Max characters is 32")
-        .required("City is required."),
-      state: Validation.string()
-        .max(32, "Max characters is 32")
-        .required("State is required."),
+      city: Validation.string().max(32, "Max characters is 32").required("City is required."),
+      state: Validation.string().max(32, "Max characters is 32").required("State is required."),
       countryIndex: Validation.integer("Country"),
       zipCode: Validation.string()
         .max(16, "Max characters is 16")

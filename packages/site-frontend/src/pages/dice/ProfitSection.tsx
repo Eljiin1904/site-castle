@@ -1,6 +1,4 @@
-import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
-import { ModalField } from "@client/comps/modal/ModalField";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
@@ -18,9 +16,18 @@ export const ProfitSection = () => {
   });
 
   return (
-    <Div fx wrap gap={8} justify="space-between">
+    <Div
+      fx
+      wrap
+      gap={8}
+      justify="space-between"
+    >
       <ModalLabel>{"Profit on Win"}</ModalLabel>
-      <Tokens value={profit} fontSize={12} vectorColor="white" />
+      <Tokens
+        value={profit}
+        fontSize={12}
+        vectorColor="white"
+      />
     </Div>
   );
 };

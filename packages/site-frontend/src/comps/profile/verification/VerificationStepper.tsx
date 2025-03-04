@@ -42,36 +42,16 @@ export const VerificationStepper = ({
   return (
     <Conditional
       value={layout}
-      mobile={
-        <MobileContent
-          step={kycStep}
-          setStep={setKycStep}
-        />
-      }
-      tablet={
-        <MobileContent
-          step={kycStep}
-          setStep={setKycStep}
-        />
-      }
-      laptop={
-        <NonMobileContent
-          step={kycStep}
-          setStep={setKycStep}
-        />
-      }
-      desktop={
-        <NonMobileContent
-          step={kycStep}
-          setStep={setKycStep}
-        />
-      }
+      mobile={<MobileContent step={kycStep} />}
+      tablet={<MobileContent step={kycStep} />}
+      laptop={<NonMobileContent step={kycStep} />}
+      desktop={<NonMobileContent step={kycStep} />}
     />
   );
 };
 
-const MobileContent = ({ step, setStep }: { step: number; setStep: any }) => {
-  let verificationItem = verificationStepsData[step];
+const MobileContent = ({ step }: { step: number }) => {
+  const verificationItem = verificationStepsData[step];
   return (
     <Div
       fx
@@ -139,8 +119,8 @@ const MobileContent = ({ step, setStep }: { step: number; setStep: any }) => {
   );
 };
 
-const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => {
-  let verificationItem = verificationStepsData[step];
+const NonMobileContent = ({ step }: { step: number }) => {
+  const verificationItem = verificationStepsData[step];
   return (
     <Div
       column
@@ -158,7 +138,6 @@ const NonMobileContent = ({ step, setStep }: { step: number; setStep: any }) => 
             <Div
               border
               borderColor="brown-4"
-              // onClick={() => setStep(index)}
             >
               <Div
                 bg={step == index ? "brown-4" : "brown-7"}

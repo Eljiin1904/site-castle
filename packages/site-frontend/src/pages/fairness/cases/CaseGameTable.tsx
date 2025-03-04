@@ -39,8 +39,7 @@ const MobileTable = ({ results, isLoading }: CaseGameTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () =>
-          Dialogs.open("primary", <FairnessCaseGameModal result={x} />),
+        onClick: () => Dialogs.open("primary", <FairnessCaseGameModal result={x} />),
       })}
       columns={[
         {
@@ -116,8 +115,7 @@ export const TabletTable = ({ results, isLoading }: CaseGameTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () =>
-          Dialogs.open("primary", <FairnessCaseGameModal result={x} />),
+        onClick: () => Dialogs.open("primary", <FairnessCaseGameModal result={x} />),
       })}
       columns={[
         {
@@ -130,9 +128,7 @@ export const TabletTable = ({ results, isLoading }: CaseGameTableProps) => {
           heading: "Date",
           grow: 4,
           justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>
-          ),
+          rowRenderer: (x) => <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>,
         },
         {
           heading: "Case",
@@ -172,7 +168,7 @@ export const TabletTable = ({ results, isLoading }: CaseGameTableProps) => {
           heading: "Input",
           grow: 1,
           justify: "flex-end",
-          rowRenderer: (x) => (
+          rowRenderer: () => (
             <Button
               kind="secondary"
               size="xs"
@@ -185,10 +181,7 @@ export const TabletTable = ({ results, isLoading }: CaseGameTableProps) => {
   );
 };
 
-export const LaptopDesktopTable = ({
-  results,
-  isLoading,
-}: CaseGameTableProps) => {
+export const LaptopDesktopTable = ({ results, isLoading }: CaseGameTableProps) => {
   return (
     <Table
       data={results}
@@ -196,8 +189,7 @@ export const LaptopDesktopTable = ({
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () =>
-          Dialogs.open("primary", <FairnessCaseGameModal result={x} />),
+        onClick: () => Dialogs.open("primary", <FairnessCaseGameModal result={x} />),
       })}
       columns={[
         {
@@ -210,9 +202,7 @@ export const LaptopDesktopTable = ({
           heading: "Date",
           grow: 3,
           justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>
-          ),
+          rowRenderer: (x) => <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>,
         },
         {
           heading: "Case",

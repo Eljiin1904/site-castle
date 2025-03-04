@@ -9,7 +9,7 @@ import "./ProfileSetting.scss";
 import { usePost } from "@client/hooks/system/usePost";
 
 export const ProfileSettings = () => {
-  const [settings, setSettings] = useState<Record<string, boolean>>({
+  const [settings] = useState<Record<string, boolean>>({
     marketing: true,
     general: true,
     transactionsNotification: true,
@@ -35,6 +35,7 @@ export const ProfileSettings = () => {
     buttonDetails?: string;
   }) =>
     usePost(async () => {
+      console.log(option);
       // const value = !isOn;
       // if (requires2fa) {
       //   const tfac = await waitForAuthenticatorCode();
