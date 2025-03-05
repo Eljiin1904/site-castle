@@ -46,24 +46,9 @@ export const VerificationOneForm = ({
           disableClose={disableClose}
         />
       }
-      one={
-        <VerificationOnePartOneForm
-          layout={layout}
-          disableClose={disableClose}
-        />
-      }
-      two={
-        <VerificationOnePartTwoForm
-          layout={layout}
-          disableClose={disableClose}
-        />
-      }
-      three={
-        <VerificationOnePartThreeForm
-          layout={layout}
-          disableClose={disableClose}
-        />
-      }
+      one={<VerificationOnePartOneForm />}
+      two={<VerificationOnePartTwoForm layout={layout} />}
+      three={<VerificationOnePartThreeForm disableClose={disableClose} />}
     />
   );
 };

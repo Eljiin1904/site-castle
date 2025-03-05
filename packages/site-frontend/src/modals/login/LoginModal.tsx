@@ -27,14 +27,16 @@ export const LoginModal = ({ initialAction }: { initialAction?: LoginAction }) =
       className="LoginModal"
       onBackdropClick={() => Dialogs.close("primary")}
     >
-      <ModalHeader
-        onCloseClick={() => Dialogs.close("primary")}
-      />
+      <ModalHeader onCloseClick={() => Dialogs.close("primary")} />
       <Div fy>
         <Conditional
           value={action}
-          login={['laptop','desktop'].includes(bodyLayout) ? <LoginBanner action={action}/> : null}
-          register={['laptop','desktop'].includes(bodyLayout) ? <LoginBanner action={action}/> : null}
+          login={
+            ["laptop", "desktop"].includes(bodyLayout) ? <LoginBanner action={action} /> : null
+          }
+          register={
+            ["laptop", "desktop"].includes(bodyLayout) ? <LoginBanner action={action} /> : null
+          }
         />
         <Div
           className={`${action}-content`}
@@ -44,8 +46,8 @@ export const LoginModal = ({ initialAction }: { initialAction?: LoginAction }) =
             <Conditional
               value={action}
               login={<LocalAuthBody setAction={setAction} />}
-              register={<LocalRegisterBody setAction={setAction} />}
-              recover={<RecoverBody setAction={setAction} />}
+              register={<LocalRegisterBody />}
+              recover={<RecoverBody />}
             />
           </ModalBody>
         </Div>
