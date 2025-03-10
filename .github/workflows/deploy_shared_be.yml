@@ -85,6 +85,9 @@ jobs:
           echo "Updating Helm chart with tag: $IMAGE_TAG"
           # Update the image tag in the Helm values file.
           sed -i "s/tag: .*/tag: $IMAGE_TAG/" shared-admin-be/values.yaml
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote
+          git add -u
           git add shared-admin-be/values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
