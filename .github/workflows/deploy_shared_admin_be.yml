@@ -8,6 +8,8 @@ on:
     paths:
       - "packages/shared-admin-backend/**"
       - ".github/workflows/deploy_shared_admin_be.yml"
+    paths-ignore:
+      - 'helm/**'
 
 jobs:
   admin-be-build-and-push:

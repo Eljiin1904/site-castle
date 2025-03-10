@@ -1,5 +1,11 @@
 name: Shared Backend CI
 
+# Ensure we can commit changes back to the repo to update values with the new image tag.  
+permissions:
+  contents: write
+
+
+
 on:
   workflow_dispatch:
   push:
@@ -8,6 +14,8 @@ on:
     paths:
       - "packages/shared-backend/**"
       - ".github/workflows/deploy_shared_be.yml"
+    paths-ignore:
+      - 'helm/**'
 
 jobs:
   build-and-push-shared-backend:
@@ -52,9 +60,89 @@ jobs:
           docker tag pidwin/castle-backend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
 
       - name: Push Docker image to ECR
+        id: push_image
         run: |
           docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
 
       - name: Output ECR Image URL
         run: | 
           echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest"
+
+
+      - name: Set image tag output
+        id: set-image-tag
+        run: |
+          # Generate an image tag (for example, using a timestamp)
+          IMAGE_TAG="v1.0.$(date +%s)"
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+  update-helm-chart:
+    needs: build-and-push-shared-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Update Helm Chart with new image tag
+        run: |
+          IMAGE_TAG="${{ needs.build-and-push-shared-backend.outputs.image_tag }}"
+          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          # Update the image tag in the Helm values file.
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" shared-admin-be/values.yaml
+          git add shared-admin-be/values.yaml
+          git commit -m "chore: update image tag to $IMAGE_TAG" || echo "No changes to commit"
+          git push
+
+  deploy-dev:
+    needs: update-helm-chart
+    runs-on: ubuntu-latest
+    environment:
+      name: dev  # Configure this environment in GitHub; dev may not require manual approval.
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to Dev (shared-backend namespace)
+        run: |
+          echo "Deploying to Dev environment..."
+          helm upgrade --install shared-admin-be ./shared-admin-be \
+            --namespace shared-backend \
+            --create-namespace \
+            --values shared-admin-be/values.yaml \
+            --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
+
+  deploy-stage:
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    environment:
+      name: stage  # Set manual approval for stage in your repository's Environment settings.
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to Stage (shared-backend namespace)
+        run: |
+          echo "Deploying to Stage environment..."
+          helm upgrade --install shared-admin-be ./shared-admin-be \
+            --namespace shared-backend \
+            --create-namespace \
+            --values shared-admin-be/values.yaml \
+            --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
+
+  deploy-prod:
+    needs: deploy-stage
+    runs-on: ubuntu-latest
+    environment:
+      name: prod  # Set manual approval for prod in your repository's Environment settings.
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to Prod (shared-backend namespace)
+        run: |
+          echo "Deploying to Prod environment..."
+          helm upgrade --install shared-admin-be ./shared-admin-be \
+            --namespace shared-backend \
+            --create-namespace \
+            --values shared-admin-be/values.yaml \
+            --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
