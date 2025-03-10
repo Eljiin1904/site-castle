@@ -112,13 +112,13 @@ jobs:
       - name: Update kubeconfig for Dev
         run: aws eks update-kubeconfig --name eks-cluster --region us-east-2
 
-      - name: Deploy to Dev (dev_shared-backend namespace)
+      - name: Deploy to Dev (castle-backend namespace)
         run: |
           echo "Deploying to Dev environment..."
-          helm upgrade --install shared-admin-be ./shared-admin-be \
-            --namespace dev_shared-backend \
+          helm upgrade --install castle-backend ./helm/shared-be/ \
+            --namespace castle-backend \
             --create-namespace \
-            --values shared-admin-be/values.yaml \
+            --values helm/shared-be/values/dev/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
 
   wait-for-stage-approval:
@@ -152,10 +152,11 @@ jobs:
       - name: Deploy to Stage (stage_shared-backend namespace)
         run: |
           echo "Deploying to Stage environment..."
-          helm upgrade --install shared-admin-be ./shared-admin-be \
-            --namespace stage_shared-backend \
+          echo "Deploying to Dev environment..."
+          helm upgrade --install castle-backend ./helm/shared-be/ \
+            --namespace castle-backend \
             --create-namespace \
-            --values shared-admin-be/values.yaml \
+            --values helm/shared-be/values/stage/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
 
   wait-for-prod-approval:
@@ -189,8 +190,9 @@ jobs:
       - name: Deploy to Prod (prod_shared-backend namespace)
         run: |
           echo "Deploying to Prod environment..."
-          helm upgrade --install shared-admin-be ./shared-admin-be \
-            --namespace prod_shared-backend \
+          echo "Deploying to Dev environment..."
+          helm upgrade --install castle-backend ./helm/shared-be/ \
+            --namespace castle-backend \
             --create-namespace \
-            --values shared-admin-be/values.yaml \
+            --values helm/shared-be/values/prod/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
