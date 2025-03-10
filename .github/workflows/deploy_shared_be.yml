@@ -89,7 +89,7 @@ jobs:
           git submodule sync --recursive
           git submodule update --init --recursive --remote
           git add -u
-          git add shared-admin-be/values.yaml
+          git add helm/shared-be/values/dev/shared_be_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
