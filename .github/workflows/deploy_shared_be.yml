@@ -85,7 +85,7 @@ jobs:
           IMAGE_TAG="${{ needs.build-and-push-shared-backend.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
           # Update the image tag in the Helm values file.
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" shared-admin-be/values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/dev/shared_be_values.yaml
           git submodule sync --recursive
           git submodule update --init --recursive --remote
           git add -u
