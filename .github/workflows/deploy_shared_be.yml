@@ -4,8 +4,6 @@ name: Shared Backend CI
 permissions:
   contents: write
 
-
-
 on:
   workflow_dispatch:
   push:
@@ -13,7 +11,7 @@ on:
       - main
     paths:
       - "packages/shared-backend/**"
-      - ".github/workflows/deploy_shared_be.yml"
+      # - ".github/workflows/deploy_shared_be.yml"
     paths-ignore:
       - 'helm/**'
 
