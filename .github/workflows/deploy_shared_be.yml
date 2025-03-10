@@ -4,8 +4,6 @@ name: Shared Backend CI
 permissions:
   contents: write
 
-
-
 on:
   workflow_dispatch:
   push:
@@ -14,13 +12,12 @@ on:
     paths:
       - "packages/shared-backend/**"
       - ".github/workflows/deploy_shared_be.yml"
-    paths-ignore:
-      - 'helm/**'
 
 jobs:
   build-and-push-shared-backend:
     runs-on: ubuntu-latest
-
+    outputs:
+      image_tag: ${{ steps.set-image-tag.outputs.image_tag }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -68,7 +65,6 @@ jobs:
         run: | 
           echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest"
 
-
       - name: Set image tag output
         id: set-image-tag
         run: |
@@ -89,8 +85,11 @@ jobs:
           echo "Updating Helm chart with tag: $IMAGE_TAG"
           # Update the image tag in the Helm values file.
           sed -i "s/tag: .*/tag: $IMAGE_TAG/" shared-admin-be/values.yaml
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote
+          git add -u
           git add shared-admin-be/values.yaml
-          git commit -m "chore: update image tag to $IMAGE_TAG" || echo "No changes to commit"
+          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
   deploy-dev:
