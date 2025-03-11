@@ -152,14 +152,14 @@ jobs:
           aws-region: us-east-2
 
       - name: Update kubeconfig for Stage
-        run: aws eks update-kubeconfig --name eks-cluster --region us-east-2
+        run: aws eks update-kubeconfig --region us-east-2 --name castle-eks-dev
 
       - name: Deploy to Stage (stage_shared-backend namespace)
         run: |
           echo "Deploying to Stage environment..."
           echo "Deploying to Dev environment..."
           helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace castle-backend \
+            --namespace stage-castle-backend \
             --create-namespace \
             --values helm/shared-be/values/stage/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
@@ -167,11 +167,18 @@ jobs:
   wait-for-prod-approval:
     needs: deploy-stage
     runs-on: ubuntu-latest
-    environment:
-      name: prod  # This environment must be configured with required reviewers for manual approval.
     steps:
-      - name: Manual approval pause for Prod deployment
-        run: echo "Awaiting manual approval for Prod deployment..."
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: csherida,civilizador
+          minimum-approvals: 1
+          issue-title: "Deploying to production"
+          issue-body: "Please approve or deny the deployment of this version"
+          exclude-workflow-initiator-as-approver: false
+          fail-on-denial: true
+          additional-approved-words: ''
+          additional-denied-words: ''
 
   deploy-prod:
     needs: wait-for-prod-approval
@@ -194,7 +201,7 @@ jobs:
 
       - name: Deploy to Prod (prod_shared-backend namespace)
         run: |
-          echo "Deploying to Prod environment..."
+          echo "Deploying to Stage environment..."
           echo "Deploying to Dev environment..."
           helm upgrade --install castle-backend ./helm/shared-be/ \
             --namespace castle-backend \
