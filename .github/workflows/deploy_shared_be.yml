@@ -3,6 +3,7 @@ name: Shared Backend CI
 # Ensure we can commit changes back to the repo to update values with the new image tag.  
 permissions:
   contents: write
+  issues: write
 
 on:
   workflow_dispatch:
@@ -125,7 +126,7 @@ jobs:
       - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
-          approvers: castle-developers
+          approvers: csherida,civilizador,castle-developers
           minimum-approvals: 1
           issue-title: "Deploying to staging"
           issue-body: "Please approve or deny the deployment of this version"
