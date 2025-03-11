@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import * as Users from "#app/services/users/Users";
+import { CaptchaFormProps } from "#app/comps/captcha-form/CaptchaForm";
 
 vi.mock("#app/services/users/Users", () => ({
   editPassword: vi.fn(),
@@ -21,19 +22,15 @@ vi.mock("#app/comps/captcha-form/useCaptchaForm", () => ({
 
 // Mock CaptchaForm component
 vi.mock("#app/comps/captcha-form/CaptchaForm", () => ({
-  CaptchaForm: ({ children }) => <div>{children}</div>, // Just render children for simplicity in tests
+  CaptchaForm: ({ children }: { children: React.ReactElement }) => <div>{children}</div>, // Just render children for simplicity in tests
 }));
 
 describe("Profile Change Password Screen", () => {
   beforeEach(() => {
     vi.resetAllMocks();
-    Users.editPassword.mockResolvedValue(undefined); // Ensure it's reset before each test
   });
 
   it("should not show validation error", async () => {
-    // Simulate a successful password change
-    Users.editPassword.mockResolvedValueOnce(undefined);
-
     const mockForm = {
       values: {
         currentPassword: "oldPassword123",
@@ -54,7 +51,7 @@ describe("Profile Change Password Screen", () => {
       handleVerify: vi.fn(),
     };
 
-    useCaptchaForm.mockReturnValue(mockForm);
+    useCaptchaForm.mockReturnValue({ onSubmit: vi.fn(), ...mockForm });
 
     render(<ChangePassword />);
 
