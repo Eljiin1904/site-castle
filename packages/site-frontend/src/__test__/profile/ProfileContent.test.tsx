@@ -40,8 +40,8 @@ describe("Profile Content Screen", () => {
       </Provider>,
     );
 
-    const oldPasswordInput = screen.getByPlaceholderText("Enter Old Password");
-    const newPasswordInput = screen.getByPlaceholderText("Enter New Password");
+    const oldPasswordInput = screen.getByPlaceholderText("Enter Old Password") as HTMLInputElement;
+    const newPasswordInput = screen.getByPlaceholderText("Enter New Password") as HTMLInputElement;
 
     // Find the Save button
     const saveButton = screen.getByText("Save Changes");
