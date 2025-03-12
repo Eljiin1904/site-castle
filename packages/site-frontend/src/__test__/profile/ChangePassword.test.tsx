@@ -51,7 +51,8 @@ describe("Profile Change Password Screen", () => {
       handleVerify: vi.fn(),
     };
 
-    useCaptchaForm.mockReturnValue({ onSubmit: vi.fn(), ...mockForm });
+    // @ts-ignore
+    vi.mocked(useCaptchaForm).mockReturnValue({ onSubmit: vi.fn(), ...mockForm });
 
     render(<ChangePassword />);
 
@@ -89,7 +90,8 @@ describe("Profile Change Password Screen", () => {
       handleVerify: vi.fn(),
     };
 
-    useCaptchaForm.mockReturnValue(mockForm);
+    // @ts-ignore
+    vi.mocked(useCaptchaForm).mockReturnValue({ onSubmit: vi.fn(), ...mockForm });
 
     render(<ChangePassword />);
 
