@@ -1,0 +1,15 @@
+
+.Placeholder {
+  animation: 2.5s linear infinite Placeholder-shimmer;
+  background: linear-gradient(to right, var(--brown-6-color) 0%, var(--brown-5-color) 8%, var(--brown-6-color) 16%, var(--brown-6-color) 50%, var(--brown-5-color) 58%, var(--brown-6-color) 66%);
+  background-size: 200%;
+}
+
+@keyframes Placeholder-shimmer {
+  0% { 
+    background-position:  100%; 
+  }
+  100% { 
+    background-position: -100%; 
+  }
+}

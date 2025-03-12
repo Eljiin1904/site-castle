@@ -1,0 +1,35 @@
+
+.NoticeCard {
+  padding: 12px;
+  gap: 12px;
+  background: var(--brown-6-color);
+  border: var(--border);
+
+  &.info {    
+    border-left: 4px solid var(--dark-brown-color);
+    .icon {
+      color: var(--dark-brown-color);
+    }
+  }
+
+  &.success {    
+    border-left: 4px solid var(--green-color);
+    .icon {
+      color: var(--green-color);
+    }
+  }
+
+  &.warning {    
+    border-left: 4px solid var(--yellow-color);
+    .icon {
+      color: var(--yellow-color);
+    }
+  }
+
+  &.error {    
+    border-left: 4px solid var(--red-color);
+    .icon {
+      color: var(--red-color);
+    }
+  }
+}

@@ -1,0 +1,43 @@
+
+$rarity-0: rgb(140, 151, 182);
+$rarity-1: rgb(94, 152, 217);
+$rarity-2: rgb(51, 95, 253);
+$rarity-3: rgb(137, 71, 255);
+$rarity-4: rgb(255, 31, 232);
+$rarity-5: rgb(255, 64, 64);
+$rarity-6: rgb(228, 193, 20);
+$rarity-7: rgb(255, 183, 50);
+
+:root {
+  --rarity-0-color: #{$rarity-0};
+  --rarity-0-color-a1: #{rgba($rarity-0, 0.05)};
+  --rarity-0-color-a2: #{rgba($rarity-0, 0.1)};
+
+  --rarity-1-color: #{$rarity-1};
+  --rarity-1-color-a1: #{rgba($rarity-1, 0.05)};
+  --rarity-1-color-a2: #{rgba($rarity-1, 0.1)};
+
+  --rarity-2-color: #{$rarity-2};
+  --rarity-2-color-a1: #{rgba($rarity-2, 0.05)};
+  --rarity-2-color-a2: #{rgba($rarity-2, 0.1)};
+
+  --rarity-3-color: #{$rarity-3};
+  --rarity-3-color-a1: #{rgba($rarity-3, 0.05)};
+  --rarity-3-color-a2: #{rgba($rarity-3, 0.1)};
+
+  --rarity-4-color: #{$rarity-4};
+  --rarity-4-color-a1: #{rgba($rarity-4, 0.05)};
+  --rarity-4-color-a2: #{rgba($rarity-4, 0.1)};
+
+  --rarity-5-color: #{$rarity-5};
+  --rarity-5-color-a1: #{rgba($rarity-5, 0.05)};
+  --rarity-5-color-a2: #{rgba($rarity-5, 0.1)};
+
+  --rarity-6-color: #{$rarity-6};
+  --rarity-6-color-a1: #{rgba($rarity-6, 0.05)};
+  --rarity-6-color-a2: #{rgba($rarity-6, 0.1)};
+
+  --rarity-7-color: #{$rarity-7};
+  --rarity-7-color-a1: #{rgba($rarity-7, 0.05)};
+  --rarity-7-color-a2: #{rgba($rarity-7, 0.1)};
+}

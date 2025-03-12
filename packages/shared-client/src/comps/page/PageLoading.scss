@@ -1,0 +1,8 @@
+
+.PageLoading {
+  min-height: 60vh;
+
+  .AppBody.mobile & {
+    min-height: 70vh;
+  }
+}

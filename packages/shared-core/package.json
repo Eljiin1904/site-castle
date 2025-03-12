@@ -1,0 +1,21 @@
+{
+  "name": "@Chicken/shared-core",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf ./build && tsc",
+    "watch": "rimraf ./build && tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "events": "^3.3.0",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/events": "^3.0.3",
+    "@types/node": "^18.19.18",
+    "rimraf": "^5.0.6",
+    "typescript": "^5.4.5"
+  }
+}

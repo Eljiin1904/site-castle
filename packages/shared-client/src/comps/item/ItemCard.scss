@@ -1,0 +1,30 @@
+
+.ItemCard {
+  &:hover {
+
+    &.rarity-0 {
+      background-image: linear-gradient(to bottom, var(--rarity-0-color-a2), var(--rarity-0-color-a2));
+    }
+    &.rarity-1 {
+      background-image: linear-gradient(to bottom, var(--rarity-1-color-a2), var(--rarity-1-color-a2));
+    }
+    &.rarity-2 {
+      background-image: linear-gradient(to bottom, var(--rarity-2-color-a2), var(--rarity-2-color-a2));
+    }
+    &.rarity-3 {
+      background-image: linear-gradient(to bottom, var(--rarity-3-color-a2), var(--rarity-3-color-a2));
+    }
+    &.rarity-4 {
+      background-image: linear-gradient(to bottom, var(--rarity-4-color-a2), var(--rarity-4-color-a2));
+    }
+    &.rarity-5 {
+      background-image: linear-gradient(to bottom, var(--rarity-5-color-a2), var(--rarity-5-color-a2));
+    }
+    &.rarity-6 {
+      background-image: linear-gradient(to bottom, var(--rarity-6-color-a2), var(--rarity-6-color-a2));
+    }
+    &.rarity-7 {
+      background-image: linear-gradient(to bottom, var(--rarity-7-color-a2), var(--rarity-7-color-a2));
+    }
+  }
+}

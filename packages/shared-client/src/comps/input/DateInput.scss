@@ -1,0 +1,19 @@
+
+.DateInput {
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .react-datepicker-popper {
+    min-width: 350px;
+  }
+
+  .react-datepicker__input-container {
+    display: flex;
+  }
+
+  .react-datepicker__tab-loop {
+    position: static;
+  }
+}

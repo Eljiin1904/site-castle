@@ -1,0 +1,46 @@
+
+.DropdownMenu {
+
+  .menu-outer {
+    z-index: 100;
+    min-width: 100%;
+  }
+
+  &.align-left {  
+    .menu-outer {
+      left: 0;    
+    }
+  }
+  
+  &.align-right {
+    .menu-outer {
+      right: 0;  
+    }
+  }
+  
+  &.align-center {
+    justify-content: center;
+  }
+  
+  &.direction-bottom {
+    top: 100%;
+  
+    .menu-outer {
+      top: 0;
+    }
+  }
+  
+  &.direction-top {
+    bottom: 100%;
+  
+    .menu-outer {
+      bottom: 0;
+    }
+  }
+
+  &.clamp-height {    
+    .menu-inner {    
+      max-height: 280px;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+
+.ChestEditorPage .LootTable {
+
+  .win-input {
+    width: 116px;
+    height: 32px;
+
+    input {
+      color: var(--dark-brown-color);
+      text-align: right;
+    }
+
+    .Vector svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .drop-rate {
+    width: 92px;
+    height: 32px;
+  }
+}

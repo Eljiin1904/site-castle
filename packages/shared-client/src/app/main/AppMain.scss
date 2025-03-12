@@ -1,0 +1,13 @@
+
+.AppMain {
+  scroll-behavior: smooth;
+
+  .return-button {
+    bottom: 8px;
+
+    .AppBody.mobile &,
+    .AppBody.tablet & {
+      bottom: 70px;
+    }
+  }
+}

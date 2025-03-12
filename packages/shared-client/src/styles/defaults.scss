@@ -1,0 +1,68 @@
+@import "colors";
+
+:root {
+  --text-family: "Plus Jakarta Sans", sans-serif;
+  --title-family: "Terminal Grotesque", serif;
+  --max-width: 1280px;
+  --border: 1px solid var(--brown-5-color);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  position: relative;
+}
+
+main,
+div {
+  scrollbar-width: none;
+}
+
+div,
+span,
+p,
+input,
+textarea,
+li {
+  font-family: var(--text-family);
+  color: var(--brown-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--title-family);
+  color: var(--white-color);
+}
+
+button,
+input,
+textarea {
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--white-color);
+}
+a:hover {
+  text-decoration: none;
+  color: var(--sand-color);
+}
+
+html,
+#index,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  overflow: hidden;
+}

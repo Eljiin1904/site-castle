@@ -1,0 +1,8 @@
+
+.HolidayInfoPage .InfoCaseGrid {
+
+  .case-list >* {
+    height: 260px;
+    width: calc((100% / 4) - (12px * 5 / 6));
+  }
+}

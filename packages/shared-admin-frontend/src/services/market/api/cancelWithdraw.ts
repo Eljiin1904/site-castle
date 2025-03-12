@@ -1,0 +1,5 @@
+import { Http } from "@client/services/http";
+
+export function cancelWithdraw(data: { transactionId: string }): Promise<void> {
+  return Http.post("/market/cancel-withdraw", data);
+}

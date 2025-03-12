@@ -1,0 +1,14 @@
+
+.ItemPicker .ItemPickerCard {
+  width: calc((100% / 7) - (12px * 6 / 7));
+  height: 184px;
+
+  .image-holder {
+    height: 98px;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}

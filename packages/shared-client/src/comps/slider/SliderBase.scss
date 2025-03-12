@@ -1,0 +1,30 @@
+
+.Slider {  
+  .rc-slider {
+    border-radius: 0;
+  }
+
+  .rc-slider-track {
+    border-radius: 0;
+    background-color: var(--light-gray-color);
+  }
+
+  .rc-slider-rail {
+    border-radius: 0;
+    background-color: var(--gray-4-color);
+  }
+
+  .rc-slider-handle {
+    opacity: unset;
+    width: 18px;
+    height: 18px;
+    top: 2px;
+    background-color: var(--white-color);
+    border: 1px solid var(--gray-8-color);
+  }
+
+  .rc-slider-handle-dragging {
+    border: 1px solid var(--white-color) !important;
+    box-shadow: none !important;
+  }
+}

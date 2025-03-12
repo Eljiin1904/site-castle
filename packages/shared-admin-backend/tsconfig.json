@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./build",
+    "noEmit": true,
+    "paths": {
+      "@core/*": ["../shared-core/src/*"],
+      "@server/*": ["../shared-server/src/*"],
+      "#app/*": ["./src/*"],
+    }
+  },  
+  "include": [
+    "src", 
+    "../shared-core/build", 
+    "../shared-server/build"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [
+    { "path": "../shared-core" },
+    { "path": "../shared-server" }
+  ]
+}
