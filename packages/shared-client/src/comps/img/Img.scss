@@ -1,0 +1,15 @@
+
+.Img {  
+
+  img {
+    object-fit: cover;
+  }
+  
+  &.hide {
+    img {
+      visibility: hidden;
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+}

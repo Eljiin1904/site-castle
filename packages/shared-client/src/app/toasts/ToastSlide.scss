@@ -1,0 +1,45 @@
+.AppToasts .ToastSlide {
+  pointer-events: all;
+  width: 100%;
+  padding: 12px 16px;
+  gap: 12px;
+  background: var(--brown-5-color);
+  animation: AppToasts-ToastSlide-in 0.3s ease-in;
+
+  &.info {
+    border-left: 4px solid var(--blue-color);
+    .icon {
+      color: var(--blue-color);
+    }
+  }
+
+  &.success {
+    border-left: 4px solid var(--green-color);
+    .icon {
+      color: var(--green-color);
+    }
+  }
+
+  &.warning {
+    border-left: 4px solid var(--yellow-color);
+    .icon {
+      color: var(--yellow-color);
+    }
+  }
+
+  &.error {
+    border-left: 4px solid var(--red-color);
+    .icon {
+      color: var(--red-color);
+    }
+  }
+}
+
+@keyframes AppToasts-ToastSlide-in {
+  0% {
+    right: -150%;
+  }
+  100% {
+    right: 0;
+  }
+}

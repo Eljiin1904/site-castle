@@ -1,0 +1,9 @@
+
+.ChestPickerModal .PickerCard {
+  width: calc((100% / 4) - (12px * 3 / 4));
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}

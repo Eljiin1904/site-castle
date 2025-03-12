@@ -1,0 +1,39 @@
+
+.DashboardPage .DataTable {
+
+  .table-header {
+    height: 40px;
+  }
+
+  .table-item {
+    border-top: 1px solid var(--brown-4-color);
+    height: 40px;
+
+    &.regular {
+
+      .Span {
+        color: var(--white-color);
+      }
+    }
+
+    &.subtotal {
+      border-top: 1px solid var(--dark-brown-color);
+      border-bottom: 1px solid var(--dark-brown-color);
+
+      .Span {
+        font-weight: 600;
+        color: var(--white-color);
+      }
+    }
+
+    &.total {
+      border-top: 1px solid var(--yellow-color);
+      border-bottom: 1px solid var(--yellow-color);
+
+      .Span {
+        font-weight: 600;
+        color: var(--white-color);
+      }
+    }
+  }
+}

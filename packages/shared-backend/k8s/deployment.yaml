@@ -1,0 +1,31 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: shared-backend 
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 1800
+  selector:
+    matchLabels:
+      app: shared-backend
+  template:
+    metadata:
+      labels:
+        app: shared-backend 
+    spec:
+      containers:
+        - name: shared-backend 
+          image: 183631306381.dkr.ecr.us-east-2.amazonaws.com/pidwin/castle-backend
+          env:
+            - name: NODE_ENV
+              value: "devcloud"
+            - name: DB_URI
+              value: "mongodb+srv://devcloud:QQGBdwKVHaYKzvZm@devcluster.oxalc.mongodb.net/?retryWrites=true&w=majority&appName=DevCluster"
+            - name: AWS_ID
+              value: "AKIAUX3EXIFVAOIJ2U4Z"
+            - name: AWS_SECRET
+              value: "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"
+            - name: AWS_REGION
+              value: "us-east-1"
+          ports:
+          - containerPort: 5000

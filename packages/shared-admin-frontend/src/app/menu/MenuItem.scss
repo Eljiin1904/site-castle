@@ -1,0 +1,23 @@
+
+.AppMenu .MenuItem {
+  height: 48px;
+  border-left: 4px solid transparent;
+
+  .Span {
+    white-space: nowrap;
+  }
+  
+  &:hover,
+  &.active {
+    border-left-color: var(--yellow-color);
+    background-color: var(--brown-5-color);
+  
+    .icon {
+      color: var(--yellow-color);
+    }
+
+    .label {
+      color: var(--white-color);
+    }
+  }
+}

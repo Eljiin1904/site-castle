@@ -1,0 +1,10 @@
+
+.Form {
+  width: 100%;
+  flex-flow: column;
+  gap: 24px;
+
+  &.error >*:not(.error-box) {
+    opacity: 0;
+  }
+}

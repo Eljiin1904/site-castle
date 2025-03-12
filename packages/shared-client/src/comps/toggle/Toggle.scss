@@ -1,0 +1,53 @@
+
+.Toggle {
+  
+  border: 1px solid var(--brown-4-color);
+  border-radius: 100px;
+  height: 32px;
+  width: 56px;
+
+  .knob {
+    color: var(--brown-5-color);
+  }
+
+  &.active {
+    background: var(--sand-color);
+  }
+
+  &:not(.active) {
+    background: var(--brown-4-color);
+
+    .knob {
+      color: var(--light-sand-color);
+    }
+  }
+
+  &.disabled {
+    
+    border: 1px solid var(--brown-4-color);
+    background: none;
+    cursor: not-allowed;
+
+    .knob {
+      color: var(--light-sand-color);
+    }
+  }
+
+  &:hover:not(.disabled) {
+    cursor: pointer;
+
+    &.active {      
+      background: var(--dark-yellow-color);
+    }
+
+    &:not(.active) {
+      background: var(--black-hover-color);      
+    }
+  }
+
+  label {
+    color: var(--dark-sand-color);
+    font-size: 12px;
+    line-height: 20px;
+  }
+}

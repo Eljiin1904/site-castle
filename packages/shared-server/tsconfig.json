@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./build",
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
+    "tsBuildInfoFile": "./build/tsbuildinfo.json",
+    "paths": {
+      "@core/*": ["../shared-core/src/*"],
+      "#server/*": ["./src/*"],
+    }
+  },
+  "include": [
+    "src", 
+    "../shared-core/build"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [
+    { "path": "../shared-core" }
+  ]
+}

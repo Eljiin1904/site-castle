@@ -1,0 +1,53 @@
+
+.DropdownItem {  
+  width: 100%;
+  align-items: center;
+  padding: 16px 16px;
+  gap: 12px;
+  background: var(--brown-4-color);
+  
+  &:not(:first-child){
+    border-top: 1px solid var(--dark-brown-hover-color);
+  }
+
+  .label {
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .icon,
+  .label {
+    color: var(--sand-color);
+  }
+
+  &:hover {  
+    cursor: pointer;
+    .label {
+      color: var(--light-sand-color);
+    }
+
+    .icon.left {
+      color: var(--light-sand-color);
+    }
+  }
+
+  &.active {
+    .label {
+      color: var(--sand-color);
+    }
+    .icon.left {
+      color: var(--yellow-color);
+    }
+  }
+
+  &.lg {
+
+    padding: 16px 24px;
+
+    .label {
+      font-size: 16px;
+    }
+  }
+  
+}

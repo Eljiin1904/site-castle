@@ -1,0 +1,18 @@
+
+.Table {
+
+  .table-header, 
+  .table-item {
+    height: 48px;
+    padding: 0 16px;
+  }
+
+  .table-item:hover {
+    background-color: var(--brown-8-color);
+  }
+
+  .table-header >*,
+  .table-item >* {
+    flex-basis: 0%;
+  }
+}

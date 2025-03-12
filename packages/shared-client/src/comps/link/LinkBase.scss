@@ -1,0 +1,11 @@
+
+.Link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yellow-color);
+  text-decoration: none;
+
+  &._hover:hover {
+    text-decoration: none;
+  }
+}

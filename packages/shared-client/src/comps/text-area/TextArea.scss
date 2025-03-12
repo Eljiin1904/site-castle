@@ -1,0 +1,40 @@
+
+.TextArea {
+  width: 100%;
+
+  textarea {
+    width: 100%;
+    padding: 12px;    
+    font-weight: 600;
+    color: var(--white-color);
+    background: var(--brown-8-color);
+    border: 1px solid var(--brown-5-color);
+    resize: none;
+    overflow-y: hidden;
+  }
+
+  textarea,
+  ::placeholder {
+    font-size: 14px;
+  }
+
+  ::placeholder {
+    color: var(--dark-brown-color);
+  }
+  
+  textarea:hover {
+    border: 1px solid var(--dark-brown-color);
+    cursor: text;
+  }
+
+  textarea:focus {
+    border: 1px solid var(--sand-color);
+  }
+
+  &.disabled {
+    textarea {
+      border: 1px solid var(--brown-5-color);
+      cursor: not-allowed;
+    }
+  }
+}

@@ -1,0 +1,103 @@
+
+.DropdownButton {
+
+  min-width: 200px;
+  height: 40px;
+  padding: 0 16px;
+  gap: 12px;
+  align-items: center;
+  background: var(--dark-brown-color);
+  border: 1px solid var(--brown-4-color);
+  justify-content: start;
+  display: flex;
+
+  .icon {
+    color: var(--dark-sand-color);
+  }
+
+  span {
+
+    font-size: 14px;
+    line-height: 20px;
+    text-wrap: nowrap;
+    font-weight: 500;
+  }
+
+  .tag {
+    color: var(--dark-sand-color);
+  }
+
+  .label {
+    color: var(--dark-sand-color);
+    font-weight: 600;
+  }
+
+  &.placeholder{
+    
+    .label {
+      color: var(--dark-sand-color);
+    }
+  }
+
+  &.disabled {
+
+    cursor: not-allowed;
+    pointer-events: none;
+
+    border: 1px solid var(--dark-brown-active-color);
+    background-color: var(--dark-brown-color);
+    cursor: not-allowed;
+    .icon, span,&.placeholder > .label {
+      color: var(--dark-brown-hover-color);
+      cursor: inherit;
+    }
+  }
+  
+  &.dark {
+    background: var(--brown-8-color);
+    border: 1px solid var(--brown-4-color);
+
+  &.lg {
+    
+    height: 48px;
+    padding: 0 24px;
+
+    .label  {
+
+      font-size: 16px;
+      line-height: 24px;      
+    }
+  } 
+  
+  &:hover , &.open {
+    border: 1px solid var(--dark-brown-hover-color);
+    cursor: pointer;
+  }
+  
+  &.secondary {
+    
+    background: var(--brown-5-color);
+    border: 1px solid var(--brown-4-color);
+
+    &:hover {
+      background: linear-gradient(0deg, var(--brown-5-color) 0%, var(--brown-4-color) 100%);
+    }
+  }
+
+  &.collapse {
+    min-width: unset;
+  }
+
+  &.expand {
+    height: 56px;
+  }
+
+  &.placeholder {
+    
+    .label {
+      color: var(--dark-sand-color);
+      
+    }
+  }
+
+}

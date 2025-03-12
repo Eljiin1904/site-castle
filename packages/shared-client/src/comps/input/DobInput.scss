@@ -1,0 +1,26 @@
+
+.DobInput {
+
+  .Dropdown {
+    width: 100%;
+    min-width: 128px;
+  }
+
+  .DropdownButton {
+    min-width: unset;
+  }
+
+  .error-text {
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+    text-align: right;
+    color: var(--red-color);
+  }
+
+  &.error {
+    .Input, .DropdownButton {
+      border: 1px solid var(--red-color);
+    }
+  }
+}

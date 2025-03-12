@@ -1,0 +1,9 @@
+
+.RafflesInfoPage .InfoItemCard {
+  width: calc((100% / 5) - (12px * 4 / 5));
+  height: 184px;
+
+  .image-holder {
+    height: 98px;
+  }
+}

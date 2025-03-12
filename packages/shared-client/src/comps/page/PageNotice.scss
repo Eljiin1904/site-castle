@@ -1,0 +1,12 @@
+
+.PageNotice {
+  min-height: 60vh;
+
+  .message {
+    max-width: 600px;
+  }
+
+  .AppBody.mobile & {
+    min-height: 70vh;
+  }
+}

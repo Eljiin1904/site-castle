@@ -1,0 +1,27 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./build",
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,    
+    "jsx": "react-jsx",
+    "tsBuildInfoFile": "./build/tsbuildinfo.json",
+    "paths": {
+      "@core/*": ["../shared-core/src/*"],
+      "#client/*": ["./src/*"],
+    }
+  },
+  "include": [
+    "src", 
+    "../shared-core/build"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [
+    { "path": "../shared-core" }
+  ]
+}

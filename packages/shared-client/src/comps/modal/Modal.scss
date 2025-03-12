@@ -1,0 +1,107 @@
+.Modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  .modal-backdrop {
+    background: rgba(31, 32, 32, 0.703);
+    animation: Modal-fade-in 0.2s ease-in;
+  }
+
+  .modal-outer {
+    pointer-events: none;
+    margin: auto;
+  }
+
+  .modal-inner {
+    background: var(--brown-6-color);;
+    pointer-events: visible;
+    max-height: calc(100% - 40px);
+    animation: Modal-slide-down 0.25s ease-in;
+  }
+
+  &.width-sm {
+    .modal-inner {
+      max-width: 400px;
+    }
+  }
+
+  &.width-md {
+    .modal-inner {
+      max-width: 500px;
+    }
+  }
+
+  &.width-lg {
+    .modal-inner {
+      max-width: 680px;
+    }
+  }
+
+  &.width-xl {
+    .modal-inner {
+      max-width: 800px;
+    }
+  }
+  
+  &.width-xxl {
+    .modal-inner {
+      max-width: 900px;
+    }
+  }
+
+  &.mobile-fs {
+    .AppBody.mobile & {
+      .modal-outer {
+        padding: 0;
+      }
+  
+      .modal-inner {
+        height: 100% !important;
+        max-height: 100vh;
+        width: 100%;
+        max-width: unset;
+        border-radius: 0;
+        animation: Modal-slide-in 0.25s ease-in;
+      }
+    }
+  }
+
+  .AppBody.tablet & {
+    .modal-inner {
+      max-height: 90%;
+    }
+  }
+}
+
+@keyframes Modal-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes Modal-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes Modal-slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

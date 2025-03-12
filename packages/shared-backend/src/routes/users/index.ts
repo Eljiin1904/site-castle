@@ -1,0 +1,48 @@
+import { Router } from "express";
+import checkUsername from "./checkUsername";
+import confirmEmail from "./confirmEmail";
+import confirmExclusion from "./confirmExclusion";
+import editAvatar from "./editAvatar";
+import editEmail from "./editEmail";
+import editPassword from "./editPassword";
+import extendExclusion from "./extendExclusion";
+import getBlockUsers from "./getBlockUsers";
+import getTransaction from "./getTransaction";
+import getTransactions from "./getTransactions";
+import requestExclusion from "./requestExclusion";
+import resetPassword from "./resetPassword";
+import sendEmailLink from "./sendEmailLink";
+import sendRecoverLink from "./sendRecoverLink";
+import setUserBlocked from "./setUserBlocked";
+import toggleSetting from "./toggleSetting";
+import unlinkAccount from "./unlinkAccount";
+import verifyTier1 from "./verifyTier1";
+import verifyTier1Part1 from "./verifyTier1Part1";
+import verifyTier1Part2 from "./verifyTier1Part2";
+import verifyTier1Part3 from "./verifyTier1Part3";
+
+const router = Router();
+
+checkUsername(router);
+confirmEmail(router);
+confirmExclusion(router);
+editAvatar(router);
+editEmail(router);
+editPassword(router);
+extendExclusion(router);
+getBlockUsers(router);
+getTransactions(router);
+getTransaction(router);
+requestExclusion(router);
+resetPassword(router);
+sendEmailLink(router);
+sendRecoverLink(router);
+setUserBlocked(router);
+toggleSetting(router);
+unlinkAccount(router);
+verifyTier1(router);
+verifyTier1Part1(router);
+verifyTier1Part2(router);
+verifyTier1Part3(router);
+
+export default router;

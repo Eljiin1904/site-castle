@@ -1,0 +1,8 @@
+
+.HolidayCreatePage .CreateCaseGrid {
+
+  .case-list >* {
+    height: 280px;
+    width: calc((100% / 4) - (12px * 5 / 6));
+  }
+}

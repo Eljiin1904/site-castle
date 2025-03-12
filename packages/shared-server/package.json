@@ -1,0 +1,38 @@
+{
+  "name": "@Chicken/shared-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf ./build && tsc",
+    "watch": "rimraf ./build && tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.521.0",
+    "@aws-sdk/client-secrets-manager": "^3.592.0",
+    "@slack/web-api": "^7.1.0",
+    "axios": "^1.6.7",
+    "cookie": "^0.6.0",
+    "cookie-parser": "^1.4.6",
+    "customerio-node": "^4.1.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "fireblocks-sdk": "^5.26.0",
+    "handlebars": "^4.7.8",
+    "mongodb": "^6.14.2",
+    "nanoid": "^5.0.6",
+    "rate-limiter-flexible": "^4.0.1",
+    "socket.io": "^4.8.1",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.6.0",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^4.17.21",
+    "@types/node": "^18.19.18",
+    "mongodb": "^6.14.2",
+    "rimraf": "^5.0.6",
+    "typescript": "^5.4.5"
+  }
+}
