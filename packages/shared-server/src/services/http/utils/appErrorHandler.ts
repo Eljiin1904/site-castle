@@ -13,21 +13,21 @@ export const appErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
       console.error(err);
     }
     if (!res.headersSent) {
-      res.status(400).json({ error: err.message , code: err.cause});
+      res.status(400).json({ error: err.message , cause: err.cause});
     }
   } else if (err instanceof ValidationError) {
     if (config.env === "development" || config.env === "devcloud") {
       console.error(err.message);
     }
     if (!res.headersSent) {
-      res.status(400).json({ error: err.message , code: err.cause});
+      res.status(400).json({ error: err.message , cause: err.cause});
     }
   } else if (err instanceof RateLimitError) {
     if (config.env === "development" || config.env === "devcloud") {
       console.error(err);
     }
     if (!res.headersSent) {
-      res.status(429).json({ error: err.message, code: err.cause });
+      res.status(429).json({ error: err.message, cause: err.cause });
     }
   } else if (isAxiosError(err)) {
     console.error(`AxiosError: ${err.message}`);
@@ -36,7 +36,7 @@ export const appErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     log({ message: err.message, ip: req.trueIP });
 
     if (!res.headersSent) {
-      res.status(500).json({ error: err.message , code: err.cause});
+      res.status(500).json({ error: err.message , cause: err.cause});
     }
   } else if (err instanceof Error) {
     console.error(err);
@@ -52,7 +52,7 @@ export const appErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     log({ message: "Unknown error encountered!", ip: req.trueIP });
 
     if (!res.headersSent) {
-      res.status(500).json({ error: "Unknown error.", code: err.cause });
+      res.status(500).json({ error: "Unknown error.", cause: err.cause });
     }
   }
 };
