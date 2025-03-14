@@ -14,16 +14,16 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
 
     return (
       <Div align="center">
-        {"xp" in user && (
+        {/* {"xp" in user && (
           <UserBadge
             xp={user.xp}
             mr={6}
           />
-        )}
+        )} */}
         <Span
-          size={13}
+          size={12}
           fontWeight="medium"
-          color={role?.color || "white"}
+          color={role?.color || "dark-sand"}
         >
           {user.name}
         </Span>

@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vite/client", "@testing-library/jest-dom"],
+    "types": ["vite/client"],
     "jsx": "react-jsx",
     "baseUrl": ".",
     "rootDir": "./src",
@@ -15,10 +15,10 @@
     }
   },
   "include": [
-    "src",
+    "src", 
     "../shared-core/build", 
     "../shared-client/build"
-   ],
+  ],
   "exclude": [
     "node_modules"
   ],

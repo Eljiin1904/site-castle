@@ -1,0 +1,136 @@
+{
+  "menu": {
+    "home": "Inicio",
+    "referrals": "Referidos",
+    "token": "Token",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "games": "Juegos",
+    "wallet": "Billetera",
+    "tokens": "Tokens",
+    "blog": "Blog",
+    "fairness": "Equidad"
+  },
+  "games": {
+    "all": "Todos los juegos",
+    "crash": "Crash",
+    "duel": "Duelos",
+    "dice": "Dados",
+    "limbo": "Limbo",
+    "blackjack": "Blackjack",
+    "mines": "Minas",
+    "cases": "Cofres",
+    "casesBattles": "Batalla de Cofres",
+    "double": "Doble",
+    "slots": "Tragamonedas",
+    "liveCasino": "Casino en vivo",
+    "gameShows": "Programas de juegos",
+    "originals": "Juegos originales",
+    "hot": "Juegos populares"
+  },
+  "footer": {
+    "socials": "Redes sociales",
+    "platform": "Plataforma",
+    "about": "Sobre nosotros",
+    "support": "Soporte",
+    "faq": "FAQ's",
+    "terms": "Términos de servicio",
+    "privacy": "Política de privacidad",
+    "hotline": "Línea directa de juegos",
+    "selfExclusion": "Autoexclusión",
+    "trustpilot": "Trustpilot",
+    "disclaimer": "es un nombre de marca de Bull Gaming N.V. Dirección de la empresa: Abraham de Veerstraat 9, Willemstad, Curazao. Rollbit está autorizado y autorizado por el Gobierno de Curazao y opera bajo la Licencia Maestra de Proveedor de Servicios de Juegos, N.V. #365/JAZ Bull Gaming N.V. los pagos pueden ser procesados por WINGAMING SUPPORT LIMITED (Número de registro HE406701). Dirección de la empresa: Avlonos, 1, MARIA HOUSE, 1075, Nicosia, Chipre El comercio de criptomonedas no es un juego de azar y, por lo tanto, no está cubierto por nuestra licencia de juego.",
+    "gamble": "Juego",
+    "aware": "Consciente",
+    "18+": "18+",
+    "rng":"RNG",
+    "certified": "certificado",
+    "acceptedTokens": "Tokens aceptados",
+    "copyright": "Todos los derechos reservados",
+    "partners": "Socios",
+    "press": "Prensa"
+  },
+  "signin": {
+    "title": "Iniciar sesión en SandCasino",    
+    "forgot": "¿Olvidaste tu contraseña?",
+    "login": "Iniciar sesión",
+    "remember": "Recuérdame",
+    "form": {
+      "username": "Nombre de usuario o correo electrónico",
+      "usernamePlaceholder": "Ingrese su nombre de usuario o correo electrónico...",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Ingrese su contraseña..."
+    },
+    "success": "¡Bienvenido de nuevo, {{username}}!"
+  },
+  "forgot": {
+    "title": "Olvidé mi contraseña",
+    "description": "Por favor, ingrese el correo electrónico asociado con su cuenta.",
+    "form": {
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Ingrese el correo electrónico...",
+      "submit": "Recuperar contraseña"
+    },
+    "sent": {
+      "title": "Correo electrónico enviado",
+      "description": "Si no recibe un enlace de recuperación de contraseña, verifique su carpeta de spam.",
+      "didntReceive": "¿No recibiste el correo electrónico? Reenviar contraseña."
+    }
+  },
+  "reset": {
+    "title": "Restablecer contraseña",
+    "form": {
+      "password": "Nueva contraseña",
+      "passwordPlaceholder": "Ingrese la nueva contraseña...",
+      "confirm": "Confirmar nueva contraseña",
+      "confirmPlaceholder": "Confirmar contraseña...",
+      "submit": "Establecer nueva contraseña"
+    }
+  },
+  "register": {
+    "title": "Crear una cuenta en SandCasino",
+    "form": {
+      "username": "Nombre de usuario",
+      "usernamePlaceholder": "Ingrese el nombre de usuario...",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Ingrese el correo electrónico...",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Ingrese la contraseña...",
+      "confirm": "Repetir contraseña",
+      "confirmPlaceholder": "Vuelva a ingresar la contraseña...",
+      "referral": "Código (Opcional)", 
+      "referralPlaceholder": "Ingrese el código...",
+      "submit": "Registrarse"
+    },
+    "extraValidations": {
+      "username": {
+        "available": "Nombre de usuario disponible!",
+        "unavailable": "Nombre de usuario no disponible.",
+        "required": "Nombre de usuario requerido."
+      }
+    },
+    "disclaimer": "Al registrarte, aceptas nuestros <0>{{link}}</0> y que tienes más de 18 años.",
+    "success": "Bienvenido, {{username}}!",
+    "confirm": {
+      "title": "Confirmar correo electrónico",
+      "description": "Para confirmar tu correo electrónico, haz clic en el button de abajo.",
+      "success": "Correo electrónico confirmado."
+    }
+  },
+  "bets": {
+    "recentBets": "Apuestas Recientes",
+    "myBets": "Mis apuestas",
+    "allBets": "Todas las apuestas",
+    "highRollers": "Grandes apostadores",
+    "luckyBets": "Apuestas afortunadas",
+    "headers" : {
+      "game": "Juego",
+      "user": "Usuario",
+      "time": "Hora",
+      "amount": "Cantidad",
+      "multiplier": "Multiplicador",
+      "payout": "Pago"
+    }
+  }
+}

@@ -13,7 +13,7 @@ export default Sockets.createListener({
 
     let documents;
 
-    if (scope === "all" || scope === "highroller") {
+    if (scope === "all" || scope === "highroller" || scope === "lucky") {
       socket.join(`bet-feed_${scope}`);
       documents = manager.log[scope];
     } else {

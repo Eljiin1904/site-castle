@@ -1,16 +1,18 @@
 import { Div } from "@client/comps/div/Div";
-import { PageTitle } from "@client/comps/page/PageTitle";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { DiceFeedCard } from "./DiceFeedCard";
-import { ButtonGroup } from "@client/comps/button/ButtonGroup";
 import { DiceFeedHeader } from "./DiceFeedHeader";
-import { DiceHistoryOverlay } from "./DiceHistoryOverlay";
 import "./DiceFeed.scss";
+import { BetNav } from "#app/comps/bet-board/BetNav";
+import { SiteBetScope } from "@core/types/site/SiteBetScope";
+import { useState } from "react";
+import { DiceFeedRow } from "./DiceFeedRow";
+import { HistoryOverlay } from "#app/comps/bet-board/HistoryOverlay";
 
 export const DiceFeed = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
-  const small = layout === "mobile";
   const diceFeed = useAppSelector((x) => x.dice.feed);
+  const [scope, setScope] = useState<SiteBetScope>("all");
+
   return (
     <Div
       className="DiceFeed"
@@ -20,18 +22,11 @@ export const DiceFeed = () => {
       mt={layout === "mobile" ? 40 : 56}
       px={layout === "mobile" ? 20 : undefined}
     >
-      <PageTitle
-        heading="DICE GAME BETS"
-        mb={small ? 0 : 16}
+      <BetNav
+        heading="Dice Game Bets"
+        scope={scope}
+        setScope={setScope}
       />
-      <ButtonGroup
-          options={["About", "All Bets","High Rollers","Lucky Bets"]}
-          size="md"
-          labelSize={12}
-          gap={16}
-          value={["about", "all", "high", "lucky"].indexOf("all")}  
-          setValue={(x) => console.log(x)}
-        />
       <Div
        column
         fx
@@ -39,12 +34,9 @@ export const DiceFeed = () => {
       >
         {diceFeed.length > 0 && <DiceFeedHeader />}
         {diceFeed.map((roll) => (
-          <DiceFeedCard
-            key={roll._id}
-            roll={roll}
-          />
+          <DiceFeedRow key={roll._id} roll={roll} />
         ))}
-        {diceFeed.length > 9 && <DiceHistoryOverlay />}
+        {diceFeed.length > 9 && <HistoryOverlay />}
       </Div>
     </Div>
   );

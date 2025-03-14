@@ -20,58 +20,62 @@ export const ChatInput = () => {
   const sendMessage = useSendMessage();
 
   return (
-    <Div column>
-      <TextArea
-        id="chat-input"
-        className="ChatInput"
-        forwardRef={textAreaRef}
-        placeholder="Say to all..."
-        value={text}
-        onChange={(x) => dispatch(Chat.setInput(x))}
-        onSubmit={sendMessage}
+    <Div fx gap={8} position="relative">
+      <Div fx>
+        <TextArea
+          id="chat-input"
+          className="ChatInput"
+          forwardRef={textAreaRef}
+          placeholder="Say to all..."
+          value={text}
+          onChange={(x) => dispatch(Chat.setInput(x))}
+          onSubmit={sendMessage}
+        />
+        <Div
+          fx
+          position="absolute"
+          style={{ bottom: "calc(100% + 4px)" }}
+        >
+          <ReplyPopout />
+        </Div>
+        <Div
+          fx
+          position="absolute"
+          style={{ bottom: "calc(100% + 4px)" }}
+        >
+          <MentionPopout
+            text={text}
+            onMentionClick={(newText) => {
+              dispatch(Chat.setInput(newText));
+              document.getElementById("chat-input")?.focus();
+            }}
+          />
+        </Div>
+        <Div
+          position="absolute"
+          right={0}
+          center
+          mr={16}
+          bottom={12}
+        >
+          <EmojiMenu
+            onEmojiClick={(emoji) => {
+              dispatch(Chat.setInput(text + emoji));
+              document.getElementById("chat-input")?.focus();
+            }}
+          />
+        </Div>
+      </Div>
+      <Vector
+        as={SvgSend}
+        size={16}
+        color="brown-5"
+        bg="sand"
+        p={4}
+        hover="highlight"
+        onClick={sendMessage}
+        width={40}
       />
-      <Div
-        fx
-        position="absolute"
-        style={{ bottom: "calc(100% + 4px)" }}
-      >
-        <ReplyPopout />
-      </Div>
-      <Div
-        fx
-        position="absolute"
-        style={{ bottom: "calc(100% + 4px)" }}
-      >
-        <MentionPopout
-          text={text}
-          onMentionClick={(newText) => {
-            dispatch(Chat.setInput(newText));
-            document.getElementById("chat-input")?.focus();
-          }}
-        />
-      </Div>
-      <Div
-        position="absolute"
-        right={0}
-        center
-        mr={8}
-        bottom={9}
-      >
-        <EmojiMenu
-          onEmojiClick={(emoji) => {
-            dispatch(Chat.setInput(text + emoji));
-            document.getElementById("chat-input")?.focus();
-          }}
-        />
-        <Vector
-          as={SvgSend}
-          size={16}
-          color="yellow"
-          p={4}
-          hover="highlight"
-          onClick={sendMessage}
-        />
-      </Div>
     </Div>
   );
 };

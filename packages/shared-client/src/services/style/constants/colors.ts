@@ -27,7 +27,7 @@ export const colors = {
   "dark-orange": "#a15400",
   blue: "#236ede",
   "light-blue": "#8ebbff",
-  "dark-blue": "#002f75",
+  "dark-blue": "#4D6BD8",
   purple: "#bd5aff",
   "light-purple": "#d89dff",
   "dark-purple": "#871dce",
@@ -51,7 +51,7 @@ export const colors = {
   "light-sand-hover": "#F4F0C2",
   "light-sand-active": "#FBF8E4",
   /**Button Primary Yellow Colors */
-  sand: "#F1E9A0",
+  "sand": "#F1E9A0",
   "sand-hover": "#F3EDBA",
   "sand-active": "#E4D869",
   /**Button Secondary Yellow Colors */
@@ -69,5 +69,7 @@ export const colors = {
   "brown-5": "#1D1A19",
   "brown-5-opacity": "#1D1A191A",
   "brown-5-hover": "#1D1A1933",
+  "black-cases": "#110f07",
+  "chat-hover": '#101010'
 } as const;
 

@@ -17,12 +17,13 @@ export const ChestCard: FC<ChestCardProps> = ({
   children,
   ...forwardProps
 }) => {
+  
+  const chestImageId = chest.imageId;
   return (
     <Card
       className="ChestCard"
       column
       align="center"
-      p={16}
       fx={undefined}
       {...forwardProps}
     >
@@ -32,20 +33,24 @@ export const ChestCard: FC<ChestCardProps> = ({
       >
         <Img
           type="png"
-          path={`/chests/${chest.imageId}`}
-          width="136px"
+          path={`/chests/${chestImageId}`}
+          width="100%"
+          alt={`${chest.displayName} Thumbnail`}
         />
       </Div>
       <Span
         weight="semi-bold"
         textOverflow="ellipsis"
-        mt={12}
+        color="light-sand"
+        fontSize={16}
+        mt={32}
       >
         {chest.displayName}
       </Span>
       <Tokens
         value={chest.openCost}
-        mt={12}
+        mt={8}
+        color="dark-sand"
       />
       {children}
     </Card>

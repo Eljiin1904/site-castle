@@ -17,7 +17,10 @@ export const dob = (name: string = "Date of birth") => {
         x.month === undefined ||
         x.year === undefined
       ) {
-        return ctx.createError({ message: `${name} is required.` });
+        return ctx.createError({ message: {
+          key: 'validations.mixed.required',
+          value: {label: name}
+        } });
       }
 
       if (
@@ -36,10 +39,11 @@ export const dob = (name: string = "Date of birth") => {
 
       if (age < 18) {
         return ctx.createError({
-          message: "You do not meet the minimum age requirement.",
+          message: {
+            key: 'validations.dob.min'
+          }
         });
       }
-
       return true;
     },
   });

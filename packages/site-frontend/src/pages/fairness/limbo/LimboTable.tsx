@@ -38,7 +38,8 @@ const MobileTable = ({ results, isLoading }: LimboTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () => Dialogs.open("primary", <FairnessLimboModal result={x} />),
+        onClick: () =>
+          Dialogs.open("primary", <FairnessLimboModal result={x} />),
       })}
       columns={[
         {
@@ -107,7 +108,8 @@ export const TabletTable = ({ results, isLoading }: LimboTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () => Dialogs.open("primary", <FairnessLimboModal result={x} />),
+        onClick: () =>
+          Dialogs.open("primary", <FairnessLimboModal result={x} />),
       })}
       columns={[
         {
@@ -120,7 +122,9 @@ export const TabletTable = ({ results, isLoading }: LimboTableProps) => {
           heading: "Date",
           grow: 4,
           justify: "flex-start",
-          rowRenderer: (x) => <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>,
+          rowRenderer: (x) => (
+            <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>
+          ),
         },
         {
           heading: "Target",
@@ -152,7 +156,7 @@ export const TabletTable = ({ results, isLoading }: LimboTableProps) => {
           heading: "Input",
           grow: 1,
           justify: "flex-end",
-          rowRenderer: () => (
+          rowRenderer: (x) => (
             <Button
               kind="secondary"
               size="xs"
@@ -173,7 +177,8 @@ export const LaptopDesktopTable = ({ results, isLoading }: LimboTableProps) => {
       emptyMessage="No results found."
       onRowProps={(x) => ({
         type: "action",
-        onClick: () => Dialogs.open("primary", <FairnessLimboModal result={x} />),
+        onClick: () =>
+          Dialogs.open("primary", <FairnessLimboModal result={x} />),
       })}
       columns={[
         {
@@ -186,7 +191,9 @@ export const LaptopDesktopTable = ({ results, isLoading }: LimboTableProps) => {
           heading: "Date",
           grow: 3,
           justify: "flex-start",
-          rowRenderer: (x) => <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>,
+          rowRenderer: (x) => (
+            <Span color="white">{Dates.toTimestamp(x.timestamp)}</Span>
+          ),
         },
         {
           heading: "Target",

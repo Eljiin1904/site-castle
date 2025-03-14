@@ -1,0 +1,141 @@
+{
+  "menu": {
+    "home": "Home",
+    "referrals": "Referrals",
+    "token": "Token",
+    "login": "Log In",
+    "logout": "Logout",
+    "register": "Register",
+    "games": "Games",
+    "wallet": "Wallet",
+    "tokens": "Tokens",
+    "blog": "Blog",
+    "fairness": "Fairness"
+  },
+  "games": {
+    "all": "All Games",
+    "crash": "Crash Game",
+    "duel": "Duel Game",
+    "dice": "Dice",
+    "limbo": "Limbo",
+    "blackjack": "Blackjack",
+    "mines": "Mines",
+    "cases": "Cases",
+    "casesBattles": "Cases Battles",
+    "double": "Double",
+    "slots": "Slots",
+    "liveCasino": "Live Casino",
+    "gameShows": "Game Shows",
+    "originals": "Original Games",
+    "hot": "Hot Games"
+  },
+  "footer": {
+    "socials": "Socials",
+    "platform": "Platform",
+    "about": "About Us",
+    "support": "Support",
+    "faq": "FAQ's",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "hotline": "Gaming Hotline",
+    "selfExclusion": "Self Exclusion",
+    "trustpilot": "Trustpilot",
+    "disclaimer": "is a brand name of Bull Gaming N.V. Company Address: Abraham de Veerstraat 9, Willemstad, Curacao. Rollbit is licensed and authorized by the Government of Curaçao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ Bull Gaming N.V. payments can be processed by WINGAMING SUPPORT LIMITED (Registration Number HE406701). Company Address: Avlonos, 1, MARIA HOUSE, 1075, Nicosia, Cyprus Crypto trading is not gambling, and therefore not covered by our gaming license.",
+    "gamble": "Gamble",
+    "aware": "Aware",
+    "18+": "18+",
+    "rng":"RNG",
+    "certified": "certified",
+    "acceptedTokens": "Accepted Tokens",
+    "copyright": "All rights reserved",
+    "partners": "Partners",
+    "press": "Press"
+  },
+  "signin": {
+    "title": "Sign In to SandCasino",    
+    "forgot": "Forgot Password?",
+    "login": "Log In",
+    "remember": "Remember me",
+    "form": {
+      "username": "Username or email",
+      "usernamePlaceholder": "Enter your username or email...",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password..."
+    },
+    "success": "Welcome back, {{username}}!"
+  },
+  "forgot": {
+    "title": "Forgot Password",
+    "description": "Please enter the email associated with your account.",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "Enter email...",
+      "submit": "Recover Password"
+    },
+    "sent": {
+      "title": "Password Recovery Sent",
+      "description": "If you don't receive a password recovery link, please check your spam folder.",
+      "didntReceive": "Didn't receive the email? Resend Password."
+    }
+  },
+  "reset": {
+    "title": "Reset Password",
+    "form": {
+      "password": "New Password",
+      "passwordPlaceholder": "Enter new password...",
+      "confirm": "Confirm New Password",
+      "confirmPlaceholder": "Confirm password...",
+      "submit": "Set Mew Password"
+    },
+    "success": {
+      "title": "Password Reset",
+      "description": "Your password has been successfully reset.",
+      "login": "Log In"
+    }
+  },
+  "register": {
+    "title": "Register to SandCasino",
+    "form": {
+      "username": "Username",
+      "usernamePlaceholder": "Enter username...",
+      "email": "Email",
+      "emailPlaceholder": "Enter email...",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password...",
+      "confirm": "Repeat Password",
+      "confirmPlaceholder": "Reenter password...",
+      "referral": "Code (Optional)",
+      "referralPlaceholder": "Enter code...",
+      "submit": "Register"
+    },
+    "extraValidations": {
+      "username": {
+        "available": "Username is available!",
+        "unavailable": "Username is unavailable!",
+        "required": "Username is required."
+      }
+    },
+    "disclaimer": "By registering, you agree to our <0>{{link}}</0> and that you're 18+ years old.",
+    "success": "Welcome, {{username}}!",
+    "confirm": {
+      "title": "Confirm Email",
+      "description": "To confirm your email, please click the button below.",
+      "success": "Email confirmed."
+    }
+  },
+  "bets": {
+    "recentBets": "Recent Bets",
+    "myBets": "My Bets",
+    "allBets": "All Bets",
+    "highRollers": "High Rollers",
+    "luckyBets": "Lucky Bets",
+    "headers" : {
+      "game": "Game",
+      "user": "User",
+      "time": "Time",
+      "amount": "Bet Amount",
+      "multiplier": "Multiplier",
+      "payout": "Payout"
+    }
+  }
+}

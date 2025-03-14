@@ -30,7 +30,7 @@ export type VolumeDropdownProps = {
   iconColor?: Color;
 };
 
-export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix }) => {
+export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColor }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [volume, setVolume] = useSoundVolume(prefix);
 

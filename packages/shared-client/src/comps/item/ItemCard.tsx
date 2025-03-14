@@ -36,39 +36,38 @@ export const ItemCard: FC<ItemCardProps> = ({
       rarity={rarity}
       column
       align="center"
-      px={8}
-      py={8}
+      p={24}
       hover="none"
       {...forwardProps}
     >
       {children}
       <Div
-        fx
-        height={small ? 64 : 80}
+        className="image-ctn"
         center
       >
         <ItemIcon
           imageType="png"
-          imagePath={`/items/${item.slug}`}
+          imagePath={`/chests/${item.slug}`}
           size={small ? "50px" : "64px"}
           rarity={rarity}
         />
       </Div>
-      <Span
-        fontSize={small ? 11 : 13}
-        fontWeight="medium"
-        color="white"
-        textAlign="center"
+      {item.baseName && <Span
+        weight="semi-bold"
         textOverflow="ellipsis"
-        mt={8}
+        color="light-sand"
+        fontSize={16}
+        mt={32}
       >
         {item.baseName}
       </Span>
+      }
       <Span
-        fontSize={small ? 11 : 12}
-        textAlign="center"
+        weight="semi-bold"
         textOverflow="ellipsis"
-        mt={small ? 3 : 4}
+        color="light-sand"
+        fontSize={16}
+        mt={32}
       >
         {prefixSymbol && item.symbol && `[${item.symbol}] `}
         {item.edition !== "Standard" && item.edition + " "}
@@ -77,8 +76,8 @@ export const ItemCard: FC<ItemCardProps> = ({
       {valueElement || (
         <Tokens
           value={tokenValue}
-          fontSize={small ? 11 : 14}
-          mt={small ? 8 : 12}
+          mt={8}
+          color="dark-sand"
         />
       )}
     </ItemBox>

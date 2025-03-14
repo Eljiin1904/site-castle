@@ -1,0 +1,101 @@
+{
+  "validations": {
+    "mixed": {
+      "default": "{{value}} is invalido.",
+      "required": "{{value}} es requerido."     
+    },
+    "string": {
+      "min": "{{value.label}} debe tener al menos {{value.min}} caracteres.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres.",
+      "email": "{{value}} debe ser un correo electrónico válido.",
+      "url": "{{value}} debe ser una URL válida.",
+      "length":"{{value.label}} must be exactly ${value.length} characters."
+    },
+    "number": {
+      "min": "{{value.label}} debe tener al menos {{value.min}} caracteres.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres.",
+      "lessThan": "{{value.label}} debe ser menor que {{value.less}}.",
+      "moreThan": "{{value.label}} debe ser mayor que {{value.more}}.",
+      "positive": "{{value}} debe ser un número positivo.",
+      "negative": "{{value}} debe ser un número negativo.",
+      "integer": "{{value}} debe ser un número entero."
+    },
+    "date": {
+      "min": "{{value.label}} debe ser posterior a {{value.min}}.",
+      "max": "{{value.label}} debe ser anterior a {{value.max}}."
+    },
+    "email": {
+      "field": "Correo electrónico",
+      "required": "{{value}} es requerido",
+      "invalid": "{{value}} es inválido",
+      "valid": "{{value}} debe estar en un formato válido."
+    },
+    "boolean": {
+      "isValue": "{{value.label}} debe ser {{value.value}}"
+    },
+    "object": {
+      "noUnknown": "{{value.label}} tiene llaves no especificadas: {{value.unknown}}"
+    },
+    "username": {
+      "field": "Nombre de usuario",
+      "required": "{{value}} es requerido.",
+      "min": "{{value.label}} debe tener al menos {{value.min}} caracteres.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres.",
+      "matches": "{{value}} must be in a valid format."
+    },
+    "password": {
+      "field": "Contraseña",
+      "confirmField": "Confirmar contraseña",
+      "newField": "Nueva contraseña",
+      "min":"{{value.label}} debe tener al menos {{value.min}} caracteres.",
+      "max":"{{value.label}} debe tener no más de {{value.max}} caracteres.",
+      "required": "{{value}} es requerida.",
+      "repeated": "Las contraseñas no coinciden",
+      "confirm": "Por favor confirma tu contraseña."
+    },
+    "tfac": {
+      "field": "Código de autenticación",
+      "required": "{{value}} es requerido.",
+      "min": "{{value.label}} debe ser {{value.min}} digitos."
+    },
+    "page": {
+      "field": "Página",
+      "required": "{{value}} es requerida.",
+      "min":"{{value.label}} debe ser mayor que {{value.min}}."
+    },
+    "index": {
+      "field": "Índice",
+      "min":"{{value.label}} debe ser >= {{value.min}}.",
+      "max":"{{value.label}} debe ser < {{value.max}}."
+    },
+    "dob": {
+      "field": "Fecha de nacimiento",
+      "min": "No tienes la edad suficiente para registrarte."   
+    },
+    "file": {
+      "field": "Avatar",
+      "fileType": "El archivo debe ser {{value.type}}.",
+      "fileSize": "El archivo debe ser menor de {{value.size}}MB.",
+      "imageSize": "La imagen debe ser de al menos {{value.width}}x{{value.height}}.",
+      "cropArea": "Invalida área de recorte.",
+      "required": "{{value}} es requerida."
+    }
+  },
+  "errors": {
+    "invalidReferral": "Código de referencia inválido.",
+    "email": {
+      "taken": "El correo electrónico ya está registrado.",
+      "invalid": "Correo electrónico inválido.",
+      "disposable": "Dominio de correo electrónico inválido."
+    },
+    "username": {
+      "taken": "El nombre de usuario ya está registrado."
+    },
+    "token": {
+      "invalid": "Token {{value}} inválido.",
+      "required": "Token es requerido."
+    },
+    "rateLimit": "Demasiadas solicitudes de registro.",
+    "invalidCaptcha": "Falló al pasar la validación de captcha."
+  }
+}

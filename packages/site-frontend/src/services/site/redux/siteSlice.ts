@@ -66,14 +66,12 @@ export const siteSlice = createSlice({
       state.initialized = true;
     }),
     updateMeta: reducer<MetaUpdate>((state, { payload }) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (state.meta as any)[payload.key] = payload.value;
     }),
     initSettings: reducer<SiteSettingObject>((state, { payload }) => {
       state.settings = payload;
     }),
     updateSetting: reducer<SettingUpdate>((state, { payload }) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (state.settings as any)[payload.key] = payload.value;
     }),
     initActivity: reducer<SiteActivityDocument[] | undefined>((state, { payload }) => {

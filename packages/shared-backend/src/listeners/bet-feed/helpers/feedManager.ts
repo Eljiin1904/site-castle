@@ -18,6 +18,7 @@ export function feedManager() {
 type ScopeMap = {
   all: SiteBetDocument[];
   highroller: SiteBetDocument[];
+  lucky: SiteBetDocument[];
 };
 
 export class FeedManager extends TypedEventEmitter<{
@@ -27,10 +28,12 @@ export class FeedManager extends TypedEventEmitter<{
   private _log: ScopeMap = {
     all: [],
     highroller: [],
+    lucky: [],
   };
   private readonly _queues: ScopeMap = {
     all: [],
     highroller: [],
+    lucky: [],
   };
   private _stream;
   private _initialized;
@@ -68,6 +71,11 @@ export class FeedManager extends TypedEventEmitter<{
     return Intimal.fromDecimal(betHighrollerThreshold);
   }
 
+  async luckyThreshold() {
+    const { betLuckyThreshold } = await Site.settings.cache();
+    return Intimal.fromDecimal(betLuckyThreshold);
+  }
+
   private async init() {
     await Database.manager.waitForInit();
 
@@ -81,12 +89,26 @@ export class FeedManager extends TypedEventEmitter<{
       )
       .toArray();
 
-    const threshold = await this.highrollerThreshold();
+    const highrollerThreshold = await this.highrollerThreshold();
 
     this._log["highroller"] = await Database.collection("site-bets")
       .find(
         {
-          betAmount: { $gte: threshold },
+          betAmount: { $gte: highrollerThreshold },
+        },
+        {
+          limit: Site.betLogSize,
+          sort: { timestamp: -1 },
+        },
+      )
+      .toArray();
+
+    const luckyThreshold = await this.luckyThreshold();  
+
+    this._log["lucky"] = await Database.collection("site-bets")
+      .find(
+        {
+          wonAmount: { $gte: luckyThreshold },
         },
         {
           limit: Site.betLogSize,
@@ -101,7 +123,8 @@ export class FeedManager extends TypedEventEmitter<{
 
   private async onInsert(document: SiteBetDocument) {
     const queues = this._queues;
-    const threshold = await this.highrollerThreshold();
+    const highrollerThreshold = await this.highrollerThreshold();
+    const luckyThreshold = await this.luckyThreshold();
 
     queues["all"].unshift(document);
 
@@ -109,11 +132,19 @@ export class FeedManager extends TypedEventEmitter<{
       queues["all"].length = Site.betLogSize;
     }
 
-    if (document.betAmount >= threshold) {
+    if (document.betAmount >= highrollerThreshold) {
       queues["highroller"].unshift(document);
 
       if (queues["highroller"].length > Site.betLogSize) {
         queues["highroller"].length = Site.betLogSize;
+      }
+    }
+
+    if (document.wonAmount >= luckyThreshold) {
+      queues["lucky"].unshift(document);
+
+      if (queues["lucky"].length > Site.betLogSize) {
+        queues["lucky"].length = Site.betLogSize;
       }
     }
 

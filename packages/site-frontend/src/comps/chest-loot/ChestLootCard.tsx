@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import classNames from "classnames";
 import { Intimal } from "@core/services/intimal";
 import { Numbers } from "@core/services/numbers";
@@ -38,24 +38,29 @@ export const ChestLootCard = ({
       size={small ? "sm" : "md"}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      p={small ? 20: 24}
+      pt={small ? 40 : 48}
+      border
+      borderColor="brown-4"
     >
       <Div
         fx
-        justify="space-between"
-        height={small ? 14 : 16}
+        justify="center"
+        height={small ? 20 : 24}
+        bg="black-hover"
+        position="absolute"
+        color="light-sand"
+        top={0}
+        flexCenter
+        gap={4}
       >
-        <Span size={small ? 10 : 12}>{item.symbol}</Span>
-        <Span
-          position="absolute"
-          right={0}
-          size={small ? 10 : 12}
-          ml={18}
-          textAlign="right"
-        >
-          {hovered
-            ? `${start} - ${end}`
-            : `${Numbers.round(Intimal.toDecimal(item.dropRate, 6) * 100, 4)}%`}
-        </Span>
+        {!hovered ? <Fragment>
+         <Span color="dark-sand" fontSize={10}>Chance:</Span>
+         <Span color="light-sand" fontSize={10}>{`${Numbers.round(Intimal.toDecimal(item.dropRate, 6) * 100, 4)}%`}</Span>
+        </Fragment> :  <Span color="dark-sand" fontSize={10}>
+          {`${start} - ${end}`}
+        </Span>}
+        {/* <Span size={small ? 10 : 12}>{item.symbol}</Span> */}
       </Div>
     </ItemCard>
   );

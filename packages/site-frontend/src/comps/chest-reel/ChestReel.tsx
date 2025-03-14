@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, memo, useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import { ChestLayout } from "@core/types/chests/ChestLayout";
 import { ChestDocument } from "@core/types/chests/ChestDocument";
@@ -10,6 +10,7 @@ import { ChestReelCard } from "./ChestReelCard";
 import { useItemSize } from "./useItemSize";
 import { useSpin } from "./useSpin";
 import "./ChestReel.scss";
+import { ChestOverlay } from "./ChestOverlay";
 
 const lootIndex = 27;
 
@@ -74,7 +75,7 @@ export const ChestReel = memo(
 
     const ItemsMemo = useMemo(
       () =>
-        items.map((x, i) => (
+        items.filter(it => it !== undefined).map((x, i) => (
           <ChestReelCard
             key={i}
             index={i}
@@ -87,7 +88,8 @@ export const ChestReel = memo(
       [items, popout, roll],
     );
 
-    return (
+    return (<Fragment>
+      <ChestOverlay position={layout === 'vertical' ? 'top': 'left'} />
       <Div
         className={classNames("ChestReel", {
           [`layout-${layout}`]: layout,
@@ -96,7 +98,10 @@ export const ChestReel = memo(
         fx
         center
         overflow="hidden"
-        style={{ "--slide-size": `${itemSize}px` }}
+        style={{ "--slide-size": `${itemSize}px`,
+        minHeight: "495px",
+        maxHeight:`495pxpx`,
+    }}
       >
         <Div
           forwardRef={ref}
@@ -111,6 +116,8 @@ export const ChestReel = memo(
           {ItemsMemo}
         </Div>
       </Div>
+        <ChestOverlay position={layout === 'vertical' ? 'bottom': 'right'} />
+        </Fragment>
     );
   },
 );

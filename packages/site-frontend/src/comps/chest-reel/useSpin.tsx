@@ -4,6 +4,7 @@ import { ChestDocument } from "@core/types/chests/ChestDocument";
 import { ChestItem } from "@core/types/chests/ChestItem";
 import { ChestSpeed } from "@core/types/chests/ChestSpeed";
 import { Utility } from "@client/services/utility";
+import { Sounds } from "@client/services/sounds";
 import { Chests } from "#app/services/chests";
 import { Effects } from "#app/services/effects";
 import { useAnimator } from "#app/hooks/animations/useAnimator";
@@ -59,7 +60,8 @@ export const useSpin = (volumePrefix: string) => {
     let lastTickTime = 0;
 
     const tickTimes = [
-      80, 80, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 80, 80, 80, 80, 80, 80, 80,
+      80, 80, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 80, 80,
+      80, 80, 80, 80, 80,
     ];
 
     await animator.play({

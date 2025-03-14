@@ -11,6 +11,7 @@ import { SvgAlert } from "#client/svgs/common/SvgAlert";
 import { SvgTimesCirlce } from "#client/svgs/common/SvgTimesCircle";
 import { SvgInfoCircle } from "#client/svgs/common/SvgInfoCircle";
 import "./ToastSlide.scss";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 const icons = {
   info: SvgInfoCircle,
@@ -27,7 +28,7 @@ export const ToastSlide = ({
   onClear: () => void;
 }) => {
   const icon = icons[info.kind];
-
+  const {t} = useTranslation(["common"]);
   return (
     <Div
       className={classNames("ToastSlide", info.kind)}
@@ -46,7 +47,7 @@ export const ToastSlide = ({
         column
         gap={4}
       >
-        <Heading size={14}>{Strings.capitalize(info.kind)}</Heading>
+        <Heading size={14}>{t(info.kind)}</Heading>
         <Span
           size={13}
           color="gray"

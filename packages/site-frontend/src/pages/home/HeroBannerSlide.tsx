@@ -5,27 +5,30 @@ import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 import { Link, LinkProps } from "@client/comps/link/Link";
 import { Button } from "@client/comps/button/Button";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export type HeroBannerSlideProps = LinkProps & {
   image: string;
   heading?: string;
+  headingLevel?: "h1" | "h2" | "h3" | "h4" | "h5";
   description?: string;
   button?: string;
   accent?: string;
+  width?: string;
 };
 
 export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
   image,
   heading,
+  headingLevel,
   description,
   button,
   accent,
   ...forwardProps
 }) => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const small = layout === "mobile";
-
+  const small =  useIsMobileLayout();
+  const fontSize = headingLevel === "h3" ? (small ? 24 : 48): (small ? 32 : 64);
+  const maxWidth = headingLevel === "h3" ? (small ? "80px" : "100px") : (small ? "160px" : "480px");
   return (
     <Link
       fx
@@ -36,9 +39,9 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
       <Img
         className="slide-img"
         type="jpg"
-        path={`${image}_${layout}`}
+        path={`${image}`}
         width="100%"
-        height={small ? "200px" : "280px"}
+        style={{ minHeight: small ? "208px" : "280px"}}
         skeleton
       />
       <Div
@@ -46,24 +49,29 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
         fx
         fy
         column
-        p={small ? 20 : 40}
+        px={small ? 20 : 40}
+        py={small ? 20 : 28}
       >
         <Div
           column
           grow
-          gap={16}
+          gap={8}
         >
           <Heading
-            as="h1"
-            color={small ? "black" : "black"}
-            size={small ? 20 : 64}
-            style={{ maxWidth: small ? "280px" : "400px" }}
+            as={headingLevel || "h1"}
+            color={"dark-brown"}
+            size={fontSize}
+            style={{ maxWidth: maxWidth}}
+            fontWeight="regular"
+            textTransform="uppercase"
           >
             {heading}
           </Heading>
           <Span
-            color={small ? "black" : "black"}
-            style={{ maxWidth: small ? "280px" : "500px" }}
+            color={"dark-brown"}
+            style={{ maxWidth: small ? "200px" : "550px" }}
+            fontSize={small ? 12 : 16}
+            fontWeight="medium"
           >
             {description}
           </Span>
@@ -74,10 +82,9 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
         >
           {button && (
             <Button
-              kind="tertiary"
+              kind="primary-black"
               label={button}
-              size={small ? "sm" : "md"}
-              labelSize={16}
+              size={small ? "md" : "lg"}
             />
           )}
           {accent && (

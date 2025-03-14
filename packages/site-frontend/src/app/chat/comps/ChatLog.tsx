@@ -90,14 +90,15 @@ export const ChatLog = () => {
           position="absolute"
           fx
           bottom={0}
-          p={8}
+          px={24}
+          py={14}
           borderTop
           bg="brown-6"
         >
           <Button
             fx
-            kind="secondary"
-            size="sm"
+            kind="primary-yellow"
+            size="md"
             label="Chat Paused"
             labelSize={13}
             onClick={handleButtonClick}

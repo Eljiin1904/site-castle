@@ -1,3 +1,4 @@
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Div } from "@client/comps/div/Div";
 
 export const HeroBannerControls = ({
@@ -11,19 +12,23 @@ export const HeroBannerControls = ({
   slideCount: number;
   setIndex: (i: number) => void;
 }) => {
+ 
+  const small = useIsMobileLayout();
   return (
+    
     <Div
-      display={hovered ? "flex" : "none"}
+      display={hovered || small ? "flex" : "none"}
       position="absolute"
-      left={0}
+      left={small ? undefined: 0}
       right={0}
-      bottom={4}
+      bottom={small ? 0: 4}
       center
-      gap={6}
+      gap={small ? 0: 6}
     >
       {[...Array(slideCount)].map((x, i) => (
         <SlideSelector
           key={i}
+          index={i}
           active={index === i}
           onClick={() => setIndex(i)}
         />
@@ -32,18 +37,23 @@ export const HeroBannerControls = ({
   );
 };
 
-const SlideSelector = ({ active, onClick }: { active: boolean; onClick: () => void }) => {
+const SlideSelector = ({ index, active, onClick }: { index: number, active: boolean; onClick: () => void }) => {
+  const small = useIsMobileLayout();
+  const width = small ? 8 : (active ? 80 : 32);
   return (
     <Div
       py={8}
+      pl={small && index === 0 ? 8 : 0}
+      pr={small ? 8 : 0}
       hover="highlight"
       onClick={onClick}
+      bg={small ? "black-hover" : undefined}
     >
       <Div
-        width={active ? 80 : 32}
+        width={width}
         height={8}
         bg={active ? "yellow" : "brown-4"}
-        borderRadius={4}
+        borderRadius={small ? undefined : 4}
         boxShadow={2}
       />
     </Div>

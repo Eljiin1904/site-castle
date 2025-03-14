@@ -2,6 +2,12 @@ import { string } from "yup";
 
 export const tfac = (name: string = "Code") => {
   return string()
-    .min(6, `${name} must be 6 digits.`)
-    .required(`${name} is required.`);
+    .min(6, {
+      key: 'validations.tfac.min',
+      value: {label: name, min: 6}
+    })
+    .required({
+      key: 'validations.tfac.required',
+      value: name
+    });
 };

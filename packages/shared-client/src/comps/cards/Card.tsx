@@ -7,8 +7,9 @@ export const Card: FC<CardProps> = ({ ...forwardProps }) => {
   return (
     <Div
       fx
-      bg="brown-6"
+      // bg="brown-6"
       border
+      borderColor="brown-4"
       {...forwardProps}
     />
   );

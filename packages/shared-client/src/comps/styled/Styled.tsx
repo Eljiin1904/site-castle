@@ -70,7 +70,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
     borderWidth?: 0 | 1 | 2 | 3 | 4;
     borderRadius?: "full" | 2 | 4 | 8 | 12;
     borderColor?: Color;
-    hover?: "highlight" | "darken" | "border" | "up" | "none";
+    hover?: "highlight" | "darken" | "border" | "up" | "none" | "bg-darken";
     cursor?: "auto" | "pointer" | "grab" | "not-allowed";
     pointerEvents?: "auto" | "none" | "all";
     fontSize?: Unit;

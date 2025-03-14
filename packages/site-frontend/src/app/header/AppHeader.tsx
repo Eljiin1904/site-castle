@@ -8,6 +8,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { HeaderGuest } from "./HeaderGuest";
 import { HeaderUser } from "./HeaderUser";
 import "./AppHeader.scss";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const AppHeader = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -19,7 +20,8 @@ export const AppHeader = () => {
       top={0}
       fx
       bg="brown-6"
-      borderBottom
+      
+      
     >
       <Conditional
         value={layout}
@@ -34,20 +36,24 @@ export const AppHeader = () => {
 
 const MobileHeader = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
+  const small = useIsMobileLayout();
   return (
     <Div
       fx
       align="center"
       px={16}
+      borderBottom
+      borderColor="brown-4"
     >
       <Link
         type="router"
         to="/"
+        flexBasis={0}
+         position={small ? "absolute" : "static"}
       >
         <Vector
           as={SvgSiteIcon}
-          size={34}
+          size={10}        
         />
       </Link>
       <Div

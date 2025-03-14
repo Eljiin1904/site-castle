@@ -181,6 +181,10 @@
   cursor: pointer;
   filter: brightness(85%);
 }
+._hover-bg-darken:hover {  
+  cursor: pointer;
+  background-color: var(--black-hover-color);
+}
 ._hover-border:hover {  
   cursor: pointer;
   border: 1px solid;

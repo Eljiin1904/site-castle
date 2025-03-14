@@ -12,6 +12,7 @@ import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
 import { SvgMinusCircle } from "@client/svgs/common/SvgMinusCircle";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { AffiliateReferralModal } from "#app/modals/affiliate/AffiliateReferralModal";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const ReferralsTable = ({
   referrals,
@@ -21,7 +22,7 @@ export const ReferralsTable = ({
   isLoading: boolean;
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
-
+  const small = useIsMobileLayout();
   return (
     <Table
       data={referrals}
@@ -34,7 +35,7 @@ export const ReferralsTable = ({
       })}
       columns={[
         {
-          hidden: mainLayout !== "mobile",
+          hidden: !small,
           heading: "User",
           grow: 2,
           justify: "flex-start",
@@ -64,16 +65,9 @@ export const ReferralsTable = ({
           ),
         },
         {
-          hidden: mainLayout !== "mobile",
-          heading: "Commission",
-          grow: 2,
-          justify: "flex-end",
-          rowRenderer: (x) => <Tokens value={x.commissionAmount} />,
-        },
-        {
-          hidden: mainLayout === "mobile",
+          hidden: small,
           heading: "User",
-          grow: 2,
+          grow: 4,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Div gap={6}>
@@ -88,8 +82,8 @@ export const ReferralsTable = ({
           ),
         },
         {
-          hidden: mainLayout === "mobile",
-          heading: "Acquired",
+          hidden:small,
+          heading: "Time",
           grow: 2,
           justify: "flex-start",
           rowRenderer: (x) => (
@@ -97,28 +91,12 @@ export const ReferralsTable = ({
           ),
         },
         {
-          hidden: mainLayout === "mobile",
-          heading: "Last Deposit",
-          grow: 2,
-          justify: "flex-start",
-          rowRenderer: (x) => <Span {...getDepositText(x.lastDepositDate)} />,
-        },
-        {
-          hidden: mainLayout === "mobile",
-          heading: "Deposited",
+          heading: "Earnings",
           grow: 2,
           justify: "flex-end",
-          rowRenderer: (x) => <Tokens value={x.depositAmount} />,
+          rowRenderer: (x) => <Tokens value={x.rewardAmount} />,
         },
         {
-          hidden: mainLayout === "mobile",
-          heading: "Wagered",
-          grow: 2,
-          justify: "flex-end",
-          rowRenderer: (x) => <Tokens value={x.wagerAmount} />,
-        },
-        {
-          hidden: mainLayout === "mobile",
           heading: "Commission",
           grow: 2,
           justify: "flex-end",

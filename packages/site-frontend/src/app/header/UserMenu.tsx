@@ -12,7 +12,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useUserLevel } from "#app/hooks/users/useUserLevel";
 import { UserLogoutModal } from "#app/modals/user/UserLogoutModal";
 import { WalletModal } from "#app/modals/wallet/WalletModal";
-import { Users } from "#app/services/users";
+
 import { VaultModal } from "#app/modals/vault/VaultModal";
 import { AffiliateReloadModal } from "#app/modals/affiliate/AffiliateReloadModal";
 import { SvgWallet } from "#app/svgs/common/SvgWallet";
@@ -23,15 +23,17 @@ import { SvgVIP } from "#app/svgs/common/SvgVIP";
 import { SvgSupport } from "#app/svgs/common/SvgSupport";
 import { SvgFAQs } from "#app/svgs/common/SvgFAQs";
 import { SvgLogout } from "#app/svgs/common/SvgLogout";
+import { Vector } from "@client/comps/vector/Vector";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
-  const username = useAppSelector((x) => x.user.username);
   const avatarIndex = useAppSelector((x) => x.user.avatarIndex);
   const avatarId = useAppSelector((x) => x.user.avatarId);
   const reloadsEnabled = useAppSelector((x) => x.user.meta.reloadsEnabled);
-  const { level, levelProgress, levelGoal } = useUserLevel();
+  const small = useIsMobileLayout();
 
   return (
     <Dropdown
@@ -42,63 +44,35 @@ export const UserMenu = () => {
       open={open}
       onToggle={setOpen}
       button={
-        <UserIcon
-          avatarIndex={avatarIndex}
-          avatarId={avatarId}
-          width="36px"
-          hover="highlight"
-        />
+        <Div
+        gap={8}
+        flexCenter
+      >
+        <Div
+          bg="black-hover"
+          borderRadius={"full"}
+          borderColor={open ? "sand": "black-hover"}
+          borderWidth={1}
+          border={!small}
+          p={small ? 0 : 4}
+        >
+          <UserIcon
+            avatarIndex={avatarIndex}
+            avatarId={avatarId}
+            width={small ? "32px" : "46px"}
+          />
+        </Div>
+        {!small && <Vector
+            className="icon left"
+            as={open ? SvgArrowRight: SvgArrowRight}
+            size={12}
+            style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
+            color="dark-sand"
+          />}
+      </Div>
       }
       body={
-        <DropdownBody pb={6}>
-          <Div
-            column
-            p={16}
-            gap={16}
-          >
-            <Div>
-              <UserIcon
-                avatarIndex={avatarIndex}
-                avatarId={avatarId}
-                width="46px"
-              />
-              <Div
-                column
-                ml={16}
-              >
-                <Span
-                  family="title"
-                  weight="bold"
-                  size={16}
-                  color="white"
-                >
-                  {username}
-                </Span>
-                <Div
-                  align="center"
-                  mt={4}
-                >
-                  <Img
-                    type="png"
-                    path={Users.getLevelBadge(level)}
-                    width="20px"
-                  />
-                  <Span
-                    size={12}
-                    weight="medium"
-                    color="gray"
-                    ml={6}
-                  >
-                    {`Level ${level}`}
-                  </Span>
-                </Div>
-              </Div>
-            </Div>
-            <ProgressBar
-              height={4}
-              progress={levelProgress / levelGoal}
-            />
-          </Div>
+        <DropdownBody>
           <DropdownItem
             type="nav"
             to="/account"
@@ -125,13 +99,11 @@ export const UserMenu = () => {
             }}
           />
           <DropdownItem
-            type="action"
+            type="nav"
             iconLeft={SvgBets}
             label="Bets"
-            onClick={() => {
-              Dialogs.open("primary", <WalletModal initialAction="withdraw" />);
-              setOpen(false);
-            }}
+            to="/bets"
+            onClick={() => setOpen(false)}
           />
           <DropdownItem
             type="action"

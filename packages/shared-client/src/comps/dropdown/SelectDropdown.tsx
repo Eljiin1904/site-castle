@@ -68,7 +68,7 @@ export const SelectDropdown: FC<SelectDropdownProps> = ({
       onToggle={setOpen}
       button={
         <DropdownButton
-          kind={buttonKind}
+          // kind={buttonKind}
           icon={icon || currentInfo.icon}
           tag={tag}
           label={currentInfo.label}

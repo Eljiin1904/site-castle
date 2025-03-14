@@ -2,7 +2,7 @@ import { Img } from "@client/comps/img/Img";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const PageBanner = ({
   image,
@@ -12,23 +12,22 @@ export const PageBanner = ({
 }: {
   image: string;
   heading: string | JSX.Element;
-  description: string;
-  content: JSX.Element;
+  description?: string;
+  content?: JSX.Element;
 }) => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const small = layout === "mobile";
+
+  const small = useIsMobileLayout();
+  
 
   return (
     <Div
       fx
-      border
-      overflow="hidden"
     >
       <Img
         type="jpg"
-        path={`${image}_${layout}`}
+        path={`${image}`}
         width="100%"
-        height={small ? "200px" : "240px"}
+        height={small ? "80px" : "136px"}
         skeleton
       />
       <Div
@@ -36,26 +35,30 @@ export const PageBanner = ({
         fx
         fy
         column
-        p={small ? 24 : 32}
+        p={small ? 20 : 40}
       >
         <Div
           column
           grow
           gap={16}
         >
-          <Heading
-            as="h2"
-            size={small ? 18 : 28}
+         <Heading
+            as={"h2"}
+            color={"dark-brown"}
+            size={small ? 32 : 64}
+            fontWeight="regular"
+            textTransform="uppercase"
           >
             {heading}
           </Heading>
-          <Span
-            color={small ? "light-gray" : "gray"}
-            size={small ? 13 : 14}
-            style={{ maxWidth: "280px" }}
+         {description &&  <Span
+            color={"dark-brown"}
+            style={{ maxWidth: small ? "200px" : "550px" }}
+            fontSize={small ? 12 : 16}
+            fontWeight="medium"
           >
             {description}
-          </Span>
+          </Span>}
         </Div>
         {content}
       </Div>

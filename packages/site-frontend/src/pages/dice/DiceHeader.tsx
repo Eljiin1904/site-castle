@@ -16,7 +16,7 @@ export const DiceHeader = () => {
       position="absolute"
       top={0}
       right={0}
-      zIndex={1}
+      zIndex={2}
       px={small ? 20 : 16}
       py={16}
     >

@@ -16,7 +16,7 @@ export const BetCardPlaceholder = () => {
     <Div
       className="BetCardPlaceholder"
       fx
-      bg="gray-6"
+      bg="black-hover"
     />
   );
 };

@@ -28,7 +28,10 @@ export const CasePickerModal = () => {
   const dispatch = useAppDispatch();
 
   const totalCount = chests.reduce((acc, x) => (acc += x.count), 0);
-  const totalValue = chests.reduce((acc, x) => (acc += x.openCost * x.count), 0);
+  const totalValue = chests.reduce(
+    (acc, x) => (acc += x.openCost * x.count),
+    0,
+  );
   const maxed = totalCount >= CaseBattles.maxRounds;
 
   const query = useInfiniteQuery({
@@ -86,12 +89,14 @@ export const CasePickerModal = () => {
             hasNextPage={query.hasNextPage}
             fetchNextPage={query.fetchNextPage}
             placeholderRenderer={(key) => <PickerCardPlaceholder key={key} />}
-            itemRenderer={(chest) => (
+            itemRenderer={(chest, i) => (
               <PickerCard
                 key={chest._id}
                 chest={chest}
                 maxed={maxed}
-                quantity={chests.find((other) => chest._id === other._id)?.count}
+                quantity={
+                  chests.find((other) => chest._id === other._id)?.count
+                }
                 setQuantity={(count) => setChestCount(chest, count)}
               />
             )}

@@ -2,8 +2,18 @@ import { string } from "yup";
 
 export const email = (name: string = "Email") => {
   return string()
-    .email(`${name} be in a valid format.`)
-    .required(`${name} is required.`);
+    .email(() => {
+      return {
+        key: "validations.email.invalid",
+        value: name
+      };
+    })
+    .required(() => {
+      return {
+        key: "validations.email.required",
+        value: name
+      };
+    });
 };
 
 export const emailConditional = (name: string = "Email") => {
@@ -11,7 +21,13 @@ export const emailConditional = (name: string = "Email") => {
     is: true,
     then: (schema) =>
       schema
-        .email(`${name} be in a valid format.`)
-        .required(`${name} is required.`),
+        .email({
+          key: "validations.email.invalid",
+          value: name
+        })
+        .required({
+          key: "validations.email.required",
+          value: name
+        }),
   });
 };

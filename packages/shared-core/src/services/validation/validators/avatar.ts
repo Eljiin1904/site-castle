@@ -12,17 +12,31 @@ export const avatar = (name: string = "Avatar") => {
       y: number;
     };
   }>()
-    .required(`${name} is required.`)
-    .test("fileType", "File type must be jpeg.", (x) => {
+    .required({
+      key: "validations.file.required",
+      value: name,
+    })
+    .test("fileType", {
+      key: "validations.file.fileType",
+      value: { type: "jpg" },
+    }, (x) => {
       return x.file.type === "image/jpeg";
     })
-    .test("fileSize", "File size must be less than 2MB.", (x) => {
+    .test("fileSize", {
+      key: "validations.file.fileSize",
+      value: { size: 2 },
+    }, (x) => {
       return x.file.size < 2 * 1024 * 1024;
     })
-    .test("imageSize", "Image size must be at least 256x256.", (x) => {
+    .test("imageSize", {
+      key: "validations.file.imageSize",
+      value: { width: 256, height: 256 },
+    }, (x) => {
       return x.image.width >= 256 && x.image.height >= 256;
     })
-    .test("cropArea", "Invalid crop result.", (x) => {
+    .test("cropArea", {
+      key: "validations.file.cropArea"
+    }, (x) => {
       return x.cropArea !== undefined;
     });
 };

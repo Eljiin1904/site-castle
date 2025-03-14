@@ -1,14 +1,15 @@
 import { AffiliateStats } from "@core/types/affiliates/AffiliateStats";
 import { Div } from "@client/comps/div/Div";
-import { Card } from "@client/comps/cards/Card";
-import { SvgTeam } from "@client/svgs/common/SvgTeam";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { StatSlide } from "./StatSlide";
 import { StatCard } from "./StatCard";
+import { SvgTotalReferrals } from "#app/svgs/referrals/SvgTotalReferrals";
+import { SvgTotalEarnings } from "#app/svgs/referrals/SvgTotalEarnings";
+import { Button } from "@client/comps/button/Button";
+import { Dialogs } from "@client/services/dialogs";
+import { AffiliateReloadModal } from "#app/modals/affiliate/AffiliateReloadModal";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const StatGrid = ({ stats }: { stats: AffiliateStats | undefined }) => {
-  const mainLayout = useAppSelector((x) => x.style.mainLayout);
-
+  const small = useIsMobileLayout();
   return (
     <Div
       fx
@@ -16,76 +17,34 @@ export const StatGrid = ({ stats }: { stats: AffiliateStats | undefined }) => {
     >
       <Div
         fx
-        wrap={mainLayout === "mobile"}
-        gap={12}
+        wrap={small}
+        gap={small ? 16: 24}
       >
-        <Card column>
-          <StatSlide
-            label="Total Depositors"
-            icon={SvgTeam}
-            field="count"
-            value={stats?.depositorCount}
-            position="header"
-          />
-          <StatSlide
-            label="First Time Depositors"
-            icon={SvgTeam}
-            field="count"
-            value={stats?.ftdCount}
-          />
-          <StatSlide
-            label="Active Referrals"
-            icon={SvgTeam}
-            field="count"
-            value={stats?.activeCount}
-          />
-          <StatSlide
-            label="Churned Referrals"
-            icon={SvgTeam}
-            field="count"
-            value={stats?.churnedCount}
-          />
-        </Card>
+        <StatCard
+          label="Claimable Earnings"
+          field="tokens"
+          value={stats?.activeCount}
+          special={true}
+          button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateReloadModal/>)}></Button>}
+        />
         <Div
           fx
           column
-          gap={12}
+          gap={small ? 8 : 12}
         >
           <StatCard
-            label="Total Earned"
+            label="Your Total Earnings"
+            icon={SvgTotalEarnings}
             field="tokens"
             value={stats?.commissionAmount}
           />
-          <StatCard
-            label="Total Referrals"
-            icon={SvgTeam}
-            field="count"
-            value={stats?.referralCount}
-          />
         </Div>
-        <Card column>
-          <StatSlide
-            label="Total XP"
-            field="intimal"
-            value={stats?.referralXp}
-            position="header"
-          />
-          <StatSlide
-            label="Total Wagered"
-            field="tokens"
-            value={stats?.wagerAmount}
-          />
-          <StatSlide
-            label="Total Rewards"
-            field="tokens"
-            value={stats?.rewardAmount}
-          />
-          <StatSlide
-            label="Total Deposited"
-            field="tokens"
-            value={stats?.depositAmount}
-          />
-        </Card>
+        <StatCard
+          label="Total Referrals"
+          icon={SvgTotalReferrals}
+          field="count"
+          value={stats?.referralCount}
+        />
       </Div>
     </Div>
   );

@@ -7,8 +7,20 @@ const maxLength = Users.nameMaxLength;
 
 export const username = (name: string = "Username") => {
   return string()
-    .min(minLength, `${name} must be at least ${minLength} characters.`)
-    .max(maxLength, `${name} must be less than ${maxLength} characters.`)
-    .matches(regex, `${name} must be in a valid format.`)
-    .required(`${name} is required.`);
+    .required({
+      key: 'validations.username.required',
+      value: name
+    }).
+    min(minLength, {
+      key: 'validations.username.min',
+      value: {label: name, min: minLength}
+    }).
+    max(maxLength, {
+      key: 'validations.username.max',
+      value: {label: name, max: maxLength}
+    })
+    .matches(regex, {
+      key: 'validations.username.matches',
+      value: name
+    });
 };

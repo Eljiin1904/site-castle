@@ -2,7 +2,6 @@ import { NotificationDocument } from "@core/types/notifications/NotificationDocu
 import { NotificationKind } from "@core/types/notifications/NotificationKind";
 import { EventEmitter } from "@client/services/utility";
 
-/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 export declare interface NotificationManager extends EventEmitter {
   on<K extends NotificationKind>(
     event: K,
@@ -12,8 +11,10 @@ export declare interface NotificationManager extends EventEmitter {
     event: K,
     listener: (x: NotificationDocument & { kind: K }) => void,
   ): this;
-  emit<K extends NotificationKind>(event: K, x: NotificationDocument & { kind: K }): boolean;
+  emit<K extends NotificationKind>(
+    event: K,
+    x: NotificationDocument & { kind: K },
+  ): boolean;
 }
 
 export class NotificationManager extends EventEmitter {}
-/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */

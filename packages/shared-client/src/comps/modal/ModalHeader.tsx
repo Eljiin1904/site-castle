@@ -8,6 +8,7 @@ import { Span } from "../span/Span";
 import { Heading } from "../heading/Heading";
 import { Img } from "../img/Img";
 import "./ModalHeader.scss";
+import { StyledProps } from "../styled/Styled";
 
 type NavOptions = {
   label: string;
@@ -20,6 +21,7 @@ export type ModalHeaderProps = {
   headerContent?: JSX.Element;
   heading?: string | NavOptions;
   hideClose?: boolean;
+  closeColor?: StyledProps['color'];
   onCloseClick?: () => void;
 };
 
@@ -28,6 +30,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
   headerContent,
   heading,
   hideClose,
+  closeColor = 'dark-sand',
   onCloseClick,
 }) => {
   const layout = useLibrarySelector((x) => x.style.bodyLayout);
@@ -100,7 +103,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
         <Vector
           as={SvgTimes}
           size={16}
-          color="gray"
+          color={closeColor}
           position="absolute"
           right={12}
           top={12}

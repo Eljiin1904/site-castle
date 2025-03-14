@@ -19,6 +19,7 @@ export const LoginModal = ({ initialAction }: { initialAction?: LoginAction }) =
   const bodyLayout = useAppSelector((x) => x.style.bodyLayout);
   const restricted = useAppSelector((x) => x.user.restricted);
 
+  const justify = bodyLayout === "mobile" && action === 'recover' ? "center" : "flex-start";
   if (restricted) {
     return <RegionBlockModal />;
   }
@@ -27,27 +28,25 @@ export const LoginModal = ({ initialAction }: { initialAction?: LoginAction }) =
       className="LoginModal"
       onBackdropClick={() => Dialogs.close("primary")}
     >
-      <ModalHeader onCloseClick={() => Dialogs.close("primary")} />
+      <ModalHeader
+        onCloseClick={() => Dialogs.close("primary")}
+      />
       <Div fy>
         <Conditional
           value={action}
-          login={
-            ["laptop", "desktop"].includes(bodyLayout) ? <LoginBanner action={action} /> : null
-          }
-          register={
-            ["laptop", "desktop"].includes(bodyLayout) ? <LoginBanner action={action} /> : null
-          }
+          login={['laptop','desktop'].includes(bodyLayout) ? <LoginBanner action={action}/> : null}
+          register={['laptop','desktop'].includes(bodyLayout) ? <LoginBanner action={action}/> : null}
         />
         <Div
           className={`${action}-content`}
           column
         >
-          <ModalBody>
+          <ModalBody justifyContent={justify}>
             <Conditional
               value={action}
               login={<LocalAuthBody setAction={setAction} />}
-              register={<LocalRegisterBody />}
-              recover={<RecoverBody />}
+              register={<LocalRegisterBody setAction={setAction} />}
+              recover={<RecoverBody setAction={setAction} />}
             />
           </ModalBody>
         </Div>

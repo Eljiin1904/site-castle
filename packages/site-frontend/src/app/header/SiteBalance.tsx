@@ -11,12 +11,13 @@ import { SvgMoney } from "@client/svgs/common/SvgMoney";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { WalletModal } from "#app/modals/wallet/WalletModal";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const SiteBalance = () => {
   const tokens = useAppSelector((x) => x.user.tokenBalance);
   const valueRef = useRef<HTMLElement>(null);
   const initTokens = useRef(tokens);
-
+  const small = useIsMobileLayout();
   const counter = useCountUp({
     ref: valueRef,
     start: Intimal.toDecimal(initTokens.current),
@@ -62,11 +63,11 @@ export const SiteBalance = () => {
           <Button
             className="wallet-button"
             icon={SvgAddFunds}
-            kind="secondary"
+            kind="primary-yellow"
             size="sm"
             onClick={() => Dialogs.open("primary", <WalletModal />)}
           />
-          <Vector as={SvgDivider} px={8} />
+          {!small && <Vector as={SvgDivider} px={8} />}
         </Div>
       </Div>
     </Div>

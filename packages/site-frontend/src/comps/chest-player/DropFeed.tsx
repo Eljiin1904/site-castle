@@ -45,7 +45,6 @@ export const DropFeed = memo(({ chest }: { chest: ChestDocument }) => {
       mt={layout === "mobile" ? undefined : 8}
     >
       <PageTitle
-        icon={SvgLive}
         heading="Live Drops"
       />
       <Div

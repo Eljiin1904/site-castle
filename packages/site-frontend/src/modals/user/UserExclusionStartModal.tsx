@@ -16,9 +16,12 @@ import { Users } from "#app/services/users";
 export const UserExclusionStartModal = () => {
   const form = useForm({
     schema: Validation.object({}),
-    onSubmit: async () => {
+    onSubmit: async (values) => {
       await Users.requestExclusion();
-      Toasts.success("Exclusion requested. Please check your email to confirm.", 8000);
+      Toasts.success(
+        "Exclusion requested. Please check your email to confirm.",
+        8000,
+      );
       Dialogs.close("primary");
     },
   });
@@ -35,14 +38,22 @@ export const UserExclusionStartModal = () => {
       <ModalBody>
         <Form form={form}>
           <ModalSection>
-            <Paragraph>{"If you need a break, you can request to be excluded."}</Paragraph>
-            <br />
-            <Paragraph>{"While excluded, you will not have access to:"}</Paragraph>
-            <UnorderedList items={["Depositing", "Betting", "Chatting"]} />
-            <Paragraph>{"Once confirmed, you will be excluded for 24 hours."}</Paragraph>
+            <Paragraph>
+              {"If you need a break, you can request to be excluded."}
+            </Paragraph>
             <br />
             <Paragraph>
-              {"We will send an email to confirm the start and the end of your self-exclusion."}
+              {"While excluded, you will not have access to:"}
+            </Paragraph>
+            <UnorderedList items={["Depositing", "Betting", "Chatting"]} />
+            <Paragraph>
+              {"Once confirmed, you will be excluded for 24 hours."}
+            </Paragraph>
+            <br />
+            <Paragraph>
+              {
+                "We will send an email to confirm the start and the end of your self-exclusion."
+              }
             </Paragraph>
           </ModalSection>
           <NoticeCard

@@ -25,7 +25,9 @@ import { MenuItem } from "./panel/MenuItem";
 import { MenuRace } from "./panel/MenuRace";
 import { MenuSeparator } from "./panel/MenuSeparator";
 import "./AppMenuPanel.scss";
+import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AppMenuPanel = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -41,7 +43,7 @@ const PanelContent = () => {
   const collapsed = useAppSelector((x) => x.site.menuPanelCollapsed);
   const animate = useAppSelector((x) => x.site.menuPanelCollapsedChanged);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
   return (
     // TODO: make background color configurable
     <Div
@@ -71,108 +73,93 @@ const PanelContent = () => {
           <MenuRace collapsed={collapsed} />
           <MenuItem
             icon={SvgHome}
-            label="Home"
+            label={t("menu.home")}
             to="/"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgReferrals}
-            label="Referrals"
-            to="/referrals"
-            showLabel={!collapsed}
-          />
-          <MenuItem
-            icon={SvgToken}
-            label="Token"
-            to="/token"
+            label={t("menu.referrals")}
+            to="/affiliate"
             showLabel={!collapsed}
           />
           <MenuSeparator />
-          <Span
-            textTransform="uppercase"
-            px={24}
-            mb={24}
-            fontWeight="medium"
-            color="dark-sand"
-            fontSize={10}
-          >
-            Games
-          </Span>
+          <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>Games</Span>
           <MenuItem
             icon={SvgAllGames}
-            label="All Games"
+            label={t("games.all")}
             to="/all-games"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgCrash}
-            label="Crash Game"
+            label={t("games.crash")}
             to="/crash"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgDuel}
-            label="Duel Game"
+            label={t("games.duel")}
             to="/duel"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgDice}
-            label="Dice"
+            label={t("games.dice")}
             to="/dice"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgLimbo}
-            label="Limbo"
+            label={t("games.limbo")}
             to="/limbo"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgBlackjack}
-            label="Blackjack"
+            label={t("games.blackjack")}
             to="/blackjack"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgMines}
-            label="Mines"
+            label={t("games.mines")}
             to="/mines"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgChest}
-            label="Cases"
+            label={t("games.cases")}
             to="/cases"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgBattle}
-            label="Case Battles"
+            label={t("games.casesBattles")}
             to="/case-battles"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgSlide}
-            label="Double"
+            label={t("games.double")}
             to="/double"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgSlots}
-            label="Slots"
+            label={t("games.slots")}
             to="/slots"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgLiveCasino}
-            label="Live Casino"
+            label={t("games.liveCasino")}
             to="/live-casino"
             showLabel={!collapsed}
           />
           <MenuItem
             icon={SvgGameShows}
-            label="Game Shows"
+            label={t("games.gameShows")}
             to="/game-shows"
             showLabel={!collapsed}
           />

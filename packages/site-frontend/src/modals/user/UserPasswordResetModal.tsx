@@ -13,6 +13,7 @@ import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserResetPasswordModal = ({
   recoverToken,
@@ -21,18 +22,18 @@ export const UserResetPasswordModal = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const {t} = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
-      newPassword: Validation.password("New password"),
-      confirmPassword: Validation.string()
-        .oneOf([Validation.ref("newPassword")], "Does not match new password.")
-        .required("Confirmation is required."),
+      newPassword: Validation.password(t("validations.password.field")),
+      confirmPassword: Validation.confirmPassword()
+        .oneOf([Validation.ref("newPassword")],'validations.password.repeated')
+        .required(t("validations.password.required",{value:t("validations.password.confirmField")})),
     }),
     onSubmit: async (values) => {
       const { user } = await Users.resetPassword({ ...values, recoverToken });
       dispatch(Users.initUser({ authenticated: true, user }));
-      Toasts.success(`Welcome back, ${user.username}!`);
+      Toasts.success(t("signin.success", { username: user.username }));
       navigate("/");
       Dialogs.close("primary");
     },
@@ -44,33 +45,33 @@ export const UserResetPasswordModal = ({
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Reset Password"
+        heading={t("reset.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <ModalSection>
-            <ModalLabel>{"New Password"}</ModalLabel>
+            <ModalLabel>{t("reset.form.password")}</ModalLabel>
             <Input
               type="password"
               id="new-password"
-              placeholder="Enter new password..."
+              placeholder={t("reset.form.passwordPlaceholder")}
               autoComplete="new-password"
               disabled={form.loading}
-              error={form.errors.newPassword}
+              error={form.errors.newPassword?.key ? t(form.errors.newPassword.key, {value: form.errors.newPassword.value}) : undefined}
               value={form.values.newPassword}
               onChange={(x) => form.setValue("newPassword", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Confirm New Password"}</ModalLabel>
+            <ModalLabel>{t("reset.form.confirm")}</ModalLabel>
             <Input
               type="password"
               id="confirm-password"
               autoComplete="new-password"
-              placeholder="Confirm password..."
+              placeholder={t("reset.form.confirmPlaceholder")}
               disabled={form.loading}
-              error={form.errors.confirmPassword}
+              error={form.errors.confirmPassword?.key ? t(form.errors.confirmPassword.key, {value: form.errors.confirmPassword.value}) : undefined}
               value={form.values.confirmPassword}
               onChange={(x) => form.setValue("confirmPassword", x)}
             />
@@ -78,7 +79,7 @@ export const UserResetPasswordModal = ({
           <Button
             type="submit"
             kind="primary"
-            label="Set New Password"
+            label={t("reset.form.submit")}
             fx
             loading={form.loading}
           />

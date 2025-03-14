@@ -5,6 +5,7 @@ import config from "#app/config";
 import { SvgTwitter } from "@client/svgs/brands/SvgTwitter";
 import { SvgInstagram } from "@client/svgs/brands/SvgInstagram";
 import { SvgFacebook } from "@client/svgs/brands/SvgFacebook";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export type MenuItem = LinkProps & { label: string; href?: string; icon?: Svg };
 
@@ -17,65 +18,66 @@ export type MenuData = {
 
 export function useMenuData() {
   const intercom = useIntercomManager();
+  const { t, i18n } = useTranslation();
 
   const data: MenuData = useMemo(
     () => ({
       games: {
-        heading: "Platform",
+        heading: t("footer.platform"),
         items: [
-          { type: "router", label: "Home", to: "/" },
-          { type: "router", label: "Crash Game", to: "/crash" },
-          { type: "router", label: "Duel Game", to: "/duel" },
-          { type: "router", label: "Dice", to: "/dice" },
-          { type: "router", label: "Referrals", to: "/referrals" },
-          { type: "router", label: "Wallet", to: "/wallet" },
-          { type: "router", label: "Token", to: "/token" },
-          { type: "router", label: "Blog", to: "/blog" },
-          { type: "router", label: "Fairness", to: "/fairness" },
+          { type: "router", label: t("menu.home"), to: "/" },
+          { type: "router", label: t("games.crash"), to: "/crash" },
+          { type: "router", label: t("games.duel"), to: "/duel" },
+          { type: "router", label: t("games.dice"), to: "/dice" },
+          { type: "router", label: t("menu.referrals"), to: "/referrals" },
+          { type: "router", label: t("menu.wallet"), to: "/wallet" },
+          { type: "router", label: t("menu.token"), to: "/token" },
+          { type: "router", label: t("menu.blog"), to: "/blog" },
+          { type: "router", label: t("menu.fairness"), to: "/fairness" },
         ],
       },
       support: {
-        heading: "About Us",
+        heading: t("footer.about"),
         items: [
           {
             type: "action",
-            label: "Support",
+            label: t("footer.support"),
             onClick: () => intercom.handleToggle(),
           },
           {
             type: "action",
-            label: "FAQ's",
+            label: t("footer.faq"),
             onClick: () => intercom.handleToggle(),
           },
           {
             type: "router",
-            label: "Terms of Service",
+            label: t("footer.terms"),
             to: "/about/terms-of-service",
           },
           {
             type: "router",
-            label: "Privacy Policy",
+            label: t("footer.privacy"),
             to: "/about/privacy-policy",
           },
           {
             type: "router",
-            label: "Gaming Hotline",
+            label: t("footer.hotline"),
             to: "/about/responsible-gaming",
           },
           {
             type: "router",
-            label: "Self Exclusion",
+            label:t("footer.selfExclusion"),
             to: "/about/responsible-gaming",
           },
           {
             type: "router",
-            label: "Trustpilot",
+            label: t("footer.trustpilot"),
             to: "/about/responsible-gaming",
           },
         ],
       },
       community: {
-        heading: "Socials",
+        heading: t("footer.socials"),
         items: [
           { type: "a", label: " Facebook", href: config.discordURL, icon: SvgFacebook },
           { type: "a", label: "Twitter", href: config.twitterURL, icon: SvgTwitter },
@@ -83,7 +85,7 @@ export function useMenuData() {
         ],
       },
     }),
-    [],
+    [i18n.language],
   );
 
   return data;

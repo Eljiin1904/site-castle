@@ -1,6 +1,25 @@
 import { useMount } from "#client/hooks/system/useMount";
 import { Style } from "#client/services/style";
 
+/**
+ * Custom function to convert hex to rgb
+ * @param hex value
+ * @returns rgb value
+ */
+const hex2rgb = (hex:string) => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? result?.slice(1).join(",") : "0,0,0";
+};
+
+/**
+ * custom hook to read all color variables and create css variables and classes for them
+ * It read all color variables from colors.ts
+ * For each color, it will generate an hex and rgb value. 
+ * It will use the hex value to create classes for color, background-color and border-color
+ * It will use the rgb value to generate backgrounds with opacity
+ * once all variables and classes are generated, it will append them to the head of the document
+ * @returns null
+ */
 export const useAppStyle = () => {
   useMount(() => {
     const elementId = "app-colors";
@@ -12,7 +31,8 @@ export const useAppStyle = () => {
     }
 
     const variables = Object.keys(Style.colors)
-      .map((key) => `--${key}-color: ${(Style.colors as any)[key]};`)
+      .map((key) => `--${key}-color: ${(Style.colors as any)[key]};\n
+      --${key}-rgb-color: ${hex2rgb((Style.colors as any)[key])};`)
       .join("\n\t");
 
     const index = ":root {\n\t" + variables + "\n}";

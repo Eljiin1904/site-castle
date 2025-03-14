@@ -1,0 +1,38 @@
+.ChestOverlay {
+
+  $initialBgColor: rgba(var(--black-rgb-color), $alpha: .6);
+  $endBgColor: rgba(var(--black-rgb-color), $alpha: 0);
+
+  &.bottom {
+
+    background: linear-gradient(to top, $initialBgColor 0%, $initialBgColor 70%, $endBgColor 100%);
+    height: 180px;
+    bottom: 0;
+  }
+
+  &.top {
+
+    background: linear-gradient(to bottom, $initialBgColor 0%, $initialBgColor 70%, $endBgColor 100%);
+    height: 180px;
+    top: 0;
+  }
+
+  &.left {
+
+    background: linear-gradient(to right,$initialBgColor 0%, $initialBgColor 70%, $endBgColor 100%);
+    width: 40%;
+    height: 100%;
+    left: 0;
+  }
+
+  &.right {
+
+    background: linear-gradient(to left,$initialBgColor 0%, $initialBgColor 70%, $endBgColor 100%);
+    width: 40%;
+    height: 100%;
+    right: 0;
+  }
+
+  pointer-events: none;
+  z-index: 1;
+}

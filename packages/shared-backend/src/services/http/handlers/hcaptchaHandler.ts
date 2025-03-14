@@ -12,7 +12,7 @@ const schema = Validation.object({
 export const hcaptchaHandler = Http.createHandler(async (req, res, next) => {
   const { hcaptchaSecret } = config;
   const { captchaToken } = await schema.validate(req.body);
-
+  
   const {
     data: { success },
   } = await axios.get<HcaptchaResponse>("https://api.hcaptcha.com/siteverify", {
@@ -24,7 +24,7 @@ export const hcaptchaHandler = Http.createHandler(async (req, res, next) => {
   });
 
   if (!success) {
-    throw new HandledError("Failed to pass captcha.");
+    throw new HandledError("errors.invalidCaptcha");
   }
 
   next();

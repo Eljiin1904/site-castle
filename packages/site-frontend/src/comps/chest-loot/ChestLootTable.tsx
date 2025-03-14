@@ -2,7 +2,6 @@ import { memo } from "react";
 import { ChestDocument } from "@core/types/chests/ChestDocument";
 import { Div } from "@client/comps/div/Div";
 import { PageTitle } from "@client/comps/page/PageTitle";
-import { SvgChest } from "@client/svgs/common/SvgChest";
 import { ChestLootCard } from "./ChestLootCard";
 
 export const ChestLootTable = memo(
@@ -12,15 +11,14 @@ export const ChestLootTable = memo(
         column
         fx
         gap={20}
-        mt={layout === "mobile" ? undefined : 8}
+        mt={layout === "mobile" ? undefined : 36}
       >
         <PageTitle
-          icon={SvgChest}
           heading="Case Contains"
         />
         <Div
           flexFlow="row-wrap"
-          gap={2}
+          gap={layout === "mobile" ? 20 : 24}
         >
           {chest.items.map((x, i) => (
             <ChestLootCard
