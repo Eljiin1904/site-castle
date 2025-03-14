@@ -38,8 +38,9 @@ const PanelContent = () => {
         left={0}
         fy
         column
-        bg="brown-6"
-        borderLeft
+        bg="black-hover"
+        border
+        borderColor="brown-4"
       >
         <ChatRoom />
         <ChatHeader />

@@ -8,7 +8,13 @@ import { ModalSection } from "@client/comps/modal/ModalSection";
 import { Div } from "@client/comps/div/Div";
 import { Users } from "#app/services/users";
 
-export const VerificationOnePartOneForm = () => {
+export const VerificationOnePartOneForm = ({
+  layout,
+  disableClose,
+}: {
+  layout: Layout;
+  disableClose?: boolean;
+}) => {
   const form = useForm({
     schema: Validation.object({
       firstName: Validation.string()

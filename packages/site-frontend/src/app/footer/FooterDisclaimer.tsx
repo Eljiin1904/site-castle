@@ -1,15 +1,17 @@
 import { Circle } from "@client/comps/circle/Circle";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const FooterDisclaimer = () => {
+  const { t } = useTranslation();
   return (
     <Span
       size={12}
       color="dark-sand"
     >
       {
-        "Sand Casino is a brand name of Bull Gaming N.V. Company Address: Abraham de Veerstraat 9, Willemstad, Curacao. Rollbit is licensed and authorized by the Government of Curaçao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ Bull Gaming N.V. payments can be processed by WINGAMING SUPPORT LIMITED (Registration Number HE406701). Company Address: Avlonos, 1, MARIA HOUSE, 1075, Nicosia, Cyprus Crypto trading is not gambling, and therefore not covered by our gaming license"
+        `Sand Casino ${t('footer.disclaimer')}`
       }
       <Div
         gap={20}
@@ -34,12 +36,12 @@ export const FooterDisclaimer = () => {
             justifyContent="center"
             column
           >
-            Gamble
+             {t('footer.gamble')}
             <Span
               color="white"
               fontSize={12}
             >
-              Aware
+              {t('footer.aware')}
             </Span>
           </Div>
         </Circle>
@@ -62,7 +64,7 @@ export const FooterDisclaimer = () => {
             justifyContent="center"
             column
           >
-            18+
+            {t('footer.18+')}
           </Div>
         </Circle>
 
@@ -84,12 +86,12 @@ export const FooterDisclaimer = () => {
             justifyContent="center"
             column
           >
-            RNG
+            {t('footer.rng')}
             <Span
               color="white"
               fontSize={10}
             >
-              certified
+               {t('footer.certified')}
             </Span>
           </Div>
         </Circle>

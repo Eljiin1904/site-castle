@@ -40,21 +40,15 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
         />
         <Div>
           <Button
-            kind="quaternary"
+            kind="tertiary-grey"
             label="1/2"
-            labelSize={14}
-            labelColor="dark-sand"
-            labelWeight="medium"
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x / 2)}
           />
           <Button
-            kind="quaternary"
+            kind="tertiary-grey"
             label="2X"
-            labelSize={14}
-            labelColor="dark-sand"
-            labelWeight="medium"
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}

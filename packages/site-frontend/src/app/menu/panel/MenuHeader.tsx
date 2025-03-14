@@ -26,7 +26,7 @@ export const MenuHeader = ({
           as={SvgMenu}
           size={20}
           color="sand"
-          mr={14}
+          mr={16}
         />
         <Vector
           as={SvgSiteLogo}

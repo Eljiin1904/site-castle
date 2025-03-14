@@ -1,1 +1,1 @@
-export const betScopes = ["all", "highroller", "user"] as const;
+export const betScopes = ["all", "highroller", "user", "lucky"] as const;

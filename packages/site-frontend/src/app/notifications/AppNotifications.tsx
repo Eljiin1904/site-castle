@@ -11,6 +11,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Notifications } from "#app/services/notifications";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { NotificationCard } from "./NotificationCard";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { NotificationHeader } from "./NotificationHeader";
 
 export const AppNotifications = () => {
@@ -57,7 +58,7 @@ export const AppNotifications = () => {
 
 const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
   let content;
-
+  
   if (log.length === 0) {
     content = (
       <Div
@@ -76,11 +77,7 @@ const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
         overflow="auto"
       >
         <NotificationHeader heading="NOTIFICATIONS" />
-        <Div
-          fx
-          column
-          px={24}
-        >
+        <Div fx column px={24}>
           {log.slice(0, Math.min(10, log.length)).map((notification) => (
             <NotificationCard
               key={notification._id}

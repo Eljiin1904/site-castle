@@ -25,6 +25,10 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { ChatRainJoinModal } from "#app/modals/chat/ChatRainJoinModal";
 import { ChatRainInfoModal } from "#app/modals/chat/ChatRainInfoModal";
 import { ChatRainTipModal } from "#app/modals/chat/ChatRainTipModal";
+import { SvgMoney } from "@client/svgs/common/SvgMoney";
+import { Tokens } from "@client/comps/tokens/Tokens";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { HistoryOverlay } from "#app/comps/bet-board/HistoryOverlay";
 
 export const ChatRain = () => {
   const rain = useAppSelector((x) => x.chat.rain);
@@ -38,6 +42,7 @@ export const ChatRain = () => {
 
 const RainContent = ({ rain }: { rain: ChatRainDocument }) => {
   const lastRainId = useAppSelector((x) => x.user.meta.lastRainId);
+  const small = useIsMobileLayout();
   const rainAmount = rain.totalAmount;
   const joined = lastRainId === rain._id;
   const valueRef = useRef<HTMLElement>(null);
@@ -58,34 +63,33 @@ const RainContent = ({ rain }: { rain: ChatRainDocument }) => {
 
   return (
     <Div>
-      <Div
+      <Div className="ChatRain"
         fx
-        px={8}
-        py={8}
+        px={small ? 20: 24}
+        py={14}
+        position="absolute"
         bg="brown-6"
-        borderBottom
-        borderColor={open ? "yellow" : "brown-5"}
+        zIndex={1}
+        //bg="brown-6"
+        // borderBottom
+        // borderColor={open ? "yellow" : "brown-4"}
       >
+        <HistoryOverlay />
         <Div grow>
-          <Vector
-            as={SvgSiteToken}
-            size={24}
-            ml={4}
-            mr={12}
-          />
+          <Tokens value={rainAmount} />
           <Div column>
-            <Span
+            {/* <Span
               forwardRef={valueRef}
               family="title"
               weight="bold"
               color="light-gray"
             >
               {"10.00"}
-            </Span>
+            </Span> */}
             <Span size={11}>{"in Rain Pool"}</Span>
           </Div>
         </Div>
-        <Div gap={4}>
+        <Div gap={8}>
           {open && (
             <Div
               center
@@ -111,7 +115,7 @@ const RainContent = ({ rain }: { rain: ChatRainDocument }) => {
             />
           )}
           <Button
-            kind="secondary"
+            kind="primary-yellow"
             size="xs"
             icon={SvgCoinStack}
             data-tooltip-id="app-tooltip"
@@ -119,7 +123,7 @@ const RainContent = ({ rain }: { rain: ChatRainDocument }) => {
             onClick={() => Dialogs.open("primary", <ChatRainTipModal />)}
           />
           <Button
-            kind="secondary"
+            kind="primary-yellow"
             size="xs"
             icon={SvgInfoCircle}
             onClick={() => Dialogs.open("primary", <ChatRainInfoModal />)}

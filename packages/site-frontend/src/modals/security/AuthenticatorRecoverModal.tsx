@@ -14,7 +14,9 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Security } from "#app/services/security";
 
-export const AuthenticatorRecoverModal = (props: { userId?: string | undefined }) => {
+export const AuthenticatorRecoverModal = (props: {
+  userId?: string | undefined;
+}) => {
   const currentUserId = useAppSelector((x) => x.user._id);
   const userId = props.userId || currentUserId;
 
@@ -43,7 +45,7 @@ export const AuthenticatorRecoverModal = (props: { userId?: string | undefined }
         <Form form={form}>
           <NoticeCard
             kind="info"
-            message={`Your backup key is in a file named "castle_backup_key.txt"`}
+            message={`Your backup key is in a file named "chicken_backup_key.txt"`}
           />
           <ModalSection>
             <ModalLabel>{"Backup Key"}</ModalLabel>

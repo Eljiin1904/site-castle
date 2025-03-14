@@ -7,7 +7,11 @@ export type UserIconProps = Omit<ImgProps, "type" | "path"> & {
   avatarId: string | undefined;
   hidden?: boolean;
 };
-
+/**
+ * Temporarily displaying default avatar for testing purposes
+ * @param param0 
+ * @returns 
+ */
 export const UserIcon: FC<UserIconProps> = ({
   className,
   avatarIndex,
@@ -18,13 +22,13 @@ export const UserIcon: FC<UserIconProps> = ({
   return (
     <Img
       className={classNames("UserIcon", className)}
-      type="jpg"
+      type="png"
       path={
         hidden
-          ? "/avatars-default/999"
+          ? "/avatars/temp-avatar"
           : avatarId
             ? `/avatars/${avatarId}`
-            : `/avatars-default/${avatarIndex.toString().padStart(3, "0")}`
+            : `/avatars/avatars-default/${avatarIndex.toString().padStart(3, "0")}`
       }
       {...forwardProps}
     />

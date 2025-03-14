@@ -10,11 +10,11 @@
   }
 
   &.highlight {
-    background: #302d29;
+    background: var(--chat-hover-color);
     
     &:hover {
       cursor: pointer;
-      background: #22201d;
+      background:var(--chat-hover-color);
     }
   }
 }

@@ -1,4 +1,5 @@
 import { SvgTimesCirlce } from "#client/svgs/common/SvgTimesCircle";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Button } from "../button/Button";
 import { Div } from "../div/Div";
 import { Span } from "../span/Span";
@@ -11,6 +12,8 @@ export const FormErrorBox = ({
   error: string;
   onAck: () => void;
 }) => {
+  
+  const {t} = useTranslation(["validations"]);
   return (
     <Div
       className="error-box"
@@ -37,12 +40,14 @@ export const FormErrorBox = ({
           size={24}
           color="light-red"
         />
-        <Span>{error}</Span>
+        <Span
+        color="light-sand"
+        >{t(error)}</Span>
       </Div>
       <Button
         kind="primary"
         fx
-        label="Okay"
+        label={t("common:okay")}
         onClick={onAck}
       />
     </Div>

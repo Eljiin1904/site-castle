@@ -1,4 +1,10 @@
-import { Routes, Route, Navigate, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { AuthReturnPage } from "#app/pages/security/AuthReturnPage";
 import { HomePage } from "#app/pages/home/HomePage";
 import { NotFoundPage } from "#app/pages/not-found/NotFoundPage";
@@ -26,14 +32,17 @@ import { FairnessPage } from "#app/pages/fairness/FairnessPage";
 import { MarketRouter } from "#app/pages/market/MarketRouter";
 import { RacePage } from "#app/pages/race/RacePage";
 import { HolidayRouter } from "#app/pages/holiday/HolidayRouter";
-import { UserProfilePage } from "#app/pages/user/UserProfilePage";
+import { BetsPage } from "#app/pages/bets/BetsPage";
 
 export const AppRouter = () => {
   const { pathname } = useLocation();
   const [params] = useSearchParams();
 
   if (params.has("p")) {
-    localStorage.setItem("referral-code", JSON.stringify(`p_${params.get("p")}`));
+    localStorage.setItem(
+      "referral-code",
+      JSON.stringify(`p_${params.get("p")}`),
+    );
     return (
       <Navigate
         replace
@@ -59,10 +68,6 @@ export const AppRouter = () => {
       <Route
         path="/login"
         element={<UserLoginPage />}
-      />
-      <Route
-        path="/profile"
-        element={<UserProfilePage />}
       />
       <Route
         path="/auth/:provider"
@@ -162,7 +167,10 @@ export const AppRouter = () => {
         path="/fairness/*"
         element={<FairnessPage />}
       />
-
+      <Route
+        path="/bets"
+        element={<BetsPage />}
+      />
       <Route
         path="/marketplace/*"
         element={<MarketRouter />}

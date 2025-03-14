@@ -20,7 +20,7 @@ export type CatalogProps<T> = StyledLayoutProps & {
 
 export function Catalog<T>({
   className,
-  gap = 12,
+  gap = 24,
   pages,
   pageSize,
   emptyMessage,
@@ -52,8 +52,6 @@ export function Catalog<T>({
           fx
           center
           p={24}
-          bg="brown-6"
-          border
         >
           <Span weight="medium">{emptyMessage}</Span>
         </Div>

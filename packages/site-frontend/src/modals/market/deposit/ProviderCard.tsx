@@ -26,7 +26,7 @@ export const ProviderCard = ({
       justify="space-between"
       px={12}
       py={8}
-      bg="gray-6"
+      bg="black-hover"
       border
       cursor={disabled ? "not-allowed" : undefined}
       hover={disabled ? undefined : "border"}

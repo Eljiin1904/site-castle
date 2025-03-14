@@ -3,10 +3,8 @@ import { Div } from "@client/comps/div/Div";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Input } from "@client/comps/input/Input";
 import { useDebounceState } from "@client/hooks/system/useDebounceState";
-import { SvgSort } from "@client/svgs/common/SvgSort";
-import { SvgCoin } from "@client/svgs/common/SvgCoin";
 import { SvgSearch } from "@client/svgs/common/SvgSearch";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const IndexHeader = ({
   searchText,
@@ -27,14 +25,14 @@ export const IndexHeader = ({
     searchText,
     setSearchText,
   );
-  const mainLayout = useAppSelector((x) => x.style.mainLayout);
-  const collapse = mainLayout === "mobile";
+  
+  const collapse =useIsMobileLayout();
 
   return (
     <Div
       fx
       align="flex-end"
-      gap={12}
+      gap={24}
     >
       <Input
         type="text"
@@ -45,15 +43,16 @@ export const IndexHeader = ({
       />
       <Dropdown
         type="select"
-        icon={SvgCoin}
+        tag="Price:"
         options={Chests.priceRanges.slice()}
         value={priceIndex}
         collapse={collapse}
         onChange={(x, i) => setPriceIndex(i)}
+        size="md"
       />
       <Dropdown
         type="select"
-        icon={SvgSort}
+        tag="Sort By:"
         options={[
           "Most Popular",
           "Highest Price",

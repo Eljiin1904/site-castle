@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, Fragment, memo } from "react";
 import { ChestDocument } from "@core/types/chests/ChestDocument";
 import { Button } from "@client/comps/button/Button";
 import { Conditional } from "@client/comps/conditional/Conditional";
@@ -12,6 +12,10 @@ import { Vector } from "@client/comps/vector/Vector";
 import { SvgChicken } from "@client/svgs/common/SvgChicken";
 import { SvgFast } from "@client/svgs/common/SvgFast";
 import "./ChestMenu.scss";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Heading } from "@client/comps/heading/Heading";
+import { Img } from "@client/comps/img/Img";
+import { ModalDivider } from "@client/comps/modal/ModalDivider";
 
 type ChestMenuProps = {
   chest: ChestDocument;
@@ -30,19 +34,39 @@ type ChestMenuProps = {
 
 export const ChestMenu: FC<ChestMenuProps> = memo((props) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
+  const small = useIsMobileLayout();
 
-  return (
-    <Div
-      className="ChestMenu"
-      fx
-    >
-      <Conditional
-        value={mainLayout}
-        mobile={<MobileMenu {...props} />}
-        tablet={<NotMobileMenu {...props} />}
-        laptop={<NotMobileMenu {...props} />}
-        desktop={<NotMobileMenu {...props} />}
-      />
+  return (<Div wrap style={
+    small
+        ? undefined
+        : {
+            minWidth: "320px",
+            maxWidth: "320px",
+          }
+    }>
+      <Div
+            column
+            p={small? 20 : 24}
+            gap={24}
+            bg="brown-6"
+            fx
+            style={
+              small
+                ? undefined
+                : {
+                    minHeight: "495px",
+                    maxHeight: "495px",
+                  }
+            }
+          >
+          <Conditional
+            value={mainLayout}
+            mobile={<MobileMenu {...props} />}
+            tablet={<NotMobileMenu {...props} />}
+            laptop={<NotMobileMenu {...props} />}
+            desktop={<NotMobileMenu {...props} />}
+          />
+        </Div>
     </Div>
   );
 });
@@ -168,77 +192,71 @@ const NotMobileMenu: FC<ChestMenuProps> = ({
   onOpenClick,
 }) => {
   return (
-    <Div fx>
+    <Fragment>
       <Div
         fx
-        justify="flex-start"
-        gap={16}
+        gap={24}
+        column
+        flexCenter
       >
+        <Div
+          className="image-ctn"
+          center
+        >
+          <Img
+            type="png"
+            path={`/chests/${chest.imageId}`}
+            width="auto"
+            height="78px"
+            alt={`${chest.displayName} Thumbnail`}
+          />
+        </Div>
+        <Heading as="h1" fontSize={24} fontWeight="regular" color="light-sand">{chest.displayName}</Heading>
+        {cost ? cost(openCount) : <Tokens color="dark-sand" fontSize={16} value={chest.openCost * openCount} />}
         <ButtonGroup
           className="count-menu"
           options={["1", "2", "3", "4"]}
           value={openCount - 1}
           disabled={disableMultiOpen || disableControls}
           setValue={(i) => setOpenCount(i + 1)}
+          gap={12}
+        />       
+      </Div>
+      <Div
+        align="center"
+        data-tooltip-id="app-tooltip"
+        data-tooltip-content="Quick Spin"
+        fx
+        justifyContent="space-between"
+      >
+        <Span color="dark-sand" fontSize={16} fontWeight="medium">Fast Spins</Span>
+        <Toggle
+          value={fast}
+          disabled={disableControls}
+          onChange={setFast}
         />
-        {cost ? cost(openCount) : <Tokens value={chest.openCost * openCount} />}
       </Div>
       <Div
         fx
-        justify="center"
-      >
+        borderTop
+        borderColor="brown-4"
+      />
+      <Div column fx gap={16}>
         <Button
-          kind="primary"
+          kind="primary-yellow"
           label="Open Case"
           disabled={disableControls}
           style={{ minWidth: "160px" }}
           onClick={onOpenClick}
         />
-      </Div>
-      <Div
-        fx
-        justify="flex-end"
-        gap={12}
-      >
-        <Div
-          align="center"
-          data-tooltip-id="app-tooltip"
-          data-tooltip-content="Quick Spin"
-        >
-          <Vector
-            as={SvgFast}
-            size={18}
-            mr={6}
-          />
-          <Toggle
-            value={fast}
-            disabled={disableControls}
-            onChange={setFast}
-          />
-        </Div>
-        <Div
-          align="center"
-          data-tooltip-id="app-tooltip"
-          data-tooltip-content="Chicken Spin"
-        >
-          <Vector
-            as={SvgChicken}
-            size={20}
-            mr={6}
-          />
-          <Toggle
-            value={specialEnabled}
-            disabled={disableControls}
-            onChange={setSpecial}
-          />
-        </Div>
         <Button
-          kind="secondary"
-          label="Demo"
+          fx
+          kind="tertiary-grey"
+          label="Demo Spin"
           disabled={disableControls}
           onClick={onDemoClick}
         />
       </Div>
-    </Div>
+    </Fragment>
   );
 };

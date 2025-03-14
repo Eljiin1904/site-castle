@@ -1,8 +1,11 @@
 import { Fragment } from "react";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const FooterContacts = () => {
+  const {t} = useTranslation();
+
   return (
     <Fragment>
       <Div gap={4}>
@@ -10,7 +13,7 @@ export const FooterContacts = () => {
           size={13}
           color="brown-10"
         >
-          {"Support:"}
+          {t("footer.support")}:
         </Span>
         <Span
           size={13}
@@ -24,7 +27,7 @@ export const FooterContacts = () => {
           size={13}
           color="brown-10"
         >
-          {"Partners:"}
+          {t("footer.partners")}:
         </Span>
         <Span
           size={13}
@@ -38,7 +41,7 @@ export const FooterContacts = () => {
           size={13}
           color="brown-10"
         >
-          {"Press:"}
+           {t("footer.press")}:
         </Span>
         <Span
           size={13}

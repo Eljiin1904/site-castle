@@ -1,9 +1,0 @@
-
-build/
-node_modules/
-.env
-.env.development
-.env.staging
-.env.production
-**/src/input/
-**/src/output/

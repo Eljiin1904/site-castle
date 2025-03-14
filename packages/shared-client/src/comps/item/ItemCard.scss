@@ -2,6 +2,17 @@
 .ItemCard {
   &:hover {
 
+    .Img {
+      transform: scale(1.1);
+    }
+
+    cursor: pointer;
+    transform: translateY(-3px);
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-image-slice: 1;
+    border-image-repeat: stretch;
+    
     &.rarity-0 {
       background-image: linear-gradient(to bottom, var(--rarity-0-color-a2), var(--rarity-0-color-a2));
     }
@@ -24,7 +35,7 @@
       background-image: linear-gradient(to bottom, var(--rarity-6-color-a2), var(--rarity-6-color-a2));
     }
     &.rarity-7 {
-      background-image: linear-gradient(to bottom, var(--rarity-7-color-a2), var(--rarity-7-color-a2));
+      border-image-source: linear-gradient(180deg, var(--brown-6-color) 0.01%, var(--sand-color) 100%);
     }
   }
 }

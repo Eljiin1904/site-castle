@@ -10,14 +10,26 @@ export const image = (
     file: File;
     image: HTMLImageElement;
   }>()
-    .required(`${name} is required.`)
-    .test("fileType", "File type must be jpg or png.", (x) => {
+    .required({
+      key: "validations.mixed.required",
+      value: name,
+    })
+    .test("fileType", {
+      key: "validations.file.fileType",
+      value: { type: "jpg or png" },
+    }, (x) => {
       return x.file.type === "image/jpeg" || x.file.type === "image/png";
     })
-    .test("fileSize", "File size must be less than 4MB.", (x) => {
+    .test("fileSize", {
+      key: "validations.file.fileSize",
+      value: { size: 4 },
+    }, (x) => {
       return x.file.size < 4 * 1024 * 1024;
     })
-    .test("imageSize", `Image size must be ${width}x${height}.`, (x) => {
+    .test("imageSize", {
+      key: "validations.file.imageSize",
+      value: { width: width, height: height },
+    }, (x) => {
       return x.image.width === width && x.image.height === height;
     });
 };
@@ -32,17 +44,29 @@ export const imageConditional = (
     file: File;
     image: HTMLImageElement;
   }>()
-    .test("fileType", "File type must be jpg or png.", (x) => {
+    .test("fileType",  {
+      key: "validations.file.fileType",
+      value: { type: "jpg or png" },
+    }, (x) => {
       return !x || x.file.type === "image/jpeg" || x.file.type === "image/png";
     })
-    .test("fileSize", "File size must be less than 4MB.", (x) => {
+    .test("fileSize",  {
+      key: "validations.file.fileSize",
+      value: { size: 4 },
+    }, (x) => {
       return !x || x.file.size < 4 * 1024 * 1024;
     })
-    .test("imageSize", `Image size must be ${width}x${height}.`, (x) => {
+    .test("imageSize", {
+      key: "validations.file.imageSize",
+      value: { width: width, height: height },
+    }, (x) => {
       return !x || (x.image.width === width && x.image.height === height);
     })
     .when("imageRequired", {
       is: true,
-      then: (schema) => schema.required(`${name} is required.`),
+      then: (schema) => schema.required({
+        key: "validations.mixed.required",
+        value: name
+      }),
     });
 };

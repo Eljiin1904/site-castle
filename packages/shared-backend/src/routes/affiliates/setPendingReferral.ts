@@ -13,7 +13,7 @@ export default Http.createApiRoute({
   body: Validation.object({
     referralCode: Validation.string(),
   }),
-  callback: async (req, res) => {
+  callback: async (req, res, next) => {
     const { referralCode } = req.body;
 
     if (referralCode) {
@@ -42,7 +42,8 @@ async function handleAdd(user: UserDocument, referralCode: string) {
 
   if (
     user.referral &&
-    differenceInDays(Date.now(), user.referral.timestamp) < Affiliates.referralLockDays
+    differenceInDays(Date.now(), user.referral.timestamp) <
+      Affiliates.referralLockDays
   ) {
     throw new HandledError(
       `You can change your referral code once every ${Affiliates.referralLockDays} days.`,
@@ -58,7 +59,7 @@ async function handleAdd(user: UserDocument, referralCode: string) {
   );
 
   if (!affiliate) {
-    throw new HandledError("Invalid referral code.");
+    throw new HandledError("errors.invalidReferralCode");
   }
 
   if (user._id === affiliate._id) {

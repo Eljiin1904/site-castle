@@ -20,16 +20,14 @@ export const SupportToggle = () => {
       boxShadow={3}
     >
       <Button
-        kind="secondary"
+        kind="primary-yellow"
         size="lg"
         icon={SvgQuestionCircle}
         iconSize={20}
         loading={processing}
         disabled={processing}
         onClick={handleToggle}
-        style={{
-          borderRadius: 64,
-        }}
+        borderRadius="full"
       />
     </Div>
   );

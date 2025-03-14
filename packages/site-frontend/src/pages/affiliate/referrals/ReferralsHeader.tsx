@@ -66,7 +66,7 @@ export const ReferralsHeader = ({
         onChange={(x, i) => setSortIndex(i)}
       />
       <Button
-        kind="secondary"
+        kind="primary-yellow"
         icon={SvgRedo}
         disabled={isLoading}
         onClick={onRefreshClick}

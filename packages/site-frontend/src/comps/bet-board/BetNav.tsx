@@ -1,80 +1,43 @@
-import classNames from "classnames";
 import { SiteBetScope } from "@core/types/site/SiteBetScope";
 import { Div } from "@client/comps/div/Div";
-import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./BetNav.scss";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { PageTitle } from "@client/comps/page/PageTitle";
+import { ButtonGroup } from "@client/comps/button/ButtonGroup";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const BetNav = ({
-  scope,
-  setScope,
-}: {
+export const BetNav = ({heading, scope, setScope}: {
+  heading: string;
   scope: SiteBetScope;
   setScope: (x: SiteBetScope) => void;
 }) => {
+
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
-  return (
-    <Div
-      className="BetNav"
-      fx
-      gap={24}
-      borderBottom
-    >
-      <NavItem
-        scope="all"
-        active={scope === "all"}
-        onClick={() => setScope("all")}
-      />
-      <NavItem
-        scope="highroller"
-        active={scope === "highroller"}
-        onClick={() => setScope("highroller")}
-      />
-      {authenticated && (
-        <NavItem
-          scope="user"
-          active={scope === "user"}
-          onClick={() => setScope("user")}
-        />
-      )}
-    </Div>
-  );
-};
-
-const NavItem = ({
-  scope,
-  active,
-  onClick,
-}: {
-  scope: SiteBetScope;
-  active: boolean;
-  onClick: () => void;
-}) => {
-  let label = "Unknown";
-
-  if (scope === "all") {
-    label = "All Bets";
-  } else if (scope === "highroller") {
-    label = "High Rollers";
-  } else if (scope === "user") {
-    label = "My Bets";
-  }
-
-  return (
-    <Div
-      className={classNames("nav-item", { active })}
-      px={12}
-      pb={12}
-      top={1}
-      onClick={onClick}
-    >
-      <Span
-        className="label"
-        weight="semi-bold"
-      >
-        {label}
-      </Span>
-    </Div>
-  );
+  const small = useIsMobileLayout();
+  const {t} = useTranslation();
+  let options = [t('bets.allBets'),t('bets.highRollers'),t('bets.luckyBets')];
+  let values = [ "all", "highroller", "lucky"];
+  if (authenticated) {
+    options = [t('bets.myBets'), ...options];
+    values = ["user", ...values];
+  } 
+  
+  return (<Div
+    column
+    fx
+    gap={24}
+  >
+    <PageTitle
+      heading={heading}
+      mb={small ? 0 : 16}
+    />
+    <ButtonGroup
+      options={options}
+      size={small ? "sm" : "md"}
+      labelSize={12}
+      gap={small ? 12 : 16}
+      value={values.indexOf(scope)}  
+      setValue={(x) => values[x] && setScope(values[x] as SiteBetScope)}
+    />
+  </Div>);
 };

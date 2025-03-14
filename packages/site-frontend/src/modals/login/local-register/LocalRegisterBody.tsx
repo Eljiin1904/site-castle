@@ -19,21 +19,26 @@ import { Users } from "#app/services/users";
 import { Gtm } from "#app/services/gtm";
 import { UsernameField } from "#app/comps/username-field/UsernameField";
 import { SSOButtons } from "../SSOButtons";
+import { LoginAction } from "../LoginAction";
 import "./LocalRegisterBody.scss";
 import { Heading } from "@client/comps/heading/Heading";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Trans } from "@core/services/internationalization/internationalization";
 
-export const LocalRegisterBody = () => {
+export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) => void }) => {
   const [initReferralCode, , removeReferralCode] = useReferralCode();
   const [showReferralCode, setShowReferralCode] = useState(!initReferralCode);
   const dispatch = useAppDispatch();
   const small = useIsMobileLayout();
+  const { t } = useTranslation(["validations"]);
+
   const form = useCaptchaForm({
     schema: Validation.object({
-      username: Validation.username(),
-      email: Validation.email(),
-      password: Validation.password(),
-      repeatedPassword: Validation.repeatedPassword(),
+      username: Validation.username(t("validations:validations.username.field")),
+      email: Validation.email(t("validations:validations.email.field")),
+      password: Validation.password(t("validations:validations.password.field")),
+      repeatedPassword: Validation.repeatedPassword(t("validations:validations.password.confirmField")),
       referralCode: Validation.string(),
     }),
     initialValues: {
@@ -47,14 +52,14 @@ export const LocalRegisterBody = () => {
 
         Gtm.trackRegister({ user, strategy: "local" });
 
-        Toasts.success(`Welcome, ${user.username}!`);
+        Toasts.success(t("register.success", { username: user.username }));
 
         Dialogs.close("primary");
       } catch (err) {
         if (
           !showReferralCode &&
           err instanceof Error &&
-          err.message.startsWith("Invalid referral code.")
+          err.message.startsWith("errors.invalidReferralCode")
         ) {
           removeReferralCode();
           setShowReferralCode(true);
@@ -72,72 +77,72 @@ export const LocalRegisterBody = () => {
       className="register-body"
     >
       <Heading
-        as="h2"
-        size={small ? 20 : 24}
-        fontWeight="regular"
-        textTransform="uppercase"
-      >
-        Register to SandCasino
+              as="h2"
+              size={small ? 20 : 24}
+              fontWeight="regular"
+              textTransform="uppercase"
+        >
+         {t("register.title")}
       </Heading>
       <CaptchaForm form={form}>
         <ModalSection>
-          <ModalLabel>{"Username"}</ModalLabel>
+          <ModalLabel>{t("register.form.username")}</ModalLabel>
           <UsernameField
-            placeholder="Enter Username"
+            placeholder={t("register.form.usernamePlaceholder")}
             disabled={form.loading}
-            error={form.errors.username}
+            error={form.errors.username?.key ? t(`validations:${form.errors.username.key}`, {value: form.errors.username.value}) : undefined}
             value={form.values.username}
-            setError={(x) => form.setError("username", x)}
+            setError={(x) => form.setError("username",{ key: x || ''})}
             onChange={(x) => form.setValue("username", x)}
           />
         </ModalSection>
         <ModalSection>
-          <ModalLabel>{"Email"}</ModalLabel>
+          <ModalLabel>{t("register.form.email")}</ModalLabel>
           <Input
             type="email"
             id="new-email"
             autoComplete="email"
-            placeholder="Enter Email"
+            placeholder={t("register.form.emailPlaceholder")}
             disabled={form.loading}
-            error={form.errors.email}
+            error={form.errors.email?.key ? t(`validations:${form.errors.email.key}`, {value: form.errors.email.value}) : undefined}
             value={form.values.email}
             onChange={(x) => form.setValue("email", x)}
           />
         </ModalSection>
         <ModalSection>
-          <ModalLabel>{"Password"}</ModalLabel>
+          <ModalLabel>{t("register.form.password")}</ModalLabel>
           <Input
             type="password"
             id="new-password"
             autoComplete="new-password"
-            placeholder="Enter Password"
+            placeholder={t("register.form.passwordPlaceholder")}
             disabled={form.loading}
-            error={form.errors.password}
+            error={form.errors.password?.key ? t(`validations:${form.errors.password.key}`, {value: form.errors.password.value}) : undefined}
             value={form.values.password}
             onChange={(x) => form.setValue("password", x)}
           />
         </ModalSection>
         <ModalSection>
-          <ModalLabel>{"Repeat Password"}</ModalLabel>
+          <ModalLabel>{t("register.form.confirm")}</ModalLabel>
           <Input
             type="password"
             id="repeatedPassword"
-            placeholder="Reenter Password"
+            placeholder={t("register.form.confirmPlaceholder")}
             disabled={form.loading}
-            error={form.errors.repeatedPassword}
+            error={form.errors.repeatedPassword?.key ? t(`validations:${form.errors.repeatedPassword.key}`, {value: form.errors.repeatedPassword.value}) : undefined}
             value={form.values.repeatedPassword}
             onChange={(x) => form.setValue("repeatedPassword", x)}
           />
         </ModalSection>
         {showReferralCode && (
           <ModalSection>
-            <ModalLabel>{"Code (Optional)"}</ModalLabel>
+            <ModalLabel>{t("register.form.referral")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter Code"
+              placeholder={t("register.form.referralPlaceholder")}
               maxLength={Users.nameMaxLength}
               disabled={form.loading}
-              error={form.errors.referralCode}
+              error={form.errors.referralCode?.key ? t(`validations:${form.errors.referralCode.key}`, {value: form.errors.referralCode.value}) : undefined}
               value={form.values.referralCode}
               onChange={(x) => form.setValue("referralCode", x?.replace(/[^a-z0-9]/gi, ""))}
             />
@@ -145,12 +150,10 @@ export const LocalRegisterBody = () => {
         )}
         <Button
           type="submit"
-          kind="secondary"
-          label="Register"
-          labelWeight="medium"
-          labelSize={16}
+          kind="primary-yellow"
+          label={t("register.form.submit")}
           fx
-          mt={4}
+          mt={8}
           loading={form.loading}
         />
       </CaptchaForm>
@@ -164,16 +167,17 @@ export const LocalRegisterBody = () => {
         fontSize={12}
         color="dark-sand"
       >
-        {"By registering, you agree to our "}
-        <Link
-          type="a"
-          href={config.siteURL + "/terms-of-service"}
-          fontSize={12}
-          fontWeight="regular"
-        >
-          {"terms & conditions"}
-        </Link>
-        {" and that you're 18+ years old."}
+        <Trans 
+          i18nKey="register.disclaimer" 
+          values={{link: t("footer.terms")}}
+          components={[<Link
+            type="a"
+            href={config.siteURL + "/terms-of-service"}
+            fontSize={12}
+            fontWeight="regular"
+          >
+         {t("footer.terms")}
+        </Link>]}/>
       </Div>
       <ModalDivider label="Or" />
       <SSOButtons />

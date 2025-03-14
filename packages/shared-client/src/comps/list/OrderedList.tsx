@@ -19,7 +19,7 @@ export const OrderedList: FC<OrderedListProps> = ({
       as="ol"
       type={type}
       column
-      gap={12}
+      gap={20}
       {...forwardProps}
     >
       {items.map((x, i) => (
@@ -27,6 +27,9 @@ export const OrderedList: FC<OrderedListProps> = ({
           key={i}
           as="li"
           fontSize={itemSize}
+          color="dark-sand"
+          fontWeight="medium"
+          pl={12}
         >
           {x}
         </Styled>

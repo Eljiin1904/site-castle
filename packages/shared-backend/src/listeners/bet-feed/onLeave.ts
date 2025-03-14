@@ -10,6 +10,8 @@ export default Sockets.createListener({
       socket.leave(`bet-feed_${scope}`);
     } else if (scope === "highroller") {
       socket.leave(`bet-feed_${scope}`);
+    }else if (scope === "lucky") {
+      socket.leave(`bet-feed_${scope}`);
     } else if (scope === "user") {
       if (!socket.data.isAuthenticated) {
         throw new HandledError("Invalid scope.");

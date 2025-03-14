@@ -9,7 +9,7 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
       <UserIcon
         avatarIndex={message.user.avatarIndex}
         avatarId={"avatarId" in user ? user.avatarId : undefined}
-        width="36px"
+        width="32px"
       />
     );
   } else if (
@@ -30,7 +30,7 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
         avatarIndex={message.user.avatarIndex}
         avatarId={"avatarId" in user ? user.avatarId : undefined}
         hidden={message.user.hidden}
-        width="36px"
+        width="32px"
       />
     );
   } else if (
@@ -41,7 +41,7 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
       <Img
         type="jpg"
         path="/icons/logo"
-        width="36px"
+        width="32px"
       />
     );
   } else {
@@ -49,7 +49,7 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
       <Img
         type="png"
         path="/icons/unknown"
-        width="36px"
+        width="32px"
       />
     );
   }

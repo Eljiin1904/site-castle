@@ -27,6 +27,11 @@ textarea,
 li {
   font-family: var(--text-family);
   color: var(--brown-color);
+
+  &::marker {
+    font-weight: 400;
+    color: var(--light-sand-color);
+  }
 }
 
 h1,

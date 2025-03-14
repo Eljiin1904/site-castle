@@ -24,7 +24,7 @@ export async function getReferer({
       },
     );
     if (!affiliate) {
-      throw new HandledError("Invalid referral code.");
+      throw new HandledError("errors.invalidReferralCode");
     }
     return {
       kind: affiliate.tags.includes("sponsored") ? "sponsored" : "user",

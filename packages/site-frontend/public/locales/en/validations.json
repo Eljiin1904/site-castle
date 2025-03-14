@@ -1,0 +1,101 @@
+{
+  "validations": {
+    "mixed": {
+      "default": "{{value}} is invalid.",
+      "required": "{{value}} is required."      
+    },
+    "string": {
+      "min": "{{value.label}} must be at least {{value.min}} characters.",
+      "max": "{{value.label}} must be less {{value.max}} characters.",
+      "email": "{{value}} must be a valid email.",
+      "url": "{{value}} must be a valid URL.",
+      "length": "{{value.label}} must be exactly ${value.length} characters."
+    },
+    "number": {
+      "min": "{{value.label}} must be greater than or equal to {{value.min}}.",
+      "max": "{{value.label}} must be less than or equal to {{value.max}}.",
+      "lessThan": "{{value.label}} must be less than {{value.less}}.",
+      "moreThan": "{{value.label}} must be greater than {{value.more}}.",
+      "positive": "{{value}} must be a positive number.",
+      "negative": "{{value}} must be a negative number.",
+      "integer": "{{value}} must be an integer."
+    },
+    "date": {
+      "min": "{{value.label}} must be later than {{value.min}}.",
+      "max": "{{value.label}} must be at earlier than {{value.max}}."
+    },
+    "email": {
+      "field": "Email",
+      "required": "{{value}} is required.",
+      "invalid": "{{value}} is invalid.",
+      "valid": "{{value}} be in a valid format."
+    },
+    "boolean": {
+      "isValue": "{{value.label}} must be {{value.value}}."
+    },
+    "object": {
+      "noUnknown": "{{value.label}} field has unspecified keys: {{value.unknown}}."
+    },
+    "username": {
+      "field": "Username",
+      "required": "{{value}} is required.",
+      "min": "{{value.label}} must be at least {{value.min}} characters.",
+      "max": "{{value.label}} must be less {{value.max}} characters.",
+      "matches": "{{value}} must be in a valid format."
+    },
+    "password": {
+      "field": "Password",
+      "confirmField": "Confirm Password",
+      "newField": "New Password",
+      "min":"{{value.label}} must be at least {{value.min}} characters.",
+      "max":"{{value.label}} must be less than {{value.max}} characters.",
+      "required": "{{value}} is required.",
+      "repeated": "Must match Password.",
+      "confirm": "Please confirm your password."
+    },
+    "tfac": {
+      "field": "Authentication Code",
+      "required": "{{value}} is required.",
+      "min": "{{value.label}} must be {{value.min}} digits."
+    },
+    "page": {
+      "field": "Page",
+      "required": "{{value}} is required.",
+      "min":"{{value.label}} must be greater than {{value.min}}."
+    },
+    "index": {
+      "field": "Index",
+      "min":"{{value.label}} must be >= {{value.min}}.",
+      "max":"{{value.label}} must be < {{value.max}}."
+    },
+    "dob": {
+      "field": "Date of Birth",
+      "min": "You do not meet the minimum age requirement."      
+    },
+    "avatar": {
+      "field": "Avatar",
+      "fileType": "File type must be {{value.type}}.",
+      "fileSize": "File size must be less than {{value.size}}MB.",
+      "imageSize": "Image size must be at least {{value.width}}x{{value.height}}.",
+      "cropArea": "Invalid crop area.",
+      "required": "{{value}} is required."
+    }
+  },
+  "errors": {
+    "invalidReferral": "Invalid referral code.",
+    "email": {
+      "taken": "Email is already registered.",
+      "invalid": "Invalid email address.",
+      "disposable": "Invalid email domain."
+    },
+    "username": {
+      "taken": "Username is already taken."
+    },
+    "token": {
+      "invalid": "{{value}} Token invalid.",
+      "required": "Token is required."
+    },
+    "rateLimit": "Too many registration requests.",
+    "invalidCaptcha": "Failed to pass captcha."
+  }
+}

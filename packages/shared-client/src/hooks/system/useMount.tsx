@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Toasts } from "#client/services/toasts";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export function useMount(
   func: () => void | Promise<void>,
@@ -7,6 +8,7 @@ export function useMount(
 ) {
   const mounted = useRef(true);
   const called = useRef(false);
+  const {t} = useTranslation(["validations"]);
 
   useEffect(() => {
     mounted.current = true;
@@ -26,7 +28,9 @@ export function useMount(
     const handler = async () => {
       try {
         await func();
-      } catch (err) {
+      } catch (err:any) {
+        console.log('use Mount',err);
+        err.message = t(err.message,{value: err.cause});
         if (mounted.current) {
           if (onError) {
             onError(err);

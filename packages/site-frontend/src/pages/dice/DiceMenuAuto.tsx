@@ -81,12 +81,10 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="secondary"
+        kind="primary-yellow"
         label={overMax ? "Exceeds Max Profit" : "Start Auto Play"}
         disabled={overMax || processing}
         onClick={handleStartAuto}
-        labelWeight="semi-bold"
-        labelSize={16}
       />
     );
   }
@@ -129,7 +127,6 @@ const BaseFields = () => {
             <ButtonGroup
               options={["Reset", "Increase"]}
               size="md"
-              labelSize={12}
               value={["reset", "increase"].indexOf(winAction)}
               disabled={autoPlaying}
               setValue={(x) =>

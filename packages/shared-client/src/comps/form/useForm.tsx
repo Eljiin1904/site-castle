@@ -4,6 +4,7 @@ import { AnyObject, ObjectSchema } from "yup";
 import { Validation } from "@core/services/validation";
 import { Toasts } from "#client/services/toasts";
 import { Errors } from "#client/services/errors";
+import { TTransErrorKeyValue } from "@core/services/validation/Validation";
 
 type SetValueFunc<T extends AnyObject> = <K extends keyof T>(
   key: K,
@@ -11,7 +12,7 @@ type SetValueFunc<T extends AnyObject> = <K extends keyof T>(
 ) => void;
 type SetErrorFunc<T extends AnyObject> = <K extends keyof T>(
   key: K,
-  error: string | undefined,
+  error: TTransErrorKeyValue | undefined,
 ) => void;
 
 export type UseFormProps<T extends AnyObject> = {
@@ -24,7 +25,7 @@ export type UseFormProps<T extends AnyObject> = {
 export type UseFormReturn<T extends AnyObject> = {
   values: Partial<T>;
   loading: boolean;
-  errors: Partial<Record<keyof T, string>>;
+  errors: Partial<Record<keyof T, TTransErrorKeyValue>>;
   submitError: string | undefined;
   setValue: SetValueFunc<T>;
   setError: SetErrorFunc<T>;
@@ -39,7 +40,7 @@ export function useForm<T extends AnyObject>({
   onSubmit,
 }: UseFormProps<T>): UseFormReturn<T> {
   const [values, setValues] = useState<Partial<T>>(initialValues || {});
-  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof T, TTransErrorKeyValue>>>({});
   const [submitError, setSubmitError] = useState<string>();
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();

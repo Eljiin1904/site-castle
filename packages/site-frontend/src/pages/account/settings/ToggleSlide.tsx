@@ -10,6 +10,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Users } from "#app/services/users";
 import { waitForAuthenticatorCode } from "#app/modals/security/AuthenticatorCodeModal";
 import { Security } from "#app/services/security";
+import './ToggleSlide.scss';
 
 export const ToggleSlide = ({
   id,
@@ -42,9 +43,11 @@ export const ToggleSlide = ({
   }, setLoading);
 
   return (
-    <CardSection
+    <Div
       align="center"
-      py={16}
+      className="ToggleSlide"
+      gap={16}
+        
     >
       <Toggle
         value={isOn}
@@ -58,19 +61,14 @@ export const ToggleSlide = ({
           : undefined)}
       />
       <Div
-        grow
-        column
-        ml={16}
-        gap={8}
+        className="label"
       >
-        <Span
-          weight="semi-bold"
-          color="white"
-        >
-          {heading}
-        </Span>
-        <Span size={12}>{description}</Span>
+        {heading}
       </Div>
-    </CardSection>
+      {description && <Span
+          className="description-text">
+          {description}
+      </Span>}
+    </Div>
   );
 };

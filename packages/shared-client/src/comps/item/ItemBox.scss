@@ -1,37 +1,38 @@
 
 .ItemBox {
-  background-color: var(--brown-6-color);
+  // background-color: var(--brown-6-color);
 
   &.rarity-0 {
-    border-color: var(--rarity-0-color);
-    background-image: linear-gradient(to bottom, var(--rarity-0-color-a1), var(--rarity-0-color-a2));
+    
+    border-bottom: 4px solid var(--orange-color);
   }
   &.rarity-1 {
-    border-color: var(--rarity-1-color);
-    background-image: linear-gradient(to bottom, var(--rarity-1-color-a1), var(--rarity-1-color-a2));
+   
+    border-bottom: 4px solid var(--dark-green-color);
   }
   &.rarity-2 {
-    border-color: var(--rarity-2-color);
-    background-image: linear-gradient(to bottom, var(--rarity-2-color-a1), var(--rarity-2-color-a2));
+   
+    border-bottom: 4px solid var(--dark-yellow-color);
   }
   &.rarity-3 {
-    border-color: var(--rarity-3-color);
-    background-image: linear-gradient(to bottom, var(--rarity-3-color-a1), var(--rarity-3-color-a2));
+    
+    border-bottom: 4px solid var(--dark-red-color);
   }
   &.rarity-4 {
-    border-color: var(--rarity-4-color);
-    background-image: linear-gradient(to bottom, var(--rarity-4-color-a1), var(--rarity-4-color-a2));
+    
+    border-bottom: 4px solid var(--dark-sand-color);
   }
   &.rarity-5 {
-    border-color: var(--rarity-5-color);
-    background-image: linear-gradient(to bottom, var(--rarity-5-color-a1), var(--rarity-5-color-a2));
+    
+    border-bottom: 4px solid var(--dark-blue-color);
   }
   &.rarity-6 {
-    border-color: var(--rarity-6-color);
-    background-image: linear-gradient(to bottom, var(--rarity-6-color-a1), var(--rarity-6-color-a2));
+   
+    border-bottom: 4px solid var(--bright-green-color);
   }
   &.rarity-7 {
-    border-color: var(--rarity-7-color);
-    background-image: linear-gradient(to bottom, var(--rarity-7-color-a1), var(--rarity-7-color-a2));
+    
+    border-bottom: 4px solid var(--sand-color);
+    // background-image: linear-gradient(to bottom, var(--rarity-7-color-a1), var(--rarity-7-color-a2));
   }
 }

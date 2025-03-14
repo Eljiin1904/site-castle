@@ -2,12 +2,13 @@ import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Link } from "@client/comps/link/Link";
 import { Chat } from "#app/services/chat";
+import { Img } from "@client/comps/img/Img";
 
 export const TextContent = ({ text }: { text: string }) => {
   if (Chat.containsBadWord(text)) {
     return (
       <Span
-        size={13}
+        size={12}
         color="dark-gray"
       >
         {"Message censored by auto-moderator."}
@@ -18,8 +19,8 @@ export const TextContent = ({ text }: { text: string }) => {
   }
   return (
     <RichText
-      fontSize={13}
-      color="gray"
+      fontSize={12}
+      color="light-sand"
       text={text}
     />
   );
@@ -53,7 +54,7 @@ const RichText = ({
       span.length = 0;
     }
   };
-
+  
   for (const str of text.split(" ")) {
     if (
       str.startsWith("http://") ||
@@ -78,7 +79,9 @@ const RichText = ({
           type="router"
           to={str}
           fontSize={fontSize}
-          color="light-blue"
+          color="sand"
+          fontWeight="medium"
+          textDecoration="underline"
         >
           {str}
         </Link>,
@@ -89,12 +92,24 @@ const RichText = ({
         <Span
           key={elements.length}
           size={fontSize}
-          color="light-orange"
+          color="sand"
         >
           {str}
         </Span>,
       );
-    } else {
+    } else if(str.startsWith(":") && str.length > 1) {
+
+      const emote = Chat.emotes.find((x) => x.id === str);
+      if(!emote)
+        span.push(str);
+      else {
+        endSpan(false);
+        elements.push(
+          <Img path={emote.src} height="32px" width="32px" type="png" alt={emote.name} />,
+        );
+      }
+    }
+    else {
       span.push(str);
     }
   }
@@ -104,7 +119,9 @@ const RichText = ({
   return (
     <Div
       className="rich-text"
-      display="block"
+      display="flex"
+      alignItems="center"
+      gap={4}
     >
       {elements.map((x) => x)}
     </Div>

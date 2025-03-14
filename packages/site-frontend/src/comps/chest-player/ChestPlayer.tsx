@@ -17,6 +17,7 @@ import { ChestReelBox } from "../chest-reel/ChestReelBox";
 import { ChestHeader } from "./ChestHeader";
 import { ChestMenu } from "./ChestMenu";
 import { DropFeed } from "./DropFeed";
+import { DiceHeader } from "#app/pages/dice/DiceHeader";
 
 export type ChestPlayerProps = {
   chest: ChestDocument;
@@ -90,23 +91,15 @@ export const ChestPlayer: FC<ChestPlayerProps> = ({
 
   return (
     <Div
-      className="ChestPlayer"
       fx
       column
-      gap={32}
+      gap={24}
     >
+      <DiceHeader />
       <Div
-        column
         fx
-        gap={Style.responsive(mainLayout, [16, 24, 24, 24])}
+        gap={24}
       >
-        <ChestHeader
-          chest={chest}
-          backTo={backTo}
-          fairnessTo={fairnessTo}
-          description={descripton}
-        />
-        <ChestReelBox layout={layout}>{Reels}</ChestReelBox>
         <ChestMenu
           chest={chest}
           openCount={openCount}
@@ -121,11 +114,12 @@ export const ChestPlayer: FC<ChestPlayerProps> = ({
           onDemoClick={handleDemo}
           onOpenClick={handleOpen}
         />
+        <ChestReelBox layout={layout}>{Reels}</ChestReelBox>
       </Div>
       <ChestLootTable
-        chest={chest}
-        layout={mainLayout}
-      />
+          chest={chest}
+          layout={mainLayout}
+        />
       <DropFeed chest={chest} />
     </Div>
   );

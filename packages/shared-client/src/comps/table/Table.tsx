@@ -11,7 +11,7 @@ import "./Table.scss";
 
 type DataSchema = {} | { _id: number | string };
 
-type TableColumn<T extends DataSchema> = {
+export type TableColumn<T extends DataSchema> = {
   grow: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   justify: "center" | "flex-start" | "flex-end";
   heading: string | JSX.Element;
@@ -53,16 +53,23 @@ export function Table<T extends DataSchema>({
   }, [autoScroll, loading]);
 
   return (
-    <Card
+    <Div
       className={classNames("Table", className)}
       forwardRef={ref}
       column
       {...forwardProps}
     >
       <Div
-        className="table-header"
-        fx
-        gap={24}
+       className="BetHeader"
+       height={56}
+       align="center"
+       gap={24}
+       py={12}
+       borderWidth={1}
+       borderColor="brown-4"
+       borderTop
+       borderBottom
+       fx
       >
         {columns.map((x, i) => (
           <Div
@@ -73,9 +80,9 @@ export function Table<T extends DataSchema>({
           >
             {typeof x.heading === "string" ? (
               <Span
-                family="title"
-                weight="bold"
+                weight="medium"
                 size={12}
+                color="dark-sand"
                 textTransform="uppercase"
               >
                 {x.heading}
@@ -92,9 +99,9 @@ export function Table<T extends DataSchema>({
         fx
       >
         {!loading && data.length === 0 && (
-          <CardSection center>
+          <Div fx center p={32}>
             <Span color="white">{emptyMessage}</Span>
-          </CardSection>
+          </Div>
         )}
         {loading && data.length === 0 && (
           <CardSection
@@ -132,6 +139,6 @@ export function Table<T extends DataSchema>({
           );
         })}
       </Div>
-    </Card>
+    </Div>
   );
 }

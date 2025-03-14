@@ -24,6 +24,7 @@ export const DiceInfoModal = () => {
         <UnorderedList
           fx
           itemSize={14}
+          color="dark-sand"
           items={[
             "Min multiplier is 1.0105x.",
             "Max multiplier is 9600x.",

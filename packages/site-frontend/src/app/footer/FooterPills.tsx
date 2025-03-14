@@ -1,7 +1,9 @@
 import { Div } from "@client/comps/div/Div";
 import { Img } from "@client/comps/img/Img";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const FooterPills = ({ wrap }: { wrap?: boolean }) => {
+  const {t} = useTranslation();
   return (
     <Div
       flexFlow={wrap ? "row-wrap" : undefined}
@@ -17,7 +19,7 @@ export const FooterPills = ({ wrap }: { wrap?: boolean }) => {
         fontSize={16}
         color="white"
       >
-        ACCEPTED TOKENS
+       {t("footer.acceptedTokens").toUpperCase()}
       </Div>
       <Div
         gap={20}

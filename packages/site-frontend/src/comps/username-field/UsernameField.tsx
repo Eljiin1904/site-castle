@@ -9,6 +9,7 @@ import { Vector } from "@client/comps/vector/Vector";
 import { Spinner } from "@client/comps/spinner/Spinner";
 import { SvgCancel } from "@client/svgs/common/SvgCancel";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export type UsernameFieldProps = {
   placeholder: string;
@@ -30,6 +31,7 @@ export const UsernameField: FC<UsernameFieldProps> = ({
   const [currentValue, setCurrentValue] = useState(value);
 
   const debounced = useDebounceCallback(setCurrentValue, 500);
+  const {t} = useTranslation();
 
   const query = useQuery({
     enabled: currentValue !== undefined,
@@ -40,6 +42,7 @@ export const UsernameField: FC<UsernameFieldProps> = ({
 
   const queryError = query.error;
   const isValid = currentValue && query.data?.isAvailable;
+
 
   useEffect(() => {
     if (queryError) {
@@ -75,15 +78,15 @@ export const UsernameField: FC<UsernameFieldProps> = ({
         ) : (
           <Vector
             as={isValid ? SvgCheck : SvgCancel}
-            color={isValid ? "green" : currentValue ? "light-red" : "gray"}
+            color={isValid ? "green" : currentValue ? "light-red" : "dark-sand"}
             hover="highlight"
             data-tooltip-id="app-tooltip"
             data-tooltip-content={
               isValid
-                ? "Username is available!"
+                ? t("register.extraValidations.username.available")
                 : currentValue
-                  ? "Username is unavailable"
-                  : "Username is required"
+                  ? t("register.extraValidations.username.unavailable")
+                  : t("register.extraValidations.username.required")
             }
           />
         )}

@@ -21,6 +21,7 @@ import {
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import config from "#app/config";
 import { SocialAuthFinalizeModal } from "./SocialAuthFinalizeModal";
+import { ModalLabel } from "@client/comps/modal/ModalLabel";
 
 export const SocialAuthStartModal = ({
   provider,
@@ -72,26 +73,20 @@ export const SocialAuthStartModal = ({
         heading={`Logging in with ${label}`}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody textAlign="center">
         <Spinner
           size={80}
           mt={32}
           mb={24}
         />
-        <Span
-          textAlign="center"
-          px={16}
-          py={8}
-        >
+        <ModalLabel>
           {`A popup window should have opened with the ${label} login page.`}
-        </Span>
+        </ModalLabel>
         <Div
           fx
           column
           center
-          p={16}
-          gap={16}
-          bg="brown-7"
+          gap={16}          
         >
           <Span
             textAlign="center"
@@ -101,9 +96,9 @@ export const SocialAuthStartModal = ({
           </Span>
           <Button
             fx
-            kind="secondary"
-            size="sm"
+            kind="primary-yellow"
             label={`Redirect to ${label} Login`}
+            mt={4}
             icon={SvgExternal}
             onClick={redirect}
           />

@@ -9,6 +9,7 @@ export * from "./api/tipRain";
 
 export * from "./constants/badWords";
 export * from "./constants/emojis";
+export * from "./constants/emotes";
 
 export * from "./redux/chatSlice";
 

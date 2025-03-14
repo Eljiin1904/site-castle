@@ -13,6 +13,8 @@ export default Sockets.createListener({
         broadcaster = io.sockets.in(`bet-feed_${scope}`);
       } else if (scope === "highroller") {
         broadcaster = io.sockets.in(`bet-feed_${scope}`);
+      } else if (scope === "lucky") {
+        broadcaster = io.sockets.in(`bet-feed_${scope}`);
       } else {
         broadcaster = io.sockets.in(`bet-feed_${scope}-${document.user.id}`);
       }

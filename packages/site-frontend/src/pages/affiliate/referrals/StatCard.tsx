@@ -1,83 +1,89 @@
-import { Intimal } from "@core/services/intimal";
-import { Numbers } from "@core/services/numbers";
-import { Card } from "@client/comps/cards/Card";
-import { Conditional } from "@client/comps/conditional/Conditional";
-import { Div } from "@client/comps/div/Div";
-import { Span } from "@client/comps/span/Span";
-import { Tokens } from "@client/comps/tokens/Tokens";
-import { Vector } from "@client/comps/vector/Vector";
+  import { Intimal } from "@core/services/intimal";
+  import { Numbers } from "@core/services/numbers";
+  import { Card } from "@client/comps/cards/Card";
+  import { Div } from "@client/comps/div/Div";
+  import { Span } from "@client/comps/span/Span";
+  import { Tokens } from "@client/comps/tokens/Tokens";
+  import { Vector } from "@client/comps/vector/Vector";
+import { Img } from "@client/comps/img/Img";
 
-export const StatCard = ({
-  label,
-  icon,
-  value,
-  field,
-}: {
-  label: string;
-  icon?: Svg;
-  value: number | undefined;
-  field: "count" | "tokens" | "intimal";
-}) => {
-  return (
-    <Card
-      fx
-      column
-      center
-      p={16}
-    >
-      <Span mb={13}>{label}</Span>
-      <Div
-        align="center"
-        gap={4}
+  export const StatCard = ({
+    label,
+    icon,
+    value,
+    field,
+    special,
+    button
+  }: {
+    label: string;
+    icon?: Svg;
+    value: number | undefined;
+    field: "count" | "tokens" | "intimal";
+    special?: boolean;
+    button?: JSX.Element;
+  }) => {
+    
+    const headerCololor = special ? "dark-brown" : "light-sand";
+    const textColor = special ? "dark-brown" : "dark-sand";
+    return (
+      <Card
+        fx
+        justify="space-between"
+        p={24}
+        bg={special ? "sand" : undefined}
       >
-        {icon && (
-          <Vector
-            as={icon}
-            size={20}
-            color="gold"
-          />
-        )}
-        {value === undefined ? (
+        {special && <Img
+          type="png"
+          path="/graphics/dark-sand-gradient"
+          position="absolute"
+          bottom={0}
+          left={0}
+          width="100%" />}
+        <Div 
+          column
+          gap={8}
+          justifyContent="space-between"
+        >
           <Span
             family="title"
-            weight="bold"
-            size={20}
-            color="white"
+            size={32}
+            color={headerCololor}
           >
-            {"--"}
+            {value === undefined ? "--" : (
+              field === "count" ? Numbers.toLocaleString(value, 0) : field === "tokens" ? (
+                <Tokens
+                  value={value}
+                  fontSize={32}
+                  vectorColor="sand"
+                  color={headerCololor}
+                  family="title"
+                />
+              ) : Intimal.toLocaleString(value
+              )
+            )}
           </Span>
-        ) : (
-          <Conditional
-            value={field}
-            count={
-              <Span
-                family="title"
-                weight="bold"
-                size={20}
-                color="white"
-              >
-                {Numbers.toLocaleString(value, 0)}
-              </Span>
-            }
-            tokens={
-              <Tokens
-                value={value}
-                fontSize={20}
-              />
-            }
-            intimal={
-              <Span
-                family="title"
-                weight="bold"
-                size={20}
-                color="white"
-              >
-                {Intimal.toLocaleString(value, 0)}
-              </Span>
-            }
-          />
-        )}
-      </Div>
-    </Card>
-  );
-};
+          <Span
+          color={textColor}
+          size={16}
+          fontWeight="medium"
+          >{label}</Span>
+        </Div>
+        <Div
+          align="center"
+          gap={4}
+        >
+          {icon && (
+            <Vector
+              as={icon}
+              size={20}
+              color="sand"
+              bg="brown-4"
+              p={20}
+            />
+          )}
+
+          {button && button}  
+        </Div>
+      </Card>
+    );
+  };

@@ -9,18 +9,26 @@ import { Div } from "@client/comps/div/Div";
 import { Users } from "#app/services/users";
 import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
+import { LoginAction } from "../LoginAction";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgLock } from "#app/svgs/common/SvgLock";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Link } from "@client/comps/link/Link";
 import { SvgPlane } from "#app/svgs/common/SvgPlane";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const RecoverBody = () => {
+export const RecoverBody = ({
+  setAction,
+}: {
+  setAction: (x: LoginAction) => void;
+}) => {
   const [sent, setSent] = useState(false);
   const small = useIsMobileLayout();
+  const {t} = useTranslation(["validations"]);
+
   const form = useCaptchaForm({
     schema: Validation.object({
-      email: Validation.email(),
+      email: Validation.email(t("validations.email.field"))
     }),
     onSubmit: async (values) => {
       await Users.sendRecoverLink(values);
@@ -38,36 +46,16 @@ export const RecoverBody = () => {
           gap={16}
           flexCenter
         >
-          <Div
-            width={40}
-            px={48}
-            py={28}
-            borderRadius={"full"}
-            border
-            borderColor="brown-4"
-            borderWidth={1}
-          >
-            <Vector
-              fx
-              as={SvgLock}
-              size={40}
-              color="dark-sand"
-            />
-          </Div>
-          <Heading
-            as="h2"
+          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
+            <Vector fx as={SvgLock} size={40} color="dark-sand" />
+          </Div>          
+          <Heading  as="h2"
             size={small ? 20 : 24}
             fontWeight="regular"
-            textTransform="uppercase"
-          >
-            Forgot Password?
+            textTransform="uppercase">{t("forgot.title")}
           </Heading>
-          <Span
-            size={14}
-            color="dark-sand"
-            textAlign="center"
-          >
-            Please enter the email associated with your account.
+          <Span size={14} color="dark-sand" textAlign="center">
+          {t("forgot.description")}
           </Span>
         </Div>
         <ModalSection>
@@ -75,19 +63,17 @@ export const RecoverBody = () => {
             type="email"
             id="new-email"
             autoComplete="email"
-            placeholder="Enter email..."
+            placeholder={t("forgot.form.emailPlaceholder")}
             disabled={form.loading || sent}
-            error={form.errors.email}
+            error={form.errors.email?.key ? t(form.errors.email.key, {value: form.errors.email.value}) : undefined}
             value={form.values.email}
             onChange={(x) => form.setValue("email", x)}
           />
         </ModalSection>
         <Button
           type="submit"
-          kind="secondary"
-          label="Recover Password"
-          labelWeight="medium"
-          labelSize={16}
+          kind="primary-yellow"
+          label={t("forgot.form.submit")}
           fx
           loading={form.loading}
           mt={4}
@@ -102,36 +88,18 @@ export const RecoverBody = () => {
           gap={32}
           flexCenter
         >
-          <Div
-            width={40}
-            px={48}
-            py={28}
-            borderRadius={"full"}
-            border
-            borderColor="brown-4"
-            borderWidth={1}
-          >
-            <Vector
-              fx
-              as={SvgPlane}
-              size={40}
-              color="dark-sand"
-            />
+          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
+            <Vector fx as={SvgPlane} size={40} color="dark-sand" />
           </Div>
-          <Heading
-            as="h2"
+          <Heading  as="h2"
             size={small ? 20 : 24}
             fontWeight="regular"
             textTransform="uppercase"
-          >
-            Password Recovery Sent
+            textAlign="center">
+              {t("forgot.sent.title")}
           </Heading>
-          <Span
-            size={14}
-            color="dark-sand"
-            textAlign="center"
-          >
-            If you don't receive a password recovery link, please check your spam folder.
+          <Span size={14} color="dark-sand" textAlign="center">
+          {t("forgot.sent.description")}
           </Span>
           <Div
             className="disclaimer-box"
@@ -143,13 +111,13 @@ export const RecoverBody = () => {
             fontSize={12}
             color="dark-sand"
           >
-            <Link
+             <Link
               type="action"
               fontSize={14}
               fontWeight="semi-bold"
               onClick={() => form.handleSubmit()}
             >
-              {"Didn’t Receive? Resend Password"}
+               {t("forgot.sent.didntReceive")}
             </Link>
           </Div>
         </Div>

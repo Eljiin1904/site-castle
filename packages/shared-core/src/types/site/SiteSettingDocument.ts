@@ -72,6 +72,7 @@ interface FeatureToggles {
 interface ThresholdSettings {
   activityThreshold: number;
   betHighrollerThreshold: number;
+  betLuckyThreshold: number;
   chatGeneralRequirement: number;
   chatHighrollerRequirement: number;
 }

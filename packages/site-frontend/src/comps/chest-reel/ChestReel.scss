@@ -1,7 +1,7 @@
 
 .ChestReel {
-  height: 278px;
-
+  // height: 278px;
+  z-index: 0;
   &.layout-horizontal {
 
     .inner-content {
@@ -12,7 +12,7 @@
   &.layout-vertical {
 
     &:not(:first-child) {
-      border-left: 2px solid var(--brown-8-color);
+      border-left: 2px solid var(--black-hover-color);
     }
 
     .inner-content {

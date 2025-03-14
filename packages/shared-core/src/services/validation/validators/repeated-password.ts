@@ -3,10 +3,19 @@ import { object, ref, string } from "yup";
 export const repeatedPassword = () => {
   return object({
     password: string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
-    repeatedPassword: string()
-      .oneOf([ref("password")], "Passwords must match")
-      .required("Please confirm your password"),
+      .min(8, {
+        key: 'validations.password.min',
+        value: {label: 'Password', min: 8}
+      })
+      .required({
+        key: 'validations.password.required',
+        value: 'Password'
+      }),
+      repeatedPassword: string()
+      .oneOf([ref("password")], {
+        key: 'validations.password.repeated',
+        value: "Password"
+      })
+      .required({key: 'validation.password.confirm'})
   });
 };

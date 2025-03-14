@@ -24,6 +24,7 @@ export const UnorderedList: FC<UnorderedListProps> = ({
           key={i}
           as="li"
           fontSize={itemSize}
+          color={forwardProps.color || "dark-sand"}
         >
           {x}
         </Styled>

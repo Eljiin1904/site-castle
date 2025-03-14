@@ -9,6 +9,7 @@ import { MessageImage } from "./MessageImage";
 import { MessageMenu } from "./MessageMenu";
 import { MessageReply } from "./MessageReply";
 import "./ChatMessageCard.scss";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const ChatMessageCard = ({
   message,
@@ -19,27 +20,27 @@ export const ChatMessageCard = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   const highlight = useHighlight(message);
-
+  const small = useIsMobileLayout();
   return (
     <Div
       className={classNames("ChatMessageCard", {
         highlight,
       })}
       fx
-      py={8}
-      px={12}
+      px={small ? 20: 24}
+      py={16}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       column
       position="relative"
     >
       <MessageReply message={message} />
-      <Div>
+      <Div fx gap={12}>
         <MessageImage message={message} />
         <Div
           column
           fx
-          ml={10}
+          // ml={10}
           gap={2}
           overflow="hidden"
         >

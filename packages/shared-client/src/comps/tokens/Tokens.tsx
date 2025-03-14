@@ -16,6 +16,7 @@ export type TokensProps = StyledLayoutProps & {
   hideIcon?: boolean;
   decimals?: number;
   integer?: boolean;
+  family?: "text" | "title";
   valueRef?: RefObject<HTMLElement>;
 };
 
@@ -28,6 +29,7 @@ export const Tokens: FC<TokensProps> = ({
   fontSize = 14,
   decimals = 2,
   integer,
+  family = "text",
   hideIcon,
   valueRef,
   ...forwardProps
@@ -53,13 +55,13 @@ export const Tokens: FC<TokensProps> = ({
         <Vector
           className="icon"
           as={SvgMoney}
-          size={fontSize}
+          size={3*fontSize/4}
           mr={2}
           color={color}
         />
       )}
       <Span
-        family="text"
+        family={family}
         size={fontSize}
         color={color}
         fontWeight="medium"
@@ -68,7 +70,7 @@ export const Tokens: FC<TokensProps> = ({
         {/* {accent === "positive" && "+"} */}
       </Span>
       <Span
-        family="text"
+        family={family}
         fontWeight="medium"
         forwardRef={valueRef}
         size={fontSize}
