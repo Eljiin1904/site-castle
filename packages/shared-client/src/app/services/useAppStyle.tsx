@@ -7,7 +7,7 @@ import { Style } from "#client/services/style";
  * @returns rgb value
  */
 const hex2rgb = (hex:string) => {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? result?.slice(1).join(",") : "0,0,0";
 };
 

@@ -17,7 +17,7 @@ export async function consumeToken<K extends TokenKind>({
 
   if (!document) {
     
-    let e = new HandledError(`errors.token.invalid`);
+    const e = new HandledError(`errors.token.invalid`);
     e.cause = kind;
     throw e;
   }
