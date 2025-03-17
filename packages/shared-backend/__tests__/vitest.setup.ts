@@ -50,6 +50,8 @@ beforeAll(async () => {
 
   await Database.manager.init();
 
+  Database.createCollection("user-sessions", {});
+
   logger.info("Initialized database.");
 
   const httpServer = initHttp();
