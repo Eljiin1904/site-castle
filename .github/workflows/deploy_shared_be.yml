@@ -108,7 +108,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Update kubeconfig for Dev
-        run: aws eks update-kubeconfig --region us-east-1 --name castle-eks-dev
+        run: aws eks update-kubeconfig --region us-east-1 --name castle-dev
 
       - name: Deploy to Dev (castle-backend namespace)
         run: |
@@ -153,7 +153,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Update kubeconfig for Stage
-        run: aws eks update-kubeconfig --region us-east-1 --name castle-eks-dev
+        run: aws eks update-kubeconfig --region us-east-1 --name castle-dev
 
       - name: Deploy to Stage (stage_shared-backend namespace)
         run: |
