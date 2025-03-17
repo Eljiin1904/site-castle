@@ -22,9 +22,9 @@ async function main() {
   Managers.cryptoRates();
   Managers.cryptoSweeps();
   Managers.databaseIndexes();
-  Managers.syncMarketItems();
-  Managers.syncMarketWithdraws();
-  Managers.marketAlerts();
+  // Managers.syncMarketItems();
+  // Managers.syncMarketWithdraws();
+  // Managers.marketAlerts();
   Managers.siteActive();
   Managers.siteHoliday();
   Managers.siteRace();
