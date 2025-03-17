@@ -137,6 +137,7 @@ jobs:
 
   deploy-stage:
     # needs: wait-for-stage-approval
+    needs: deploy-dev
     runs-on: ubuntu-latest
     environment:
       name: stage  # Ensure manual approval is enforced in this environment's settings.
