@@ -67,8 +67,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
   console.log("shutting down MongoDB containers");
-  // await client.close();
-  // await mongoContainer.stop();
+  await client.close();
+  await mongoContainer.stop();
 });
 
 export { client, mongoUri };
