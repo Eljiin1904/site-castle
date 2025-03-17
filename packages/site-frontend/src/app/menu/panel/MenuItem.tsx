@@ -9,7 +9,7 @@ import { FC } from "react";
 type LinkProps = {type: "action" , onClick: () => void } | { type: "nav" ,to: To; end?: boolean; };
 export const MenuItem:FC<{icon:Svg, iconRight?: Svg, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
   
-  const {showLabel, icon,iconRight, label, labelColor, subText} = props;
+  const {showLabel, icon,iconRight, label, labelColor, subText, ...remainingProps} = props;
   return (
     <Link
       className="MenuItem"
@@ -17,7 +17,7 @@ export const MenuItem:FC<{icon:Svg, iconRight?: Svg, label: string, labelColor?:
       alignItems="center"
       pl={20}
       hover="none"
-      {...props}
+      {...remainingProps}
     >
       {showLabel ? (
        <MenuItemContent

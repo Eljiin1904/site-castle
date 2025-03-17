@@ -12,11 +12,13 @@
     "tokens": "Tokens",
     "blog": "Blog",
     "fairness": "Fairness",
-    "vip": "VIP"
+    "vip": "VIP",
+    "categories": "Categories"
   },
   "games": {
     "all": "All Games",
-    "featured": "Featured Games",
+    "featured_one": "Featured",
+    "featured_other": "Featured Games",
     "crash": "Crash",
     "duel": "Duel Game",
     "dice": "Dice",
@@ -31,7 +33,17 @@
     "gameShows": "Game Shows",
     "original_one": "Original Game",
     "original_other": "Original Games",
-    "hot": "Hot Games"
+    "hot": "Hot Games",
+    "recentlyAdded": "Recently Added"
+  },
+  "providers": {
+    "title": "Providers",
+    "evolution": "Evolution",
+    "pragmaticPlay": "Pragmatic Play",
+    "playngo": "Play'n Go",
+    "netent": "NetEnt",
+    "bigTimeGaming": "Big Time Gaming",
+    "hackSawGaming": "HackSaw Gaming"
   },
   "footer": {
     "socials": "Socials",

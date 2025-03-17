@@ -12,11 +12,13 @@
     "tokens": "Tokens",
     "blog": "Blog",
     "fairness": "Equidad",
-    "vip": "VIP"
+    "vip": "VIP",
+    "categories": "Categorías"
   },
   "games": {
     "all": "Todos los juegos",
-    "featured": "Juegos destacados",
+    "featured_one": "Destacados",
+    "featured_other": "Juegos destacados",
     "crash": "Crash",
     "duel": "Duelos",
     "dice": "Dados",
@@ -31,7 +33,17 @@
     "gameShows": "Programas",
     "original_one": "Juego Original",
     "original_other": "Juegos Originales",
-    "hot": "Juegos populares"
+    "hot": "Juegos populares",
+    "recentlyAdded": "Recién agregados"
+  },
+  "providers": {
+    "title": "Proveedores",
+    "evolution": "Evolución",
+    "pragmaticPlay": "Pragmático",
+    "playngo": "Jugar n ir",
+    "netent": "NetEnt",
+    "bigTimeGaming": "Gran momento",
+    "hackSawGaming": "Sierra de hack"
   },
   "footer": {
     "socials": "Redes sociales",

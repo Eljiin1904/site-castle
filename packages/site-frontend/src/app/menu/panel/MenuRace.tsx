@@ -29,6 +29,7 @@ export const MenuRace = ({ collapsed }: { collapsed: boolean }) => {
         />
       }
       to="/race"
+      type="nav"
       showLabel={!collapsed}
     />
   );

@@ -85,6 +85,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
     boxShadow?: 1 | 2 | 3 | 4;
     style?: CSSProperties | any;
     objectFitPosition?: "center" | "top" | "bottom" | "left" | "right" | "20%" | "40%" | "60%" | "80%";
+    objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
   };
 
 export type StyledElement = (props: {
