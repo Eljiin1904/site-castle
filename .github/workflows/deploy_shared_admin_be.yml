@@ -109,7 +109,7 @@ jobs:
         run: |
           echo "Deploying to Dev environment..."
           helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace castle-backend \
+            --namespace shared-admin-backend \
             --create-namespace \
             --values helm/shared-be/values/dev/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
@@ -155,7 +155,7 @@ jobs:
           echo "Deploying to Stage environment..."
           echo "Deploying to Dev environment..."
           helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace stage-castle-backend \
+            --namespace stage-shared-admin-backend \ \
             --create-namespace \
             --values helm/shared-be/values/stage/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
@@ -200,7 +200,7 @@ jobs:
           echo "Deploying to Stage environment..."
           echo "Deploying to Dev environment..."
           helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace castle-backend \
+            --namespace prod-shared-admin-backend \
             --create-namespace \
             --values helm/shared-be/values/prod/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
