@@ -31,7 +31,7 @@ export const AppNotifications = () => {
       }}
       button={
         <Button
-          kind="tertiary"
+          kind="tertiary-black-overlay"
           size="sm"
           icon={SvgBell}
         >

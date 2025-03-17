@@ -11,7 +11,7 @@ export const FooterContacts = () => {
       <Div gap={4}>
         <Span
           size={13}
-          color="brown-10"
+          color="dark-sand"
         >
           {t("footer.support")}:
         </Span>
@@ -25,7 +25,7 @@ export const FooterContacts = () => {
       <Div gap={4}>
         <Span
           size={13}
-          color="brown-10"
+          color="dark-sand"
         >
           {t("footer.partners")}:
         </Span>
@@ -39,7 +39,7 @@ export const FooterContacts = () => {
       <Div gap={4}>
         <Span
           size={13}
-          color="brown-10"
+          color="dark-sand"
         >
            {t("footer.press")}:
         </Span>

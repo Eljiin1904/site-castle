@@ -4,6 +4,7 @@ import { UserMenu } from "./UserMenu";
 import { SiteBalance } from "./SiteBalance";
 import { ChatToggle } from "./ChatToggle";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { LanguageSelector } from "./LanguageSelector";
 
 export const HeaderUser = () => {
   
@@ -12,9 +13,10 @@ export const HeaderUser = () => {
     <Div
       className="HeaderUser"
       align="center"
-      gap={small ? 24 : 8}
+      gap={small ? 24 : 12}
     >
       <SiteBalance />
+      <LanguageSelector />
       <ChatToggle />
       <AppNotifications />      
       <UserMenu />

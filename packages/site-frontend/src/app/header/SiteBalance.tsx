@@ -52,7 +52,7 @@ export const SiteBalance = () => {
             family="title"
             color="white"
           >
-            5000{/* {Intimal.toLocaleString(tokens)} */}
+            {Intimal.toLocaleString(tokens)}
           </Span>
         </Div>
         <Div
@@ -62,9 +62,9 @@ export const SiteBalance = () => {
           <Span size={40} width={1}>&nbsp;</Span>
           <Button
             className="wallet-button"
-            icon={SvgAddFunds}
             kind="primary-yellow"
             size="sm"
+            label="Wallet"
             onClick={() => Dialogs.open("primary", <WalletModal />)}
           />
           {!small && <Vector as={SvgDivider} px={8} />}

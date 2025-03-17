@@ -7,7 +7,18 @@
   background: var(--brown-4-color);
   
   &:not(:first-child){
-    border-top: 1px solid var(--dark-brown-hover-color);
+   
+    position: relative;
+    &::before {
+      content: '';
+      display: block;
+      width: calc(100% - 32px);
+      height: 1px;
+      background: var(--dark-brown-hover-color);
+      position: absolute;
+      top: 0;
+      left: 16px;
+    }
   }
 
   .label {
@@ -18,7 +29,7 @@
   
   .icon,
   .label {
-    color: var(--sand-color);
+    color: var(--dark-sand-color);
   }
 
   &:hover {  
@@ -37,7 +48,7 @@
       color: var(--sand-color);
     }
     .icon.left {
-      color: var(--yellow-color);
+      color: var(--sand-color);
     }
   }
 

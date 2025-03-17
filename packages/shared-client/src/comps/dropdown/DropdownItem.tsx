@@ -31,6 +31,7 @@ export const DropdownItem: FC<DropdownItemProps> = ({
       className={classNames("DropdownItem", className, size, { active })}
       hover="none"
       {...forwardProps}
+      color={active ? "sand" : "dark-sand"}
     >
       {iconLeft && (
         <Vector
