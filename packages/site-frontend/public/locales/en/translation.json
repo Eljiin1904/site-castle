@@ -3,6 +3,7 @@
     "home": "Home",
     "referrals": "Referrals",
     "token": "Token",
+    "races": "Races",
     "login": "Log In",
     "logout": "Logout",
     "register": "Register",
@@ -10,11 +11,13 @@
     "wallet": "Wallet",
     "tokens": "Tokens",
     "blog": "Blog",
-    "fairness": "Fairness"
+    "fairness": "Fairness",
+    "vip": "VIP"
   },
   "games": {
     "all": "All Games",
-    "crash": "Crash Game",
+    "featured": "Featured Games",
+    "crash": "Crash",
     "duel": "Duel Game",
     "dice": "Dice",
     "limbo": "Limbo",
@@ -26,7 +29,8 @@
     "slots": "Slots",
     "liveCasino": "Live Casino",
     "gameShows": "Game Shows",
-    "originals": "Original Games",
+    "original_one": "Original Game",
+    "original_other": "Original Games",
     "hot": "Hot Games"
   },
   "footer": {

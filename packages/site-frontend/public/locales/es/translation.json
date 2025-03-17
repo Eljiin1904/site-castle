@@ -3,6 +3,7 @@
     "home": "Inicio",
     "referrals": "Referidos",
     "token": "Token",
+    "races": "Carreras",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "register": "Registrarse",
@@ -10,10 +11,12 @@
     "wallet": "Billetera",
     "tokens": "Tokens",
     "blog": "Blog",
-    "fairness": "Equidad"
+    "fairness": "Equidad",
+    "vip": "VIP"
   },
   "games": {
     "all": "Todos los juegos",
+    "featured": "Juegos destacados",
     "crash": "Crash",
     "duel": "Duelos",
     "dice": "Dados",
@@ -25,8 +28,9 @@
     "double": "Doble",
     "slots": "Tragamonedas",
     "liveCasino": "Casino en vivo",
-    "gameShows": "Programas de juegos",
-    "originals": "Juegos originales",
+    "gameShows": "Programas",
+    "original_one": "Juego Original",
+    "original_other": "Juegos Originales",
     "hot": "Juegos populares"
   },
   "footer": {

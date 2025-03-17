@@ -25,10 +25,12 @@ export const HomePage = () => {
       <HashManager />
       {/* <ActivityFeed /> */}
       <HeroBanner />
-      {authenticated && <GameSearch />}
+      <GameSearch />
+      <FeaturedGamesSection />
       <OriginalGamesSection />
+      <HotGamesSection />
       {authenticated && <>
-        <HotGamesSection />
+        
         <BetBoard />
       </>}
     </SitePage>
@@ -37,7 +39,7 @@ export const HomePage = () => {
 
 const GameSearch = () => {
   const small = useIsMobileLayout();
-  const {t} = useTranslation();
+  const {t} = useTranslation(["home"]);
   return (
     <Div
       fx
@@ -50,13 +52,13 @@ const GameSearch = () => {
         size="lg"
         type="text"
         id="game-search"
-        placeholder="Search for a game or provider"
+        placeholder={t('search')}
         value=""
         onChange={(x) => true}
         mt={8}
       />
       <ButtonGroup
-          options={[t('games.all'),t('games.slots'),t('games.liveCasino'),t('games.gameShows'),t('games.originals')]}
+          options={[t('games.all'),t('games.featured'),t('games.original',{count: 2}),t('games.slots'),t('games.liveCasino'),t('games.gameShows')]}
           size={small ? "sm" : "md"}
           gap={small ? 12 : 16}
           value={["all", "slots", "casino", "show","original"].indexOf("all")}  
@@ -66,7 +68,7 @@ const GameSearch = () => {
   );
 };
 
-const OriginalGamesSection = () => {
+const FeaturedGamesSection = () => {
 
   const small = useIsMobileLayout();
   const {t} = useTranslation();
@@ -78,14 +80,81 @@ const OriginalGamesSection = () => {
       gap={small ? 24 : 40}
     >
       <PageTitle
-        heading={t('games.originals')}
+        heading={t('games.featured')}
         mt={small ? 0 : 16}
       />
       <Div
         gap={small ? 20 : 24}
       >
-        <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%"  image="/graphics/games/crash-tile" to="/crash" heading={t('games.crash')}/>
-        <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%" image="/graphics/games/duel-tile" to="/duel" heading={t('games.duel')}/>
+        <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%"  image="/graphics/games/crash-tile" to="/crash" heading={t('games.duel')}/>
+        <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%" image="/graphics/games/duel-tile" to="/duel" heading={t('games.casesBattles')}/>
+      </Div>
+    </Div>
+  );
+};
+const OriginalGamesSection = () => {
+  const small = useIsMobileLayout();
+  const {t} = useTranslation();
+  return (
+    <Div
+      id="original-games"
+      column
+      fx
+      gap={small ? 24 : 40}
+      mb={40}
+    >
+      <PageTitle
+        heading={t('games.original',{count: 2})}
+        mt={small ? 0 : 16}
+      />
+      <Div
+       gap={small ? 20 : 24}
+       wrap={small}
+      >
+        <GameBanner
+          image="/graphics/original-game-default"
+          heading={t('games.dice')}
+          subheading={t('games.original',{count: 1})}
+          to="/dice"
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        <GameBanner
+          image="/graphics/original-game-default"
+          heading={t('games.limbo')}
+          subheading={t('games.original',{count: 1})}
+          to="/limbo"
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        <GameBanner
+          image="/graphics/original-game-default"
+          heading={t('games.blackjack')}
+          subheading={t('games.original',{count: 1})}
+          to="/blackjack"
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        <GameBanner
+          image="/graphics/original-game-default"
+          heading={t('games.mines')}
+          subheading={t('games.original',{count: 1})}
+          to="/mines"
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        <GameBanner
+           image="/graphics/original-game-default"
+          heading={t('games.double')}
+          subheading={t('games.original',{count: 1})}
+          to="/double"
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        <GameBanner
+          image="/graphics/original-game-default"
+          heading={t('games.crash')}
+          subheading={t('games.original',{count: 1})}
+          to="/crash"
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        
+        
       </Div>
     </Div>
   );
@@ -100,6 +169,7 @@ const HotGamesSection = () => {
       column
       fx
       gap={small ? 24 : 40}
+      mb={40}
     >
       <PageTitle
         heading={t('games.hot')}
@@ -114,35 +184,42 @@ const HotGamesSection = () => {
           heading={t('games.casesBattles')}
           subheading="Original"
           to="/case-battles"
-          ratio={small ? "150 / 160" : "186 / 260"}
+          ratio={small ? "150 / 160" : "168 / 180"}
         />
         <GameBanner
           image="/graphics/cases-tile"
           heading={t('games.cases')}
           subheading="Original"
           to="/cases"
-          ratio={small ? "150 / 160" : "186 / 260"}
+          ratio={small ? "150 / 160" : "168 / 180"}
         />
         <GameBanner
           image="/graphics/double-tile"
           heading={t('games.double')}
           subheading="Original"
           to="/double"
-          ratio={small ? "150 / 160" : "186 / 260"}
+          ratio={small ? "150 / 160" : "168 / 180"}
         />
         <GameBanner
           image="/graphics/dice-tile"
           heading={t('games.dice')}
           subheading="Original"
           to="/dice"
-          ratio={small ? "150 / 160" : "186 / 260"}
+          ratio={small ? "150 / 160" : "168 / 180"}
         />
         <GameBanner
           image="/graphics/limbo-tile"
           heading={t('games.limbo')}
           subheading="Original"
           to="/limbo"
-          ratio={small ? "150 / 160" : "186 / 260"}
+          ratio={small ? "150 / 160" : "168 / 180"}
+        />
+        <GameBanner
+          image="/graphics/limbo-tile"
+          heading={t('games.limbo')}
+          subheading="Original"
+          to="/limbo"
+          ratio={small ? "150 / 160" : "168 / 180"}
         />
       </Div>
     </Div>

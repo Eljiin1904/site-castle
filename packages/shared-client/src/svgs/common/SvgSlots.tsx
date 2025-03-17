@@ -2,7 +2,7 @@ import { SVGProps } from "react";
 
 export const SvgSlots = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    viewBox="0 0 24 24"
+    viewBox="0 0 16 16"
     fill="none"
     {...props}
   >
@@ -25,3 +25,4 @@ export const SvgSlots = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
+

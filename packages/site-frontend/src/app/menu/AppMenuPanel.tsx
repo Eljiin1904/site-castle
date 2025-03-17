@@ -21,13 +21,17 @@ import { Site } from "#app/services/site";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { MenuHeader } from "./panel/MenuHeader";
-import { MenuItem } from "./panel/MenuItem";
+import { MenuItem, MenuItemAction } from "./panel/MenuItem";
 import { MenuRace } from "./panel/MenuRace";
 import { MenuSeparator } from "./panel/MenuSeparator";
 import "./AppMenuPanel.scss";
-import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { SvgVIP } from "#app/svgs/common/SvgVIP";
+import { SvgSupport } from "#app/svgs/common/SvgSupport";
+import { SvgBlog } from "#app/svgs/common/SvgBlog";
+import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
+import { SvgOriginalGames } from "#app/svgs/common/SvgOriginalGames";
 
 export const AppMenuPanel = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -42,6 +46,7 @@ export const AppMenuPanel = () => {
 const PanelContent = () => {
   const collapsed = useAppSelector((x) => x.site.menuPanelCollapsed);
   const animate = useAppSelector((x) => x.site.menuPanelCollapsedChanged);
+  const intercom = useIntercomManager();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   return (
@@ -70,7 +75,6 @@ const PanelContent = () => {
           justify="flex-start"
           fx
         >
-          <MenuRace collapsed={collapsed} />
           <MenuItem
             icon={SvgHome}
             label={t("menu.home")}
@@ -84,19 +88,10 @@ const PanelContent = () => {
             showLabel={!collapsed}
           />
           <MenuSeparator />
-          <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>Games</Span>
-          <MenuItem
-            icon={SvgAllGames}
-            label={t("games.all")}
-            to="/all-games"
-            showLabel={!collapsed}
-          />
-          <MenuItem
-            icon={SvgCrash}
-            label={t("games.crash")}
-            to="/crash"
-            showLabel={!collapsed}
-          />
+          <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>{t('menu.races')}</Span>
+          <MenuRace collapsed={collapsed} />
+          <MenuSeparator />
+          <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>{t('menu.games')}</Span>
           <MenuItem
             icon={SvgDuel}
             label={t("games.duel")}
@@ -104,6 +99,61 @@ const PanelContent = () => {
             showLabel={!collapsed}
           />
           <MenuItem
+            icon={SvgBattle}
+            label={t("games.casesBattles")}
+            to="/case-battles"
+            showLabel={!collapsed}
+          />
+           <MenuItem
+            icon={SvgOriginalGames}
+            label={t("games.original",{count: 2})}
+            to="/original"
+            showLabel={!collapsed}
+          />
+          <MenuItem
+            icon={SvgSlots}
+            label={t("games.slots")}
+            to="/slots"
+            showLabel={!collapsed}
+          />
+          <MenuItem
+            icon={SvgLiveCasino}
+            label={t("games.liveCasino")}
+            to="/live-casino"
+            showLabel={!collapsed}
+          />
+          <MenuItem
+            icon={SvgGameShows}
+            label={t("games.gameShows")}
+            to="/game-shows"
+            showLabel={!collapsed}
+          />
+          <MenuSeparator />
+          <MenuItem
+            icon={SvgVIP}
+            label={t("menu.vip")}
+            to="/vip"
+            showLabel={!collapsed}
+          />
+          <MenuItemAction
+            icon={SvgSupport}
+            label={t("footer.support")}
+            onClick={() => intercom.handleToggle()}
+            showLabel={!collapsed}
+          />
+          <MenuItem
+            icon={SvgBlog}
+            label={t("menu.blog")}
+            to="/blog"
+            showLabel={!collapsed}
+          />
+        </Nav>
+      </Div>
+    </Div>
+  );
+};
+
+{/* <MenuItem
             icon={SvgDice}
             label={t("games.dice")}
             to="/dice"
@@ -134,37 +184,8 @@ const PanelContent = () => {
             showLabel={!collapsed}
           />
           <MenuItem
-            icon={SvgBattle}
-            label={t("games.casesBattles")}
-            to="/case-battles"
-            showLabel={!collapsed}
-          />
-          <MenuItem
             icon={SvgSlide}
             label={t("games.double")}
             to="/double"
             showLabel={!collapsed}
-          />
-          <MenuItem
-            icon={SvgSlots}
-            label={t("games.slots")}
-            to="/slots"
-            showLabel={!collapsed}
-          />
-          <MenuItem
-            icon={SvgLiveCasino}
-            label={t("games.liveCasino")}
-            to="/live-casino"
-            showLabel={!collapsed}
-          />
-          <MenuItem
-            icon={SvgGameShows}
-            label={t("games.gameShows")}
-            to="/game-shows"
-            showLabel={!collapsed}
-          />
-        </Nav>
-      </Div>
-    </Div>
-  );
-};
+          /> */}

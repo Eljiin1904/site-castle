@@ -11,7 +11,7 @@ export const MenuItem = ({
   labelColor = "dark-sand",
   subText,
   showLabel,
-  to,
+  to
 }: {
   icon: Svg;
   label: string;
@@ -36,8 +36,8 @@ export const MenuItem = ({
           <Vector
             className="icon"
             as={icon}
-            size={20}
-            color="light-gray"
+            size={16}
+            color={labelColor}
             mr={16}
           />
           <Div column>
@@ -63,3 +63,60 @@ export const MenuItem = ({
     </Link>
   );
 };
+
+export const MenuItemAction = ({
+  icon,
+  label,
+  labelColor = "dark-sand",
+  subText,
+  showLabel,
+  onClick
+}: {
+  icon: Svg;
+  label: string;
+  labelColor?: Color;
+  subText?: string | JSX.Element;
+  showLabel: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <Div
+      className="MenuItem"
+      fx
+      alignItems="center"
+      pl={20}
+      hover="none"
+      onClick={onClick}
+    >
+      {showLabel ? (
+        <Div>
+          <Vector
+            className="icon"
+            as={icon}
+            size={20}
+            color={labelColor}
+            mr={16}
+          />
+          <Div column>
+            <Span
+              className="label fade-content"
+              color={labelColor}
+              fontWeight="medium"
+            >
+              {label}
+            </Span>
+            {subText}
+          </Div>
+        </Div>
+      ) : (
+        <Div center>
+          <Vector
+            as={icon}
+            size={20}
+            color="light-gray"
+          />
+        </Div>
+      )}
+    </Div>
+  );
+}

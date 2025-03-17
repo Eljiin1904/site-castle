@@ -34,6 +34,7 @@ export const GameBanner = ({
       to={to}
       hover="none"
       overflow="hidden"
+      position="relative"
     >
       <Img
         type="jpg"
@@ -45,24 +46,29 @@ export const GameBanner = ({
         objectPositionVertical={objectPositionVertical}
       />
       <Div
+        className="HeaderContent"
         position="absolute"
-        fx
-        fy
         align="center"
         justify="flex-end"
         column
-        pb={small ? 8 : 12}
+        px={small ? 16 : 20}
+        py={small ? 16 : 20}
         gap={small ? 0 : 2}
+        bg="dark-brown"
+        bottom={small ? 0 : 20}
       >
         <Heading
           as="h2"
-          size={small ? 20 : 24}
+          size={small ? 20 : 28}
+          fontWeight="regular"
+          textAlign="center"
         >
           {heading}
         </Heading>
         <Span
-          size={small ? 12 : 13}
-          color="sand"
+          size={small ? 10 : 10}
+          color="light-sand"
+          fontWeight="medium"
         >
           {subheading}
         </Span>
