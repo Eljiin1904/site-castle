@@ -7,16 +7,6 @@ import { Random } from "@server/services/random";
 import { Dice } from "@core/services/dice";
 import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
 import { Users } from "@core/services/users";
-import { Limbo } from "@server/services/limbo";
-import { LimboTicketDocument } from "@core/types/limbo/LimboTicketDocument";
-import { ChestItem, ChestItemOptions } from "@core/types/chests/ChestItem";
-import { Database } from "@server/services/database";
-import { Items } from "@core/services/items";
-import { HandledError } from "@server/services/errors";
-import { ChestDocument } from "@core/types/chests/ChestDocument";
-import { ChestGameDocument } from "@core/types/chests/ChestGameDocument";
-import { getGameId } from "@server/services/chests/Chests";
-import { Chests } from "@server/services/chests";
 import { UserRole } from "@core/types/users/UserRole";
 
 export const createTestUser = (
@@ -71,7 +61,11 @@ export const createTestUser = (
       commissionBalance: 0,
       commissionTotal: 0,
     },
-    tfa: { enabled: true },
+    tfa: {
+      enabled: true,
+      secret: "",
+      recoveryHash: "",
+    },
     kyc: {
       tier: 3,
     },
