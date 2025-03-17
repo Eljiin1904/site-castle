@@ -64,7 +64,7 @@ ingress:
   enabled: false
 
 secrets:
-  app: "shared-backend-secrets"
+  app: "castle-server-development"
   
 service:
   type: ClusterIP
