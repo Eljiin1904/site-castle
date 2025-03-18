@@ -7,6 +7,7 @@ export { default as chat } from "./chat";
 export { default as cryptos } from "./cryptos";
 export { default as dice } from "./dice";
 export { default as double } from "./double";
+export { default as games } from "./games";
 export { default as limbo } from "./limbo";
 export { default as market } from "./market";
 export { default as economy } from "./economy";

@@ -54,8 +54,8 @@ export async function handleLogin(
   const response = await handleFetch(url, "POST", { ...login_details, captchaToken });
   const result = await response.json();
 
-  const setCookieHeader: string = response.headers.get("set-cookie");
-  const sessionCookie: string = parseCookie(setCookieHeader);
+  const setCookieHeader: string = response.headers.get("set-cookie") || "";
+  const sessionCookie: string = parseCookie(setCookieHeader) || "";
 
   url = base_url + "/auth/session";
   let sessionResponse = await fetchWithCookie(
