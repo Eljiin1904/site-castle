@@ -16,6 +16,7 @@ export type ImgProps = Omit<StyledLayoutProps, "width" | "height"> & {
   alt?: string;
   skeleton?: boolean;
   aspectRatio?: string;
+  objectFit?: StyledProps["objectFit"];
   objectPositionVertical?: StyledProps["objectFitPosition"];
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
 };
@@ -30,6 +31,7 @@ export const Img: FC<ImgProps> = ({
   style,
   skeleton,
   aspectRatio,
+  objectFit = "cover",
   objectPositionVertical = "center",
   objectPositionHorizontal = "center",
   ...forwardProps
@@ -65,7 +67,7 @@ export const Img: FC<ImgProps> = ({
         width={width}
         src={src}
         alt={alt}
-        style={{ objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}` }}
+        style={{ objectFit: `${objectFit}`,objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}` }}
         onLoad={() => {
           setLoading(false);
         }}

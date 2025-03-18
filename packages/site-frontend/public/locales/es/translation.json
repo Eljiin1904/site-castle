@@ -3,6 +3,7 @@
     "home": "Inicio",
     "referrals": "Referidos",
     "token": "Token",
+    "races": "Carreras",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "register": "Registrarse",
@@ -10,10 +11,14 @@
     "wallet": "Billetera",
     "tokens": "Tokens",
     "blog": "Blog",
-    "fairness": "Equidad"
+    "fairness": "Equidad",
+    "vip": "VIP",
+    "categories": "Categorías"
   },
   "games": {
     "all": "Todos los juegos",
+    "featured_one": "Destacados",
+    "featured_other": "Juegos destacados",
     "crash": "Crash",
     "duel": "Duelos",
     "dice": "Dados",
@@ -21,13 +26,24 @@
     "blackjack": "Blackjack",
     "mines": "Minas",
     "cases": "Cofres",
-    "casesBattles": "Batalla de Cofres",
+    "cases_battles": "Batalla de Cofres",
     "double": "Doble",
     "slots": "Tragamonedas",
     "liveCasino": "Casino en vivo",
-    "gameShows": "Programas de juegos",
-    "originals": "Juegos originales",
-    "hot": "Juegos populares"
+    "gameShows": "Programas",
+    "original_one": "Juego Original",
+    "original_other": "Juegos Originales",
+    "hot": "Juegos populares",
+    "recentlyAdded": "Recién agregados"
+  },
+  "providers": {
+    "title": "Proveedores",
+    "evolution": "Evolución",
+    "pragmaticPlay": "Pragmático",
+    "playngo": "Jugar n ir",
+    "netent": "NetEnt",
+    "bigTimeGaming": "Gran momento",
+    "hackSawGaming": "Sierra de hack"
   },
   "footer": {
     "socials": "Redes sociales",

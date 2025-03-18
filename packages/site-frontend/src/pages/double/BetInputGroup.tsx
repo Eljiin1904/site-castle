@@ -60,7 +60,7 @@ const MobileContent = () => {
           placeholder="Enter bet amount..."
           value={betAmount}
           onChange={(x) => setBetAmount(x)}
-          iconColor={"brown-10"}
+          iconColor={"dark-sand"}
         />
         <Div
           position="absolute"
@@ -133,7 +133,7 @@ const TabletContent = () => {
         placeholder="Enter bet amount..."
         value={betAmount}
         onChange={(x) => setBetAmount(x)}
-        iconColor={"brown-10"}
+        iconColor={"dark-sand"}
       />
       <Div
         position="absolute"
@@ -218,7 +218,7 @@ const LaptopDesktopContent = () => {
           placeholder="Enter bet amount..."
           value={betAmount}
           onChange={(x) => setBetAmount(x)}
-          iconColor={"brown-10"}
+          iconColor={"dark-sand"}
         />
         <Div
           position="absolute"

@@ -10,7 +10,7 @@
     border: 1px solid var(--brown-4-color);
 
     .label {
-      color: var(--brown-10-color);
+      color: var(--dark-sand-color);
     }
 
     .icon {
@@ -287,7 +287,7 @@
     &:hover {
       background: var(--black-hover-color);
 
-      span {
+      span, .icon {
         color: var(--light-sand-color);
       }
     }
@@ -296,7 +296,7 @@
 
       background-color: var(--brown-4-color);
 
-      span {
+      span, .icon {
         color: var(--sand-color);
       }
     }

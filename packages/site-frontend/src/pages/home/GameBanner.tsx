@@ -21,6 +21,7 @@ export const GameBanner = ({
   subheading?: string | undefined;
   to: string;
   ratio?: string | undefined;
+  width?: 160 | 170;
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
   objectPositionVertical?: StyledProps["objectFitPosition"];
 }) => {
@@ -33,39 +34,45 @@ export const GameBanner = ({
       type="router"
       to={to}
       hover="none"
-      overflow="hidden"
+      position="relative"
     >
-      <Img
-        type="jpg"
-        path={image}
-        skeleton
-        width="100%"
-        aspectRatio={ratio || "186 / 260"}
-        objectPositionHorizontal={objectPositionHorizontal}
-        objectPositionVertical={objectPositionVertical}
-      />
-      <Div
-        position="absolute"
-        fx
-        fy
-        align="center"
-        justify="flex-end"
-        column
-        pb={small ? 8 : 12}
-        gap={small ? 0 : 2}
-      >
-        <Heading
-          as="h2"
-          size={small ? 20 : 24}
+      <Div fx column>
+        <Img
+          type="jpg"
+          path={image}
+          skeleton
+          width="100%"
+          aspectRatio={ratio || "186 / 260"}
+          objectPositionHorizontal={objectPositionHorizontal}
+          objectPositionVertical={objectPositionVertical}
+        />
+        <Div
+          className="HeaderContent"
+          align="center"
+          justify="flex-end"
+          column
+          px={small ? 16 : 20}
+          py={small ? 16 : 20}
+          gap={small ? 0 : 2}
+          bg="dark-brown"
+          bottom={small ? 0 : 20}
         >
-          {heading}
-        </Heading>
-        <Span
-          size={small ? 12 : 13}
-          color="sand"
-        >
-          {subheading}
-        </Span>
+          <Heading
+            as="h2"
+            size={small ? 20 : 28}
+            fontWeight="regular"
+            textAlign="center"
+          >
+            {heading}
+          </Heading>
+          <Span
+            size={small ? 10 : 10}
+            color="light-sand"
+            fontWeight="medium"
+          >
+            {subheading}
+          </Span>
+        </Div>
       </Div>
     </Link>
   );

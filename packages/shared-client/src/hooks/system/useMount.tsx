@@ -29,7 +29,7 @@ export function useMount(
       try {
         await func();
       } catch (err:any) {
-        console.log('use Mount',err);
+        
         err.message = t(err.message,{value: err.cause});
         if (mounted.current) {
           if (onError) {

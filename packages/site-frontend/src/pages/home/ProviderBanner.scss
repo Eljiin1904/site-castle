@@ -1,0 +1,15 @@
+
+.HomePage .ProviderBanner {
+
+  .AppMain.tablet & {
+    width: calc((100% - 72px)/4);
+  }
+  .AppMain.laptop & {
+    width: calc((100% - 96px)/5);
+  }
+  .AppMain.desktop & {
+    width: calc((100% - 120px)/6);
+  }
+  
+  flex-shrink: 0;
+}

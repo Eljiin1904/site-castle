@@ -3,6 +3,7 @@
     "home": "Home",
     "referrals": "Referrals",
     "token": "Token",
+    "races": "Races",
     "login": "Log In",
     "logout": "Logout",
     "register": "Register",
@@ -10,24 +11,39 @@
     "wallet": "Wallet",
     "tokens": "Tokens",
     "blog": "Blog",
-    "fairness": "Fairness"
+    "fairness": "Fairness",
+    "vip": "VIP",
+    "categories": "Categories"
   },
   "games": {
     "all": "All Games",
-    "crash": "Crash Game",
+    "featured_one": "Featured",
+    "featured_other": "Featured Games",
+    "crash": "Crash",
     "duel": "Duel Game",
     "dice": "Dice",
     "limbo": "Limbo",
     "blackjack": "Blackjack",
     "mines": "Mines",
     "cases": "Cases",
-    "casesBattles": "Cases Battles",
+    "cases_battles": "Cases Battles",
     "double": "Double",
     "slots": "Slots",
     "liveCasino": "Live Casino",
     "gameShows": "Game Shows",
-    "originals": "Original Games",
-    "hot": "Hot Games"
+    "original_one": "Original Game",
+    "original_other": "Original Games",
+    "hot": "Hot Games",
+    "recentlyAdded": "Recently Added"
+  },
+  "providers": {
+    "title": "Providers",
+    "evolution": "Evolution",
+    "pragmaticPlay": "Pragmatic Play",
+    "playngo": "Play'n Go",
+    "netent": "NetEnt",
+    "bigTimeGaming": "Big Time Gaming",
+    "hackSawGaming": "HackSaw Gaming"
   },
   "footer": {
     "socials": "Socials",

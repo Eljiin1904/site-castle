@@ -25,7 +25,7 @@ export const Vector: FC<VectorProps> = ({
       className={classNames("Vector", className)}
       display="inline-flex"
       center
-      color="gray"
+      // color="gray"
       {...forwardProps}
     >
       {createElement(as, {

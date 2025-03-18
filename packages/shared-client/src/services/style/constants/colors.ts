@@ -40,7 +40,6 @@ export const colors = {
   "brown-6": "#262321" /** Replace this name by black-hover on all elements */,
   "brown-7": "#1D1A19",
   "brown-8": "#1D1A19",
-  "brown-10": "#AFAC9F",
   gold: "#ffbc02",
   "light-sand": "#FFFEFC",
   /**Button Black Primary Colors */
