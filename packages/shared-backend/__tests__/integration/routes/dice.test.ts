@@ -4,7 +4,7 @@ import { createTestUser, fetchWithCookie, handleLogin } from "../../testUtility"
 import bcrypt from "bcrypt";
 import config from "#app/config";
 
-const url = config.siteAPI;
+const BASE_URL = config.siteAPI;
 const hCaptchaToken = "10000000-aaaa-bbbb-cccc-000000000001"; // from hCatcha's integration test guidance
 
 describe("Test Dice Game Route", () => {
@@ -32,8 +32,6 @@ describe("Test Dice Game Route", () => {
 
     await Database.collection("users").insertOne(user);
   });
-
-  const BASE_URL = "http://127.0.0.1:5000";
 
   it("Post Dice Ticket", async () => {
     const user = await Database.collection("users").findOne({
