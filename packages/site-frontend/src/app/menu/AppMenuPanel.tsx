@@ -32,6 +32,7 @@ import { SvgMines } from "@client/svgs/common/SvgMines";
 import { SvgDouble } from "#app/svgs/double/SvgDouble";
 import { SvgOriginalArrowUp } from "@client/svgs/common/SvgOriginalArrowUp";
 import { SvgOriginalArrowDown } from "@client/svgs/common/SvgOriginalArrowDown";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 export const AppMenuPanel = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -111,7 +112,8 @@ const PanelContent = () => {
           />
           <MenuItem
             icon={SvgOriginalGames}
-            iconRight={!open ? SvgOriginalArrowUp : SvgOriginalArrowDown}
+            isSubMenu={true}
+            open={open}
             label={t("games.original",{count: 2})}
             onClick={() => setOpen(!open)}
             showLabel={!collapsed}

@@ -15,7 +15,6 @@ export const HeaderUser = () => {
       align="center"
       gap={small ? 24 : 12}
     >
-      <SiteBalance />
       <LanguageSelector />
       <ChatToggle />
       <AppNotifications />      

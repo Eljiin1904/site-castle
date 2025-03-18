@@ -5,11 +5,12 @@ import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
 import "./MenuItem.scss";
 import { FC } from "react";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 type LinkProps = {type: "action" , onClick: () => void } | { type: "nav" ,to: To; end?: boolean; };
-export const MenuItem:FC<{icon:Svg, iconRight?: Svg, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
+export const MenuItem:FC<{icon:Svg, isSubMenu?: boolean, open?: boolean, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
   
-  const {showLabel, icon,iconRight, label, labelColor, subText, ...remainingProps} = props;
+  const {showLabel, icon,isSubMenu, open, label, labelColor, subText, ...remainingProps} = props;
   return (
     <Link
       className="MenuItem"
@@ -25,7 +26,8 @@ export const MenuItem:FC<{icon:Svg, iconRight?: Svg, label: string, labelColor?:
         labelColor={labelColor || "dark-sand"}
         label={label}
         subText={subText}
-        iconRight={iconRight}
+        isSubMenu={isSubMenu}
+        open={open}
       />
       ) : (
         <Div center>
@@ -40,12 +42,13 @@ export const MenuItem:FC<{icon:Svg, iconRight?: Svg, label: string, labelColor?:
   );
 };
 
-const MenuItemContent = ({iconLeft, labelColor, label, subText, iconRight} : {
+const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open} : {
   iconLeft: Svg;
   labelColor: Color;
   label: string;
   subText?: string | JSX.Element;
-  iconRight?: Svg;
+  isSubMenu?: boolean;
+  open?: boolean;
 }) => {
 
   return (<Div fx alignItems="center" gap={16}>
@@ -65,17 +68,15 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, iconRight} : {
       </Span>
       {/* {subText} */}
     </Div>
-    {iconRight && <Vector
+    {isSubMenu && <Vector
       className="icon fade-content"
-      as={iconRight}
-      size={16}
+      as={SvgArrowRight}
+      size={12}
       color={labelColor}
       border
       borderColor={'brown-4'}
-      pb={8}
-      pt={2}
-      pl={2}
-      pr={8}
+      p={8}
+      style={{transform: !open ? "rotate(180deg)" : "rotate(0deg)"}}
       />}
   </Div>)
 };

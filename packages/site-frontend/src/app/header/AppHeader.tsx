@@ -9,6 +9,7 @@ import { HeaderGuest } from "./HeaderGuest";
 import { HeaderUser } from "./HeaderUser";
 import "./AppHeader.scss";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { SiteBalance } from "./SiteBalance";
 
 export const AppHeader = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -104,6 +105,7 @@ const NotMobileHeader = () => {
           {authenticated ? <HeaderUser /> : <HeaderGuest />}
         </Div>
       </Div>
+      {authenticated && <SiteBalance />}
     </Div>
   );
 };
