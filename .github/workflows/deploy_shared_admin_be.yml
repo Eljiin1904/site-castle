@@ -155,7 +155,7 @@ jobs:
           echo "Deploying to Stage environment..."
           echo "Deploying to Dev environment..."
           helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace stage-shared-admin-backend \ \
+            --namespace stage-shared-admin-backend \ 
             --create-namespace \
             --values helm/shared-be/values/stage/shared_be_values.yaml \
             --set image.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
