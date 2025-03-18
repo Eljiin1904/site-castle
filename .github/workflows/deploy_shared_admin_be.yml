@@ -118,7 +118,7 @@ jobs:
           additional-denied-words: ''
 
   update-helm-chart-prod:
-    needs: update-helm-chart-stage
+    needs: wait-for-prod-approval
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
