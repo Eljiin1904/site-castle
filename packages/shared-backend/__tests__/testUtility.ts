@@ -9,6 +9,64 @@ import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
 import { Users } from "@core/services/users";
 import { UserRole } from "@core/types/users/UserRole";
 
+export function parseCookie(cookieString: string) {
+  const cookies = cookieString.split(";");
+  const sessionCookie = cookies.find((cookie) => cookie.trim().startsWith("connect.sid="));
+  return sessionCookie ? sessionCookie.trim().split("=")[1] : null;
+}
+
+export async function fetchWithCookie(
+  url: string,
+  method: "POST" | "GET" | "DELETE" | "PUT",
+  body: object,
+  sessionCookie: string,
+) {
+  return fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `connect.sid=${sessionCookie}`, // Include the session cookie
+    },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function handleFetch(
+  url: string,
+  method: "POST" | "GET" | "DELETE" | "PUT",
+  body?: string | object,
+) {
+  return fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function handleLogin(
+  base_url: string,
+  login_details: { username: string; password: string },
+  captchaToken: string,
+) {
+  let url = base_url + "/auth/local";
+  const response = await handleFetch(url, "POST", { ...login_details, captchaToken });
+  const result = await response.json();
+
+  const setCookieHeader: string = response.headers.get("set-cookie");
+  const sessionCookie: string = parseCookie(setCookieHeader);
+
+  url = base_url + "/auth/session";
+  let sessionResponse = await fetchWithCookie(
+    url,
+    "POST",
+    { userId: result.user._id },
+    sessionCookie,
+  );
+  return [sessionResponse, sessionCookie];
+}
+
 export const createTestUser = (
   username: string = "tester",
   email: string = "test@gmail.com",
@@ -35,7 +93,7 @@ export const createTestUser = (
     role: role,
     tags: [],
     avatarIndex: Numbers.randomInt(1, 16),
-    tokenBalance: 0,
+    tokenBalance: 10000,
     gemBalance: 0,
     xp: 0,
     stats: {},

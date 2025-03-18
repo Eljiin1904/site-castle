@@ -6,7 +6,7 @@ export default Http.createAuthRoute({
   type: "post",
   path: "/local",
   strategy: "local",
-  captcha: true,
+  captcha: process.env.NODE_ENV != "development",
   finalizes: true,
   onFail: async (err, req, res, next) => {
     if (err instanceof HandledError) {
