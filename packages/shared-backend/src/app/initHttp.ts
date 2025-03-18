@@ -113,6 +113,7 @@ export function initHttp(app = express()) {
   app.use("/double", Routes.double);
   app.use("/economy", Routes.economy);
   app.use("/fairness", Routes.fairness);
+  app.use("/games", Routes.games);
   app.use("/limbo", Routes.limbo);
   app.use("/market", Routes.market);
   app.use("/notifications", Routes.notifications);

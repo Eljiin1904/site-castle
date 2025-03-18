@@ -8,6 +8,7 @@ import { initHttp } from "../src/app/initHttp";
 import { initSockets } from "../src/app/initSockets";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { initSiteGames } from "#app/app/initGames";
 
 let mongoContainer: StartedMongoDBContainer;
 let mongoUri: string;
@@ -50,6 +51,8 @@ beforeAll(async () => {
 
   await Database.manager.init();
 
+  Database.createCollection("user-sessions", {});
+
   logger.info("Initialized database.");
 
   const httpServer = initHttp();
@@ -57,6 +60,8 @@ beforeAll(async () => {
   logger.info("Initialized http.");
 
   initSockets(httpServer);
+
+  await initSiteGames();
 
   logger.info("Initialized sockets.");
 
