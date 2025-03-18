@@ -4,6 +4,7 @@ import { initHttp } from "./app/initHttp";
 import { initSockets } from "./app/initSockets";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { initSiteGames } from "./app/initGames";
 
 main();
 
@@ -27,6 +28,9 @@ async function main() {
   logger.info("Initialized http.");
 
   initSockets(httpServer);
+
+  //  Initialize Site Games
+  await initSiteGames();
 
   logger.info("Initialized sockets.");
 

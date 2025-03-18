@@ -6,9 +6,7 @@ const names = [config.env, "messaging"] as const;
 
 export type dbNames = (typeof names)[number];
 
-export const dbCollectionsMapping: Readonly<
-  Record<keyof DatabaseCollections, dbNames>
-> = {
+export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, dbNames>> = {
   ["admin-log"]: config.env,
   ["admin-sessions"]: config.env,
   ["advent-tickets"]: config.env,
@@ -55,6 +53,7 @@ export const dbCollectionsMapping: Readonly<
   ["swapped-wallets"]: config.env,
   ["site-activity"]: config.env,
   ["site-bets"]: config.env,
+  ["site-games"]: config.env,
   ["site-meta"]: config.env,
   ["site-settings"]: config.env,
   ["site-stats"]: config.env,
