@@ -17,7 +17,7 @@
     "src", 
     "../shared-core/build", 
     "../shared-server/build",
-    "__tests__/vitest.setup.ts"],
+    "__tests__/vitest.setup.ts", "__tests__/testUtility.ts"],
   "exclude": [
     "node_modules"
   ],
