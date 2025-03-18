@@ -111,7 +111,7 @@ const FeaturedGamesSection = ({showSection}: {showSection: boolean}) => {
         gap={small ? 20 : 24}
       >
         <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%"  image="/graphics/games/crash-tile" to="/crash" heading={t('games.duel')}/>
-        <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%" image="/graphics/games/duel-tile" to="/duel" heading={t('games.casesBattles')}/>
+        <FeatureGameBanner ratio={small ? "150 / 160" : "552 / 240"}  objectPositionHorizontal="80%" image="/graphics/games/duel-tile" to="/duel" heading={t('games.cases_battles')}/>
       </Div>
     </Div>);
 };
@@ -137,7 +137,7 @@ const HotGamesSection = ({showSection}: {showSection: boolean}) => {
   const {t} = useTranslation();
 
   const games = [
-    {image:"/graphics/case-battles-tile", heading:t('games.casesBattles'),subheading:"Original", to:"/case-battles"},
+    {image:"/graphics/case-battles-tile", heading:t('games.cases_battles'),subheading:"Original", to:"/case-battles"},
     {image:"/graphics/cases-tile", heading:t('games.cases'),subheading:"Original", to:"/cases"},
     {image:"/graphics/double-tile", heading:t('games.double'),subheading:"Original", to:"/double"},
     {image:"/graphics/dice-tile", heading:t('games.dice'),subheading:"Original", to:"/dice"},
@@ -151,7 +151,7 @@ const RecentlyAdedGamesSection = ({showSection}: {showSection: boolean}) => {
   const {t} = useTranslation();
 
   const games = [
-    {image:"/graphics/case-battles-tile", heading:t('games.casesBattles'),subheading:"Original", to:"/case-battles"},
+    {image:"/graphics/case-battles-tile", heading:t('games.cases_battles'),subheading:"Original", to:"/case-battles"},
     {image:"/graphics/cases-tile", heading:t('games.cases'),subheading:"Original", to:"/cases"},
     {image:"/graphics/double-tile", heading:t('games.double'),subheading:"Original", to:"/double"},
     {image:"/graphics/dice-tile", heading:t('games.dice'),subheading:"Original", to:"/dice"},

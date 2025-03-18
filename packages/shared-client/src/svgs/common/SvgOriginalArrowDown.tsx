@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-export const SvgOriginalArrow = (props: SVGProps<SVGSVGElement>) => (
+export const SvgOriginalArrowDown = (props: SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 16 16"
     {...props}

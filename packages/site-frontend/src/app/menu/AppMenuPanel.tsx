@@ -23,8 +23,15 @@ import { SvgSupport } from "#app/svgs/common/SvgSupport";
 import { SvgBlog } from "#app/svgs/common/SvgBlog";
 import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
 import { SvgOriginalGames } from "#app/svgs/common/SvgOriginalGames";
-import { SvgArrowBottom } from "@client/svgs/common/SvgArrowBottom";
-import { SvgOriginalArrow } from "@client/svgs/common/SvgOriginalArrow";
+import { useState } from "react";
+import { SvgDice } from "@client/svgs/common/SvgDice";
+import { SvgLimbo } from "@client/svgs/common/SvgLimbo";
+import { To } from "react-router-dom";
+import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
+import { SvgMines } from "@client/svgs/common/SvgMines";
+import { SvgDouble } from "#app/svgs/double/SvgDouble";
+import { SvgOriginalArrowUp } from "@client/svgs/common/SvgOriginalArrowUp";
+import { SvgOriginalArrowDown } from "@client/svgs/common/SvgOriginalArrowDown";
 
 export const AppMenuPanel = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -39,6 +46,7 @@ export const AppMenuPanel = () => {
 const PanelContent = () => {
   const collapsed = useAppSelector((x) => x.site.menuPanelCollapsed);
   const animate = useAppSelector((x) => x.site.menuPanelCollapsedChanged);
+  const [open, setOpen] = useState(false);
   const intercom = useIntercomManager();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
@@ -96,19 +104,20 @@ const PanelContent = () => {
           />
           <MenuItem
             icon={SvgBattle}
-            label={t("games.casesBattles")}
+            label={t("games.cases_battles")}
             to="/case-battles"
             showLabel={!collapsed}
             type="nav"
           />
-           <MenuItem
+          <MenuItem
             icon={SvgOriginalGames}
-            iconRight={SvgOriginalArrow}
+            iconRight={!open ? SvgOriginalArrowUp : SvgOriginalArrowDown}
             label={t("games.original",{count: 2})}
-            to="/original"
+            onClick={() => setOpen(!open)}
             showLabel={!collapsed}
-            type="nav"
+            type="action"
           />
+          <OriginalGames animate={true} collapsed={open} />
           <MenuItem
             icon={SvgSlots}
             label={t("games.slots")}
@@ -156,4 +165,36 @@ const PanelContent = () => {
       </Div>
     </Div>
   );
+};
+
+
+const OriginalGames = ({animate,collapsed}: {animate?: boolean, collapsed: boolean}) => {
+
+  const {t} = useTranslation();
+
+  const games: {icon: Svg, label: string, to: To}[] = [{icon: SvgDice, label:t('games.dice'), to: "/originals/dice"},
+    {icon: SvgLimbo, label: t('games.limbo'), to: "/originals/limbo"},
+    {icon: SvgBlackjack, label: t('games.blackjack'), to: "/originals/blackjack"},
+    {icon: SvgMines, label: t('games.mines'), to: "/originals/mines"},
+    {icon: SvgDouble, label: t('games.double'), to: "/originals/double"}];
+
+  return (<Div 
+    className={classNames("OriginalGames", {
+      animate,
+      opened: !collapsed,
+      closed: collapsed,
+    })}
+    column
+  fx>
+    {games.map((game, i) => (
+      <MenuItem
+        key={i}
+        icon={game.icon}
+        label={game.label}
+        type="nav"
+        to={game.to}
+        showLabel={!collapsed}
+      />
+    ))}
+  </Div>);
 };

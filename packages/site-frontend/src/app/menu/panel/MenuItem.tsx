@@ -48,15 +48,14 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, iconRight} : {
   iconRight?: Svg;
 }) => {
 
-  return (<Div fx alignItems="center">
+  return (<Div fx alignItems="center" gap={16}>
     <Vector
       className="icon"
       as={iconLeft}
       size={20}
       color={labelColor}
-      mr={16}
     />
-    <Div column>
+    <Div column className="fade-content">
       <Span
         className="label"
         color={labelColor}
@@ -67,11 +66,10 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, iconRight} : {
       {/* {subText} */}
     </Div>
     {iconRight && <Vector
-      className="icon"
+      className="icon fade-content"
       as={iconRight}
       size={16}
       color={labelColor}
-      ml={16}
       border
       borderColor={'brown-4'}
       pb={8}

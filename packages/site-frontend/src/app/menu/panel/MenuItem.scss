@@ -21,3 +21,44 @@
     }
   }
 }
+
+.OriginalGames {
+  
+  --menu-height: 240px;
+  --menu-collapsed-height: 0px;
+  overflow: hidden;
+
+  &.closed {  
+    height: var(--menu-collapsed-height);
+  
+    &.animate {  
+      animation: OriginalGames-close 0.3s ease-in;
+    }
+  }
+  
+  &.opened {
+    height: var(--menu-height);
+    
+    &.animate {
+      animation: OriginalGames-open 0.3s ease-in;
+    }
+  }
+}
+
+@keyframes OriginalGames-open {
+  0% { 
+    height: var(--menu-collapsed-height);
+  }
+  100% { 
+    height: var(--menu-height);
+  }
+}
+
+@keyframes OriginalGames-close {
+  0% { 
+    height: var(--menu-height); 
+  }
+  100% {    
+    height: var(--menu-collapsed-height);
+  }
+}
