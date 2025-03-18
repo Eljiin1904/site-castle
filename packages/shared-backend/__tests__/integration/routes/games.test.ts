@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import { Database } from "@server/services/database";
 import { handleFetch } from "../../testUtility";
 import config from "#app/config";
