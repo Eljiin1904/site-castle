@@ -7,7 +7,7 @@
   backdrop-filter: blur(2px);
   
   .inner-content {
-    max-width: 240px;
+    width: 100%;
     animation: AppMenuOverlay-slide-right 0.2s ease-in;
   }
 

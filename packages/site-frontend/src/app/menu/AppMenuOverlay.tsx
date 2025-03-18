@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useEventListener } from "usehooks-ts";
 import { Div } from "@client/comps/div/Div";
 import { Nav } from "@client/comps/nav/Nav";
@@ -28,6 +28,14 @@ import { NavSection } from "./overlay/NavSection";
 import { MenuRace } from "./overlay/MenuRace";
 import { MenuEvent } from "./overlay/MenuEvent";
 import "./AppMenuOverlay.scss";
+import { GameSearch } from "#app/pages/home/HomePage";
+import { MenuItem } from "./panel/MenuItem";
+import { SvgHome } from "@client/svgs/common/SvgHome";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { SvgReferrals } from "@client/svgs/common/SvgReferrals";
+import { MenuSeparator } from "./panel/MenuSeparator";
+import { Span } from "@client/comps/span/Span";
+import { BaseMenu } from "./BaseMenu";
 
 export const AppMenuOverlay = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -48,6 +56,8 @@ const OverlayContent = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const dispatch = useAppDispatch();
   const innerRef = useRef<HTMLDivElement>(null);
+  const [filterGames, setFilterGames] = useState("");
+  const {t} = useTranslation();
 
   const handleClose = () => {
     dispatch(Site.toggleMenuOverlay(false));
@@ -80,115 +90,13 @@ const OverlayContent = () => {
         flow="column"
         fx
         fy
-        gap={8}
+        gap={20}
+        py={20}
         overflow="auto"
-        bg="brown-6"
+        bg="black-hover"
       >
-        <Div
-          fx
-          gap={2}
-        >
-          <MenuRace onClick={handleClose} />
-          <MenuEvent onClick={handleClose} />
-        </Div>
-        <NavSection heading="Navigation">
-          <NavItem
-            icon={SvgBattle}
-            label="Battles"
-            to="/case-battles"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgChest}
-            label="Cases"
-            to="/cases"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgSlide}
-            label="Double"
-            to="/double"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgDice}
-            label="Dice"
-            to="/dice"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgMultiplier}
-            label="Limbo"
-            to="/limbo"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgTeam}
-            label="Affiliate"
-            to="/affiliate"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgMedal}
-            label="Rewards"
-            to="/rewards"
-            onClick={handleClose}
-          />
-        </NavSection>
-        <NavSection heading="Account">
-          <NavItem
-            icon={SvgUser}
-            label="Profile"
-            to="/account"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgDeposit}
-            label="Deposit"
-            onClick={() => {
-              Dialogs.open("primary", <WalletModal initialAction="deposit" />);
-              handleClose();
-            }}
-          />
-          <NavItem
-            icon={SvgWithdraw}
-            label="Withdraw"
-            onClick={() => {
-              Dialogs.open("primary", <WalletModal initialAction="withdraw" />);
-              handleClose();
-            }}
-          />
-          <NavItem
-            icon={SvgVault}
-            label="Vault"
-            onClick={() => {
-              Dialogs.open("primary", <VaultModal />);
-              handleClose();
-            }}
-          />
-          <NavItem
-            icon={SvgTransaction}
-            label="Transactions"
-            to="/account/transactions"
-            onClick={handleClose}
-          />
-          <NavItem
-            icon={SvgHistory}
-            label="Game History"
-            to="/account/game-history"
-            onClick={handleClose}
-          />
-          {authenticated && (
-            <NavItem
-              icon={SvgSignOut}
-              label="Sign Out"
-              onClick={() => {
-                Dialogs.open("secondary", <UserLogoutModal />);
-                handleClose();
-              }}
-            />
-          )}
-        </NavSection>
+        {/* <GameSearch filterGames={filterGames} setFilterGames={setFilterGames} /> */}
+        <BaseMenu collapsed={false} />
       </Nav>
     </Div>
   );

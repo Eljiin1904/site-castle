@@ -48,7 +48,7 @@ export const HomePage = () => {
   );
 };
 
-const GameSearch = ({
+export const GameSearch = ({
   setFilterGames,
   filterGames
 }: {
