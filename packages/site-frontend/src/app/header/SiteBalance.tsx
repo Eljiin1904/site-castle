@@ -5,14 +5,11 @@ import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { Dialogs } from "@client/services/dialogs";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgAddFunds } from "@client/svgs/common/SvgAddFunds";
-import { SvgDivider } from "@client/svgs/common/SvgDivider";
 import { SvgMoney } from "@client/svgs/common/SvgMoney";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { WalletModal } from "#app/modals/wallet/WalletModal";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
-import { SvgOriginalArrowDown } from "@client/svgs/common/SvgOriginalArrowDown";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 export const SiteBalance = () => {
@@ -38,7 +35,7 @@ export const SiteBalance = () => {
 
   return (
     <Div className="SiteBalance"
-    position="absolute"
+    position={"absolute"}
     >
       <Div
         align="center"

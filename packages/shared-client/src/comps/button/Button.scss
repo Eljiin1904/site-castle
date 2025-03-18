@@ -280,7 +280,7 @@
     background: none;
     border: 1px solid var(--brown-4-color);
 
-    span {
+    span, .icon {
         color: var(--dark-sand-color);
     }
 
@@ -305,7 +305,7 @@
 
     background: var(--black-overlay-color);
 
-    span {
+    span, .icon {
         color: var(--light-sand-color);
     }
 
@@ -321,7 +321,7 @@
 
       background-color: var(--dark-brown-active-color);
 
-      span {
+      span, .icon {
         color: var(--sand-color);
       }
     }
@@ -330,7 +330,7 @@
     
     background-color: var(--white-overlay-color);
 
-    span {
+    span, .icon {
         color: var(--light-sand-color);
     }
 
@@ -342,7 +342,7 @@
 
       background: var(--brown-4-color);
 
-      span {
+      span, .icon {
         color: var(--sand-color);
       }
     }

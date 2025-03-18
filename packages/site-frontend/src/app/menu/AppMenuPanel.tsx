@@ -30,8 +30,6 @@ import { To } from "react-router-dom";
 import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
 import { SvgMines } from "@client/svgs/common/SvgMines";
 import { SvgDouble } from "#app/svgs/double/SvgDouble";
-import { SvgOriginalArrowUp } from "@client/svgs/common/SvgOriginalArrowUp";
-import { SvgOriginalArrowDown } from "@client/svgs/common/SvgOriginalArrowDown";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 export const AppMenuPanel = () => {

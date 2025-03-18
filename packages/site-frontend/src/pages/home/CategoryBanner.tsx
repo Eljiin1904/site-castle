@@ -3,7 +3,7 @@ import { Link } from "@client/comps/link/Link";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./GameBanner.scss";
+import "./CategoryBanner.scss";
 import { StyledProps } from "@client/comps/styled/Styled";
 import { Conditional } from "@client/comps/conditional/Conditional";
 
@@ -43,7 +43,7 @@ export const CategoryBanner = ({
         fx
         column
         gap={small ? 24 : 0}
-        justifyContent="center"
+        justifyContent={small ? "flex-start" : "center"}
       >
         <Div
           fx
@@ -63,49 +63,24 @@ export const CategoryBanner = ({
         />     
         </Div>
         <Div
-          position={small ? "relative" : "absolute"}
+          position={"absolute"}
           fx
-          px={small ? 0 : 16}
-          py={small ? 0 : 16}
+          px={16}
+          py={16}
+          textAlign={small ? "center" : "left"}
         >
-          <Conditional
-            value={layout}
-            mobile={<MobileHeader heading={heading} />}
-            tablet={<NotMobileHeader heading={heading} />}
-            laptop={<NotMobileHeader heading={heading} />}
-            desktop={<NotMobileHeader heading={heading} />}
-          />
+          <Heading
+            as={"h3"}
+            color={"dark-brown"}
+            size={28}
+            style={{ maxWidth: small ? "100%" : "100px" }}
+            fontWeight="regular"
+            textTransform="capitalize"
+          >
+            {heading}
+          </Heading>
         </Div>
       </Div>
     </Link>
   );
-};
-
-const MobileHeader = ({heading}: {
-  heading: string | undefined;
-}) => {
-  return (<Heading
-    as={"h3"}
-    color={"white"}
-    size={ 20}
-    fontWeight="regular"
-    textTransform="capitalize"
-  >
-    {heading}
-  </Heading>);
-};
-
-const NotMobileHeader = ({heading}: {
-  heading: string | undefined;
-}) => {
-  return (<Heading
-    as={"h3"}
-    color={"black"}
-    size={28}
-    style={{ maxWidth: "100px" }}
-    fontWeight="regular"
-    textTransform="capitalize"
-  >
-    {heading}
-  </Heading>);
 };

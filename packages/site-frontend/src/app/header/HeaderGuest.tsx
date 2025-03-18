@@ -8,10 +8,10 @@ import { LanguageSelector } from "./LanguageSelector";
 
 export const HeaderGuest = () => {
   const small = useIsMobileLayout();
-  const {t, i18n} = useTranslation();
+  const {t} = useTranslation();
   return (
-    <Div gap={16}>
-      <LanguageSelector />
+    <Div gap={small ? 8: 16}>
+      {!small && <LanguageSelector />}
       <Button
         kind="secondary-yellow"
         size={small ? "sm" : "md"}

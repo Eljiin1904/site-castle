@@ -1,5 +1,5 @@
 
-.HomePage .ProviderBanner {
+.HomePage .CategoryBanner {
 
   .AppMain.mobile & {
     width: calc(50% - 10px);
@@ -13,6 +13,6 @@
   .AppMain.desktop & {
     width: calc((100% - 120px)/6);
   }
-  
+
   flex-shrink: 0;
 }

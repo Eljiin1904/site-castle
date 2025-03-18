@@ -19,6 +19,7 @@ import { SvgSliderArrow } from "@client/svgs/common/SvgSliderArrow";
 import { SvgSliderArrowNext } from "@client/svgs/common/SvgSliderArrowNext";
 import { ProviderBanner } from "./ProviderBanner";
 import { CategoryBanner } from "./CategoryBanner";
+import { Conditional } from "@client/comps/conditional/Conditional";
 
 export const HomePage = () => {
   
@@ -40,8 +41,7 @@ export const HomePage = () => {
       <ProvidersSection />
       <CategoriesSection />
       
-      {authenticated && <>
-        
+      {authenticated && <>        
         <BetBoard />
       </>}
     </SitePage>
@@ -130,7 +130,7 @@ const OriginalGamesSection = ({showSection}: {showSection: boolean}) => {
   ];
 
   if(!showSection) return null;
-  return (<GameSection title={t('games.original',{count: 2})} items={games} />);
+  return (<GameSection type="game" title={t('games.original',{count: 2})} items={games} />);
 };
 const HotGamesSection = ({showSection}: {showSection: boolean}) => {
 
@@ -144,7 +144,7 @@ const HotGamesSection = ({showSection}: {showSection: boolean}) => {
     {image:"/graphics/limbo-tile", heading:t('games.limbo'),subheading:"Original", to:"/limbo"}
   ];
   if(!showSection) return null;
-  return (<GameSection title={t('games.hot')} items={games} />);
+  return (<GameSection type="game" title={t('games.hot')} items={games} />);
 };
 const RecentlyAdedGamesSection = ({showSection}: {showSection: boolean}) => {
 
@@ -159,7 +159,7 @@ const RecentlyAdedGamesSection = ({showSection}: {showSection: boolean}) => {
   ];
   
   if(!showSection) return null;
-  return (<GameSection title={t('games.recentlyAdded')} items={games} />);
+  return (<GameSection type="game" title={t('games.recentlyAdded')} items={games} />);
 };
 const ProvidersSection = () => {
 
@@ -174,36 +174,22 @@ const ProvidersSection = () => {
     {image:"/graphics/providers/hacksaw", heading:t('providers.hackSawGaming'),subheading:"", to:""}
   ];
 
-  return (<GameSection title={t('providers.title')} items={providers} />);  
+  return (<GameSection type="provider" title={t('providers.title')} items={providers} />);  
 };
 
 const CategoriesSection = () => {
 
-  const small = useIsMobileLayout();
   const {t} = useTranslation();
 
-  return (<Div
-    id="home-games"
-    column
-    fx
-    gap={small ? 24 : 40}
-  >
-    <PageTitle
-      heading={t('menu.categories')}
-      mt={small ? 0 : 16}
-    />
-    <Div
-      gap={small ? 20 : 24}
-    >
-      <CategoryBanner ratio={small ? "150 / 160" : "206 / 88"}  objectPositionHorizontal="80%"  image="/graphics/categories/featured" to="/featured" heading={t('games.featured', {count: 1})}/>
-      <CategoryBanner ratio={small ? "150 / 160" : "206 / 88"}  objectPositionHorizontal="80%" image="/graphics/categories/originals" to="/original" heading={t('games.original',{count: 2})}/>
-      <CategoryBanner ratio={small ? "150 / 160" : "206 / 88"}  objectPositionHorizontal="80%" image="/graphics/categories/slots" to="/slots" heading={t('games.slots')}/>
-      <CategoryBanner ratio={small ? "150 / 160" : "206 / 88"}  objectPositionHorizontal="80%" image="/graphics/categories/live-casino" to="/live-casino" heading={t('games.liveCasino')}/>
-      <CategoryBanner ratio={small ? "150 / 160" : "206 / 88"}  objectPositionHorizontal="80%" image="/graphics/categories/game-shows" to="/game-shows" heading={t('games.gameShows')}/>
-    </Div>
-  </Div>);
+  const items = [
+    {image:"/graphics/categories/featured", heading:t('games.featured', {count: 1}),subheading:"", to:"/featured"},
+    {image:"/graphics/categories/originals", heading:t('games.original', {count: 1}),subheading:"", to:"/original"},
+    {image:"/graphics/categories/slots", heading:t('games.slots'),subheading:"", to:"/slots"},
+    {image:"/graphics/categories/live-casino", heading:t('games.liveCasino'),subheading:"", to:"/live-casino"},
+    {image:"/graphics/categories/game-shows", heading:t('games.gameShows'),subheading:"", to:"/game-shows"}
+  ];
+  return (<GameSection type="category" title={t('games.categories')} items={items} />);
 };
-
 
 type ItemGameSectionProps = {
   image: string,
@@ -212,9 +198,10 @@ type ItemGameSectionProps = {
   to: string
 };
 
-const GameSection = ({title, items }: {
+const GameSection = ({title, items, type }: {
   title: string,
-  items : ItemGameSectionProps[]
+  items : ItemGameSectionProps[],
+  type: "category" | "game" | "provider"
 }) => {
 
   const [index, setIndex] = useState(0);
@@ -256,10 +243,10 @@ const GameSection = ({title, items }: {
       <PageTitle
         heading={title}
       />
-      <Div className="gameSectionControls" gap={16}>
+      {items.length > slideElementsInDisplay && <Div className="gameSectionControls" gap={16}>
         <Button kind="tertiary-grey" size="md" icon={SvgSliderArrow} disabled={index === 0 } onClick={handlePrevious} />
         <Button kind="tertiary-grey" size="md" onClick={handleNext} disabled={index === items.length - slideElementsInDisplay} icon={SvgSliderArrowNext} />
-      </Div>
+      </Div>}
     </Div>
     <Div
      overflow="hidden"
@@ -273,13 +260,12 @@ const GameSection = ({title, items }: {
         }}
         gap={layout === 'mobile' ? 20 : 24}
       >
-        {items.map((x, i) => (
-          (x.to ? <GameBanner
-            key={`${title} ${x.heading}`}
-            ratio={layout === 'mobile' ? "150 / 160" : "168 / 180"}
-            {...x}
-          /> : <ProviderBanner image={x.image} key={`${title} ${x.heading}`} />)
-        ))}
+        {items.map((x, i) => <Conditional
+          value={type}
+          game={<GameBanner key={`${title} ${x.heading}`} ratio={layout === 'mobile' ? "150 / 160" : "168 / 180"} {...x}/>}
+          provider={<ProviderBanner key={`${title} ${x.heading}`} image={x.image} />}
+          category={<CategoryBanner ratio={layout === 'mobile'  ? "150 / 154" : "206 / 88"}  objectPositionHorizontal="80%" {...x}/>}
+        />)}
       </Div>
     </Div>
   </Div>);
