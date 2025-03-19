@@ -50,17 +50,17 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t pidwin/castle-backend -f ./packages/shared-admin-backend/Dockerfile .
-          docker tag pidwin/castle-backend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
+          docker build -t pidwin/castle-admin-backend -f ./packages/shared-admin-backend/Dockerfile .
+          docker tag pidwin/castle-admin-backend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-backend:latest
 
       - name: Push Docker image to ECR
         id: push_image
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-backend:latest
 
       - name: Output ECR Image URL
         run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest"
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-backend:latest"
 
       - name: Set image tag output
         id: set-image-tag
