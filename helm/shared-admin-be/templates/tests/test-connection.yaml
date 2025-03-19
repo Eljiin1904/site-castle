@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "castle-backend.fullname" . }}-test-connection"
+  name: "{{ include "castle-admin-backend.fullname" . }}-test-connection"
   labels:
-    {{- include "castle-backend.labels" . | nindent 4 }}
+    {{- include "castle-admin-backend.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "castle-backend.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "castle-admin-backend.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
