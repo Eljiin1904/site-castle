@@ -1,4 +1,4 @@
-name: Shared Admin Backend CI
+name: Shared Admin FrontEnd CI
 
 on:
   workflow_dispatch:
