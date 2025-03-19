@@ -1,0 +1,15 @@
+project: castle
+source:
+  repoURL: 'https://github.com/Pidwin/site-castle.git'
+  path: helm/shared-admin-be
+  targetRevision: HEAD
+  helm:
+    valueFiles:
+      - values/dev/shared_admin_be_values.yaml
+destination:
+  server: 'https://E738613D3011B82B93272CD343D47EDB.gr7.us-east-1.eks.amazonaws.com'
+  namespace: shared-admin-backend
+syncPolicy:
+  automated:
+    prune: true
+    selfHeal: true
