@@ -18,6 +18,13 @@ COPY packages/shared-core ./packages/shared-core
 COPY packages/shared-server ./packages/shared-server
 COPY packages/shared-backend ./packages/shared-backend
 
+# Set necessary environment variables for the build process
+ENV NODE_ENV=devcloud \
+    DB_URI="mongodb://localhost:27778/?directConnection=true" \
+    AWS_ID=AKIAUX3EXIFVAOIJ2U4Z \
+    AWS_SECRET=1Zq2NYfpgymMTJPS6t3XgQBsPqqp3uC0yvhYRmXu \
+    AWS_REGION=us-east-1
+    
 # 4) Install dependencies at the root (this runs your init script to set everything up)
 RUN npm run init
 
