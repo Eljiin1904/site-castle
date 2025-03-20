@@ -45,6 +45,7 @@ export const RecoverBody = ({
           column
           gap={16}
           flexCenter
+          fx
         >
           <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
             <Vector fx as={SvgLock} size={40} color="dark-sand" />
@@ -125,13 +126,5 @@ export const RecoverBody = ({
     );
   }
 
-  return (
-    <Div
-      fx
-      column
-      gap={16}
-    >
-      <CaptchaForm form={form}>{content}</CaptchaForm>
-    </Div>
-  );
+  return (<CaptchaForm form={form}>{content}</CaptchaForm>);
 };

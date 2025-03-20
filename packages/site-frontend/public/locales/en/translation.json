@@ -111,6 +111,7 @@
   },
   "reset": {
     "title": "Reset Password",
+    "description": "To reset your password, please click the button below.",
     "form": {
       "password": "New Password",
       "passwordPlaceholder": "Enter new password...",

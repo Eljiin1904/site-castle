@@ -14,12 +14,19 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Div } from "@client/comps/div/Div";
+import { SvgLock } from "#app/svgs/common/SvgLock";
+import { Vector } from "@client/comps/vector/Vector";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const UserResetPasswordModal = ({
   recoverToken,
 }: {
   recoverToken: string;
 }) => {
+  
+  const small = useIsMobileLayout();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {t} = useTranslation(["validations"]);
@@ -39,52 +46,95 @@ export const UserResetPasswordModal = ({
     },
   });
 
+  const justify = small ? "center" : "flex-start";
+
   return (
     <Modal
-      width="sm"
+      className="LoginModal"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading={t("reset.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
-        <Form form={form}>
-          <ModalSection>
-            <ModalLabel>{t("reset.form.password")}</ModalLabel>
-            <Input
-              type="password"
-              id="new-password"
-              placeholder={t("reset.form.passwordPlaceholder")}
-              autoComplete="new-password"
-              disabled={form.loading}
-              error={form.errors.newPassword?.key ? t(form.errors.newPassword.key, {value: form.errors.newPassword.value}) : undefined}
-              value={form.values.newPassword}
-              onChange={(x) => form.setValue("newPassword", x)}
-            />
-          </ModalSection>
-          <ModalSection>
-            <ModalLabel>{t("reset.form.confirm")}</ModalLabel>
-            <Input
-              type="password"
-              id="confirm-password"
-              autoComplete="new-password"
-              placeholder={t("reset.form.confirmPlaceholder")}
-              disabled={form.loading}
-              error={form.errors.confirmPassword?.key ? t(form.errors.confirmPassword.key, {value: form.errors.confirmPassword.value}) : undefined}
-              value={form.values.confirmPassword}
-              onChange={(x) => form.setValue("confirmPassword", x)}
-            />
-          </ModalSection>
-          <Button
-            type="submit"
-            kind="primary"
-            label={t("reset.form.submit")}
-            fx
-            loading={form.loading}
-          />
-        </Form>
-      </ModalBody>
+      <Div fy>
+        <Div
+          className={`login-content`}
+          column
+        >
+          <ModalBody justifyContent={justify}>
+            <Div
+              column
+              gap={16}
+              flexCenter
+              fx
+            >
+              <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
+                <Vector fx as={SvgLock} size={40} color="dark-sand" />
+              </Div>
+              <Heading  as="h2"
+                size={small ? 20 : 24}
+                fontWeight="regular"
+                textTransform="uppercase">{t("reset.title")}
+              </Heading>
+              <Form form={form}>
+                <ModalSection>
+                  <ModalLabel>{t("reset.form.password")}</ModalLabel>
+                  <Input
+                    type="password"
+                    id="new-password"
+                    placeholder={t("reset.form.passwordPlaceholder")}
+                    autoComplete="new-password"
+                    disabled={form.loading}
+                    error={form.errors.newPassword?.key ? t(form.errors.newPassword.key, {value: form.errors.newPassword.value}) : undefined}
+                    value={form.values.newPassword}
+                    onChange={(x) => form.setValue("newPassword", x)}
+                  />
+                </ModalSection>
+                <ModalSection>
+                  <ModalLabel>{t("reset.form.confirm")}</ModalLabel>
+                  <Input
+                    type="password"
+                    id="confirm-password"
+                    autoComplete="new-password"
+                    placeholder={t("reset.form.confirmPlaceholder")}
+                    disabled={form.loading}
+                    error={form.errors.confirmPassword?.key ? t(form.errors.confirmPassword.key, {value: form.errors.confirmPassword.value}) : undefined}
+                    value={form.values.confirmPassword}
+                    onChange={(x) => form.setValue("confirmPassword", x)}
+                  />
+                </ModalSection>
+                <Button
+                  type="submit"
+                  kind="primary-yellow"
+                  label={t("reset.form.submit")}
+                  fx
+                  loading={form.loading}
+                  mt={4}
+                />
+              </Form>
+            </Div>
+          </ModalBody>
+        </Div> 
+      </Div>
     </Modal>
   );
 };
+
+{/* <Div
+          column
+          gap={16}
+          flexCenter
+        >
+          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
+            <Vector fx as={SvgLock} size={40} color="dark-sand" />
+          </Div>          
+          <Heading  as="h2"
+            size={small ? 20 : 24}
+            fontWeight="regular"
+            textTransform="uppercase">{t("forgot.title")}
+          </Heading>
+          <Span size={14} color="dark-sand" textAlign="center">
+          {t("forgot.description")}
+          </Span>
+        </Div>
+        /> */}
