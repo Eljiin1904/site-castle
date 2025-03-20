@@ -12,17 +12,17 @@ RUN pwd
 RUN ls -alt
 
 # 2) Copy the root-level package.json and any lock file (if you have one)
-COPY package*.json ./
-COPY tsconfig.base.json ./
-# If your init script is located at ./scripts/init.js, copy that too:
-COPY scripts/ ./scripts/
+# COPY package*.json ./
+# COPY tsconfig.base.json ./
+# # If your init script is located at ./scripts/init.js, copy that too:
+# COPY scripts/ ./scripts/
 
 # 3) Copy only the needed subdirectories
-COPY packages/shared-core ./packages/shared-core
-COPY packages/shared-server ./packages/shared-server
-COPY packages/shared-backend ./packages/shared-backend
-COPY packages/shared-client ./packages/shared-client
-
+# COPY packages/shared-core ./packages/shared-core
+# COPY packages/shared-server ./packages/shared-server
+# COPY packages/shared-backend ./packages/shared-backend
+# COPY packages/shared-client ./packages/shared-client
+COPY . .
 # Set necessary environment variables for the build process
 ENV NODE_ENV=devcloud \
     DB_URI="mongodb://localhost:27778/?directConnection=true" \
