@@ -7,6 +7,10 @@ ENV NODE_ENV=devcloud
 # 1) Set the working directory at the "root" of the repo
 WORKDIR /pidwin
 
+# DEBUG
+RUN pwd
+RUN ls -alt
+
 # 2) Copy the root-level package.json and any lock file (if you have one)
 COPY package*.json ./
 COPY tsconfig.base.json ./
@@ -17,6 +21,7 @@ COPY scripts/ ./scripts/
 COPY packages/shared-core ./packages/shared-core
 COPY packages/shared-server ./packages/shared-server
 COPY packages/shared-backend ./packages/shared-backend
+COPY packages/shared-client ./packages/shared-client
 
 # Set necessary environment variables for the build process
 ENV NODE_ENV=devcloud \
@@ -26,7 +31,7 @@ ENV NODE_ENV=devcloud \
     AWS_REGION=us-east-1
     
 # 4) Install dependencies at the root (this runs your init script to set everything up)
-RUN npm install --verbose
+# RUN npm install --verbose
 RUN npm run init --verbose
 
 # 5) Switch to the shared-backend directory
