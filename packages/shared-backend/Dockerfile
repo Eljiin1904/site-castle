@@ -18,7 +18,7 @@ RUN npm run init
     
 # 5) Switch to the shared-backend directory
 WORKDIR /pidwin/packages/shared-backend
-
+RUN npm run build
 # DEBUG
 RUN pwd
 RUN ls -alt
