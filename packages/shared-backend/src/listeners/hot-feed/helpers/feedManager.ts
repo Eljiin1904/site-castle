@@ -23,9 +23,6 @@ export class FeedManager extends TypedEventEmitter<{
   private _log: ScopeMap = {
     hot: [],
   };
-  private readonly _queues: ScopeMap = {
-    hot: [],
-  };
 
   private _initialized;
 

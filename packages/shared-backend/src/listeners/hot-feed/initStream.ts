@@ -6,9 +6,9 @@ export default Sockets.createListener({
   callback: async (io) => {
     const manager = feedManager();
 
-    manager.on("update", (document) => {
+    manager.on("update", (documents) => {
       const broadcaster = io.sockets.in(`hot-feed_all`);
-      broadcaster.emit("hot-feed-update", document);
+      broadcaster.emit("hot-feed-update", documents);
     });
   },
 });
