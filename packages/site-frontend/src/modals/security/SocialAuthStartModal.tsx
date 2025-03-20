@@ -22,19 +22,25 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import config from "#app/config";
 import { SocialAuthFinalizeModal } from "./SocialAuthFinalizeModal";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const SocialAuthStartModal = ({
   provider,
 }: {
   provider: UserLinkProvider;
 }) => {
+  
+  const small = useIsMobileLayout();
+  const {t} = useTranslation();
   const [status, setStatus] = useAuthStatus();
   const [, setReturnTo, removeReturnTo] = useAuthRedirect();
   const [, , removeSearch] = useAuthSearch();
   const { pathname } = useLocation();
   const bodyLayout = useAppSelector((x) => x.style.bodyLayout);
   const label = Strings.capitalize(provider);
-
+  
   const redirect = () => {
     setStatus("redirect");
     setReturnTo(pathname);
@@ -70,40 +76,53 @@ export const SocialAuthStartModal = ({
       disableBackdrop
     >
       <ModalHeader
-        heading={`Logging in with ${label}`}
+        // heading={t("signin.social.login", { provider: label })}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody textAlign="center">
-        <Spinner
-          size={80}
-          mt={32}
-          mb={24}
-        />
-        <ModalLabel>
-          {`A popup window should have opened with the ${label} login page.`}
-        </ModalLabel>
+      <Div fy>
         <Div
-          fx
+          className={`login-content`}
           column
-          center
-          gap={16}          
+          fx
         >
-          <Span
-            textAlign="center"
-            color="yellow"
-          >
-            {`Don't see the ${label} login popup window?`}
-          </Span>
-          <Button
-            fx
-            kind="primary-yellow"
-            label={`Redirect to ${label} Login`}
-            mt={4}
-            icon={SvgExternal}
-            onClick={redirect}
-          />
-        </Div>
-      </ModalBody>
+          <ModalBody textAlign="center" justifyContent={small? "center" : "flex-start"}>
+            <Heading  as="h2"
+              size={small ? 20 : 24}
+              fontWeight="regular"
+              textTransform="uppercase">{t("signin.social.login", { provider: label })}
+            </Heading>
+            <Spinner
+              size={80}
+              mt={32}
+              mb={24}
+            />
+            <ModalLabel>
+              {t("signin.social.popup", { provider: label})}
+            </ModalLabel>
+            <Div
+              fx
+              column
+              center
+              gap={16}          
+            >
+              <Span
+                textAlign="center"
+                color="sand"
+              >
+                {t("signin.social.noPopup", { provider: label})}
+              </Span>
+              <Button
+                fx
+                kind="primary-yellow"
+                label={t("signin.social.redirect", { provider: label})}
+                mt={4}
+                icon={SvgExternal}
+                onClick={redirect}
+              />
+            </Div>
+          </ModalBody>
+        </Div> 
+      </Div>
     </Modal>
   );
 };

@@ -93,6 +93,12 @@
       "password": "Contraseña",
       "passwordPlaceholder": "Ingrese su contraseña..."
     },
+    "social": {
+      "login": "Iniciar sesión con {{provider}}",
+      "popup": "Debería haberse abierto una ventana emergente con la página de inicio de sesión de {{provider}}.",
+      "noPopup": "¿No ves la ventana emergente de inicio de sesión de {{provider}}?",
+      "redirect": "Redirigir al inicio de sesión de {{provider}}"
+    },
     "success": "¡Bienvenido de nuevo, {{username}}!"
   },
   "forgot": {
@@ -111,6 +117,7 @@
   },
   "reset": {
     "title": "Restablecer contraseña",
+    "description": "Para restablecer su contraseña, haga clic en el botón de abajo.",
     "form": {
       "password": "Nueva contraseña",
       "passwordPlaceholder": "Ingrese la nueva contraseña...",

@@ -93,6 +93,12 @@
       "password": "Password",
       "passwordPlaceholder": "Enter password..."
     },
+    "social": {
+      "login": "Log In with {{provider}}",
+      "popup": "A popup window should have opened with the {{provider}} login page.",
+      "noPopup": "Don't see the {{provider}} login popup window?",
+      "redirect": "Redirect to {{provider}} login"
+    },
     "success": "Welcome back, {{username}}!"
   },
   "forgot": {
