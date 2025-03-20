@@ -20,6 +20,8 @@ export interface SiteClientEvents {
   "dice-leave": () => void;
   "holiday-join": () => void;
   "holiday-leave": () => void;
+  "hot-feed-join": () => void;
+  "hot-feed-leave": () => void;
   "limbo-join": (userId: string) => void;
   "limbo-leave": () => void;
   "notifications-join": () => void;

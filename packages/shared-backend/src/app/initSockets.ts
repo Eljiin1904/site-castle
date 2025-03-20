@@ -33,6 +33,7 @@ export function initSockets(httpServer: HttpServer) {
   Listeners.dice(io);
   Listeners.double(io);
   Listeners.holiday(io);
+  Listeners.hotFeed(io);
   Listeners.limbo(io);
   Listeners.notifications(io);
   Listeners.site(io);

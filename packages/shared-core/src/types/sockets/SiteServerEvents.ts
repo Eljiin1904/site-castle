@@ -1,8 +1,5 @@
 import type { CaseBattleDocument } from "../case-battles/CaseBattleDocument";
-import type {
-  DatabaseStreamEvent,
-  StreamUpdate,
-} from "../database/DatabaseStreamEvent";
+import type { DatabaseStreamEvent, StreamUpdate } from "../database/DatabaseStreamEvent";
 import type { DoubleInitialState } from "../double/DoubleInitialState";
 import type { DoubleRoundDocument } from "../double/DoubleRoundDocument";
 import type { DoubleTicketDocument } from "../double/DoubleTicketDocument";
@@ -12,11 +9,7 @@ import type { NotificationDocument } from "../notifications/NotificationDocument
 import type { DiceInitialState } from "../dice/DiceInitialState";
 import type { DiceTicketDocument } from "../dice/DiceTicketDocument";
 import type { UserUpdate } from "../users/UserUpdate";
-import type {
-  SiteMetaId,
-  SiteMetaObject,
-  SiteMetaValue,
-} from "../site/SiteMetaDocument";
+import type { SiteMetaId, SiteMetaObject, SiteMetaValue } from "../site/SiteMetaDocument";
 import type {
   SiteSettingId,
   SiteSettingObject,
@@ -25,6 +18,7 @@ import type {
 import type { HolidayInitialState } from "../rewards/HolidayInitialState";
 import type { SiteActivityDocument } from "../site/SiteActivityDocument";
 import type { SiteBetDocument } from "../site/SiteBetDocument";
+import { HotSiteGameDetails } from "../site/HotSiteGame";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -48,6 +42,8 @@ export interface SiteServerEvents {
   "double-bet-insert": (bet: DoubleTicketDocument) => void;
   "holiday-init": (x: HolidayInitialState) => void;
   "holiday-race-update": (update: StreamUpdate) => void;
+  "hot-feed-init": (x: HotSiteGameDetails[]) => void;
+  "hot-feed-update": (x: HotSiteGameDetails[]) => void;
   "holiday-raffle-update": (update: StreamUpdate) => void;
   "limbo-init": (x: LimboInitialState) => void;
   "limbo-insert": (bet: LimboTicketDocument) => void;
