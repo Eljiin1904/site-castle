@@ -7,6 +7,7 @@ export { default as chestDrops } from "./chest-drops";
 export { default as dice } from "./dice";
 export { default as double } from "./double";
 export { default as holiday } from "./holiday";
+export { default as hotFeed } from "./hot-feed";
 export { default as limbo } from "./limbo";
 export { default as notifications } from "./notifications";
 export { default as site } from "./site";

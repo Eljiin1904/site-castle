@@ -1,4 +1,4 @@
-# Default values for castle-backend.
+# Default values for castle-admin-backend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -126,3 +126,4 @@ tolerations: []
 
 affinity: {}
 
+namespace: shared-admin-backend

@@ -1,6 +1,4 @@
 name: Shared Backend CI
-
-# Ensure we can commit changes back to the repo to update values with the new image tag.  
 permissions:
   contents: write
   issues: write
@@ -30,14 +28,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 23
           cache: 'npm'
  
-      - name: Install dependencies
-        run: npm install
+      # - name: Install dependencies
+      #   run: npm install
 
-      - name: Build React app
-        run: npm run init
+      # - name: Build React app
+      #   run: npm run init
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -74,99 +72,40 @@ jobs:
           IMAGE_TAG="v1.0.$(date +%s)"
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-  update-helm-chart:
+  update-helm-chart-dev:
     needs: build-and-push-shared-backend
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Update Helm Chart with new image tag
+      - name: Update Helm Chart for shared backend DEV
         run: |
           IMAGE_TAG="${{ needs.build-and-push-shared-backend.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          # Update the image tag in the Helm values file.
           sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/dev/shared_be_values.yaml
           git add helm/shared-be/values/dev/shared_be_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
-  deploy-dev:
-    needs: update-helm-chart
+  update-helm-chart-stage:
+    needs: update-helm-chart-dev
     runs-on: ubuntu-latest
-    environment:
-      name: dev  # Configure this environment in GitHub; no manual approval required for Dev.
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials for Dev
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Update kubeconfig for Dev
-        run: aws eks update-kubeconfig --region us-east-1 --name castle-dev
-
-      - name: Deploy to Dev (castle-backend namespace)
+      - name: Update Helm Chart for shared backend STAGE
         run: |
-          echo "Deploying to Dev environment..."
-          helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace shared-backend \
-            --create-namespace \
-            --values helm/shared-be/values/dev/shared_be_values.yaml \
-            --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
-
-  # wait-for-stage-approval:
-  #   needs: deploy-dev
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: trstringer/manual-approval@v1
-  #       with:
-  #         secret: ${{ github.TOKEN }}
-  #         approvers: csherida,civilizador
-  #         minimum-approvals: 1
-  #         issue-title: "Deploying to staging"
-  #         issue-body: "Please approve or deny the deployment of this version"
-  #         exclude-workflow-initiator-as-approver: false
-  #         fail-on-denial: true
-  #         additional-approved-words: ''
-  #         additional-denied-words: ''
-
-  deploy-stage:
-    # needs: wait-for-stage-approval
-    needs: deploy-dev
-    runs-on: ubuntu-latest
-    environment:
-      name: stage  # Ensure manual approval is enforced in this environment's settings.
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Configure AWS Credentials for Stage
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Update kubeconfig for Stage
-        run: aws eks update-kubeconfig --region us-east-1 --name castle-dev
-
-      - name: Deploy to Stage (stage_shared-backend namespace)
-        run: |
-          echo "Deploying to Stage environment..."
-          echo "Deploying to Dev environment..."
-          helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace stage-shared-backend \
-            --create-namespace \
-            --values helm/shared-be/values/stage/shared_be_values.yaml \
-            --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
+          IMAGE_TAG="${{ needs.build-and-push-shared-backend.outputs.image_tag }}"
+          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_be_values.yaml
+          git add helm/shared-be/values/stage/shared_be_values.yaml
+          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git push
 
   wait-for-prod-approval:
-    needs: deploy-stage
+    needs: update-helm-chart-stage
     runs-on: ubuntu-latest
     steps:
       - uses: trstringer/manual-approval@v1
@@ -181,31 +120,18 @@ jobs:
           additional-approved-words: ''
           additional-denied-words: ''
 
-  deploy-prod:
+  update-helm-chart-prod:
     needs: wait-for-prod-approval
     runs-on: ubuntu-latest
-    environment:
-      name: prod  # Ensure manual approval is enforced in this environment's settings.
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials for Prod
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.PROD_AWS_REGION }}
-
-      - name: Update kubeconfig for Prod
-        run: aws eks update-kubeconfig --name prod-cluster --region ${{ secrets.PROD_AWS_REGION }}
-
-      - name: Deploy to Prod (prod_shared-backend namespace)
+      - name: Update Helm Chart for shared backend PROD
         run: |
-          echo "Deploying to Stage environment..."
-          echo "Deploying to Dev environment..."
-          helm upgrade --install castle-backend ./helm/shared-be/ \
-            --namespace prod-shared-backend \
-            --create-namespace \
-            --values helm/shared-be/values/prod/shared_be_values.yaml \
-            --set image.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
+          IMAGE_TAG="${{ needs.build-and-push-shared-backend.outputs.image_tag }}"
+          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_be_values.yaml
+          git add helm/shared-be/values/prod/shared_be_values.yaml
+          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git push

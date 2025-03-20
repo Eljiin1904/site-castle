@@ -10,9 +10,11 @@ on:
       - ".github/workflows/deploy_shared_admin_fe.yml"
 
 jobs:
-  admin-be-build-and-push:
+  build-and-push-shared-admin-frontend:
     runs-on: ubuntu-latest
-
+    environment: dev
+    outputs:
+      image_tag: ${{ steps.set-image-tag.outputs.image_tag }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -40,7 +42,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+          aws-region: us-east-1
 
       - name: Log in to Amazon ECR
         id: login-ecr
@@ -52,9 +54,81 @@ jobs:
           docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
       - name: Push Docker image to ECR
+        id: push_image
         run: |
           docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
       - name: Output ECR Image URL
         run: | 
           echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
+
+      - name: Set image tag output
+        id: set-image-tag
+        run: |
+          # Generate an image tag (for example, using a timestamp)
+          IMAGE_TAG="v1.0.$(date +%s)"
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+  update-helm-chart-dev:
+    needs: build-and-push-shared-admin-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Update Helm Chart for shared backend DEV
+        run: |
+          IMAGE_TAG="${{ needs.build-and-push-shared-admin-frontend.outputs.image_tag }}"
+          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-admin-fe/values/dev/shared_be_values.yaml
+          git add helm/shared-admin-fe/values/dev/shared_be_values.yaml
+          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git push
+
+  update-helm-chart-stage:
+    needs: update-helm-chart-dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Update Helm Chart for shared backend STAGE
+        run: |
+          IMAGE_TAG="${{ needs.build-and-push-shared-admin-frontend.outputs.image_tag }}"
+          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-admin-fe/values/stage/shared_be_values.yaml
+          git add helm/shared-admin-fe/values/stage/shared_be_values.yaml
+          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git push
+
+  wait-for-prod-approval:
+    needs: update-helm-chart-stage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: csherida,civilizador
+          minimum-approvals: 1
+          issue-title: "Deploying to production"
+          issue-body: "Please approve or deny the deployment of this version"
+          exclude-workflow-initiator-as-approver: false
+          fail-on-denial: true
+          additional-approved-words: ''
+          additional-denied-words: ''
+
+  update-helm-chart-prod:
+    needs: wait-for-prod-approval
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Update Helm Chart for shared backend PROD
+        run: |
+          IMAGE_TAG="${{ needs.build-and-push-shared-admin-frontend.outputs.image_tag }}"
+          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-admin-fe/values/stage/shared_be_values.yaml
+          git add helm/shared-admin-fe/values/prod/shared_be_values.yaml
+          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git push

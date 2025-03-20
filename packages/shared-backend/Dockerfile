@@ -1,28 +1,16 @@
-# Fetching the latest node image on alpine linux
-FROM node:18-alpine AS development
-
-# Declaring env
-ENV NODE_ENV=devcloud
-
-# Setting up the work directory
+# Use Node 23 on Alpine
+FROM node:23-alpine
+ENV NODE_ENV=devcloud \
+    DB_URI="mongodb://localhost:27778/?directConnection=true" \
+    AWS_ID="" \
+    AWS_SECRET="" \
+    AWS_REGION=us-east-1 \
+    PORT=3000
 WORKDIR /pidwin
-
-# Installing dependencies
-COPY ./package*.json .
-COPY ./tsconfig.base.json .
-
-RUN echo "-------------- Begin npm install --------------"
-RUN npm install --verbose
-RUN echo "------------- npm install Done --------------"
-
-# Copying all the files in our project
-COPY ./packages/shared-core ./packages/shared-core
-COPY ./packages/shared-server ./packages/shared-server
-COPY ./packages/shared-backend ./packages/shared-backend
-
+COPY . .
+RUN npm run init
+# 5) Switch to the shared-backend directory
 WORKDIR /pidwin/packages/shared-backend
-
-EXPOSE 5000
-
-# Starting our application
-CMD ["npm", "run", "dev-cloud"]
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start"]
