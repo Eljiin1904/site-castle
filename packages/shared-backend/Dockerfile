@@ -26,7 +26,8 @@ ENV NODE_ENV=devcloud \
     AWS_REGION=us-east-1
     
 # 4) Install dependencies at the root (this runs your init script to set everything up)
-RUN npm run init
+RUN npm install --verbose
+RUN npm run init --verbose
 
 # 5) Switch to the shared-backend directory
 WORKDIR /pidwin/packages/shared-backend
