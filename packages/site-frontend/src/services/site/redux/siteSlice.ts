@@ -9,6 +9,9 @@ import { SiteActivityDocument } from "@core/types/site/SiteActivityDocument";
 import { SiteBetDocument } from "@core/types/site/SiteBetDocument";
 import { Utility } from "@client/services/utility";
 import { Site } from "@core/services/site";
+import { GameDocument } from "@core/types/game/GameDocument";
+import { Game } from "@core/services/game";
+import { GameKindType } from "@core/services/game/Game";
 
 interface SiteState {
   initialized?: boolean;
@@ -20,6 +23,9 @@ interface SiteState {
   meta: SiteMetaObject;
   activity?: ActivityData[];
   bets?: BetData[];
+  games?: GameDocument[];
+  search?: string;
+  filter?: Game.GameKindType;
 }
 
 type SettingUpdate = {
@@ -108,6 +114,15 @@ export const siteSlice = createSlice({
 
       state.bets = bets;
     }),
+    initGames: reducer<GameDocument[] | []>((state, { payload }) => {
+      state.games = payload;
+    }),
+    setSearch: reducer<string | undefined>((state, { payload }) => {
+      state.search = payload;
+    }),
+    setFilter: reducer<GameKindType | undefined>((state, { payload }) => {
+      state.filter = payload;
+    }),
   }),
 });
 
@@ -123,4 +138,7 @@ export const {
   updateActivity,
   initBets,
   updateBets,
+  initGames,
+  setSearch,
+  setFilter
 } = siteSlice.actions;

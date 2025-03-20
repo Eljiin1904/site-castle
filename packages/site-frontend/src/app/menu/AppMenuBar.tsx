@@ -1,16 +1,15 @@
 import { Div } from "@client/comps/div/Div";
 import { SvgMenu } from "@client/svgs/common/SvgMenu";
-import { SvgMedal } from "@client/svgs/common/SvgMedal";
-import { SvgHeadset } from "@client/svgs/common/SvgHeadset";
-import { SvgDice } from "@client/svgs/common/SvgDice";
 import { SvgChat } from "@client/svgs/common/SvgChat";
-import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Chat } from "#app/services/chat";
 import { Site } from "#app/services/site";
 import { MenuItem } from "./bar/MenuItem";
 import "./AppMenuBar.scss";
+import { SvgBets } from "#app/svgs/common/SvgBets";
+import { SvgCasino } from "#app/svgs/common/SvgCasino";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AppMenuBar = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -25,19 +24,22 @@ export const AppMenuBar = () => {
 const BarContent = () => {
   const menuOpen = useAppSelector((x) => x.site.menuOverlayOpen);
   const chatOpen = useAppSelector((x) => x.chat.overlayOpen);
-  const intercom = useIntercomManager();
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   return (
     <Div
       className="AppMenuBar"
       fx
       borderTop
+      borderColor="brown-4"
+      py={16}
+      bg="black-hover"
     >
       <MenuItem
         id="menu-toggle"
         icon={SvgMenu}
-        label="Menu"
+        label={t("menu.menu")}
         type="action"
         active={menuOpen}
         onClick={() => {
@@ -45,31 +47,25 @@ const BarContent = () => {
         }}
       />
       <MenuItem
-        icon={SvgDice}
-        label="Games"
-        type="router"
-        to={{ pathname: "/", hash: "#games" }}
+        icon={SvgCasino}
+        label={t("menu.casino")}
+        type="nav"
+        to="/casino"
       />
       <MenuItem
-        icon={SvgMedal}
-        label="Rewards"
-        type="router"
-        to="/rewards"
+        icon={SvgBets}
+        label={t("menu.bets")}
+        type="nav"
+        to="/bets"
       />
       <MenuItem
         id="chat-toggle"
         icon={SvgChat}
-        label="Chat"
+        label={t("menu.chat")}
         type="action"
         onClick={() => {
           dispatch(Chat.toggleOverlay(!chatOpen));
         }}
-      />
-      <MenuItem
-        icon={SvgHeadset}
-        label="Support"
-        type="action"
-        onClick={intercom.handleToggle}
       />
     </Div>
   );

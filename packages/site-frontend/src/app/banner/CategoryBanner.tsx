@@ -3,14 +3,12 @@ import { Link } from "@client/comps/link/Link";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./CategoryBanner.scss";
 import { StyledProps } from "@client/comps/styled/Styled";
-import { Conditional } from "@client/comps/conditional/Conditional";
+import "./BaseBanner.scss";
 
 export const CategoryBanner = ({
   image,
   heading,
-  subheading,
   to,
   ratio,
   objectPositionHorizontal ="center",
@@ -18,7 +16,6 @@ export const CategoryBanner = ({
 }: {
   image: string;
   heading?: string | undefined;
-  subheading?: string | undefined;
   to: string;
   ratio?: string | undefined;
   objectPositionHorizontal?: StyledProps["objectFitPosition"];

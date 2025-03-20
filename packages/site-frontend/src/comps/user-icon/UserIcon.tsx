@@ -28,7 +28,7 @@ export const UserIcon: FC<UserIconProps> = ({
           ? "/avatars/temp-avatar"
           : avatarId
             ? `/avatars/${avatarId}`
-            : `/avatars/avatars-default/${avatarIndex.toString().padStart(3, "0")}`
+            : `/avatars/avatars-default/${avatarIndex?.toString()?.padStart(3, "0")}`
       }
       {...forwardProps}
     />

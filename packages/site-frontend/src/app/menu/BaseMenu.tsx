@@ -1,3 +1,4 @@
+import React from 'react';
 import { SvgHome } from "@client/svgs/common/SvgHome";
 import { MenuItem } from "./panel/MenuItem";
 import { useTranslation } from "@core/services/internationalization/internationalization";
@@ -24,6 +25,9 @@ import { SvgGameShows } from "@client/svgs/common/SvgGameShows";
 import { SvgLiveCasino } from "@client/svgs/common/SvgLiveCasino";
 import { SvgSlots } from "@client/svgs/common/SvgSlots";
 import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
+import { useIsMobileLayout } from '#app/hooks/style/useIsMobileLayout';
+import { useAppSelector } from '#app/hooks/store/useAppSelector';
+import { Games } from '#app/services/games';
 
 export const BaseMenu = ({collapsed}: {
   collapsed: boolean;
@@ -38,6 +42,7 @@ export const BaseMenu = ({collapsed}: {
     icon={SvgHome}
     label={t("menu.home")}
     to="/"
+    end={true}
     showLabel={!collapsed}
     type="nav"
   />
@@ -62,8 +67,9 @@ export const BaseMenu = ({collapsed}: {
   />
   <MenuItem
     icon={SvgBattle}
-    label={t("games.cases_battles")}
+    label={t("games.case_battles")}
     to="/case-battles"
+    end
     showLabel={!collapsed}
     type="nav"
   />
@@ -76,24 +82,24 @@ export const BaseMenu = ({collapsed}: {
     showLabel={!collapsed}
     type="action"
   />
-  <OriginalGames animate={true} collapsed={open} />
+  <OriginalGames animate={true} collapsed={open} />    
   <MenuItem
-    icon={SvgSlots}
-    label={t("games.slots")}
-    to="/slots"
-    showLabel={!collapsed}
-    type="nav"
-  />
+      icon={SvgSlots}
+      label={t("games.slots")}
+      to="/slots"
+      showLabel={!collapsed}
+      type="nav"
+    />
   <MenuItem
     icon={SvgLiveCasino}
-    label={t("games.liveCasino")}
+    label={t("games.live_casino")}
     to="/live-casino"
     showLabel={!collapsed}
     type="nav"
   />
   <MenuItem
     icon={SvgGameShows}
-    label={t("games.gameShows")}
+    label={t("games.game_shows")}
     to="/game-shows"
     showLabel={!collapsed}
     type="nav"
@@ -125,13 +131,21 @@ export const BaseMenu = ({collapsed}: {
 
 export const OriginalGames = ({animate,collapsed}: {animate?: boolean, collapsed: boolean}) => {
 
+  const games = useAppSelector((x) => x.site.games) || [];
+  const small = useIsMobileLayout();
   const {t} = useTranslation();
 
-  const games: {icon: Svg, label: string, to: To}[] = [{icon: SvgDice, label:t('games.dice'), to: "/originals/dice"},
-    {icon: SvgLimbo, label: t('games.limbo'), to: "/originals/limbo"},
-    {icon: SvgBlackjack, label: t('games.blackjack'), to: "/originals/blackjack"},
-    {icon: SvgMines, label: t('games.mines'), to: "/originals/mines"},
-    {icon: SvgDouble, label: t('games.double'), to: "/originals/double"}];
+  const originalGames = games?.filter((x) => x.category === "original").map((x) => {
+    return {
+      icon: Games.getGameIcon(x),
+      label: t(`games.${x.name}`),
+      to: `/${x.name}`
+    }});
+  // const games: {icon: Svg, label: string, to: To}[] = [{icon: SvgDice, label:t('games.dice'), to: "/dice"},
+  //   {icon: SvgLimbo, label: t('games.limbo'), to: "/limbo"},
+  //   {icon: SvgBlackjack, label: t('games.blackjack'), to: "/blackjack"},
+  //   {icon: SvgMines, label: t('games.mines'), to: "/mines"},
+  //   {icon: SvgDouble, label: t('games.double'), to: "/double"}];
 
   return (<Div 
     className={classNames("OriginalGames", {
@@ -140,8 +154,9 @@ export const OriginalGames = ({animate,collapsed}: {animate?: boolean, collapsed
       closed: collapsed,
     })}
     column
+    gap={small ? 20: 0}
   fx>
-    {games.map((game, i) => (
+    {originalGames.map((game, i) => (
       <MenuItem
         key={i}
         icon={game.icon}

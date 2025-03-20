@@ -25,15 +25,31 @@ import { SvgFAQs } from "#app/svgs/common/SvgFAQs";
 import { SvgLogout } from "#app/svgs/common/SvgLogout";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
-import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
-
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { UserMenuModal } from "#app/modals/menu/UserMenuModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { SvgDeposit } from "@client/svgs/common/SvgDeposit";
+import { SvgWithdraw } from "@client/svgs/common/SvgWithdraw";
+import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 
 export const UserMenu = () => {
+
+  const layout = useAppSelector((x) => x.style.mainLayout);
+
+  return (<Conditional 
+    value={layout} 
+    mobile={<UserMenuMobile />}
+    tablet={<UserMenuDesktop />}
+    laptop={<UserMenuDesktop />}
+    desktop={<UserMenuDesktop />}
+    />);
+};
+
+export const UserMenuDesktop = () => {
   const [open, setOpen] = useState(false);
   const avatarIndex = useAppSelector((x) => x.user.avatarIndex);
-  const avatarId = useAppSelector((x) => x.user.avatarId);
-  const reloadsEnabled = useAppSelector((x) => x.user.meta.reloadsEnabled);
-  const small = useIsMobileLayout();
+  const avatarId = useAppSelector((x) => x.user.avatarId);  
+  const {t} = useTranslation();
 
   return (
     <Dropdown
@@ -53,96 +69,106 @@ export const UserMenu = () => {
           borderRadius={"full"}
           borderColor={open ? "sand": "black-hover"}
           borderWidth={1}
-          border={!small}
-          p={small ? 0 : 4}
+          border
+          p={4}
         >
           <UserIcon
             avatarIndex={avatarIndex}
             avatarId={avatarId}
-            width={small ? "32px" : "46px"}
+            width={"46px"}
           />
         </Div>
-        {!small && <Vector
+        <Vector
             className="icon left"
             as={open ? SvgArrowRight: SvgArrowRight}
             size={12}
             style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
             color="dark-sand"
-          />}
+          />
       </Div>
       }
-      body={
-        <DropdownBody>
-          <DropdownItem
-            type="nav"
-            to="/account"
-            end
-            iconLeft={SvgWallet}
-            label="Wallet"
-            onClick={() => setOpen(false)}
-          />
-          <DropdownItem
-            type="nav"
-            to="/account"
-            end
-            iconLeft={SvgProfile}
-            label="Profile"
-            onClick={() => setOpen(false)}
-          />
-          <DropdownItem
-            type="action"
-            iconLeft={SvgAvatar}
-            label="Avatar"
-            onClick={() => {
-              Dialogs.open("primary", <WalletModal initialAction="deposit" />);
-              setOpen(false);
-            }}
-          />
-          <DropdownItem
-            type="nav"
-            iconLeft={SvgBets}
-            label="Bets"
-            to="/bets"
-            onClick={() => setOpen(false)}
-          />
-          <DropdownItem
-            type="action"
-            iconLeft={SvgVIP}
-            label="VIP"
-            onClick={() => {
-              Dialogs.open("primary", <VaultModal />);
-              setOpen(false);
-            }}
-          />
-          {reloadsEnabled && (
-            <DropdownItem
-              type="action"
-              iconLeft={SvgSupport}
-              label="Support"
-              onClick={async () => {
-                Dialogs.open("primary", <AffiliateReloadModal />);
-                setOpen(false);
-              }}
-            />
-          )}
-          <DropdownItem
-            type="nav"
-            to="/account/transactions"
-            iconLeft={SvgFAQs}
-            label="FAQ's"
-            onClick={() => setOpen(false)}
-          />
-          <DropdownItem
-            type="action"
-            iconLeft={SvgLogout}
-            label="Logout"
-            onClick={() => {
-              Dialogs.open("secondary", <UserLogoutModal />);
-              setOpen(false);
-            }}
-          />
-        </DropdownBody>
-      }
+      body={<DropdownBody>
+        <DropdownItem
+          type="nav"
+          to="/account"
+          end
+          iconLeft={SvgProfile}
+          label={t("menu.account.profile")}
+          onClick={() => setOpen(false)}
+        />
+        <DropdownItem
+          type="action"
+          iconLeft={SvgDeposit}
+          label={t("menu.account.deposit")}
+          onClick={() => {
+            Dialogs.open("primary", <WalletModal initialAction="deposit" />);
+            setOpen(false);
+          }}
+        />
+        <DropdownItem
+          type="action"
+          iconLeft={SvgWithdraw}
+          label={t("menu.account.withdraw")}
+          onClick={() => {
+            Dialogs.open("primary", <WalletModal initialAction="withdraw" />);
+            setOpen(false);
+          }}
+        />
+        <DropdownItem
+          type="nav"
+          iconLeft={SvgTransaction}
+          label={t("menu.account.transactions")}
+          to="/transactions"
+          onClick={() => setOpen(false)}
+        />
+        <DropdownItem
+          type="nav"
+          iconLeft={SvgAvatar}
+          label={t("menu.account.avatar")}
+          to="/avatar"
+          onClick={() => setOpen(false)}
+        />
+        <DropdownItem
+          type="nav"
+          iconLeft={SvgBets}
+          label={t("menu.account.bets")}
+          to="/bets"
+          onClick={() => setOpen(false)}
+        />
+        <DropdownItem
+          type="action"
+          iconLeft={SvgLogout}
+          label={t("menu.account.logout")}
+          onClick={() => {
+            Dialogs.open("secondary", <UserLogoutModal />);
+            setOpen(false);
+          }}
+        />
+      </DropdownBody>}
     />
   );
+};
+
+const UserMenuMobile = () => {
+
+  const avatarIndex = useAppSelector((x) => x.user.avatarIndex);
+  const avatarId = useAppSelector((x) => x.user.avatarId);
+
+  return (<Div
+    gap={4}
+    flexCenter
+    onClick={() => Dialogs.open("primary", <UserMenuModal />)}
+    overflow="hidden"
+  >
+    <Div
+      bg="black-hover"
+      borderRadius={"full"}
+    >
+      <UserIcon
+        avatarIndex={avatarIndex}
+        avatarId={avatarId}
+        width={"32px"}
+      />
+    </Div>
+  </Div>);
 };

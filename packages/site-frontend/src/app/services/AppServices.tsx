@@ -9,10 +9,11 @@ import { useAppTracking } from "./useAppTracking";
 import { useAppSocket } from "./useAppSocket";
 import { useAppSession } from "./useAppSession";
 import { useAppSupport } from "./useAppSupport";
+import { useAppGames } from "./useAppGames";
 
 export const AppServices = () => {
   useAppStyle();
-
+  useAppGames();
   useAppSite();
   useAppUser();
 

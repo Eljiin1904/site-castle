@@ -2,16 +2,15 @@ import { Img } from "@client/comps/img/Img";
 import { Link } from "@client/comps/link/Link";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
-import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./GameBanner.scss";
 import { StyledProps } from "@client/comps/styled/Styled";
 import { Conditional } from "@client/comps/conditional/Conditional";
+import "./FeatureGameBanner.scss";
+import "./ScaleBanner.scss";
 
 export const FeatureGameBanner = ({
   image,
   heading,
-  subheading,
   to,
   ratio,
   objectPositionHorizontal ="center",
@@ -31,7 +30,7 @@ export const FeatureGameBanner = ({
   
   return (
     <Link
-      className="FeatureGameBanner"
+      className="FeatureGameBanner ScaleBanner"
       type="router"
       to={to}
       hover="none"

@@ -5,6 +5,7 @@
   z-index: 15;
   background: rgba(16, 16, 16, 0.9);
   backdrop-filter: blur(2px);
+  overflow: scroll;
   
   .inner-content {
     width: 100%;

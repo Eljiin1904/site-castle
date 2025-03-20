@@ -96,6 +96,7 @@
       "required": "Token es requerido."
     },
     "rateLimit": "Demasiadas solicitudes de registro.",
-    "invalidCaptcha": "Falló al pasar la validación de captcha."
+    "invalidCaptcha": "Falló al pasar la validación de captcha.",
+    "invalidGameName": "Juego inválido {{value}}."
   }
 }

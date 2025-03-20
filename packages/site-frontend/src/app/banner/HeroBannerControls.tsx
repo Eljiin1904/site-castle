@@ -20,7 +20,7 @@ export const HeroBannerControls = ({
       display={hovered || small ? "flex" : "none"}
       position="absolute"
       left={small ? undefined: 0}
-      right={0}
+      style={{ right: '-1px' }}
       bottom={small ? 0: 4}
       center
       gap={small ? 0: 6}
@@ -48,6 +48,7 @@ const SlideSelector = ({ index, active, onClick }: { index: number, active: bool
       hover="highlight"
       onClick={onClick}
       bg={small ? "black-hover" : undefined}
+      border={false}
     >
       <Div
         width={width}

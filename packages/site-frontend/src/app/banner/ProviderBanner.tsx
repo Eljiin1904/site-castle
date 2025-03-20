@@ -1,24 +1,20 @@
 import { Img } from "@client/comps/img/Img";
 import { Div } from "@client/comps/div/Div";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./ProviderBanner.scss";
-import { StyledProps } from "@client/comps/styled/Styled";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import "./BaseBanner.scss";
 
 export const ProviderBanner = ({
   image,
+  ratio
 }: {
   image: string;
-  heading?: string | undefined;
-  ratio?: string | undefined;
-  objectPositionHorizontal?: StyledProps["objectFitPosition"];
-  objectPositionVertical?: StyledProps["objectFitPosition"];
+  heading?: string;
+  ratio?: string;
 }) => {
 
   const small = useIsMobileLayout();
-
   return (
-    <Div className="ProviderBanner"
+    <Div className="BaseBanner"
       fx
       px={small ? 20 : 40}
       py={small ? 20 : 40}
@@ -31,7 +27,8 @@ export const ProviderBanner = ({
       skeleton
       width="100%"
       objectFit="contain"
-      height={small ? "40px" : "40px"}
+      height={"40px"}
+      aspectRatio={ratio || "100 / 20"}
     />
   </Div>
   );

@@ -24,7 +24,6 @@ export const MenuItem = ({
       flexCenter
       fx
       fy
-      bg="brown-6"
       hover="none"
     >
       <Div
@@ -34,14 +33,15 @@ export const MenuItem = ({
         <Vector
           className="icon"
           as={icon}
-          size={18}
-          color="gray"
+          size={16}
+          color="dark-sand"
         />
         <Span
           className="label"
-          size={13}
-          color="gray"
-          mt={6}
+          size={10}
+          fontWeight="medium"
+          color="dark-sand"
+          mt={8}
         >
           {label}
         </Span>

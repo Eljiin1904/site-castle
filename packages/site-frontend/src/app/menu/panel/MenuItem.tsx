@@ -6,9 +6,10 @@ import { Vector } from "@client/comps/vector/Vector";
 import "./MenuItem.scss";
 import { FC } from "react";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
-type LinkProps = {type: "action" , onClick: () => void } | { type: "nav" ,to: To; end?: boolean; };
-export const MenuItem:FC<{icon:Svg, isSubMenu?: boolean, open?: boolean, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
+type LinkProps = {type: "action" , onClick: (e?:React.MouseEvent) => void } | { type: "nav" ,to: To; end?: boolean; };
+export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
   
   const {showLabel, icon,isSubMenu, open, label, labelColor, subText, ...remainingProps} = props;
   return (
@@ -29,7 +30,7 @@ export const MenuItem:FC<{icon:Svg, isSubMenu?: boolean, open?: boolean, label: 
         isSubMenu={isSubMenu}
         open={open}
       />
-      ) : (
+      ) : (icon &&
         <Div center>
           <Vector
             as={icon}
@@ -43,7 +44,7 @@ export const MenuItem:FC<{icon:Svg, isSubMenu?: boolean, open?: boolean, label: 
 };
 
 const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open} : {
-  iconLeft: Svg;
+  iconLeft?: Svg;
   labelColor: Color;
   label: string;
   subText?: string | JSX.Element;
@@ -51,13 +52,14 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open}
   open?: boolean;
 }) => {
 
+  const small = useIsMobileLayout();
   return (<Div fx alignItems="center" gap={16}>
-    <Vector
+    {iconLeft && <Vector
       className="icon"
       as={iconLeft}
       size={20}
       color={labelColor}
-    />
+    />}
     <Div column className="fade-content">
       <Span
         className="label"
@@ -70,6 +72,7 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open}
     </Div>
     {isSubMenu && <Vector
       className="icon fade-content"
+      align="flex-end"
       as={SvgArrowRight}
       size={12}
       color={labelColor}
@@ -77,6 +80,8 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open}
       borderColor={'brown-4'}
       p={8}
       style={{transform: !open ? "rotate(180deg)" : "rotate(0deg)"}}
+      position="absolute"
+      right={ 20}
       />}
   </Div>)
 };

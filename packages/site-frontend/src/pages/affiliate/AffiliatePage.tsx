@@ -2,7 +2,7 @@ import { SitePage } from "#app/comps/site-page/SitePage";
 import { ReferralsBody } from "./referrals/ReferralsBody";
 import { Fragment } from "react/jsx-runtime";
 
-import { HeroBanner } from "../home/HeroBanner";
+
 
 import { ImageBanner } from "./ImageBanner";
 import { Div } from "@client/comps/div/Div";
@@ -16,6 +16,7 @@ import { KeyboardInput } from "@client/comps/input/KeyboardInput";
 import config from "#app/config";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { AffiliateReferAFriendModal } from "#app/modals/affiliate/AffiliateReferAFriendModal";
+import { HeroBanner } from "#app/app/banner/HeroBanner";
 
 export const AffiliatePage = () => {
   const small = useIsMobileLayout();

@@ -4,8 +4,9 @@ import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./GameBanner.scss";
 import { StyledProps } from "@client/comps/styled/Styled";
+import "./BaseBanner.scss";
+import "./ScaleBanner.scss";
 
 export const GameBanner = ({
   image,
@@ -30,7 +31,7 @@ export const GameBanner = ({
 
   return (
     <Link
-      className="GameBanner"
+      className="BaseBanner ScaleBanner"
       type="router"
       to={to}
       hover="none"

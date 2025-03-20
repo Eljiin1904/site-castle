@@ -1,5 +1,6 @@
 {
   "menu": {
+    "menu": "Menú",
     "home": "Inicio",
     "referrals": "Referidos",
     "token": "Token",
@@ -13,7 +14,21 @@
     "blog": "Blog",
     "fairness": "Equidad",
     "vip": "VIP",
-    "categories": "Categorías"
+    "categories": "Categorías",
+    "casino": "Casino",
+    "bets": "Apuestas",
+    "chat": "Chat",
+    "language": "Idioma",
+    "account": {
+      "title": "Cuenta",
+      "profile": "Perfil",
+      "deposit": "Depositar",
+      "withdraw": "Retirar",
+      "transactions": "Transacciones",
+      "avatar": "Avatar",
+      "bets": "Apuestas",
+      "logout": "Cerrar sesión"
+    }
   },
   "games": {
     "all": "Todos los juegos",
@@ -26,11 +41,11 @@
     "blackjack": "Blackjack",
     "mines": "Minas",
     "cases": "Cofres",
-    "cases_battles": "Batalla de Cofres",
+    "case_battles": "Batalla de Cofres",
     "double": "Doble",
     "slots": "Tragamonedas",
-    "liveCasino": "Casino en vivo",
-    "gameShows": "Programas",
+    "live_casino": "Casino en vivo",
+    "game_shows": "Programas",
     "original_one": "Juego Original",
     "original_other": "Juegos Originales",
     "hot": "Juegos populares",
