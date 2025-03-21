@@ -64,18 +64,18 @@ ingress:
   enabled: false
 
 secrets:
-  app: "shared-backend"
+  app: "shared-admin-backend"
   
 service:
   type: ClusterIP
-  port: 5000
+  port: 3000
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
 app:
-  port: 5000
+  port: 3000
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
