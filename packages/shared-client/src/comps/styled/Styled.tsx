@@ -81,7 +81,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
     textTransform?: "uppercase" | "lowercase" | "capitalize";
     textAlign?: "center" | "left" | "right" | "justify";
     textOverflow?: "clip" | "ellipsis";
-    zIndex?: 1 | 2 | 3 | 4 | 5;
+    zIndex?: 1 | 2 | 3 | 4 | 5 | 10 | 11 | 12 | 13 | 14 | 15;
     boxShadow?: 1 | 2 | 3 | 4;
     style?: CSSProperties | any;
     objectFitPosition?: "center" | "top" | "bottom" | "left" | "right" | "20%" | "40%" | "60%" | "80%";

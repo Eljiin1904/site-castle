@@ -28,7 +28,7 @@ export const BaseMenu = ({collapsed}: {
 }) => {
 
   const intercom = useIntercomManager();
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   return (<>
   <MenuItem
@@ -53,14 +53,14 @@ export const BaseMenu = ({collapsed}: {
   <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>{t('menu.games')}</Span>
   <MenuItem
     icon={SvgDuel}
-    label={t("games.duel")}
+    label={t("games:duel")}
     to="/duel"
     showLabel={!collapsed}
     type="nav"
   />
   <MenuItem
     icon={SvgBattle}
-    label={t("games.case_battles")}
+    label={t("games:case_battles")}
     to="/case-battles"
     end
     showLabel={!collapsed}
@@ -69,21 +69,21 @@ export const BaseMenu = ({collapsed}: {
   <OriginalGames collapsed={!collapsed} />    
   <MenuItem
       icon={SvgSlots}
-      label={t("games.slots")}
+      label={t("games:slots")}
       to="/slots"
       showLabel={!collapsed}
       type="nav"
     />
   <MenuItem
     icon={SvgLiveCasino}
-    label={t("games.live_casino")}
+    label={t("games:live_casino")}
     to="/live-casino"
     showLabel={!collapsed}
     type="nav"
   />
   <MenuItem
     icon={SvgGameShows}
-    label={t("games.game_shows")}
+    label={t("games:game_shows")}
     to="/game-shows"
     showLabel={!collapsed}
     type="nav"
@@ -124,7 +124,7 @@ export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
   const originalGames = games?.filter((x) => x.category === "original").map((x) => {
     return {
       icon: Games.getGameIcon(x),
-      label: t(`games.${x.name}`),
+      label: t(`games:${x.name}`),
       to: `/${x.name}`
     }
   });

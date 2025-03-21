@@ -5,6 +5,8 @@ import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { StyledProps } from "@client/comps/styled/Styled";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Site } from "#app/services/site";
 import "./BaseBanner.scss";
 import "./ScaleBanner.scss";
 
@@ -27,7 +29,15 @@ export const GameBanner = ({
 }) => {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = ["mobile", "tablet"].includes(layout);
+  const menuOpen = useAppSelector((x) => x.site.menuOverlayOpen);
+  const dispatch = useAppDispatch();
 
+  const handleClose = () => {
+    if (small && menuOpen) {
+      dispatch(Site.toggleMenuOverlay(false));
+      dispatch(Site.setSearch(''));
+    }
+  };
   return (
     <Link
       className="BaseBanner ScaleBanner"
@@ -36,7 +46,7 @@ export const GameBanner = ({
       hover="none"
       position="relative"
     >
-      <Div fx column>
+      <Div fx column onClick={handleClose}>
         <Img
           type="jpg"
           path={image}
