@@ -10,11 +10,12 @@ RUN npm run build
 FROM node:23-alpine AS production
 ENV NODE_ENV=devcloud
 ENV PORT=3000
-WORKDIR /pidwin
-RUN mkdir -p packages/shared-backend
 WORKDIR /pidwin/packages/shared-backend
-COPY --from=builder /pidwin/packages/shared-backend/package*.json ./
-COPY --from=builder /pidwin/packages/shared-backend/build ./build
+COPY --from=builder /pidwin/packages/shared-backend/* ./
+COPY --from=builder /pidwin/packages/shared-core/* ./
+COPY --from=builder /pidwin/packages/shared-server/* ./
+COPY --from=builder /pidwin/packages/shared-client/* ./
+
 RUN npm install --only=production
 EXPOSE 3000
 CMD ["npm", "run", "start"]
