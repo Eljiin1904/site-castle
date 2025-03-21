@@ -159,7 +159,22 @@
       "title": "Confirm Email",
       "description": "To confirm your email, please click the button below.",
       "success": "Email confirmed."
+    },
+    "social": {
+      "title": "Set your username",
+      "description": "In order to continue using sandcasino, please set your username!",
+      "submit": "Create Account",
+      "success": {
+        "title": "Welcome to SandCasino",
+        "description": "Thanks for registering in SandCasino. Explore our games and races!",
+        "action": "Continue"
+      }
     }
+  },
+  "signout": {
+    "title": "Sign Out",
+    "description": "Are you sure you want to sign out?",
+    "success": "You have been signed out."
   },
   "bets": {
     "recentBets": "Recent Bets",

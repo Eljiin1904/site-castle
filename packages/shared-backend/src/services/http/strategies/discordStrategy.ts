@@ -43,7 +43,7 @@ async function verify(
 
     if (req.isAuthenticated()) {
       if (await Database.exists("users", { discordId })) {
-        throw new HandledError("Discord id is already linked.");
+        throw new HandledError("errors.discord.taken");
       }
       await Database.collection("users").updateOne(
         { _id: req.user._id },
@@ -64,11 +64,11 @@ async function verify(
             { collation: { locale: "en", strength: 2 } },
           )
         ) {
-          throw new HandledError("Email is already registered.");
+          throw new HandledError("errors.email.taken");
         }
 
         if (await Database.exists("users", { discordId })) {
-          throw new HandledError("Discord id is already linked.");
+          throw new HandledError("errors.discord.taken");
         }
 
         throw new UnknownUserError(discordId, email);

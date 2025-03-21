@@ -10,12 +10,6 @@ import { SvgDuel } from "@client/svgs/common/SvgDuel";
 import { SvgBattle } from "@client/svgs/common/SvgBattle";
 import { SvgOriginalGames } from "#app/svgs/common/SvgOriginalGames";
 import { useState } from "react";
-import { SvgDice } from "@client/svgs/common/SvgDice";
-import { To } from "react-router-dom";
-import { SvgLimbo } from "@client/svgs/common/SvgLimbo";
-import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
-import { SvgMines } from "@client/svgs/common/SvgMines";
-import { SvgDouble } from "#app/svgs/double/SvgDouble";
 import { Div } from "@client/comps/div/Div";
 import classNames from "classnames";
 import { SvgBlock } from "@client/svgs/common/SvgBlock";
@@ -82,7 +76,7 @@ export const BaseMenu = ({collapsed}: {
     showLabel={!collapsed}
     type="action"
   />
-  <OriginalGames animate={true} collapsed={open} />    
+  <OriginalGames collapsed={!open} />    
   <MenuItem
       icon={SvgSlots}
       label={t("games.slots")}
@@ -129,7 +123,7 @@ export const BaseMenu = ({collapsed}: {
 </>)
 };
 
-export const OriginalGames = ({animate,collapsed}: {animate?: boolean, collapsed: boolean}) => {
+export const OriginalGames = ({collapsed}: {collapsed: boolean}) => {
 
   const games = useAppSelector((x) => x.site.games) || [];
   const small = useIsMobileLayout();
@@ -140,16 +134,13 @@ export const OriginalGames = ({animate,collapsed}: {animate?: boolean, collapsed
       icon: Games.getGameIcon(x),
       label: t(`games.${x.name}`),
       to: `/${x.name}`
-    }});
-  // const games: {icon: Svg, label: string, to: To}[] = [{icon: SvgDice, label:t('games.dice'), to: "/dice"},
-  //   {icon: SvgLimbo, label: t('games.limbo'), to: "/limbo"},
-  //   {icon: SvgBlackjack, label: t('games.blackjack'), to: "/blackjack"},
-  //   {icon: SvgMines, label: t('games.mines'), to: "/mines"},
-  //   {icon: SvgDouble, label: t('games.double'), to: "/double"}];
+    }
+  });
+  
 
   return (<Div 
     className={classNames("OriginalGames", {
-      animate,
+      animate: !collapsed,
       opened: !collapsed,
       closed: collapsed,
     })}

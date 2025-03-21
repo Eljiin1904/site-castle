@@ -16,7 +16,9 @@ export async function getToken<K extends TokenKind>({
   });
 
   if (!document) {
-    throw new HandledError(`Invalid ${kind} token.`);
+    const e = new HandledError(`errors.token.invalid`);
+    e.cause = kind;
+    throw e;
   }
 
   return document as TokenDocument & { kind: K };

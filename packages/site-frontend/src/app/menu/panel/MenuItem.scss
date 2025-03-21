@@ -28,6 +28,8 @@
   --menu-collapsed-height: 0px;
   overflow: hidden;
 
+  max-height: var(--menu-collapsed-height);
+
   &.closed {  
     max-height: var(--menu-collapsed-height);
   
@@ -38,6 +40,7 @@
   
   &.opened {
     max-height: var(--menu-height);
+    //height: var(--menu-height);
     
     &.animate {
       animation: OriginalGames-open 0.3s ease-in forwards;

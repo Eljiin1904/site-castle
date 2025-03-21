@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useEventListener } from "usehooks-ts";
 import { Div } from "@client/comps/div/Div";
 import { Nav } from "@client/comps/nav/Nav";
@@ -6,7 +6,6 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Site } from "#app/services/site";
 import "./AppMenuOverlay.scss";
-import { useTranslation } from "@core/services/internationalization/internationalization";
 import { BaseMenu } from "./BaseMenu";
 import { SiteSearch } from "#app/comps/site-search/SiteSearch";
 
@@ -26,11 +25,8 @@ export const AppMenuOverlay = () => {
 };
 
 const OverlayContent = () => {
-  const authenticated = useAppSelector((x) => x.user.authenticated);
   const dispatch = useAppDispatch();
   const innerRef = useRef<HTMLDivElement>(null);
-  const [filterGames, setFilterGames] = useState("");
-  const {t} = useTranslation();
 
   const handleClose = () => {
     dispatch(Site.toggleMenuOverlay(false));

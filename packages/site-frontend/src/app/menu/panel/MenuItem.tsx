@@ -6,12 +6,15 @@ import { Vector } from "@client/comps/vector/Vector";
 import "./MenuItem.scss";
 import { FC } from "react";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
-import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Site } from "#app/services/site";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 
 type LinkProps = {type: "action" , onClick: (e?:React.MouseEvent) => void } | { type: "nav" ,to: To; end?: boolean; };
 export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
   
   const {showLabel, icon,isSubMenu, open, label, labelColor, subText, ...remainingProps} = props;
+
   return (
     <Link
       className="MenuItem"
@@ -43,7 +46,7 @@ export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label:
   );
 };
 
-const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open} : {
+const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu = false, open} : {
   iconLeft?: Svg;
   labelColor: Color;
   label: string;
@@ -52,8 +55,18 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open}
   open?: boolean;
 }) => {
 
-  const small = useIsMobileLayout();
-  return (<Div fx alignItems="center" gap={16}>
+  const dispatch = useAppDispatch();
+  const menuOpen = useAppSelector((x) => x.site.menuOverlayOpen);
+  const layout = useAppSelector((x) => x.style.bodyLayout);
+  const small = ["mobile", "tablet"].includes(layout);
+
+  const handleClose = () => {
+    if (!isSubMenu && small && menuOpen) {
+      dispatch(Site.toggleMenuOverlay(false));
+    }
+  };
+
+  return (<Div fx alignItems="center" gap={16} onClick={handleClose}>
     {iconLeft && <Vector
       className="icon"
       as={iconLeft}
@@ -79,7 +92,7 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu, open}
       border
       borderColor={'brown-4'}
       p={8}
-      style={{transform: !open ? "rotate(180deg)" : "rotate(0deg)"}}
+      style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
       position="absolute"
       right={ 20}
       />}

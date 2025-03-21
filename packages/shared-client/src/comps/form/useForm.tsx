@@ -5,6 +5,7 @@ import { Validation } from "@core/services/validation";
 import { Toasts } from "#client/services/toasts";
 import { Errors } from "#client/services/errors";
 import { TTransErrorKeyValue } from "@core/services/validation/Validation";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 type SetValueFunc<T extends AnyObject> = <K extends keyof T>(
   key: K,
@@ -44,7 +45,7 @@ export function useForm<T extends AnyObject>({
   const [submitError, setSubmitError] = useState<string>();
   const [loading, setLoading] = useState(false);
   const isMounted = useIsMounted();
-
+  const {t} = useTranslation(['validations']);
   const setValue: SetValueFunc<T> = (key, value) => {
     setValues((values) => ({ ...values, [key]: value }));
   };
@@ -69,7 +70,10 @@ export function useForm<T extends AnyObject>({
       if (toastSubmitError) {
         Toasts.error(err);
       } else if (isMounted()) {
-        setSubmitError(Errors.getMessage(err));
+        
+        const errorCause = (err as Error)?.cause;
+        const errorKey  = (err as Error).message;
+        setSubmitError(t(errorKey, {value: errorCause}));
       }
     } finally {
       if (isMounted()) {

@@ -95,6 +95,15 @@
       "invalid": "Token {{value}} inválido.",
       "required": "Token es requerido."
     },
+    "google": {
+      "taken": "Google id ya está vinculado."
+    },
+    "twitch": {
+      "taken": "Twitch id ya está vinculado."
+    },
+    "discord": {
+      "taken": "Discord id ya está vinculado."
+    },
     "rateLimit": "Demasiadas solicitudes de registro.",
     "invalidCaptcha": "Falló al pasar la validación de captcha.",
     "invalidGameName": "Juego inválido {{value}}."

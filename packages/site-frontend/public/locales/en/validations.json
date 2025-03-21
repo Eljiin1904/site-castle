@@ -95,6 +95,15 @@
       "invalid": "{{value}} Token invalid.",
       "required": "Token is required."
     },
+    "google": {
+      "taken": "Google id is already linked."
+    },
+    "twitch": {
+      "taken": "Twitch id is already linked."
+    },
+    "discord": {
+      "taken": "Discord id is already linked."
+    },
     "rateLimit": "Too many registration requests.",
     "invalidCaptcha": "Failed to pass captcha.",
     "invalidGameName": "Invalid game {{value}}."

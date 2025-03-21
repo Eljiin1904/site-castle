@@ -154,7 +154,22 @@
       "title": "Confirmar correo electrónico",
       "description": "Para confirmar tu correo electrónico, haz clic en el button de abajo.",
       "success": "Correo electrónico confirmado."
+    },
+    "social": {
+      "title": "Configura tu nombre de usuario",
+      "description": "¡Para continuar usando sandcasino, por favor configura tu nombre de usuario!",
+      "submit": "Crear Cuenta",
+      "success": {
+        "title": "¡Bienvenido a SandCasino!",
+        "description": "Gracias por registrarte en SandCasino. ¡Explora nuestros juegos y carreras!",
+        "action": "Continuar"
+      }
     }
+  },
+  "signout": {
+    "title": "Cerrar sesión",
+    "description": "¿Estás seguro de que deseas cerrar sesión?",
+    "success": "Has cerrado sesión con éxito."
   },
   "bets": {
     "recentBets": "Apuestas Recientes",
