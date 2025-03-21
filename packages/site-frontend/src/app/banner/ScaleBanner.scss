@@ -1,0 +1,12 @@
+.ScaleBanner {
+
+  img {
+    transition: transform 0.5s;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+  }
+}

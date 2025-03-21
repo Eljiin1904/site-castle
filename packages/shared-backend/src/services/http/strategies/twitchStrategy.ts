@@ -50,7 +50,7 @@ async function verify(
 
     if (req.isAuthenticated()) {
       if (await Database.exists("users", { twitchId })) {
-        throw new HandledError("Twitch id is already linked.");
+        throw new HandledError("errors.twitch.taken");
       }
 
       await Database.collection("users").updateOne({ _id: req.user._id }, { $set: { twitchId } });
@@ -65,11 +65,11 @@ async function verify(
         if (
           await Database.exists("users", { email }, { collation: { locale: "en", strength: 2 } })
         ) {
-          throw new HandledError("Email is already registered.");
+          throw new HandledError("errors.email.taken");
         }
 
         if (await Database.exists("users", { twitchId })) {
-          throw new HandledError("Twitch id is already linked.");
+          throw new HandledError("errors.twitch.taken");
         }
 
         throw new UnknownUserError(twitchId, email);

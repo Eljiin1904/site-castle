@@ -3,14 +3,14 @@ import { Link } from "@client/comps/link/Link";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./GameBanner.scss";
 import { StyledProps } from "@client/comps/styled/Styled";
 import { Conditional } from "@client/comps/conditional/Conditional";
+import "./FeatureGameBanner.scss";
+import "./ScaleBanner.scss";
 
-export const CategoryBanner = ({
+export const FeatureGameBanner = ({
   image,
   heading,
-  subheading,
   to,
   ratio,
   objectPositionHorizontal ="center",
@@ -30,7 +30,7 @@ export const CategoryBanner = ({
   
   return (
     <Link
-      className="CategoryBanner"
+      className="FeatureGameBanner ScaleBanner"
       type="router"
       to={to}
       hover="none"
@@ -43,13 +43,12 @@ export const CategoryBanner = ({
         fx
         column
         gap={small ? 24 : 0}
-        justifyContent="center"
       >
         <Div
           fx
           column
           position="relative"
-          style={{ minHeight: small ? "160px" : "88px" }}
+          style={{ minHeight: small ? "160px" : "240px" }}
           overflow="hidden"
           >
             <Img
@@ -57,7 +56,7 @@ export const CategoryBanner = ({
           path={image}
           skeleton
           width="100%"
-          aspectRatio={ratio || "206 / 88"}
+          aspectRatio={ratio || "186 / 260"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}
         />     
@@ -65,8 +64,8 @@ export const CategoryBanner = ({
         <Div
           position={small ? "relative" : "absolute"}
           fx
-          px={small ? 0 : 16}
-          py={small ? 0 : 16}
+          px={small ? 0 : 40}
+          py={small ? 0 : 40}
         >
           <Conditional
             value={layout}
@@ -85,11 +84,10 @@ const MobileHeader = ({heading}: {
   heading: string | undefined;
 }) => {
   return (<Heading
-    as={"h3"}
+    as={"h2"}
     color={"white"}
     size={ 20}
     fontWeight="regular"
-    textTransform="capitalize"
   >
     {heading}
   </Heading>);
@@ -99,12 +97,12 @@ const NotMobileHeader = ({heading}: {
   heading: string | undefined;
 }) => {
   return (<Heading
-    as={"h3"}
+    as={"h2"}
     color={"black"}
-    size={28}
+    size={ 48}
     style={{ maxWidth: "100px" }}
     fontWeight="regular"
-    textTransform="capitalize"
+    textTransform="uppercase"
   >
     {heading}
   </Heading>);

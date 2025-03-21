@@ -1,6 +1,9 @@
 
-.HomePage .ProviderBanner {
+.HomePage .BaseBanner {
 
+  .AppMain.mobile & {
+    width: calc(50% - 10px);
+  }
   .AppMain.tablet & {
     width: calc((100% - 72px)/4);
   }
@@ -10,6 +13,14 @@
   .AppMain.desktop & {
     width: calc((100% - 120px)/6);
   }
-  
+
   flex-shrink: 0;
+
+  .HeaderContent {
+
+    width:calc(100% - 40px);
+    bottom: 20px;
+    left:20px;
+    z-index: 10;
+  }
 }

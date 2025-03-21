@@ -1,5 +1,6 @@
 {
   "menu": {
+    "menu": "Menú",
     "home": "Inicio",
     "referrals": "Referidos",
     "token": "Token",
@@ -13,7 +14,21 @@
     "blog": "Blog",
     "fairness": "Equidad",
     "vip": "VIP",
-    "categories": "Categorías"
+    "categories": "Categorías",
+    "casino": "Casino",
+    "bets": "Apuestas",
+    "chat": "Chat",
+    "language": "Idioma",
+    "account": {
+      "title": "Cuenta",
+      "profile": "Perfil",
+      "deposit": "Depositar",
+      "withdraw": "Retirar",
+      "transactions": "Transacciones",
+      "avatar": "Avatar",
+      "bets": "Apuestas",
+      "logout": "Cerrar sesión"
+    }
   },
   "games": {
     "all": "Todos los juegos",
@@ -26,11 +41,11 @@
     "blackjack": "Blackjack",
     "mines": "Minas",
     "cases": "Cofres",
-    "cases_battles": "Batalla de Cofres",
+    "case_battles": "Batalla de Cofres",
     "double": "Doble",
     "slots": "Tragamonedas",
-    "liveCasino": "Casino en vivo",
-    "gameShows": "Programas",
+    "live_casino": "Casino en vivo",
+    "game_shows": "Programas",
     "original_one": "Juego Original",
     "original_other": "Juegos Originales",
     "hot": "Juegos populares",
@@ -78,6 +93,12 @@
       "password": "Contraseña",
       "passwordPlaceholder": "Ingrese su contraseña..."
     },
+    "social": {
+      "login": "Iniciar sesión con {{provider}}",
+      "popup": "Debería haberse abierto una ventana emergente con la página de inicio de sesión de {{provider}}.",
+      "noPopup": "¿No ves la ventana emergente de inicio de sesión de {{provider}}?",
+      "redirect": "Redirigir al inicio de sesión de {{provider}}"
+    },
     "success": "¡Bienvenido de nuevo, {{username}}!"
   },
   "forgot": {
@@ -96,6 +117,7 @@
   },
   "reset": {
     "title": "Restablecer contraseña",
+    "description": "Para restablecer su contraseña, haga clic en el botón de abajo.",
     "form": {
       "password": "Nueva contraseña",
       "passwordPlaceholder": "Ingrese la nueva contraseña...",
@@ -132,10 +154,25 @@
       "title": "Confirmar correo electrónico",
       "description": "Para confirmar tu correo electrónico, haz clic en el button de abajo.",
       "success": "Correo electrónico confirmado."
+    },
+    "social": {
+      "title": "Configura tu nombre de usuario",
+      "description": "¡Para continuar usando sandcasino, por favor configura tu nombre de usuario!",
+      "submit": "Crear Cuenta",
+      "success": {
+        "title": "¡Bienvenido a SandCasino!",
+        "description": "Gracias por registrarte en SandCasino. ¡Explora nuestros juegos y carreras!",
+        "action": "Continuar"
+      }
     }
   },
+  "signout": {
+    "title": "Cerrar sesión",
+    "description": "¿Estás seguro de que deseas cerrar sesión?",
+    "success": "Has cerrado sesión con éxito."
+  },
   "bets": {
-    "recentBets": "Apuestas Recientes",
+    "recentBets": "Apuestas Recientes y Carreras",
     "myBets": "Mis apuestas",
     "allBets": "Todas las apuestas",
     "highRollers": "Grandes apostadores",

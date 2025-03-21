@@ -21,12 +21,12 @@ export default Http.createApiRoute({
     const { username, email, password, referralCode, linkToken } = req.body;
 
     if (await Database.exists("users", { email }, { collation: { locale: "en", strength: 2 } })) {
-      throw new HandledError("Email is already registered.");
+      throw new HandledError("errors.email.taken");
     }
     if (
       await Database.exists("users", { username }, { collation: { locale: "en", strength: 2 } })
     ) {
-      throw new HandledError("Username is already taken.");
+      throw new HandledError("errors.username.taken");
     }
 
     await Site.validateEmail(email);

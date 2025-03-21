@@ -7,10 +7,13 @@ import { Heading } from "../heading/Heading";
 import { Span } from "../span/Span";
 import { StyledLayoutProps } from "../styled/Styled";
 import "./PageNotice.scss";
+import { Vector } from "../vector/Vector";
 
 export type PageNoticeProps = Omit<StyledLayoutProps, "children"> & {
-  image: string;
+  image?: string;
+  icon?: Svg;
   title: string;
+  titleSize?: Unit;
   message: string | JSX.Element;
   description?: string;
   buttonLabel?: string;
@@ -20,7 +23,9 @@ export type PageNoticeProps = Omit<StyledLayoutProps, "children"> & {
 export const PageNotice: FC<PageNoticeProps> = ({
   className,
   image,
+  icon,
   title,
+  titleSize = 24,
   message,
   description,
   buttonLabel,
@@ -33,20 +38,17 @@ export const PageNotice: FC<PageNoticeProps> = ({
       column
       center
       grow
+      gap={40}
       {...forwardProps}
     >
-      <Img
-        type="png"
-        path={image}
-        width="256px"
-      />
+      {image && <Img  type="png" path={image} width="256px" />}
+      {icon && <Vector as={icon} size={40} color="dark-sand" />}
+      
       <Heading
         as="h1"
         className="title"
-        size={20}
+        size={titleSize}
         textAlign="center"
-        mt={32}
-        mb={16}
         textTransform="uppercase"
       >
         {title}
@@ -55,7 +57,7 @@ export const PageNotice: FC<PageNoticeProps> = ({
         display="block"
         className="message"
         fontSize={14}
-        color="gray"
+        color="dark-sand"
         textAlign="center"
         px={16}
       >
@@ -63,11 +65,11 @@ export const PageNotice: FC<PageNoticeProps> = ({
       </Div>
       {buttonLabel && (
         <Button
-          kind="primary"
-          size="lg"
+          kind="primary-yellow"
+          size="md"
           label={buttonLabel}
-          mt={32}
-          style={{ minWidth: "200px" }}
+          fx
+          style={{ maxWidth: "400px" }}
           onClick={onButtonClick}
         ></Button>
       )}

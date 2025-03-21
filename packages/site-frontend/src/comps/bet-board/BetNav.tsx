@@ -15,8 +15,8 @@ export const BetNav = ({heading, scope, setScope}: {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const small = useIsMobileLayout();
   const {t} = useTranslation();
-  let options = [t('bets.allBets'),t('bets.highRollers'),t('bets.luckyBets')];
-  let values = [ "all", "highroller", "lucky"];
+  let options = [t('bets.allBets'),t('bets.highRollers'),t('bets.luckyBets'),t('menu.races')];
+  let values = [ "all", "highroller", "lucky","races"];
   if (authenticated) {
     options = [t('bets.myBets'), ...options];
     values = ["user", ...values];

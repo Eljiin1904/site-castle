@@ -5,13 +5,12 @@ import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { Dialogs } from "@client/services/dialogs";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgAddFunds } from "@client/svgs/common/SvgAddFunds";
-import { SvgDivider } from "@client/svgs/common/SvgDivider";
 import { SvgMoney } from "@client/svgs/common/SvgMoney";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { WalletModal } from "#app/modals/wallet/WalletModal";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 export const SiteBalance = () => {
   const tokens = useAppSelector((x) => x.user.tokenBalance);
@@ -35,12 +34,14 @@ export const SiteBalance = () => {
   }, [tokens]);
 
   return (
-    <Div className="SiteBalance">
+    <Div className="SiteBalance"
+    position={"absolute"}
+    >
       <Div
         align="center"
         justify="flex-end"
       >
-        <Div gap={4}>
+        <Div gap={4} cursor="pointer" border borderColor="brown-4" height={32} flexCenter px={12} onClick={() => Dialogs.open("primary", <WalletModal />)}>
           <Vector
             className="icon"
             color="white"
@@ -54,9 +55,14 @@ export const SiteBalance = () => {
           >
             {Intimal.toLocaleString(tokens)}
           </Span>
+          <Vector
+            className="icon"
+            color="dark-sand"
+            as={SvgArrowRight}
+            size={12}
+          />
         </Div>
         <Div
-          gap={16}
           align="center"
         >
           <Span size={40} width={1}>&nbsp;</Span>
@@ -67,7 +73,6 @@ export const SiteBalance = () => {
             label="Wallet"
             onClick={() => Dialogs.open("primary", <WalletModal />)}
           />
-          {!small && <Vector as={SvgDivider} px={8} />}
         </Div>
       </Div>
     </Div>

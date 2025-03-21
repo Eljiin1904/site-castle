@@ -46,7 +46,7 @@ async function verify(
 
     if (req.isAuthenticated()) {
       if (await Database.exists("users", { googleId })) {
-        throw new HandledError("Google id is already linked.");
+        throw new HandledError("errors.google.taken");
       }
 
       await Database.collection("users").updateOne(
@@ -68,11 +68,11 @@ async function verify(
             { collation: { locale: "en", strength: 2 } },
           )
         ) {
-          throw new HandledError("Email is already registered.");
+          throw new HandledError("errors.email.taken");
         }
 
         if (await Database.exists("users", { googleId })) {
-          throw new HandledError("Google id is already linked.");
+          throw new HandledError("errors.google.taken");
         }
 
         throw new UnknownUserError(googleId, email);

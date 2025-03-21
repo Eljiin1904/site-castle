@@ -1,3 +1,4 @@
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Div } from "@client/comps/div/Div";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { DropdownBody } from "@client/comps/dropdown/DropdownBody";
@@ -10,6 +11,7 @@ import { useState } from "react";
 
 export const LanguageSelector = () => {
 
+  const layout = useAppSelector((x) => x.style.bodyLayout);
   const [open, setOpen] = useState(false);
   const {t, i18n} = useTranslation();
 
@@ -17,6 +19,10 @@ export const LanguageSelector = () => {
     i18n.changeLanguage(language);
     setOpen(false);
   };
+
+  if (["mobile"].includes(layout)) {
+    return null;
+  }
 
   return (<Dropdown
     className="LanguageDropdown"

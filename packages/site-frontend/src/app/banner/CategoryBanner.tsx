@@ -2,16 +2,13 @@ import { Img } from "@client/comps/img/Img";
 import { Link } from "@client/comps/link/Link";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
-import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./GameBanner.scss";
 import { StyledProps } from "@client/comps/styled/Styled";
-import { Conditional } from "@client/comps/conditional/Conditional";
+import "./BaseBanner.scss";
 
-export const FeatureGameBanner = ({
+export const CategoryBanner = ({
   image,
   heading,
-  subheading,
   to,
   ratio,
   objectPositionHorizontal ="center",
@@ -19,7 +16,6 @@ export const FeatureGameBanner = ({
 }: {
   image: string;
   heading?: string | undefined;
-  subheading?: string | undefined;
   to: string;
   ratio?: string | undefined;
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
@@ -31,7 +27,7 @@ export const FeatureGameBanner = ({
   
   return (
     <Link
-      className="FeatureGameBanner"
+      className="CategoryBanner"
       type="router"
       to={to}
       hover="none"
@@ -44,12 +40,13 @@ export const FeatureGameBanner = ({
         fx
         column
         gap={small ? 24 : 0}
+        justifyContent={small ? "flex-start" : "center"}
       >
         <Div
           fx
           column
           position="relative"
-          style={{ minHeight: small ? "160px" : "240px" }}
+          style={{ minHeight: small ? "160px" : "88px" }}
           overflow="hidden"
           >
             <Img
@@ -57,54 +54,30 @@ export const FeatureGameBanner = ({
           path={image}
           skeleton
           width="100%"
-          aspectRatio={ratio || "186 / 260"}
+          aspectRatio={ratio || "206 / 88"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}
         />     
         </Div>
         <Div
-          position={small ? "relative" : "absolute"}
+          position={"absolute"}
           fx
-          px={small ? 0 : 40}
-          py={small ? 0 : 40}
+          px={16}
+          py={16}
+          textAlign={small ? "center" : "left"}
         >
-          <Conditional
-            value={layout}
-            mobile={<MobileHeader heading={heading} />}
-            tablet={<NotMobileHeader heading={heading} />}
-            laptop={<NotMobileHeader heading={heading} />}
-            desktop={<NotMobileHeader heading={heading} />}
-          />
+          <Heading
+            as={"h3"}
+            color={"dark-brown"}
+            size={28}
+            style={{ maxWidth: small ? "100%" : "100px" }}
+            fontWeight="regular"
+            textTransform="capitalize"
+          >
+            {heading}
+          </Heading>
         </Div>
       </Div>
     </Link>
   );
-};
-
-const MobileHeader = ({heading}: {
-  heading: string | undefined;
-}) => {
-  return (<Heading
-    as={"h2"}
-    color={"white"}
-    size={ 20}
-    fontWeight="regular"
-  >
-    {heading}
-  </Heading>);
-};
-
-const NotMobileHeader = ({heading}: {
-  heading: string | undefined;
-}) => {
-  return (<Heading
-    as={"h2"}
-    color={"black"}
-    size={ 48}
-    style={{ maxWidth: "100px" }}
-    fontWeight="regular"
-    textTransform="uppercase"
-  >
-    {heading}
-  </Heading>);
 };

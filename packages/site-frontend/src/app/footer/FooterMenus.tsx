@@ -105,6 +105,7 @@ const DisplayMenuSectionsMobile = () => {
 };
 
 const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] }) => {
+  
   return (
     <Div
       column
@@ -120,7 +121,7 @@ const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] })
       >
         {heading}
       </Span>
-      {items.map(({ label, ...itemProps }, i) => (
+      {items.map(({ label, icon, ...itemProps }, i) => (
         <Link
           key={i}
           {...itemProps}
@@ -128,7 +129,7 @@ const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] })
         >
           {itemProps.type === "a" && (
             <Vector
-              as={itemProps.icon || SvgExternal}
+              as={icon || SvgExternal}
               size={16}
               color="dark-sand"
               mr={10}

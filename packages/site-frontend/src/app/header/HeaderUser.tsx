@@ -13,9 +13,8 @@ export const HeaderUser = () => {
     <Div
       className="HeaderUser"
       align="center"
-      gap={small ? 24 : 12}
+      gap={small ? 16 : 12}
     >
-      <SiteBalance />
       <LanguageSelector />
       <ChatToggle />
       <AppNotifications />      

@@ -9,7 +9,7 @@ export const ModalBody: FC<ModalBodyProps> = ({
   ...forwardProps
 }) => {
   const bodyLayout = useLibrarySelector((x) => x.style.bodyLayout);
-  const space: Unit = bodyLayout === "mobile" ? 16 : 32;
+  const space: Unit = bodyLayout === "mobile" ? 24 : 32;
   const padding: Unit = bodyLayout === "mobile" ? 20 : 32;
   
   return (

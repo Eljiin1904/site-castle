@@ -9,6 +9,7 @@ import { HeaderGuest } from "./HeaderGuest";
 import { HeaderUser } from "./HeaderUser";
 import "./AppHeader.scss";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { SiteBalance } from "./SiteBalance";
 
 export const AppHeader = () => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
@@ -36,7 +37,7 @@ export const AppHeader = () => {
 
 const MobileHeader = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
-  const small = useIsMobileLayout();
+
   return (
     <Div
       fx
@@ -44,12 +45,14 @@ const MobileHeader = () => {
       px={16}
       borderBottom
       borderColor="brown-4"
+      center
     >
       <Link
         type="router"
         to="/"
         flexBasis={0}
-         position={small ? "absolute" : "static"}
+        position={"absolute"}
+        left={20}
       >
         <Vector
           as={SvgSiteIcon}
@@ -63,6 +66,7 @@ const MobileHeader = () => {
       >
         {authenticated ? <HeaderUser /> : <HeaderGuest />}
       </Div>
+      {authenticated && <SiteBalance />}
     </Div>
   );
 };
@@ -104,6 +108,7 @@ const NotMobileHeader = () => {
           {authenticated ? <HeaderUser /> : <HeaderGuest />}
         </Div>
       </Div>
+      {authenticated && <SiteBalance />}
     </Div>
   );
 };

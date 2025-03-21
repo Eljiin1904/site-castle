@@ -1,7 +1,6 @@
 
 .AppMenuPanel .MenuItem {
   height: 48px;
-  border-left: 4px solid transparent;
 
   .Span {
     white-space: nowrap;
@@ -9,7 +8,6 @@
   
   &:hover,
   &.active {
-    border-left-color: var(--sand-color);
     background-color: var(--brown-5-color);
   
     .icon {
@@ -24,41 +22,64 @@
 
 .OriginalGames {
   
-  --menu-height: 240px;
-  --menu-collapsed-height: 0px;
+  --menu-height: 500px;
+  --menu-collapsed-height: 0;
   overflow: hidden;
+  flex-shrink: 0;
+
+  .MenuItem {
+
+    flex-shrink: 0;
+    padding-left: 12px;
+  }
 
   &.closed {  
-    height: var(--menu-collapsed-height);
   
     &.animate {  
-      animation: OriginalGames-close 0.3s ease-in;
+      animation: OriginalGames-close 0.3s ease-in forwards;
     }
   }
   
   &.opened {
-    height: var(--menu-height);
     
     &.animate {
-      animation: OriginalGames-open 0.3s ease-in;
+      animation: OriginalGames-open 0.3s ease-in forwards;
+    }
+  }
+
+  .AppBody.mobile & {
+   
+    &.closed {  
+     
+      &.animate {  
+        animation: OriginalGames-close 0.3s ease-in forwards;
+      }
+    }
+    
+    &.opened {
+      
+      &.animate {
+        animation: OriginalGames-open 0.3s ease-in forwards;
+      }
     }
   }
 }
 
 @keyframes OriginalGames-open {
   0% { 
-    height: var(--menu-collapsed-height);
+    max-height: var(--menu-collapsed-height);
   }
   100% { 
-    height: var(--menu-height);
+    max-height: var(--menu-height);
   }
 }
 
 @keyframes OriginalGames-close {
   0% { 
-    height: var(--menu-height); 
+    max-height: var(--menu-height); 
   }
   100% {    
-    height: var(--menu-collapsed-height);
+    max-height: var(--menu-collapsed-height);
+    display: none;
   }
 }

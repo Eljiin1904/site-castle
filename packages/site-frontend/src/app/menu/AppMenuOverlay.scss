@@ -5,10 +5,17 @@
   z-index: 15;
   background: rgba(16, 16, 16, 0.9);
   backdrop-filter: blur(2px);
+  overflow: scroll;
   
   .inner-content {
-    max-width: 240px;
+    width: 100%;
     animation: AppMenuOverlay-slide-right 0.2s ease-in;
+  }
+
+  .MenuItem {
+
+    flex-shrink: 0;
+    height: 48px;
   }
 
   .nav-item.tactive, 

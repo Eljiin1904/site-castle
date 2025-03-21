@@ -1,5 +1,6 @@
 {
   "menu": {
+    "menu": "Menu",
     "home": "Home",
     "referrals": "Referrals",
     "token": "Token",
@@ -13,7 +14,21 @@
     "blog": "Blog",
     "fairness": "Fairness",
     "vip": "VIP",
-    "categories": "Categories"
+    "categories": "Categories",
+    "casino": "Casino",
+    "bets": "Bets",
+    "chat": "Chat",
+    "language": "Language",
+    "account": {
+      "title": "Account",
+      "profile": "Profile",
+      "deposit": "Deposit",
+      "withdraw": "Withdraw",
+      "transactions": "Transactions",
+      "avatar": "Avatar",
+      "bets": "Bets",
+      "logout": "Logout"
+    }
   },
   "games": {
     "all": "All Games",
@@ -26,11 +41,11 @@
     "blackjack": "Blackjack",
     "mines": "Mines",
     "cases": "Cases",
-    "cases_battles": "Cases Battles",
+    "case_battles": "Cases Battles",
     "double": "Double",
     "slots": "Slots",
-    "liveCasino": "Live Casino",
-    "gameShows": "Game Shows",
+    "live_casino": "Live Casino",
+    "game_shows": "Game Shows",
     "original_one": "Original Game",
     "original_other": "Original Games",
     "hot": "Hot Games",
@@ -78,10 +93,16 @@
       "password": "Password",
       "passwordPlaceholder": "Enter password..."
     },
+    "social": {
+      "login": "Log In with {{provider}}",
+      "popup": "A popup window should have opened with the {{provider}} login page.",
+      "noPopup": "Don't see the {{provider}} login popup window?",
+      "redirect": "Redirect to {{provider}} login"
+    },
     "success": "Welcome back, {{username}}!"
   },
   "forgot": {
-    "title": "Forgot Password",
+    "title": "Forgot Password?",
     "description": "Please enter the email associated with your account.",
     "form": {
       "email": "Email",
@@ -96,12 +117,13 @@
   },
   "reset": {
     "title": "Reset Password",
+    "description": "To reset your password, please click the button below.",
     "form": {
       "password": "New Password",
       "passwordPlaceholder": "Enter new password...",
       "confirm": "Confirm New Password",
       "confirmPlaceholder": "Confirm password...",
-      "submit": "Set Mew Password"
+      "submit": "Set New Password"
     },
     "success": {
       "title": "Password Reset",
@@ -137,10 +159,25 @@
       "title": "Confirm Email",
       "description": "To confirm your email, please click the button below.",
       "success": "Email confirmed."
+    },
+    "social": {
+      "title": "Set your username",
+      "description": "In order to continue using sandcasino, please set your username!",
+      "submit": "Create Account",
+      "success": {
+        "title": "Welcome to SandCasino",
+        "description": "Thanks for registering in SandCasino. Explore our games and races!",
+        "action": "Continue"
+      }
     }
   },
+  "signout": {
+    "title": "Sign Out",
+    "description": "Are you sure you want to sign out?",
+    "success": "You have been signed out."
+  },
   "bets": {
-    "recentBets": "Recent Bets",
+    "recentBets": "Bets & Races",
     "myBets": "My Bets",
     "allBets": "All Bets",
     "highRollers": "High Rollers",

@@ -7,6 +7,7 @@ import { ModalHeader } from "#client/comps/modal/ModalHeader";
 import { usePost } from "#client/hooks/system/usePost";
 import { Dialogs } from "#client/services/dialogs";
 import { Span } from "#client/comps/span/Span";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export type ConfirmModalProps = {
   heading: string;
@@ -35,13 +36,14 @@ export async function waitForConfirmation(
 export const ConfirmModal: FC<ConfirmModalProps> = ({
   heading,
   message,
-  cancelLabel = "Cancel",
-  confirmLabel = "Confirm",
+  cancelLabel = "common:cancel",
+  confirmLabel = "common:confirm",
   onConfirm,
   onCancel,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const {t} = useTranslation(["common"]);
   const handleCancel = () => {
     onCancel && onCancel();
     Dialogs.close("secondary");
@@ -73,13 +75,13 @@ export const ConfirmModal: FC<ConfirmModalProps> = ({
           <Button
             fx
             kind="primary-yellow"
-            label={cancelLabel}
+            label={t(cancelLabel)}
             onClick={handleCancel}
           />
           <Button
             fx
             kind="secondary-yellow"
-            label={confirmLabel}
+            label={t(confirmLabel)}
             disabled={isLoading}
             onClick={handleConfirm}
           />
