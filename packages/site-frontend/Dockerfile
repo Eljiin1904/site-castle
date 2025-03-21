@@ -6,6 +6,8 @@ COPY . .
 RUN npm run init
 
 WORKDIR /pidwin/packages/site-frontend
+RUN ls -alt 
+RUN pwd
 RUN npm run build
 
 # Setup server
