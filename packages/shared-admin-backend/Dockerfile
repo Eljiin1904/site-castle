@@ -1,6 +1,6 @@
 FROM node:23-alpine
 ENV NODE_ENV=devcloud \
-    DB_URI="mongodb://localhost:27778/?directConnection=true" \
+    DB_URI="" \
     AWS_ID="" \
     AWS_SECRET="" \
     AWS_REGION=us-east-1 \
