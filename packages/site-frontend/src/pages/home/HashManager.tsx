@@ -34,11 +34,9 @@ export const HashManager = () => {
   useSocketListener("hot-feed-init", (games) => {
     
     dispatch(Site.updateHotGames(games));
-    console.log("hot-feed-init", games);
   });
 
   useSocketListener("hot-feed-update", (games) => {
-    console.log("hot-feed-update", games);
     dispatch(Site.updateHotGames(games));    
   });
 

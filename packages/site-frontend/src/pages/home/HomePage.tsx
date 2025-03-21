@@ -165,15 +165,15 @@ const RecentlyAddedSlider = () => {
 };
 const HotGamesSlider = () => {
   
-  const games = useAppSelector((x) => x.site.games) || [];
+  const games = useAppSelector((x) => x.site.hotGames) || [];
   const {t} = useTranslation();
 
   const items = games?.map((x) => {
     return {
-      image: `/graphics/games/${x.name}`,
-      heading: t(`games.${x.name}`),
+      image: `/graphics/games/${x.game}`,
+      heading: t(`games.${x.game}`),
       subheading: '',
-      to: `/${x.name}`
+      to: `/${x.game}`
     };
   });
 
