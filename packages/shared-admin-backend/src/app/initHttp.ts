@@ -45,14 +45,10 @@ export function initHttp() {
   app.use(Http.ipHandler);
 
   passport.serializeUser((user: Express.User, done) => {
-    console.log("In Serialize");
-    console.log(user);
     done(null, user._id);
   });
 
   passport.deserializeUser(async (id: string, done) => {
-    console.log("In Deserialize");
-    console.log(id);
     try {
       const user = await Database.collection("users").findOne({ _id: id });
 

@@ -26,7 +26,7 @@ async function main() {
   initSockets(httpServer);
 
   if (env == "development" || env == "devcloud") {
-    console.log("Creating Admin: tester@pidwin.com");
+    console.log("Creating Admin");
     await initTestAdmin();
   }
 
