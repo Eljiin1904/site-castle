@@ -18,11 +18,10 @@ export const GameBanner = ({
   objectPositionVertical = "center"
 }: {
   image: string;
-  heading?: string | undefined;
-  subheading?: string | undefined;
+  heading?: string ;
+  subheading?: string ;
   to: string;
-  ratio?: string | undefined;
-  width?: 160 | 170;
+  ratio?: string;
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
   objectPositionVertical?: StyledProps["objectFitPosition"];
 }) => {
@@ -43,7 +42,7 @@ export const GameBanner = ({
           path={image}
           skeleton
           width="100%"
-          aspectRatio={ratio || "186 / 260"}
+          aspectRatio={ratio ?? "186 / 260"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}
         />
@@ -67,7 +66,7 @@ export const GameBanner = ({
             {heading}
           </Heading>
           <Span
-            size={small ? 10 : 10}
+            size={10}
             color="light-sand"
             fontWeight="medium"
           >
