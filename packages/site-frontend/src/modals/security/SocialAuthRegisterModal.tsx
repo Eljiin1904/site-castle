@@ -107,7 +107,7 @@ export const SocialAuthRegisterModal = ({
           height={small ? "450px" : "296px"}
         />
         <ModalBody>
-          <Div fx flexCenter column gap={small ? 32: 32} >
+          <Div fx flexCenter column gap={32} >
               <Heading  as="h2"
                 size={24}
                 fontWeight="regular"
@@ -121,8 +121,7 @@ export const SocialAuthRegisterModal = ({
               <Button fx kind="primary-yellow" label={t("register.social.success.action")} onClick={() => Dialogs.close('primary')} />
           </Div>
         </ModalBody>
-      </Fragment> : <Fragment>
-      <ModalBody textAlign="center" justifyContent={small? "center" : "flex-start"}>
+      </Fragment> : <ModalBody textAlign="center" justifyContent={small? "center" : "flex-start"}>
         <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
           <Vector fx as={SvgUser} size={40} color="dark-sand" />
         </Div>
@@ -195,8 +194,7 @@ export const SocialAuthRegisterModal = ({
             loading={form.loading}
           />
         </Form>
-      </ModalBody>
-    </Fragment>}      
+      </ModalBody>}      
     </Modal>
   );
 };

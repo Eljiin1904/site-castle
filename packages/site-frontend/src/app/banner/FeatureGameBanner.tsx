@@ -17,10 +17,9 @@ export const FeatureGameBanner = ({
   objectPositionVertical = "center"
 }: {
   image: string;
-  heading?: string | undefined;
-  subheading?: string | undefined;
+  heading?: string;
   to: string;
-  ratio?: string | undefined;
+  ratio?: string;
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
   objectPositionVertical?: StyledProps["objectFitPosition"];
 }) => {
@@ -56,7 +55,7 @@ export const FeatureGameBanner = ({
           path={image}
           skeleton
           width="100%"
-          aspectRatio={ratio || "186 / 260"}
+          aspectRatio={ratio ?? "186 / 260"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}
         />     

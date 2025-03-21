@@ -15,9 +15,9 @@ export const CategoryBanner = ({
   objectPositionVertical = "center"
 }: {
   image: string;
-  heading?: string | undefined;
+  heading?: string;
   to: string;
-  ratio?: string | undefined;
+  ratio?: string;
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
   objectPositionVertical?: StyledProps["objectFitPosition"];
 }) => {
@@ -54,7 +54,7 @@ export const CategoryBanner = ({
           path={image}
           skeleton
           width="100%"
-          aspectRatio={ratio || "206 / 88"}
+          aspectRatio={ratio ?? "206 / 88"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}
         />     

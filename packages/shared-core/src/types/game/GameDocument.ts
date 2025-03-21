@@ -5,6 +5,6 @@ export interface GameDocument {
   name: string;
   description: string;
   featured: boolean;
-  category: string;
+  category: typeof kinds[number];
   timestamp: Date;
 };

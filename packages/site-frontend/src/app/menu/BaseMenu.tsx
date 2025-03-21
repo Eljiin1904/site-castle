@@ -115,6 +115,7 @@ export const BaseMenu = ({collapsed}: {
 
 export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
 
+  const [animate, setAnimate] = useState(false);
   const [open, setOpen] = useState(false);
   const games = useAppSelector((x) => x.site.games) || [];
   const small = useIsMobileLayout();
@@ -127,8 +128,12 @@ export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
       to: `/${x.name}`
     }
   });
-  
 
+  const onClickMenu = () => {
+    setAnimate(true);
+    setOpen(!open)
+  }
+  
   return (<Div 
      px={12}
      column
@@ -139,14 +144,14 @@ export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
       isSubMenu={true}
       open={open}
       label={t("games.original",{count: 2})}
-      onClick={() => setOpen(!open)}
+      onClick={onClickMenu}
       showLabel={collapsed}
       type="action"
       bg={ open ? "dark-brown": "black-hover"}
     />
     <Div
       className={classNames("OriginalGames", {
-        animate: true,
+        animate: animate,
         opened: open,
         closed: !open,
       })}
