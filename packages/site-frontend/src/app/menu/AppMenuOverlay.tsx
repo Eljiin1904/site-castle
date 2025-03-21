@@ -59,7 +59,6 @@ const OverlayContent = () => {
         flow="column"
         fx
         fy
-        gap={20}
         py={20}
         overflow="auto"
         bg="black-hover"

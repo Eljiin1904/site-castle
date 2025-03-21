@@ -12,6 +12,7 @@ import { Site } from "@core/services/site";
 import { GameDocument } from "@core/types/game/GameDocument";
 import { Game } from "@core/services/game";
 import { GameKindType } from "@core/services/game/Game";
+import { HotSiteGameDetails } from "@core/types/site/HotSiteGame";
 
 interface SiteState {
   initialized?: boolean;
@@ -24,6 +25,7 @@ interface SiteState {
   activity?: ActivityData[];
   bets?: BetData[];
   games?: GameDocument[];
+  hotGames?: HotSiteGameDetails[];
   search?: string;
   filter?: Game.GameKindType;
 }
@@ -123,6 +125,9 @@ export const siteSlice = createSlice({
     setFilter: reducer<GameKindType | undefined>((state, { payload }) => {
       state.filter = payload;
     }),
+    updateHotGames: reducer<HotSiteGameDetails[] | undefined>((state, { payload }) => {
+      state.hotGames = payload;
+    })
   }),
 });
 
@@ -140,5 +145,6 @@ export const {
   updateBets,
   initGames,
   setSearch,
-  setFilter
+  setFilter,
+  updateHotGames
 } = siteSlice.actions;

@@ -11,7 +11,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 
 type LinkProps = {type: "action" , onClick: (e?:React.MouseEvent) => void } | { type: "nav" ,to: To; end?: boolean; };
-export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean} & LinkProps> = (props) => {
+export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label: string, labelColor?: Color, subText?: string | JSX.Element, showLabel: boolean, bg?: Color} & LinkProps> = (props) => {
   
   const {showLabel, icon,isSubMenu, open, label, labelColor, subText, ...remainingProps} = props;
 
@@ -20,7 +20,7 @@ export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label:
       className="MenuItem"
       fx
       alignItems="center"
-      pl={20}
+      pl={isSubMenu ? 12: 24}
       hover="none"
       {...remainingProps}
     >
@@ -38,7 +38,7 @@ export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label:
           <Vector
             as={icon}
             size={20}
-            color="light-gray"
+            color="dark-sand"
           />
         </Div>
       )}
@@ -94,7 +94,7 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu = fals
       p={8}
       style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
       position="absolute"
-      right={ 20}
+      right={12}
       />}
   </Div>)
 };

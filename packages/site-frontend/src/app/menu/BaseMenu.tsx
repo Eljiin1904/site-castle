@@ -27,7 +27,6 @@ export const BaseMenu = ({collapsed}: {
   collapsed: boolean;
 }) => {
 
-  const [open, setOpen] = useState(false);
   const intercom = useIntercomManager();
   const {t} = useTranslation();
 
@@ -67,16 +66,7 @@ export const BaseMenu = ({collapsed}: {
     showLabel={!collapsed}
     type="nav"
   />
-  <MenuItem
-    icon={SvgOriginalGames}
-    isSubMenu={true}
-    open={open}
-    label={t("games.original",{count: 2})}
-    onClick={() => setOpen(!open)}
-    showLabel={!collapsed}
-    type="action"
-  />
-  <OriginalGames collapsed={!open} />    
+  <OriginalGames collapsed={!collapsed} />    
   <MenuItem
       icon={SvgSlots}
       label={t("games.slots")}
@@ -123,8 +113,9 @@ export const BaseMenu = ({collapsed}: {
 </>)
 };
 
-export const OriginalGames = ({collapsed}: {collapsed: boolean}) => {
+export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
 
+  const [open, setOpen] = useState(false);
   const games = useAppSelector((x) => x.site.games) || [];
   const small = useIsMobileLayout();
   const {t} = useTranslation();
@@ -139,23 +130,39 @@ export const OriginalGames = ({collapsed}: {collapsed: boolean}) => {
   
 
   return (<Div 
-    className={classNames("OriginalGames", {
-      animate: !collapsed,
-      opened: !collapsed,
-      closed: collapsed,
-    })}
-    column
-    gap={small ? 20: 0}
-  fx>
-    {originalGames.map((game, i) => (
-      <MenuItem
-        key={i}
-        icon={game.icon}
-        label={game.label}
-        type="nav"
-        to={game.to}
-        showLabel={!collapsed}
-      />
-    ))}
+     px={12}
+     column
+     fx
+    >
+     <MenuItem
+      icon={SvgOriginalGames}
+      isSubMenu={true}
+      open={open}
+      label={t("games.original",{count: 2})}
+      onClick={() => setOpen(!open)}
+      showLabel={collapsed}
+      type="action"
+      bg={ open ? "dark-brown": "black-hover"}
+    />
+    <Div
+      className={classNames("OriginalGames", {
+        animate: true,
+        opened: open,
+        closed: !open,
+      })}
+      column
+      bg={ "dark-brown"}
+    fx>
+      {originalGames.map((game, i) => (
+        <MenuItem
+          key={i}
+          icon={game.icon}
+          label={game.label}
+          type="nav"
+          to={game.to}
+          showLabel={collapsed}
+        />
+      ))}
+    </Div>
   </Div>);
 };

@@ -83,6 +83,7 @@ export const HomePageGamesSlider = ({title, items, type }: {
       >
         {items.map((x, i) => <Conditional
           value={type}
+          key={`${type} ${title} ${x.heading}`}
           game={<GameBanner key={`${title} ${x.heading}`} ratio={layout === 'mobile' ? "150 / 160" : "168 / 180"} {...x}/>}
           provider={<ProviderBanner key={`${title} ${x.heading}`} image={x.image} />}
           category={<CategoryBanner ratio={layout === 'mobile'  ? "150 / 154" : "206 / 88"}  objectPositionHorizontal="80%" {...x}/>}

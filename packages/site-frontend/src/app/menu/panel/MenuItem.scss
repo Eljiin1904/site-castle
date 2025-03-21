@@ -1,7 +1,6 @@
 
 .AppMenuPanel .MenuItem {
   height: 48px;
-  border-left: 4px solid transparent;
 
   .Span {
     white-space: nowrap;
@@ -9,7 +8,6 @@
   
   &:hover,
   &.active {
-    border-left-color: var(--sand-color);
     background-color: var(--brown-5-color);
   
     .icon {
@@ -24,14 +22,18 @@
 
 .OriginalGames {
   
-  --menu-height: 100%;
-  --menu-collapsed-height: 0px;
+  --menu-height: 500px;
+  --menu-collapsed-height: 0;
   overflow: hidden;
+  flex-shrink: 0;
 
-  max-height: var(--menu-collapsed-height);
+  .MenuItem {
+
+    flex-shrink: 0;
+    padding-left: 12px;
+  }
 
   &.closed {  
-    max-height: var(--menu-collapsed-height);
   
     &.animate {  
       animation: OriginalGames-close 0.3s ease-in forwards;
@@ -39,8 +41,6 @@
   }
   
   &.opened {
-    max-height: var(--menu-height);
-    //height: var(--menu-height);
     
     &.animate {
       animation: OriginalGames-open 0.3s ease-in forwards;
@@ -52,14 +52,14 @@
     &.closed {  
      
       &.animate {  
-        animation: OriginalGames-close 0s ease-in forwards;
+        animation: OriginalGames-close 0.3s ease-in forwards;
       }
     }
     
     &.opened {
       
       &.animate {
-        animation: OriginalGames-open 0s ease-in forwards;
+        animation: OriginalGames-open 0.3s ease-in forwards;
       }
     }
   }
@@ -71,7 +71,6 @@
   }
   100% { 
     max-height: var(--menu-height);
-    overflow: visible;
   }
 }
 

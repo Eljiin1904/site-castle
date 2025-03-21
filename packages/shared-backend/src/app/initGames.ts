@@ -4,7 +4,7 @@ import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 
 export const initSiteGames = async () => {
-  await Database.collection("site-games").insertMany(gameOptions);
+  //await Database.collection("site-games").insertMany(gameOptions);
 };
 
 const gameOptions: SiteGameDisplayDocument[] = [

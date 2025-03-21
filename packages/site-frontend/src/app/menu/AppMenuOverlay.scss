@@ -12,6 +12,12 @@
     animation: AppMenuOverlay-slide-right 0.2s ease-in;
   }
 
+  .MenuItem {
+
+    flex-shrink: 0;
+    height: 48px;
+  }
+
   .nav-item.tactive, 
   .nav-item:hover {
     
