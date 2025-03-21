@@ -18,7 +18,7 @@ export type MenuData = {
 
 export function useMenuData() {
   const intercom = useIntercomManager();
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation(["games"]);
 
   const data: MenuData = useMemo(
     () => ({
@@ -26,9 +26,9 @@ export function useMenuData() {
         heading: t("footer.platform"),
         items: [
           { type: "router", label: t("menu.home"), to: "/" },
-          { type: "router", label: t("games.crash"), to: "/crash" },
-          { type: "router", label: t("games.duel"), to: "/duel" },
-          { type: "router", label: t("games.dice"), to: "/dice" },
+          { type: "router", label: t("games:crash"), to: "/crash" },
+          { type: "router", label: t("games:duel"), to: "/duel" },
+          { type: "router", label: t("games:dice"), to: "/dice" },
           { type: "router", label: t("menu.referrals"), to: "/referrals" },
           { type: "router", label: t("menu.wallet"), to: "/wallet" },
           { type: "router", label: t("menu.token"), to: "/token" },

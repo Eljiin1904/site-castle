@@ -27,7 +27,7 @@ export const CategoryBanner = ({
   
   return (
     <Link
-      className="CategoryBanner"
+      className="BaseBanner CategoryBanner"
       type="router"
       to={to}
       hover="none"

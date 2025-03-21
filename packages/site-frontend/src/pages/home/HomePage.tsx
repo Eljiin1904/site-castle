@@ -61,7 +61,7 @@ export const HomePage = () => {
 const FeaturedGamesSection = ({items, showSection}: {items: GameDocument[],showSection: boolean}) => {
 
   const small = useIsMobileLayout();
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   if(!showSection) return null;
 
@@ -78,7 +78,7 @@ const FeaturedGamesSection = ({items, showSection}: {items: GameDocument[],showS
       <Div
         gap={small ? 20 : 24}
       >
-        {items.map((x) => <FeatureGameBanner key={x.name} ratio={small ? "150 / 160" : "168 / 180"} objectPositionHorizontal="80%" heading={t(`games.${x.name}`)} to={`/${x.name}`} image={`/graphics/games/${x.name}`}/>)}
+        {items.map((x) => <FeatureGameBanner key={x.name} ratio={small ? "150 / 160" : "168 / 180"} objectPositionHorizontal="80%" heading={t(`games:${x.name}`)} to={`/${x.name}`} image={`/graphics/games/${x.name}`}/>)}
       </Div>
     </Div>);
 };
@@ -86,12 +86,12 @@ const FeaturedGamesSection = ({items, showSection}: {items: GameDocument[],showS
 const OriginalGamesSlider = () => {
 
   const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   const items = games?.filter((x) => x.category === "original").map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games.${x.name}`),
+      heading: t(`games:${x.name}`),
       subheading: t('games.original',{count: 1}),
       to: `/${x.name}`
     };
@@ -102,12 +102,12 @@ const OriginalGamesSlider = () => {
 const SlotGamesSlider = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   const items = games?.filter((x) => x.category === "slots").map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games.${x.name}`),
+      heading: t(`games:${x.name}`),
       subheading: t('games.slots'),
       to: `/${x.name}`
     };
@@ -118,12 +118,12 @@ const SlotGamesSlider = () => {
 const LiveCasinoSlider = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   const items = games?.filter((x) => x.category === "live_casino").map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games.${x.name}`),
+      heading: t(`games:${x.name}`),
       subheading: t('games.live_casino'),
       to: `/${x.name}`
     };
@@ -134,12 +134,12 @@ const LiveCasinoSlider = () => {
 const GameShowsSlider = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   const items = games?.filter((x) => x.category === "game_shows").map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games.${x.name}`),
+      heading: t(`games:${x.name}`),
       subheading: t('games.game_shows'),
       to: `/${x.name}`
     };
@@ -150,12 +150,12 @@ const GameShowsSlider = () => {
 const RecentlyAddedSlider = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   const items = games?.map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games.${x.name}`),
+      heading: t(`games:${x.name}`),
       subheading: '',
       to: `/${x.name}`
     };
@@ -166,12 +166,12 @@ const RecentlyAddedSlider = () => {
 const HotGamesSlider = () => {
   
   const games = useAppSelector((x) => x.site.hotGames) || [];
-  const {t} = useTranslation();
+  const {t} = useTranslation(["games"]);
 
   const items = games?.map((x) => {
     return {
       image: `/graphics/games/${x.game}`,
-      heading: t(`games.${x.game}`),
+      heading: t(`games:${x.game}`),
       subheading: '',
       to: `/${x.game}`
     };

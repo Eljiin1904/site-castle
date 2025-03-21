@@ -1,0 +1,39 @@
+
+.SearchResults {
+
+  flex-wrap: wrap;
+  max-height: 380px;
+  overflow-y: auto;
+
+  .AppBody.mobile & {
+    max-height: 100%;
+  }
+
+  .BaseBanner {
+
+    .AppMain.mobile &, .AppBody.mobile & {
+      width: calc(50% - 10px);
+    }
+    .AppMain.tablet &, .AppBody.tablet & {
+      width: calc((100% - 72px)/4);
+    }
+
+    animation: Result-show 0.2s ease-in forwards;
+  }
+}
+
+.SearchOverlay {
+
+  background-color: rgba(var(--black-hover-rgb-color), 0.2);
+}
+
+@keyframes Result-show {
+  0% { 
+   opacity: 0;
+   transform: translateY(5px);
+  }
+  100% { 
+   opacity: 1;
+   transform: translateY(0px);
+  }
+}
