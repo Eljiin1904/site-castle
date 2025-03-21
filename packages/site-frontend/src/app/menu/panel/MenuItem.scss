@@ -38,6 +38,10 @@
     &.animate {  
       animation: OriginalGames-close 0.3s ease-in forwards;
     }
+    &:not(.animate) {
+      max-height: var(--menu-collapsed-height);
+      display: none;
+    }
   }
   
   &.opened {
