@@ -16,7 +16,7 @@ export type SiteGameCategory = "original" | "live_casino" | "game_shows" | "slot
 export const SiteGameCatergoryOptions = ["all", "original", "live_casino", "game_shows", "slots"];
 
 export interface SiteGameDisplayDocument {
-  _id: string;
+  _id?: string;
   category: SiteGameCategory;
   description: string;
   featured: boolean;

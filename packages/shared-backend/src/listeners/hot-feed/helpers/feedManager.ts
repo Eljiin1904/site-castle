@@ -51,13 +51,20 @@ export class FeedManager extends TypedEventEmitter<{
 
   private async init() {
     await Database.manager.waitForInit();
-    this._log["hot"] = [];
+
+    this._log["hot"] = await this.consolidateHotGames();
 
     this._initialized = true;
     this.emit("initialized");
   }
 
   private async onInterval() {
+    const result = await this.consolidateHotGames();
+    this._log["hot"] = result;
+    this.emit("update", result);
+  }
+
+  private consolidateHotGames = async () => {
     const hotGamesResult = await this.getHotGames();
     let result: HotSiteGameDetails[] = [];
     const gameNames = [];
@@ -88,10 +95,8 @@ export class FeedManager extends TypedEventEmitter<{
         }
       }
     }
-
-    this._log["hot"] = result;
-    this.emit("update", result);
-  }
+    return result;
+  };
 
   private getHotGames = async () => {
     // Get the current time

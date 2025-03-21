@@ -3,13 +3,33 @@ import { SiteGameDisplayDocument } from "@core/types/site/SiteGameDisplayDocumen
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 
-export const initSiteGames = async () => {
-  //await Database.collection("site-games").insertMany(gameOptions);
+export const initSiteGames = async () => {// if (await Database.hasCollection("site-games")) {
+  //   await Database.collection("site-games").drop();
+  //   await Database.createCollection("site-games", {});
+  // }
+  if (!(await Database.hasCollection("site-games"))) {
+    await Database.createCollection("site-games", {});
+  }
+  var indexExist = await Database.collection("site-games").indexExists("name");
+
+  if (!indexExist) {
+    await Database.collection("site-games").createIndex({ name: 1 }, { unique: true });
+  }
+
+  await Database.collection("site-games")
+    .insertMany(gameOptions, { ordered: true })
+    .then((result) => {})
+    .catch((err) => {
+      if (err.code === 11000) {
+        console.log("Duplicate name found, skipping duplicates.");
+      } else {
+        console.log("Error:", err);
+      }
+    });
 };
 
 const gameOptions: SiteGameDisplayDocument[] = [
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: true,
@@ -17,7 +37,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: true,
@@ -25,7 +44,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: false,
@@ -33,7 +51,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: false,
@@ -41,7 +58,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: false,
@@ -49,7 +65,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: false,
@@ -57,7 +72,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: false,
@@ -65,7 +79,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "original",
     description: "",
     featured: false,
@@ -81,7 +94,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "slots",
     description: "",
     featured: false,
@@ -89,7 +101,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "live_casino",
     description: "",
     featured: false,
@@ -97,7 +108,6 @@ const gameOptions: SiteGameDisplayDocument[] = [
     timestamp: new Date(),
   },
   {
-    _id: Ids.long(),
     category: "game_shows",
     description: "",
     featured: false,

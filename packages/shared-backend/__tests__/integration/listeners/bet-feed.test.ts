@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Database } from "@server/services/database";
 import { createTestTicket, createTestUser } from "../../testUtility";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import config from "#app/config";
 import { SiteBetDocument } from "@core/types/site/SiteBetDocument";
 import { Ids } from "@server/services/ids";
 import { Users } from "@core/services/users";
 
-let socket = null;
+let socket: Socket;
 
 const url = config.siteAPI;
 async function createSocket() {
@@ -58,7 +58,7 @@ describe("Bet Feed Test ", async () => {
 
     if (!user) return;
 
-    const handleSocketEvents = new Promise((resolve) => {
+    const handleSocketEvents = new Promise<SiteBetDocument[]>((resolve) => {
       socket.on("bet-feed-init", (message) => {
         resolve(message);
       });
@@ -105,7 +105,7 @@ describe("Bet Feed Test ", async () => {
     await Database.collection("site-bets").insertOne(bet);
 
     // Capture Message for insert
-    const handleSocketEvents = new Promise((resolve) => {
+    const handleSocketEvents = new Promise<SiteBetDocument>((resolve) => {
       socket.on("bet-feed-insert", (message) => {
         resolve(message);
       });
@@ -161,7 +161,7 @@ describe("Bet Feed Test ", async () => {
     if (!user) return;
 
     // Rejoin Feed
-    const handleInitSocketEvent = new Promise((resolve) => {
+    const handleInitSocketEvent = new Promise<SiteBetDocument[]>((resolve) => {
       socket.on("bet-feed-init", (message) => {
         resolve(message);
       });
@@ -201,7 +201,7 @@ describe("Bet Feed Test ", async () => {
 
     await Database.collection("site-bets").insertOne(aboveThresholdBet);
 
-    const handleSocketEvents = new Promise((resolve) => {
+    const handleSocketEvents = new Promise<SiteBetDocument>((resolve) => {
       socket.on("bet-feed-insert", (message) => {
         resolve(message);
       });
