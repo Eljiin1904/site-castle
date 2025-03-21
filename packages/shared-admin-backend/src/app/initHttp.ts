@@ -22,8 +22,12 @@ export function initHttp() {
   app.use(
     cors({
       origin: {
-        development: ["http://127.0.0.1:3001"],
-        devcloud: ["http://shared-admin-frontend"],
+        development: ["http://127.0.0.1:3001", "http://localhost:3001"],
+        devcloud: [
+          "http://shared-admin-frontend",
+          "http://127.0.0.1:3001",
+          "http://localhost:3001",
+        ],
         staging: [`https://admin.staging.${domain}`],
         production: [`https://admin.${domain}`],
       }[env],

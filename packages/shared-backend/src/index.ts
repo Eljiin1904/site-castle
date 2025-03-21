@@ -23,14 +23,14 @@ async function main() {
 
   logger.info("Initialized database.");
 
+  //  Initialize Site Games
+  await initSiteGames();
+
   const httpServer = initHttp();
 
   logger.info("Initialized http.");
 
   initSockets(httpServer);
-
-  //  Initialize Site Games
-  await initSiteGames();
 
   logger.info("Initialized sockets.");
 
