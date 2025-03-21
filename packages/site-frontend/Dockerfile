@@ -1,21 +1,7 @@
-# Fetching the latest node image with nginx
-FROM node:18-alpine AS build
-
-# Declaring env
-ENV NODE_ENV=devcloud
-
-# Setting up the work directory
+FROM node:23-alpine AS build
+ENV NODE_ENV=devcloud 
+ENV PORT=80
 WORKDIR /pidwin
-
-# Installing dependencies
-COPY ./package*.json .
-COPY ./tsconfig.base.json .
-
-RUN echo "-------------- Begin npm install --------------"
-RUN npm install --verbose
-RUN echo "------------- npm install Done --------------"
-
-# Copying all the files in our project and building
 COPY . .
 RUN npm run init
 
