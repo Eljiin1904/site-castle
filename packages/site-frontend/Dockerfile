@@ -1,28 +1,13 @@
-# Fetching the latest node image on alpine linux
-FROM node:18-alpine AS development
-
-# Declaring env
+FROM node:18-alpine AS build
 ENV NODE_ENV=devcloud
-
-# Setting up the work directory
+ENV PORT=80
 WORKDIR /pidwin
+COPY . .
+RUN npm run init
+WORKDIR /pidwin/packages/site-frontend
+RUN npm run build
 
-# Installing dependencies
-COPY ./package*.json .
-COPY ./tsconfig.base.json .
-
-RUN echo "-------------- Begin npm install --------------"
-RUN npm install --verbose
-RUN echo "------------- npm install Done --------------"
-
-# Copying all the files in our project
-COPY ./packages/shared-core ./packages/shared-core
-COPY ./packages/shared-server ./packages/shared-server
-COPY ./packages/site-backend ./packages/site-backend
-
-WORKDIR /pidwin/packages/site-backend
-
-EXPOSE 5000
-
-# Starting our application
-CMD ["npm", "run", "dev-cloud"]
+FROM nginx:stable-alpine
+COPY --from=build /pidwin/packages/site-frontend/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
