@@ -1,14 +1,14 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Database } from "@server/services/database";
-import { createTestTicket, createTestUser } from "../../testUtility";
-import { io } from "socket.io-client";
+import { createTestUser } from "../../testUtility";
+import { io, Socket } from "socket.io-client";
 import config from "#app/config";
 import { SiteBetDocument } from "@core/types/site/SiteBetDocument";
 import { Ids } from "@server/services/ids";
 import { Users } from "@core/services/users";
 import { HotSiteGameDetails } from "@core/types/site/HotSiteGame";
 
-let socket = null;
+let socket: Socket;
 
 const url = config.siteAPI;
 async function createSocket() {
@@ -28,9 +28,8 @@ beforeAll(async () => {
   await Database.createCollection("users", {});
   await Database.createCollection("dice-tickets", {});
   await Database.createCollection("site-bets", {});
-  await Database.createCollection("site-activity", {});
+  await Database.createCollection("site-games", {});
   await Database.createCollection("transactions", {});
-  await Database.createCollection("site-settings", {});
 
   await Database.collection("users").insertOne(user);
   try {
@@ -48,8 +47,8 @@ describe("Hot Feed Test ", async () => {
   it("Setup Hot Feed", async () => {
     if (socket == null) return;
 
-    const handleSocketEvents = new Promise((resolve) => {
-      socket.on("hot-feed-init", (message) => {
+    const handleSocketEvents = new Promise<HotSiteGameDetails[]>((resolve) => {
+      socket.on("hot-feed-init", (message: HotSiteGameDetails[]) => {
         resolve(message);
       });
     });
@@ -58,7 +57,13 @@ describe("Hot Feed Test ", async () => {
     socket.emit("hot-feed-join");
 
     const message: HotSiteGameDetails[] = await handleSocketEvents;
-    expect(message).toStrictEqual([]);
+    expect(message.length).toBe(6);
+
+    const games = message.map((game) => game.game);
+    expect(games).toEqual(["crash", "duel", "dice", "limbo", "blackjack", "mines"]);
+
+    const ranks = message.map((game) => game.rank);
+    expect(ranks).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
   //  By Default if not Bets within hour frame, it will return featured games first
@@ -70,10 +75,9 @@ describe("Hot Feed Test ", async () => {
 
     if (!user) return;
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const handleUpdateSocketEvents = new Promise((resolve) => {
+    // await new Promise((resolve) => setTimeout(resolve, 200));
+    const handleUpdateSocketEvents = new Promise<HotSiteGameDetails[]>((resolve) => {
       socket.on("hot-feed-update", (update) => {
-        // console.log(update);
         resolve(update);
       });
     });
@@ -124,7 +128,7 @@ describe("Hot Feed Test ", async () => {
     await Database.collection("site-bets").insertMany([limboBet, diceBet]);
     await new Promise((resolve) => setTimeout(resolve, 200));
 
-    const handleUpdateSocketEvents = new Promise((resolve) => {
+    const handleUpdateSocketEvents = new Promise<HotSiteGameDetails[]>((resolve) => {
       socket.on("hot-feed-update", (update) => {
         resolve(update);
       });

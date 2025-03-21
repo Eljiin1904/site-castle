@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Database } from "@server/services/database";
 import { createTestTicket, createTestUser } from "../../testUtility";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import config from "#app/config";
+import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
 
-let socket = null;
+let socket: Socket;
 
 const url = config.siteAPI;
 async function createSocket() {
@@ -90,7 +91,7 @@ describe("Dice Game Test ", async () => {
     if (socket == null) return;
 
     // // Capture Message for insert
-    const handleSocketEvents = new Promise((resolve) => {
+    const handleSocketEvents = new Promise<DiceTicketDocument>((resolve) => {
       socket.on("dice-insert", (message) => {
         resolve(message);
       });

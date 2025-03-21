@@ -2,11 +2,12 @@ import config, { initConfig } from "./config";
 import { Database } from "@server/services/database";
 import { initHttp } from "./app/initHttp";
 import { initSockets } from "./app/initSockets";
+import { initTestAdmin } from "./app/initTestAdmin";
 
 main();
 
 async function main() {
-  const { port } = config;
+  const { port, env } = config;
 
   console.log("Starting admin backend...");
 
@@ -24,9 +25,12 @@ async function main() {
 
   initSockets(httpServer);
 
+  if (env == "development" || env == "devcloud") {
+    console.log("Creating Admin: tester@pidwin.com");
+    await initTestAdmin();
+  }
+
   console.log("Initialized sockets.");
 
-  httpServer.listen(port, () =>
-    console.log(`Admin backend listening on port ${port}.`),
-  );
+  httpServer.listen(port, () => console.log(`Admin backend listening on port ${port}.`));
 }

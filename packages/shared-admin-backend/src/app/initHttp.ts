@@ -22,8 +22,12 @@ export function initHttp() {
   app.use(
     cors({
       origin: {
-        development: ["http://127.0.0.1:3001"],
-        devcloud: ["http://shared-admin-frontend"],
+        development: ["http://127.0.0.1:3001", "http://localhost:3001"],
+        devcloud: [
+          "http://shared-admin-frontend",
+          "http://127.0.0.1:3001",
+          "http://localhost:3001",
+        ],
         staging: [`https://admin.staging.${domain}`],
         production: [`https://admin.${domain}`],
       }[env],
@@ -41,10 +45,14 @@ export function initHttp() {
   app.use(Http.ipHandler);
 
   passport.serializeUser((user: Express.User, done) => {
+    console.log("In Serialize");
+    console.log(user);
     done(null, user._id);
   });
 
   passport.deserializeUser(async (id: string, done) => {
+    console.log("In Deserialize");
+    console.log(id);
     try {
       const user = await Database.collection("users").findOne({ _id: id });
 

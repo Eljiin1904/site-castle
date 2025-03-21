@@ -53,6 +53,8 @@ beforeAll(async () => {
 
   Database.createCollection("user-sessions", {});
 
+  await initSiteGames();
+
   logger.info("Initialized database.");
 
   const httpServer = initHttp();
@@ -60,8 +62,6 @@ beforeAll(async () => {
   logger.info("Initialized http.");
 
   initSockets(httpServer);
-
-  await initSiteGames();
 
   logger.info("Initialized sockets.");
 
