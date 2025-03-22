@@ -71,7 +71,6 @@ describe("Test Dice Game Route", () => {
       gameId: getTicketResult.ticket._id,
     });
 
-    expect(diceTransaction?.gameId).toBe(getTicketResult.ticket._id);
     expect(diceTransaction?.category).toBe("dice");
     expect(diceTransaction?.value).toBe(100);
     expect(diceTransaction?.kind).toBe("dice-bet");

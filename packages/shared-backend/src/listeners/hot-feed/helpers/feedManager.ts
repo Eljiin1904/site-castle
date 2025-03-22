@@ -145,8 +145,9 @@ export class FeedManager extends TypedEventEmitter<{
       },
     ];
 
-    const hotGamesResult: { rank: number; _id: string; totalWonAmount: number }[] =
-      await Database.collection("site-bets").aggregate(aggregationPipe).toArray();
+    const hotGamesResult = await Database.collection("site-bets")
+      .aggregate(aggregationPipe)
+      .toArray();
 
     return hotGamesResult;
   };
