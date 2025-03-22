@@ -12,20 +12,6 @@ describe("Test Dice Game Route", () => {
     const passwordHash = await bcrypt.hash("password123", 8);
     const user = createTestUser("tester2", "test2@gmail.com", "user", passwordHash);
 
-    if (!(await Database.hasCollection("dice-tickets"))) {
-      await Database.createCollection("dice-tickets", {});
-    }
-    if (!(await Database.hasCollection("users"))) {
-      await Database.createCollection("users", {});
-    }
-
-    // Initialize Server DB
-
-    await Database.createCollection("site-bets", {});
-    await Database.createCollection("site-activity", {});
-    await Database.createCollection("transactions", {});
-    await Database.createCollection("site-settings", {});
-
     await Database.collection("site-settings").insertOne({
       _id: "diceEnabled",
       value: true,

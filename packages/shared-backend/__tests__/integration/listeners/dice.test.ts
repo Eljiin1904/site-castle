@@ -17,19 +17,6 @@ async function createSocket() {
 beforeAll(async () => {
   const user = createTestUser("diceTester1", "diceTester@gmail.com", "user", "password123");
 
-  if (!(await Database.hasCollection("dice-tickets"))) {
-    await Database.createCollection("dice-tickets", {});
-  }
-  if (!(await Database.hasCollection("users"))) {
-    await Database.createCollection("users", {});
-  }
-
-  // Initialize Server DB
-  await Database.createCollection("site-bets", {});
-  await Database.createCollection("site-activity", {});
-  await Database.createCollection("transactions", {});
-  await Database.createCollection("site-settings", {});
-
   // Create Setting for Threshold for High Roller Bet
   await Database.collection("site-settings").insertOne({
     _id: "betHighrollerThreshold",

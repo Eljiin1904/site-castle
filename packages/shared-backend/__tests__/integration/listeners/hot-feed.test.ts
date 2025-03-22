@@ -20,19 +20,6 @@ async function createSocket() {
 beforeAll(async () => {
   const user = createTestUser("tester3", "test3@gmail.com", "user", "password123");
 
-  if (!(await Database.hasCollection("dice-tickets"))) {
-    await Database.createCollection("dice-tickets", {});
-  }
-
-  if (!(await Database.hasCollection("users"))) {
-    await Database.createCollection("users", {});
-  }
-
-  // Initialize Server DB
-  await Database.createCollection("site-bets", {});
-  await Database.createCollection("site-games", {});
-  await Database.createCollection("transactions", {});
-
   await Database.collection("users").insertOne(user);
   try {
     socket = await createSocket();
