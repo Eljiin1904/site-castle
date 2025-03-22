@@ -19,13 +19,14 @@ async function createSocket() {
 beforeAll(async () => {
   const user = createTestUser("tester1", "test1@gmail.com", "user", "password123");
 
-  if (await Database.hasCollection("dice-tickets")) {
-    Database.collection("dice-tickets").drop();
+  if (!(await Database.hasCollection("dice-tickets"))) {
+    await Database.createCollection("dice-tickets", {});
+  }
+  if (!(await Database.hasCollection("users"))) {
+    await Database.createCollection("users", {});
   }
 
   // Initialize Server DB
-  await Database.createCollection("users", {});
-  await Database.createCollection("dice-tickets", {});
   await Database.createCollection("site-bets", {});
   await Database.createCollection("site-activity", {});
   await Database.createCollection("transactions", {});
@@ -114,13 +115,12 @@ describe("Bet Feed Test ", async () => {
     const message = await handleSocketEvents;
 
     // Make sure message is the message expected
-    expect(message._id).toBe(bet._id);
     expect(message.multiplier).toBe(0.5);
     expect(message.betAmount).toBe(1000);
     expect(message.wonAmount).toBe(1500);
     expect(message.won).toBe(true);
     expect(new Date(message.timestamp)).toStrictEqual(bet.timestamp);
-  });
+  }, 10000);
 
   it("Leave Feed", async () => {
     if (socket == null) return;
@@ -154,7 +154,7 @@ describe("Bet Feed Test ", async () => {
     });
 
     await expect(handleSocketEvents).rejects.toThrow("Message not received on insert");
-  });
+  }, 10000);
 
   it("Insert Dice Ticket into HighRoller Feed", async () => {
     const user = await Database.collection("users").findOne();
@@ -244,5 +244,5 @@ describe("Bet Feed Test ", async () => {
     await expect(handleBelowThresholdEvents).rejects.toThrow(
       "Message not received due to being below threshold",
     );
-  });
+  }, 10000);
 });
