@@ -1,8 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 
-export function getRequestConfig(
-  config: AxiosRequestConfig | undefined,
-): AxiosRequestConfig {
+export function getRequestConfig(config: AxiosRequestConfig | undefined): AxiosRequestConfig {
   if (!config) {
     return {
       withCredentials: true,

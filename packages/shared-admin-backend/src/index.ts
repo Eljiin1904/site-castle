@@ -17,6 +17,12 @@ async function main() {
 
   await Database.manager.init();
 
+  if (env == "development" || env == "devcloud") {
+    console.log("Creating Admin");
+    await Database.createCollection("user-sessions", {});
+    await initTestAdmin();
+  }
+
   console.log("Initialized database.");
 
   const httpServer = initHttp();
@@ -24,11 +30,6 @@ async function main() {
   console.log("Initialized http.");
 
   initSockets(httpServer);
-
-  if (env == "development" || env == "devcloud") {
-    console.log("Creating Admin");
-    await initTestAdmin();
-  }
 
   console.log("Initialized sockets.");
 
