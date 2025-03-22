@@ -49,7 +49,7 @@ export async function handleLogin(
   base_url: string,
   login_details: { username: string; password: string },
   captchaToken: string,
-) {
+): Promise<[Response, string]> {
   let url = base_url + "/auth/local";
   const response = await handleFetch(url, "POST", { ...login_details, captchaToken });
   const result = await response.json();

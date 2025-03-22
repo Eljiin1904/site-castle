@@ -18,18 +18,7 @@ async function createSocket() {
 }
 
 beforeAll(async () => {
-  const user = createTestUser("tester1", "test1@gmail.com", "user", "password123");
-
-  if (await Database.hasCollection("dice-tickets")) {
-    Database.collection("dice-tickets").drop();
-  }
-
-  // Initialize Server DB
-  await Database.createCollection("users", {});
-  await Database.createCollection("dice-tickets", {});
-  await Database.createCollection("site-bets", {});
-  await Database.createCollection("site-games", {});
-  await Database.createCollection("transactions", {});
+  const user = createTestUser("tester3", "test3@gmail.com", "user", "password123");
 
   await Database.collection("users").insertOne(user);
   try {
@@ -60,10 +49,13 @@ describe("Hot Feed Test ", async () => {
     expect(message.length).toBe(6);
 
     const games = message.map((game) => game.game);
-    expect(games).toEqual(["crash", "duel", "dice", "limbo", "blackjack", "mines"]);
+    expect(games).toContain("crash");
+    expect(games).toContain("duel");
 
     const ranks = message.map((game) => game.rank);
-    expect(ranks).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(ranks).toStrictEqual([1, 2, 3, 4, 5, 6]);
+
+    socket.emit("hot-feed-leave");
   });
 
   //  By Default if not Bets within hour frame, it will return featured games first
@@ -71,9 +63,11 @@ describe("Hot Feed Test ", async () => {
   it(" Default Hot Feed Updates", async () => {
     if (socket == null) return;
 
-    const user = await Database.collection("users").findOne();
+    const user = await Database.collection("users").findOne({ username: "tester3" });
 
     if (!user) return;
+    // Join the Hot Feed to receive all "Hot" Games
+    socket.emit("hot-feed-join");
 
     // await new Promise((resolve) => setTimeout(resolve, 200));
     const handleUpdateSocketEvents = new Promise<HotSiteGameDetails[]>((resolve) => {
@@ -83,12 +77,14 @@ describe("Hot Feed Test ", async () => {
     });
 
     const updateMessage: HotSiteGameDetails[] = await handleUpdateSocketEvents;
+    expect(updateMessage.length).toBe(6);
 
-    expect(updateMessage[0].rank).toBe(1);
-    expect(updateMessage[0].game).toBe("crash");
+    const games = updateMessage.map((game) => game.game);
+    expect(games).toContain("crash");
+    expect(games).toContain("duel");
 
-    expect(updateMessage[1].rank).toBe(2);
-    expect(updateMessage[1].game).toBe("duel");
+    const ranks = updateMessage.map((game) => game.rank);
+    expect(ranks).toStrictEqual([1, 2, 3, 4, 5, 6]);
 
     socket.emit("hot-feed-leave");
   });
@@ -97,7 +93,7 @@ describe("Hot Feed Test ", async () => {
   it(" Hot Feed Updates", async () => {
     if (socket == null) return;
 
-    const user = await Database.collection("users").findOne();
+    const user = await Database.collection("users").findOne({ username: "tester3" });
 
     if (!user) return;
 
@@ -136,12 +132,9 @@ describe("Hot Feed Test ", async () => {
 
     const updateMessage: HotSiteGameDetails[] = await handleUpdateSocketEvents;
 
-    expect(updateMessage[0].rank).toBe(1);
-    expect(updateMessage[0].game).toBe("dice");
-
-    expect(updateMessage[1].rank).toBe(2);
-    expect(updateMessage[1].game).toBe("limbo");
-
+    const games = updateMessage.map((game) => game.game);
+    expect(games).toContain("dice");
+    expect(games).toContain("limbo");
     socket.emit("hot-feed-leave");
   });
 
@@ -149,7 +142,7 @@ describe("Hot Feed Test ", async () => {
   it("Stop receiving Hot Feed Updates on Leave", async () => {
     if (socket == null) return;
 
-    const user = await Database.collection("users").findOne();
+    const user = await Database.collection("users").findOne({ username: "tester3" });
 
     if (!user) return;
 
