@@ -18,7 +18,7 @@ COPY packages/site-frontend /pidwin/packages/site-frontend
 # Execute script to build frontend
 RUN npm run build-site-frontend
 WORKDIR /pidwin/packages/site-frontend
-
+RUN npm run build
 # TODO: make image production ready
 # FROM nginx:stable-alpine
 # COPY --from=build /pidwin/packages/site-frontend/build /usr/share/nginx/html
