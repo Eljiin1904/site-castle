@@ -1,4 +1,4 @@
-# Default values for castle-admin-backend.
+# Default values for castle-frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -8,7 +8,7 @@ replicaCount: 1
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   app:
-    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-admin-backend"
+    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend"
     pullPolicy: Always
     tag: "latest"
   # envoy:
@@ -64,18 +64,18 @@ ingress:
   enabled: false
 
 secrets:
-  app: "shared-admin-backend"
+  app: "castle-frontend"
   
 service:
   type: ClusterIP
-  port: 3000
+  port: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
 app:
-  port: 3000
+  port: 80
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
