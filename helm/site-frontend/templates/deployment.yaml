@@ -22,9 +22,9 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.app.port }}
-          env:
-            - name: PORT
-              value: "{{ .Values.app.port }}"
+          # env:
+          #   - name: PORT
+          #     value: "{{ .Values.app.port }}"
           livenessProbe: 
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe: 
