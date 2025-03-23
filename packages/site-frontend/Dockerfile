@@ -19,11 +19,11 @@ COPY packages/site-frontend /pidwin/packages/site-frontend
 RUN npm run build-site-frontend
 WORKDIR /pidwin/packages/site-frontend
 RUN npm run build
+# Stage 2: Production image using NGINX to serve the built static assets
+FROM nginx:stable-alpine
+COPY --from=build /pidwin/packages/site-frontend/build /usr/share/nginx/html
 EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
-CMD ["npm", "run", "dev-start"]
-
-
+CMD ["nginx", "-g", "daemon off;"]
 
 # # Stage 1: Build stage using Node.js
 # FROM node:23-alpine AS build
