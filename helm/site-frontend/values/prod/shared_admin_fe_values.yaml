@@ -1,4 +1,4 @@
-# Default values for castle-backend.
+# Default values for castle-frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -64,11 +64,11 @@ ingress:
   enabled: false
 
 secrets:
-  app: "shared-backend"
+  app: "castle-frontend-secrets"
   
 service:
   type: ClusterIP
-  port: 80
+  port: 5000
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -126,4 +126,4 @@ tolerations: []
 
 affinity: {}
 
-namespace: shared-frontend
+namespace: shared-admin-backend

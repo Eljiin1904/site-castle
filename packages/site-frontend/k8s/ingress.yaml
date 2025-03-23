@@ -35,7 +35,7 @@ spec:
                 name: site-frontend
                 port:
                   number: 80
-    - host: k8s-ingressb-nginxing-30ae712882-f965233a31d30e87.elb.us-east-2.amazonaws.com
+    - host: k8s-ingressb-nginxing-30ae712882-f965233a31d30e87.elb.us-east-1.amazonaws.com
       http:
         paths:
           - path: /

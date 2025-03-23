@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: site-frontend 
-          image: 183631306381.dkr.ecr.us-east-2.amazonaws.com/pidwin/castle-frontend
+          image: 183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend
           env:
             - name: NODE_ENV
               value: "devcloud"
