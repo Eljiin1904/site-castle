@@ -26,6 +26,6 @@ WORKDIR /pidwin/packages/site-frontend
 # TODO: make image production ready
 # FROM nginx:stable-alpine
 # COPY --from=build /pidwin/packages/site-frontend/build /usr/share/nginx/html
-EXPOSE 3000
+EXPOSE 80
 # CMD ["nginx", "-g", "daemon off;"]
 CMD ["npm", "run", "dev-start"]
