@@ -22,7 +22,6 @@ import { ChestMenu } from "./editor/ChestMenu";
 import { ChestProfile } from "./editor/ChestProfile";
 import { LootTable } from "./editor/LootTable";
 import { ChestAction } from "./editor/ChestAction";
-
 interface ChestErrors {
   image: string;
   displayName: string;
@@ -155,13 +154,11 @@ export const ChestEditorPage = () => {
   const handleCreate = usePost(async () => {
     try {
       const imageRequired = action === "create";
-      await schema.validate(
-        { imageRequired, image, displayName },
-        { abortEarly: false },
-      );
+      await schema.validate({ imageRequired, image, displayName }, { abortEarly: false });
       setErrors({});
     } catch (e) {
-      return setErrors(Validation.getErrors(schema, e));
+      const error = Validation.getErrors(schema, e);
+      return setErrors({ displayName: error.displayName?.key, image: error.image?.key });
     }
 
     if (Intimal.toDecimal(totalDropRate) !== 1) {
