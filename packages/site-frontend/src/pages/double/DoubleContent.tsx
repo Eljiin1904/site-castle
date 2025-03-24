@@ -11,6 +11,7 @@ import { RecentRounds } from "./RecentRounds";
 import { Span } from "@client/comps/span/Span";
 import { DoubleReelOverlay } from "./DoubleReelOverlay";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
+import { DoubleFeed } from "./DoubleFeed";
 
 export const DoubleContent = () => {
   const initialized = useAppSelector((x) => x.double.initialized);
@@ -105,7 +106,7 @@ const NotMobileContent = () => {
         <BetBoardGrid />
       </Div>
       <Div mt={56}>
-        <BetBoard />
+        <DoubleFeed />
       </Div>
     </Div>
   );

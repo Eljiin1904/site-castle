@@ -161,7 +161,9 @@ export const ChestEditorPage = () => {
       );
       setErrors({});
     } catch (e) {
-      return setErrors(Validation.getErrors(schema, e));
+      
+      const error = Validation.getErrors(schema, e);
+      return setErrors({displayName: error.displayName?.key, image: error.image?.key});
     }
 
     if (Intimal.toDecimal(totalDropRate) !== 1) {
