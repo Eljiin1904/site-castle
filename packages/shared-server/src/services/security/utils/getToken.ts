@@ -2,14 +2,11 @@ import { TokenDocument } from "@core/types/security/TokenDocument";
 import { TokenKind } from "@core/types/security/TokenKind";
 import { Database } from "#server/services/database";
 import { HandledError } from "#server/services/errors";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
-export async function getToken<K extends TokenKind>({
-  kind,
-  token,
-}: {
-  kind: K;
-  token: string;
-}) {
+export async function getToken<K extends TokenKind>({ kind, token }: { kind: K; token: string }) {
+  const logger = getServerLogger({});
+  logger.info("fetching token: " + token);
   const document = await Database.collection("tokens").findOne({
     kind,
     token,

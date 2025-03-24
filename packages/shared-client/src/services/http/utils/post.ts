@@ -11,11 +11,7 @@ export async function post<T = any>(
 ): Promise<T> {
   requestConfig = getRequestConfig(requestConfig);
   try {
-    const result = await axios.post<T>(
-      `${config.apiURL}${url}`,
-      data,
-      requestConfig,
-    );
+    const result = await axios.post<T>(`${config.apiURL}${url}`, data, requestConfig);
     Dates.parseDates(result.data);
     return result.data;
   } catch (err) {

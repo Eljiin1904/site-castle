@@ -40,10 +40,10 @@ export function setEnvironment(env: SystemEnvironment) {
     config.adminURL = "http://127.0.0.1:3001";
     config.adminAPI = "http://127.0.0.1:5001";
   } else if (env === "devcloud") {
-    config.siteURL = `http://site-frontend:3000`;
-    config.siteAPI = `http://shared-backend:5000`;
-    config.adminURL = `http://shared-admin-frontend:3001`;
-    config.adminAPI = `http://shared-admin-backend:5001`;
+    config.siteURL = `https://dev.${domain}`;
+    config.siteAPI = `https://api.dev.${domain}`;
+    config.adminURL = `https://admin.dev.${domain}`;
+    config.adminAPI = `https://aapi.dev.${domain}`;
   } else if (env === "staging") {
     config.siteURL = `https://staging.${domain}`;
     config.siteAPI = `https://api.staging.${domain}`;

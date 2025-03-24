@@ -5,11 +5,17 @@ import { SvgGoogle } from "@client/svgs/brands/SvgGoogle";
 import { SvgMetamask } from "@client/svgs/brands/SvgMetamask";
 import { SvgSteam } from "@client/svgs/brands/SvgSteam";
 import { SocialAuthStartModal } from "../security/SocialAuthStartModal";
+import { useMetaMaskAuth } from "#app/hooks/security/useMetaMaskAuth";
+import { Web3AuthStartModal } from "../security/Web3AuthStartModal";
 import "./SSOButtons.scss";
 
 export const SSOButtons = () => {
+  const { connectMetaMask } = useMetaMaskAuth();
   return (
-    <Div className="sso-buttons" justifyContent="space-between">
+    <Div
+      className="sso-buttons"
+      justifyContent="space-between"
+    >
       <Button
         width={100}
         height={40}
@@ -38,7 +44,7 @@ export const SSOButtons = () => {
         icon={SvgMetamask}
         iconSize={128}
         fx
-        onClick={() => Dialogs.open("primary", <SocialAuthStartModal provider="metamask" />)}
+        onClick={connectMetaMask}
       />
     </Div>
   );

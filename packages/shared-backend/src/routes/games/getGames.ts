@@ -17,7 +17,11 @@ export default Http.createApiRoute({
   }),
   callback: async (req, res) => {
     const { category } = req.body;
-    const options = category == "all" ? undefined : { category };
+    const options: any = {};
+
+    if (category !== "all") {
+      options.category = category;
+    }
 
     const gameOptions = await Database.collection("site-games")
       .find(options)

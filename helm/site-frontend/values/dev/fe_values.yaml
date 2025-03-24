@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   app:
-    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-admin-backend"
+    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend"
     pullPolicy: Always
     tag: "latest"
 
@@ -24,20 +24,21 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 3000
+  port: 80
   tls: []
 
 ingress:
   enabled: false
 
 secrets:
-  app: "shared-admin-backend"
+  app: "castle-frontend"
 
 app:
-  port: 3000
+  port: 80
 
 resources: {}
 
+# Default liveness and readiness probes
 livenessProbe:
   httpGet:
     path: /
@@ -69,4 +70,4 @@ namespace: shared-admin-backend
 
 # Explicit labels to ensure consistency
 labels:
-  app: castle-admin-backend
+  app: castle-frontend

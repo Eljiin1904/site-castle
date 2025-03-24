@@ -10,19 +10,7 @@ const hCaptchaToken = "10000000-aaaa-bbbb-cccc-000000000001"; // from hCatcha's 
 describe("Test Dice Game Route", () => {
   beforeAll(async () => {
     const passwordHash = await bcrypt.hash("password123", 8);
-    const user = createTestUser("tester1", "test1@gmail.com", "user", passwordHash);
-
-    if (await Database.hasCollection("dice-tickets")) {
-      Database.collection("dice-tickets").drop();
-    }
-
-    // Initialize Server DB
-    await Database.createCollection("users", {});
-    await Database.createCollection("dice-tickets", {});
-    await Database.createCollection("site-bets", {});
-    await Database.createCollection("site-activity", {});
-    await Database.createCollection("transactions", {});
-    await Database.createCollection("site-settings", {});
+    const user = createTestUser("tester2", "test2@gmail.com", "user", passwordHash);
 
     await Database.collection("site-settings").insertOne({
       _id: "diceEnabled",
@@ -34,9 +22,7 @@ describe("Test Dice Game Route", () => {
   });
 
   it("Post Dice Ticket", async () => {
-    const user = await Database.collection("users").findOne({
-      role: "user",
-    });
+    const user = await Database.collection("users").findOne({ username: "tester2" });
     if (!user) return;
     const [sessionResponse, sessionCookie] = await handleLogin(
       config.siteAPI,
@@ -71,16 +57,14 @@ describe("Test Dice Game Route", () => {
       gameId: getTicketResult.ticket._id,
     });
 
-    expect(diceTransaction?.gameId).toBe(getTicketResult.ticket._id);
     expect(diceTransaction?.category).toBe("dice");
     expect(diceTransaction?.value).toBe(100);
     expect(diceTransaction?.kind).toBe("dice-bet");
   });
 
   it("Post Bad Target Value Dice Ticket", async () => {
-    const user = await Database.collection("users").findOne({
-      role: "user",
-    });
+    const user = await Database.collection("users").findOne({ username: "tester2" });
+
     if (!user) return;
     const [sessionResponse, sessionCookie] = await handleLogin(
       config.siteAPI,
@@ -107,9 +91,7 @@ describe("Test Dice Game Route", () => {
   });
 
   it("Post Bad Target Kind Dice Ticket", async () => {
-    const user = await Database.collection("users").findOne({
-      role: "user",
-    });
+    const user = await Database.collection("users").findOne({ username: "tester2" });
     if (!user) return;
     const [sessionResponse, sessionCookie] = await handleLogin(
       config.siteAPI,
@@ -136,9 +118,7 @@ describe("Test Dice Game Route", () => {
   });
 
   it("Post Bad Bet Amount Dice Ticket", async () => {
-    const user = await Database.collection("users").findOne({
-      role: "user",
-    });
+    const user = await Database.collection("users").findOne({ username: "tester2" });
     if (!user) return;
     const [sessionResponse, sessionCookie] = await handleLogin(
       config.siteAPI,
@@ -165,9 +145,7 @@ describe("Test Dice Game Route", () => {
   });
 
   it("Post Bad Target Amount Dice Ticket (Max)", async () => {
-    const user = await Database.collection("users").findOne({
-      role: "user",
-    });
+    const user = await Database.collection("users").findOne({ username: "tester2" });
     if (!user) return;
     const [sessionResponse, sessionCookie] = await handleLogin(
       config.siteAPI,

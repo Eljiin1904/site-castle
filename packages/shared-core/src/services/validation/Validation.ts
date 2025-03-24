@@ -3,6 +3,7 @@ export { array, object, string, number, boolean, date, mixed, ref } from "yup";
 export * from "./utils/getErrors";
 
 export * from "./validators/avatar";
+export * from "./validators/common-address";
 export * from "./validators/currency";
 export * from "./validators/date";
 export * from "./validators/dob";

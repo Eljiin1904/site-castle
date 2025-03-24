@@ -7,6 +7,7 @@ export type TokenKindData =
   | ExcludeConfirmData
   | LinkDiscordData
   | LinkGoogleData
+  | LinkSiweData
   | LinkSteamData
   | LinkTwitchData
   | OtpActionData
@@ -34,6 +35,11 @@ interface LinkGoogleData {
   kind: "link-google";
   googleId: string;
   email: string;
+}
+
+interface LinkSiweData {
+  kind: "link-siwe";
+  address: string;
 }
 
 interface LinkSteamData {

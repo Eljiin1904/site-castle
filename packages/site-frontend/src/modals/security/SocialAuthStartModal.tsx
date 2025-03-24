@@ -13,11 +13,7 @@ import { useMount } from "@client/hooks/system/useMount";
 import { Dialogs } from "@client/services/dialogs";
 import { SvgExternal } from "@client/svgs/common/SvgExternal";
 import { Utility } from "@client/services/utility";
-import {
-  useAuthStatus,
-  useAuthRedirect,
-  useAuthSearch,
-} from "#app/hooks/security/useAuthState";
+import { useAuthStatus, useAuthRedirect, useAuthSearch } from "#app/hooks/security/useAuthState";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import config from "#app/config";
 import { SocialAuthFinalizeModal } from "./SocialAuthFinalizeModal";

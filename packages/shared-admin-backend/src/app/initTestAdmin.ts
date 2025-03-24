@@ -1,14 +1,15 @@
 import { Numbers } from "@core/services/numbers";
+import { UserDocument } from "@core/types/users/UserDocument";
 import { UserReferer } from "@core/types/users/UserReferer";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 import bcrypt from "bcrypt";
 
 export const initTestAdmin = async (
-  username: string = "first_admin",
-  email: string = "tester@pidwin.com",
+  username: string = "adminTest",
+  email: string = "testAdmin@pidwin.com",
 ) => {
-  const exisiting = await Database.collection("users").find({ email: email });
+  const exisiting = await Database.collection("users").findOne({ email: email });
   if (exisiting) {
     console.log("Admin already created");
     return;
@@ -22,13 +23,11 @@ export const initTestAdmin = async (
   const twitchId = undefined;
   const passwordHash = await bcrypt.hash("password", 8);
 
-  const user = {
+  const user: UserDocument = {
     _id: userId,
     registerDate: new Date(),
     referer,
-    referral: {
-      kind: "none",
-    },
+    referral: undefined,
     locale: "en",
     username,
     email,

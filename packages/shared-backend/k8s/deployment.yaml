@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: shared-backend 
-          image: 183631306381.dkr.ecr.us-east-2.amazonaws.com/pidwin/castle-backend
+          image: 183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-backend
           env:
             - name: NODE_ENV
               value: "devcloud"

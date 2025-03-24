@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build-site-frontend": "node ./scripts/build-site-frontend.js",
     "init": "node ./scripts/init.js",
     "dev": "node ./scripts/dev.js",
     "deploy": "node ./scripts/deploy.js",

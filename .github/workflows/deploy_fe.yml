@@ -80,8 +80,8 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/dev/shared_be_values.yaml
-          git add helm/site-frontend/values/dev/shared_be_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/dev/fe_values.yaml
+          git add helm/site-frontend/values/dev/fe_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -96,8 +96,8 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/shared_be_values.yaml
-          git add helm/site-frontend/values/stage/shared_be_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/fe_values.yaml
+          git add helm/site-frontend/values/stage/fe_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -128,7 +128,7 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/shared_be_values.yaml
-          git add helm/site-frontend/values/prod/shared_be_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
+          git add helm/site-frontend/values/prod/fe_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
