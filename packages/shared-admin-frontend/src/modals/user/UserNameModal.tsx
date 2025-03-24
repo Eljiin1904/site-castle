@@ -15,10 +15,12 @@ import { useForm } from "@client/comps/form/useForm";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserNameModal = ({ user }: { user: UserDocument }) => {
   const userId = user._id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -57,11 +59,13 @@ export const UserNameModal = ({ user }: { user: UserDocument }) => {
               autoComplete="username"
               placeholder="Enter new username..."
               disabled={form.loading}
-              error={form.errors.newName}
-              value={form.values.newName}
-              onChange={(x) =>
-                form.setValue("newName", x?.replace(/[^a-z0-9]/gi, ""))
+              error={
+                form.errors.newName?.key
+                  ? t(form.errors.newName.key, { value: form.errors.newName.value })
+                  : undefined
               }
+              value={form.values.newName}
+              onChange={(x) => form.setValue("newName", x?.replace(/[^a-z0-9]/gi, ""))}
             />
           </ModalSection>
           <NoticeCard

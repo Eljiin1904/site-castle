@@ -14,10 +14,12 @@ import { Form } from "@client/comps/form/Form";
 import { useForm } from "@client/comps/form/useForm";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserReferralModal = ({ user }: { user: UserDocument }) => {
   const userId = user._id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -57,11 +59,13 @@ export const UserReferralModal = ({ user }: { user: UserDocument }) => {
               type="text"
               placeholder="Enter new referral..."
               disabled={form.loading}
-              error={form.errors.referralCode}
-              value={form.values.referralCode}
-              onChange={(x) =>
-                form.setValue("referralCode", x?.replace(/[^a-z0-9]/gi, ""))
+              error={
+                form.errors.referralCode?.key
+                  ? t(form.errors.referralCode.key, { value: form.errors.referralCode.value })
+                  : undefined
               }
+              value={form.values.referralCode}
+              onChange={(x) => form.setValue("referralCode", x?.replace(/[^a-z0-9]/gi, ""))}
             />
           </ModalSection>
           <Button

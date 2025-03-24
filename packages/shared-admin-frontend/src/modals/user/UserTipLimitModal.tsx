@@ -13,9 +13,11 @@ import { UserDocument } from "@core/types/users/UserDocument";
 import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserTipLimitModal = ({ user }: { user: UserDocument }) => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -54,7 +56,11 @@ export const UserTipLimitModal = ({ user }: { user: UserDocument }) => {
               type="currency"
               placeholder="Enter token amount..."
               disabled={form.loading}
-              error={form.errors.tipLimit}
+              error={
+                form.errors.tipLimit?.key
+                  ? t(form.errors.tipLimit.key, { value: form.errors.tipLimit.value })
+                  : undefined
+              }
               value={form.values.tipLimit}
               onChange={(x) => form.setValue("tipLimit", x)}
             />

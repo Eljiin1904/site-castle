@@ -12,12 +12,11 @@ import { Toasts } from "@client/services/toasts";
 import { Dialogs } from "@client/services/dialogs";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Economy } from "#app/services/economy";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const GiftBatchCreateModal = ({
-  onSuccess,
-}: {
-  onSuccess: () => void;
-}) => {
+export const GiftBatchCreateModal = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       batchId: Validation.string().required("Batch ID is required."),
@@ -57,11 +56,13 @@ export const GiftBatchCreateModal = ({
               type="text"
               placeholder="Enter batch id..."
               disabled={form.loading}
-              error={form.errors.batchId}
-              value={form.values.batchId}
-              onChange={(x) =>
-                form.setValue("batchId", x?.replace(/[^a-z0-9-]/gi, ""))
+              error={
+                form.errors.batchId?.key
+                  ? t(form.errors.batchId.key, { value: form.errors.batchId.value })
+                  : undefined
               }
+              value={form.values.batchId}
+              onChange={(x) => form.setValue("batchId", x?.replace(/[^a-z0-9-]/gi, ""))}
             />
           </ModalSection>
           <ModalSection>
@@ -81,7 +82,11 @@ export const GiftBatchCreateModal = ({
               type="integer"
               placeholder="Enter batch size..."
               disabled={form.loading}
-              error={form.errors.batchSize}
+              error={
+                form.errors.batchSize?.key
+                  ? t(form.errors.batchSize.key, { value: form.errors.batchSize.value })
+                  : undefined
+              }
               value={form.values.batchSize}
               onChange={(x) => form.setValue("batchSize", x)}
             />
@@ -92,7 +97,11 @@ export const GiftBatchCreateModal = ({
               type="currency"
               placeholder="Enter token amount..."
               disabled={form.loading}
-              error={form.errors.tokenAmount}
+              error={
+                form.errors.tokenAmount?.key
+                  ? t(form.errors.tokenAmount.key, { value: form.errors.tokenAmount.value })
+                  : undefined
+              }
               value={form.values.tokenAmount}
               onChange={(x) => form.setValue("tokenAmount", x)}
             />

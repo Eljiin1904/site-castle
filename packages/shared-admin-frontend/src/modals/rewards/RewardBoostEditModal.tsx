@@ -12,6 +12,7 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Rewards } from "#app/services/rewards";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const RewardBoostEditModal = ({
   event,
@@ -20,6 +21,8 @@ export const RewardBoostEditModal = ({
   event: RewardBoostEventDocument;
   onSuccess: () => void;
 }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       startDate: Validation.date().required("Start date is required."),
@@ -61,7 +64,11 @@ export const RewardBoostEditModal = ({
               placeholder="Enter start date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.startDate}
+              error={
+                form.errors.startDate?.key
+                  ? t(form.errors.startDate.key, { value: form.errors.startDate.value })
+                  : undefined
+              }
               value={form.values.startDate}
               onChange={(x) => form.setValue("startDate", x)}
             />
@@ -74,7 +81,11 @@ export const RewardBoostEditModal = ({
               placeholder="Enter end date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.endDate}
+              error={
+                form.errors.endDate?.key
+                  ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                  : undefined
+              }
               value={form.values.endDate}
               onChange={(x) => form.setValue("endDate", x)}
             />
