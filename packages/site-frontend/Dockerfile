@@ -1,7 +1,7 @@
 FROM node:23-alpine AS build
 # Setting up the work directory
 WORKDIR /pidwin
-
+ENV NODE_ENV=devcloud
 # Installing dependencies
 COPY ./package*.json ./
 COPY ./tsconfig.base.json ./
