@@ -1,78 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "castle-frontend.fullname" . }}
+  name: castle-frontend
   labels:
-    {{- include "castle-frontend.labels" . | nindent 4 }}
+    app: castle-frontend
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "castle-frontend.selectorLabels" . | nindent 6 }}
+      app: castle-frontend
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "castle-frontend.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        app: castle-frontend
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "castle-frontend.serviceAccountName" . }}
-      {{- with .Values.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default "default" }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: castle-frontend
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
           imagePullPolicy: {{ .Values.image.app.pullPolicy }}
-          # envFrom:
-          #   - secretRef:
-          #       name: {{ .Values.secrets.app }}
           ports:
-            - containerPort: {{ .Values.app.port }}
-          env:
-            - name: PORT
-              value: "{{ .Values.app.port }}"           
-          {{- with .Values.livenessProbe }}
-          livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
-          readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.resources }}
+            - name: http
+              containerPort: {{ .Values.app.port }}
+          # env:
+          #   - name: PORT
+          #     value: "{{ .Values.app.port }}"
+          livenessProbe: 
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe: 
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.resources | nindent 12 }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
