@@ -2,27 +2,27 @@ import classNames from "classnames";
 import { DoubleColor } from "@core/types/double/DoubleColor";
 import { Div } from "@client/comps/div/Div";
 import "./DoubleReelCard.scss";
-import { Img } from "@client/comps/img/Img";
-import { getImageFromBetKind } from "#app/services/double/Double";
+import { getIconFromBetKind } from "#app/services/double/Double";
+import { Vector } from "@client/comps/vector/Vector";
 
 export const DoubleReelCard = ({ index }: { index: number }) => {
-  let path;
+  let icon;
   let color: DoubleColor;
 
   if (index === 1) {
-    path = getImageFromBetKind("green");
+    icon = getIconFromBetKind("green");
     color = "green";
   } else if (index === 2) {
-    path = getImageFromBetKind("bait");
+    icon = getIconFromBetKind("bait");
     color = "yellow";
   } else if (index === 15) {
-    path = getImageFromBetKind("bait");
+    icon = getIconFromBetKind("bait");
     color = "yellow";
   } else if (index % 2 === 0) {
-    path = getImageFromBetKind("red");
+    icon = getIconFromBetKind("red");
     color = "red";
   } else {
-    path = getImageFromBetKind("black");
+    icon = getIconFromBetKind("black");
     color = "black";
   }
 
@@ -30,14 +30,8 @@ export const DoubleReelCard = ({ index }: { index: number }) => {
     <Div
       className={classNames("DoubleReelCard", color)}
       center
-      py={8}
-      px={12}
     >
-      <Img
-        type="png"
-        path={path}
-        width="100px"
-      />
+      <Vector className="icon" as={icon} size={40} />
     </Div>
   );
 };

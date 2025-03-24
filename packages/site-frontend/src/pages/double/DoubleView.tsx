@@ -11,10 +11,9 @@ export const DoubleView = () => {
       className="DoubleView"
       column
       fx
-      py={16}
-      border
-      bg="brown-8"
+      py={20}
     >
+      <DoubleViewOverlay />
       <DoubleReel />
       <Vector
         className="arrow arrow-top"
@@ -22,13 +21,13 @@ export const DoubleView = () => {
         width={12}
         height={24}
       />
+      <Div className="arrowsConnection" />
       <Vector
         className="arrow arrow-bottom"
         as={SvgReelArrow}
         width={12}
         height={24}
       />
-      <DoubleViewOverlay />
     </Div>
   );
 };

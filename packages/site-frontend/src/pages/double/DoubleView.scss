@@ -1,23 +1,35 @@
 
 .DoublePage .DoubleView {
   
-  .arrow {
+  .arrow, .arrowsConnection {
     position: absolute;
     pointer-events: none;
     z-index: 1;
   }
 
+  .arrowsConnection {
+
+    height: 95%;
+    width: 1px;
+    background: var(--sand-color);
+    top: 1px;
+    margin: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
   .arrow-top {
     left: 0;
     right: 0;
-    top: -9px;
+    top: -7px;
     transform: rotate(90deg);
   }
 
   .arrow-bottom {
     left: 0;
     right: 0;
-    bottom: -9px;
+    bottom: -7px;
     transform: rotate(270deg);
   }
 }
