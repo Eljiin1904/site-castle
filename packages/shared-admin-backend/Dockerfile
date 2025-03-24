@@ -11,11 +11,9 @@ FROM node:23-alpine AS production
 ENV NODE_ENV=devcloud
 ENV PORT=3000
 WORKDIR /pidwin
-RUN mkdir -p packages/shared-admin-backend
+COPY --from=build /pidwin/node_modules ./node_modules
+COPY --from=build /pidwin/packages/shared-admin-backend/build ./packages/shared-admin-backend/build
+COPY --from=build /pidwin/packages/shared-admin-backend/package*.json ./packages/shared-admin-backend/
 WORKDIR /pidwin/packages/shared-admin-backend
-COPY --from=build /pidwin/packages/shared-admin-backend/package*.json ./
-COPY --from=build /pidwin/packages/shared-admin-backend/build ./build
-RUN npm install --only=production
 EXPOSE 3000
 CMD ["npm", "run", "start"]
-
