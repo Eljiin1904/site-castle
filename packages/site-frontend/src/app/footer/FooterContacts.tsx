@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";

@@ -4,7 +4,6 @@ import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
 import config from "#app/config";
 import { SvgTwitter } from "@client/svgs/brands/SvgTwitter";
 import { SvgInstagram } from "@client/svgs/brands/SvgInstagram";
-import { SvgFacebook } from "@client/svgs/brands/SvgFacebook";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { SvgDiscord } from "@client/svgs/brands/SvgDiscord";
 import { SvgTelegram } from "@client/svgs/brands/SvgTelegram";

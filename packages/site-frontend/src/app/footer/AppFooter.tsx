@@ -7,7 +7,6 @@ import { FooterCopyright } from "./FooterCopyright";
 import { FooterDisclaimer } from "./FooterDisclaimer";
 import { FooterMenus } from "./FooterMenus";
 import { FooterPills } from "./FooterPills";
-import { FooterSocials } from "./FooterSocials";
 import { FooterContacts } from "./FooterContacts";
 import "./AppFooter.scss";
 import { Divider } from "@client/comps/divider/Divider";
