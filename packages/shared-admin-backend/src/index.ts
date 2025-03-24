@@ -19,7 +19,6 @@ async function main() {
 
   if (env == "development" || env == "devcloud") {
     console.log("Creating Admin");
-    await Database.createCollection("user-sessions", {});
     await initTestAdmin();
   }
 
