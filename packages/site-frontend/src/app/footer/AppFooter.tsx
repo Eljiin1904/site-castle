@@ -229,7 +229,7 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
         <Div
           align="center"
           justify="space-between"
-          py={24}
+          py={40}
         >
           <FooterCopyright />
           <FooterContacts />

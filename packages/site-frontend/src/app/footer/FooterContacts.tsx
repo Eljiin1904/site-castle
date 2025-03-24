@@ -6,50 +6,60 @@ import { useTranslation } from "@core/services/internationalization/internationa
 export const FooterContacts = () => {
   const {t} = useTranslation();
 
-  return (
-    <Fragment>
-      <Div gap={4}>
+  return (<Div gap={20}>
+      <Div gap={2}>
         <Span
-          size={13}
+          size={12}
           color="dark-sand"
+          lineHeight={20}
+          weight="medium"
         >
-          {t("footer.support")}:
+          {t("footer.support")}
         </Span>
         <Span
-          size={13}
-          color="light-gray"
+          size={12}
+          lineHeight={20}
+          color="light-sand"
+          weight="medium"
         >
           {"support@sandcasino.com"}
         </Span>
       </Div>
-      <Div gap={4}>
+      <Div gap={2}>
         <Span
-          size={13}
+          size={12}
+          lineHeight={20}
           color="dark-sand"
+          weight="medium"
         >
-          {t("footer.partners")}:
+          {t("footer.partners")}
         </Span>
         <Span
-          size={13}
-          color="light-gray"
+          size={12}
+          lineHeight={20}
+          color="light-sand"
+          weight="medium"
         >
           {"partners@sandcasino.com"}
         </Span>
       </Div>
-      <Div gap={4}>
+      <Div gap={2}>
         <Span
-          size={13}
+          size={12}
+          lineHeight={20}
           color="dark-sand"
+          weight="medium"
         >
-           {t("footer.press")}:
+           {t("footer.press")}
         </Span>
         <Span
-          size={13}
-          color="light-gray"
+          size={12}
+          lineHeight={20}
+          color="light-sand"
+          weight="medium"
         >
           {"press@sandcasino.com"}
         </Span>
       </Div>
-    </Fragment>
-  );
+    </Div>);
 };
