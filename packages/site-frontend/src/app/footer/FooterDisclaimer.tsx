@@ -16,9 +16,9 @@ export const FooterDisclaimer = () => {
         `Sand Casino ${t('footer.disclaimer')}`
       }
       <Div
-        gap={20}
-        my={20}
-        justify="space-around"
+        gap={24}
+        mt={32}
+        justify="flex-start"
       >
         <Circle
           as="div"
@@ -42,6 +42,7 @@ export const FooterDisclaimer = () => {
             <Span
               color="white"
               fontSize={12}
+              lineHeight={12}
             >
               {t('footer.aware')}
             </Span>
@@ -92,6 +93,7 @@ export const FooterDisclaimer = () => {
             <Span
               color="white"
               fontSize={10}
+              lineHeight={12}
             >
                {t('footer.certified')}
             </Span>
