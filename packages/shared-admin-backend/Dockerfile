@@ -15,5 +15,6 @@ COPY --from=build /pidwin/node_modules ./node_modules
 COPY --from=build /pidwin/packages/shared-admin-backend/build ./packages/shared-admin-backend/build
 COPY --from=build /pidwin/packages/shared-admin-backend/package*.json ./packages/shared-admin-backend/
 WORKDIR /pidwin/packages/shared-admin-backend
+RUN ln -s ../../node_modules node_modules
 EXPOSE 3000
 CMD ["npm", "run", "start"]
