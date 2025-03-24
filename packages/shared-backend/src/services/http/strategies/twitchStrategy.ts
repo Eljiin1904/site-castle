@@ -10,11 +10,7 @@ export function twitchStrategy() {
   const { env, siteURL, twitchClientId, twitchClientSecret } = config;
 
   const callbackURL =
-    env === "development"
-      ? "http://localhost:3000/auth/twitch"
-      : env === "devcloud"
-        ? "http://site-frontend:3000/auth/twitch"
-        : `${siteURL}/auth/twitch`;
+    env === "development" ? "http://localhost:3000/auth/twitch" : `${siteURL}/auth/twitch`;
 
   const strategy = new TwitchStrategy(
     {
