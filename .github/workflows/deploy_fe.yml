@@ -118,17 +118,17 @@ jobs:
   #         additional-denied-words: ''
 
   # update-helm-chart-prod:
-    needs: wait-for-prod-approval
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
+    # needs: wait-for-prod-approval
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - name: Check out repository
+    #     uses: actions/checkout@v3
 
-      - name: Update Helm Chart for shared backend PROD
-        run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
-          git add helm/site-frontend/values/prod/fe_values.yaml
-          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-          git push
+    #   - name: Update Helm Chart for shared backend PROD
+    #     run: |
+    #       IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
+    #       echo "Updating Helm chart with tag: $IMAGE_TAG"
+    #       sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
+    #       git add helm/site-frontend/values/prod/fe_values.yaml
+    #       git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+    #       git push
