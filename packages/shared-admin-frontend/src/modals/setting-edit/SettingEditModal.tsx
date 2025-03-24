@@ -1,9 +1,6 @@
 import { FC } from "react";
 import { Validation } from "@core/services/validation";
-import {
-  SiteSettingId,
-  SiteSettingValue,
-} from "@core/types/site/SiteSettingDocument";
+import { SiteSettingId, SiteSettingValue } from "@core/types/site/SiteSettingDocument";
 import { Form } from "@client/comps/form/Form";
 import { Input } from "@client/comps/input/Input";
 import { Modal } from "@client/comps/modal/Modal";
@@ -17,6 +14,7 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Site } from "#app/services/site";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export interface EditOptions {
   id: SiteSettingId;
@@ -45,10 +43,11 @@ export const SettingEditModal: FC<SettingEditModalProps> = ({
   inputType,
   onSuccess,
 }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
-      value:
-        Validation.mixed<SiteSettingValue>().required("Value is required."),
+      value: Validation.mixed<SiteSettingValue>().required("Value is required."),
     }),
     initialValues: {
       value: initialValue,
@@ -84,7 +83,11 @@ export const SettingEditModal: FC<SettingEditModalProps> = ({
                       placeholder="Enter value..."
                       disabled={form.loading}
                       value={form.values.value as string}
-                      error={form.errors.value}
+                      error={
+                        form.errors.value?.key
+                          ? t(form.errors.value.key, { value: form.errors.value.value })
+                          : undefined
+                      }
                       onChange={(x) => form.setValue("value", x || "")}
                     />
                   );
@@ -95,7 +98,11 @@ export const SettingEditModal: FC<SettingEditModalProps> = ({
                       placeholder="Enter value..."
                       disabled={form.loading}
                       value={form.values.value as string}
-                      error={form.errors.value}
+                      error={
+                        form.errors.value?.key
+                          ? t(form.errors.value.key, { value: form.errors.value.value })
+                          : undefined
+                      }
                       onChange={(x) => form.setValue("value", x || "")}
                     />
                   );
@@ -106,7 +113,11 @@ export const SettingEditModal: FC<SettingEditModalProps> = ({
                       placeholder="Enter value..."
                       disabled={form.loading}
                       value={form.values.value as number}
-                      error={form.errors.value}
+                      error={
+                        form.errors.value?.key
+                          ? t(form.errors.value.key, { value: form.errors.value.value })
+                          : undefined
+                      }
                       onChange={(x) => form.setValue("value", x)}
                     />
                   );
@@ -118,7 +129,11 @@ export const SettingEditModal: FC<SettingEditModalProps> = ({
                       placeholder="Enter value..."
                       disabled={form.loading}
                       value={form.values.value as number}
-                      error={form.errors.value}
+                      error={
+                        form.errors.value?.key
+                          ? t(form.errors.value.key, { value: form.errors.value.value })
+                          : undefined
+                      }
                       onChange={(x) => form.setValue("value", x)}
                     />
                   );
@@ -130,7 +145,11 @@ export const SettingEditModal: FC<SettingEditModalProps> = ({
                       placeholder="Enter value..."
                       disabled={form.loading}
                       value={form.values.value as number}
-                      error={form.errors.value}
+                      error={
+                        form.errors.value?.key
+                          ? t(form.errors.value.key, { value: form.errors.value.value })
+                          : undefined
+                      }
                       onChange={(x) => form.setValue("value", x)}
                     />
                   );

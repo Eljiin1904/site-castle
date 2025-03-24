@@ -8,6 +8,7 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { Tokens } from "@client/comps/tokens/Tokens";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const CreateMenu = ({
   items,
@@ -20,6 +21,8 @@ export const CreateMenu = ({
     endDate: Date;
   }>;
 }) => {
+  const { t } = useTranslation(["validations"]);
+
   return (
     <Div
       border
@@ -34,7 +37,11 @@ export const CreateMenu = ({
               type="text"
               placeholder="Enter raffle name..."
               disabled={form.loading}
-              error={form.errors.displayName}
+              error={
+                form.errors.displayName?.key
+                  ? t(form.errors.displayName.key, { value: form.errors.displayName.value })
+                  : undefined
+              }
               value={form.values.displayName}
               onChange={(x) => form.setValue("displayName", x)}
             />
@@ -47,7 +54,11 @@ export const CreateMenu = ({
               placeholder="Enter start date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.startDate}
+              error={
+                form.errors.startDate?.key
+                  ? t(form.errors.startDate.key, { value: form.errors.startDate.value })
+                  : undefined
+              }
               value={form.values.startDate}
               onChange={(x) => form.setValue("startDate", x)}
             />
@@ -60,7 +71,11 @@ export const CreateMenu = ({
               placeholder="Enter end date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.endDate}
+              error={
+                form.errors.endDate?.key
+                  ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                  : undefined
+              }
               value={form.values.endDate}
               onChange={(x) => form.setValue("endDate", x)}
             />
@@ -68,9 +83,7 @@ export const CreateMenu = ({
           <ModalSection>
             <ModalLabel>{"Raffle Value"}</ModalLabel>
             <ModalField>
-              <Tokens
-                value={items.reduce((acc, x) => (acc += x.lootValue), 0)}
-              />
+              <Tokens value={items.reduce((acc, x) => (acc += x.lootValue), 0)} />
             </ModalField>
           </ModalSection>
         </ModalBody>

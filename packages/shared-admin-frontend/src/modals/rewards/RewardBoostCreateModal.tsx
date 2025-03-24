@@ -13,14 +13,13 @@ import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Rewards } from "#app/services/rewards";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 const timeframes = Rewards.boostTimeframes.filter((x) => x !== "daily");
 
-export const RewardBoostCreateModal = ({
-  onSuccess,
-}: {
-  onSuccess: () => void;
-}) => {
+export const RewardBoostCreateModal = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       timeIndex: Validation.number().required(),
@@ -75,7 +74,11 @@ export const RewardBoostCreateModal = ({
               placeholder="Enter start date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.startDate}
+              error={
+                form.errors.startDate?.key
+                  ? t(form.errors.startDate.key, { value: form.errors.startDate.value })
+                  : undefined
+              }
               value={form.values.startDate}
               onChange={(x) => form.setValue("startDate", x)}
             />
@@ -88,7 +91,11 @@ export const RewardBoostCreateModal = ({
               placeholder="Enter end date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.endDate}
+              error={
+                form.errors.endDate?.key
+                  ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                  : undefined
+              }
               value={form.values.endDate}
               onChange={(x) => form.setValue("endDate", x)}
             />

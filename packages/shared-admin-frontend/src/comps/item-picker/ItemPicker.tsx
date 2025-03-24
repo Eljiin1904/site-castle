@@ -28,15 +28,9 @@ export const ItemPicker = ({
   const limit = 20;
   const maxValue = 500000;
   const [searchText, setSearchText] = useState<string>();
-  const [searchCurrent, setSearchCurrent] = useDebounceState(
-    searchText,
-    setSearchText,
-  );
+  const [searchCurrent, setSearchCurrent] = useDebounceState(searchText, setSearchText);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, maxValue]);
-  const [priceCurrent, setPriceCurrent] = useDebounceState(
-    priceRange,
-    setPriceRange,
-  );
+  const [priceCurrent, setPriceCurrent] = useDebounceState(priceRange, setPriceRange);
   const [sortIndex, setSortIndex] = useState(0);
   const [rarities, setRarities] = useState(Items.rarities.slice());
   const [subTypes, setSubTypes] = useState(Items.subTypes.slice());
@@ -44,16 +38,7 @@ export const ItemPicker = ({
   const [editions, setEditions] = useState(Items.editions.slice());
 
   const query = useInfiniteQuery({
-    queryKey: [
-      searchText,
-      rarities,
-      subTypes,
-      priceRange,
-      wears,
-      editions,
-      sortIndex,
-      limit,
-    ],
+    queryKey: [searchText, rarities, subTypes, priceRange, wears, editions, sortIndex, limit],
     queryFn: ({ pageParam: page }) =>
       Economy.getLoot({
         searchText,
@@ -118,7 +103,7 @@ export const ItemPicker = ({
               column
               p={16}
               gap={8}
-              bg="gray-6"
+              bg="gray-7"
               border
             >
               <Div>
@@ -147,17 +132,13 @@ export const ItemPicker = ({
               className="rarity-filters"
               options={Items.rarities.slice()}
               actives={Items.rarities.map((x) => rarities.includes(x))}
-              onChange={(actives) =>
-                setRarities(Items.rarities.filter((x, i) => actives[i]))
-              }
+              onChange={(actives) => setRarities(Items.rarities.filter((x, i) => actives[i]))}
             />
           </Div>
           <FilterGroup
             options={Items.subTypes.slice()}
             actives={Items.subTypes.map((x) => subTypes.includes(x))}
-            onChange={(actives) =>
-              setSubTypes(Items.subTypes.filter((x, i) => actives[i]))
-            }
+            onChange={(actives) => setSubTypes(Items.subTypes.filter((x, i) => actives[i]))}
           />
           <Div
             column
@@ -167,16 +148,12 @@ export const ItemPicker = ({
             <FilterGroup
               options={Items.wears.slice()}
               actives={Items.wears.map((x) => wears.includes(x))}
-              onChange={(actives) =>
-                setWears(Items.wears.filter((x, i) => actives[i]))
-              }
+              onChange={(actives) => setWears(Items.wears.filter((x, i) => actives[i]))}
             />
             <FilterGroup
               options={Items.editions.slice()}
               actives={Items.editions.map((x) => editions.includes(x))}
-              onChange={(actives) =>
-                setEditions(Items.editions.filter((x, i) => actives[i]))
-              }
+              onChange={(actives) => setEditions(Items.editions.filter((x, i) => actives[i]))}
             />
           </Div>
         </Div>

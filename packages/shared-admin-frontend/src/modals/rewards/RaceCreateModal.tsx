@@ -18,6 +18,7 @@ import { Vector } from "@client/comps/vector/Vector";
 import { SvgMinusCircle } from "@client/svgs/common/SvgMinusCircle";
 import { SvgPlusCircle } from "@client/svgs/common/SvgPlusCircle";
 import { Rewards } from "#app/services/rewards";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const RaceCreateModal = ({
   payouts: initPayouts,
@@ -26,6 +27,8 @@ export const RaceCreateModal = ({
   payouts?: number[];
   onSuccess?: () => void;
 }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       displayName: Validation.string().required("Name is required."),
@@ -55,9 +58,7 @@ export const RaceCreateModal = ({
 
   const resizePayouts = (inc: number) => {
     const newSize = Math.max(10, payouts.length + inc);
-    const newPayouts = [...Array(newSize)].map(
-      (x, i) => payouts[i] || payouts[payouts.length - 1],
-    );
+    const newPayouts = [...Array(newSize)].map((x, i) => payouts[i] || payouts[payouts.length - 1]);
     form.setValue("payouts", newPayouts);
   };
 
@@ -75,7 +76,11 @@ export const RaceCreateModal = ({
               type="text"
               placeholder="Enter race name..."
               disabled={form.loading}
-              error={form.errors.displayName}
+              error={
+                form.errors.displayName?.key
+                  ? t(form.errors.displayName.key, { value: form.errors.displayName.value })
+                  : undefined
+              }
               value={form.values.displayName}
               onChange={(x) => form.setValue("displayName", x)}
             />
@@ -89,7 +94,11 @@ export const RaceCreateModal = ({
                 placeholder="Enter start date..."
                 showTimeSelect
                 disabled={form.loading}
-                error={form.errors.startDate}
+                error={
+                  form.errors.startDate?.key
+                    ? t(form.errors.startDate.key, { value: form.errors.startDate.value })
+                    : undefined
+                }
                 value={form.values.startDate}
                 onChange={(x) => form.setValue("startDate", x)}
               />
@@ -102,7 +111,11 @@ export const RaceCreateModal = ({
                 placeholder="Enter end date..."
                 showTimeSelect
                 disabled={form.loading}
-                error={form.errors.endDate}
+                error={
+                  form.errors.endDate?.key
+                    ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                    : undefined
+                }
                 value={form.values.endDate}
                 onChange={(x) => form.setValue("endDate", x)}
               />
@@ -170,7 +183,11 @@ export const RaceCreateModal = ({
                     type="currency"
                     placeholder={`#${index + 1} Payout`}
                     disabled={form.loading}
-                    error={form.errors.payouts}
+                    error={
+                      form.errors.payouts?.key
+                        ? t(form.errors.payouts.key, { value: form.errors.payouts.value })
+                        : undefined
+                    }
                     value={value}
                     style={{ minHeight: "40px" }}
                     onChange={(x) => {

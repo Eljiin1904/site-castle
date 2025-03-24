@@ -14,6 +14,7 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { Span } from "@client/comps/span/Span";
 import { Affiliates } from "#app/services/affiliates";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AffiliateReloadEditModal = ({
   reload,
@@ -22,6 +23,8 @@ export const AffiliateReloadEditModal = ({
   reload: AffiliateReloadDocument;
   onSuccess: () => void;
 }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       tokenAmount: Validation.currency("Token amount"),
@@ -70,7 +73,11 @@ export const AffiliateReloadEditModal = ({
               showTimeSelect
               showTimeSelectOnly
               disabled={form.loading}
-              error={form.errors.resetDate}
+              error={
+                form.errors.resetDate?.key
+                  ? t(form.errors.resetDate.key, { value: form.errors.resetDate.value })
+                  : undefined
+              }
               value={form.values.resetDate}
               onChange={(x) => form.setValue("resetDate", x)}
             />
@@ -81,7 +88,11 @@ export const AffiliateReloadEditModal = ({
               type="currency"
               placeholder="Enter token amount..."
               disabled={form.loading}
-              error={form.errors.tokenAmount}
+              error={
+                form.errors.tokenAmount?.key
+                  ? t(form.errors.tokenAmount.key, { value: form.errors.tokenAmount.value })
+                  : undefined
+              }
               value={form.values.tokenAmount}
               onChange={(x) => form.setValue("tokenAmount", x)}
             />
@@ -92,7 +103,11 @@ export const AffiliateReloadEditModal = ({
               type="integer"
               placeholder="Enter available claims..."
               disabled={form.loading}
-              error={form.errors.claimCount}
+              error={
+                form.errors.claimCount?.key
+                  ? t(form.errors.claimCount.key, { value: form.errors.claimCount.value })
+                  : undefined
+              }
               value={form.values.claimCount}
               onChange={(x) => form.setValue("claimCount", x)}
             />
