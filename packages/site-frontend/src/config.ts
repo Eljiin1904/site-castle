@@ -6,6 +6,7 @@ export interface SiteFrontendConfig extends FrontendConfig {
   twitterURL: string;
   discordURL: string;
   telegramURL: string;
+  instagramURL: string;
   hcaptchaSiteKey: string;
   pushPublicKey: string;
   intercomAppId: string;
