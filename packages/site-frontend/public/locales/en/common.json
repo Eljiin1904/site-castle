@@ -11,5 +11,7 @@
   "clear": "Clear",
   "enterBetAmount": "Enter bet amount...",
   "recentRolls": "Recent Rolls",
-  "last100": "Last 100"
+  "last100": "Last 100",
+  "online": "Status Online",
+  "offline": "Status Offline"
 }

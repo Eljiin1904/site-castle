@@ -25,8 +25,8 @@ export const BetBoardTicketCard = (props: {
     >
       <Conditional
         value={layout}
-        mobile={<MobileContent {...props} />}
-        tablet={<TabletContent {...props} />}
+        mobile={<LaptopDesktopContent {...props} />}
+        tablet={<LaptopDesktopContent {...props} />}
         laptop={<LaptopDesktopContent {...props} />}
         desktop={<LaptopDesktopContent {...props} />}
       />
@@ -76,50 +76,6 @@ const MobileContent = ({
         value={ticket.betAmount * multiplier}
         accent={accent}
         hideIcon
-      />
-    </Div>
-  );
-};
-
-const TabletContent = ({
-  ticket,
-  accent,
-  multiplier,
-}: {
-  ticket: DoubleTicketDocument;
-  accent: TokensProps["accent"];
-  multiplier: number;
-}) => {
-  const { username, xp, hideInfo } = useHiddenInfo(ticket.user);
-
-  return (
-    <Div
-      className="inner-content"
-      fx
-      px={12}
-      py={8}
-      justify="space-between"
-      align="center"
-    >
-      <Div
-        gap={6}
-        align="center"
-      >
-        {!hideInfo && <UserBadge xp={xp} />}
-        <Span
-          color={hideInfo ? "gray" : "white"}
-          size={13}
-          textOverflow="ellipsis"
-          style={{ maxWidth: "64px" }}
-        >
-          {username}
-        </Span>
-      </Div>
-      <Tokens
-        value={ticket.betAmount * multiplier}
-        accent={accent}
-        hideIcon
-        fontSize={13}
       />
     </Div>
   );

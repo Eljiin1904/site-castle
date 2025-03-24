@@ -6,7 +6,6 @@ import { DoubleHeader } from "./DoubleHeader";
 import { BetInputGroup } from "./BetInputGroup";
 import { BetBoardGrid } from "./BetBoardGrid";
 import { DoubleView } from "./DoubleView";
-import { DoubleFairness } from "./DoubleFairness";
 import { LastRounds } from "./LastRounds";
 import { RecentRounds } from "./RecentRounds";
 import { Span } from "@client/comps/span/Span";
@@ -41,7 +40,8 @@ const MobileContent = () => {
       <Div column>
         <DoubleReelOverlay
           path="/graphics/double-tile-overlay"
-          p={15}
+          px={20}
+          py={16}
         >
           <DoubleHeader />
           <Span>
@@ -51,15 +51,23 @@ const MobileContent = () => {
       </Div>
       <Div
         column
-        p={10}
-        gap={20}
+        px={20}
+        py={16}
+        gap={16}
         bg="brown-6"
+        borderTop
+        borderColor="brown-4"
       >
         <BetInputGroup />
         <BetBoardGrid />
+        <Div column gap={8} mt={28}>
+          <LastRounds />
+          <RecentRounds />
+        </Div>
+      </Div>
+      <Div mt={64}>
         <BetBoard />
       </Div>
-      <DoubleFairness />
     </Div>
   );
 };

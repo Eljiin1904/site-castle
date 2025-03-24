@@ -11,44 +11,11 @@ export const LastRounds = () => {
   return (
     <Conditional
       value={layout}
-      mobile={<MobileContent />}
+      mobile={<LaptopDesktopContent />}
       tablet={<LaptopDesktopContent />}
       laptop={<LaptopDesktopContent />}
       desktop={<LaptopDesktopContent />}
     />
-  );
-};
-
-const MobileContent = () => {
-  return (
-    <Div
-      gap={12}
-      column
-    >
-      <Span>{"Last 100 Rolls"}</Span>
-      <Div gap={8}>
-        <LastRoundCounter
-          color="green"
-          bait={false}
-        />
-        <LastRoundCounter
-          color="red"
-          bait={false}
-        />
-        <LastRoundCounter
-          color="black"
-          bait={false}
-        />
-        <LastRoundCounter
-          color="red"
-          bait={true}
-        />
-        <LastRoundCounter
-          color="black"
-          bait={true}
-        />
-      </Div>
-    </Div>
   );
 };
 

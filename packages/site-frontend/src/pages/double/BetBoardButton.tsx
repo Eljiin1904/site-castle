@@ -37,7 +37,7 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
           />
         }
         tablet={
-          <TabletContent
+          <LaptopDesktopContent
             betKind={betKind}
             betPlaced={betPlaced}
           />
@@ -60,7 +60,7 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
 };
 
 const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
-  const path = Double.getImageFromBetKind(betKind);
+  const svg = Double.getIconFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
   const {t} = useTranslation(["games.double"]);
   return (
@@ -68,60 +68,17 @@ const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlac
       column
       fx
       center
-      pt={12}
-      pb={8}
-      gap={6}
+      py={16}
+      gap={8}
     >
-      <Img
-        type="png"
-        className="label"
-        path={path}
-        width="50px"
-      />
-      <Span
-        className="label"
-        size={12}
-      >
-        {betPlaced ? t("double:betPlaced") : t("double:placeBet")}
-      </Span>
-      <Div
-        grow
-        justify="flex-end"
-      >
-        <Span
-          className="label"
-          size={12}
-        >
-          {`Win ${multiplier}x`}
-        </Span>
-      </Div>
-    </Div>
-  );
-};
-
-const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
-  const path = Double.getImageFromBetKind(betKind);
-  const multiplier = Double.getMultiplierFromBetKind(betKind);
-  const {t} = useTranslation(["games.double"])
-  return (
-    <Div
-      fx
-      align="center"
-      height={40}
-      px={6}
-      gap={6}
-    >
-      <Img
-        type="png"
-        className="label"
-        path={path}
-        width="45px"
-      />
+      <Vector className="icon" as={svg} size={24}/>
       <Span
         className="label"
         weight="semi-bold"
+        fontSize={12}
+        lineHeight={20}
       >
-         {betPlaced ? t("double:betPlaced") : t("double:placeBet")}
+        {betPlaced ? t("games\\double:betPlaced") : t("games\\double:placeBet")}
       </Span>
       <Div
         grow
@@ -130,8 +87,9 @@ const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlac
         <Span
           className="label"
           weight="semi-bold"
+          fontSize={12}
         >
-          {`${multiplier}x`}
+          {`${multiplier}X`}
         </Span>
       </Div>
     </Div>

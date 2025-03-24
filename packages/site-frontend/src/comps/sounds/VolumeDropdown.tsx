@@ -60,7 +60,7 @@ export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColo
       }}
       button={
         <Button
-          kind="quinary"
+          kind="tertiary-black-overlay"
           icon={getButtonIcon()}
         />
       }

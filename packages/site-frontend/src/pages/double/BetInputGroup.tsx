@@ -47,7 +47,7 @@ const useBetHandler = () => {
 
 const MobileContent = () => {
   const { tokenBalance, betAmount, handleMath, setBetAmount } = useBetHandler();
-
+  const {t} = useTranslation(["common"]);
   return (
     <Div
       fx
@@ -57,67 +57,54 @@ const MobileContent = () => {
       <Div fx>
         <Input
           type="currency"
-          height={32}
-          placeholder="Enter bet amount..."
+          height={40}
+          placeholder={t("common:enterBetAmount")}
           value={betAmount}
           onChange={(x) => setBetAmount(x)}
-          iconColor={"dark-sand"}
         />
-        <Div
-          position="absolute"
-          right={0}
-          bottom={0}
-        >
-          <Button
-            kind="primary"
-            size="xs"
-            label="Clear"
-            labelSize={13}
-            onClick={() => setBetAmount(undefined)}
-          />
-        </Div>
+        <Button
+          kind="tertiary-grey"
+          label={t("common:clear")}
+          onClick={() => setBetAmount(undefined)}
+        />
       </Div>
       <Div fx>
         <Button
-          kind="primary"
-          size="sm"
-          label="+10"
-          labelSize={13}
-          fx
-          onClick={() => handleMath((x) => x + Intimal.fromDecimal(10))}
-        />
-        <Button
-          kind="primary"
-          size="sm"
-          label="+100"
-          labelSize={13}
-          fx
-          onClick={() => handleMath((x) => x + Intimal.fromDecimal(100))}
-        />
-        <Button
-          kind="primary"
-          size="sm"
-          label="1/2"
-          labelSize={13}
-          fx
-          onClick={() => handleMath((x) => x / 2)}
-        />
-        <Button
-          kind="primary"
-          size="sm"
-          label="2x"
-          labelSize={13}
-          fx
-          onClick={() => handleMath((x) => x * 2)}
-        />
-        <Button
-          kind="primary"
-          size="sm"
-          label="Max"
-          labelSize={13}
-          fx
-          onClick={() => setBetAmount(Intimal.floor(tokenBalance))}
-        />
+            kind="tertiary-grey"
+            label="+1"
+            onClick={() => handleMath((x) => x + Intimal.fromDecimal(1))}
+            flexGrow={1}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="+10"
+            onClick={() => handleMath((x) => x + Intimal.fromDecimal(10))}
+            flexGrow={1}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="+100"
+            onClick={() => handleMath((x) => x + Intimal.fromDecimal(100))}
+            flexGrow={1}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="1/2"
+            onClick={() => handleMath((x) => x / 2)}
+            flexGrow={1}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="2X"
+            onClick={() => handleMath((x) => x * 2)}
+            flexGrow={1}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="Max"
+            onClick={() => setBetAmount(tokenBalance)}
+            flexGrow={1}
+          />
       </Div>
     </Div>
   );
@@ -125,7 +112,7 @@ const MobileContent = () => {
 
 const LaptopDesktopContent = () => {
   const { tokenBalance, betAmount, handleMath, setBetAmount } = useBetHandler();
-  const {t} = useTranslation(["common"])
+  const {t} = useTranslation(["common"]);
   return (
     <Div column gap={8}>
       <Span size={12} color="dark-sand" lineHeight={20} fontWeight="medium">{t("common:amount")}</Span>
