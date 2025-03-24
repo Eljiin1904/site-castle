@@ -9,6 +9,8 @@ export const FooterDisclaimer = () => {
     <Span
       size={12}
       color="dark-sand"
+      weight="medium"
+      lineHeight={20}
     >
       {
         `Sand Casino ${t('footer.disclaimer')}`

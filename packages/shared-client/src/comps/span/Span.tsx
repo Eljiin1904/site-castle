@@ -7,6 +7,7 @@ export type SpanProps = Omit<StyledProps<"span">, "as"> & {
   size?: Unit;
   family?: StyledProps["fontFamily"];
   weight?: StyledProps["fontWeight"];
+  lineHeight?: Unit;
   children: any;
 };
 
@@ -19,6 +20,7 @@ export const Span: FC<SpanProps> = ({
   fontFamily = family,
   weight,
   fontWeight = weight,
+  lineHeight,
   ...forwardProps
 }) => {
   return (
@@ -28,6 +30,7 @@ export const Span: FC<SpanProps> = ({
       fontSize={fontSize}
       fontFamily={fontFamily}
       fontWeight={fontWeight}
+      lineHeight={lineHeight}
       {...forwardProps}
     >
       {children}
