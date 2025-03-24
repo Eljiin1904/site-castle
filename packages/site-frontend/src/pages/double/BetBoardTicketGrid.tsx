@@ -57,21 +57,18 @@ export const BetBoardTicketGrid = ({ betKind }: { betKind: DoubleBetKind }) => {
     <Div
       fx
       column
-      bg="brown-8"
       border
+      borderColor="brown-4"
       style={{ opacity: accent === "negative" ? 0.6 : 1 }}
     >
       <Div
         justify="space-between"
-        px={12}
-        py={small ? 8 : 12}
+        px={16}
+        py={small ? 8 : 12}       
       >
-        <Div
-          align="center"
-          gap={12}
-        >
+        <Div gap={12}  center>
           {small && <DoubleBetIcon betKind={betKind} />}
-          <Span>{`${betCount} Bets`}</Span>
+          <Span color="dark-sand" weight="medium">{`${betCount} Bets`}</Span>
         </Div>
         <Tokens
           value={betAmount * multiplier}

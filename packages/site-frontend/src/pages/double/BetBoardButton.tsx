@@ -8,6 +8,7 @@ import { Double } from "#app/services/double";
 import { usePostTicket } from "./usePostTicket";
 import "./BetBoardButton.scss";
 import { Img } from "@client/comps/img/Img";
+import { Vector } from "@client/comps/vector/Vector";
 
 export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
   const userId = useAppSelector((x) => x.user._id);
@@ -143,7 +144,7 @@ const LaptopDesktopContent = ({
   betKind: DoubleBetKind;
   betPlaced: boolean;
 }) => {
-  const path = Double.getImageFromBetKind(betKind);
+  const svg = Double.getIconFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
 
   return (
@@ -151,18 +152,14 @@ const LaptopDesktopContent = ({
       fx
       align="center"
       height={40}
-      px={8}
-      gap={8}
+      px={16}
+      gap={12}
     >
-      <Img
-        type="png"
-        className="label"
-        path={path}
-        width="40px"
-      />
+      <Vector className="icon" as={svg} size={16}/>
       <Span
         className="label"
         weight="semi-bold"
+        fontSize={16}
       >
         {betPlaced ? "Bet Placed" : "Place Bet"}
       </Span>
@@ -173,8 +170,9 @@ const LaptopDesktopContent = ({
         <Span
           className="label"
           weight="semi-bold"
+          fontSize={16}
         >
-          {`Win ${multiplier}x`}
+          {`${multiplier}X`}
         </Span>
       </Div>
     </Div>

@@ -77,13 +77,12 @@ const TabletContent = () => {
 };
 
 const LaptopDesktopContent = () => {
-  const kinds: DoubleBetKind[] = ["green", "red", "bait", "black"];
+  const kinds: DoubleBetKind[] = ["green", "black", "bait", "red"];
 
   return (
     <Div
       fx
-      gap={16}
-      style={{ minHeight: "200px" }}
+      gap={16}     
     >
       {kinds.map((betKind) => (
         <Div

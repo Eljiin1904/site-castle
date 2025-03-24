@@ -4,10 +4,10 @@ import { Div } from "@client/comps/div/Div";
 import { Vector } from "@client/comps/vector/Vector";
 import { Double } from "#app/services/double";
 import "./DoubleBetIcon.scss";
-import { Img } from "@client/comps/img/Img";
 
 export const DoubleBetIcon = ({ betKind }: { betKind: DoubleBetKind }) => {
-  const path = Double.getImageFromBetKind(betKind);
+  
+  const icon = Double.getIconFromBetKind(betKind);
 
   return (
     <Div
@@ -15,11 +15,7 @@ export const DoubleBetIcon = ({ betKind }: { betKind: DoubleBetKind }) => {
       center
       p={8}
     >
-      <Img
-        type="png"
-        path={path}
-        width="25px"
-      />
+      <Vector className="icon" as={icon} size={24} />
     </Div>
   );
 };

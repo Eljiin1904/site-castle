@@ -69,6 +69,8 @@ export const colors = {
   "brown-5-opacity": "#1D1A191A",
   "brown-5-hover": "#1D1A1933",
   "black-cases": "#110f07",
-  "chat-hover": '#101010'
+  "chat-hover": '#101010',
+  /**Double colors */
+  "double-red": "#FB4545",
 } as const;
 

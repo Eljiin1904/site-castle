@@ -1,39 +1,26 @@
 
 .DoublePage .DoubleBetIcon {
 
-  &.green {
-    background: rgba(89, 207, 136, 1);
-    border: 1px solid #217c43;
+  .label, .icon {
+    color: var(--dark-brown-color);
+  }
 
-    .label {
-      color: var(--white-color);
-    }
+  &.green {
+    background: var(--bright-green-color);
   }
 
   &.bait {
-    background: rgba(241, 233, 160, 1);
-    border: 1px solid #5584bd;
-    
-    .label {
-      color: var(--white-color);
-    }
+   background-color: var(--sand-color);
   }
   
   &.red {
-    background:rgba(255, 254, 252, 1);
-    border: 1px solid #9e8569;
-    
-    .label {
-      color: var(--white-color);
-    }
+    background:var(--double-red-color); 
   }
   
   &.black {
-    background: rgba(199, 197, 189, 1);
-    border: 1px solid #404453;
-    
-    .label {
-      color: var(--white-color);
+    background: var(--dark-brown-active-color);
+    .label, .icon {
+      color: var(--light-sand-color);
     }
   }
 }

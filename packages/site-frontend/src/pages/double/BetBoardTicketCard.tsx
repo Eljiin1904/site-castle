@@ -21,6 +21,7 @@ export const BetBoardTicketCard = (props: {
       className="BetBoardTicketCard"
       fx
       borderTop
+      borderColor="brown-4"
     >
       <Conditional
         value={layout}
@@ -139,13 +140,13 @@ const LaptopDesktopContent = ({
     <Div
       className="inner-content"
       fx
-      px={12}
+      px={16}
       py={8}
       justify="space-between"
       align="center"
     >
       <Div
-        gap={6}
+        gap={8}
         align="center"
       >
         <UserIcon
@@ -154,10 +155,11 @@ const LaptopDesktopContent = ({
           avatarId={ticket.user.avatarId}
           hidden={hideInfo}
         />
-        {!hideInfo && <UserBadge xp={xp} />}
+        {/* {!hideInfo && <UserBadge xp={xp} />} */}
         <Span
-          color={hideInfo ? "gray" : "white"}
+          color={hideInfo ? "gray" : "light-sand"}
           textOverflow="ellipsis"
+          weight="medium"
         >
           {username}
         </Span>
@@ -165,7 +167,6 @@ const LaptopDesktopContent = ({
       <Tokens
         value={ticket.betAmount * multiplier}
         accent={accent}
-        hideIcon
       />
     </Div>
   );

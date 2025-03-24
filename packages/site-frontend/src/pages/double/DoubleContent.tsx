@@ -70,19 +70,13 @@ const NotMobileContent = () => {
       fx
       column
     >
-      <Div
-        pb={20}
-        pt={20}
-        column
-      >
-        <DoubleReelOverlay
+      <DoubleReelOverlay
           path="/graphics/double-tile-overlay"
-          p={20}
+          p={24}
+          gap={24}
         >
           <DoubleHeader />
-          <Span mt={10}>
-            <DoubleView />
-          </Span>
+          <DoubleView />
           <Div
             fx
             justify="space-between"
@@ -91,20 +85,20 @@ const NotMobileContent = () => {
             <LastRounds />
           </Div>
         </DoubleReelOverlay>
-      </Div>
-      <Div
+       <Div
         column
-        p={20}
-        gap={20}
+        p={24}
+        gap={24}
         bg="brown-6"
       >
         <BetInputGroup />
         <BetBoardGrid />
       </Div>
-      <Div mt={20}>
+      <Div mt={56}>
         <BetBoard />
       </Div>
-      <DoubleFairness />
     </Div>
   );
 };
+
+{/* <DoubleFairness /> */}
