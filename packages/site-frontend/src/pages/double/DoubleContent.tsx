@@ -81,11 +81,13 @@ const NotMobileContent = () => {
             fx
             justify="space-between"
           >
-            <RecentRounds />
-            <LastRounds />
+            <Div column gap={8}>
+              <LastRounds />
+              <RecentRounds />
+            </Div>
           </Div>
-        </DoubleReelOverlay>
-       <Div
+      </DoubleReelOverlay>
+      <Div
         column
         p={24}
         gap={24}

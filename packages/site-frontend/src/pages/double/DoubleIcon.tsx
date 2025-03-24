@@ -1,33 +1,31 @@
 import classNames from "classnames";
-import { DoubleColor } from "@core/types/double/DoubleColor";
 import { Div } from "@client/comps/div/Div";
 import { Double } from "#app/services/double";
-import "./DoubleIcon.scss";
-import { Img } from "@client/comps/img/Img";
+import { DoubleBetKind } from "@core/types/double/DoubleBetKind";
+import { Vector } from "@client/comps/vector/Vector";
+import "./DoubleBetIcon.scss";
 
 export const DoubleIcon = ({
   className,
-  color,
+  betKind,
   bait,
+  last100 = false
 }: {
   className?: string;
-  color: DoubleColor;
-  bait: boolean;
+  betKind: DoubleBetKind;
+  bait?: boolean;
+  last100?: boolean;
 }) => {
-  const path = Double.getImageFromColor({ color, bait });
+  
+  const icon = Double.getIconFromBetKind(betKind);
 
   return (
     <Div
-      className={classNames("DoubleIcon", className, color, { bait })}
+      className={classNames("DoubleIcon", className, betKind, { bait })}
       center
       p={8}
     >
-      <Img
-        type="png"
-        className="icon"
-        path={path}
-        width="20px"
-      />
+      {last100 ? <Div className="icon" />: <Vector className="icon" as={icon} size={16} />}
     </Div>
   );
 };

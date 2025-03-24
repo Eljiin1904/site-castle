@@ -9,5 +9,7 @@
   "close": "Cerrar",
   "amount": "Cantidad",
   "clear": "Limpiar",
-  "enterBetAmount": "Ingrese la cantidad de la apuesta..."
+  "enterBetAmount": "Ingrese la cantidad de la apuesta...",
+  "recentRolls": "Jugadas Recientes",
+  "last100": "Últimas 100"
 }

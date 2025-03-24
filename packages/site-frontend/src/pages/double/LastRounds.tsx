@@ -3,6 +3,7 @@ import { Span } from "@client/comps/span/Span";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LastRoundCounter } from "#app/pages/double/LastRoundCounter";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const LastRounds = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -11,7 +12,7 @@ export const LastRounds = () => {
     <Conditional
       value={layout}
       mobile={<MobileContent />}
-      tablet={<TabletContent />}
+      tablet={<LaptopDesktopContent />}
       laptop={<LaptopDesktopContent />}
       desktop={<LaptopDesktopContent />}
     />
@@ -51,72 +52,31 @@ const MobileContent = () => {
   );
 };
 
-const TabletContent = () => {
+const LaptopDesktopContent = () => {
+  
+  const {t} = useTranslation(["common"]);
   return (
     <Div
-      gap={12}
-      column
-      align="flex-end"
-      data-tooltip-id="app-tooltip"
-      data-tooltip-content="Last 100 Rolls"
+      gap={16}
       cursor="pointer"
     >
+      <Span color="dark-sand" size={12} lineHeight={20} weight="medium">{t('common:last100')}</Span>
       <Div gap={8}>
         <LastRoundCounter
           color="green"
           bait={false}
         />
         <LastRoundCounter
-          color="red"
-          bait={false}
-        />
-        <LastRoundCounter
-          color="black"
-          bait={false}
-        />
-        <LastRoundCounter
-          color="red"
-          bait={true}
-        />
-        <LastRoundCounter
           color="black"
           bait={true}
         />
-      </Div>
-    </Div>
-  );
-};
-
-const LaptopDesktopContent = () => {
-  return (
-    <Div
-      gap={12}
-      column
-      align="flex-end"
-      data-tooltip-id="app-tooltip"
-      data-tooltip-content="Last 100 Rolls"
-      cursor="pointer"
-    >
-      <Div gap={12}>
         <LastRoundCounter
-          color="green"
-          bait={false}
+          color="yellow"
+          bait={true}
         />
         <LastRoundCounter
           color="red"
           bait={false}
-        />
-        <LastRoundCounter
-          color="black"
-          bait={false}
-        />
-        <LastRoundCounter
-          color="red"
-          bait={true}
-        />
-        <LastRoundCounter
-          color="black"
-          bait={true}
         />
       </Div>
     </Div>

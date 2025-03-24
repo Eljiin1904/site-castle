@@ -9,5 +9,7 @@
   "close": "Close",
   "amount": "Amount",
   "clear": "Clear",
-  "enterBetAmount": "Enter bet amount..."
+  "enterBetAmount": "Enter bet amount...",
+  "recentRolls": "Recent Rolls",
+  "last100": "Last 100"
 }

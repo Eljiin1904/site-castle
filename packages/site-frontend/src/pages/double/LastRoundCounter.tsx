@@ -16,15 +16,16 @@ export const LastRoundCounter = ({ color, bait }: { color: DoubleColor; bait: bo
   });
 
   return (
-    <Div alignItems="center">
+    <Div alignItems="center" gap={4}>
       <DoubleIcon
-        color={color}
+        betKind={color === 'yellow' ? 'bait' : color}
         bait={bait}
+        last100={true}
       />
       <Span
-        ml={6}
-        width={18}
-        color="white"
+        color="dark-sand"
+        size={12}
+        weight="semi-bold"
       >
         {matches.length.toString().padStart(2, "0")}
       </Span>
