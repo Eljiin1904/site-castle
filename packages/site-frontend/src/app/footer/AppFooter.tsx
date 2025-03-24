@@ -7,7 +7,6 @@ import { FooterCopyright } from "./FooterCopyright";
 import { FooterDisclaimer } from "./FooterDisclaimer";
 import { FooterMenus } from "./FooterMenus";
 import { FooterPills } from "./FooterPills";
-import { FooterSocials } from "./FooterSocials";
 import { FooterContacts } from "./FooterContacts";
 import "./AppFooter.scss";
 import { Divider } from "@client/comps/divider/Divider";
@@ -20,8 +19,7 @@ export const AppFooter = () => {
       className="AppFooter"
       center
       fx
-      bg="brown-8"
-      borderTop
+      bg="black-hover"
     >
       <Div
         className="inner-content"
@@ -48,7 +46,7 @@ const FooterMobile = () => {
       <Div
         column
         bg="brown-6"
-        px={28}
+        px={20}
       >
         <Div
           fx
@@ -60,8 +58,6 @@ const FooterMobile = () => {
 
         <Divider
           as={"div"}
-          px={16}
-          mt={10}
           borderColor={"brown-4"}
         />
         <Div>
@@ -69,46 +65,22 @@ const FooterMobile = () => {
         </Div>
         <Divider
           as={"div"}
-          px={16}
-          mt={10}
           borderColor={"brown-4"}
         />
-        <Div
-          py={24}
-          px={16}
-        >
-          <Div grow>
-            <SiteLogo scale={0.9} />
-          </Div>
-        </Div>
-
-        <Div>
-          <FooterDisclaimer />
+        <Div fx column py={20} gap={16}>
+          <SiteLogo scale={0.9} />
+          <FooterDisclaimer mt={20}/>
         </Div>
         <Divider
           as={"div"}
-          px={16}
-          mt={10}
           borderColor={"brown-4"}
         />
-        <Div
-          py={4}
-          mt={16}
+        <Div fx column py={20} gap={20}
         >
           <FooterCopyright />
-        </Div>
-        <Div
-          column
-          gap={12}
-          mt={16}
-          mb={24}
-          color="brown-5"
-        >
           <FooterContacts />
         </Div>
       </Div>
-
-      <FooterSocials />
     </Div>
   );
 };
@@ -118,25 +90,20 @@ const FooterTablet = () => {
     <Div
       column
       fx
-      px={32}
+      px={24}
     >
       <Div
         column
-        bg="brown-6"
-        px={28}
       >
         <Div
           fx
           justify="space-between"
-          py={32}
+          py={24}
         >
           <FooterMenus />
         </Div>
-
         <Divider
           as={"div"}
-          px={16}
-          mt={10}
           borderColor={"brown-4"}
         />
         <FooterPills wrap />
@@ -146,37 +113,25 @@ const FooterTablet = () => {
           mt={10}
           borderColor={"brown-4"}
         />
-        <Div py={32}>
-          <Div grow>
-            <SiteLogo />
-          </Div>
-        </Div>
-        <Div>
-          <FooterDisclaimer />
+        <Div column py={24} gap={24}>
+          <SiteLogo />
+          <FooterDisclaimer mt={24} />
         </Div>
         <Divider
           as={"div"}
-          px={16}
-          mt={10}
-          pb={20}
           borderColor={"brown-4"}
         />
         <Div
-          align="center"
-          justify="space-between"
-          py={4}
+          justify="flex-start"
+          py={24}
+          gap={24}
+          fx
+          column
         >
           <FooterCopyright />
-        </Div>
-        <Div
-          gap={16}
-          py={24}
-          color="brown-5"
-        >
           <FooterContacts />
         </Div>
       </Div>
-      <FooterSocials />
     </Div>
   );
 };
@@ -186,21 +141,21 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
     <Div
       column
       fx
-      px={pad ? 16 : undefined}
+      px={pad ? 40 : 0}
     >
       <Div
         column
-        bg="brown-6"
-        px={28}
       >
         <Div
           fx
-          py={48}
+          py={pad ? 40: 80}
+          gap={40}
+          justify="space-between"
         >
           <Div
             column
             align="flex-start"
-            gap={24}
+            gap={20}
             style={{ width: "450px" }}
           >
             <SiteLogo />
@@ -209,7 +164,6 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
           <Div
             justify="space-around"
             grow
-            ml={32}
           >
             <FooterMenus />
           </Div>
@@ -217,26 +171,22 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
 
         <Divider
           as={"div"}
-          mt={10}
           borderColor={"brown-4"}
         />
         <FooterPills />
         <Divider
           as={"div"}
-          mt={10}
           borderColor={"brown-4"}
         />
         <Div
           align="center"
           justify="space-between"
-          py={24}
+          py={40}
         >
           <FooterCopyright />
           <FooterContacts />
         </Div>
       </Div>
-
-      <FooterSocials />
     </Div>
   );
 };

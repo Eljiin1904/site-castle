@@ -95,7 +95,9 @@ export const useAppStyle = () => {
           "\n" +
           `._bottom-${unit} { bottom: ${unit}px; }` +
           "\n" +
-          `._font-size-${unit} { font-size: ${unit}px; }`,
+          `._font-size-${unit} { font-size: ${unit}px; }` +
+          "\n" +
+          `._line-height-${unit} { line-height: ${unit}px; }`,
       )
       .join("\n\n");
 

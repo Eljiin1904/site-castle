@@ -3,20 +3,22 @@ import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const FooterDisclaimer = () => {
+export const FooterDisclaimer = ({mt = 32} : {mt?: Unit}) => {
   const { t } = useTranslation();
   return (
     <Span
       size={12}
       color="dark-sand"
+      weight="medium"
+      lineHeight={20}
     >
       {
         `Sand Casino ${t('footer.disclaimer')}`
       }
       <Div
-        gap={20}
-        my={20}
-        justify="space-around"
+        gap={24}
+        mt={mt}
+        justify="flex-start"
       >
         <Circle
           as="div"
@@ -40,6 +42,7 @@ export const FooterDisclaimer = () => {
             <Span
               color="white"
               fontSize={12}
+              lineHeight={12}
             >
               {t('footer.aware')}
             </Span>
@@ -90,6 +93,7 @@ export const FooterDisclaimer = () => {
             <Span
               color="white"
               fontSize={10}
+              lineHeight={12}
             >
                {t('footer.certified')}
             </Span>

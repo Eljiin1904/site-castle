@@ -6,6 +6,7 @@ export interface SiteFrontendConfig extends FrontendConfig {
   twitterURL: string;
   discordURL: string;
   telegramURL: string;
+  instagramURL: string;
   hcaptchaSiteKey: string;
   pushPublicKey: string;
   intercomAppId: string;
@@ -21,6 +22,7 @@ config.twitterHandle = "@chickendotgg";
 config.twitterURL = "https://x.com/chickendotgg";
 config.discordURL = "https://discord.com/invite/chickengg";
 config.telegramURL = "https://t.me/chickendotgg";
+config.instagramURL = "https://t.me/chickendotgg";
 config.intercomAppId = "b81gk8j9";
 config.gtmId = "GTM-WV5NCV94";
 

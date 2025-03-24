@@ -2,52 +2,14 @@ import { SVGProps } from "react";
 
 export const SvgETH = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    viewBox="0 0 40 40"
+    viewBox="0 0 15 25"
     {...props}
   >
-    <circle
-      cx={20}
-      cy={20}
-      r={20}
-      style={{
-        fill: "#627eea",
-        strokeWidth: 0,
-      }}
-    />
-    <path
-      d="M20.62 5v11.09l9.37 4.18L20.62 5z"
-      style={{
-        fill: "rgba(255,255,255,.6)",
-        strokeWidth: 0,
-      }}
-    />
-    <path
-      d="m20.62 5-9.37 15.27 9.37-4.18V5z"
-      style={{
-        fill: "#fff",
-        strokeWidth: 0,
-      }}
-    />
-    <path
-      d="M20.62 27.46v7.53L30 22.02l-9.38 5.44z"
-      style={{
-        fill: "rgba(255,255,255,.6)",
-        strokeWidth: 0,
-      }}
-    />
-    <path
-      d="M20.62 34.99v-7.53l-9.37-5.44 9.37 12.97z"
-      style={{
-        fill: "#fff",
-        strokeWidth: 0,
-      }}
-    />
-    <path
-      d="m20.62 25.71 9.37-5.44-9.37-4.18v9.62z"
-      style={{
-        fill: "rgba(255,255,255,.2)",
-        strokeWidth: 0,
-      }}
-    />
+  <path d="M7.49787 0L7.33398 0.55658V16.7058L7.49787 16.8693L14.9955 12.4383L7.49787 0Z" fill="#D6D6D6"/>
+  <path d="M7.4978 0L0 12.4383L7.4978 16.8693V9.0309V0Z" fill="white"/>
+  <path d="M7.49764 18.2881L7.40527 18.4007V24.1533L7.49764 24.4229L14.9998 13.8594L7.49764 18.2881Z" fill="#A1A1A1"/>
+  <path d="M7.4978 24.4229V18.2881L0 13.8594L7.4978 24.4229Z" fill="white"/>
+  <path d="M7.49805 16.8687L14.9957 12.4376L7.49805 9.03027V16.8687Z" fill="#E3E3E3"/>
+  <path d="M0 12.4376L7.4978 16.8687V9.03027L0 12.4376Z" fill="#B7B7B7"/>
   </svg>
 );

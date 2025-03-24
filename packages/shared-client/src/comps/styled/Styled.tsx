@@ -74,6 +74,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
     cursor?: "auto" | "pointer" | "grab" | "not-allowed";
     pointerEvents?: "auto" | "none" | "all";
     fontSize?: Unit;
+    lineHeight?: Unit;
     fontFamily?: "text" | "title";
     fontWeight?: "thin"| "light" | "regular" | "medium" | "semi-bold" | "bold";
     fontStyle?: "normal" | "italic" | "oblique";
@@ -174,6 +175,7 @@ export function Styled<T extends ElementType>({
   cursor,
   pointerEvents,
   fontSize,
+  lineHeight,
   fontFamily,
   fontWeight,
   fontStyle,
@@ -229,6 +231,7 @@ export function Styled<T extends ElementType>({
         [`_cursor-${cursor}`]: cursor,
         [`_pointer-events-${pointerEvents}`]: pointerEvents,
         [`_font-size-${fontSize}`]: fontSize,
+        [`_line-height-${lineHeight}`]: lineHeight,
         [`_font-family-${fontFamily}`]: fontFamily,
         [`_font-weight-${fontWeight}`]: fontWeight,
         [`_text-decoration-${textDecoration}`]: textDecoration,

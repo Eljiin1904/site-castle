@@ -5,7 +5,9 @@ export const FooterCopyright = () => {
   const {t} = useTranslation();
   return (
     <Span
-      size={13}
+      size={12}
+      lineHeight={20}
+      weight="medium"
       color="dark-sand"
     >
       {`Copyright © 2025 SandCasino. ${t('footer.copyright')}`}
