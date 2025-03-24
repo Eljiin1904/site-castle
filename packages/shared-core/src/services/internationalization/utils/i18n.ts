@@ -3,10 +3,10 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from 'i18next-http-backend';
 
-//"https://static.brickrax.com/locales/{{lng}}/{{ns}}.json",
+//"http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json",
 const locizeOptions = {
   referenceLng: "en",
-  loadPath: "http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json",
+  loadPath: "https://static.brickrax.com/locales/{{lng}}/{{ns}}.json",
   crossDomain: true,
 };
 
