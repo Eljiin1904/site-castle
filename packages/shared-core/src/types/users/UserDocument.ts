@@ -41,6 +41,7 @@ export interface UserDocument {
   googleId?: string;
   discordId?: string;
   twitchId?: string;
+  walletAddress?: string;
   affiliate: UserAffiliateData;
   tfa: User2faData;
   kyc: UserKycData;

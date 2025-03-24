@@ -74,6 +74,7 @@ export function initHttp(app = express()) {
   // passport.use(Http.discordStrategy());
   // passport.use(Http.googleStrategy());
   passport.use(Http.localStrategy());
+  passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
   // passport.use(Http.twitchStrategy());
 

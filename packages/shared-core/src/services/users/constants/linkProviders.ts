@@ -1,1 +1,1 @@
-export const linkProviders = ["discord", "google", "metamask", "steam", "twitch"] as const;
+export const linkProviders = ["discord", "google", "siwe", "steam", "twitch"] as const;

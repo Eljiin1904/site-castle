@@ -9,6 +9,7 @@
   "dependencies": {
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "ethers": "^6.13.5",
     "events": "^3.3.0",
     "i18next": "^24.2.2",
     "i18next-browser-languagedetector": "^8.0.4",

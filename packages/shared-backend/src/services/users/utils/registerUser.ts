@@ -23,6 +23,7 @@ export async function registerUser(
     googleId,
     discordId,
     twitchId,
+    walletAddress,
     referralCode,
   }: {
     strategy: "local" | UserLinkProvider;
@@ -34,6 +35,7 @@ export async function registerUser(
     googleId?: string;
     discordId?: string;
     twitchId?: string;
+    walletAddress?: string;
     referralCode?: string;
   },
 ) {
@@ -48,6 +50,7 @@ export async function registerUser(
     googleId,
     discordId,
     twitchId,
+    walletAddress,
     referer,
     passwordHash,
   });

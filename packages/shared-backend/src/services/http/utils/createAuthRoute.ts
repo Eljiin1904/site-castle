@@ -15,31 +15,16 @@ import { Ids } from "@server/services/ids";
 import { Security } from "@server/services/security";
 import { hcaptchaHandler } from "../handlers/hcaptchaHandler";
 import { regionHandler } from "../handlers/regionHandler";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 type RouteOptions = {
-  type:
-    | "all"
-    | "get"
-    | "post"
-    | "put"
-    | "delete"
-    | "patch"
-    | "options"
-    | "head";
+  type: "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
   path: string;
   strategy: "local" | UserLinkProvider;
   captcha?: boolean;
   finalizes?: boolean;
-  onFail?: (
-    err: unknown,
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => void | Promise<void>;
-  onSuccess?: (
-    req: Request & Express.AuthenticatedRequest,
-    res: Response,
-  ) => void | Promise<void>;
+  onFail?: (err: unknown, req: Request, res: Response, next: NextFunction) => void | Promise<void>;
+  onSuccess?: (req: Request & Express.AuthenticatedRequest, res: Response) => void | Promise<void>;
 };
 
 export function createAuthRoute({
@@ -51,6 +36,8 @@ export function createAuthRoute({
   onFail,
   onSuccess,
 }: RouteOptions) {
+  const logger = getServerLogger({});
+  logger.debug("starting auth handling");
   const handlers: (RequestHandler | ErrorRequestHandler)[] = [];
 
   handlers.push(regionHandler);

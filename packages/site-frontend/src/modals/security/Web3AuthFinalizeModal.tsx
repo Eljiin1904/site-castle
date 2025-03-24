@@ -1,4 +1,4 @@
-import { Strings } from "@core/services/strings";
+import { Http } from "@client/services/http";
 import { UserLinkProvider } from "@core/types/users/UserLinkProvider";
 import { Modal } from "@client/comps/modal/Modal";
 import { ModalBody } from "@client/comps/modal/ModalBody";
@@ -9,23 +9,48 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { useAuthStatus, useAuthRedirect, useAuthSearch } from "#app/hooks/security/useAuthState";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { ethers } from "ethers";
 import { Security } from "#app/services/security";
 import { Users } from "#app/services/users";
-import { AuthenticatorLoginModal } from "./AuthenticatorLoginModal";
 import { SocialAuthRegisterModal } from "./SocialAuthRegisterModal";
 
-export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvider }) => {
+type SignatureCapture = {
+  nonce: string;
+  signature: string;
+};
+
+export const Web3AuthFinalizeModal = ({
+  address,
+  signer,
+  provider,
+  walletProvider,
+}: {
+  address: string;
+  signer: ethers.JsonRpcSigner | null;
+  provider: UserLinkProvider;
+  walletProvider: string;
+}) => {
   const [, , removeStatus] = useAuthStatus();
   const [, , removeReturnTo] = useAuthRedirect();
-  const [search, , removeSearch] = useAuthSearch();
+  const [, , removeSearch] = useAuthSearch();
   const dispatch = useAppDispatch();
 
   useMount(
     async () => {
+      console.log("Web3Auth modal mounted with account " + address);
+      const signCapture = await signMessage();
+      if (signCapture == null) {
+        console.log("no signature captured");
+        return;
+      }
+      const nonce = signCapture.nonce;
+      const signature = signCapture.signature;
+
       removeStatus();
       removeSearch();
       removeReturnTo();
 
+      const search = "?address=" + address + "&nonce=" + nonce + "&signature=" + signature;
       const res = await Security.authSocial({ provider, search });
 
       if (res.action === "register") {
@@ -33,19 +58,8 @@ export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvid
           "primary",
           <SocialAuthRegisterModal
             provider={provider}
-            emailRequired={res.emailRequired}
+            emailRequired={true}
             linkToken={res.linkToken}
-          />,
-        );
-      } else if (res.action === "link") {
-        Toasts.success(`${Strings.capitalize(provider)} linked.`);
-        Dialogs.close("primary");
-      } else if (res.action === "2fa") {
-        Dialogs.open(
-          "primary",
-          <AuthenticatorLoginModal
-            userId={res.userId}
-            loginToken={res.loginToken}
           />,
         );
       } else if (res.action === "login") {
@@ -60,6 +74,24 @@ export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvid
     },
   );
 
+  const signMessage = async (): Promise<SignatureCapture | undefined> => {
+    if (!signer || !address) {
+      console.log("signer or account missing");
+      return;
+    }
+
+    // Fetch nonce from the backend
+    const data = { address: address };
+    const resp = await Http.post("/auth/nonce", data);
+
+    const { nonce } = await resp;
+    console.log("got a nonce back:" + nonce);
+
+    // Sign the nonce
+    const signature = await signer.signMessage(nonce);
+    return { nonce, signature };
+  };
+
   return (
     <Modal
       className="AuthFinalizeModal"
@@ -67,7 +99,7 @@ export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvid
       disableBackdrop
     >
       <ModalHeader
-        heading={`Logging in with ${Strings.capitalize(provider)}`}
+        heading={`Logging in with ${walletProvider}`}
         hideClose
       />
       <ModalBody>

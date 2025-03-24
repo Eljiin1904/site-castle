@@ -16,6 +16,7 @@ export async function createUser({
   googleId,
   discordId,
   twitchId,
+  walletAddress,
 }: {
   referer?: UserReferer;
   username: string;
@@ -27,6 +28,7 @@ export async function createUser({
   googleId?: string;
   discordId?: string;
   twitchId?: string;
+  walletAddress?: string;
 }) {
   const userId = Ids.long();
 
@@ -64,6 +66,7 @@ export async function createUser({
     googleId,
     discordId,
     twitchId,
+    walletAddress,
     affiliate: {
       referralCount: 0,
       referralXp: 0,

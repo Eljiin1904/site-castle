@@ -5,6 +5,7 @@ const kindMap: Record<TokenKind, boolean> = {
   "exclude-confirm": true,
   "link-discord": true,
   "link-google": true,
+  "link-siwe": true,
   "link-steam": true,
   "link-twitch": true,
   "otp-action": true,

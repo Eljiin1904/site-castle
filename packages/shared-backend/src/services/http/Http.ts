@@ -5,6 +5,7 @@ export * from "./handlers/maintenanceHandler";
 export * from "./strategies/discordStrategy";
 export * from "./strategies/googleStrategy";
 export * from "./strategies/localStrategy";
+export * from "./strategies/siweStrategy";
 export * from "./strategies/steamStrategy";
 export * from "./strategies/twitchStrategy";
 
