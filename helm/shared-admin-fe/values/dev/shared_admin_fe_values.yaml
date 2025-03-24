@@ -61,7 +61,7 @@ volumes: []
 volumeMounts: []
 
 nodeSelector: {}
-tolerations: {}
+tolerations: []   # <-- Changed to an empty list instead of an object.
 affinity: {}
 
 namespace: shared-admin-frontend
