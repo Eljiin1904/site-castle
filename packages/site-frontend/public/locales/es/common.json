@@ -6,5 +6,8 @@
   "info": "Información",
   "confirm": "Confirmar",
   "cancel": "Cancelar",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "amount": "Cantidad",
+  "clear": "Limpiar",
+  "enterBetAmount": "Ingrese la cantidad de la apuesta..."
 }

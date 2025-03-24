@@ -7,11 +7,13 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Double } from "#app/services/double";
 import { BetBoardTicketCard } from "./BetBoardTicketCard";
 import { DoubleBetIcon } from "./DoubleBetIcon";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetBoardTicketGrid = ({ betKind }: { betKind: DoubleBetKind }) => {
   const tickets = useAppSelector((x) => x.double.tickets);
   const round = useAppSelector((x) => x.double.round);
   const layout = useAppSelector((x) => x.style.mainLayout);
+  const {t} = useTranslation(["games\\double"]);
   const small = layout === "mobile";
 
   const { accent, multiplier } = useMemo(() => {
@@ -68,7 +70,7 @@ export const BetBoardTicketGrid = ({ betKind }: { betKind: DoubleBetKind }) => {
       >
         <Div gap={12}  center>
           {small && <DoubleBetIcon betKind={betKind} />}
-          <Span color="dark-sand" weight="medium">{`${betCount} Bets`}</Span>
+          <Span color="dark-sand" weight="medium">{ t("games\\double:bet",{count: betCount})}</Span>
         </Div>
         <Tokens
           value={betAmount * multiplier}

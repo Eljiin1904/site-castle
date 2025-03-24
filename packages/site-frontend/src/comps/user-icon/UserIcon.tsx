@@ -20,7 +20,6 @@ export const UserIcon: FC<UserIconProps> = ({
   ...forwardProps
 }) => {
   
-  console.log(avatarIndex?.toString()?.padStart(3, "0"));
   return (
     <Img
       className={classNames("UserIcon", className)}

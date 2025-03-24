@@ -3,17 +3,17 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from 'i18next-http-backend';
 
-//"http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json",
+//"https://static.brickrax.com/locales/{{lng}}/{{ns}}.json",
 const locizeOptions = {
   referenceLng: "en",
-  loadPath: "https://static.brickrax.com/locales/{{lng}}/{{ns}}.json",
+  loadPath: "http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json",
   crossDomain: true,
 };
 
 const options: InitOptions = {
   debug: true,
   fallbackLng: "en",
-  ns: ["translation", "validations", "common"],
+  ns: ["translation", "validations", "common","games\\double"],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
   interpolation: {

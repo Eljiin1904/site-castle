@@ -1,0 +1,8 @@
+{
+  "placeBet": "Place Bet",
+  "betPlaced": "Bet Placed",
+  "betBoardHeader": "Double Game Bets",
+  "bet_zero": "{{count}} Bet",
+  "bet_one": "{{count}} Bet",
+  "bet_other": "{{count}} Bets"
+}

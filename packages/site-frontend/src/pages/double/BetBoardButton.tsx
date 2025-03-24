@@ -9,6 +9,7 @@ import { usePostTicket } from "./usePostTicket";
 import "./BetBoardButton.scss";
 import { Img } from "@client/comps/img/Img";
 import { Vector } from "@client/comps/vector/Vector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
   const userId = useAppSelector((x) => x.user._id);
@@ -61,7 +62,7 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
 const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
   const path = Double.getImageFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
-
+  const {t} = useTranslation(["games.double"]);
   return (
     <Div
       column
@@ -81,7 +82,7 @@ const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlac
         className="label"
         size={12}
       >
-        {betPlaced ? "Bet Placed" : "Place Bet"}
+        {betPlaced ? t("double:betPlaced") : t("double:placeBet")}
       </Span>
       <Div
         grow
@@ -101,7 +102,7 @@ const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlac
 const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
   const path = Double.getImageFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
-
+  const {t} = useTranslation(["games.double"])
   return (
     <Div
       fx
@@ -120,7 +121,7 @@ const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlac
         className="label"
         weight="semi-bold"
       >
-        {betPlaced ? "Bet Placed" : "Place Bet"}
+         {betPlaced ? t("double:betPlaced") : t("double:placeBet")}
       </Span>
       <Div
         grow
@@ -146,7 +147,7 @@ const LaptopDesktopContent = ({
 }) => {
   const svg = Double.getIconFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
-
+  const {t} = useTranslation(["games\\double"]);
   return (
     <Div
       fx
@@ -161,7 +162,7 @@ const LaptopDesktopContent = ({
         weight="semi-bold"
         fontSize={16}
       >
-        {betPlaced ? "Bet Placed" : "Place Bet"}
+        {betPlaced ? t("games\\double:betPlaced") : t("games\\double:placeBet")}
       </Span>
       <Div
         grow
