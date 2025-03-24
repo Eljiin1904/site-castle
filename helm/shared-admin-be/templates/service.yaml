@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: castle-admin-backend
+  name: {{ include "castle-admin-backend.fullname" . | default "castle-admin-backend" }}
   labels:
     app: castle-admin-backend
 spec:
