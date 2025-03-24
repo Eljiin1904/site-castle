@@ -11,10 +11,21 @@ spec:
       app: castle-frontend
   template:
     metadata:
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
       labels:
         app: castle-frontend
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       serviceAccountName: {{ .Values.serviceAccount.name | default "default" }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: castle-frontend
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
@@ -22,15 +33,23 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.app.port }}
-          # env:
-          #   - name: PORT
-          #     value: "{{ .Values.app.port }}"
-          livenessProbe: 
+          env:
+            - name: PORT
+              value: "{{ .Values.app.port }}"
+          {{- if .Values.livenessProbe }}
+          livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe: 
+          {{- end }}
+          {{- if .Values.readinessProbe }}
+          readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
+      volumes:
+        {{- toYaml .Values.volumes | nindent 8 }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       tolerations:

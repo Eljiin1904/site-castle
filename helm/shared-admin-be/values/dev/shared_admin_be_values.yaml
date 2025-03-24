@@ -22,7 +22,6 @@ podLabels: {}
 podSecurityContext: {}
 securityContext: {}
 
-# Use a single service block for consistency.
 service:
   type: ClusterIP
   port: 3000
@@ -33,14 +32,25 @@ ingress:
 
 secrets:
   app: "shared-admin-backend"
-  
+
 app:
   port: 3000
 
 resources: {}
 
-livenessProbe: {}
-readinessProbe: {}
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
 
 autoscaling:
   enabled: false
@@ -52,11 +62,11 @@ volumes: []
 volumeMounts: []
 
 nodeSelector: {}
-tolerations: {}
+tolerations: []
 affinity: {}
 
 namespace: shared-admin-backend
 
-# Explicit labels for consistency
+# Explicit labels to ensure consistency
 labels:
   app: castle-admin-backend
