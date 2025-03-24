@@ -7,6 +7,8 @@ import { Link } from "@client/comps/link/Link";
 import { MenuItem, useMenuData } from "./useMenuData";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { StyledProps } from "@client/comps/styled/Styled";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const FooterMenus = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
@@ -19,7 +21,7 @@ export const FooterMenus = () => {
         <Conditional
           value={mainLayout}
           mobile={<DisplayMenuSectionsMobile />}
-          tablet={<DisplayMenuSectionsNonMobile />}
+          tablet={<DisplayMenuSectionsNonMobile justify="space-between" />}
           laptop={<DisplayMenuSectionsNonMobile />}
           desktop={<DisplayMenuSectionsNonMobile />}
         />
@@ -27,12 +29,12 @@ export const FooterMenus = () => {
     </Fragment>
   );
 };
-const DisplayMenuSectionsNonMobile = () => {
+const DisplayMenuSectionsNonMobile = ({justify = "space-around"}: {justify?: StyledProps['justifyContent']}) => {
   const { games, support, community } = useMenuData();
   return (
     <Div
       width={"full"}
-      justifyContent="space-around"
+      justifyContent={justify}
     >
       <MenuSection {...games} />
       <MenuSection {...support} />
@@ -46,59 +48,24 @@ const DisplayMenuSectionsMobile = () => {
   return (
     <Div
       width={"full"}
-      justify="space-around"
+      
       column
+      gap={32}
     >
       <Div
-        justify="space-between"
-        pb={12}
+        justify="flex-start"
+        gap={100}
       >
         <MenuSection {...games} />
-        <MenuSection {...support} />
+        <MenuSection {...support} />      
       </Div>
 
       <Div
-        column
-        gap={12}
-        mt={20}
+        justify="flex-start"
+        gap={100}
       >
-        <Span
-          family="title"
-          weight="bold"
-          color="white"
-          textTransform="uppercase"
-          size={12}
-          mb={8}
-        >
-          {community.heading}
-        </Span>
-        <Div
-          justify="space-between"
-          flexFlow="row"
-        >
-          {community.items.map(({ label, ...itemProps }, i) => (
-            <Link
-              key={i}
-              {...itemProps}
-              style={{ lineHeight: 1.5 }}
-            >
-              {itemProps.type === "a" && (
-                <Vector
-                  as={itemProps.icon || SvgExternal}
-                  size={16}
-                  color="dark-sand"
-                  mr={10}
-                />
-              )}
-              <Span
-                weight="medium"
-                color="dark-sand"
-              >
-                {label}
-              </Span>
-            </Link>
-          ))}
-        </Div>
+         <MenuSection heading={community.heading} items={community.items.filter((x,pos) => pos%2 === 0)} />
+         <MenuSection heading={""} items={community.items.filter((x,pos) => pos%2 === 1)}  />
       </Div>
     </Div>
   );
@@ -106,10 +73,12 @@ const DisplayMenuSectionsMobile = () => {
 
 const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] }) => {
   
+  const small = useIsMobileLayout()
   return (
     <Div
       column
       gap={16}
+     style={{width: small ? "50%": "auto"}}
     >
       <Span
         family="title"

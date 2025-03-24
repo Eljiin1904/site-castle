@@ -15,10 +15,23 @@ import { SvgPEPE } from "@client/svgs/crypto/SvgPEPE";
 import { SvgUSDT } from "@client/svgs/crypto/SvgUSDT";
 import { SvgXRP } from "@client/svgs/crypto/SvgXRP";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
 export const FooterPills = ({ wrap }: { wrap?: boolean }) => {
   const {t} = useTranslation();
-
+  
+  const layout = useAppSelector((x) => x.style.mainLayout);
+  
+  let gap: 20 | 24 | 32 |40 = 40;
+  switch (layout) {
+    case "mobile":
+      gap = 20;
+      break;
+    case "tablet":
+      gap = 24;
+      break;
+  }
+  
   const cryptoOptions = [
     { cryptoIcon: SvgBTC, key: "BTC" },
     { cryptoIcon: SvgETH, key: "ETH" },
@@ -37,8 +50,8 @@ export const FooterPills = ({ wrap }: { wrap?: boolean }) => {
   return (
     <Div
       flexFlow={wrap ? "row-wrap" : undefined}
-      gap={40}
-      py={24}
+      gap={gap}
+      py={gap}
       align="center"
       alignItems="center"
       justifyContent="space-between"
@@ -51,7 +64,7 @@ export const FooterPills = ({ wrap }: { wrap?: boolean }) => {
       >
        {t("footer.acceptedTokens").toUpperCase()}
       </Div>
-      <Div gap={24} wrap>
+      <Div gap={layout === 'mobile' ? 20 : 24} wrap>
         {cryptoOptions.map((option, i) => (
           <CrytoCircle key={option.key} cryptoIcon={option.cryptoIcon} />
         ))}

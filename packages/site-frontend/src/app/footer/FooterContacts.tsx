@@ -2,11 +2,12 @@ import { Fragment } from "react";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const FooterContacts = () => {
   const {t} = useTranslation();
-
-  return (<Div gap={20}>
+  const small = useIsMobileLayout();
+  return (<Div gap={20} {...(small ? {flexFlow: "column"} : {})}>
       <Div gap={2}>
         <Span
           size={12}

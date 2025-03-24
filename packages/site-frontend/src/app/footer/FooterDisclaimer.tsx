@@ -3,7 +3,7 @@ import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const FooterDisclaimer = () => {
+export const FooterDisclaimer = ({mt = 32} : {mt?: Unit}) => {
   const { t } = useTranslation();
   return (
     <Span
@@ -17,7 +17,7 @@ export const FooterDisclaimer = () => {
       }
       <Div
         gap={24}
-        mt={32}
+        mt={mt}
         justify="flex-start"
       >
         <Circle
