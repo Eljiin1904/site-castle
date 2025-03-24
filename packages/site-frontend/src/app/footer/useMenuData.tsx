@@ -6,6 +6,9 @@ import { SvgTwitter } from "@client/svgs/brands/SvgTwitter";
 import { SvgInstagram } from "@client/svgs/brands/SvgInstagram";
 import { SvgFacebook } from "@client/svgs/brands/SvgFacebook";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { SvgDiscord } from "@client/svgs/brands/SvgDiscord";
+import { SvgTelegram } from "@client/svgs/brands/SvgTelegram";
+import { SvgKick } from "@client/svgs/brands/SvgKick";
 
 export type MenuItem = LinkProps & { label: string; href?: string; icon?: Svg };
 
@@ -78,10 +81,12 @@ export function useMenuData() {
       },
       community: {
         heading: t("footer.socials"),
-        items: [
-          { type: "a", label: " Facebook", href: config.discordURL, icon: SvgFacebook },
-          { type: "a", label: "Twitter", href: config.twitterURL, icon: SvgTwitter },
-          { type: "a", label: "Instagram", href: config.telegramURL, icon: SvgInstagram },
+        items: [  
+          { type: "a", label: "X", href: config.twitterURL, icon: SvgTwitter },
+          { type: "a", label: "Instagram", href: config.instagramURL, icon: SvgInstagram },
+          { type: "a", label: "Telegram", href: config.telegramURL, icon: SvgTelegram },
+          { type: "a", label: " Discord", href: config.discordURL, icon: SvgDiscord },
+          { type: "a", label: "Kick", href: config.twitterURL, icon: SvgKick }          
         ],
       },
     }),

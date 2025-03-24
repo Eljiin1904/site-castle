@@ -235,8 +235,6 @@ const FooterLaptopDesktop = ({ pad }: { pad?: boolean }) => {
           <FooterContacts />
         </Div>
       </Div>
-
-      <FooterSocials />
     </Div>
   );
 };

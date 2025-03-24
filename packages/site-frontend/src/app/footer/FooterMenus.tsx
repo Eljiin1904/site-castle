@@ -109,15 +109,15 @@ const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] })
   return (
     <Div
       column
-      gap={12}
+      gap={16}
     >
       <Span
         family="title"
-        weight="bold"
-        color="white"
+        weight="regular"
+        color="light-sand"
         textTransform="uppercase"
-        size={12}
-        mb={8}
+        lineHeight={24}
+        size={16}
       >
         {heading}
       </Span>
@@ -125,7 +125,6 @@ const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] })
         <Link
           key={i}
           {...itemProps}
-          style={{ lineHeight: 1.5 }}
         >
           {itemProps.type === "a" && (
             <Vector
@@ -138,6 +137,8 @@ const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] })
           <Span
             weight="medium"
             color="dark-sand"
+            size={14}
+            lineHeight={20}
           >
             {label}
           </Span>

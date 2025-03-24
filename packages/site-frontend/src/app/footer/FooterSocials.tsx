@@ -26,14 +26,14 @@ export const FooterSocials = () => {
 };
 
 const FooterSocialMobile = () => {
-  const { games, support, community } = useMenuData();
+  const { community } = useMenuData();
   return (
     <Fragment>
       <Div
         flexFlow="column"
-        py={36}
-        px={24}
-        mt={16}
+        // py={36}
+        // px={24}
+        // mt={16}
         bg="brown-6"
       >
         <Div
