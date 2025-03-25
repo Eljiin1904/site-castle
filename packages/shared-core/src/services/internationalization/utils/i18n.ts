@@ -13,7 +13,7 @@ const locizeOptions = {
 const options: InitOptions = {
   debug: true,
   fallbackLng: "en",
-  ns: ["translation", "validations", "common","games\\double"],
+  ns: ["translation", "validations","fields", "common","games\\double"],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
   interpolation: {

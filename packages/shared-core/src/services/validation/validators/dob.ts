@@ -19,7 +19,7 @@ export const dob = (name: string = "Date of birth") => {
       ) {
         return ctx.createError({ message: {
           key: 'validations.mixed.required',
-          value: {label: name}
+          value: name
         } });
       }
 

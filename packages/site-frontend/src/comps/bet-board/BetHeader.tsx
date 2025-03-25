@@ -1,8 +1,9 @@
 import { Div } from "@client/comps/div/Div";
 import { BetHeaderColumn } from "./BetHeaderColumn";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { SiteGame } from "@core/types/site/SiteGame";
 
-export const BetHeader = () => {
+export const BetHeader = ({game = 'all'}: {game?: SiteGame | 'all'}) => {
 
   const {t} = useTranslation();
   return (
@@ -17,7 +18,7 @@ export const BetHeader = () => {
       borderTop
       borderBottom
     >
-      <BetHeaderColumn header={t('bets.headers.game')} flexBasis={0} grow={3} />
+      {game === 'all' && <BetHeaderColumn header={t('bets.headers.game')} flexBasis={0} grow={3} />}
       <BetHeaderColumn header={t('bets.headers.user')} flexBasis={0} grow={4}  hideInMobile={true}/>
       <BetHeaderColumn header={t('bets.headers.time')} flexBasis={0} grow={3} hideInMobile={true} />
       <BetHeaderColumn header={t('bets.headers.amount')} flexBasis={0} grow={4}  hideInMobile={true}/>

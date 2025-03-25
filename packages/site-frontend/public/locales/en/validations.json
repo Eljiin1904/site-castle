@@ -79,6 +79,16 @@
       "imageSize": "Image size must be at least {{value.width}}x{{value.height}}.",
       "cropArea": "Invalid crop area.",
       "required": "{{value}} is required."
+    },
+    "firstName": {
+      "field": "First Name",
+      "required": "{{value}} is required.",
+      "max": "{{value.label}} must be less than {{value.max}} characters."
+    },
+    "lastName": {
+      "field": "Last Name",
+      "required": "{{value}} is required.",
+      "max": "{{value.label}} must be less than {{value.max}} characters."
     }
   },
   "errors": {

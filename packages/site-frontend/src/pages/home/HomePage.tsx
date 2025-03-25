@@ -20,7 +20,7 @@ export const HomePage = () => {
   const filterGames = useAppSelector((x) => x.site.filter) || "all";
   const games = useAppSelector((x) => x.site.games) || [];
   const small = useIsMobileLayout();
-
+  const {t} = useTranslation();
   const featuredGames = games?.filter((x) => x.featured);
   
   return (
@@ -51,7 +51,7 @@ export const HomePage = () => {
       <CategoriesSection />
       
       {authenticated && <>        
-        <BetBoard />
+        <BetBoard title={t("bets.recentBets")}/>
       </>}
     </SitePage>
   );

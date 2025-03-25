@@ -7,14 +7,13 @@ import classNames from "classnames";
 
 import { BetColumn } from "./BetColumn";
 import { Numbers } from "@core/services/numbers";
-import { Intimal } from "@core/services/intimal";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgMoney } from "@client/svgs/common/SvgMoney";
+import { SiteGame } from "@core/types/site/SiteGame";
 
-export const BetRow = ({ bet, inserted, animate }: {
+export const BetRow = ({ bet, inserted, animate, game='all' }: {
    bet: SiteBetDocument 
    inserted: boolean | undefined;
    animate: boolean;
+  game?: SiteGame | 'all';
   }) => {
   
   const small = useIsMobileLayout();
@@ -38,7 +37,7 @@ export const BetRow = ({ bet, inserted, animate }: {
     borderColor="brown-4"
     borderBottom
     >
-      <BetColumn flexBasis={0} grow={3}>{bet.game}</BetColumn>
+      {game  === 'all' && <BetColumn flexBasis={0} grow={3}>{bet.game}</BetColumn>}
       <BetColumn flexBasis={0} grow={4}  hideInMobile={true}>{username}</BetColumn>
       <BetColumn flexBasis={0} grow={3} hideInMobile={true} >{bet.timestamp.toLocaleTimeString([], {
         hour: "numeric",

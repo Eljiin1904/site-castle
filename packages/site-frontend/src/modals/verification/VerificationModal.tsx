@@ -5,6 +5,7 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { VerificationOneForm } from "./VerificationOneForm";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const VerificationModal = ({
   disableClose,
@@ -12,7 +13,7 @@ export const VerificationModal = ({
   disableClose?: boolean;
 }) => {
   const layout = useAppSelector((x) => x.style.bodyLayout);
-
+  const {t} = useTranslation();
   return (
     <Modal
       className="VerificationModal"
@@ -21,7 +22,7 @@ export const VerificationModal = ({
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Quick Account Setup"
+        heading={t("accountSetup.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody
@@ -30,11 +31,9 @@ export const VerificationModal = ({
       >
         <Span
           pb={16}
-          borderBottom
+          color="dark-sand"
         >
-          {
-            "A few quick details to secure your account. It only takes a few seconds!"
-          }
+          {t("accountSetup.description")}
         </Span>
         <VerificationOneForm
           layout={layout}

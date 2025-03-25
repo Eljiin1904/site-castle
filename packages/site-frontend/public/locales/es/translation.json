@@ -92,6 +92,11 @@
     },
     "success": "¡Bienvenido de nuevo, {{username}}!"
   },
+  "accountSetup": {
+    "title": "Configuración de la cuenta",
+    "description": "Algunos detalles rápidos para asegurar su cuenta. ¡Solo toma unos segundos!",
+    "completed": "Configuración de la cuenta completada."
+  },
   "forgot": {
     "title": "Olvidé mi contraseña",
     "description": "Por favor, ingrese el correo electrónico asociado con su cuenta.",

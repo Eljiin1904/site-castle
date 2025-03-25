@@ -8,6 +8,7 @@ import { IntegerInput } from "./IntegerInput";
 import { Dropdown } from "../dropdown/Dropdown";
 import { Span } from "../span/Span";
 import "./DobInput.scss";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export type DobInputProps = StyledLayoutProps & {
   value: Birthday | undefined;
@@ -25,6 +26,7 @@ export const DobInput: FC<DobInputProps> = ({
   error,
   onChange,
 }) => {
+  const {t} = useTranslation(["common"]);
   const handleChange = (key: keyof Birthday, x: number | undefined) => {
     if (!value) {
       value = { day: 0, month: 1, year: 0 };
@@ -43,7 +45,7 @@ export const DobInput: FC<DobInputProps> = ({
     >
       <IntegerInput
         maxLength={2}
-        placeholder="Day"
+        placeholder={t("common:fields.dob.day")}
         disabled={disabled}
         value={value?.day === 0 ? undefined : value?.day}
         onChange={(x) => handleChange("day", x)}
@@ -56,7 +58,7 @@ export const DobInput: FC<DobInputProps> = ({
       />
       <IntegerInput
         maxLength={4}
-        placeholder="Year"
+        placeholder={t("common:fields.dob.year")}
         disabled={disabled}
         value={value?.year === 0 ? undefined : value?.year}
         onChange={(x) => handleChange("year", x)}
