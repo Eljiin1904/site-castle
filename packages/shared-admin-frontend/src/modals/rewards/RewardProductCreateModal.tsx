@@ -14,12 +14,11 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { SvgGem } from "@client/svgs/common/SvgGem";
 import { Rewards } from "#app/services/rewards";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const RewardProductCreateModal = ({
-  onSuccess,
-}: {
-  onSuccess: () => void;
-}) => {
+export const RewardProductCreateModal = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       image: Validation.image(512, 512),
@@ -68,7 +67,11 @@ export const RewardProductCreateModal = ({
                 type: "png",
                 path: "/icons/unknown",
               }}
-              error={form.errors.image}
+              error={
+                form.errors.image?.key
+                  ? t(form.errors.image.key, { value: form.errors.image.value })
+                  : undefined
+              }
               value={form.values.image}
               onChange={(x) => form.setValue("image", x)}
             />
@@ -90,7 +93,11 @@ export const RewardProductCreateModal = ({
               type="text"
               placeholder="Enter display name..."
               disabled={form.loading}
-              error={form.errors.displayName}
+              error={
+                form.errors.displayName?.key
+                  ? t(form.errors.displayName.key, { value: form.errors.displayName.value })
+                  : undefined
+              }
               value={form.values.displayName}
               onChange={(x) => form.setValue("displayName", x)}
             />
@@ -103,7 +110,11 @@ export const RewardProductCreateModal = ({
               placeholder="Enter gem cost..."
               iconLeft={SvgGem}
               disabled={form.loading}
-              error={form.errors.gemCost}
+              error={
+                form.errors.gemCost?.key
+                  ? t(form.errors.gemCost.key, { value: form.errors.gemCost.value })
+                  : undefined
+              }
               value={form.values.gemCost}
               onChange={(x) => form.setValue("gemCost", x)}
             />
@@ -115,11 +126,13 @@ export const RewardProductCreateModal = ({
                 type="text"
                 placeholder="Enter chest id..."
                 disabled={form.loading}
-                error={form.errors.chestId}
-                value={form.values.chestId}
-                onChange={(x) =>
-                  form.setValue("chestId", x?.replace(/[^a-z0-9]/gi, ""))
+                error={
+                  form.errors.chestId?.key
+                    ? t(form.errors.chestId.key, { value: form.errors.chestId.value })
+                    : undefined
                 }
+                value={form.values.chestId}
+                onChange={(x) => form.setValue("chestId", x?.replace(/[^a-z0-9]/gi, ""))}
               />
             </ModalSection>
           )}
@@ -130,7 +143,11 @@ export const RewardProductCreateModal = ({
                 type="currency"
                 placeholder="Enter token amount..."
                 disabled={form.loading}
-                error={form.errors.tokenAmount}
+                error={
+                  form.errors.tokenAmount?.key
+                    ? t(form.errors.tokenAmount.key, { value: form.errors.tokenAmount.value })
+                    : undefined
+                }
                 value={form.values.tokenAmount}
                 onChange={(x) => form.setValue("tokenAmount", x)}
               />

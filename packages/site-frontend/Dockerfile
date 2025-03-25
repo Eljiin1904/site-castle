@@ -1,8 +1,7 @@
 FROM node:23-alpine AS build
-# Setting up the work directory
-WORKDIR /pidwin
 ENV NODE_ENV=devcloud
 # Installing dependencies
+WORKDIR /pidwin
 COPY ./package*.json ./
 COPY ./tsconfig.base.json ./
 
@@ -21,6 +20,7 @@ WORKDIR /pidwin/packages/site-frontend
 RUN npm run build
 # Stage 2: Production image using NGINX to serve the built static assets
 FROM nginx:stable-alpine
+ENV NODE_ENV=devcloud
 COPY --from=build /pidwin/packages/site-frontend/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

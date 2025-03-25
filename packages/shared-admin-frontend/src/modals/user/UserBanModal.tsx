@@ -19,12 +19,14 @@ import { Checkbox } from "@client/comps/checkbox/Checkbox";
 import { Div } from "@client/comps/div/Div";
 import { Input } from "@client/comps/input/Input";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserBanModal = ({ user }: { user: UserDocument }) => {
   const current = user.ban;
   const isBanned = Users.isBanned(current);
   const userId = user._id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -93,9 +95,7 @@ export const UserBanModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addDays(Date.now(), 1))
-                    }
+                    onClick={() => form.setValue("endDate", addDays(Date.now(), 1))}
                   />
                   <Button
                     kind="secondary"
@@ -104,9 +104,7 @@ export const UserBanModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addDays(Date.now(), 7))
-                    }
+                    onClick={() => form.setValue("endDate", addDays(Date.now(), 7))}
                   />
                   <Button
                     kind="secondary"
@@ -115,9 +113,7 @@ export const UserBanModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addDays(Date.now(), 30))
-                    }
+                    onClick={() => form.setValue("endDate", addDays(Date.now(), 30))}
                   />
                   <Button
                     kind="secondary"
@@ -126,9 +122,7 @@ export const UserBanModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addDays(Date.now(), 90))
-                    }
+                    onClick={() => form.setValue("endDate", addDays(Date.now(), 90))}
                   />
                   <Button
                     kind="secondary"
@@ -137,9 +131,7 @@ export const UserBanModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addDays(Date.now(), 100000))
-                    }
+                    onClick={() => form.setValue("endDate", addDays(Date.now(), 100000))}
                   />
                 </Div>
               </ModalSection>
@@ -151,7 +143,11 @@ export const UserBanModal = ({ user }: { user: UserDocument }) => {
                   placeholder="Enter end date..."
                   showTimeSelect
                   disabled={form.loading}
-                  error={form.errors.endDate}
+                  error={
+                    form.errors.endDate?.key
+                      ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                      : undefined
+                  }
                   value={form.values.endDate}
                   onChange={(x) => form.setValue("endDate", x)}
                 />
