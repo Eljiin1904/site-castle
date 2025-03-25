@@ -6,5 +6,12 @@
   "info": "Info",
   "confirm": "Confirm",
   "cancel": "Cancel",
-  "close": "Close"
+  "close": "Close",
+  "amount": "Amount",
+  "clear": "Clear",
+  "enterBetAmount": "Enter bet amount...",
+  "recentRolls": "Recent Rolls",
+  "last100": "Last 100",
+  "online": "Status Online",
+  "offline": "Status Offline"
 }

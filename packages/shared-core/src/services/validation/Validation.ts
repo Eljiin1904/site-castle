@@ -1,6 +1,7 @@
 export { array, object, string, number, boolean, date, mixed, ref } from "yup";
 
 export * from "./utils/getErrors";
+export * from "./utils/setLocale";
 
 export * from "./validators/avatar";
 export * from "./validators/common-address";

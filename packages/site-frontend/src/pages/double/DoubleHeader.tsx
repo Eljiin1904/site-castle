@@ -11,10 +11,10 @@ import { DoubleInfoModal } from "#app/modals/double/DoubleInfoModal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Vector } from "@client/comps/vector/Vector";
 import { DoubleStatus } from "./DoubleStatus";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DoubleHeader = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
-
   return (
     <Div>
       <Conditional
@@ -79,6 +79,7 @@ const MobileHeader = () => {
 };
 
 const NotMobileHeader = () => {
+  const {t} = useTranslation();
   return (
     <Div fx>
       <DoubleStatus status="Online" />
@@ -96,9 +97,9 @@ const NotMobileHeader = () => {
           <Button kind="tertiary-black-overlay">
             <Vector
               as={SvgCheckCircle}
-              color="white"
+              color="light-sand"
             />
-            <Div color="white">Fairness</Div>
+            <Div color="light-sand">{t("menu.fairness")}</Div>
           </Button>
         </Link>
         <Button
@@ -107,13 +108,13 @@ const NotMobileHeader = () => {
         >
           <Vector
             as={SvgInfoCircle}
-            color="white"
+            color="light-sand"
           />
         </Button>
         <VolumeDropdown
           prefix="double"
           kind="tertiary-black-overlay"
-          iconColor="white"
+          iconColor="light-sand"
         />
       </Div>
     </Div>

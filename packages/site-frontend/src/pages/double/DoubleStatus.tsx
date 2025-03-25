@@ -2,8 +2,10 @@ import { Circle } from "@client/comps/circle/Circle";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import "./DoubleStatus.scss";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DoubleStatus = ({ status }: { status: "Online" | "Offline" }) => {
+  const {t} = useTranslation(["common"]);
   return (
     <Div
       className={"DoubleStatus"}
@@ -29,7 +31,7 @@ export const DoubleStatus = ({ status }: { status: "Online" | "Offline" }) => {
         color="white"
         fontSize={12}
       >
-        Status {status}
+        {status === 'Online' ? t("common:online") : t("common:offline")}
       </Span>
     </Div>
   );

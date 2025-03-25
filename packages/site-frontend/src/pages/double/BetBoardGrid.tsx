@@ -12,7 +12,7 @@ export const BetBoardGrid = () => {
     <Conditional
       value={layout}
       mobile={<MobileContent />}
-      tablet={<TabletContent />}
+      tablet={<LaptopDesktopContent />}
       laptop={<LaptopDesktopContent />}
       desktop={<LaptopDesktopContent />}
     />
@@ -40,7 +40,7 @@ const MobileContent = () => {
       </Div>
       <Div
         column
-        gap={12}
+        gap={16}
       >
         {kinds.map((betKind) => (
           <BetBoardTicketGrid
@@ -53,37 +53,13 @@ const MobileContent = () => {
   );
 };
 
-const TabletContent = () => {
-  const kinds: DoubleBetKind[] = ["green", "red", "bait", "black"];
-
-  return (
-    <Div
-      fx
-      gap={8}
-      style={{ minHeight: "300px" }}
-    >
-      {kinds.map((betKind) => (
-        <Div
-          key={betKind}
-          fx
-          column
-        >
-          <BetBoardButton betKind={betKind} />
-          <BetBoardTicketGrid betKind={betKind} />
-        </Div>
-      ))}
-    </Div>
-  );
-};
-
 const LaptopDesktopContent = () => {
-  const kinds: DoubleBetKind[] = ["green", "red", "bait", "black"];
+  const kinds: DoubleBetKind[] = ["green", "black", "bait", "red"];
 
   return (
     <Div
       fx
-      gap={16}
-      style={{ minHeight: "200px" }}
+      gap={16}     
     >
       {kinds.map((betKind) => (
         <Div

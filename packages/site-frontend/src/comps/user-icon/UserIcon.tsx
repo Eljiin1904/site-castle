@@ -19,6 +19,7 @@ export const UserIcon: FC<UserIconProps> = ({
   hidden,
   ...forwardProps
 }) => {
+  
   return (
     <Img
       className={classNames("UserIcon", className)}
@@ -31,6 +32,7 @@ export const UserIcon: FC<UserIconProps> = ({
             : `/avatars/avatars-default/${avatarIndex?.toString()?.padStart(3, "0")}`
       }
       {...forwardProps}
+      style={{overflow: "hidden"}}
     />
   );
 };

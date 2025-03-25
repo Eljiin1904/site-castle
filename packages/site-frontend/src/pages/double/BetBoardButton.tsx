@@ -7,7 +7,8 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Double } from "#app/services/double";
 import { usePostTicket } from "./usePostTicket";
 import "./BetBoardButton.scss";
-import { Img } from "@client/comps/img/Img";
+import { Vector } from "@client/comps/vector/Vector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
   const userId = useAppSelector((x) => x.user._id);
@@ -35,7 +36,7 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
           />
         }
         tablet={
-          <TabletContent
+          <LaptopDesktopContent
             betKind={betKind}
             betPlaced={betPlaced}
           />
@@ -58,68 +59,25 @@ export const BetBoardButton = ({ betKind }: { betKind: DoubleBetKind }) => {
 };
 
 const MobileContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
-  const path = Double.getImageFromBetKind(betKind);
+  const svg = Double.getIconFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
-
+  const {t} = useTranslation(["games.double"]);
   return (
     <Div
       column
       fx
       center
-      pt={12}
-      pb={8}
-      gap={6}
+      py={16}
+      gap={8}
     >
-      <Img
-        type="png"
-        className="label"
-        path={path}
-        width="50px"
-      />
-      <Span
-        className="label"
-        size={12}
-      >
-        {betPlaced ? "Bet Placed" : "Place Bet"}
-      </Span>
-      <Div
-        grow
-        justify="flex-end"
-      >
-        <Span
-          className="label"
-          size={12}
-        >
-          {`Win ${multiplier}x`}
-        </Span>
-      </Div>
-    </Div>
-  );
-};
-
-const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlaced: boolean }) => {
-  const path = Double.getImageFromBetKind(betKind);
-  const multiplier = Double.getMultiplierFromBetKind(betKind);
-
-  return (
-    <Div
-      fx
-      align="center"
-      height={40}
-      px={6}
-      gap={6}
-    >
-      <Img
-        type="png"
-        className="label"
-        path={path}
-        width="45px"
-      />
+      <Vector className="icon" as={svg} size={24}/>
       <Span
         className="label"
         weight="semi-bold"
+        fontSize={12}
+        lineHeight={20}
       >
-        {betPlaced ? "Bet Placed" : "Place Bet"}
+        {betPlaced ? t("games\\double:betPlaced") : t("games\\double:placeBet")}
       </Span>
       <Div
         grow
@@ -128,8 +86,9 @@ const TabletContent = ({ betKind, betPlaced }: { betKind: DoubleBetKind; betPlac
         <Span
           className="label"
           weight="semi-bold"
+          fontSize={12}
         >
-          {`${multiplier}x`}
+          {`${multiplier}X`}
         </Span>
       </Div>
     </Div>
@@ -143,28 +102,24 @@ const LaptopDesktopContent = ({
   betKind: DoubleBetKind;
   betPlaced: boolean;
 }) => {
-  const path = Double.getImageFromBetKind(betKind);
+  const svg = Double.getIconFromBetKind(betKind);
   const multiplier = Double.getMultiplierFromBetKind(betKind);
-
+  const {t} = useTranslation(["games\\double"]);
   return (
     <Div
       fx
       align="center"
       height={40}
-      px={8}
-      gap={8}
+      px={16}
+      gap={12}
     >
-      <Img
-        type="png"
-        className="label"
-        path={path}
-        width="40px"
-      />
+      <Vector className="icon" as={svg} size={16}/>
       <Span
         className="label"
         weight="semi-bold"
+        fontSize={16}
       >
-        {betPlaced ? "Bet Placed" : "Place Bet"}
+        {betPlaced ? t("games\\double:betPlaced") : t("games\\double:placeBet")}
       </Span>
       <Div
         grow
@@ -173,8 +128,9 @@ const LaptopDesktopContent = ({
         <Span
           className="label"
           weight="semi-bold"
+          fontSize={16}
         >
-          {`Win ${multiplier}x`}
+          {`${multiplier}X`}
         </Span>
       </Div>
     </Div>

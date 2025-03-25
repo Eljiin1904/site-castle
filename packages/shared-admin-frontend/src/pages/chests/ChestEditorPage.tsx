@@ -157,7 +157,7 @@ export const ChestEditorPage = () => {
       await schema.validate({ imageRequired, image, displayName }, { abortEarly: false });
       setErrors({});
     } catch (e) {
-      const error = Validation.getErrors(schema, e);
+    const error = Validation.getErrors(schema, e);
       return setErrors({ displayName: error.displayName?.key, image: error.image?.key });
     }
 

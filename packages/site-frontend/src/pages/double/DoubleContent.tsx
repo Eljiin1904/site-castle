@@ -6,12 +6,12 @@ import { DoubleHeader } from "./DoubleHeader";
 import { BetInputGroup } from "./BetInputGroup";
 import { BetBoardGrid } from "./BetBoardGrid";
 import { DoubleView } from "./DoubleView";
-import { DoubleFairness } from "./DoubleFairness";
 import { LastRounds } from "./LastRounds";
 import { RecentRounds } from "./RecentRounds";
 import { Span } from "@client/comps/span/Span";
 import { DoubleReelOverlay } from "./DoubleReelOverlay";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
+import { DoubleFeed } from "./DoubleFeed";
 
 export const DoubleContent = () => {
   const initialized = useAppSelector((x) => x.double.initialized);
@@ -41,7 +41,8 @@ const MobileContent = () => {
       <Div column>
         <DoubleReelOverlay
           path="/graphics/double-tile-overlay"
-          p={15}
+          px={20}
+          py={16}
         >
           <DoubleHeader />
           <Span>
@@ -51,15 +52,23 @@ const MobileContent = () => {
       </Div>
       <Div
         column
-        p={10}
-        gap={20}
+        px={20}
+        py={16}
+        gap={16}
         bg="brown-6"
+        borderTop
+        borderColor="brown-4"
       >
         <BetInputGroup />
         <BetBoardGrid />
+        <Div column gap={8} mt={28}>
+          <LastRounds />
+          <RecentRounds />
+        </Div>
+      </Div>
+      <Div mt={64}>
         <BetBoard />
       </Div>
-      <DoubleFairness />
     </Div>
   );
 };
@@ -70,41 +79,37 @@ const NotMobileContent = () => {
       fx
       column
     >
-      <Div
-        pb={20}
-        pt={20}
-        column
-      >
-        <DoubleReelOverlay
+      <DoubleReelOverlay
           path="/graphics/double-tile-overlay"
-          p={20}
+          p={24}
+          gap={24}
         >
           <DoubleHeader />
-          <Span mt={10}>
-            <DoubleView />
-          </Span>
+          <DoubleView />
           <Div
             fx
             justify="space-between"
           >
-            <RecentRounds />
-            <LastRounds />
+            <Div column gap={8}>
+              <LastRounds />
+              <RecentRounds />
+            </Div>
           </Div>
-        </DoubleReelOverlay>
-      </Div>
+      </DoubleReelOverlay>
       <Div
         column
-        p={20}
-        gap={20}
+        p={24}
+        gap={24}
         bg="brown-6"
       >
         <BetInputGroup />
         <BetBoardGrid />
       </Div>
-      <Div mt={20}>
-        <BetBoard />
+      <Div mt={56}>
+        <DoubleFeed />
       </Div>
-      <DoubleFairness />
     </Div>
   );
 };
+
+{/* <DoubleFairness /> */}

@@ -160,6 +160,7 @@ export const DoubleReel = () => {
         forwardRef={animator.ref}
         className="inner-content"
         style={{ transform: `translateX(${origin}px)` }}
+        gap={8}
       >
         {ItemsMemo}
       </Div>

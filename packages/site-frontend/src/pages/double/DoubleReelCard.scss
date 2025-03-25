@@ -3,35 +3,26 @@
   width: 100px;
   height: 100px;
 
-  &.green {
-    background:rgba(89, 207, 136, 1);
-
-    .icon {
-      color: var(--white-color);
-    }
+  .label, .icon {
+    color: var(--dark-brown-color);
   }
 
-  &.red {
-    background: rgba(255, 254, 252, 1);
-    
-    .icon {
-      color: var(--brown-8-color);
-    }
+  &.green {
+    background: var(--bright-green-color);
   }
 
   &.yellow {
-    background: rgba(241, 233, 160, 1);
-    
-    .icon {
-      color: var(--brown-8-color);
-    }
+   background-color: var(--sand-color);
   }
-
+  
+  &.red {
+    background:var(--double-red-color); 
+  }
+  
   &.black {
-    background: rgba(199, 197, 189, 1);
-    
-    .icon {
-      color: #7BBFCE;
+    background: var(--dark-brown-active-color);
+    .label, .icon {
+      color: var(--light-sand-color);
     }
   }
 }

@@ -1,3 +1,7 @@
+import { SvgDoubleBaitIcon } from "#app/svgs/double/SvgDoubleBaitIcon";
+import { SvgDoubleBlackIcon } from "#app/svgs/double/SvgDoubleBlackIcon";
+import { SvgDoubleGreenIcon } from "#app/svgs/double/SvgDoubleGreenIcon";
+import { SvgDoubleRedIcon } from "#app/svgs/double/SvgDoubleRedIcon";
 import { DoubleBetKind } from "@core/types/double/DoubleBetKind";
 import { DoubleColor } from "@core/types/double/DoubleColor";
 
@@ -30,4 +34,19 @@ export function getImageFromBetKind(kind: DoubleBetKind) {
     path = "/graphics/double-man";
   }
   return path;
+}
+
+export function getIconFromBetKind(kind: DoubleBetKind) {
+  let icon;
+
+  if (kind === "green") {
+    icon = SvgDoubleGreenIcon;
+  } else if (kind === "bait") {
+    icon =  SvgDoubleBaitIcon
+  } else if (kind === "red") {
+    icon =  SvgDoubleRedIcon
+  } else {
+    icon = SvgDoubleBlackIcon;
+  }
+  return icon;
 }

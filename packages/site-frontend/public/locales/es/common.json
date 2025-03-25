@@ -6,5 +6,12 @@
   "info": "Información",
   "confirm": "Confirmar",
   "cancel": "Cancelar",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "amount": "Cantidad",
+  "clear": "Limpiar",
+  "enterBetAmount": "Ingrese la cantidad de la apuesta...",
+  "recentRolls": "Jugadas Recientes",
+  "last100": "Últimas 100",
+  "online": "En línea",
+  "offline": "Desconectado"
 }
