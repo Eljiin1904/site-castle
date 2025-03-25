@@ -13,12 +13,11 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const UserUnlinkAccountModal = ({
-  provider,
-}: {
-  provider: UserLinkProvider;
-}) => {
+export const UserUnlinkAccountModal = ({ provider }: { provider: UserLinkProvider }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       password: Validation.password(),
@@ -49,7 +48,11 @@ export const UserUnlinkAccountModal = ({
               placeholder="Enter password..."
               autoComplete="current-password"
               disabled={form.loading}
-              error={form.errors.password}
+              error={
+                form.errors.password?.key
+                  ? t(form.errors.password.key, { value: form.errors.password.value })
+                  : undefined
+              }
               value={form.values.password}
               onChange={(x) => form.setValue("password", x)}
             />

@@ -11,6 +11,7 @@ import { SiteLogo } from "#app/comps/site-logo/SiteLogo";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Admin } from "#app/services/admin";
 import { Security } from "#app/services/security";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AppLoginNotice = () => {
   return (
@@ -41,6 +42,7 @@ export const AppLoginNotice = () => {
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -63,7 +65,11 @@ const LoginForm = () => {
           autoComplete="email"
           placeholder="Enter email..."
           disabled={form.loading}
-          error={form.errors.username}
+          error={
+            form.errors.username?.key
+              ? t(form.errors.username.key, { value: form.errors.username.value })
+              : undefined
+          }
           value={form.values.username}
           onChange={(x) => form.setValue("username", x)}
         />
@@ -76,7 +82,11 @@ const LoginForm = () => {
           autoComplete="current-password"
           placeholder="Enter password..."
           disabled={form.loading}
-          error={form.errors.password}
+          error={
+            form.errors.password?.key
+              ? t(form.errors.password.key, { value: form.errors.password.value })
+              : undefined
+          }
           value={form.values.password}
           onChange={(x) => form.setValue("password", x)}
         />

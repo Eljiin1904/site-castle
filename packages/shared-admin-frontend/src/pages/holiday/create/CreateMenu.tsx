@@ -7,6 +7,7 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Rewards } from "#app/services/rewards";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const CreateMenu = ({
   form,
@@ -23,6 +24,7 @@ export const CreateMenu = ({
   }>;
 }) => {
   const adventBonusFilter = form.values.adventBonusFilter || [];
+  const { t } = useTranslation(["validations"]);
 
   return (
     <Div
@@ -38,7 +40,11 @@ export const CreateMenu = ({
               type="text"
               placeholder="Enter display name..."
               disabled={form.loading}
-              error={form.errors.displayName}
+              error={
+                form.errors.displayName?.key
+                  ? t(form.errors.displayName.key, { value: form.errors.displayName.value })
+                  : undefined
+              }
               value={form.values.displayName}
               onChange={(x) => form.setValue("displayName", x)}
             />
@@ -51,7 +57,11 @@ export const CreateMenu = ({
               placeholder="Enter start date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.startDate}
+              error={
+                form.errors.startDate?.key
+                  ? t(form.errors.startDate.key, { value: form.errors.startDate.value })
+                  : undefined
+              }
               value={form.values.startDate}
               onChange={(x) => form.setValue("startDate", x)}
             />
@@ -64,7 +74,11 @@ export const CreateMenu = ({
               placeholder="Enter end date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.endDate}
+              error={
+                form.errors.endDate?.key
+                  ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                  : undefined
+              }
               value={form.values.endDate}
               onChange={(x) => form.setValue("endDate", x)}
             />
@@ -76,7 +90,11 @@ export const CreateMenu = ({
               decimals={2}
               placeholder="Enter currency rate..."
               disabled={form.loading}
-              error={form.errors.currencyRate}
+              error={
+                form.errors.currencyRate?.key
+                  ? t(form.errors.currencyRate.key, { value: form.errors.currencyRate.value })
+                  : undefined
+              }
               value={form.values.currencyRate}
               onChange={(x) => form.setValue("currencyRate", x)}
             />
@@ -88,7 +106,11 @@ export const CreateMenu = ({
               decimals={2}
               placeholder="Enter raffle rate..."
               disabled={form.loading}
-              error={form.errors.raffleRate}
+              error={
+                form.errors.raffleRate?.key
+                  ? t(form.errors.raffleRate.key, { value: form.errors.raffleRate.value })
+                  : undefined
+              }
               value={form.values.raffleRate}
               onChange={(x) => form.setValue("raffleRate", x)}
             />
@@ -100,7 +122,11 @@ export const CreateMenu = ({
               decimals={2}
               placeholder="Enter boost rate..."
               disabled={form.loading}
-              error={form.errors.boostRate}
+              error={
+                form.errors.boostRate?.key
+                  ? t(form.errors.boostRate.key, { value: form.errors.boostRate.value })
+                  : undefined
+              }
               value={form.values.boostRate}
               onChange={(x) => form.setValue("boostRate", x)}
             />
@@ -114,7 +140,11 @@ export const CreateMenu = ({
               showTimeSelect
               showTimeSelectOnly
               disabled={form.loading}
-              error={form.errors.adventResetDate}
+              error={
+                form.errors.adventResetDate?.key
+                  ? t(form.errors.adventResetDate.key, { value: form.errors.adventResetDate.value })
+                  : undefined
+              }
               value={form.values.adventResetDate}
               onChange={(x) => form.setValue("adventResetDate", x)}
             />
@@ -124,11 +154,7 @@ export const CreateMenu = ({
             <Dropdown
               type="filter"
               fx
-              label={
-                Rewards.adventDays
-                  .filter((x, i) => adventBonusFilter[i])
-                  .join(", ") || "None"
-              }
+              label={Rewards.adventDays.filter((x, i) => adventBonusFilter[i]).join(", ") || "None"}
               options={Rewards.adventDays.map((x) => x.toString())}
               filter={adventBonusFilter}
               disabled={form.loading}

@@ -12,12 +12,11 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Economy } from "#app/services/economy";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const PromotionCreateModal = ({
-  onSuccess,
-}: {
-  onSuccess: () => void;
-}) => {
+export const PromotionCreateModal = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { t } = useTranslation(["validations"]);
+
   const form = useForm({
     schema: Validation.object({
       promotionId: Validation.string().required("Promotion ID is required."),
@@ -29,9 +28,7 @@ export const PromotionCreateModal = ({
         .min(Validation.ref("startDate"), "End date must be after start date.")
         .required("End date is required."),
       maxUses: Validation.integer("Max Uses").min(0),
-      requiredLevel: Validation.integer("Required level")
-        .min(0)
-        .max(Users.maxLevel),
+      requiredLevel: Validation.integer("Required level").min(0).max(Users.maxLevel),
       requiredWagerAmount: Validation.integer("Required wager amount").min(0),
       requiredWagerDays: Validation.integer("Required wager timeframe").min(0),
     }),
@@ -68,11 +65,13 @@ export const PromotionCreateModal = ({
               type="text"
               placeholder="Enter promotion id..."
               disabled={form.loading}
-              error={form.errors.promotionId}
-              value={form.values.promotionId}
-              onChange={(x) =>
-                form.setValue("promotionId", x?.replace(/[^a-z0-9-]/gi, ""))
+              error={
+                form.errors.promotionId?.key
+                  ? t(form.errors.promotionId.key, { value: form.errors.promotionId.value })
+                  : undefined
               }
+              value={form.values.promotionId}
+              onChange={(x) => form.setValue("promotionId", x?.replace(/[^a-z0-9-]/gi, ""))}
             />
           </ModalSection>
           <ModalSection>
@@ -81,7 +80,11 @@ export const PromotionCreateModal = ({
               type="currency"
               placeholder="Enter token amount..."
               disabled={form.loading}
-              error={form.errors.tokenAmount}
+              error={
+                form.errors.tokenAmount?.key
+                  ? t(form.errors.tokenAmount.key, { value: form.errors.tokenAmount.value })
+                  : undefined
+              }
               value={form.values.tokenAmount}
               onChange={(x) => form.setValue("tokenAmount", x)}
             />
@@ -94,7 +97,11 @@ export const PromotionCreateModal = ({
               placeholder="Enter start date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.startDate}
+              error={
+                form.errors.startDate?.key
+                  ? t(form.errors.startDate.key, { value: form.errors.startDate.value })
+                  : undefined
+              }
               value={form.values.startDate}
               onChange={(x) => form.setValue("startDate", x)}
             />
@@ -107,7 +114,11 @@ export const PromotionCreateModal = ({
               placeholder="Enter end date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.endDate}
+              error={
+                form.errors.endDate?.key
+                  ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                  : undefined
+              }
               value={form.values.endDate}
               onChange={(x) => form.setValue("endDate", x)}
             />
@@ -118,7 +129,11 @@ export const PromotionCreateModal = ({
               type="integer"
               placeholder="Enter max uses..."
               disabled={form.loading}
-              error={form.errors.maxUses}
+              error={
+                form.errors.maxUses?.key
+                  ? t(form.errors.maxUses.key, { value: form.errors.maxUses.value })
+                  : undefined
+              }
               value={form.values.maxUses}
               onChange={(x) => form.setValue("maxUses", x)}
             />
@@ -130,7 +145,11 @@ export const PromotionCreateModal = ({
               iconLeft={undefined}
               placeholder="Enter required level..."
               disabled={form.loading}
-              error={form.errors.requiredLevel}
+              error={
+                form.errors.requiredLevel?.key
+                  ? t(form.errors.requiredLevel.key, { value: form.errors.requiredLevel.value })
+                  : undefined
+              }
               value={form.values.requiredLevel}
               onChange={(x) => form.setValue("requiredLevel", x)}
             />
@@ -141,7 +160,13 @@ export const PromotionCreateModal = ({
               type="currency"
               placeholder="Enter wager token amount..."
               disabled={form.loading}
-              error={form.errors.requiredWagerAmount}
+              error={
+                form.errors.requiredWagerAmount?.key
+                  ? t(form.errors.requiredWagerAmount.key, {
+                      value: form.errors.requiredWagerAmount.value,
+                    })
+                  : undefined
+              }
               value={form.values.requiredWagerAmount}
               onChange={(x) => form.setValue("requiredWagerAmount", x)}
             />
@@ -152,7 +177,13 @@ export const PromotionCreateModal = ({
               type="integer"
               placeholder="Enter wager days..."
               disabled={form.loading}
-              error={form.errors.requiredWagerDays}
+              error={
+                form.errors.requiredWagerDays?.key
+                  ? t(form.errors.requiredWagerDays.key, {
+                      value: form.errors.requiredWagerDays.value,
+                    })
+                  : undefined
+              }
               value={form.values.requiredWagerDays}
               onChange={(x) => form.setValue("requiredWagerDays", x)}
             />

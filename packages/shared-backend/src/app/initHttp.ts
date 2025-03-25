@@ -21,15 +21,7 @@ export function initHttp(app = express()) {
     cors({
       origin: {
         development: ["http://127.0.0.1:3000", "http://localhost:3000"],
-        devcloud: [
-          "http://site-frontend",
-          "http://k8s-ingressb-nginxing-30ae712882-f965233a31d30e87.elb.us-east-1.amazonaws.com",
-          "https://k8s-ingressb-nginxing-30ae712882-f965233a31d30e87.elb.us-east-1.amazonaws.com",
-          "https://brickrax.com",
-          "https://dev.brickrax.com",
-          "http://127.0.0.1:3000",
-          "http://localhost:3000",
-        ],
+        devcloud: [`https://dev.${domain}`],
         staging: [`https://staging.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
       }[env],

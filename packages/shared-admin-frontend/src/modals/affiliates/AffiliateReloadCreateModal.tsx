@@ -11,12 +11,10 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Affiliates } from "#app/services/affiliates";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const AffiliateReloadCreateModal = ({
-  onSuccess,
-}: {
-  onSuccess: () => void;
-}) => {
+export const AffiliateReloadCreateModal = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { t } = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
       userLookup: Validation.string().required("User Lookup is required."),
@@ -49,7 +47,11 @@ export const AffiliateReloadCreateModal = ({
               type="text"
               placeholder="Enter username, user ID, or email..."
               disabled={form.loading}
-              error={form.errors.userLookup}
+              error={
+                form.errors.userLookup?.key
+                  ? t(form.errors.userLookup.key, { value: form.errors.userLookup.value })
+                  : undefined
+              }
               value={form.values.userLookup}
               onChange={(x) => form.setValue("userLookup", x)}
             />
@@ -62,7 +64,11 @@ export const AffiliateReloadCreateModal = ({
               placeholder="Enter first claim date..."
               showTimeSelect
               disabled={form.loading}
-              error={form.errors.resetDate}
+              error={
+                form.errors.resetDate?.key
+                  ? t(form.errors.resetDate.key, { value: form.errors.resetDate.value })
+                  : undefined
+              }
               value={form.values.resetDate}
               onChange={(x) => form.setValue("resetDate", x)}
             />
@@ -76,7 +82,11 @@ export const AffiliateReloadCreateModal = ({
               showTimeSelect
               showTimeSelectOnly
               disabled={form.loading}
-              error={form.errors.resetDate}
+              error={
+                form.errors.resetDate?.key
+                  ? t(form.errors.resetDate.key, { value: form.errors.resetDate.value })
+                  : undefined
+              }
               value={form.values.resetDate}
               onChange={(x) => form.setValue("resetDate", x)}
             />
@@ -87,7 +97,11 @@ export const AffiliateReloadCreateModal = ({
               type="currency"
               placeholder="Enter token amount..."
               disabled={form.loading}
-              error={form.errors.tokenAmount}
+              error={
+                form.errors.tokenAmount?.key
+                  ? t(form.errors.tokenAmount.key, { value: form.errors.tokenAmount.value })
+                  : undefined
+              }
               value={form.values.tokenAmount}
               onChange={(x) => form.setValue("tokenAmount", x)}
             />
@@ -98,7 +112,11 @@ export const AffiliateReloadCreateModal = ({
               type="integer"
               placeholder="Enter claim count..."
               disabled={form.loading}
-              error={form.errors.claimCount}
+              error={
+                form.errors.claimCount?.key
+                  ? t(form.errors.claimCount.key, { value: form.errors.claimCount.value })
+                  : undefined
+              }
               value={form.values.claimCount}
               onChange={(x) => form.setValue("claimCount", x)}
             />

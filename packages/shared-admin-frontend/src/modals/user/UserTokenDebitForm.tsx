@@ -14,10 +14,11 @@ import { Toasts } from "@client/services/toasts";
 import { Strings } from "@core/services/strings";
 import { Admin } from "#app/services/admin";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserTokenDebitForm = ({ user }: { user: UserDocument }) => {
   const queryClient = useQueryClient();
-
+  const { t } = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
       tokenAmount: Validation.currency("Debit Amount"),
@@ -33,9 +34,7 @@ export const UserTokenDebitForm = ({ user }: { user: UserDocument }) => {
         tokenAmount,
       });
 
-      Toasts.success(
-        `User debited ${Intimal.toLocaleString(tokenAmount)} tokens.`,
-      );
+      Toasts.success(`User debited ${Intimal.toLocaleString(tokenAmount)} tokens.`);
       Dialogs.close("primary");
 
       queryClient.invalidateQueries({ queryKey: ["user", user._id] });
@@ -61,7 +60,11 @@ export const UserTokenDebitForm = ({ user }: { user: UserDocument }) => {
           type="currency"
           placeholder="Enter debit amount..."
           disabled={form.loading}
-          error={form.errors.tokenAmount}
+          error={
+            form.errors.tokenAmount?.key
+              ? t(form.errors.tokenAmount.key, { value: form.errors.tokenAmount.value })
+              : undefined
+          }
           value={form.values.tokenAmount}
           onChange={(x) => form.setValue("tokenAmount", x)}
         />

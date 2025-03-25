@@ -15,10 +15,12 @@ import { useForm } from "@client/comps/form/useForm";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserEmailModal = ({ user }: { user: UserDocument }) => {
   const userId = user._id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -57,7 +59,11 @@ export const UserEmailModal = ({ user }: { user: UserDocument }) => {
               autoComplete="email"
               placeholder="Enter new email..."
               disabled={form.loading}
-              error={form.errors.newEmail}
+              error={
+                form.errors.newEmail?.key
+                  ? t(form.errors.newEmail.key, { value: form.errors.newEmail.value })
+                  : undefined
+              }
               value={form.values.newEmail}
               onChange={(x) => form.setValue("newEmail", x)}
             />

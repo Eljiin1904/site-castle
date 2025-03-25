@@ -19,12 +19,14 @@ import { Checkbox } from "@client/comps/checkbox/Checkbox";
 import { Input } from "@client/comps/input/Input";
 import { Div } from "@client/comps/div/Div";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserMuteModal = ({ user }: { user: UserDocument }) => {
   const current = user.mute;
   const isMuted = Users.isMuted(current);
   const userId = user._id;
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -96,9 +98,7 @@ export const UserMuteModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addHours(Date.now(), 1))
-                    }
+                    onClick={() => form.setValue("endDate", addHours(Date.now(), 1))}
                   />
                   <Button
                     kind="secondary"
@@ -107,9 +107,7 @@ export const UserMuteModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addHours(Date.now(), 2))
-                    }
+                    onClick={() => form.setValue("endDate", addHours(Date.now(), 2))}
                   />
                   <Button
                     kind="secondary"
@@ -118,9 +116,7 @@ export const UserMuteModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addHours(Date.now(), 4))
-                    }
+                    onClick={() => form.setValue("endDate", addHours(Date.now(), 4))}
                   />
                   <Button
                     kind="secondary"
@@ -129,9 +125,7 @@ export const UserMuteModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addHours(Date.now(), 8))
-                    }
+                    onClick={() => form.setValue("endDate", addHours(Date.now(), 8))}
                   />
                   <Button
                     kind="secondary"
@@ -140,9 +134,7 @@ export const UserMuteModal = ({ user }: { user: UserDocument }) => {
                     labelSize={12}
                     fx
                     loading={form.loading}
-                    onClick={() =>
-                      form.setValue("endDate", addHours(Date.now(), 24))
-                    }
+                    onClick={() => form.setValue("endDate", addHours(Date.now(), 24))}
                   />
                 </Div>
               </ModalSection>
@@ -154,7 +146,11 @@ export const UserMuteModal = ({ user }: { user: UserDocument }) => {
                   placeholder="Enter end date..."
                   showTimeSelect
                   disabled={form.loading}
-                  error={form.errors.endDate}
+                  error={
+                    form.errors.endDate?.key
+                      ? t(form.errors.endDate.key, { value: form.errors.endDate.value })
+                      : undefined
+                  }
                   value={form.values.endDate}
                   onChange={(x) => form.setValue("endDate", x)}
                 />
