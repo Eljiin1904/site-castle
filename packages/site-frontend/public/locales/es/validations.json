@@ -79,6 +79,16 @@
       "imageSize": "La imagen debe ser de al menos {{value.width}}x{{value.height}}.",
       "cropArea": "Invalida área de recorte.",
       "required": "{{value}} es requerida."
+    },
+    "firstName": {
+      "field": "Nombre",
+      "required": "{{value}} es requerido.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres."
+    },
+    "lastName": {
+      "field": "Apellido",
+      "required": "{{value}} es requerido.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres."
     }
   },
   "errors": {

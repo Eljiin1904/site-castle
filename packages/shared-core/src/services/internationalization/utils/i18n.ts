@@ -6,14 +6,14 @@ import Backend from 'i18next-http-backend';
 //"https://static.brickrax.com/locales/{{lng}}/{{ns}}.json",
 const locizeOptions = {
   referenceLng: "en",
-  loadPath: "https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
+  loadPath: "http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json",
   crossDomain: true,
 };
 
 const options: InitOptions = {
   debug: true,
   fallbackLng: "en",
-  ns: ["translation", "validations", "common","games\\double"],
+  ns: ["translation", "validations","fields", "common","games\\double"],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
   interpolation: {

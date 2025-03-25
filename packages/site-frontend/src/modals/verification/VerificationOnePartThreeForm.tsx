@@ -9,6 +9,7 @@ import { Dialogs } from "@client/services/dialogs";
 import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const VerificationOnePartThreeForm = ({
   layout,
@@ -17,16 +18,17 @@ export const VerificationOnePartThreeForm = ({
   layout: Layout;
   disableClose?: boolean;
 }) => {
+  const {t} = useTranslation(["validations","common","fields"]); 
   const form = useForm({
     schema: Validation.object({
       occupation: Validation.string()
-        .max(32, "Max characters is 32")
-        .required("Occupation is required."),
+      .max(32,t("validations.string.max",{value: {label:t("fields:occupation.field"),max:32}}))
+      .required(t("validations.mixed.required",{value:t("fields:occupation.field")})),
     }),
     onSubmit: async (values) => {
       await Users.verifyTier1Part3(values);
 
-      Toasts.success("Account setup complete.");
+      Toasts.success(t("accountSetup.completed"));
 
       if (!disableClose) {
         Dialogs.close("primary");
@@ -46,12 +48,12 @@ export const VerificationOnePartThreeForm = ({
         gap={24}
       >
         <ModalSection>
-          <ModalLabel>{"Occupation"}</ModalLabel>
+          <ModalLabel>{t("fields:occupation.field")}</ModalLabel>
           <Input
             type="text"
-            placeholder="Enter occupation..."
+            placeholder={t("fields:occupation.placeholder")}
             disabled={form.loading}
-            error={form.errors.occupation}
+            error={form.errors.occupation?.key ? t(form.errors.occupation.key, {value: form.errors.occupation.value}) : undefined}
             value={form.values.occupation}
             onChange={(x) => form.setValue("occupation", x)}
           />
@@ -65,7 +67,7 @@ export const VerificationOnePartThreeForm = ({
           fx
           type="submit"
           kind="primary"
-          label="Start Playing!"
+          label={t("common:startPlaying")}
           loading={form.loading}
         />
       </Div>

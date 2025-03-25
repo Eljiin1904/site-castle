@@ -1,0 +1,37 @@
+{
+  "name": {
+    "first": "First Name",
+    "firstPlaceholder": "Enter first name...",
+    "last": "Last Name",
+    "lastPlaceholder": "Enter last name..."
+  },
+  "username": "Username",
+  "email": "Email",
+  "password": {
+    "field": "Password",
+    "confirmField": "Confirm Password",
+    "newField": "New Password"
+  },
+  "dob": {
+    "field": "Date of Birth",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year"
+  },
+  "occupation": {
+    "field": "Occupation",
+    "placeholder": "Enter occupation..."
+  },
+  "address": {
+    "address": "Street Address",
+    "addressPlaceholder": "Enter street address...",
+    "city": "City / Town",
+    "cityPlaceholder": "Enter city...",
+    "state": "State / Province / Region",
+    "statePlaceholder": "Enter state...",
+    "zip": "Zip",
+    "zipPlaceholder": "Enter zip code...",
+    "country": "Country",
+    "countryPlaceholder": "Enter country..."
+  }
+}
