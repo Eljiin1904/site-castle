@@ -7,7 +7,6 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Double } from "#app/services/double";
 import { usePostTicket } from "./usePostTicket";
 import "./BetBoardButton.scss";
-import { Img } from "@client/comps/img/Img";
 import { Vector } from "@client/comps/vector/Vector";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
