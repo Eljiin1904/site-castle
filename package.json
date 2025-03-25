@@ -2,6 +2,7 @@
   "scripts": {
     "build-site-frontend": "node ./scripts/build-site-frontend.js",
     "build-admin-frontend": "node ./scripts/build-admin-frontend.js",
+    "build-admin-backend": "node ./scripts/build-admin-backend.js",
     "init": "node ./scripts/init.js",
     "dev": "node ./scripts/dev.js",
     "deploy": "node ./scripts/deploy.js",
