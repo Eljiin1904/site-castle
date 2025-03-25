@@ -24,7 +24,7 @@ const config = {
   siteAPI: "",
   adminURL: "",
   adminAPI: "",
-  staticURL: `https://static.${domain}`,
+  staticURL: `https://font.${domain}`,
 
   // convenience
   get isDev() {
