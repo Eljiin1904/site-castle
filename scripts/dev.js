@@ -67,7 +67,7 @@ const spawn = ({ prefix, command, doneText }) => new Promise((resolve, reject) =
 
       spawn({
         prefix: `[${cyan("Game")}]`,
-        command: "cd ./packages/shared-shared-game-server && npm run dev-start",
+        command: "cd ./packages/shared-game-server && npm run dev-start",
         doneText: "server running"
       }),
 

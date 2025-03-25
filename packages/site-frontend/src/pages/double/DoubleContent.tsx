@@ -12,6 +12,7 @@ import { Span } from "@client/comps/span/Span";
 import { DoubleReelOverlay } from "./DoubleReelOverlay";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
 import { DoubleFeed } from "./DoubleFeed";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DoubleContent = () => {
   const initialized = useAppSelector((x) => x.double.initialized);
@@ -33,6 +34,7 @@ export const DoubleContent = () => {
 };
 
 const MobileContent = () => {
+  const {t} = useTranslation(["games\\double"]);
   return (
     <Div
       fx
@@ -67,14 +69,15 @@ const MobileContent = () => {
         </Div>
       </Div>
       <Div mt={64}>
-        <BetBoard />
+        <BetBoard title={t("games\\double:betBoardHeader")} game="double" />
       </Div>
     </Div>
   );
 };
 
 const NotMobileContent = () => {
-  return (
+   const {t} = useTranslation(["games\\double"])
+   return (
     <Div
       fx
       column
@@ -106,7 +109,7 @@ const NotMobileContent = () => {
         <BetBoardGrid />
       </Div>
       <Div mt={56}>
-        <DoubleFeed />
+        <BetBoard title={t("games\\double:betBoardHeader")} game="double" />
       </Div>
     </Div>
   );

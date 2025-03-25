@@ -35,11 +35,11 @@ const LaptopDesktopContent = () => {
         />
         <LastRoundCounter
           color="black"
-          bait={true}
+          bait={false}
         />
         <LastRoundCounter
           color="yellow"
-          bait={true}
+          bait={false}
         />
         <LastRoundCounter
           color="red"

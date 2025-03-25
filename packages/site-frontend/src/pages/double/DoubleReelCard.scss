@@ -3,6 +3,9 @@
   width: 100px;
   height: 100px;
 
+  border-left: 4px solid rgba(var(--dark-brown-rgb-color),0.9);
+  border-right: 4px solid rgba(var(--dark-brown-rgb-color), 0.9);
+
   .label, .icon {
     color: var(--dark-brown-color);
   }

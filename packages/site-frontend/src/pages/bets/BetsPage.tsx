@@ -10,6 +10,7 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Div } from "@client/comps/div/Div";
 import { ButtonGroup } from "@client/comps/button/ButtonGroup";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetsPage = () => {
   const limit = 30;
@@ -17,6 +18,7 @@ export const BetsPage = () => {
   const [priceIndex, setPriceIndex] = useLocalStorage("case-index-price", 0);
   const [sortIndex, setSortIndex] = useLocalStorage("case-index-sort", 0);
   const small = useIsMobileLayout();
+  const {t} = useTranslation();
 
   const query = useInfiniteQuery({
     queryKey: ["cases", searchText, priceIndex, sortIndex, limit],
@@ -36,7 +38,7 @@ export const BetsPage = () => {
       gap={small ? 20: 24}
     >
       <Div fx column gap={small ? 20: 40}>
-      <BetBoard />
+      <BetBoard title={t("bets.recentBets")}/>
       </Div>
     </SitePage>
     </Fragment>

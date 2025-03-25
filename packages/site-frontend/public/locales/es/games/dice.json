@@ -1,0 +1,8 @@
+{
+  "placeBet": "Hacer apuesta",
+  "betPlaced": "Apuesta realizada",
+  "betBoardHeader": "Apuestas Juego Dados",
+  "bet_zero": "{{count}} Apuesta",
+  "bet_one": "{{count}} Apuesta",
+  "bet_other": "{{count}} Apuestas"
+}
