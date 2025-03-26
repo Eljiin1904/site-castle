@@ -23,7 +23,7 @@ import { HotSiteGameDetails } from "../site/HotSiteGame";
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
   "activity-feed-insert": (x: SiteActivityDocument) => void;
-  "bet-feed-init": (x: SiteBetDocument[]) => void;
+  "bet-feed-init": (x: SiteBetDocument[] | Record<string, SiteBetDocument[]>) => void;
   "bet-feed-insert": (x: SiteBetDocument) => void;
   "case-battle-index-init": (battles: CaseBattleDocument[]) => void;
   "case-battle-index-insert": (battle: CaseBattleDocument) => void;
