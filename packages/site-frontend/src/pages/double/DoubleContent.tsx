@@ -11,8 +11,8 @@ import { RecentRounds } from "./RecentRounds";
 import { Span } from "@client/comps/span/Span";
 import { DoubleReelOverlay } from "./DoubleReelOverlay";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
-import { DoubleFeed } from "./DoubleFeed";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import {DoubleSandJackpot} from "./DoubleSandJackpot";
 
 export const DoubleContent = () => {
   const initialized = useAppSelector((x) => x.double.initialized);
@@ -92,11 +92,13 @@ const NotMobileContent = () => {
           <Div
             fx
             justify="space-between"
+            alignItems="flex-end"
           >
             <Div column gap={8}>
               <LastRounds />
               <RecentRounds />
             </Div>
+            <DoubleSandJackpot />
           </Div>
       </DoubleReelOverlay>
       <Div

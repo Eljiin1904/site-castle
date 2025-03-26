@@ -8,12 +8,11 @@ import { Conditional } from "@client/comps/conditional/Conditional";
 import { Link } from "@client/comps/link/Link";
 import { Site } from "#app/services/site";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import "./DoubleViewOverlay.scss";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import "./DoubleViewOverlay.scss";
 
 export const DoubleViewOverlay = () => {
   const status = useAppSelector((x) => x.double.round.status);
-
   if (status !== "waiting" && status !== "pending") {
     return null;
   }
@@ -42,7 +41,7 @@ const DoubleCountdown = () => {
   const statusDate = useAppSelector((x) => x.double.round.statusDate);
   const getRemainder = () => 15000 - Site.timeSince(statusDate);
   const [timer, setTimer] = useState(getRemainder());
-  console.log(timer);
+  
   useInterval(() => {
     setTimer(getRemainder());
   }, 200);

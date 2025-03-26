@@ -5,5 +5,6 @@
   "bet_zero": "{{count}} Bet",
   "bet_one": "{{count}} Bet",
   "bet_other": "{{count}} Bets",
-  "placeYourBet": "Place Your Bet"
+  "placeYourBet": "Place Your Bet",
+  "jackpot":"Tripple Sand Jackpot"
 }
