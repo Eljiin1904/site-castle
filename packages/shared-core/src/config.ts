@@ -56,4 +56,5 @@ export function setEnvironment(env: SystemEnvironment) {
     config.adminAPI = `https://aapi.dev.${domain}`;
   }
 }
+
 export default config as Readonly<CoreConfig>;
