@@ -29,6 +29,7 @@ export const ToastSlide = ({
 }) => {
   const icon = icons[info.kind];
   const {t} = useTranslation(["common"]);
+  
   return (
     <Div
       className={classNames("ToastSlide", info.kind)}
@@ -52,7 +53,7 @@ export const ToastSlide = ({
           size={13}
           color="gray"
         >
-          {info.text}
+          {t(info.text,{value: info.data})}
         </Span>
       </Div>
       <Vector

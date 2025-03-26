@@ -13,10 +13,10 @@ export default Http.createApiRoute({
   transaction: true,
   bet: true,
   body: Validation.object({
-    roundId: Validation.string().required("Round is required."),
+    roundId: Validation.string().required("validations:errors.games.double.requiredRound"),
     betKind: Validation.string()
-      .oneOf(Double.betKinds, "Invalid bet kind.")
-      .required("Bet kind is required."),
+      .oneOf(Double.betKinds, "validations:errors.games.double.invalidBetKind")
+      .required("validations:errors.games.double.required"),
     betAmount: Validation.currency("Bet amount"),
   }),
   callback: async (req, res) => {
@@ -24,7 +24,7 @@ export default Http.createApiRoute({
     const user = req.user;
 
     if (betAmount > Double.getMaxBetAmount(betKind)) {
-      throw new HandledError("The bet amount is greater than the max.");
+      throw new HandledError("validations:errors.games.double.max");
     }
 
     await Site.validateToggle("doubleEnabled");
@@ -37,10 +37,10 @@ export default Http.createApiRoute({
     });
 
     if (!round) {
-      throw new HandledError("Invalid round id.");
+      throw new HandledError("validations:errors.games.double.invalidRoundId");
     }
     if (round.status !== "waiting") {
-      throw new HandledError("Invalid round status.");
+      throw new HandledError("validations:errors.games.double.invalidRoundStatus");
     }
 
     const matches = [betKind];
@@ -58,7 +58,7 @@ export default Http.createApiRoute({
     });
 
     if (existing) {
-      throw new HandledError("Invalid bet combination.");
+      throw new HandledError("validations:errors.games.double.invalidCombination");
     }
 
     const location = await Http.getLocation(req.trueIP);

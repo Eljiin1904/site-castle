@@ -6,5 +6,9 @@
   "bet_one": "{{count}} Apuesta",
   "bet_other": "{{count}} Apuestas",
   "placeYourBet": "Hacer tu apuesta",
-  "jackpot":"Sand Tripe Premio Gordo"
+  "jackpot":"Sand Tripe Premio Gordo",
+  "confirmBet": {
+    "title": "Confirmar apuesta",
+    "message": "Apostar {{value.amount}} en {{value.kind}}?"
+  }
 }

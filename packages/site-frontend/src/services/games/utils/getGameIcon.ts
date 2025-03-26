@@ -30,7 +30,7 @@ export function getGameIcon(game: GameDocument) {
       return SvgBattle;
     default:
     {
-      const e = new Error(`errors.invalidGameName`);
+      const e = new Error(`validations:errors.games.invalidGameName`);
       console.error('Error in game '+game.name);
       e.cause = game.name;
       throw e;

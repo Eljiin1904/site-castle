@@ -91,7 +91,7 @@
       "noPopup": "¿No ves la ventana emergente de inicio de sesión de {{provider}}?",
       "redirect": "Redirigir al inicio de sesión de {{provider}}"
     },
-    "success": "¡Bienvenido de nuevo, {{username}}!"
+    "success": "¡Bienvenido de nuevo, {{value.username}}!"
   },
   "accountSetup": {
     "title": "Configuración de la cuenta",
@@ -182,5 +182,6 @@
       "multiplier": "Multiplicador",
       "payout": "Pago"
     }
-  }
+  },
+ "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!"
 }
