@@ -4,5 +4,6 @@
   "betBoardHeader": "Apuestas Juego Doble",
   "bet_zero": "{{count}} Apuesta",
   "bet_one": "{{count}} Apuesta",
-  "bet_other": "{{count}} Apuestas"
+  "bet_other": "{{count}} Apuestas",
+  "placeYourBet": "Hacer tu apuesta"
 }

@@ -11,6 +11,12 @@
   }
 }
 
+.DoublePage .DoubleTimerOverlay {
+
+  background: rgba(var(--dark-brown-rgb-color), 0.8);
+}
+
+
 @keyframes DoubleViewOverlay-fade-in {
   0% { 
     opacity: 0;

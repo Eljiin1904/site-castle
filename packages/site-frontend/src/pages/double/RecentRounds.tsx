@@ -25,7 +25,6 @@ const LaptopDesktopContent = () => {
   const {t} = useTranslation(["common"]);
   const small = useIsMobileLayout();
 
-  console.log("history", history);
   return (
     <Div
       gap={12}

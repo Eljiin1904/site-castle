@@ -9,6 +9,7 @@ import { Link } from "@client/comps/link/Link";
 import { Site } from "#app/services/site";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./DoubleViewOverlay.scss";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DoubleViewOverlay = () => {
   const status = useAppSelector((x) => x.double.round.status);
@@ -37,25 +38,32 @@ export const DoubleViewOverlay = () => {
 };
 
 const DoubleCountdown = () => {
+  const {t} = useTranslation(["games\\double"]);
   const statusDate = useAppSelector((x) => x.double.round.statusDate);
   const getRemainder = () => 15000 - Site.timeSince(statusDate);
   const [timer, setTimer] = useState(getRemainder());
-
+  console.log(timer);
   useInterval(() => {
     setTimer(getRemainder());
   }, 200);
 
   return (
     <Div
+      className="DoubleTimerOverlay"  
       column
       center
+      zIndex={10}
+      fx
+      fy
+      gap={12}
     >
-      <Span size={12}>{"Place Bets"}</Span>
+      <Span color="light-sand" size={16} weight="medium" lineHeight={24}>{t('games\\double:placeYourBet')}</Span>
       <Span
         family="title"
-        weight="bold"
-        size={32}
-        color="white"
+        weight="regular"
+        size={48}
+        lineHeight={40}
+        color="light-sand"
       >
         {Numbers.max(0, Math.ceil(timer / 1000))}
       </Span>
