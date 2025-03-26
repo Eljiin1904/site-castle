@@ -86,7 +86,7 @@ describe("Bet Feed Test ", async () => {
 
     expect(message).toStrictEqual({
       all: [],
-      "case-battles": [],
+      case_battles: [],
       cases: [],
       dice: [],
       double: [],

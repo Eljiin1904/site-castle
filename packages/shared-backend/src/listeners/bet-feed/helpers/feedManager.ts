@@ -45,8 +45,8 @@ export class FeedManager extends TypedEventEmitter<{
   constructor() {
     super();
     for (const name of options) {
-      this._log["all"][name] = [];
-      this._queues["all"][name] = [];
+      this._log["all"][this.sanitizeGameName(name)] = [];
+      this._queues["all"][this.sanitizeGameName(name)] = [];
     }
     this._stream = Database.createStream({
       collection: "site-bets",
@@ -145,10 +145,10 @@ export class FeedManager extends TypedEventEmitter<{
     const highrollerThreshold = await this.highrollerThreshold();
     const luckyThreshold = await this.luckyThreshold();
 
-    queues["all"][document.game].unshift(document);
+    queues["all"][this.sanitizeGameName(document.game)].unshift(document);
 
-    if (queues["all"][document.game].length > Site.betLogSize) {
-      queues["all"][document.game].length = Site.betLogSize;
+    if (queues["all"][this.sanitizeGameName(document.game)].length > Site.betLogSize) {
+      queues["all"][this.sanitizeGameName(document.game)].length = Site.betLogSize;
     }
 
     if (document.betAmount >= highrollerThreshold) {
@@ -175,7 +175,9 @@ export class FeedManager extends TypedEventEmitter<{
       let document;
       if (scope == "all") {
         for (const name of games) {
-          document = queue[name] ? queue[name].pop() : undefined;
+          document = queue[this.sanitizeGameName(name)]
+            ? queue[this.sanitizeGameName(name)].pop()
+            : undefined;
           if (document) {
             if (queue[name].length > Site.betLogSize) {
               queue[name].length = Site.betLogSize;
@@ -226,4 +228,8 @@ export class FeedManager extends TypedEventEmitter<{
 
     return results;
   }
+
+  sanitizeGameName = (name: string): string => {
+    return name == "case-battles" ? "case_battles" : name;
+  };
 }
