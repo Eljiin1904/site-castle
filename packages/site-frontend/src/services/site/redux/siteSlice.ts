@@ -13,6 +13,7 @@ import { GameDocument } from "@core/types/game/GameDocument";
 import { Game } from "@core/services/game";
 import { GameKindType } from "@core/services/game/Game";
 import { HotSiteGameDetails } from "@core/types/site/HotSiteGame";
+import { SiteGame } from "@core/types/site/SiteGame";
 
 interface SiteState {
   initialized?: boolean;
@@ -23,7 +24,7 @@ interface SiteState {
   settings: SiteSettingObject;
   meta: SiteMetaObject;
   activity?: ActivityData[];
-  bets?: BetData[];
+  bets?: BetBoardData;
   games?: GameDocument[];
   hotGames?: HotSiteGameDetails[];
   search?: string;
@@ -44,8 +45,17 @@ type ActivityData = SiteActivityDocument & {
   inserted?: boolean;
 };
 
-type BetData = SiteBetDocument & {
+export type BetData = SiteBetDocument & {
   inserted?: boolean;
+};
+
+type BetBoardData = {
+  all: BetData[];
+  'case-battles': BetData[];
+  cases: BetData[];  
+  dice: BetData[];
+  double: BetData[];
+  limbo: BetData[];
 };
 
 const initialState: SiteState = {
@@ -99,21 +109,28 @@ export const siteSlice = createSlice({
 
       state.activity = activity;
     }),
-    initBets: reducer<SiteBetDocument[] | undefined>((state, { payload }) => {
+    initBets: reducer<BetBoardData | undefined>((state, { payload }) => {
       state.bets = payload;
     }),
     updateBets: reducer<SiteBetDocument>((state, { payload }) => {
-      const bets = state.bets ? state.bets.slice() : [];
+      
+      const allBets = state.bets?.all ? state.bets.all.slice() : [];
+      const doubleBets = replaceBet(state.bets?.double ? state.bets.double.slice() : [], "double", payload);
+      const diceBets = replaceBet(state.bets?.dice ? state.bets.dice.slice() : [], "dice", payload);
+      const limboBets = replaceBet(state.bets?.limbo ? state.bets.limbo.slice() : [], "limbo", payload);
+      const caseBets = replaceBet(state.bets?.cases ? state.bets.cases.slice() : [], "cases", payload);
+      const caseBattleBets:BetData[] = [];//replaceBet(state.bets?.["case-battles"] ? state.bets["case-battles"].slice() : [], "case-battles", payload);
+      
 
-      bets.unshift({
+      allBets.unshift({
         ...payload,
         inserted: true,
       });
-
-      if (bets.length > Site.betLogSize) {
-        bets.pop();
+      if (allBets.length > Site.betLogSize) {
+        allBets.pop();
       }
 
+      const bets = { all: allBets, 'case-battles': caseBattleBets, cases: caseBets, dice: diceBets, double: doubleBets, limbo: limboBets };
       state.bets = bets;
     }),
     initGames: reducer<GameDocument[] | []>((state, { payload }) => {
@@ -148,3 +165,18 @@ export const {
   setFilter,
   updateHotGames
 } = siteSlice.actions;
+
+const replaceBet = (bets: BetData[], game: SiteGame ,  bet: SiteBetDocument) => {
+ 
+  if(game === bet.game) {
+    bets.unshift({
+      ...bet,
+      inserted: true,
+    });
+    if (bets.length > Site.betLogSize) {
+      bets.pop();
+    }
+  }
+
+  return bets;
+}

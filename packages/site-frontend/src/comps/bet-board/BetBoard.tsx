@@ -12,14 +12,36 @@ import { BetRow } from "./BetRow";
 import { HistoryOverlay } from "./HistoryOverlay";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { SiteGame } from "@core/types/site/SiteGame";
+import { BetData } from "#app/services/site/Site";
+
+
 
 export const BetBoard = ({title, game = 'all'}: {title: string, game?: SiteGame | 'all'}) => {
   const [scope, setScope] = useState<SiteBetScope>("all");
   const bets = useAppSelector((x) => x.site.bets);
-  console.log(bets);
-
-  return null;
-  const filteredBets = bets?.filter(b => game === 'all' || b.game === game) || [];
+  let filteredBets:BetData[] = [];
+  
+  switch (game) {
+    case 'dice':
+      filteredBets = bets?.dice || [];
+      break;
+    case 'double':
+      filteredBets = bets?.double || [];
+      break;
+    case 'limbo':
+      filteredBets = bets?.limbo || [];
+      break;
+    case 'cases':
+      filteredBets = bets?.cases || [];
+      break;
+    case 'case-battles':
+      filteredBets = [];
+      break;
+    default:
+      filteredBets = bets?.all || [];
+      break;
+  }
+  
   return (
     <Div
       className="BetBoard"
