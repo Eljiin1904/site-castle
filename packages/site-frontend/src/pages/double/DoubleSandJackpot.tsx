@@ -7,9 +7,11 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Effects } from "#app/services/effects";
 import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
 import { useEffect } from "react";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const DoubleSandJackpot = () => {
 
+  const small = useIsMobileLayout();
   const history = useAppSelector((x) => x.double.history);
   const last3 = history.slice(0, 3);
 
@@ -19,8 +21,8 @@ export const DoubleSandJackpot = () => {
   
   const {t} = useTranslation(["games\\double"]);
   return (<Div>
-      <Div fx gap={16} flexCenter justifyContent="flex-end">
-        <Div column alignItems="flex-end">
+      <Div fx gap={16} flexCenter justifyContent={small ? "space-between" : "flex-end"}>
+        <Div column alignItems={small ? "flex-start" : "flex-end"}>
           <Span size={12} lineHeight={20} weight="medium" color="dark-sand">{t('games\\double:jackpot')}</Span>
           <Tokens fontSize={20} value={20000000000} decimals={0} />
         </Div>

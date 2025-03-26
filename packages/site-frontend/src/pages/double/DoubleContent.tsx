@@ -45,11 +45,13 @@ const MobileContent = () => {
           path="/graphics/double-tile-overlay"
           px={20}
           py={16}
+          gap={16}
         >
           <DoubleHeader />
           <Span>
             <DoubleView />
           </Span>
+          <DoubleSandJackpot />
         </DoubleReelOverlay>
       </Div>
       <Div
