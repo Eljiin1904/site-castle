@@ -42,19 +42,19 @@ export function setEnvironment(env: SystemEnvironment) {
     config.adminAPI = "http://127.0.0.1:5001";
   } else if (env === "devcloud") {
     config.siteURL = `https://dev.${domain}`;
-    config.siteAPI = `https://api.${domain}`;
-    config.adminURL = `https://admin.${domain}`;
-    config.adminAPI = `https://aapi.${domain}`;
+    config.siteAPI = `https://api.dev.${domain}`;
+    config.adminURL = `https://admin.dev.${domain}`;
+    config.adminAPI = `https://aapi.dev.${domain}`;
   } else if (env === "staging") {
     config.siteURL = `https://staging.${domain}`;
     config.siteAPI = `https://api.staging.${domain}`;
     config.adminURL = `https://admin.staging.${domain}`;
     config.adminAPI = `https://aapi.staging.${domain}`;
   } else if (env === "production") {
-    config.siteURL = `https://${domain}`;
-    config.siteAPI = `https://api.${domain}`;
-    config.adminURL = `https://admin.${domain}`;
-    config.adminAPI = `https://aapi.${domain}`;
+    config.siteURL = `https://dev.${domain}`;
+    config.siteAPI = `https://api.dev.${domain}`;
+    config.adminURL = `https://admin.dev.${domain}`;
+    config.adminAPI = `https://aapi.dev.${domain}`;
   }
 }
 
