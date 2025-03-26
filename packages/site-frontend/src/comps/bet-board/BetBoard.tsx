@@ -16,7 +16,9 @@ import { SiteGame } from "@core/types/site/SiteGame";
 export const BetBoard = ({title, game = 'all'}: {title: string, game?: SiteGame | 'all'}) => {
   const [scope, setScope] = useState<SiteBetScope>("all");
   const bets = useAppSelector((x) => x.site.bets);
+  console.log(bets);
 
+  return null;
   const filteredBets = bets?.filter(b => game === 'all' || b.game === game) || [];
   return (
     <Div
