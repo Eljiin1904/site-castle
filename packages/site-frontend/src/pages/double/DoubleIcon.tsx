@@ -1,27 +1,27 @@
 import classNames from "classnames";
 import { Div } from "@client/comps/div/Div";
 import { Double } from "#app/services/double";
-import { DoubleBetKind } from "@core/types/double/DoubleBetKind";
+import { DoubleColor } from "@core/types/double/DoubleColor";
 import { Vector } from "@client/comps/vector/Vector";
 import "./DoubleBetIcon.scss";
 
 export const DoubleIcon = ({
   className,
-  betKind,
+  color,
   bait,
   last100 = false
 }: {
   className?: string;
-  betKind: DoubleBetKind;
-  bait?: boolean;
+  color: DoubleColor;
+  bait: boolean;
   last100?: boolean;
 }) => {
   
-  const icon = Double.getIconFromBetKind(betKind);
+  const icon = Double.getIconFromColor({color, bait });
 
   return (
     <Div
-      className={classNames("DoubleIcon", className, betKind, { bait })}
+      className={classNames("DoubleIcon", className, color, { bait })}
       center
       p={8}
     >
