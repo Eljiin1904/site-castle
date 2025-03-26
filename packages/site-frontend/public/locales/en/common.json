@@ -16,5 +16,7 @@
   "online": "Status Online",
   "offline": "Status Offline",
   "continue": "Continue",
-  "startPlaying": "Start Playing!"
+  "startPlaying": "Start Playing!",
+  "accept": "Accept",
+  "moreInfo": "More Info"
 }

@@ -47,9 +47,9 @@ const DoubleJackpot = () => {
 
   useEffect(() => {
 
-    Effects.manager.play("DoubleJackpot", "jackpot");
+    Effects.manager.play("DoubleJackpot");
     playSound("confetti-jackpot");
   }, []);
 
-  return (<Div className={"DoubleJackpot jackpot"} fx fy zIndex={12} position="absolute" />)
+  return (<Div className={"DoubleJackpot"} fx fy zIndex={12} position="absolute" />)
 };
