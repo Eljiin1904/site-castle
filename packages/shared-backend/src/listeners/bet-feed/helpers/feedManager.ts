@@ -8,7 +8,10 @@ import { Site } from "#app/services/site";
 import { games } from "@core/services/site/Site";
 
 let instance: FeedManager;
+
+// Get name of each game and add a key that will hold 'all' bets
 const options = [...games, "all"];
+
 export function feedManager() {
   if (!instance) {
     instance = new FeedManager();
@@ -83,14 +86,18 @@ export class FeedManager extends TypedEventEmitter<{
   private async init() {
     await Database.manager.waitForInit();
 
-    const bets = await this.getSiteBets();
+    const betsByGame = await this.getSiteBets();
 
-    if (bets) {
-      for (let bet of bets) {
+    // Retreive Bets by Game
+    // Place bets in logs by game,
+    //  _id is the game name, documents is the game data
+    if (betsByGame) {
+      for (let bet of betsByGame) {
         this._log["all"][bet._id] = bet.documents;
       }
     }
 
+    // Retreive Latest Bets no matter the game type
     this._log["all"]["all"] = await Database.collection("site-bets")
       .find(
         {},
@@ -192,7 +199,7 @@ export class FeedManager extends TypedEventEmitter<{
   private async getSiteBets() {
     const results = await Database.collection("site-bets")
       .aggregate([
-        // Step 1: Sort the documents by game and create time (descending for most recent)
+        // Step 1: Sort the documents by game and created timestamp (descending for most recent)
         {
           $sort: {
             game: 1,
