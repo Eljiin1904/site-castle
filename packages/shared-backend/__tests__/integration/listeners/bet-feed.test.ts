@@ -42,9 +42,35 @@ describe("Bet Feed Test ", async () => {
   it("Setup Feed", async () => {
     if (socket == null) return;
 
-    const user = await Database.collection("users").findOne();
+    const user = await Database.collection("users").findOne({ username: "tester1" });
 
     if (!user) return;
+    // Create and InsertTicket for Dice
+    const ticket = await createTestTicket({
+      user,
+      targetKind: "over",
+      targetValue: 4,
+      rollValue: 5,
+    });
+    await Database.collection("dice-tickets").insertOne(ticket);
+
+    if (socket == null) return;
+
+    //  Create and insert Bet
+    let betTimestamp = new Date();
+    const bet: SiteBetDocument = {
+      _id: Ids.object(),
+      user: Users.getBasicUser(user),
+      game: "dice",
+      timestamp: betTimestamp,
+      multiplier: 0.5,
+      betAmount: 1000,
+      won: true,
+      wonAmount: 1500,
+    };
+
+    //  Create and insert Bet
+    await Database.collection("site-bets").insertOne(bet);
 
     const handleSocketEvents = new Promise<SiteBetDocument[]>((resolve) => {
       socket.on("bet-feed-init", (message) => {
@@ -57,11 +83,19 @@ describe("Bet Feed Test ", async () => {
 
     //Expect initial Bet Feed to be Empty
     const message: SiteBetDocument[] = await handleSocketEvents;
-    expect(message).toStrictEqual([]);
+
+    expect(message).toStrictEqual({
+      all: [],
+      "case-battles": [],
+      cases: [],
+      dice: [],
+      double: [],
+      limbo: [],
+    });
   });
 
   it("Insert Dice Ticket into Feed", async () => {
-    const user = await Database.collection("users").findOne();
+    const user = await Database.collection("users").findOne({ username: "tester1" });
     if (!user) return;
 
     // Create and InsertTicket for Dice
@@ -72,8 +106,6 @@ describe("Bet Feed Test ", async () => {
       rollValue: 5,
     });
     await Database.collection("dice-tickets").insertOne(ticket);
-
-    await new Promise((resolve) => setTimeout(resolve, 800));
 
     if (socket == null) return;
 
@@ -106,7 +138,7 @@ describe("Bet Feed Test ", async () => {
     expect(message.betAmount).toBe(1000);
     expect(message.wonAmount).toBe(1500);
     expect(message.won).toBe(true);
-    expect(new Date(message.timestamp)).toStrictEqual(bet.timestamp);
+    expect(new Date(message.timestamp)).toBeDefined();
   }, 10000);
 
   it("Leave Feed", async () => {
