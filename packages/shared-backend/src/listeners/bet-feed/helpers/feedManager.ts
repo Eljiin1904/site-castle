@@ -5,8 +5,12 @@ import { SiteBetScope } from "@core/types/site/SiteBetScope";
 import { Database } from "@server/services/database";
 import { System } from "@server/services/system";
 import { Site } from "#app/services/site";
+import { games } from "@core/services/site/Site";
 
 let instance: FeedManager;
+
+// Get name of each game and add a key that will hold 'all' bets
+const options = [...games, "all"];
 
 export function feedManager() {
   if (!instance) {
@@ -16,7 +20,7 @@ export function feedManager() {
 }
 
 type ScopeMap = {
-  all: SiteBetDocument[];
+  all: Record<string, SiteBetDocument[]>;
   highroller: SiteBetDocument[];
   lucky: SiteBetDocument[];
 };
@@ -26,12 +30,12 @@ export class FeedManager extends TypedEventEmitter<{
   insert: (scope: SiteBetScope, document: SiteBetDocument) => void;
 }> {
   private _log: ScopeMap = {
-    all: [],
+    all: {},
     highroller: [],
     lucky: [],
   };
   private readonly _queues: ScopeMap = {
-    all: [],
+    all: {},
     highroller: [],
     lucky: [],
   };
@@ -40,7 +44,10 @@ export class FeedManager extends TypedEventEmitter<{
 
   constructor() {
     super();
-
+    for (const name of options) {
+      this._log["all"][name] = [];
+      this._queues["all"][name] = [];
+    }
     this._stream = Database.createStream({
       collection: "site-bets",
       maxLogSize: 0,
@@ -79,7 +86,19 @@ export class FeedManager extends TypedEventEmitter<{
   private async init() {
     await Database.manager.waitForInit();
 
-    this._log["all"] = await Database.collection("site-bets")
+    const betsByGame = await this.getSiteBets();
+
+    // Retreive Bets by Game
+    // Place bets in logs by game,
+    //  _id is the game name, documents is the game data
+    if (betsByGame) {
+      for (let bet of betsByGame) {
+        this._log["all"][bet._id] = bet.documents;
+      }
+    }
+
+    // Retreive Latest Bets no matter the game type
+    this._log["all"]["all"] = await Database.collection("site-bets")
       .find(
         {},
         {
@@ -103,7 +122,7 @@ export class FeedManager extends TypedEventEmitter<{
       )
       .toArray();
 
-    const luckyThreshold = await this.luckyThreshold();  
+    const luckyThreshold = await this.luckyThreshold();
 
     this._log["lucky"] = await Database.collection("site-bets")
       .find(
@@ -126,10 +145,10 @@ export class FeedManager extends TypedEventEmitter<{
     const highrollerThreshold = await this.highrollerThreshold();
     const luckyThreshold = await this.luckyThreshold();
 
-    queues["all"].unshift(document);
+    queues["all"][document.game].unshift(document);
 
-    if (queues["all"].length > Site.betLogSize) {
-      queues["all"].length = Site.betLogSize;
+    if (queues["all"][document.game].length > Site.betLogSize) {
+      queues["all"][document.game].length = Site.betLogSize;
     }
 
     if (document.betAmount >= highrollerThreshold) {
@@ -153,17 +172,58 @@ export class FeedManager extends TypedEventEmitter<{
 
   private async onInterval() {
     for (const [scope, queue] of Utility.entries(this._queues)) {
-      const document = queue.pop();
-
-      if (document) {
-        const length = this._log[scope].unshift(document);
-
-        if (length > Site.betLogSize) {
-          this._log[scope].length = Site.betLogSize;
+      let document;
+      if (scope == "all") {
+        for (const name of games) {
+          document = queue[name] ? queue[name].pop() : undefined;
+          if (document) {
+            if (queue[name].length > Site.betLogSize) {
+              queue[name].length = Site.betLogSize;
+            }
+            this.emit("insert", scope, document);
+          }
         }
-
-        this.emit("insert", scope, document);
+      } else {
+        document = queue.pop();
+        if (document) {
+          const length = this._log[scope].unshift(document);
+          if (length > Site.betLogSize) {
+            this._log[scope].length = Site.betLogSize;
+          }
+        }
+        if (document) this.emit("insert", scope, document);
       }
     }
+  }
+
+  private async getSiteBets() {
+    const results = await Database.collection("site-bets")
+      .aggregate([
+        // Step 1: Sort the documents by game and created timestamp (descending for most recent)
+        {
+          $sort: {
+            game: 1,
+            timestamp: -1,
+          },
+        },
+
+        // Step 2: Group by game name and collect results in an array
+        {
+          $group: {
+            _id: "$game",
+            documents: { $push: "$$ROOT" },
+          },
+        },
+
+        // Step 3: Limit the results to Game Size
+        {
+          $project: {
+            documents: { $slice: ["$documents", Site.betLogSize] },
+          },
+        },
+      ])
+      .toArray();
+
+    return results;
   }
 }
