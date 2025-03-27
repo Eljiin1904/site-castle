@@ -13,6 +13,7 @@ import "./DoubleViewOverlay.scss";
 
 export const DoubleViewOverlay = () => {
   const status = useAppSelector((x) => x.double.round.status);
+  console.log("double status: " + status);
   if (status !== "waiting" && status !== "pending") {
     return null;
   }
@@ -37,18 +38,18 @@ export const DoubleViewOverlay = () => {
 };
 
 const DoubleCountdown = () => {
-  const {t} = useTranslation(["games\\double"]);
+  const { t } = useTranslation(["games\\double"]);
   const statusDate = useAppSelector((x) => x.double.round.statusDate);
   const getRemainder = () => 15000 - Site.timeSince(statusDate);
   const [timer, setTimer] = useState(getRemainder());
-  
+
   useInterval(() => {
     setTimer(getRemainder());
   }, 200);
 
   return (
     <Div
-      className="DoubleTimerOverlay"  
+      className="DoubleTimerOverlay"
       column
       center
       zIndex={10}
@@ -56,7 +57,14 @@ const DoubleCountdown = () => {
       fy
       gap={12}
     >
-      <Span color="light-sand" size={16} weight="medium" lineHeight={24}>{t('games\\double:placeYourBet')}</Span>
+      <Span
+        color="light-sand"
+        size={16}
+        weight="medium"
+        lineHeight={24}
+      >
+        {t("games\\double:placeYourBet")}
+      </Span>
       <Span
         family="title"
         weight="regular"
