@@ -1,4 +1,4 @@
-name: Shared Backend CI
+name: Shared Game Server CI
 permissions:
   contents: write
   issues: write
