@@ -41,17 +41,17 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t pidwin/castle-backend -f ./packages/shared-game-server/Dockerfile .
-          docker tag pidwin/castle-backend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
+          docker build -t pidwin/castle-game-server -f ./packages/shared-game-server/Dockerfile .
+          docker tag pidwin/castle-game-server:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest
 
       - name: Push Docker image to ECR
         id: push_image
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest
 
       - name: Output ECR Image URL
         run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-backend:latest"
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest"
 
       - name: Set image tag output
         id: set-image-tag
@@ -71,8 +71,8 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/dev/shared_be_values.yaml
-          git add helm/shared-be/values/dev/shared_be_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/dev/shared_gs_values.yaml
+          git add helm/shared-be/values/dev/shared_gs_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -87,8 +87,8 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_be_values.yaml
-          git add helm/shared-be/values/stage/shared_be_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_gs_values.yaml
+          git add helm/shared-be/values/stage/shared_gs_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -119,7 +119,7 @@ jobs:
   #       run: |
   #         IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
   #         echo "Updating Helm chart with tag: $IMAGE_TAG"
-  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_be_values.yaml
-  #         git add helm/shared-be/values/prod/shared_be_values.yaml
+  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_gs_values.yaml
+  #         git add helm/shared-be/values/prod/shared_gs_values.yaml
   #         git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
   #         git push
