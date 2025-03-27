@@ -32,7 +32,7 @@ export function useBetConfirmation() {
         const confirmed = await waitForConfirmation(onConfirmProps());
 
         if (!confirmed) {
-          throw new Error("Bet confirmation is required.");
+          throw new Error("validations:errors.games.betConfirmationRequired");
         }
       }
 

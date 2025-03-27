@@ -4,8 +4,11 @@ import { Div } from "@client/comps/div/Div";
 import { Button } from "@client/comps/button/Button";
 import { Span } from "@client/comps/span/Span";
 import "./AppCookieNotice.scss";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AppCookieNotice = () => {
+  
+  const {t} = useTranslation(["common"]);
   const [accepted, setAccepted] = useLocalStorage("accept-cookies", false);
   const navigate = useNavigate();
 
@@ -32,8 +35,7 @@ export const AppCookieNotice = () => {
           textAlign="center"
           color="dark-sand"
         >
-          {"This website uses cookies to improve your experience."}
-          {" By using this site, you agree to our use of cookies."}
+         {t('cookies')}
         </Span>
         <Div
           className="buttons"
@@ -43,16 +45,16 @@ export const AppCookieNotice = () => {
           gap={12}
         >
           <Button
-            kind="primary"
+            kind="tertiary-grey"
             size="sm"
-            label="Accept"
+            label={t('common:accept')}
             fx
             onClick={() => setAccepted(true)}
           />
           <Button
-            kind="secondary"
+            kind="primary-yellow"
             size="sm"
-            label="More Info"
+            label={t('common:moreInfo')}
             fx
             onClick={() => navigate("/about/privacy-policy")}
           />

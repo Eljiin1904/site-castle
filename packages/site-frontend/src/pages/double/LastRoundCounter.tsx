@@ -18,7 +18,7 @@ export const LastRoundCounter = ({ color, bait }: { color: DoubleColor; bait: bo
   return (
     <Div alignItems="center" gap={4}>
       <DoubleIcon
-        betKind={color === 'yellow' ? 'bait' : color}
+        color={color}
         bait={bait}
         last100={true}
       />

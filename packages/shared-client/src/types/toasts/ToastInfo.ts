@@ -3,4 +3,5 @@ export interface ToastInfo {
   text: string;
   duration: number;
   timestamp: Date;
+  data?: any;
 }

@@ -73,6 +73,7 @@
     "partners": "Partners",
     "press": "Press"
   },
+  "cookies": "This website uses cookies to improve your experience. By using this site, you agree to our use of cookies.",
   "signin": {
     "title": "Sign In to SandCasino",    
     "forgot": "Forgot Password?",
@@ -90,7 +91,7 @@
       "noPopup": "Don't see the {{provider}} login popup window?",
       "redirect": "Redirect to {{provider}} login"
     },
-    "success": "Welcome back, {{username}}!"
+    "success": "Welcome back, {{value.username}}!"
   },
   "forgot": {
     "title": "Forgot Password?",
@@ -186,5 +187,6 @@
       "multiplier": "Multiplier",
       "payout": "Payout"
     }
-  }
+  },
+  "levelCongrats": "Congrats on Level {{value.level}}!"
 }

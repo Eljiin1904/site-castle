@@ -18,7 +18,7 @@ export function useAppMilestones() {
       setInitialized(true);
     } else if (level !== lastLevel) {
       setLastLevel(level);
-      Toasts.success(`Congrats on Level ${level}!`);
+      Toasts.success("levelCongrats", 5000, { level: level });
     }
   }, [authenticated, initialized, level, lastLevel]);
 

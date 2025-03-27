@@ -157,10 +157,10 @@ export function useAutoBet() {
       return Dialogs.open("primary", <VerificationModal />);
     }
     if (betAmount === undefined) {
-      throw new Error("Invalid bet amount.");
+      throw new Error("validations:s.invalidBetAmount");
     }
     if (betAmount > tokenBalance) {
-      throw new Error("You do not have enough tokens.");
+      throw new Error("validations:errors.games.notEnoughTokens");
     }
 
     await confirmBet({

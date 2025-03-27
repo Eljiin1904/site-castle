@@ -1,6 +1,5 @@
 import { Div } from "@client/comps/div/Div";
 import { Conditional } from "@client/comps/conditional/Conditional";
-import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { DoubleIcon } from "./DoubleIcon";
 import { useTranslation } from "@core/services/internationalization/internationalization";
@@ -25,7 +24,6 @@ const LaptopDesktopContent = () => {
   const {t} = useTranslation(["common"]);
   const small = useIsMobileLayout();
 
-  console.log("history", history);
   return (
     <Div
       gap={12}
@@ -38,7 +36,7 @@ const LaptopDesktopContent = () => {
         {history.slice(0, small ? 8 : 10).map((x, i) => (
           <DoubleIcon
             key={i}
-            betKind={x.color === "yellow" ? "bait" : x.color}
+            color={x.color}
             bait={x.bait}
           />
         ))}

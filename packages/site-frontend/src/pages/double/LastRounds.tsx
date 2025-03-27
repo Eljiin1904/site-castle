@@ -34,16 +34,20 @@ const LaptopDesktopContent = () => {
           bait={false}
         />
         <LastRoundCounter
+          color="red"
+          bait={false}
+        />
+        <LastRoundCounter
           color="black"
           bait={false}
         />
         <LastRoundCounter
-          color="yellow"
-          bait={false}
+          color="red"
+          bait={true}
         />
         <LastRoundCounter
-          color="red"
-          bait={false}
+          color="black"
+          bait={true}
         />
       </Div>
     </Div>

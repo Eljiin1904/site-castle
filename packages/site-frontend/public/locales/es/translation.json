@@ -73,6 +73,7 @@
     "partners": "Socios",
     "press": "Prensa"
   },
+  "cookies": "Este sitio web utiliza cookies para mejorar su experiencia. Al utilizar este sitio, acepta nuestro uso de cookies.",
   "signin": {
     "title": "Iniciar sesión en SandCasino",    
     "forgot": "¿Olvidaste tu contraseña?",
@@ -90,7 +91,7 @@
       "noPopup": "¿No ves la ventana emergente de inicio de sesión de {{provider}}?",
       "redirect": "Redirigir al inicio de sesión de {{provider}}"
     },
-    "success": "¡Bienvenido de nuevo, {{username}}!"
+    "success": "¡Bienvenido de nuevo, {{value.username}}!"
   },
   "accountSetup": {
     "title": "Configuración de la cuenta",
@@ -181,5 +182,6 @@
       "multiplier": "Multiplicador",
       "payout": "Pago"
     }
-  }
+  },
+ "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!"
 }
