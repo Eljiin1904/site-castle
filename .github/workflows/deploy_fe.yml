@@ -76,18 +76,10 @@ jobs:
           curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           chmod +x /usr/local/bin/argocd
       - name: Update ArgoCD Application for DEV
-        env:
-          IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
-          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
-          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
         run: |
-          # Log in to ArgoCD
-          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
-          # Update the DEV application with the new image tag override
-          argocd app set castle-fe --helm-set image.tag=$IMAGE_TAG
-          # Sync the application to deploy the changes
-          argocd app sync castle-fe
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
+          argocd app set castle-fe --helm-set image.tag=${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+          argocd app sync castle-fe --async
 
   # update-argocd-stage:
   #   needs: update-argocd-dev
