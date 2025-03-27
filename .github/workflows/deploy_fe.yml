@@ -39,7 +39,7 @@ jobs:
       - name: Set image tag
         id: set-image-tag
         run: |
-          # Generate an immutable version tag (e.g. using a timestamp)
+          # Generate an immutable version tag using a timestamp
           IMAGE_TAG="v1.0.$(date +%s)"
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
@@ -51,7 +51,7 @@ jobs:
           docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .
           # Tag the image with the generated version tag
           docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:$IMAGE_TAG
-          # Optionally, tag it as 'latest' for development or fallback purposes
+          # Optionally, tag it as 'latest' for fallback purposes
           docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
 
       - name: Push Docker images to ECR
@@ -62,48 +62,50 @@ jobs:
           docker push $REGISTRY/pidwin/castle-frontend:latest
 
       - name: Output ECR Image URL
-        run: | 
+        run: |
           echo "Image pushed to ECR with tags:"
           echo "Version tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:${{ steps.set-image-tag.outputs.image_tag }}"
           echo "Latest tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
 
-  update-helm-chart-dev:
+  update-argocd-dev:
     needs: build-and-push-site-frontend
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Update Helm Chart for DEV
+      - name: Update ArgoCD Application for DEV
+        env:
+          IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
         run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating DEV Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/dev/fe_values.yaml
-          git add helm/site-frontend/values/dev/fe_values.yaml
-          git commit -m "new_image_release: update DEV image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-          git push
+          # Log in to ArgoCD
+          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+          # Update the DEV application with the new image tag override
+          argocd app set castle-frontend-dev --helm-set image.tag=$IMAGE_TAG
+          # Sync the application to deploy the changes
+          argocd app sync castle-frontend-dev
 
-  update-helm-chart-stage:
-    needs: update-helm-chart-dev
+  update-argocd-stage:
+    needs: update-argocd-dev
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Update Helm Chart for STAGE
+      - name: Update ArgoCD Application for STAGE
+        env:
+          IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
         run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating STAGE Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/fe_values.yaml
-          git add helm/site-frontend/values/stage/fe_values.yaml
-          git commit -m "new_image_release: update STAGE image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-          git push
+          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+          argocd app set castle-frontend-stage --helm-set image.tag=$IMAGE_TAG
+          argocd app sync castle-frontend-stage
 
   # wait-for-prod-approval:
-  #   needs: update-helm-chart-stage
+  #   needs: update-argocd-stage
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: trstringer/manual-approval@v1
+  #     - name: Wait for Production Approval
+  #       uses: trstringer/manual-approval@v1
   #       with:
   #         secret: ${{ github.TOKEN }}
   #         approvers: csherida,civilizador
@@ -112,22 +114,18 @@ jobs:
   #         issue-body: "Please approve or deny the deployment of this version"
   #         exclude-workflow-initiator-as-approver: false
   #         fail-on-denial: true
-  #         additional-approved-words: ''
-  #         additional-denied-words: ''
 
-  # update-helm-chart-prod:
+  # update-argocd-prod:
   #   needs: wait-for-prod-approval
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Check out repository
-  #       uses: actions/checkout@v3
-
-  #     - name: Update Helm Chart for PROD
+  #     - name: Update ArgoCD Application for PROD
+  #       env:
+  #         IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+  #         ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+  #         ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+  #         ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
   #       run: |
-  #         # For PROD, use the generated version tag for immutability and traceability
-  #         IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-  #         echo "Updating PROD Helm chart with tag: $IMAGE_TAG"
-  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
-  #         git add helm/site-frontend/values/prod/fe_values.yaml
-  #         git commit -m "new_image_release: update PROD image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-  #         git push
+  #         argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+  #         argocd app set castle-frontend-prod --helm-set image.tag=$IMAGE_TAG
+  #         argocd app sync castle-frontend-prod
