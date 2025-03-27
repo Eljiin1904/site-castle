@@ -21,11 +21,11 @@ export const DoubleIcon = ({
 
   return (
     <Div
-      className={classNames("DoubleIcon", className, color, { bait })}
+      className={classNames("DoubleIcon", className, color, {last100}, { bait })}
       center
       p={8}
     >
-      {last100 ? <Div className="icon" />: <Vector className="icon" as={icon} size={16} />}
+      { <Vector className="icon" as={icon} size={last100 ? 10: 16} />}
     </Div>
   );
 };
