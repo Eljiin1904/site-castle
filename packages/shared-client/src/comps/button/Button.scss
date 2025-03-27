@@ -200,7 +200,25 @@
     }
   }
 
-  &.size-ss0 {
+  &.size-xssso {
+    height: 40px;
+    padding: 0 14px;
+
+    span {
+
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+
+    &.square {
+      
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  &.size-sso {
     height: 40px;
   }
 
