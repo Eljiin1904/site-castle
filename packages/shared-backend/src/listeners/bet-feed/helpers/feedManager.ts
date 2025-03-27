@@ -10,7 +10,6 @@ import { games } from "@core/services/site/Site";
 let instance: FeedManager;
 
 // Get name of each game and add a key that will hold 'all' bets
-const options = [...games, "all"];
 
 export function feedManager() {
   if (!instance) {
@@ -29,6 +28,8 @@ export class FeedManager extends TypedEventEmitter<{
   initialized: () => void;
   insert: (scope: SiteBetScope, document: SiteBetDocument) => void;
 }> {
+  options = [...games, "all"];
+
   private _log: ScopeMap = {
     all: {},
     highroller: [],
@@ -44,7 +45,7 @@ export class FeedManager extends TypedEventEmitter<{
 
   constructor() {
     super();
-    for (const name of options) {
+    for (const name of this.options) {
       this._log["all"][this.sanitizeGameName(name)] = [];
       this._queues["all"][this.sanitizeGameName(name)] = [];
     }
@@ -198,33 +199,42 @@ export class FeedManager extends TypedEventEmitter<{
     }
   }
 
-  private async getSiteBets() {
-    const results = await Database.collection("site-bets")
-      .aggregate([
-        // Step 1: Sort the documents by game and created timestamp (descending for most recent)
-        {
-          $sort: {
-            game: 1,
-            timestamp: -1,
-          },
-        },
+  async getSiteBets(user_id?: string) {
+    let query = [];
 
-        // Step 2: Group by game name and collect results in an array
-        {
-          $group: {
-            _id: "$game",
-            documents: { $push: "$$ROOT" },
-          },
+    if (user_id) {
+      query.push({
+        $match: {
+          user_id: user_id,
         },
+      });
+    }
 
-        // Step 3: Limit the results to Game Size
-        {
-          $project: {
-            documents: { $slice: ["$documents", Site.betLogSize] },
-          },
+    query.push(
+      // Step 1: Sort the documents by game and created timestamp (descending for most recent)
+      {
+        $sort: {
+          game: 1,
+          timestamp: -1,
         },
-      ])
-      .toArray();
+      },
+
+      // Step 2: Group by game name and collect results in an array
+      {
+        $group: {
+          _id: "$game",
+          documents: { $push: "$$ROOT" },
+        },
+      },
+
+      // Step 3: Limit the results to Game Size
+      {
+        $project: {
+          documents: { $slice: ["$documents", Site.betLogSize] },
+        },
+      },
+    );
+    const results = await Database.collection("site-bets").aggregate(query).toArray();
 
     return results;
   }

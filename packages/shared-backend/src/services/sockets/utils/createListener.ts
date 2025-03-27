@@ -27,32 +27,21 @@ type ListenerOptions<K extends keyof SiteClientEvents> = {
     }
 );
 
-export function createListener<K extends keyof SiteClientEvents>(
-  options: ListenerOptions<K>,
-) {
+export function createListener<K extends keyof SiteClientEvents>(options: ListenerOptions<K>) {
   return (io: SiteServer) => {
     if (options.action === "init") {
       options.callback(io).catch((e) => Sockets.handleError(e));
     } else {
       io.on("connection", (socket) => {
         if (options.action === "connection") {
-          options
-            .callback(io, socket)
-            .catch((e) => Sockets.handleError(e, socket.data.ip));
+          options.callback(io, socket).catch((e) => Sockets.handleError(e, socket.data.ip));
         } else if (options.action === "event") {
           socket.on<keyof SiteClientEvents>(options.key, (...args: any) => {
             if (options.secure && !socket.data.isAuthenticated) {
-              Sockets.handleError(
-                new HandledError("Not authenticated."),
-                socket.data.ip,
-              );
+              Sockets.handleError(new HandledError("Not authenticated."), socket.data.ip);
             } else {
               options
-                .callback(
-                  io,
-                  socket,
-                  ...(args as Parameters<SiteClientEvents[K]>),
-                )
+                .callback(io, socket, ...(args as Parameters<SiteClientEvents[K]>))
                 .catch((e) => Sockets.handleError(e, socket.data.ip));
             }
           });

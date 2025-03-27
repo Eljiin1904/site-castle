@@ -22,12 +22,6 @@ jobs:
           submodules: 'true'
           token: ${{ secrets.PIDWIN_READ_ONLY_PAT }}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 23
-          cache: 'npm'
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -42,64 +36,73 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and tag Docker image
-        run: |
-          docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .
-          docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
-
-      - name: Push Docker image to ECR
-        id: push_image
-        run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
-
-      - name: Output ECR Image URL
-        run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
-
-      - name: Set image tag output
+      - name: Set image tag
         id: set-image-tag
         run: |
-          # Generate an image tag (for example, using a timestamp)
+          # Generate an immutable version tag using a timestamp
           IMAGE_TAG="v1.0.$(date +%s)"
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
-  update-helm-chart-dev:
+      - name: Build and tag Docker image
+        run: |
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          # Build the Docker image from the frontend Dockerfile
+          docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .
+          # Tag the image with the generated version tag
+          docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:$IMAGE_TAG
+          # Optionally, tag it as 'latest' for fallback purposes
+          docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
+
+      - name: Push Docker images to ECR
+        run: |
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          docker push $REGISTRY/pidwin/castle-frontend:$IMAGE_TAG
+          docker push $REGISTRY/pidwin/castle-frontend:latest
+
+      - name: Output ECR Image URL
+        run: |
+          echo "Image pushed to ECR with tags:"
+          echo "Version tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:${{ steps.set-image-tag.outputs.image_tag }}"
+          echo "Latest tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
+
+  update-argocd-dev:
     needs: build-and-push-site-frontend
+    environment: dev
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Update Helm Chart for shared backend DEV
+      - name: Install ArgoCD CLI
         run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/dev/fe_values.yaml
-          git add helm/site-frontend/values/dev/fe_values.yaml
-          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-          git push
-
-  update-helm-chart-stage:
-    needs: update-helm-chart-dev
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Update Helm Chart for shared backend STAGE
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+      - name: Update ArgoCD Application for DEV
         run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/fe_values.yaml
-          git add helm/site-frontend/values/stage/fe_values.yaml
-          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-          git push
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
+          argocd app set castle-fe --helm-set image.tag=${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+          argocd app sync castle-fe --async
 
-  # wait-for-prod-approval:
-  #   needs: update-helm-chart-stage
+  # update-argocd-stage:
+  #   needs: update-argocd-dev
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: trstringer/manual-approval@v1
+  #     - name: Update ArgoCD Application for STAGE
+  #       env:
+  #         IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+  #         ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+  #         ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+  #         ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+  #       run: |
+  #         argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+  #         argocd app set castle-fe-stage --helm-set image.tag=$IMAGE_TAG
+  #         argocd app sync castle-fe-stage
+
+  # wait-for-prod-approval:
+  #   needs: update-argocd-stage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Wait for Production Approval
+  #       uses: trstringer/manual-approval@v1
   #       with:
   #         secret: ${{ github.TOKEN }}
   #         approvers: csherida,civilizador
@@ -108,21 +111,18 @@ jobs:
   #         issue-body: "Please approve or deny the deployment of this version"
   #         exclude-workflow-initiator-as-approver: false
   #         fail-on-denial: true
-  #         additional-approved-words: ''
-  #         additional-denied-words: ''
 
-  # update-helm-chart-prod:
-    # needs: wait-for-prod-approval
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: Check out repository
-    #     uses: actions/checkout@v3
-
-    #   - name: Update Helm Chart for shared backend PROD
-    #     run: |
-    #       IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-    #       echo "Updating Helm chart with tag: $IMAGE_TAG"
-    #       sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
-    #       git add helm/site-frontend/values/prod/fe_values.yaml
-    #       git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-    #       git push
+  # update-argocd-prod:
+  #   needs: wait-for-prod-approval
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Update ArgoCD Application for PROD
+  #       env:
+  #         IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+  #         ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+  #         ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+  #         ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+  #       run: |
+  #         argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+  #         argocd app set castle-frontend-prod --helm-set image.tag=$IMAGE_TAG
+  #         argocd app sync castle-frontend-prod

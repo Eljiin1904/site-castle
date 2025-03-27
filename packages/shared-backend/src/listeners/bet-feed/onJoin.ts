@@ -3,6 +3,7 @@ import { HandledError } from "@server/services/errors";
 import { Sockets } from "#app/services/sockets";
 import { Site } from "#app/services/site";
 import { feedManager } from "./helpers/feedManager";
+import { SiteBetDocument } from "@core/types/site/SiteBetDocument";
 
 export default Sockets.createListener({
   action: "event",
@@ -12,7 +13,6 @@ export default Sockets.createListener({
     const manager = feedManager();
 
     let documents;
-
     if (scope === "all" || scope === "highroller" || scope === "lucky") {
       socket.join(`bet-feed_${scope}`);
       documents = manager.log[scope];
@@ -23,7 +23,18 @@ export default Sockets.createListener({
 
       socket.join(`bet-feed_${scope}-${socket.data.userId}`);
 
-      documents = await Database.collection("site-bets")
+      const bets = await manager.getSiteBets(socket.data.userId);
+
+      const results: Record<string, SiteBetDocument[]> = {};
+      for (const name of manager.options) {
+        results[manager.sanitizeGameName(name)] = [];
+      }
+      if (bets) {
+        for (let bet of bets) {
+          results[bet._id] = bet.documents;
+        }
+      }
+      results["all"] = documents = await Database.collection("site-bets")
         .find(
           { "user.id": socket.data.userId },
           {
@@ -32,6 +43,8 @@ export default Sockets.createListener({
           },
         )
         .toArray();
+
+      documents = results;
     }
 
     socket.emit("bet-feed-init", documents);
