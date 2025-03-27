@@ -15,9 +15,9 @@ export const DoubleSandJackpot = () => {
   const history = useAppSelector((x) => x.double.history);
   const last3 = history.slice(0, 3);
 
-  const fillFirstOne = last3[0]?.color === "red";
-  const fillSecondOne = fillFirstOne && last3[1]?.color === "red";
-  const fillThirdOne = fillSecondOne && last3[2]?.color === "red";
+  const fillFirstOne = last3[0]?.color === "green";
+  const fillSecondOne = fillFirstOne && last3[1]?.color === "green";
+  const fillThirdOne = fillSecondOne && last3[2]?.color === "green";
   
   const {t} = useTranslation(["games\\double"]);
   return (<Div>
