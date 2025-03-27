@@ -1,16 +1,19 @@
-name: Castle Front-End CI
+name: Shared Backend CI
+permissions:
+  contents: write
+  issues: write
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main 
+      - main
     paths:
-      - "packages/site-frontend/**"
-      - ".github/workflows/deploy_fe.yml"
+      - "packages/shared-game-server/**"
+      - ".github/workflows/deploy_game_server.yml"
 
 jobs:
-  build-and-push-site-frontend:
+  build-and-push-shared-game-server:
     runs-on: ubuntu-latest
     environment: dev
     outputs:
@@ -38,17 +41,17 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .
-          docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
+          docker build -t pidwin/castle-game-server -f ./packages/shared-game-server/Dockerfile .
+          docker tag pidwin/castle-game-server:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest
 
       - name: Push Docker image to ECR
         id: push_image
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest
 
       - name: Output ECR Image URL
         run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
+          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest"
 
       - name: Set image tag output
         id: set-image-tag
@@ -58,7 +61,7 @@ jobs:
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
   update-helm-chart-dev:
-    needs: build-and-push-site-frontend
+    needs: build-and-push-shared-game-server
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -66,10 +69,10 @@ jobs:
 
       - name: Update Helm Chart for shared backend DEV
         run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
+          IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/dev/fe_values.yaml
-          git add helm/site-frontend/values/dev/fe_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/dev/shared_gs_values.yaml
+          git add helm/shared-be/values/dev/shared_gs_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -82,10 +85,10 @@ jobs:
 
       - name: Update Helm Chart for shared backend STAGE
         run: |
-          IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
+          IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/fe_values.yaml
-          git add helm/site-frontend/values/stage/fe_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_gs_values.yaml
+          git add helm/shared-be/values/stage/shared_gs_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -106,17 +109,17 @@ jobs:
   #         additional-denied-words: ''
 
   # update-helm-chart-prod:
-    # needs: wait-for-prod-approval
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: Check out repository
-    #     uses: actions/checkout@v3
+  #   needs: wait-for-prod-approval
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v3
 
-    #   - name: Update Helm Chart for shared backend PROD
-    #     run: |
-    #       IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-    #       echo "Updating Helm chart with tag: $IMAGE_TAG"
-    #       sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
-    #       git add helm/site-frontend/values/prod/fe_values.yaml
-    #       git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-    #       git push
+  #     - name: Update Helm Chart for shared backend PROD
+  #       run: |
+  #         IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
+  #         echo "Updating Helm chart with tag: $IMAGE_TAG"
+  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_gs_values.yaml
+  #         git add helm/shared-be/values/prod/shared_gs_values.yaml
+  #         git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+  #         git push
