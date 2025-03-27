@@ -54,7 +54,7 @@ const ActionButton = () => {
   return (
     <Button
       fx
-      kind="primary-yellow"
+      kind="primary-green"
       label={overMax ? "Exceeds Max Profit" : "Place Bet"}
       loading={processing}
       disabled={overMax || processing}

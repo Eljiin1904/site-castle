@@ -16,7 +16,6 @@ export const colors = {
   "dark-yellow": "#8F610C",
   green: "#299B53",
   "light-green": "#44BA70",
-  "bright-green": "#59CF88",
   "dark-green": "#1B7C3F",
   red: "#FF4040",
   "light-red": "#ff7a85",
@@ -62,6 +61,10 @@ export const colors = {
   "black-overlay": "#1D1A19B2",
   /** Button Tertiary White Overlay Colors */
   "white-overlay": "#FFFEFC1A",
+  /** Button Green Colors */
+  "bright-green": "#59CF88",
+  "green-hover": "#94D8A7",
+  "green-active": "#63BD76",
   /** Error Color */
   "error-red": "#F03030",
   /** Input Colors */
