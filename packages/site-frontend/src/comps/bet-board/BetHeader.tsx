@@ -19,7 +19,7 @@ export const BetHeader = ({game = 'all'}: {game?: SiteGame | 'all'}) => {
       borderBottom
     >
       {game === 'all' && <BetHeaderColumn header={t('bets.headers.game')} flexBasis={0} grow={3} />}
-      <BetHeaderColumn header={t('bets.headers.user')} flexBasis={0} grow={4}  hideInMobile={true}/>
+      <BetHeaderColumn header={t('bets.headers.user')} flexBasis={0} grow={4}/>
       <BetHeaderColumn header={t('bets.headers.time')} flexBasis={0} grow={3} hideInMobile={true} />
       <BetHeaderColumn header={t('bets.headers.amount')} flexBasis={0} grow={4}  hideInMobile={true}/>
       <BetHeaderColumn header={t('bets.headers.multiplier')} flexBasis={0} grow={2} />

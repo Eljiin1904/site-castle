@@ -70,7 +70,7 @@ const MobileContent = () => {
           <RecentRounds />
         </Div>
       </Div>
-      <Div mt={64}>
+      <Div mt={64} px={20}>
         <BetBoard title={t("games\\double:betBoardHeader")} game="double" />
       </Div>
     </Div>
