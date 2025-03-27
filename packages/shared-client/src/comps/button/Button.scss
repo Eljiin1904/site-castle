@@ -365,4 +365,22 @@
       }
     }
   }
+
+  &.primary-green {
+
+    background: var(--bright-green-color);
+
+    span, .icon {
+      color: var(--dark-brown-color);
+    }
+  
+    &:hover {
+      background: var(--green-hover-color);
+    }
+  
+    &:active, &.active {
+  
+      background-color: var(--green-active-color);
+    }
+  }
 }
