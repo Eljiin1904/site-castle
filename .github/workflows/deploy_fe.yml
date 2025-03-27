@@ -69,6 +69,7 @@ jobs:
 
   update-argocd-dev:
     needs: build-and-push-site-frontend
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       - name: Install ArgoCD CLI
