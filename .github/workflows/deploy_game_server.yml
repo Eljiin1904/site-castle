@@ -1,4 +1,4 @@
-name: Shared Backend CI
+name: Shared Game Server CI
 permissions:
   contents: write
   issues: write
@@ -71,8 +71,8 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/dev/shared_gs_values.yaml
-          git add helm/shared-be/values/dev/shared_gs_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-game-server/values/dev/shared_gs_values.yaml
+          git add helm/shared-game-server/values/dev/shared_gs_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -87,8 +87,8 @@ jobs:
         run: |
           IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
           echo "Updating Helm chart with tag: $IMAGE_TAG"
-          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_gs_values.yaml
-          git add helm/shared-be/values/stage/shared_gs_values.yaml
+          sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-game-server/values/stage/shared_gs_values.yaml
+          git add helm/shared-game-server/values/stage/shared_gs_values.yaml
           git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
@@ -119,7 +119,7 @@ jobs:
   #       run: |
   #         IMAGE_TAG="${{ needs.build-and-push-shared-game-server.outputs.image_tag }}"
   #         echo "Updating Helm chart with tag: $IMAGE_TAG"
-  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-be/values/stage/shared_gs_values.yaml
-  #         git add helm/shared-be/values/prod/shared_gs_values.yaml
+  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/shared-game-server/values/stage/shared_gs_values.yaml
+  #         git add helm/shared-game-server/values/prod/shared_gs_values.yaml
   #         git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
   #         git push
