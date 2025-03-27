@@ -81,24 +81,24 @@ jobs:
           # Log in to ArgoCD
           argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
           # Update the DEV application with the new image tag override
-          argocd app set castle-frontend-dev --helm-set image.tag=$IMAGE_TAG
+          argocd app set castle-fe --helm-set image.tag=$IMAGE_TAG
           # Sync the application to deploy the changes
-          argocd app sync castle-frontend-dev
+          argocd app sync castle-fe
 
-  update-argocd-stage:
-    needs: update-argocd-dev
-    runs-on: ubuntu-latest
-    steps:
-      - name: Update ArgoCD Application for STAGE
-        env:
-          IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
-          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
-          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
-        run: |
-          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
-          argocd app set castle-frontend-stage --helm-set image.tag=$IMAGE_TAG
-          argocd app sync castle-frontend-stage
+  # update-argocd-stage:
+  #   needs: update-argocd-dev
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Update ArgoCD Application for STAGE
+  #       env:
+  #         IMAGE_TAG: ${{ needs.build-and-push-site-frontend.outputs.image_tag }}
+  #         ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+  #         ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+  #         ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+  #       run: |
+  #         argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+  #         argocd app set castle-fe-stage --helm-set image.tag=$IMAGE_TAG
+  #         argocd app sync castle-fe-stage
 
   # wait-for-prod-approval:
   #   needs: update-argocd-stage
