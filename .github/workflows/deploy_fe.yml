@@ -36,26 +36,36 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Set image tag
+        id: set-image-tag
+        run: |
+          # Generate an immutable version tag (e.g. using a timestamp)
+          IMAGE_TAG="v1.0.$(date +%s)"
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "Generated IMAGE_TAG: $IMAGE_TAG"
+
       - name: Build and tag Docker image
         run: |
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          # Build the Docker image from the frontend Dockerfile
           docker build -t pidwin/castle-frontend -f ./packages/site-frontend/Dockerfile .
+          # Tag the image with the generated version tag
+          docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:$IMAGE_TAG
+          # Optionally, tag it as 'latest' for development or fallback purposes
           docker tag pidwin/castle-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
 
-      - name: Push Docker image to ECR
-        id: push_image
+      - name: Push Docker images to ECR
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          docker push $REGISTRY/pidwin/castle-frontend:$IMAGE_TAG
+          docker push $REGISTRY/pidwin/castle-frontend:latest
 
       - name: Output ECR Image URL
         run: | 
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
-
-      - name: Set image tag output
-        id: set-image-tag
-        run: |
-          # Generate an image tag (for example, using a timestamp)
-          IMAGE_TAG="v1.0.$(date +%s)"
-          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "Image pushed to ECR with tags:"
+          echo "Version tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:${{ steps.set-image-tag.outputs.image_tag }}"
+          echo "Latest tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest"
 
   update-helm-chart-dev:
     needs: build-and-push-site-frontend
@@ -64,13 +74,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Update Helm Chart for shared backend DEV
+      - name: Update Helm Chart for DEV
         run: |
           IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          echo "Updating DEV Helm chart with tag: $IMAGE_TAG"
           sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/dev/fe_values.yaml
           git add helm/site-frontend/values/dev/fe_values.yaml
-          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git commit -m "new_image_release: update DEV image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
   update-helm-chart-stage:
@@ -80,13 +90,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Update Helm Chart for shared backend STAGE
+      - name: Update Helm Chart for STAGE
         run: |
           IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-          echo "Updating Helm chart with tag: $IMAGE_TAG"
+          echo "Updating STAGE Helm chart with tag: $IMAGE_TAG"
           sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/stage/fe_values.yaml
           git add helm/site-frontend/values/stage/fe_values.yaml
-          git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+          git commit -m "new_image_release: update STAGE image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
           git push
 
   # wait-for-prod-approval:
@@ -106,17 +116,18 @@ jobs:
   #         additional-denied-words: ''
 
   # update-helm-chart-prod:
-    # needs: wait-for-prod-approval
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: Check out repository
-    #     uses: actions/checkout@v3
+  #   needs: wait-for-prod-approval
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v3
 
-    #   - name: Update Helm Chart for shared backend PROD
-    #     run: |
-    #       IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
-    #       echo "Updating Helm chart with tag: $IMAGE_TAG"
-    #       sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
-    #       git add helm/site-frontend/values/prod/fe_values.yaml
-    #       git commit -m "new_image_release: update image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
-    #       git push
+  #     - name: Update Helm Chart for PROD
+  #       run: |
+  #         # For PROD, use the generated version tag for immutability and traceability
+  #         IMAGE_TAG="${{ needs.build-and-push-site-frontend.outputs.image_tag }}"
+  #         echo "Updating PROD Helm chart with tag: $IMAGE_TAG"
+  #         sed -i "s/tag: .*/tag: $IMAGE_TAG/" helm/site-frontend/values/prod/fe_values.yaml
+  #         git add helm/site-frontend/values/prod/fe_values.yaml
+  #         git commit -m "new_image_release: update PROD image tag to $IMAGE_TAG [skip ci]" || echo "No changes to commit"
+  #         git push
