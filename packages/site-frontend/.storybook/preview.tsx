@@ -1,7 +1,11 @@
+import React from 'react';
 import type { Preview } from "@storybook/react";
 import "../../shared-client/src/styles/defaults.scss";
 import "../../shared-client/src/styles/styled.scss";
 import { Style } from "../../shared-client/src/services/style";
+import { connect, Provider as StoreProvider } from "react-redux";
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+// import {store} from "../../site-frontend/src/store";
 
 const appendStyle = () => {
 
@@ -89,6 +93,61 @@ const appendUnits = () => {
 };
 appendUnits();
 
+const doubleSlice = {
+  round: {},
+  initialized: true,
+  history: [],
+  tickets: [],
+  betAmount: 200
+};
+
+const store = configureStore({
+  reducer: {
+    double: createSlice({
+      name: "doublePlayer",
+      initialState: doubleSlice,
+      reducers: {
+        setBetAmount: (state, action) => {
+          state.betAmount = action.payload;
+        }
+      }
+    }).reducer,
+    site: createSlice({
+      name: "site",
+      initialState: {
+        bets: []
+      },
+      reducers: {}
+    }).reducer,
+    style: createSlice({
+      name: "style",
+      initialState: {
+        mainLayout: 'mobile'
+      },
+      reducers: {}
+    }).reducer,
+    socket: createSlice({
+      name: "socket",
+      initialState: {
+        connected: true
+      },
+      reducers: {}
+    }).reducer,
+    user: createSlice({
+      name: "user",
+      initialState: {
+        authenticated: true,
+        kyc: {tier: 1},
+        settings: { unusualBetConfirm: false, bet2fa: false },
+        tfa: {enabled: false},
+        emailConfirmed: true,
+        tokenBalance: 500000000
+      },
+      reducers: {}
+    }).reducer
+  }
+});
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -106,6 +165,18 @@ const preview: Preview = {
       default: 'Dark',
     },
   },
+  decorators: [
+    (Story, {parameters}) => {
+      
+      //const { style = {mainLayout = 'mobile'} } = parameters;
+
+      return (
+        <StoreProvider store={store}>
+          <Story />
+        </StoreProvider>
+      );
+    },
+  ],
 };
 
 
