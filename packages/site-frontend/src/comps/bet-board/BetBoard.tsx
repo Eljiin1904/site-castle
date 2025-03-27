@@ -10,7 +10,6 @@ import { BetHeader } from "./BetHeader";
 import "./BetBoard.scss";
 import { BetRow } from "./BetRow";
 import { HistoryOverlay } from "./HistoryOverlay";
-import { useTranslation } from "@core/services/internationalization/internationalization";
 import { SiteGame } from "@core/types/site/SiteGame";
 import { BetData } from "#app/services/site/Site";
 
@@ -20,7 +19,6 @@ export const BetBoard = ({title, game = 'all'}: {title: string, game?: SiteGame 
   const [scope, setScope] = useState<SiteBetScope>("all");
   const bets = useAppSelector((x) => x.site.bets);
   let filteredBets:BetData[] = [];
-  
   switch (game) {
     case 'dice':
       filteredBets = bets?.dice || [];

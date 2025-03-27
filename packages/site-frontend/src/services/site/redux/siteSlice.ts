@@ -121,7 +121,6 @@ export const siteSlice = createSlice({
       const caseBets = replaceBet(state.bets?.cases ? state.bets.cases.slice() : [], "cases", payload);
       const caseBattleBets:BetData[] = [];//replaceBet(state.bets?.["case-battles"] ? state.bets["case-battles"].slice() : [], "case-battles", payload);
       
-
       allBets.unshift({
         ...payload,
         inserted: true,
