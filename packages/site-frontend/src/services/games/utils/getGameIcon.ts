@@ -1,6 +1,7 @@
 import { SvgDouble } from "#app/svgs/double/SvgDouble";
 import { SvgBattle } from "@client/svgs/common/SvgBattle";
 import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
+import { SvgCases } from "@client/svgs/common/SvgCases";
 import { SvgCrash } from "@client/svgs/common/SvgCrash";
 import { SvgDice } from "@client/svgs/common/SvgDice";
 import { SvgDuel } from "@client/svgs/common/SvgDuel";
@@ -25,7 +26,7 @@ export function getGameIcon(game: GameDocument) {
     case "duel":
       return SvgDuel;
     case "cases":
-      return SvgBattle;
+      return SvgCases;
     case "case_battles":
       return SvgBattle;
     default:

@@ -12,6 +12,7 @@ const locizeOptions = {
 
 const options: InitOptions = {
   debug: true,
+  lng: "en",
   fallbackLng: "en",
   ns: ["translation", "validations","fields", "common","games\\double"],
   fallbackNS: ["translation"],
