@@ -1,10 +1,10 @@
-name: Shared Admin FrontEnd CI
+name: Castle Front-End CI
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - main 
     paths:
       - "packages/shared-admin-frontend/**"
       - ".github/workflows/deploy_shared_admin_fe.yml"
@@ -36,28 +36,36 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Set image tag
+        id: set-image-tag
+        run: |
+          # Generate an immutable version tag using a timestamp
+          IMAGE_TAG="v1.0.$(date +%s)"
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "Generated IMAGE_TAG: $IMAGE_TAG"
+
       - name: Build and tag Docker image
         run: |
-          # Build the Docker image from the shared-admin-frontend Dockerfile
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          # Build the Docker image from the frontend Dockerfile
           docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
-          # Tag the image as 'latest' for fallback purposes
+          # Tag the image with the generated version tag
+          docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:$IMAGE_TAG
+          # Optionally, tag it as 'latest' for fallback purposes
           docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
 
-      - name: Push Docker image to ECR
-        id: push_image
+      - name: Push Docker images to ECR
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest
+          IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          docker push $REGISTRY/pidwin/castle-admin-frontend:$IMAGE_TAG
+          docker push $REGISTRY/pidwin/castle-admin-frontend:latest
 
       - name: Output ECR Image URL
         run: |
-          echo "Image pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
-
-      - name: Set image tag output
-        id: set-image-tag
-        run: |
-          # Generate an image tag (for example, using a timestamp)
-          IMAGE_TAG="v1.0.$(date +%s)"
-          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "Image pushed to ECR with tags:"
+          echo "Version tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:${{ steps.set-image-tag.outputs.image_tag }}"
+          echo "Latest tag: ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:latest"
 
   update-argocd-dev:
     needs: build-and-push-shared-admin-frontend
