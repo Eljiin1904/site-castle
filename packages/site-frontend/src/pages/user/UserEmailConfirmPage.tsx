@@ -18,7 +18,7 @@ export const UserEmailConfirmPage = () => {
       navigate("/");
     } else {
       await Users.confirmEmail({ confirmToken });
-      Toasts.success(t("register.confirm.success"));
+      Toasts.success("register.confirm.success");
       navigate("/account");
     }
   });

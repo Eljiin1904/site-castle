@@ -18,5 +18,9 @@
   "continue": "Continue",
   "startPlaying": "Start Playing!",
   "accept": "Accept",
-  "moreInfo": "More Info"
+  "moreInfo": "More Info",
+  "manual": "Manual",
+  "auto": "Auto",
+  "reset": "Reset",
+  "increase": "Increase"
 }
