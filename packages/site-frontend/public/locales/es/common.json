@@ -20,5 +20,7 @@
   "accept": "Aceptar",
   "moreInfo": "Más información",
   "manual": "Manual",
-  "auto": "Automático"
+  "auto": "Automático",
+  "reset": "Reiniciar",
+  "increase": "Aumentar"
 }

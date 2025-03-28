@@ -1,5 +1,5 @@
 {
-  "placeBet": "Hacer apuesta",
+  "placeBet": "Apostar",
   "betPlaced": "Apuesta realizada",
   "betBoardHeader": "Apuestas Juego Doble",
   "bet_zero": "{{count}} Apuesta",
@@ -7,6 +7,9 @@
   "bet_other": "{{count}} Apuestas",
   "placeYourBet": "Hacer tu apuesta",
   "jackpot":"Sand Tripe Premio Gordo",
+  "serverSeedHash": "Seed Hash del Servidor",
+  "eosBlock": "Bloque EOS",
+  "eosBlockId": "ID de Bloque EOS",
   "confirmBet": {
     "title": "Confirmar apuesta",
     "message": "Apostar {{value.amount}} en {{value.kind}}?"

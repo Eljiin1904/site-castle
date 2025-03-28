@@ -60,7 +60,7 @@ export const HomePageGamesSlider = ({title, items, type }: {
   return (<Div fx column  gap={layout === 'mobile' ? 24 : 40}
     mb={0}>
     <Div className="gameSectionHeader"
-      fx alignItems="center" mt={layout === 'mobile' ? 0 : 16}>
+      fx alignItems="center">
       {title && <PageTitle heading={title} />}
       {items.length > slideElementsInDisplay && <Div className="gameSectionControls" gap={16}>
         <Button kind="tertiary-grey" size="md" icon={SvgSliderArrow} disabled={index === 0 } onClick={handlePrevious} />

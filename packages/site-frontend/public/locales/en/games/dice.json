@@ -4,5 +4,14 @@
   "betBoardHeader": "Dice Game Bets",
   "bet_zero": "{{count}} Bet",
   "bet_one": "{{count}} Bet",
-  "bet_other": "{{count}} Bets"
+  "bet_other": "{{count}} Bets",
+  "exceedMaxBet": "Exceeds Max Profit",
+  "startAutoPlay": "Start Auto Play",
+  "profitOnWin": "Profit on Win",
+  "stopAutoPlay": "Stop Auto Play",
+  "autoPlayStopped": "Auto Play Stopped",
+  "confirmBet": {
+    "title": "Confirm Bet",
+    "message": "Bet {{value.amount}}?"
+  }
 }

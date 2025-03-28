@@ -37,9 +37,7 @@ export const BetsPage = () => {
       title="Bets"
       gap={small ? 20: 24}
     >
-      <Div fx column gap={small ? 20: 40}>
       <BetBoard title={t("bets.recentBets")}/>
-      </Div>
     </SitePage>
     </Fragment>
   );

@@ -14,7 +14,7 @@ export const DiceHistoryCard = ({ roll }: { roll: DiceRoll }) => {
       center
       py={8}
       px={12}
-      bg={isWin ? "yellow" : "brown-9"}
+      bg={isWin ? "bright-green" : "brown-9"}
     >
       <Span
         weight="medium"

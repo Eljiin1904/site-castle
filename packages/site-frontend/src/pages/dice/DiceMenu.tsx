@@ -7,6 +7,7 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Dice } from "#app/services/dice";
 import { DiceMenuAuto } from "./DiceMenuAuto";
 import { DiceMenuManual } from "./DiceMenuManual";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceMenu = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -54,7 +55,7 @@ const ModeMenu = () => {
   const processing = useAppSelector((x) => x.dice.processing);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
   const modeHandler = (x: DiceMode) => {
     return () => dispatch(Dice.setMode(x));
   };
@@ -64,12 +65,12 @@ const ModeMenu = () => {
       disabled={processing || autoPlaying}
       options={[
         {
-          label: "Manual",
+          label: t("common:manual"),
           active: mode === "manual",
           onClick: modeHandler("manual"),
         },
         {
-          label: "Auto",
+          label: t("common:auto"),
           active: mode === "auto",
           onClick: modeHandler("auto"),
         },

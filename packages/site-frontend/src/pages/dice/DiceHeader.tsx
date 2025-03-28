@@ -7,8 +7,10 @@ import { VolumeDropdown } from "#app/comps/sounds/VolumeDropdown";
 import { DiceInfoModal } from "#app/modals/dice/DiceInfoModal";
 import { FairnessSeedModal } from "#app/modals/fairness/FairnessSeedModal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceHeader = () => {
+  const {t} = useTranslation();
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
   const small = mainLayout === "mobile";
   return (
@@ -27,13 +29,13 @@ export const DiceHeader = () => {
         gap={8}
       >
         <Button
-          kind="quinary"
+          kind="tertiary-black-overlay"
           icon={SvgCheckCircle}
-          label="Fairness"
+          label={t("menu.fairness")}
           onClick={() => Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/dice" />)}
         />
         <Button
-          kind="quinary"
+           kind="tertiary-black-overlay"
           icon={SvgInfoCircle}
           onClick={() => Dialogs.open("primary", <DiceInfoModal />)}
         />

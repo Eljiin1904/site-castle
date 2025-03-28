@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from 'i18next-http-backend';
 
-//"https://static.brickrax.com/locales/{{lng}}/{{ns}}.json",
+//"https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
 const locizeOptions = {
   referenceLng: "en",
   loadPath: "https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
