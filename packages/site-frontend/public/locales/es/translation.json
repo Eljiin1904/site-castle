@@ -151,8 +151,11 @@
     "confirm": {
       "title": "Confirmar correo electrónico",
       "description": "Para confirmar tu correo electrónico, haz clic en el button de abajo.",
+      "codeSent":"Hemos enviado un código a tu correo electrónico, por favor ingrésalo abajo.",
       "success": "Correo electrónico confirmado."
     },
+    "changeEmail": "Cambiar correo electrónico",
+    "emailConfirmed": "Correo electrónico confirmado.",
     "social": {
       "title": "Configura tu nombre de usuario",
       "description": "¡Para continuar usando sandcasino, por favor configura tu nombre de usuario!",

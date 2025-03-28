@@ -151,8 +151,11 @@
     "confirm": {
       "title": "Confirm Email",
       "description": "To confirm your email, please click the button below.",
+      "codeSent":"We sent a code to your email, please enter it below.",
       "success": "Email confirmed."
     },
+    "changeEmail": "Change Email",
+    "emailConfirmed": "Email confirmed.",
     "social": {
       "title": "Set your username",
       "description": "In order to continue using sandcasino, please set your username!",
