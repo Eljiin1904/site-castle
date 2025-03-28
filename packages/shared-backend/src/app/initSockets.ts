@@ -22,6 +22,7 @@ export function initSockets(httpServer: HttpServer) {
     }),
   );
 
+  logger.info("connecting socket.io to session handler");
   io.use(
     Sockets.sessionHandler({
       collection: "user-sessions",
