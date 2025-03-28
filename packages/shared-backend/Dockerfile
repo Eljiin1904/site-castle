@@ -21,7 +21,7 @@ COPY --from=build /pidwin/packages/shared-server /pidwin/packages/shared-server
 WORKDIR /pidwin/packages/shared-backend
 
 EXPOSE 3000
-CMD ["npm", "run", "devcloud"]
+CMD ["npm", "run", "dev-cloud"]
 
 
 # FROM node:23-alpine
