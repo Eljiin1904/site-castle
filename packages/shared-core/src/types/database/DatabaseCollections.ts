@@ -58,6 +58,7 @@ import type { UserReportDocument } from "../users/UserReport";
 import type { UserSeedPairDocument } from "../users/UserSeedPairDocument";
 import type { UserSessionDocument } from "../users/UserSessionDocument";
 import { SiteGameDisplayDocument } from "../site/SiteGameDisplayDocument";
+import { SiteJackPotDocument } from "../site/SiteJackpotDocument";
 
 export interface DatabaseCollections {
   ["admin-log"]: AdminLogDocument;
@@ -107,6 +108,7 @@ export interface DatabaseCollections {
   ["site-activity"]: SiteActivityDocument;
   ["site-bets"]: SiteBetDocument;
   ["site-games"]: SiteGameDisplayDocument;
+  ["site-jackpot"]: SiteJackPotDocument;
   ["site-meta"]: SiteMetaDocument;
   ["site-settings"]: SiteSettingDocument;
   ["site-stats"]: SiteStatsDocument;

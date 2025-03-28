@@ -13,6 +13,7 @@ import { Transactions } from "@server/services/transactions";
 import { Site } from "@server/services/site";
 import { Chat } from "@server/services/chat";
 import { Users } from "@server/services/users";
+import { SiteJackPotDocument } from "../../../../shared-core/src/types/site/SiteJackpotDocument";
 
 export default () => System.tryCatch(main)();
 
@@ -170,11 +171,90 @@ async function processTickets(round: DoubleRoundDocument) {
     return;
   }
 
+  let isJackpot = false;
+
+  // Get Sum of Bets of Round
+  const settings = await Site.settings.cache();
+  const roundSum = await Database.collection("double-tickets")
+    .aggregate([
+      {
+        $match: {
+          roundId: round._id,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$betAmount" },
+        },
+      },
+    ])
+    .toArray();
+
+  // Add percentage to jackpot
+  const roundPotAmount =
+    roundSum && roundSum[0].betAmount
+      ? roundSum[0].betAmount + roundSum[0].betAmount * settings.jackpotThreshold
+      : 0;
+
+  // Grab latest pending jackpot or create one if doesnt exist
+  // gameIds less than 3
+  const existing = await Database.collection("site-jackpot").findOne({
+    status: { $eq: "pending" },
+    game: { $eq: "double" },
+  });
+  if (existing) {
+    const potAmount = existing.potAmount + roundPotAmount;
+    if (round.roll.color == "green" && existing.gameIds.length < 3) {
+      const newGameId: string[] = [...existing.gameIds, round._id];
+
+      await Database.collection("site-jackpot").updateOne(
+        { _id: existing._id },
+        {
+          $set: {
+            potAmount: potAmount,
+            gameIds: newGameId,
+          },
+        },
+      );
+      if (newGameId.length == 3) isJackpot = true;
+    } else if (round.roll.color != "green") {
+      // Reset the jackpot but add updated potAmount
+      await Database.collection("site-jackpot").updateOne(
+        { _id: existing._id },
+        {
+          $set: {
+            potAmount: potAmount,
+            gameIds: [],
+          },
+        },
+      );
+    }
+    // Create new Jackpot add new Game Id
+  } else {
+    // Create new Jackpot add new Game Id if roll is green else provide empty gameIds
+    const newJackpot: SiteJackPotDocument = {
+      _id: Ids.object(),
+      potAmount: roundPotAmount,
+      gameIds: round.roll.color == "green" ? [round._id] : [],
+      status: "pending",
+      game: "double",
+      timestamp: new Date(),
+    };
+    await Database.collection("site-jackpot").insertOne(newJackpot);
+  }
+
   const cursor = Database.collection("double-tickets").find({
     roundId: round._id,
     processed: { $exists: false },
   });
 
+  // if isJackpot, getGame ids, get tickets of each round that are green
+  // Split pot by three and add pot amount to each user.
+  // Make query clarify that user must be unique to get proper user amount
+  // After providing users with there money, mark jackpot as complete
+  // Create aggregate to group double tickets by gameIds that match winning gameIds and those who chose green
+  // iterate each group and add amount to each based on (potAmount / 3) / (# winners per Round)
   for await (const ticket of cursor) {
     await System.tryCatch(processTicket)({ round, ticket });
   }
