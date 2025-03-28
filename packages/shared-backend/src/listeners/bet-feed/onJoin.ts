@@ -46,10 +46,6 @@ export default Sockets.createListener({
         )
         .toArray();
 
-      // Provide Highroller and lucky data
-      result["highroller"] = manager.log["highroller"];
-      result["lucky"] = manager.log["lucky"];
-
       documents = results;
     }
 

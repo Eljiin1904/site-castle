@@ -22,6 +22,18 @@ type ScopeMap = {
   lucky: Record<string, SiteBetDocument[]>;
 };
 
+type QueueScopeMap = {
+  all: SiteBetDocument[];
+  highroller: SiteBetDocument[];
+  lucky: SiteBetDocument[];
+};
+
+type SiteBetMatch = {
+  "user.id"?: string;
+  betAmount?: { $gte: number };
+  wonAmount?: { $gte: number };
+};
+
 export class FeedManager extends TypedEventEmitter<{
   initialized: () => void;
   insert: (scope: SiteBetScope, document: SiteBetDocument) => void;
@@ -33,7 +45,7 @@ export class FeedManager extends TypedEventEmitter<{
     highroller: {},
     lucky: {},
   };
-  private readonly _queues = {
+  private readonly _queues: QueueScopeMap = {
     all: [],
     highroller: [],
     lucky: [],
@@ -202,25 +214,25 @@ export class FeedManager extends TypedEventEmitter<{
     }
   }
   async getSiteBets(
-    user_id?: string = undefined,
+    user_id: string | undefined = undefined,
     highroller: boolean = false,
     lucky: boolean = false,
   ) {
     const highrollerThreshold = await this.highrollerThreshold();
     const luckyThreshold = await this.luckyThreshold();
-    let query = [];
-    let match = {};
+    const query = [];
+    const match: SiteBetMatch = {};
 
     if (user_id) {
       match["user.id"] = user_id;
     }
 
     if (highroller) {
-      match.betAmount = { $gte: highrollerThreshold };
+      match["betAmount"] = { $gte: highrollerThreshold };
     }
 
     if (lucky) {
-      match.wonAmount = { $gte: luckyThreshold };
+      match["wonAmount"] = { $gte: luckyThreshold };
     }
 
     if (Object.keys(match).length > 0) {
