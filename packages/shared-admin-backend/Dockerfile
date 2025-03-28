@@ -21,4 +21,4 @@ COPY --from=build /pidwin/packages/shared-server /pidwin/packages/shared-server
 WORKDIR /pidwin/packages/shared-admin-backend
 
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "devcloud"]
