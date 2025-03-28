@@ -1,6 +1,6 @@
 {
   "placeBet": "Apostar",
-  "betPlaced": "Apuesta realizada",
+  "betPlaced": "Apostado",
   "betBoardHeader": "Apuestas Juego Dados",
   "bet_zero": "{{count}} Apuesta",
   "bet_one": "{{count}} Apuesta",

@@ -49,5 +49,9 @@
     "rollTargetPlaceholder": "Enter target...",
     "winChance": "Win Chance",
     "winChancePlaceholder": "Enter win chance..."
+  },
+  "code": {
+    "code": "Code",
+    "codePlaceholder": "Enter code..."
   }
 }

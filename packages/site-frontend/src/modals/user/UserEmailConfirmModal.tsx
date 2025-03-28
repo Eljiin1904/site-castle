@@ -15,6 +15,7 @@ import { useMount } from "@client/hooks/system/useMount";
 import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Users } from "#app/services/users";
 import { UserEmailEditModal } from "./UserEmailEditModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserEmailConfirmModal = ({
   confirmToken: initToken,
@@ -25,6 +26,7 @@ export const UserEmailConfirmModal = ({
     await Users.sendEmailLink();
   });
 
+  const {t} = useTranslation();
   const form = useForm({
     schema: Validation.object({
       confirmToken: Validation.string().required("Code is required."),
@@ -34,7 +36,7 @@ export const UserEmailConfirmModal = ({
     },
     onSubmit: async (values) => {
       await Users.confirmEmail(values);
-      Toasts.success("Email confirmed.");
+      Toasts.success("register.emailConfirmed");
       Dialogs.close("primary");
     },
   });
@@ -45,22 +47,26 @@ export const UserEmailConfirmModal = ({
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Confirm Email"
+        heading={t("register.confirm.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <NoticeCard
             kind="success"
-            message="We sent a code to your email, please enter it below."
+            message={t("register.confirm.codeSent")}
           />
           <ModalSection>
-            <ModalLabel>{"Code"}</ModalLabel>
+            <ModalLabel>{t("fields:code.field")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter code..."
+              placeholder={t("fields:code.codePlaceholder")}
               disabled={form.loading}
-              error={form.errors.confirmToken}
+              error={
+                form.errors.confirmToken?.key
+                  ? t(form.errors.confirmToken.key, { value: form.errors.confirmToken.value })
+                  : undefined
+              }
               value={form.values.confirmToken}
               onChange={(x) =>
                 form.setValue(
@@ -76,19 +82,20 @@ export const UserEmailConfirmModal = ({
             gap={12}
           >
             <Button
-              kind="secondary"
-              label="Change Email"
+              type="submit"
+              kind="tertiary-grey"
+              label={t("common:submit")}
+              fx
+              loading={form.loading}
+            />
+            <Button
+              kind="primary-yellow"
+              label={t("register.changeEmail")}
               fx
               loading={form.loading}
               onClick={() => Dialogs.open("primary", <UserEmailEditModal />)}
             />
-            <Button
-              type="submit"
-              kind="primary"
-              label="Submit"
-              fx
-              loading={form.loading}
-            />
+            
           </Div>
         </Form>
       </ModalBody>

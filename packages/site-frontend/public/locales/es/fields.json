@@ -49,5 +49,9 @@
     "rollTargetPlaceholder": "Ingrese el objetivo...",
     "winChance": "Probabilidad de ganar",
     "winChancePlaceholder": "Ingrese la probabilidad de ganar..."
+  },
+  "code": {
+    "field": "Código",
+    "codePlaceholder": "Ingrese el código..."
   }
 }
