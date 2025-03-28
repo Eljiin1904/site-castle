@@ -1,24 +1,22 @@
-import { SitePage } from "#app/comps/site-page/SitePage";
+import { GamePage } from "#app/comps/game-page/GamePage";
 import { DoubleManager } from "./DoubleManager";
 import { DoubleContent } from "./DoubleContent";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Style } from "@client/services/style";
 
+/**
+ * Double Main Page, contains the DoubleManager and DoubleContent components
+ * DoubleManager is the component that manages the double rolls
+ * DoubleContent is the component that displays the double rolls
+ * @returns 
+ */
 export const DoublePage = () => {
-  
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const small = layout === "mobile";
-  const tablet = layout === "tablet";
 
   return (
-    <SitePage
+    <GamePage
       className="DoublePage"
       title="Double"
-      px={small ? 0 : (tablet ? 24: 40)}
-      pt={Style.responsive(layout, [0, 24, 40, 40])}
     >
       <DoubleManager />
       <DoubleContent />
-    </SitePage>
+    </GamePage>
   );
 };

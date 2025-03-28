@@ -4,6 +4,11 @@ import { useSocketListener } from "#app/hooks/sockets/useSocketListener";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Double } from "#app/services/double";
 
+/**
+ * DoubleManager component will subscribe to the double game events
+ * and dispatch the appropriate actions to the store
+ * @returns 
+ */
 export const DoubleManager = () => {
   const dispatch = useAppDispatch();
 

@@ -13,6 +13,7 @@ import { DoubleReelOverlay } from "./DoubleReelOverlay";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import {DoubleSandJackpot} from "./DoubleSandJackpot";
+import { DoubleFairness } from "./DoubleFairness";
 
 export const DoubleContent = () => {
   const initialized = useAppSelector((x) => x.double.initialized);
@@ -40,10 +41,10 @@ const MobileContent = () => {
       fx
       column
     >
-      <Div column>
+      <Div column  px={20}>
         <DoubleReelOverlay
           path="/graphics/double-tile-overlay"
-          px={20}
+         
           py={16}
           gap={16}
         >
@@ -65,14 +66,18 @@ const MobileContent = () => {
       >
         <BetInputGroup />
         <BetBoardGrid />
-        <Div column gap={8} mt={28}>
+        <Div column gap={8} mt={24} mb={24}>
           <LastRounds />
           <RecentRounds />
         </Div>
       </Div>
-      <Div mt={64} px={20}>
-        <BetBoard title={t("games\\double:betBoardHeader")} game="double" />
-      </Div>
+      <Div
+        column
+        px={24}
+        >
+          <DoubleFairness />
+          <BetBoard mt={40} mb={40} title={t("games\\double:betBoardHeader")} game="double" />
+        </Div>
     </Div>
   );
 };
@@ -112,11 +117,8 @@ const NotMobileContent = () => {
         <BetInputGroup />
         <BetBoardGrid />
       </Div>
-      <Div mt={56}>
-        <BetBoard title={t("games\\double:betBoardHeader")} game="double" />
-      </Div>
+      <DoubleFairness />
+      <BetBoard mt={40} mb={40} title={t("games\\double:betBoardHeader")} game="double" />
     </Div>
   );
 };
-
-{/* <DoubleFairness /> */}

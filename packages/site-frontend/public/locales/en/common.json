@@ -20,5 +20,7 @@
   "accept": "Accept",
   "moreInfo": "More Info",
   "manual": "Manual",
-  "auto": "Auto"
+  "auto": "Auto",
+  "reset": "Reset",
+  "increase": "Increase"
 }

@@ -39,15 +39,7 @@ const MobileContent = () => {
       <DiceHeader />
       <DiceView />
       <DiceMenu />
-      <Div
-        column
-        fx
-        gap={24}
-        mt={40}
-        px={20}
-      >
-        <BetBoard title={t("games\\dice:betBoardHeader")} game="dice" />
-      </Div> 
+      <BetBoard px={20} mt={40}  mb={40} title={t("games\\dice:betBoardHeader")} game="dice" />
     </Div>
   );
 };
@@ -58,7 +50,6 @@ const NotMobileContent = () => {
     <Div
       fx
       column
-      gap={0}
     >
       <DiceHeader />
       <Div
@@ -68,14 +59,7 @@ const NotMobileContent = () => {
         <DiceMenu />
         <DiceView />
       </Div>
-      <Div
-        column
-        fx
-        gap={24}
-        mt={56}
-      >
-        <BetBoard title={t("games\\dice:betBoardHeader")} game="dice" />
-      </Div>      
+      <BetBoard mt={56} mb={56} title={t("games\\dice:betBoardHeader")} game="dice" />    
     </Div>
   );
 };

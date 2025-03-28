@@ -75,5 +75,8 @@ export const colors = {
   "chat-hover": '#101010',
   /**Double colors */
   "double-red": "#FB4545",
+  /** Dice colors */
+  "red-arrow": "#721912",
+  "green-arrow": "#274C2F",
 } as const;
 
