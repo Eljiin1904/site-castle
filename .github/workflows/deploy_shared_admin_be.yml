@@ -81,38 +81,3 @@ jobs:
           argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
           argocd app set castle-admin-be --helm-set image.app.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
           argocd app sync castle-admin-be --async
-
-  # update-argocd-stage:
-  #   needs: update-argocd-dev
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Update ArgoCD Application for STAGE
-  #       run: |
-  #         argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
-  #         argocd app set castle-admin-be-stage --helm-set image.app.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
-  #         argocd app sync castle-admin-be-stage --async
-
-  # wait-for-prod-approval:
-  #   needs: update-argocd-stage
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Wait for Production Approval
-  #       uses: trstringer/manual-approval@v1
-  #       with:
-  #         secret: ${{ github.TOKEN }}
-  #         approvers: csherida,civilizador
-  #         minimum-approvals: 1
-  #         issue-title: "Deploying to production"
-  #         issue-body: "Please approve or deny the deployment of this version"
-  #         exclude-workflow-initiator-as-approver: false
-  #         fail-on-denial: true
-
-  # update-argocd-prod:
-  #   needs: wait-for-prod-approval
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Update ArgoCD Application for PROD
-  #       run: |
-  #         argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
-  #         argocd app set castle-admin-be-prod --helm-set image.app.tag=${{ needs.build-and-push-shared-admin-backend.outputs.image_tag }}
-  #         argocd app sync castle-admin-be-prod --async
