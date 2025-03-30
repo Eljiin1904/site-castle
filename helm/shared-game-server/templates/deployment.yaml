@@ -39,10 +39,8 @@ spec:
           env:
             - name: PORT
               value: "{{ .Values.app.port }}"
-          livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          livenessProbe: {}
+          readinessProbe: {}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
