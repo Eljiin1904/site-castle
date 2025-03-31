@@ -4,6 +4,7 @@ const kindMap: Record<SiteActivityKind, boolean> = {
   "advent-item": true,
   "case-battle-drop": true,
   "case-drop": true,
+  "double-jackpot-win": true,
   "double-win": true,
   "dice-win": true,
   "limbo-win": true,

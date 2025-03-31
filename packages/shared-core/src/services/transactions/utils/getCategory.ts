@@ -21,6 +21,7 @@ const map: Record<TransactionKind, TransactionCategory> = {
   "dice-bet": "dice",
   "dice-won": "dice",
   "double-bet": "double",
+  "double-jackpot-won": "double",
   "double-won": "double",
   "limbo-bet": "limbo",
   "limbo-won": "limbo",

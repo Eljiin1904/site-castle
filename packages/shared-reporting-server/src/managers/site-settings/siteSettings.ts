@@ -49,7 +49,7 @@ async function main() {
   await insertDefault("activityThreshold", 0.01);
   await insertDefault("betHighrollerThreshold", 100);
   await insertDefault("betLuckyThreshold", 5);
-  await insertDefault("jackpotThreshold", 0.66666);
+  await insertDefault("jackpotThreshold", 0.0066666);
   await insertDefault("chatGeneralRequirement", 0);
   await insertDefault("chatHighrollerRequirement", 50);
 

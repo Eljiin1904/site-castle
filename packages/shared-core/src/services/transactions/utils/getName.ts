@@ -33,6 +33,8 @@ export function getName(tx: TransactionDocument): string {
       return "Dice - Won";
     case "double-bet":
       return "Double - Bet";
+    case "double-jackpot-won":
+      return "Double - Jackpot Won";
     case "double-won":
       return "Double - Won";
     case "limbo-bet":

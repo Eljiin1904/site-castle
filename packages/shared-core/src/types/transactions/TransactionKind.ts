@@ -35,6 +35,7 @@ export type TransactionKindData =
   | DiceBetData
   | DiceWonData
   | DoubleBetData
+  | DoubleJackpotWonData
   | DoubleWonData
   | LimboBetData
   | LimboWonData
@@ -171,6 +172,11 @@ interface DoubleBetData {
   gameId: string;
   betKind: DoubleBetKind;
 }
+interface DoubleJackpotWonData {
+  kind: "double-jackpot-won";
+  roundId: string;
+  gameId: string;
+}
 
 interface DoubleWonData {
   kind: "double-won";
@@ -178,7 +184,6 @@ interface DoubleWonData {
   gameId: string;
   multiplier: number;
 }
-
 interface LimboBetData {
   kind: "limbo-bet";
   bet: TransactionBetData;
