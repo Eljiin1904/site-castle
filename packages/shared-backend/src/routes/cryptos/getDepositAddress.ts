@@ -10,7 +10,7 @@ export default Http.createApiRoute({
   secure: true,
   transaction: true,
   body: Validation.object({
-    kind: Validation.string().oneOf(Cryptos.kinds).required("Kind is required."),
+    kind: Validation.string().oneOf(Cryptos.kinds).required("validations:errors.wallet.kind.required"),
   }),
   callback: async (req, res) => {
     const { kind } = req.body;

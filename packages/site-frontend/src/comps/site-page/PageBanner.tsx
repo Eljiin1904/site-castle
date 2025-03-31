@@ -46,6 +46,7 @@ export const PageBanner = ({
             as={"h2"}
             color={"dark-brown"}
             size={small ? 32 : 64}
+            lineHeight={small ? 32 : 56}
             fontWeight="regular"
             textTransform="uppercase"
           >

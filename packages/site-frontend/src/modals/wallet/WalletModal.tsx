@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Conditional } from "@client/comps/conditional/Conditional";
-import { Div } from "@client/comps/div/Div";
 import { Modal } from "@client/comps/modal/Modal";
 import { Dialogs } from "@client/services/dialogs";
 import { ModalBody } from "@client/comps/modal/ModalBody";
@@ -75,7 +74,7 @@ export const WalletModal = ({
             />
             </ModalSection>
             <ModalSection borderTop  borderColor="brown-4" pt={24}>
-              <Conditional value={action} deposit={<DepositCryptoBody  setAction={setAction}/>} withdraw={<WithdrawCryptoBody setAction={setAction} />} />
+              <Conditional value={action} deposit={<DepositCryptoBody />} withdraw={<WithdrawCryptoBody setAction={setAction} />} />
             </ModalSection>
           </ModalBody>
     </Modal>
