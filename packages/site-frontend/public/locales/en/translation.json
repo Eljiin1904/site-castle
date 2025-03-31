@@ -19,6 +19,7 @@
     "bets": "Bets",
     "chat": "Chat",
     "language": "Language",
+    "promotions": "Promotions",
     "account": {
       "title": "Account",
       "profile": "Profile",
@@ -73,6 +74,7 @@
     "partners": "Partners",
     "press": "Press"
   },
+  "cookies": "This website uses cookies to improve your experience. By using this site, you agree to our use of cookies.",
   "signin": {
     "title": "Sign In to SandCasino",    
     "forgot": "Forgot Password?",
@@ -90,7 +92,7 @@
       "noPopup": "Don't see the {{provider}} login popup window?",
       "redirect": "Redirect to {{provider}} login"
     },
-    "success": "Welcome back, {{username}}!"
+    "success": "Welcome back, {{value.username}}!"
   },
   "forgot": {
     "title": "Forgot Password?",
@@ -149,8 +151,11 @@
     "confirm": {
       "title": "Confirm Email",
       "description": "To confirm your email, please click the button below.",
+      "codeSent":"We sent a code to your email, please enter it below.",
       "success": "Email confirmed."
     },
+    "changeEmail": "Change Email",
+    "emailConfirmed": "Email confirmed.",
     "social": {
       "title": "Set your username",
       "description": "In order to continue using sandcasino, please set your username!",
@@ -161,6 +166,11 @@
         "action": "Continue"
       }
     }
+  },
+  "accountSetup": {
+    "title": "Quick Account Setup",
+    "description": "A few quick details to secure your account. It only takes a few seconds!",
+    "completed": "Account setup complete."
   },
   "signout": {
     "title": "Sign Out",
@@ -181,5 +191,6 @@
       "multiplier": "Multiplier",
       "payout": "Payout"
     }
-  }
+  },
+  "levelCongrats": "Congrats on Level {{value.level}}!"
 }

@@ -13,10 +13,13 @@ import { Transactions } from "@server/services/transactions";
 import { Site } from "@server/services/site";
 import { Chat } from "@server/services/chat";
 import { Users } from "@server/services/users";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 export default () => System.tryCatch(main)();
 
 async function main() {
+  const logger = getServerLogger({});
+  logger.info("initializing double game");
   const existing = await Database.collection("double-rounds").findOne({
     status: { $ne: "completed" },
   });

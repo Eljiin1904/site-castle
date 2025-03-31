@@ -1,0 +1,57 @@
+{
+  "name": {
+    "first": "First Name",
+    "firstPlaceholder": "Enter first name...",
+    "last": "Last Name",
+    "lastPlaceholder": "Enter last name..."
+  },
+  "username": "Username",
+  "email": "Email",
+  "password": {
+    "field": "Password",
+    "confirmField": "Confirm Password",
+    "newField": "New Password"
+  },
+  "dob": {
+    "field": "Date of Birth",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year"
+  },
+  "occupation": {
+    "field": "Occupation",
+    "placeholder": "Enter occupation..."
+  },
+  "address": {
+    "address": "Street Address",
+    "addressPlaceholder": "Enter street address...",
+    "city": "City / Town",
+    "cityPlaceholder": "Enter city...",
+    "state": "State / Province / Region",
+    "statePlaceholder": "Enter state...",
+    "zip": "Zip",
+    "zipPlaceholder": "Enter zip code...",
+    "country": "Country",
+    "countryPlaceholder": "Enter country..."
+  },
+  "bets": {
+    "amount": "Bet Amount",
+    "amountPlaceholder": "Enter amount...",
+    "games": "Games",
+    "onWin": "On Win",
+    "onLoss": "On Loss",
+    "stopOnProfit": "Stop on Profit",
+    "stopOnLoss": "Stop on Loss",
+    "multiplier": "Multiplier",
+    "multiplierPlaceholder": "Enter multiplier...",
+    "rollOver": "Roll Over",
+    "rollUnder": "Roll Under",
+    "rollTargetPlaceholder": "Enter target...",
+    "winChance": "Win Chance",
+    "winChancePlaceholder": "Enter win chance..."
+  },
+  "code": {
+    "code": "Code",
+    "codePlaceholder": "Enter code..."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": {
+    "first": "Nombre",
+    "firstPlaceholder": "Ingrese el nombre...",
+    "last": "Apellido",
+    "lastPlaceholder": "Ingrese el apellido..."
+  },
+  "username": "Nombre de usuario",
+  "email": "Correo electrónico",
+  "password": {
+    "field": "Contraseña",
+    "confirmField": "Confirmar contraseña",
+    "newField": "Nueva contraseña"
+  },
+  "dob": {
+    "field": "Fecha de nacimiento",
+    "day": "Día",
+    "month": "Mes",
+    "year": "Año"
+  },
+  "occupation": {
+    "field": "Ocupación",
+    "placeholder": "Ingrese la ocupación..."
+  },
+  "address": {
+    "address": "Dirección",
+    "addressPlaceholder": "Ingrese la dirección...",
+    "city": "Ciudad",
+    "cityPlaceholder": "Ingrese la ciudad...",
+    "state": "Estado",
+    "statePlaceholder": "Ingrese el estado...",
+    "zip": "Código postal",
+    "zipPlaceholder": "Ingrese el código postal...",
+    "country": "País",
+    "countryPlaceholder": "Ingrese el país..."
+  },
+  "bets": {
+    "amount": "Cantidad",
+    "amountPlaceholder": "Ingrese la cantidad...",
+    "games": "Juegos",
+    "onWin": "En victoria",
+    "onLoss": "En derrota",
+    "stopOnProfit": "Detener en ganancia",
+    "stopOnLoss": "Detener en pérdida",
+    "multiplier": "Multiplicador",
+    "multiplierPlaceholder": "Ingrese el multiplicador...",
+    "rollOver": "Roll Over",
+    "rollUnder": "Roll Under",
+    "rollTargetPlaceholder": "Ingrese el objetivo...",
+    "winChance": "Probabilidad de ganar",
+    "winChancePlaceholder": "Ingrese la probabilidad de ganar..."
+  },
+  "code": {
+    "field": "Código",
+    "codePlaceholder": "Ingrese el código..."
+  }
+}

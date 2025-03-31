@@ -9,6 +9,7 @@ import { Div } from "@client/comps/div/Div";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Utility } from "@client/services/utility";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const VerificationOnePartTwoForm = ({
   layout,
@@ -17,23 +18,24 @@ export const VerificationOnePartTwoForm = ({
   layout: Layout;
   disableClose?: boolean;
 }) => {
+  const {t} = useTranslation(["validations","common"]);
   const small = layout === "mobile";
 
   const form = useForm({
     schema: Validation.object({
       address: Validation.string()
-        .max(256, "Max characters is 256")
-        .required("Address is required."),
+        .max(256,t("validations.string.max",{value: {label:t("fields:address.address"),max:256}}))
+        .required(t("validations.mixed.required",{value:t("fields:address.address")})),
       city: Validation.string()
-        .max(32, "Max characters is 32")
-        .required("City is required."),
+        .max(32,t("validations.string.max",{value: {label:t("fields:address.city"),max:32}}))
+        .required(t("validations.mixed.required",{value:t("fields:address.city")})),
       state: Validation.string()
-        .max(32, "Max characters is 32")
-        .required("State is required."),
+        .max(32,t("validations.string.max",{value: {label:t("fields:address.state"),max:32}}))
+        .required(t("validations.mixed.required",{value:t("fields:address.state")})),
       countryIndex: Validation.integer("Country"),
       zipCode: Validation.string()
-        .max(16, "Max characters is 16")
-        .required("Zip code is required."),
+        .max(16,t("validations.string.max",{value: {label:t("fields:address.zip"),max:16}}))
+        .required(t("validations.mixed.required",{value:t("fields:address.zip")})),
     }),
     onSubmit: async (values) => {
       await Users.verifyTier1Part2(values);
@@ -52,12 +54,12 @@ export const VerificationOnePartTwoForm = ({
         gap={24}
       >
         <ModalSection>
-          <ModalLabel>{"Street Address"}</ModalLabel>
+          <ModalLabel>{t("fields:address.address")}</ModalLabel>
           <Input
             type="text"
-            placeholder="Enter address..."
+            placeholder={t("fields:address.addressPlaceholder")}
             disabled={form.loading}
-            error={form.errors.address}
+            error={form.errors.address?.key ? t(form.errors.address.key, {value: form.errors.address.value}) : undefined}
             value={form.values.address}
             onChange={(x) => form.setValue("address", x)}
           />
@@ -67,23 +69,23 @@ export const VerificationOnePartTwoForm = ({
           flexFlow={small ? "row-wrap" : undefined}
         >
           <ModalSection>
-            <ModalLabel>{"City / Town"}</ModalLabel>
+            <ModalLabel>{t("fields:address.city")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter city..."
+              placeholder={t("fields:address.cityPlaceholder")}
               disabled={form.loading}
-              error={form.errors.city}
+              error={form.errors.city?.key ? t(form.errors.city.key, {value: form.errors.city.value}) : undefined}
               value={form.values.city}
               onChange={(x) => form.setValue("city", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"State / Province / Region"}</ModalLabel>
+            <ModalLabel>{t("fields:address.state")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter state..."
+              placeholder={t("fields:address.statePlaceholder")}
               disabled={form.loading}
-              error={form.errors.state}
+              error={form.errors.state?.key ? t(form.errors.state.key, {value: form.errors.state.value}) : undefined}
               value={form.values.state}
               onChange={(x) => form.setValue("state", x)}
             />
@@ -94,25 +96,25 @@ export const VerificationOnePartTwoForm = ({
           flexFlow={small ? "row-wrap" : undefined}
         >
           <ModalSection>
-            <ModalLabel>{"Country"}</ModalLabel>
+            <ModalLabel>{t("fields:address.country")}</ModalLabel>
             <Dropdown
               forceDirection="top"
               type="select"
-              placeholder="Select a country..."
+              placeholder={t("fields:address.countryPlaceholder")}
               options={Utility.supportedCountries.map((x) => x.name)}
               disabled={form.loading}
-              error={form.errors.countryIndex}
+              error={form.errors.countryIndex?.key ? t(form.errors.countryIndex.key, {value: form.errors.countryIndex.value}) : undefined}
               value={form.values.countryIndex}
               onChange={(x, i) => form.setValue("countryIndex", i)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Postal / Zip Code"}</ModalLabel>
+            <ModalLabel>{t("fields:address.zip")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter zip code..."
+              placeholder={t("fields:address.zipPlaceholder")}
               disabled={form.loading}
-              error={form.errors.zipCode}
+              error={form.errors.zipCode?.key ? t(form.errors.zipCode.key, {value: form.errors.zipCode.value}) : undefined}
               value={form.values.zipCode}
               onChange={(x) => form.setValue("zipCode", x)}
             />
@@ -127,7 +129,7 @@ export const VerificationOnePartTwoForm = ({
           fx
           type="submit"
           kind="primary"
-          label="Continue"
+          label={t("common:continue")}
           loading={form.loading}
         />
       </Div>

@@ -5,6 +5,7 @@
   "warning": "Advertencia",
   "info": "Información",
   "confirm": "Confirmar",
+  "submit": "Enviar",
   "cancel": "Cancelar",
   "close": "Cerrar",
   "amount": "Cantidad",
@@ -13,5 +14,13 @@
   "recentRolls": "Jugadas Recientes",
   "last100": "Últimas 100",
   "online": "En línea",
-  "offline": "Desconectado"
+  "offline": "Desconectado",
+  "continue": "Continuar",
+  "startPlaying": "¡Comienza a jugar!",
+  "accept": "Aceptar",
+  "moreInfo": "Más información",
+  "manual": "Manual",
+  "auto": "Automático",
+  "reset": "Reiniciar",
+  "increase": "Aumentar"
 }

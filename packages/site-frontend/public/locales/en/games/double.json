@@ -4,5 +4,14 @@
   "betBoardHeader": "Double Game Bets",
   "bet_zero": "{{count}} Bet",
   "bet_one": "{{count}} Bet",
-  "bet_other": "{{count}} Bets"
+  "bet_other": "{{count}} Bets",
+  "placeYourBet": "Place Your Bet",
+  "jackpot":"Tripple Sand Jackpot",
+  "serverSeedHash": "Server Seed Hash",
+  "eosBlock": "EOS Block",
+  "eosBlockId": "EOS Block ID",
+  "confirmBet": {
+    "title": "Confirm Bet",
+    "message": "Bet {{value.amount}} on {{value.kind}}?"
+  }
 }

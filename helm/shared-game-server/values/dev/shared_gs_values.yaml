@@ -1,0 +1,73 @@
+replicaCount: 1
+
+image:
+  app:
+    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-game-server"
+    pullPolicy: Always
+    tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+securityContext: {}
+
+ingress:
+  enabled: false
+
+secrets:
+  app: "shared-game-server"
+
+service:
+  type: ClusterIP
+  port: 3000
+  tls: []
+
+app:
+  port: 3000
+
+resources: {}
+
+# Default liveness and readiness probes
+livenessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
+  # initialDelaySeconds: 30
+  # periodSeconds: 10
+
+readinessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
+  # initialDelaySeconds: 5
+  # periodSeconds: 5
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+namespace: shared-game-server
+
+# Explicit labels to ensure consistency across resources
+labels:
+  app: shared-game-server

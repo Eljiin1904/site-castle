@@ -79,6 +79,16 @@
       "imageSize": "Image size must be at least {{value.width}}x{{value.height}}.",
       "cropArea": "Invalid crop area.",
       "required": "{{value}} is required."
+    },
+    "firstName": {
+      "field": "First Name",
+      "required": "{{value}} is required.",
+      "max": "{{value.label}} must be less than {{value.max}} characters."
+    },
+    "lastName": {
+      "field": "Last Name",
+      "required": "{{value}} is required.",
+      "max": "{{value.label}} must be less than {{value.max}} characters."
     }
   },
   "errors": {
@@ -106,6 +116,20 @@
     },
     "rateLimit": "Too many registration requests.",
     "invalidCaptcha": "Failed to pass captcha.",
-    "invalidGameName": "Invalid game {{value}}."
+    "games": {
+      "invalidGameName": "Invalid game {{value}}.",
+      "notEnoughTokens": "You do not have enough tokens.",
+      "invalidBetAmount"  : "Invalid bet amount.",
+      "betConfirmationRequired": "Bet confirmation is required.",
+      "double": {
+        "invalid": "Invalid bet kind",
+        "required": "Bet kind is required.",
+        "max": "The bet amount is greater than the max.",
+        "invalidRoundId": "Invalid round id.",
+        "invalidRoundStatus": "Invalid round status.",
+        "invalidCombination": "Invalid bet combination.",
+        "maxBetAmount": "The max bet amount is {{value}}."       
+      }
+    }
   }
 }

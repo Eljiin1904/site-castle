@@ -5,6 +5,7 @@
   "warning": "Warning",
   "info": "Info",
   "confirm": "Confirm",
+  "submit": "Submit",
   "cancel": "Cancel",
   "close": "Close",
   "amount": "Amount",
@@ -13,5 +14,13 @@
   "recentRolls": "Recent Rolls",
   "last100": "Last 100",
   "online": "Status Online",
-  "offline": "Status Offline"
+  "offline": "Status Offline",
+  "continue": "Continue",
+  "startPlaying": "Start Playing!",
+  "accept": "Accept",
+  "moreInfo": "More Info",
+  "manual": "Manual",
+  "auto": "Auto",
+  "reset": "Reset",
+  "increase": "Increase"
 }

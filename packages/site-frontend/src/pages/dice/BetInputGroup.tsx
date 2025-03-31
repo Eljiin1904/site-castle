@@ -7,11 +7,13 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Dice } from "#app/services/dice";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const betAmount = useAppSelector((x) => x.dice.betAmount);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const setBetAmount = (x: number | undefined) => {
     dispatch(Dice.setBetAmount(x));
@@ -29,11 +31,11 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
 
   return (
     <ModalSection>
-      <ModalLabel>{"Bet Amount"}</ModalLabel>
+      <ModalLabel>{t("fields:bets.amount")}</ModalLabel>
       <Div align="center" justify="space-between" gap={8}>
         <Input
           type="currency"
-          placeholder="Enter bet amount..."
+          placeholder={t("fields:bets.amountPlaceholder")}
           value={betAmount}
           disabled={disabled}
           onChange={(x) => setBetAmount(x)}
@@ -52,6 +54,13 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="MAX"
+            width={40}
+            disabled={disabled}
+            onClick={() => setBetAmount(tokenBalance)}
           />
         </Div>
       </Div>

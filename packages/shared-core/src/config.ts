@@ -34,7 +34,6 @@ const config = {
 
 export function setEnvironment(env: SystemEnvironment) {
   config.env = env;
-  console.log("env: " + env);
   if (env === "development") {
     config.siteURL = "http://127.0.0.1:3000";
     config.siteAPI = "http://127.0.0.1:5000";

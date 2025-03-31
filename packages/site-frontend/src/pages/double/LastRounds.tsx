@@ -26,6 +26,9 @@ const LaptopDesktopContent = () => {
     <Div
       gap={16}
       cursor="pointer"
+      alignItems="center"
+      data-tooltip-id="app-tooltip"
+      data-tooltip-content={t('common:last100')}
     >
       <Span color="dark-sand" size={12} lineHeight={20} weight="medium">{t('common:last100')}</Span>
       <Div gap={8}>
@@ -34,16 +37,20 @@ const LaptopDesktopContent = () => {
           bait={false}
         />
         <LastRoundCounter
-          color="black"
-          bait={true}
+          color="red"
+          bait={false}
         />
         <LastRoundCounter
-          color="yellow"
-          bait={true}
+          color="black"
+          bait={false}
         />
         <LastRoundCounter
           color="red"
-          bait={false}
+          bait={true}
+        />
+        <LastRoundCounter
+          color="black"
+          bait={true}
         />
       </Div>
     </Div>

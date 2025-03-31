@@ -61,11 +61,14 @@ const MobileContent = () => {
           placeholder={t("common:enterBetAmount")}
           value={betAmount}
           onChange={(x) => setBetAmount(x)}
+          flexGrow={1}
         />
         <Button
           kind="tertiary-grey"
           label={t("common:clear")}
           onClick={() => setBetAmount(undefined)}
+          flexGrow={1}
+          size="xssso"
         />
       </Div>
       <Div fx>
@@ -74,36 +77,42 @@ const MobileContent = () => {
             label="+1"
             onClick={() => handleMath((x) => x + Intimal.fromDecimal(1))}
             flexGrow={1}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="+10"
             onClick={() => handleMath((x) => x + Intimal.fromDecimal(10))}
             flexGrow={1}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="+100"
             onClick={() => handleMath((x) => x + Intimal.fromDecimal(100))}
             flexGrow={1}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="1/2"
             onClick={() => handleMath((x) => x / 2)}
             flexGrow={1}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="2X"
             onClick={() => handleMath((x) => x * 2)}
             flexGrow={1}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="Max"
             onClick={() => setBetAmount(tokenBalance)}
-            flexGrow={1}
+             flexGrow={1}
+             size="xssso"
           />
       </Div>
     </Div>

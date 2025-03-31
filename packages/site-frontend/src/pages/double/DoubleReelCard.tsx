@@ -14,10 +14,10 @@ export const DoubleReelCard = ({ index }: { index: number }) => {
     color = "green";
   } else if (index === 2) {
     icon = getIconFromBetKind("bait");
-    color = "yellow";
+    color = "red";
   } else if (index === 15) {
     icon = getIconFromBetKind("bait");
-    color = "yellow";
+    color = "black";
   } else if (index % 2 === 0) {
     icon = getIconFromBetKind("red");
     color = "red";

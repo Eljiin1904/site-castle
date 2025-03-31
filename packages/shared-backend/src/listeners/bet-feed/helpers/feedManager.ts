@@ -5,6 +5,7 @@ import { SiteBetScope } from "@core/types/site/SiteBetScope";
 import { Database } from "@server/services/database";
 import { System } from "@server/services/system";
 import { Site } from "#app/services/site";
+import { games } from "@core/services/site/Site";
 
 let instance: FeedManager;
 
@@ -16,21 +17,35 @@ export function feedManager() {
 }
 
 type ScopeMap = {
+  all: Record<string, SiteBetDocument[]>;
+  highroller: Record<string, SiteBetDocument[]>;
+  lucky: Record<string, SiteBetDocument[]>;
+};
+
+type QueueScopeMap = {
   all: SiteBetDocument[];
   highroller: SiteBetDocument[];
   lucky: SiteBetDocument[];
+};
+
+type SiteBetMatch = {
+  "user.id"?: string;
+  betAmount?: { $gte: number };
+  wonAmount?: { $gte: number };
 };
 
 export class FeedManager extends TypedEventEmitter<{
   initialized: () => void;
   insert: (scope: SiteBetScope, document: SiteBetDocument) => void;
 }> {
+  options = [...games, "all"];
+
   private _log: ScopeMap = {
-    all: [],
-    highroller: [],
-    lucky: [],
+    all: {},
+    highroller: {},
+    lucky: {},
   };
-  private readonly _queues: ScopeMap = {
+  private readonly _queues: QueueScopeMap = {
     all: [],
     highroller: [],
     lucky: [],
@@ -40,6 +55,12 @@ export class FeedManager extends TypedEventEmitter<{
 
   constructor() {
     super();
+    for (const name of this.options) {
+      let sanitizedName: string = this.sanitizeGameName(name);
+      this._log["all"][sanitizedName] = [];
+      this._log["highroller"][sanitizedName] = [];
+      this._log["lucky"][sanitizedName] = [];
+    }
 
     this._stream = Database.createStream({
       collection: "site-bets",
@@ -79,7 +100,8 @@ export class FeedManager extends TypedEventEmitter<{
   private async init() {
     await Database.manager.waitForInit();
 
-    this._log["all"] = await Database.collection("site-bets")
+    // Retreive Latest Bets no matter the game type
+    this._log["all"]["all"] = await Database.collection("site-bets")
       .find(
         {},
         {
@@ -89,12 +111,22 @@ export class FeedManager extends TypedEventEmitter<{
       )
       .toArray();
 
-    const highrollerThreshold = await this.highrollerThreshold();
+    const betsByGame = await this.getSiteBets();
 
-    this._log["highroller"] = await Database.collection("site-bets")
+    // Retreive Bets by Game
+    // Place bets in logs by game,
+    //  _id is the game name, documents is the game data
+    if (betsByGame) {
+      for (let bet of betsByGame) {
+        this._log["all"][bet._id] = bet.documents;
+      }
+    }
+
+    const threshold = await this.highrollerThreshold();
+    this._log["highroller"]["all"] = await Database.collection("site-bets")
       .find(
         {
-          betAmount: { $gte: highrollerThreshold },
+          betAmount: { $gte: threshold },
         },
         {
           limit: Site.betLogSize,
@@ -103,9 +135,15 @@ export class FeedManager extends TypedEventEmitter<{
       )
       .toArray();
 
-    const luckyThreshold = await this.luckyThreshold();  
+    const highRollerByGameResults = await this.getSiteBets(undefined, true, false);
+    if (highRollerByGameResults) {
+      for (let bet of highRollerByGameResults) {
+        this._log["highroller"][bet._id] = bet.documents;
+      }
+    }
 
-    this._log["lucky"] = await Database.collection("site-bets")
+    const luckyThreshold = await this.luckyThreshold();
+    this._log["lucky"]["all"] = await Database.collection("site-bets")
       .find(
         {
           wonAmount: { $gte: luckyThreshold },
@@ -117,6 +155,13 @@ export class FeedManager extends TypedEventEmitter<{
       )
       .toArray();
 
+    const luckyByGameResults = await this.getSiteBets(undefined, false, true);
+    if (luckyByGameResults) {
+      for (let bet of luckyByGameResults) {
+        this._log["lucky"][bet._id] = bet.documents;
+      }
+    }
+
     this._initialized = true;
     this.emit("initialized");
   }
@@ -127,14 +172,12 @@ export class FeedManager extends TypedEventEmitter<{
     const luckyThreshold = await this.luckyThreshold();
 
     queues["all"].unshift(document);
-
     if (queues["all"].length > Site.betLogSize) {
       queues["all"].length = Site.betLogSize;
     }
 
     if (document.betAmount >= highrollerThreshold) {
       queues["highroller"].unshift(document);
-
       if (queues["highroller"].length > Site.betLogSize) {
         queues["highroller"].length = Site.betLogSize;
       }
@@ -142,7 +185,6 @@ export class FeedManager extends TypedEventEmitter<{
 
     if (document.wonAmount >= luckyThreshold) {
       queues["lucky"].unshift(document);
-
       if (queues["lucky"].length > Site.betLogSize) {
         queues["lucky"].length = Site.betLogSize;
       }
@@ -153,17 +195,80 @@ export class FeedManager extends TypedEventEmitter<{
 
   private async onInterval() {
     for (const [scope, queue] of Utility.entries(this._queues)) {
-      const document = queue.pop();
+      if (scope == "all" || scope == "highroller" || scope == "lucky") {
+        let document = queue.pop();
+        if (document) {
+          const allLength = this._log[scope]["all"].unshift(document);
+          if (allLength > Site.betLogSize) {
+            this._log[scope]["all"].length = Site.betLogSize;
+          }
 
-      if (document) {
-        const length = this._log[scope].unshift(document);
-
-        if (length > Site.betLogSize) {
-          this._log[scope].length = Site.betLogSize;
+          const sanitizedName = this.sanitizeGameName(document.game);
+          const specificGameLogLength = this._log[scope][sanitizedName].unshift(document);
+          if (specificGameLogLength > Site.betLogSize) {
+            this._log[scope][sanitizedName].length = Site.betLogSize;
+          }
+          this.emit("insert", scope, document);
         }
-
-        this.emit("insert", scope, document);
       }
     }
   }
+  async getSiteBets(
+    user_id: string | undefined = undefined,
+    highroller: boolean = false,
+    lucky: boolean = false,
+  ) {
+    const highrollerThreshold = await this.highrollerThreshold();
+    const luckyThreshold = await this.luckyThreshold();
+    const query = [];
+    const match: SiteBetMatch = {};
+
+    if (user_id) {
+      match["user.id"] = user_id;
+    }
+
+    if (highroller) {
+      match["betAmount"] = { $gte: highrollerThreshold };
+    }
+
+    if (lucky) {
+      match["wonAmount"] = { $gte: luckyThreshold };
+    }
+
+    if (Object.keys(match).length > 0) {
+      query.push({ $match: match });
+    }
+
+    query.push(
+      // Step 1: Sort the documents by game and created timestamp (descending for most recent)
+      {
+        $sort: {
+          game: 1,
+          timestamp: -1,
+        },
+      },
+
+      // Step 2: Group by game name and collect results in an array
+      {
+        $group: {
+          _id: "$game",
+          documents: { $push: "$$ROOT" },
+        },
+      },
+
+      // Step 3: Limit the results to Game Size
+      {
+        $project: {
+          documents: { $slice: ["$documents", Site.betLogSize] },
+        },
+      },
+    );
+    const results = await Database.collection("site-bets").aggregate(query).toArray();
+
+    return results;
+  }
+
+  sanitizeGameName = (name: string): string => {
+    return name == "case-battles" ? "case_battles" : name;
+  };
 }

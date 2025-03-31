@@ -6,6 +6,8 @@ import { DiceHeader } from "./DiceHeader";
 import { DiceView } from "./DiceView";
 import { DiceFeed } from "./DiceFeed";
 import { DiceMenu } from "./DiceMenu";
+import { BetBoard } from "#app/comps/bet-board/BetBoard";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceContent = () => {
   const initialized = useAppSelector((x) => x.dice.initialized);
@@ -27,6 +29,7 @@ export const DiceContent = () => {
 };
 
 const MobileContent = () => {
+  const {t} = useTranslation(["games\\dice"]);
   return (
     <Div
       fx
@@ -36,17 +39,17 @@ const MobileContent = () => {
       <DiceHeader />
       <DiceView />
       <DiceMenu />
-      <DiceFeed />
+      <BetBoard px={20} mt={40}  mb={40} title={t("games\\dice:betBoardHeader")} game="dice" />
     </Div>
   );
 };
 
 const NotMobileContent = () => {
+  const {t} = useTranslation(["games\\dice"]);
   return (
     <Div
       fx
       column
-      gap={0}
     >
       <DiceHeader />
       <Div
@@ -56,7 +59,7 @@ const NotMobileContent = () => {
         <DiceMenu />
         <DiceView />
       </Div>
-      <DiceFeed />
+      <BetBoard mt={56} mb={56} title={t("games\\dice:betBoardHeader")} game="dice" />    
     </Div>
   );
 };

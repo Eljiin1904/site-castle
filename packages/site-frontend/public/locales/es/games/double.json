@@ -1,8 +1,17 @@
 {
-  "placeBet": "Hacer apuesta",
-  "betPlaced": "Apuesta realizada",
+  "placeBet": "Apostar",
+  "betPlaced": "Apostado",
   "betBoardHeader": "Apuestas Juego Doble",
   "bet_zero": "{{count}} Apuesta",
   "bet_one": "{{count}} Apuesta",
-  "bet_other": "{{count}} Apuestas"
+  "bet_other": "{{count}} Apuestas",
+  "placeYourBet": "Hacer tu apuesta",
+  "jackpot":"Sand Tripe Premio Gordo",
+  "serverSeedHash": "Seed Hash del Servidor",
+  "eosBlock": "Bloque EOS",
+  "eosBlockId": "ID de Bloque EOS",
+  "confirmBet": {
+    "title": "Confirmar apuesta",
+    "message": "Apostar {{value.amount}} en {{value.kind}}?"
+  }
 }

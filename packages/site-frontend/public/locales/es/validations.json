@@ -79,6 +79,16 @@
       "imageSize": "La imagen debe ser de al menos {{value.width}}x{{value.height}}.",
       "cropArea": "Invalida área de recorte.",
       "required": "{{value}} es requerida."
+    },
+    "firstName": {
+      "field": "Nombre",
+      "required": "{{value}} es requerido.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres."
+    },
+    "lastName": {
+      "field": "Apellido",
+      "required": "{{value}} es requerido.",
+      "max": "{{value.label}} debe tener no más de {{value.max}} caracteres."
     }
   },
   "errors": {
@@ -106,6 +116,21 @@
     },
     "rateLimit": "Demasiadas solicitudes de registro.",
     "invalidCaptcha": "Falló al pasar la validación de captcha.",
-    "invalidGameName": "Juego inválido {{value}}."
+     "games": {
+      "invalidGameName": "Juego inválido {{value}}.",
+      "notEnoughTokens": "No tienes suficientes tokens.",
+      "invalidBetAmount": "Cantidad de apuesta inválida.",
+      "betConfirmationRequired": "Se requiere confirmación de apuesta.",
+      "double": {
+        "requiredRound":"Ronda requerida.",
+        "invalid": "Apuesta inválida",
+        "required": "Apuesta requerida.",
+        "max": "La cantidad apostada es mayor que el máximo.",
+        "invalidRoundId": "Id de ronda inválido.",
+        "invalidRoundStatus": "Estado de ronda inválido.",
+        "invalidCombination": "Combinación de apuesta inválida.",
+        "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."       
+      }
+    }
   }
 }

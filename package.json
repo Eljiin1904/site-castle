@@ -2,6 +2,7 @@
   "scripts": {
     "build-site-frontend": "node ./scripts/build-site-frontend.js",
     "build-admin-frontend": "node ./scripts/build-admin-frontend.js",
+    "build-admin-backend": "node ./scripts/build-admin-backend.js",
     "init": "node ./scripts/init.js",
     "dev": "node ./scripts/dev.js",
     "deploy": "node ./scripts/deploy.js",
@@ -24,6 +25,9 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@storybook/addon-docs": "^8.6.10",
+    "@types/node": "^22.13.14",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard-with-typescript": "^43.0.1",

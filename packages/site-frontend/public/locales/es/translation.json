@@ -19,6 +19,7 @@
     "bets": "Apuestas",
     "chat": "Chat",
     "language": "Idioma",
+    "promotions": "Promociones",
     "account": {
       "title": "Cuenta",
       "profile": "Perfil",
@@ -73,6 +74,7 @@
     "partners": "Socios",
     "press": "Prensa"
   },
+  "cookies": "Este sitio web utiliza cookies para mejorar su experiencia. Al utilizar este sitio, acepta nuestro uso de cookies.",
   "signin": {
     "title": "Iniciar sesión en SandCasino",    
     "forgot": "¿Olvidaste tu contraseña?",
@@ -90,7 +92,12 @@
       "noPopup": "¿No ves la ventana emergente de inicio de sesión de {{provider}}?",
       "redirect": "Redirigir al inicio de sesión de {{provider}}"
     },
-    "success": "¡Bienvenido de nuevo, {{username}}!"
+    "success": "¡Bienvenido de nuevo, {{value.username}}!"
+  },
+  "accountSetup": {
+    "title": "Configuración de la cuenta",
+    "description": "Algunos detalles rápidos para asegurar su cuenta. ¡Solo toma unos segundos!",
+    "completed": "Configuración de la cuenta completada."
   },
   "forgot": {
     "title": "Olvidé mi contraseña",
@@ -144,8 +151,11 @@
     "confirm": {
       "title": "Confirmar correo electrónico",
       "description": "Para confirmar tu correo electrónico, haz clic en el button de abajo.",
+      "codeSent":"Hemos enviado un código a tu correo electrónico, por favor ingrésalo abajo.",
       "success": "Correo electrónico confirmado."
     },
+    "changeEmail": "Cambiar correo electrónico",
+    "emailConfirmed": "Correo electrónico confirmado.",
     "social": {
       "title": "Configura tu nombre de usuario",
       "description": "¡Para continuar usando sandcasino, por favor configura tu nombre de usuario!",
@@ -176,5 +186,6 @@
       "multiplier": "Multiplicador",
       "payout": "Pago"
     }
-  }
+  },
+ "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!"
 }

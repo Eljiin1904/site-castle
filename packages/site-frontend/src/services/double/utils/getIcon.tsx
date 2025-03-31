@@ -36,17 +36,39 @@ export function getImageFromBetKind(kind: DoubleBetKind) {
   return path;
 }
 
+export function getIconFromColor({
+  color,
+  bait,
+}: {
+  color: DoubleColor;
+  bait: boolean;
+}) {
+  let icon;
+
+  if (color === "green") {
+    icon = SvgDoubleGreenIcon;
+  } else if (bait) {
+    icon =  SvgDoubleBaitIcon
+  } else if (color === "red") {
+    icon =  SvgDoubleRedIcon
+  } else {
+    icon = SvgDoubleBlackIcon;
+  }
+  return icon;
+}
+
 export function getIconFromBetKind(kind: DoubleBetKind) {
   let icon;
 
   if (kind === "green") {
     icon = SvgDoubleGreenIcon;
   } else if (kind === "bait") {
-    icon =  SvgDoubleBaitIcon
+    icon = SvgDoubleBaitIcon;
   } else if (kind === "red") {
-    icon =  SvgDoubleRedIcon
+    icon = SvgDoubleRedIcon;
   } else {
     icon = SvgDoubleBlackIcon;
   }
+
   return icon;
 }

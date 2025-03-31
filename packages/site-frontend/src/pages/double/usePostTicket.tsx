@@ -11,8 +11,11 @@ import { LoginModal } from "#app/modals/login/LoginModal";
 import { UserEmailConfirmModal } from "#app/modals/user/UserEmailConfirmModal";
 import { VerificationModal } from "#app/modals/verification/VerificationModal";
 import { Gtm } from "#app/services/gtm";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export function usePostTicket() {
+  
+  const {t} = useTranslation(["games\\double"]);
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
@@ -35,25 +38,26 @@ export function usePostTicket() {
         return Dialogs.open("primary", <VerificationModal />);
       }
       if (!betAmount) {
-        throw new Error("Invalid bet amount.");
+        throw new Error("validations:errors.games.invalidBetAmount");
       }
       if (betAmount > tokenBalance) {
-        throw new Error("You do not have enough tokens.");
+        throw new Error("validations:errors.games.notEnoughTokens");
       }
 
       const maxBet = Double.getMaxBetAmount(betKind);
 
       if (betAmount > maxBet) {
-        throw new Error(
-          `The max bet amount is ${Intimal.toLocaleString(maxBet)}.`,
-        );
+        
+        let error = new Error("validations:errors.games.double.maxBetAmount");
+        error.cause = maxBet;
+        throw error;
       }
 
       await confirmBet({
         betAmount,
         onConfirmProps: () => ({
-          heading: "Confirm Bet",
-          message: `Bet ${Intimal.toLocaleString(betAmount)} on ${Double.getLabelFromBetKind(betKind)}?`,
+          heading: t("games\\double:confirmBet.title"),
+          message:  t("games\\double:confirmBet.message", {value : {amount: Intimal.toLocaleString(betAmount), kind: Double.getLabelFromBetKind(betKind)}})
         }),
       });
 

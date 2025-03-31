@@ -8,6 +8,7 @@ import { Dice } from "@core/services/dice";
 import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
 import { Users } from "@core/services/users";
 import { UserRole } from "@core/types/users/UserRole";
+import { UserSuspensionData } from "@core/types/users/UserSuspensionData";
 
 export function parseCookie(cookieString: string) {
   const cookies = cookieString.split(";");
@@ -72,14 +73,23 @@ export const createTestUser = (
   email: string = "test@gmail.com",
   role: UserRole = "user",
   passwordHash: string = "password123",
+  tokenBalance: number = 10000,
+  suspended: boolean = false,
+  emailConfirmed: boolean = true,
 ): UserDocument => {
   const userId = Ids.long();
-  const emailConfirmed = true;
   const referer: UserReferer = { kind: "none" };
   const steamId = undefined;
   const googleId = undefined;
   const discordId = undefined;
   const twitchId = undefined;
+  const suspensionData: UserSuspensionData = suspended
+    ? {
+        reason: "self-exclude",
+        startDate: new Date(),
+        endDate: undefined,
+      }
+    : {};
 
   return {
     _id: userId,
@@ -89,11 +99,11 @@ export const createTestUser = (
     locale: "en",
     username,
     email,
-    emailConfirmed,
+    emailConfirmed: emailConfirmed,
     role: role,
     tags: [],
     avatarIndex: Numbers.randomInt(1, 16),
-    tokenBalance: 10000,
+    tokenBalance: tokenBalance,
     gemBalance: 0,
     xp: 0,
     stats: {},
@@ -128,7 +138,7 @@ export const createTestUser = (
       tier: 3,
     },
     mute: {},
-    suspension: {},
+    suspension: suspensionData,
     ban: {},
     blockedUsers: [],
     meta: {

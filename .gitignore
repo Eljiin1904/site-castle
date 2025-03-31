@@ -8,3 +8,13 @@ node_modules/
 **/src/input/
 **/src/output/
 *storybook.log
+*.DS_Store
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+tests-examples/
+__tests__/
+playwright.config.ts

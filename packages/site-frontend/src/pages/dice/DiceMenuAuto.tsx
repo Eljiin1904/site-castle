@@ -13,6 +13,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BetInputGroup } from "./BetInputGroup";
 import { useProfit } from "./useProfit";
 import { useAutoBet } from "./useAutoBet";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceMenuAuto = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -63,7 +64,7 @@ const ActionButton = () => {
   const processing = useAppSelector((x) => x.dice.processing);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\dice"]);
   const { overMax } = useProfit();
 
   const handleStartAuto = useAutoBet();
@@ -72,8 +73,8 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="primary"
-        label="Stop Auto Play"
+        kind="primary-green"
+        label={t('games\\dice:stopAutoPlay')}
         onClick={() => dispatch(Dice.setAutoPlaying(false))}
       />
     );
@@ -81,8 +82,8 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="primary-yellow"
-        label={overMax ? "Exceeds Max Profit" : "Start Auto Play"}
+        kind="primary-green"
+        label={overMax ? t('games\\dice:exceedMaxBet') : t('games\\dice:startAutoPlay')}
         disabled={overMax || processing}
         onClick={handleStartAuto}
       />
@@ -100,12 +101,13 @@ const BaseFields = () => {
   const lossLimit = useAppSelector((x) => x.dice.lossLimit);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   return (
     <Fragment>
       <BetInputGroup disabled={autoPlaying} />
       <ModalSection>
-        <ModalLabel>{"Games"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.games")}</ModalLabel>
         <Input
           type="integer"
           placeholder="0"
@@ -117,7 +119,7 @@ const BaseFields = () => {
         />
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"On Win"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.onWin")}</ModalLabel>
         <Div
           fx
           align="center"
@@ -125,8 +127,8 @@ const BaseFields = () => {
         >
           <Div>
             <ButtonGroup
-              options={["Reset", "Increase"]}
-              size="md"
+              options={[t('common:reset'), t('common:increase')]}
+              size="xssso"
               value={["reset", "increase"].indexOf(winAction)}
               disabled={autoPlaying}
               setValue={(x) =>
@@ -147,7 +149,7 @@ const BaseFields = () => {
         </Div>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"On Loss"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.onLoss")}</ModalLabel>
         <Div
          fx
          align="center"
@@ -155,8 +157,8 @@ const BaseFields = () => {
         >
           <Div>
             <ButtonGroup
-              options={["Reset", "Increase"]}
-              size="md"
+              options={[t('common:reset'), t('common:increase')]}
+              size="xssso"
               labelSize={12}
               value={["reset", "increase"].indexOf(lossAction)}
               disabled={autoPlaying}
@@ -177,7 +179,7 @@ const BaseFields = () => {
         </Div>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Stop on Profit"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.stopOnProfit")}</ModalLabel>
         <Input
           type="currency"
           placeholder="0.00"
@@ -187,7 +189,7 @@ const BaseFields = () => {
         />
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Stop on Loss"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.stopOnLoss")}</ModalLabel>
         <Input
           type="currency"
           placeholder="0.00"

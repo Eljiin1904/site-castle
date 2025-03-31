@@ -20,13 +20,13 @@ export const HomePage = () => {
   const filterGames = useAppSelector((x) => x.site.filter) || "all";
   const games = useAppSelector((x) => x.site.games) || [];
   const small = useIsMobileLayout();
-
+  const {t} = useTranslation();
   const featuredGames = games?.filter((x) => x.featured);
   
   return (
     <SitePage
       className="HomePage"
-      gap={small ? 20: 48}
+      gap={small ? 32: 56}
     >
       <HashManager />
       <HeroBanner />
@@ -50,9 +50,7 @@ export const HomePage = () => {
       <ProvidersSection />
       <CategoriesSection />
       
-      {authenticated && <>        
-        <BetBoard />
-      </>}
+      {authenticated &&  <BetBoard mt={small ? 12: 0} mb={small ? 20: 32} title={t("bets.recentBets")}/>}
     </SitePage>
   );
 };
@@ -73,7 +71,6 @@ const FeaturedGamesSection = ({items, showSection}: {items: GameDocument[],showS
     >
       <PageTitle
         heading={t('games.featured', {count: 2})}
-        mt={small ? 0 : 16}
       />
       <Div
         gap={small ? 20 : 24}
