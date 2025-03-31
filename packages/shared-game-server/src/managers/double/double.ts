@@ -13,6 +13,7 @@ import { Transactions } from "@server/services/transactions";
 import { Site } from "@server/services/site";
 import { Chat } from "@server/services/chat";
 import { Users } from "@server/services/users";
+import { SiteJackPotDocument } from "../../../../shared-core/src/types/site/SiteJackpotDocument";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 export default () => System.tryCatch(main)();
@@ -173,6 +174,81 @@ async function processTickets(round: DoubleRoundDocument) {
     return;
   }
 
+  let isJackpot = false;
+  let newGameIds: string[] = [];
+  let jackPotAmount: number = 0;
+
+  // Get Sum of Bets of Round
+  const settings = await Site.settings.cache();
+  const roundSum = await Database.collection("double-tickets")
+    .aggregate([
+      {
+        $match: {
+          roundId: round._id,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$betAmount" },
+        },
+      },
+    ])
+    .toArray();
+
+  // Add percentage to jackpot
+  const roundPotPercentAmount =
+    roundSum.length > 0 && roundSum[0].totalAmount
+      ? roundSum[0].totalAmount * settings.jackpotThreshold
+      : 0;
+
+  // Grab latest pending jackpot or create one if doesnt exist
+  // gameIds less than 3
+  const existing = await Database.collection("site-jackpot").findOne({
+    status: { $eq: "pending" },
+    game: { $eq: "double" },
+  });
+
+  if (existing) {
+    jackPotAmount = existing.potAmount + roundPotPercentAmount;
+    if (round.roll.color == "green" && existing.gameIds.length < 3) {
+      newGameIds = [...existing.gameIds, round._id];
+
+      await Database.collection("site-jackpot").updateOne(
+        { _id: existing._id },
+        {
+          $set: {
+            potAmount: jackPotAmount,
+            gameIds: newGameIds,
+          },
+        },
+      );
+      if (newGameIds.length == 3) isJackpot = true;
+    } else if (round.roll.color != "green") {
+      // Reset the jackpot but add updated potAmount
+      await Database.collection("site-jackpot").updateOne(
+        { _id: existing._id },
+        {
+          $set: {
+            potAmount: jackPotAmount,
+            gameIds: [],
+          },
+        },
+      );
+    }
+  } else {
+    // Create new Jackpot add new Game Id if roll is green else provide empty gameIds
+    const newJackpot: SiteJackPotDocument = {
+      _id: Ids.object(),
+      potAmount: roundPotPercentAmount,
+      gameIds: round.roll.color == "green" ? [round._id] : [],
+      status: "pending",
+      game: "double",
+      timestamp: new Date(),
+    };
+    await Database.collection("site-jackpot").insertOne(newJackpot);
+  }
+
   const cursor = Database.collection("double-tickets").find({
     roundId: round._id,
     processed: { $exists: false },
@@ -180,6 +256,23 @@ async function processTickets(round: DoubleRoundDocument) {
 
   for await (const ticket of cursor) {
     await System.tryCatch(processTicket)({ round, ticket });
+  }
+
+  if (isJackpot && newGameIds.length == 3) {
+    if (existing) {
+      await Database.collection("site-jackpot").updateOne(
+        { _id: existing._id },
+        {
+          $set: {
+            status: "complete",
+          },
+        },
+      );
+    }
+
+    for (const roundId of newGameIds) {
+      await System.tryCatch(processJackPotWinners)({ roundId, jackPotAmount: jackPotAmount / 3 });
+    }
   }
 }
 
@@ -253,6 +346,63 @@ async function processTicket({
         user: Users.getBasicUser(user),
         wonAmount,
         betKind,
+      });
+    }
+  }
+}
+
+async function processJackPotWinners({
+  roundId,
+  jackPotAmount,
+}: {
+  roundId: string;
+  jackPotAmount: number;
+}) {
+  const greenTicketSelectors = await Database.collection("double-tickets")
+    .find({
+      roundId: roundId,
+      betKind: "green",
+    })
+    .toArray();
+
+  if (greenTicketSelectors.length > 0 && jackPotAmount > 0) {
+    // Split Round Pot Amount by Amount of Players that select "Green" that round
+    const potSplit = jackPotAmount / greenTicketSelectors.length;
+    for (const ticket of greenTicketSelectors) {
+      const user = await Database.collection("users").findOne({
+        _id: ticket.user.id,
+      });
+
+      if (!user) {
+        throw new Error("User lookup failed.");
+      }
+
+      // Create Transaction
+      await Transactions.createTransaction({
+        user,
+        autoComplete: true,
+        kind: "double-jackpot-won",
+        amount: potSplit,
+        roundId: roundId,
+        gameId: ticket._id,
+      });
+
+      // track activity
+      await Site.trackActivity({
+        kind: "double-jackpot-win",
+        user: Users.getBasicUser(user),
+        amount: potSplit,
+        betKind: "green",
+        roundId,
+      });
+      // Inform in chat
+      await Chat.createMessage({
+        agent: "system",
+        channel: null,
+        kind: "double-jackpot-win",
+        user: Users.getBasicUser(user),
+        wonAmount: potSplit,
+        betKind: "green",
       });
     }
   }

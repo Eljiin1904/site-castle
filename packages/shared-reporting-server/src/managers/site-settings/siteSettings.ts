@@ -1,7 +1,4 @@
-import {
-  SiteSettingId,
-  SiteSettingObject,
-} from "@core/types/site/SiteSettingDocument";
+import { SiteSettingId, SiteSettingObject } from "@core/types/site/SiteSettingDocument";
 import { Database } from "@server/services/database";
 import { Site } from "@server/services/site";
 import { System } from "@server/services/system";
@@ -52,6 +49,7 @@ async function main() {
   await insertDefault("activityThreshold", 0.01);
   await insertDefault("betHighrollerThreshold", 100);
   await insertDefault("betLuckyThreshold", 5);
+  await insertDefault("jackpotThreshold", 0.0066666);
   await insertDefault("chatGeneralRequirement", 0);
   await insertDefault("chatHighrollerRequirement", 50);
 
@@ -60,10 +58,7 @@ async function main() {
   await insertDefault("skindeckEnabled", true);
 }
 
-async function insertDefault<K extends SiteSettingId>(
-  _id: K,
-  value: SiteSettingObject[K],
-) {
+async function insertDefault<K extends SiteSettingId>(_id: K, value: SiteSettingObject[K]) {
   const settings = await Site.settings.cache();
 
   if (settings[_id] !== undefined) {

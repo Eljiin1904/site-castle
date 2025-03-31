@@ -11,6 +11,7 @@ export type SiteActivityKindData =
   | CaseBattleDropData
   | CaseDropData
   | DiceWonData
+  | DoubleJackpotWonData
   | DoubleWonData
   | LimboWonData
   | RewardBoostData;
@@ -39,6 +40,12 @@ interface CaseDropData {
 
 interface DiceWonData {
   kind: "dice-win";
+}
+
+interface DoubleJackpotWonData {
+  kind: "double-jackpot-win";
+  betKind: DoubleBetKind;
+  roundId: string;
 }
 
 interface DoubleWonData {

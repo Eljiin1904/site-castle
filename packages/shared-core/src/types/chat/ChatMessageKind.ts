@@ -15,6 +15,7 @@ export type ChatMessageKindData =
   | CaseBattleLinkData
   | CaseBattleWinData
   | CaseWinData
+  | DoubleJackpotWinData
   | DoubleStreakData
   | DoubleWinData
   | DiceWinData
@@ -48,11 +49,7 @@ interface CaseBattleWinData {
 }
 
 interface CaseWinData {
-  kind:
-    | "case-game-win"
-    | "level-case-win"
-    | "gem-case-win"
-    | "holiday-case-win";
+  kind: "case-game-win" | "level-case-win" | "gem-case-win" | "holiday-case-win";
   user: BasicUser;
   chest: BasicChest;
   item: ChestItem;
@@ -68,6 +65,13 @@ interface DiceWinData {
   kind: "dice-win";
   user: BasicUser;
   multiplier: number;
+  wonAmount: number;
+}
+
+interface DoubleJackpotWinData {
+  kind: "double-jackpot-win";
+  user: BasicUser;
+  betKind: DoubleBetKind;
   wonAmount: number;
 }
 
