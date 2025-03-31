@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { Dialogs } from "@client/services/dialogs";
 import { Web3AuthFinalizeModal } from "#app/modals/security/Web3AuthFinalizeModal";
+import { Toasts } from "@client/services/toasts";
 
 export function useMetaMaskAuth() {
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
@@ -28,7 +29,10 @@ export function useMetaMaskAuth() {
   }, []);
 
   const connectMetaMask = async () => {
-    if (!provider) return alert("MetaMask not found installed on the browser.");
+    if (!provider) {
+      Toasts.error("validation:errors.metamask.noplugin");
+      return;
+    }
 
     try {
       const accounts = await provider.send("eth_requestAccounts", []);

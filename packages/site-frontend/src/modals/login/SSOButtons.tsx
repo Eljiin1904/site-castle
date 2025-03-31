@@ -6,7 +6,6 @@ import { SvgMetamask } from "@client/svgs/brands/SvgMetamask";
 import { SvgSteam } from "@client/svgs/brands/SvgSteam";
 import { SocialAuthStartModal } from "../security/SocialAuthStartModal";
 import { useMetaMaskAuth } from "#app/hooks/security/useMetaMaskAuth";
-import { Web3AuthStartModal } from "../security/Web3AuthStartModal";
 import "./SSOButtons.scss";
 
 export const SSOButtons = () => {
