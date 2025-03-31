@@ -5,26 +5,18 @@ import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgCopy } from "@client/svgs/common/SvgCopy";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
-import { ModalField } from "@client/comps/modal/ModalField";
 import { SvgRedo } from "@client/svgs/common/SvgRedo";
-import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Button } from "@client/comps/button/Button";
 import { Cryptos } from "#app/services/cryptos";
-import { WalletAction } from "../WalletAction";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Heading } from "@client/comps/heading/Heading";
 import { Link } from "@client/comps/link/Link";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
-export const DepositCryptoBody = ({
-  setAction,
-}: {
-  setAction: (x: WalletAction) => void;
-}) => {
+export const DepositCryptoBody = () => {
   const [cryptoIndex, setCryptoIndex] = useState(0);
   const [rotate, setRotate] = useState(false);
   const { t } = useTranslation(["wallet"]);
@@ -101,7 +93,7 @@ export const DepositCryptoBody = ({
             label={t("common:copy")}
             onClick={() => {
               navigator.clipboard.writeText(address);
-              Toasts.success("Wallet address copied to clipboard.");
+              Toasts.success(t('copied'));
             }}
             flexGrow={1}
             size="xssso"

@@ -26,6 +26,7 @@ export const LoadingContent = () => {
       >
         <Spinner
           size={48}
+          lineHeight={40}
           color="gold"
         />
         <Span size={12}>{"Creating Trade Offer"}</Span>

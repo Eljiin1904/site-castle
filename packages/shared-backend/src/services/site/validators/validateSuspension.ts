@@ -4,6 +4,6 @@ import { Users } from "#app/services/users";
 
 export async function validateSuspension(user: UserDocument) {
   if (Users.isSuspended(user.suspension)) {
-    throw new HandledError("You can't do that while suspended.");
+    throw new HandledError("validations:errors.wallet.suspended");
   }
 }

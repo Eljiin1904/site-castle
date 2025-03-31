@@ -39,6 +39,7 @@ export const AffiliatePage = () => {
           as={"h1"}
           color={"dark-brown"}
           size={small ? 32: 48}
+          lineHeight={small ? 32 : 40}
           style={{ maxWidth: small ? "100%" : "550px" }}
           fontWeight="regular"
           textTransform="uppercase"

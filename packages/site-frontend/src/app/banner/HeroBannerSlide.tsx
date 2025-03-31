@@ -27,7 +27,8 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
   ...forwardProps
 }) => {
   const small =  useIsMobileLayout();
-  const fontSize = headingLevel === "h3" ? (small ? 24 : 48): (small ? 32 : 64);
+  const fontSize = headingLevel === "h3" ? (small ? 20 : 48): (small ? 32 : 64);
+  const lineHeight = headingLevel === "h3" ? (small ? 24 : 40) : (small ? 32 : 56);
   const maxWidth = headingLevel === "h3" ? (small ? "80px" : "100px") : (small ? "160px" : "480px");
   return (
     <Link
@@ -64,6 +65,7 @@ export const HeroBannerSlide: FC<HeroBannerSlideProps> = ({
             style={{ maxWidth: maxWidth}}
             fontWeight="regular"
             textTransform="uppercase"
+            lineHeight={lineHeight}
           >
             {heading}
           </Heading>

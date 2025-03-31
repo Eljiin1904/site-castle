@@ -14,5 +14,6 @@
   "depositInstructions": {
     "title": "Deposit Info",
     "description": "Send the amount of {crypto} of your choice to the address above or QR code to receive  in sandcasino wallet"
-  }
+  },
+  "copied": "Wallet address copied to clipboard."
 }

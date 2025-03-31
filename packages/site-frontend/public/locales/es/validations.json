@@ -135,6 +135,14 @@
         "invalidCombination": "Combinación de apuesta inválida.",
         "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."       
       }
+    },
+    "wallet": {
+      "kind": {
+        "invalid": "Tipo de billetera inválido."
+      },
+      "permissionDenied": "No tienes permiso para hacer eso.",
+      "emailNotConfirmed": "El correo electrónico debe ser confirmado.",
+      "suspended": "No puedes hacer eso mientras estás suspendido."
     }
   }
 }
