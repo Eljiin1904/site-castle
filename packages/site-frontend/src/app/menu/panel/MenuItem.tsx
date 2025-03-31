@@ -38,7 +38,6 @@ export const MenuItem:FC<{icon?:Svg, isSubMenu?: boolean, open?: boolean, label:
           <Vector
             as={icon}
             size={20}
-            color="dark-sand"
           />
         </Div>
       )}

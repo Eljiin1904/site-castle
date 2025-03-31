@@ -13,7 +13,6 @@ import "./DoubleViewOverlay.scss";
 
 export const DoubleViewOverlay = () => {
   const status = useAppSelector((x) => x.double.round.status);
-  console.log("double status: " + status);
   if (status !== "waiting" && status !== "pending") {
     return null;
   }
@@ -79,24 +78,40 @@ const DoubleCountdown = () => {
 };
 
 const DoublePending = () => {
+  const { t } = useTranslation(["games\\double"]);
   const eosBlockNum = useAppSelector((x) => x.double.round.eosBlockNum);
-
   return (
     <Div
+      className="DoubleTimerOverlay"
       column
       center
-      gap={4}
+      zIndex={10}
+      fx
+      fy
+      gap={12}
     >
-      <Span size={12}>{"Awaiting EOS Block"}</Span>
+      <Span
+      color="light-sand"
+        size={16}
+        weight="medium"
+        lineHeight={24}
+      >{t("games\\double:awaitingForEosBlock")}</Span>
       <Link
         type="a"
         href={Random.getBlockUrl(eosBlockNum)}
         fontWeight="semi-bold"
-        fontSize={15}
-        color="light-blue"
+        fontSize={16}
+        color="sand"
       >
         {`#${eosBlockNum}`}
       </Link>
     </Div>
   );
 };
+// Only for testing
+const DoubleCompleted = () => {
+
+  const round = useAppSelector((x) => x.double.round);
+  console.log(round.roll);
+  return (<Span data-testid="game-completed-color">{round.roll?.color}</Span>);
+}

@@ -165,7 +165,6 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
         bottom={0}
         textAlign="center"
         fontSize={12}
-        color="dark-sand"
       >
         <Trans 
           i18nKey="register.disclaimer" 

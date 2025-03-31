@@ -8,6 +8,8 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Double } from "#app/services/double";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Dialogs } from "@client/services/dialogs";
+import { LoginModal } from "#app/modals/login/LoginModal";
 
 export const BetInputGroup = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -24,15 +26,24 @@ export const BetInputGroup = () => {
 };
 
 const useBetHandler = () => {
+  const authenticated = useAppSelector((x) => x.user.authenticated);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const betAmount = useAppSelector((x) => x.double.betAmount);
   const dispatch = useAppDispatch();
 
   const setBetAmount = (x: number | undefined) => {
+    
+    if (!authenticated) {
+      return Dialogs.open("primary", <LoginModal />);
+    }
     dispatch(Double.setBetAmount(x));
   };
 
   const handleMath = (f: (x: number) => number) => {
+    
+    if (!authenticated) {
+      return Dialogs.open("primary", <LoginModal />);
+    }
     let value = f(betAmount || 0);
 
     value = Math.min(tokenBalance, value);
@@ -124,7 +135,7 @@ const LaptopDesktopContent = () => {
   const {t} = useTranslation(["common"]);
   return (
     <Div column gap={8}>
-      <Span size={12} color="dark-sand" lineHeight={20} fontWeight="medium">{t("common:amount")}</Span>
+      <Span size={12}>{t("common:amount")}</Span>
       <Div>
         <Input
           type="currency"

@@ -97,14 +97,12 @@ export const ChatHeader = () => {
         as={SvgRules}
         size={16}
         hover="highlight"
-        color="dark-sand"
         onClick={() => Dialogs.open("primary", <ChatRulesModal />)}
       />
       <Vector
         as={SvgTimes}
         size={16}
         hover="highlight"
-        color="dark-sand"
         onClick={() => toggleChat()}
       />
     </Div>
@@ -140,14 +138,12 @@ const ChatDrowdown = () => {
           <Vector
             as={options[value].icon}
             size={16}
-            color="dark-sand"
           />
           <Vector
               className="icon left"
               as={open ? SvgArrowRight: SvgArrowRight}
               size={12}
               style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
-              color="dark-sand"
             />
         </Div>
         }

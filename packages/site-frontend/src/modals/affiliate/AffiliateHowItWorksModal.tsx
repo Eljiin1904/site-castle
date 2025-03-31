@@ -19,7 +19,7 @@ export const AffiliateHowItWorksModal = () => {
       <ModalHeader
         heading="How do Referrals Work?"
         onCloseClick={() => Dialogs.close("primary")}
-        headerContent={ <Paragraph color="dark-sand" mt={small ? 16: 24}>
+        headerContent={ <Paragraph mt={small ? 16: 24}>
           {"Refer a friend to Sandcasino and earn free money from all of their bets!"}
         </Paragraph>}
       />
@@ -29,7 +29,7 @@ export const AffiliateHowItWorksModal = () => {
           <Heading as="h3" size={small ? 20: 16} fontWeight="regular" textTransform="uppercase">
             {"Step 1"}
           </Heading>
-          <Paragraph color="dark-sand" mt={12}>
+          <Paragraph mt={12}>
             {"Have a friend that would love Sandcasino? Help them sign up using your Referral Link, or your Code, and they will be counted as your referral!"}
           </Paragraph>
           </ModalSection>
@@ -37,7 +37,7 @@ export const AffiliateHowItWorksModal = () => {
           <Heading as="h3"size={small ? 20: 16} fontWeight="regular" textTransform="uppercase">
             {"Step 2"}
           </Heading>
-          <Paragraph color="dark-sand" mt={12}>
+          <Paragraph mt={12}>
             {"You will earn 10% commission from the house edge on all bets placed by your referrals whether they win or lose."}
           </Paragraph>
          </ModalSection>
@@ -45,7 +45,7 @@ export const AffiliateHowItWorksModal = () => {
           <Heading as="h3" size={small ? 20: 16} fontWeight="regular"  textTransform="uppercase">
             {"Step 3"}
           </Heading>
-          <Paragraph color="dark-sand" mt={12}>
+          <Paragraph mt={12}>
             {"Your referral earnings are immediately available to be claimed!"}
           </Paragraph>
          </ModalSection>

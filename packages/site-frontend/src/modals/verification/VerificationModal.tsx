@@ -31,7 +31,6 @@ export const VerificationModal = ({
       >
         <Span
           pb={16}
-          color="dark-sand"
         >
           {t("accountSetup.description")}
         </Span>

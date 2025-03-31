@@ -14,7 +14,7 @@ const options: InitOptions = {
   debug: true,
   lng: "en",
   fallbackLng: "en",
-  ns: ["translation", "validations","fields", "common","games\\double"],
+  ns: ["translation", "validations","fields", "common","wallet","games\\double"],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
   interpolation: {

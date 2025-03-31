@@ -55,9 +55,9 @@ export const ChestLootCard = ({
         gap={4}
       >
         {!hovered ? <Fragment>
-         <Span color="dark-sand" fontSize={10}>Chance:</Span>
+         <Span fontSize={10}>Chance:</Span>
          <Span color="light-sand" fontSize={10}>{`${Numbers.round(Intimal.toDecimal(item.dropRate, 6) * 100, 4)}%`}</Span>
-        </Fragment> :  <Span color="dark-sand" fontSize={10}>
+        </Fragment> :  <Span fontSize={10}>
           {`${start} - ${end}`}
         </Span>}
         {/* <Span size={small ? 10 : 12}>{item.symbol}</Span> */}

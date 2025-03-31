@@ -23,7 +23,6 @@ export const ModalDivider: FC<ModalDividerProps> = ({ className, label, ...forwa
       />
       <Span
         size={13}
-        color="dark-sand"
       >
         {label}
       </Span>

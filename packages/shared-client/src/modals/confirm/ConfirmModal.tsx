@@ -65,7 +65,7 @@ export const ConfirmModal: FC<ConfirmModalProps> = ({
         onCloseClick={handleCancel}
       />
       <ModalBody>
-        <Span size={14} color="dark-sand" textAlign="center">
+        <Span textAlign="center">
           {message}
         </Span>
         <Div

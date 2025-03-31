@@ -83,7 +83,6 @@ export const UserMenuDesktop = () => {
             as={open ? SvgArrowRight: SvgArrowRight}
             size={12}
             style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
-            color="dark-sand"
           />
       </Div>
       }

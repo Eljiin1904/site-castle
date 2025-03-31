@@ -211,7 +211,7 @@ const NotMobileMenu: FC<ChestMenuProps> = ({
             alt={`${chest.displayName} Thumbnail`}
           />
         </Div>
-        <Heading as="h1" fontSize={24} fontWeight="regular" color="light-sand">{chest.displayName}</Heading>
+        <Heading as="h1" fontSize={24} fontWeight="regular">{chest.displayName}</Heading>
         {cost ? cost(openCount) : <Tokens color="dark-sand" fontSize={16} value={chest.openCost * openCount} />}
         <ButtonGroup
           className="count-menu"
@@ -229,7 +229,7 @@ const NotMobileMenu: FC<ChestMenuProps> = ({
         fx
         justifyContent="space-between"
       >
-        <Span color="dark-sand" fontSize={16} fontWeight="medium">Fast Spins</Span>
+        <Span fontSize={16}>Fast Spins</Span>
         <Toggle
           value={fast}
           disabled={disableControls}

@@ -48,10 +48,10 @@ export const BaseMenu = ({collapsed}: {
     type="nav"
   />
   <MenuSeparator />
-  <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>{t('menu.races')}</Span>
+  <Span textTransform="uppercase" px={24} mb={24} fontSize={10}>{t('menu.races')}</Span>
   <MenuRace collapsed={collapsed} />
   <MenuSeparator />
-  <Span textTransform="uppercase" px={24} mb={24} fontWeight="medium" color="dark-sand" fontSize={10}>{t('menu.games')}</Span>
+  <Span textTransform="uppercase" px={24} mb={24} fontSize={10}>{t('menu.games')}</Span>
   <MenuItem
     icon={SvgDuel}
     label={t("games:duel")}
