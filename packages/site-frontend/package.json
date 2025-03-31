@@ -7,6 +7,7 @@
     "dev-start": "vite",
     "deploy-staging": "tsc && vite build --mode staging && aws s3 sync --delete build/ s3://staging.chicken.gg",
     "deploy-production": "tsc && vite build --mode production && aws s3 sync --delete build/ s3://chicken.gg",
+    "start": "vite",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
