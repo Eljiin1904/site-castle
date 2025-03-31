@@ -26,7 +26,7 @@ ingress:
   enabled: false
 
 secrets:
-  app: "shared-backend"
+  app: "shared-reporting-server"
 
 service:
   type: ClusterIP
@@ -66,7 +66,7 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-namespace: shared-backend
+namespace: shared-reporting-server
 
 # Explicit labels to ensure consistency across resources
 labels:
