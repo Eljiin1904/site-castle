@@ -34,27 +34,26 @@ const config = {
 
 export function setEnvironment(env: SystemEnvironment) {
   config.env = env;
-  console.log("env: " + env);
   if (env === "development") {
     config.siteURL = "http://127.0.0.1:3000";
     config.siteAPI = "http://127.0.0.1:5000";
     config.adminURL = "http://127.0.0.1:3001";
     config.adminAPI = "http://127.0.0.1:5001";
   } else if (env === "devcloud") {
-    config.siteURL = `https://dev.${domain}`;
-    config.siteAPI = `https://api.dev.${domain}`;
-    config.adminURL = `https://admin.dev.${domain}`;
-    config.adminAPI = `https://aapi.dev.${domain}`;
+    config.siteURL = `http://castle-frontend.front-end.svc.cluster.local:80`;
+    config.siteAPI = `http://castle-backend.shared-backend.svc.cluster.local:3000`;
+    config.adminURL = `http://castle-admin-frontend.shared-admin-frontend.svc.cluster.local:80`;
+    config.adminAPI = `http://castle-admin-be-castle-admin-backend.shared-admin-backend.svc.cluster.local:3000`;
   } else if (env === "staging") {
     config.siteURL = `https://staging.${domain}`;
     config.siteAPI = `https://api.staging.${domain}`;
     config.adminURL = `https://admin.staging.${domain}`;
     config.adminAPI = `https://aapi.staging.${domain}`;
   } else if (env === "production") {
-    config.siteURL = `https://dev.${domain}`;
-    config.siteAPI = `https://api.dev.${domain}`;
-    config.adminURL = `https://admin.dev.${domain}`;
-    config.adminAPI = `https://aapi.dev.${domain}`;
+    config.siteURL = `http://castle-frontend.front-end.svc.cluster.local:80`;
+    config.siteAPI = `http://castle-backend.shared-backend.svc.cluster.local:3000`;
+    config.adminURL = `http://castle-admin-frontend.shared-admin-frontend.svc.cluster.local:80`;
+    config.adminAPI = `http://castle-admin-be-castle-admin-backend.shared-admin-backend.svc.cluster.local:3000`;
   }
 }
 
