@@ -1,4 +1,4 @@
-name: Castle Front-End CI
+name: Castle Shred Admin Frontend CI
 
 on:
   workflow_dispatch:
