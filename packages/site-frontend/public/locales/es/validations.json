@@ -114,6 +114,10 @@
     "discord": {
       "taken": "Discord id ya está vinculado."
     },
+    "metamask": {
+      "noplugin": "MetaMask plug-in no esta installado en el navegador.",
+      "walletlinked": "Usuario autenticado y dirección de billetera ya vinculada."
+    },
     "rateLimit": "Demasiadas solicitudes de registro.",
     "invalidCaptcha": "Falló al pasar la validación de captcha.",
      "games": {

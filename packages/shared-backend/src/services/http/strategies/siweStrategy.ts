@@ -72,12 +72,12 @@ export class SIWEStrategyClass extends PassportStrategy {
 async function verify(req: Request, walletAddress: string, done: (error: any, user?: any) => void) {
   const logger = getServerLogger({});
   try {
-    logger.debug("verifying SIWE authentication for address: " + walletAddress);
+    logger.debug("verifying SIWE user is in database for address: " + walletAddress);
     if (req.isAuthenticated()) {
       logger.debug("user authenticated");
       if (await Database.exists("users", { walletAddress })) {
-        logger.warn("wallet address is already linked: " + walletAddress);
-        throw new HandledError("Wallet address is already linked.");
+        logger.warn("user authenticated and wallet address is already linked: " + walletAddress);
+        throw new HandledError("validation:errors.metamask.walletinked");
       }
 
       await Database.collection("users").updateOne(
