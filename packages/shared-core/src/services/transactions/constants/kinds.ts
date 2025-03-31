@@ -16,6 +16,7 @@ const kindMap: Record<TransactionKind, boolean> = {
   "dice-won": true,
   "dice-bet": true,
   "double-bet": true,
+  "double-jackpot-won": true,
   "double-won": true,
   "limbo-bet": true,
   "limbo-won": true,

@@ -75,6 +75,7 @@ interface ThresholdSettings {
   betLuckyThreshold: number;
   chatGeneralRequirement: number;
   chatHighrollerRequirement: number;
+  jackpotThreshold: number;
 }
 
 interface MarketProviderToggles {

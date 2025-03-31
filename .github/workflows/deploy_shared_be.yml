@@ -6,6 +6,7 @@ on:
     branches:
       - main 
     paths:
+      - "helm/shared-backend/**"
       - "packages/shared-backend/**"
       - ".github/workflows/deploy_shared_be.yml"
 

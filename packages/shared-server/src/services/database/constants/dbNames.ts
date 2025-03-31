@@ -54,6 +54,7 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["site-activity"]: config.env,
   ["site-bets"]: config.env,
   ["site-games"]: config.env,
+  ["site-jackpot"]: config.env,
   ["site-meta"]: config.env,
   ["site-settings"]: config.env,
   ["site-stats"]: config.env,
