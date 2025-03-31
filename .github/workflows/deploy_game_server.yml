@@ -9,6 +9,7 @@ on:
     branches:
       - main
     paths:
+      - "helm/shared-game-server/**"
       - "packages/shared-game-server/**"
       - ".github/workflows/deploy_game_server.yml"
 
