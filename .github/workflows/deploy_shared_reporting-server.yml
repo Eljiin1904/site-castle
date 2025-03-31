@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - "helm/shared-reporting-server/**"
       - "packages/shared-reporting-server/**"
       - ".github/workflows/deploy_shared_reporting-server.yml"
 
@@ -79,5 +80,5 @@ jobs:
       - name: Update ArgoCD Application for DEV
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
-          argocd app set castle-reporting-server --helm-set image.app.tag=${{ needs.build-and-push-shared-reporting-server.outputs.image_tag }}
-          argocd app sync castle-reporting-server --async
+          argocd app set shared-reporting-server --helm-set image.app.tag=${{ needs.build-and-push-shared-reporting-server.outputs.image_tag }}
+          argocd app sync shared-reporting-server --async

@@ -6,6 +6,7 @@ on:
     branches:
       - main 
     paths:
+      - "helm/shared-admin-backend/**"
       - "packages/shared-admin-frontend/**"
       - ".github/workflows/deploy_shared_admin_fe.yml"
 
