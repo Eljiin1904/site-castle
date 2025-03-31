@@ -15,6 +15,7 @@ import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Button } from "@client/comps/button/Button";
 import { Cryptos } from "#app/services/cryptos";
 import { WalletAction } from "../WalletAction";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DepositCryptoBody = ({
   setAction,
@@ -23,7 +24,7 @@ export const DepositCryptoBody = ({
 }) => {
   const [cryptoIndex, setCryptoIndex] = useState(0);
   const [rotate, setRotate] = useState(false);
-
+  const { t } = useTranslation(["wallet"]);
   const crypto = Cryptos.infos[cryptoIndex];
 
   const { data, error } = useQuery({
@@ -57,59 +58,58 @@ export const DepositCryptoBody = ({
       column
       gap={20}
     >
-      <Dropdown
-        type="select"
-        fx
-        options={Cryptos.infos.map((x) => ({
-          label: x.name,
-          description: x.kind.replace("_", " "),
-          icon: Cryptos.getIcon(x.symbol),
-        }))}
-        value={cryptoIndex}
-        onChange={(x, i) => setCryptoIndex(i)}
-      />
+       <ModalSection>
+        <ModalLabel>{t('currency')}</ModalLabel>
+        <Dropdown
+            type="select"
+            size="md"
+            fx
+            options={Cryptos.infos.map((x) => ({
+              label: `${x.name} (${x.kind.replace("_", " ")})`,
+              icon: Cryptos.getIcon(x.symbol),
+            }))}
+            value={cryptoIndex}
+            onChange={(x, i) => setCryptoIndex(i)}
+          />
+      </ModalSection>
+
       <ModalSection>
-        <ModalLabel>{`Your ${crypto.kind.replace("_", " ")} deposit address`}</ModalLabel>
-        {address ? (
-          <ModalField>
+        <ModalLabel>{t('depositAddress',{crypto: crypto.kind.replace("_", " ")})}</ModalLabel>
+        {address ? <Div fx>
+          <Div>
             <Span
-              flexGrow
-              color="gray"
-              textOverflow="ellipsis"
-            >
-              {address}
-            </Span>
-            <Vector
-              as={SvgRedo}
-              fontSize={18}
-              color="white"
-              ml={8}
-              hover="highlight"
-              onClick={() => setRotate(true)}
-            />
-            <Vector
-              as={SvgCopy}
-              fontSize={18}
-              color="light-blue"
-              ml={8}
-              hover="highlight"
-              onClick={() => {
-                navigator.clipboard.writeText(address);
-                Toasts.success("Wallet address copied to clipboard.");
-              }}
-            />
-          </ModalField>
-        ) : (
-          <ModalField>
-            <Span
-              flexGrow
-              color="gray"
-              textOverflow="ellipsis"
-            >
-              {"..."}
-            </Span>
-          </ModalField>
-        )}
+                flexGrow
+                color="gray"
+                textOverflow="ellipsis"
+              >
+                {address}
+              </Span>
+              <Vector
+                as={SvgRedo}
+                fontSize={18}
+                color="white"
+                ml={8}
+                hover="highlight"
+                onClick={() => setRotate(true)}
+              />
+          </Div>
+          <Button
+            kind="tertiary-grey"
+            label={t("common:copy")}
+            onClick={() => {
+              navigator.clipboard.writeText(address);
+              Toasts.success("Wallet address copied to clipboard.");
+            }}
+            flexGrow={1}
+            size="xssso"
+          />
+        </Div> : <Span
+            flexGrow
+            color="gray"
+            textOverflow="ellipsis"
+          >
+            {"..."}
+          </Span>}
       </ModalSection>
       <Div center>
         {address ? (
@@ -130,18 +130,6 @@ export const DepositCryptoBody = ({
         kind="info"
         message={`You will be credited after ${crypto.confirms} confirmation(s). Only send ${crypto.kind.replace("_", " ")} to this address.`}
       />
-      <Div
-        fx
-        grow
-        align="flex-end"
-      >
-        <Button
-          fx
-          kind="secondary"
-          label="Back to Options"
-          onClick={() => setAction("deposit")}
-        />
-      </Div>
     </Div>
   );
 };

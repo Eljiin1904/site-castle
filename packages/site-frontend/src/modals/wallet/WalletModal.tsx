@@ -20,6 +20,10 @@ import { WalletBanner } from "./WalletBanner";
 import { WalletHeader } from "./WalletHeader";
 import { WalletReferral } from "./WalletReferral";
 import "./WalletModal.scss";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
+import { ButtonGroup } from "@client/comps/button/ButtonGroup";
+import { ModalSection } from "@client/comps/modal/ModalSection";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const WalletModal = ({
   initialAction,
@@ -29,12 +33,21 @@ export const WalletModal = ({
   const [action, setAction] = useState<WalletAction>(
     initialAction || "deposit",
   );
-  const bodyLayout = useAppSelector((x) => x.style.bodyLayout);
+  const {t} = useTranslation(["wallet"]);
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const restricted = useAppSelector((x) => x.user.restricted);
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
 
+  const handleAction = (x: WalletAction) => {
+
+    if (kycTier < 1 && x === "withdraw") {
+      Dialogs.open("primary", <VerificationModal />);
+    } else {
+      setAction(x);
+    }
+  };
+  
   if (restricted) {
     return <RegionBlockModal />;
   }
@@ -49,47 +62,55 @@ export const WalletModal = ({
       className="WalletModal"
       onBackdropClick={() => Dialogs.close("primary")}
     >
-      <Div fy>
-        <Conditional
-          value={bodyLayout}
-          laptop={<WalletBanner />}
-          desktop={<WalletBanner />}
-        />
-        <Div
-          className="wallet-content"
-          column
-        >
-          <WalletHeader
-            action={action}
-            setAction={(x) => {
-              if (kycTier < 1 && x === "withdraw") {
-                Dialogs.open("primary", <VerificationModal />);
-              } else {
-                setAction(x);
-              }
-            }}
-          />
-          <ModalBody gap={0}>
-            <WalletReferral />
-            <Conditional
-              value={action}
-              deposit={
-                <DepositBody
-                  setAction={setAction}
-                  setOpen={(x) =>
-                    Dialogs.open("primary", <WalletModal initialAction={x} />)
-                  }
-                />
-              }
-              depositCrypto={<DepositCryptoBody setAction={setAction} />}
-              depositGiftCard={<DepositGiftCardBody setAction={setAction} />}
-              depositPromotion={<DepositPromotionBody setAction={setAction} />}
-              withdraw={<WithdrawBody setAction={setAction} />}
-              withdrawCrypto={<WithdrawCryptoBody setAction={setAction} />}
+      <ModalHeader heading={t('title')} onCloseClick={() => Dialogs.close("primary")} />
+      <ModalBody>
+            <ModalSection>
+            <ButtonGroup 
+              gap={16}
+              fill
+              fx
+              options={[t('deposit'), t('withdraw')]} 
+              value={action === 'deposit' ? 0 : 1}
+              setValue={(x) => handleAction(x === 0 ? 'deposit' : 'withdraw')}
             />
-          </ModalBody>
-        </Div>
-      </Div>
+            </ModalSection>
+            <ModalSection borderTop  borderColor="brown-4" pt={24}>
+              <Conditional value={action} deposit={<DepositCryptoBody  setAction={setAction}/>} withdraw={<WithdrawCryptoBody setAction={setAction} />} />
+            </ModalSection>
+          </ModalBody>     
     </Modal>
   );
 };
+
+ 
+
+   {/* <WalletHeader
+     action={action}
+     setAction={(x) => {
+       if (kycTier < 1 && x === "withdraw") {
+         Dialogs.open("primary", <VerificationModal />);
+       } else {
+         setAction(x);
+       }
+     }}
+   /> */}
+   {/* <ModalBody gap={0}>
+     <WalletReferral />
+     <Conditional
+       value={action}
+       deposit={
+         <DepositBody
+           setAction={setAction}
+           setOpen={(x) =>
+             Dialogs.open("primary", <WalletModal initialAction={x} />)
+           }
+         />
+       }
+       depositCrypto={<DepositCryptoBody setAction={setAction} />}
+       depositGiftCard={<DepositGiftCardBody setAction={setAction} />}
+       depositPromotion={<DepositPromotionBody setAction={setAction} />}
+       withdraw={<WithdrawBody setAction={setAction} />}
+       withdrawCrypto={<WithdrawCryptoBody setAction={setAction} />}
+     />
+   </ModalBody> */}
+

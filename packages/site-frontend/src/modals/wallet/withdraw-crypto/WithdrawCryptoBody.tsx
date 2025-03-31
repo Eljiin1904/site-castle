@@ -24,6 +24,8 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Cryptos } from "#app/services/cryptos";
 import { waitForAuthenticatorCode } from "#app/modals/security/AuthenticatorCodeModal";
 import { WalletAction } from "../WalletAction";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Span } from "@client/comps/span/Span";
 
 const cryptos = Cryptos.infos.filter((x) => x.canWithdraw);
 
@@ -37,7 +39,7 @@ export const WithdrawCryptoBody = ({
   const tfaEnabled = useAppSelector((x) => x.user.tfa.enabled);
   const settings = useAppSelector((x) => x.user.settings);
   const require2fa = tfaEnabled && settings.withdraw2fa;
-
+  const {t} = useTranslation(["wallet"]);
   const crypto = cryptos[cryptoIndex];
 
   const form = useForm({
@@ -82,135 +84,98 @@ export const WithdrawCryptoBody = ({
       form={form}
       grow
     >
-      <Dropdown
-        type="select"
-        fx
-        options={cryptos.map((x) => ({
-          label: x.name,
-          description: x.kind.replace("_", " "),
-          icon: Cryptos.getIcon(x.symbol),
-        }))}
-        value={cryptoIndex}
-        onChange={(x, i) => setCryptoIndex(i)}
-      />
-      <Div gap={8}>
-        <ModalSection>
-          <ModalLabel>{"Balance"}</ModalLabel>
-          <ModalField>
-            <Tokens value={tokenBalance} />
-          </ModalField>
-        </ModalSection>
-        <ModalSection>
-          <ModalLabel>{"Minimum Amount"}</ModalLabel>
-          <ModalField>
-            <Tokens value={crypto.minWithdrawTokens} />
-          </ModalField>
-        </ModalSection>
-      </Div>
       <ModalSection>
-        <ModalLabel>{`Your ${crypto.kind.replace("_", " ")} address`}</ModalLabel>
+        <ModalLabel>{t('currency')}</ModalLabel>
+        <Dropdown
+            type="select"
+            size="md"
+            fx
+            options={cryptos.map((x) => ({
+              label: `${x.name} (${x.kind.replace("_", " ")})`,
+              icon: Cryptos.getIcon(x.symbol),
+            }))}
+            value={cryptoIndex}
+            onChange={(x, i) => setCryptoIndex(i)}
+          />
+      </ModalSection>
+      
+      <ModalSection>
+        <ModalLabel>{t('witdrawAddress',{crypto: crypto.kind.replace("_", " ")})}</ModalLabel>
         <Input
           type="text"
           placeholder={`Enter ${crypto.kind.replace("_", " ")} address`}
-          error={form.errors.address}
+          error={form.errors.address?.key ? t(form.errors.address.key, {value: form.errors.address.value}) : undefined}
           value={form.values.address}
           onChange={(x) => form.setValue("address", x)}
         />
       </ModalSection>
+
+
       <ModalSection>
-        <ModalLabel>{"Withdraw Amount"}</ModalLabel>
-        <Div gap={8}>
+        <ModalLabel>{t('withdrawAmount')}</ModalLabel>
+        <Div fx>
           <Input
             type="currency"
-            placeholder="Token amount"
-            error={form.errors.tokenAmount}
+            height={40}
+            placeholder={t("withdrawAmount")}
+            error={form.errors.tokenAmount?.key ? t(form.errors.tokenAmount.key, {value: form.errors.tokenAmount.value}) : undefined}
             value={form.values.tokenAmount}
             onChange={(x) => form.setValue("tokenAmount", x)}
-          />
-          <Input
-            type="currency"
-            iconLeft={SvgDollarSign}
-            placeholder="USD amount"
-            error={form.errors.tokenAmount}
-            value={
-              form.values.tokenAmount ? form.values.tokenAmount / 2 : undefined
-            }
-            onChange={(x) =>
-              form.setValue("tokenAmount", x ? x * 2 : undefined)
-            }
-          />
-        </Div>
-        <Div
-          gap={8}
-          mt={8}
-        >
-          <Button
-            kind="secondary"
-            size="xs"
-            label="25%"
-            labelSize={12}
-            fx
-            onClick={() =>
-              form.setValue("tokenAmount", Intimal.floor(tokenBalance * 0.25))
-            }
+            flexGrow={1}
+            iconLeft={Cryptos.getIcon(cryptos[cryptoIndex].symbol)}
           />
           <Button
-            kind="secondary"
-            size="xs"
-            label="50%"
-            labelSize={12}
-            fx
-            onClick={() =>
-              form.setValue("tokenAmount", Intimal.floor(tokenBalance * 0.5))
-            }
-          />
-          <Button
-            kind="secondary"
-            size="xs"
-            label="75%"
-            labelSize={12}
-            fx
-            onClick={() =>
-              form.setValue("tokenAmount", Intimal.floor(tokenBalance * 0.75))
-            }
-          />
-          <Button
-            kind="secondary"
-            size="xs"
-            label="100%"
-            labelSize={12}
-            fx
-            onClick={() =>
-              form.setValue("tokenAmount", Intimal.floor(tokenBalance))
-            }
+            kind="tertiary-grey"
+            label={t("common:max")}
+            onClick={() =>form.setValue("tokenAmount", tokenBalance)}
+            flexGrow={1}
+            size="xssso"
           />
         </Div>
       </ModalSection>
+  
       <Div
-        gap={8}
+        gap={16}
         grow
-        align="flex-end"
+        borderTop
+        borderColor="brown-4"
+        pt={24}
+        fx
+        column
       >
+        <Div fx gap={16} justifyContent="space-between">
+          <ModalLabel>{t("withdrawAmount")}</ModalLabel>
+          <ModalLabel gap={8}>
+            <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
+            <Span color="light-sand" size={14} weight="medium" lineHeight={20}>{form.values.tokenAmount}</Span>
+          </ModalLabel>
+        </Div>
+        <Div fx gap={16} justifyContent="space-between">
+        <ModalLabel>{t("fee")}</ModalLabel>
+          <ModalLabel gap={8}>
+            <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
+            <Span color="light-sand" size={14} weight="medium" lineHeight={20}>{form.values.tokenAmount}</Span>
+          </ModalLabel>
+        </Div>
+        <Div fx gap={16} justifyContent="space-between">
+        <ModalLabel>{t("total")}</ModalLabel>
+          <ModalLabel gap={8}>
+            <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
+            <Span color="light-sand" size={14} weight="medium" lineHeight={20}>{form.values.tokenAmount}</Span>
+          </ModalLabel>
+        </Div>        
         <Button
-          kind="secondary"
-          type="submit"
-          label="Back to Options"
-          fx
-          disabled={form.loading}
-          onClick={() => setAction("withdraw")}
-        />
-        <Button
-          kind="primary"
-          type="submit"
-          label="Continue"
-          fx
-          disabled={
-            !form.values.tokenAmount ||
-            form.values.tokenAmount < crypto.minWithdrawTokens ||
-            form.values.address === undefined ||
-            form.loading
-          }
-        />
+            kind="primary-yellow"
+            type="submit"
+            label={t("actionWithdraw")}
+            fx
+            disabled={
+              !form.values.tokenAmount ||
+              form.values.tokenAmount < crypto.minWithdrawTokens ||
+              form.values.address === undefined ||
+              form.loading
+            }
+          />
       </Div>
     </Form>
   );

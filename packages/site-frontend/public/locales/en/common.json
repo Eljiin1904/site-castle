@@ -10,6 +10,7 @@
   "close": "Close",
   "amount": "Amount",
   "clear": "Clear",
+  "max": "Max",
   "enterBetAmount": "Enter bet amount...",
   "recentRolls": "Recent Rolls",
   "last100": "Last 100",
@@ -22,5 +23,8 @@
   "manual": "Manual",
   "auto": "Auto",
   "reset": "Reset",
-  "increase": "Increase"
+  "increase": "Increase",
+  "copy": "Copy",
+  "copied": "Copied",
+  "more": "More details"
 }
