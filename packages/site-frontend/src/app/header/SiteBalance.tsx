@@ -41,23 +41,24 @@ export const SiteBalance = () => {
         align="center"
         justify="flex-end"
       >
-        <Div gap={4} cursor="pointer" border borderColor="brown-4" height={32} flexCenter px={12} onClick={() => Dialogs.open("primary", <WalletModal />)}>
+        <Div gap={16} cursor="pointer" border borderColor="brown-4" height={32} flexCenter px={12} onClick={() => Dialogs.open("primary", <WalletModal />)}>
+          <Div>
+            <Vector
+              className="icon"
+              as={SvgMoney}
+              size={12}
+              color="light-sand"
+            />
+            <Span
+              forwardRef={valueRef}
+              family="title"
+              color="light-sand"
+            >
+              {Intimal.toLocaleString(tokens)}
+            </Span>
+          </Div>
           <Vector
             className="icon"
-            color="white"
-            as={SvgMoney}
-            size={14}
-          />
-          <Span
-            forwardRef={valueRef}
-            family="title"
-            color="white"
-          >
-            {Intimal.toLocaleString(tokens)}
-          </Span>
-          <Vector
-            className="icon"
-            color="dark-sand"
             as={SvgArrowRight}
             size={12}
           />

@@ -26,7 +26,7 @@ input,
 textarea,
 li {
   font-family: var(--text-family);
-  color: var(--brown-color);
+  color: var(--dark-sand-color);
 
   &::marker {
     font-weight: 400;
@@ -40,7 +40,7 @@ h3,
 h4,
 h5 {
   font-family: var(--title-family);
-  color: var(--white-color);
+  color: var(--light-sand-color);
 }
 
 button,
@@ -52,7 +52,7 @@ textarea {
 
 a {
   text-decoration: none;
-  color: var(--white-color);
+  color: var(--sand-color);
 }
 a:hover {
   text-decoration: none;

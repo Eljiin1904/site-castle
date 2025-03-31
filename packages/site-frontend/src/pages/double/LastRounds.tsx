@@ -30,7 +30,7 @@ const LaptopDesktopContent = () => {
       data-tooltip-id="app-tooltip"
       data-tooltip-content={t('common:last100')}
     >
-      <Span color="dark-sand" size={12} lineHeight={20} weight="medium">{t('common:last100')}</Span>
+      <Span size={12} lineHeight={20}>{t('common:last100')}</Span>
       <Div gap={8}>
         <LastRoundCounter
           color="green"

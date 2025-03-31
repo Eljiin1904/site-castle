@@ -6,12 +6,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 export const FooterDisclaimer = ({mt = 32} : {mt?: Unit}) => {
   const { t } = useTranslation();
   return (
-    <Span
-      size={12}
-      color="dark-sand"
-      weight="medium"
-      lineHeight={20}
-    >
+    <Span size={12}>
       {
         `Sand Casino ${t('footer.disclaimer')}`
       }

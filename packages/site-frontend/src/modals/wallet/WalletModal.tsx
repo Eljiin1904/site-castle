@@ -77,7 +77,7 @@ export const WalletModal = ({
             <ModalSection borderTop  borderColor="brown-4" pt={24}>
               <Conditional value={action} deposit={<DepositCryptoBody  setAction={setAction}/>} withdraw={<WithdrawCryptoBody setAction={setAction} />} />
             </ModalSection>
-          </ModalBody>     
+          </ModalBody>
     </Modal>
   );
 };

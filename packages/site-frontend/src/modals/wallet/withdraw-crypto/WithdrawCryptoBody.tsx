@@ -147,21 +147,21 @@ export const WithdrawCryptoBody = ({
           <ModalLabel>{t("withdrawAmount")}</ModalLabel>
           <ModalLabel gap={8}>
             <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
-            <Span color="light-sand" size={14} weight="medium" lineHeight={20}>{form.values.tokenAmount}</Span>
+            <Span>{form.values.tokenAmount}</Span>
           </ModalLabel>
         </Div>
         <Div fx gap={16} justifyContent="space-between">
         <ModalLabel>{t("fee")}</ModalLabel>
           <ModalLabel gap={8}>
             <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
-            <Span color="light-sand" size={14} weight="medium" lineHeight={20}>{form.values.tokenAmount}</Span>
+            <Span>{form.values.tokenAmount}</Span>
           </ModalLabel>
         </Div>
         <Div fx gap={16} justifyContent="space-between">
         <ModalLabel>{t("total")}</ModalLabel>
           <ModalLabel gap={8}>
             <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
-            <Span color="light-sand" size={14} weight="medium" lineHeight={20}>{form.values.tokenAmount}</Span>
+            <Span>{form.values.tokenAmount}</Span>
           </ModalLabel>
         </Div>        
         <Button

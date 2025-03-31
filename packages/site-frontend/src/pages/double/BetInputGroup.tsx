@@ -135,7 +135,7 @@ const LaptopDesktopContent = () => {
   const {t} = useTranslation(["common"]);
   return (
     <Div column gap={8}>
-      <Span size={12} color="dark-sand" lineHeight={20} fontWeight="medium">{t("common:amount")}</Span>
+      <Span size={12}>{t("common:amount")}</Span>
       <Div>
         <Input
           type="currency"

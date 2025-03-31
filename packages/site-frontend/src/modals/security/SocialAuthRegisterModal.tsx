@@ -115,7 +115,7 @@ export const SocialAuthRegisterModal = ({
                 textAlign="center">
                 {t("register.social.success.title")}
               </Heading>
-              <Span size={14} color="dark-sand" textAlign="center">
+              <Span textAlign="center">
                 {t("register.social.success.description")}
               </Span>
               <Button fx kind="primary-yellow" label={t("register.social.success.action")} onClick={() => Dialogs.close('primary')} />
@@ -123,7 +123,7 @@ export const SocialAuthRegisterModal = ({
         </ModalBody>
       </Fragment> : <ModalBody textAlign="center" justifyContent={small? "center" : "flex-start"}>
         <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-          <Vector fx as={SvgUser} size={40} color="dark-sand" />
+          <Vector fx as={SvgUser} size={40}/>
         </Div>
         <Heading  as="h2"
           size={small ? 20 : 24}

@@ -16,6 +16,9 @@ import { Button } from "@client/comps/button/Button";
 import { Cryptos } from "#app/services/cryptos";
 import { WalletAction } from "../WalletAction";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Heading } from "@client/comps/heading/Heading";
+import { Link } from "@client/comps/link/Link";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
 export const DepositCryptoBody = ({
   setAction,
@@ -111,7 +114,7 @@ export const DepositCryptoBody = ({
             {"..."}
           </Span>}
       </ModalSection>
-      <Div center>
+      <Div border borderColor="brown-4" gap={20}>
         {address ? (
           <Div
             p={10}
@@ -125,11 +128,30 @@ export const DepositCryptoBody = ({
             style={{ width: "148px", height: "148px" }}
           />
         )}
+        <Div fx column gap={8} p={20}>
+          <Heading as="h3" size={20} >
+            {t("depositInstructions.title")}
+          </Heading>
+          <Span size={12} weight="medium" lineHeight={20}>
+          {t("depositInstructions.description")}
+          </Span>
+          <Link
+            type="a"
+            href={`#`}
+            hover="none"
+            gap={8}
+          >
+            {t("common:more")}
+            <Vector
+            className="icon left"
+            as={SvgArrowRight}
+            style={{transform: "rotate(270deg)"}}
+            size={10}
+            color="sand"
+          />
+        </Link>
+        </Div>
       </Div>
-      <NoticeCard
-        kind="info"
-        message={`You will be credited after ${crypto.confirms} confirmation(s). Only send ${crypto.kind.replace("_", " ")} to this address.`}
-      />
     </Div>
   );
 };
