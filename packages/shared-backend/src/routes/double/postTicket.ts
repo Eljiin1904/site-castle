@@ -4,6 +4,7 @@ import { Double } from "@server/services/double";
 import { HandledError } from "@server/services/errors";
 import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 export default Http.createApiRoute({
   type: "post",
@@ -20,6 +21,8 @@ export default Http.createApiRoute({
     betAmount: Validation.currency("Bet amount"),
   }),
   callback: async (req, res) => {
+    const logger = getServerLogger({});
+    logger.debug("creating Double ticket");
     const { roundId, betKind, betAmount } = req.body;
     const user = req.user;
 

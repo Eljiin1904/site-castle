@@ -22,6 +22,7 @@ import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
 import { useIsMobileLayout } from '#app/hooks/style/useIsMobileLayout';
 import { useAppSelector } from '#app/hooks/store/useAppSelector';
 import { Games } from '#app/services/games';
+import { SvgPromotions } from '#app/svgs/common/SvgPromotions';
 
 export const BaseMenu = ({collapsed}: {
   collapsed: boolean;
@@ -110,6 +111,13 @@ export const BaseMenu = ({collapsed}: {
     showLabel={!collapsed}
     type="nav"
   />
+  <MenuItem
+    icon={SvgPromotions}
+    label={t("menu.promotions")}
+    to="/promotions"
+    showLabel={!collapsed}
+    type="nav"
+  />
 </>)
 };
 
@@ -121,7 +129,7 @@ export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
   const small = useIsMobileLayout();
   const {t} = useTranslation();
 
-  const originalGames = games?.filter((x) => x.category === "original").map((x) => {
+  const originalGames = games?.filter((x) => x.category === "original" && x.name !== 'case_battles' && x.name !== 'duel' ).map((x) => {
     return {
       icon: Games.getGameIcon(x),
       label: t(`games:${x.name}`),

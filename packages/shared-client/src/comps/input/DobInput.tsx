@@ -45,7 +45,7 @@ export const DobInput: FC<DobInputProps> = ({
     >
       <IntegerInput
         maxLength={2}
-        placeholder={t("common:fields.dob.day")}
+        placeholder={t("fields:dob.day")}
         disabled={disabled}
         value={value?.day === 0 ? undefined : value?.day}
         onChange={(x) => handleChange("day", x)}
@@ -58,7 +58,7 @@ export const DobInput: FC<DobInputProps> = ({
       />
       <IntegerInput
         maxLength={4}
-        placeholder={t("common:fields.dob.year")}
+        placeholder={t("fields:dob.year")}
         disabled={disabled}
         value={value?.year === 0 ? undefined : value?.year}
         onChange={(x) => handleChange("year", x)}

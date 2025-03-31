@@ -23,6 +23,7 @@ export default Sockets.createListener({
 
       socket.join(`bet-feed_${scope}-${socket.data.userId}`);
 
+      // Groups Site Bets by Game for the Specified User
       const bets = await manager.getSiteBets(socket.data.userId);
 
       const results: Record<string, SiteBetDocument[]> = {};
@@ -34,6 +35,7 @@ export default Sockets.createListener({
           results[bet._id] = bet.documents;
         }
       }
+      // Retreive all Site Bets for specific user in order
       results["all"] = documents = await Database.collection("site-bets")
         .find(
           { "user.id": socket.data.userId },
