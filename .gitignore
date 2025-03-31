@@ -18,3 +18,5 @@ node_modules/
 tests-examples/
 __tests__/
 playwright.config.ts
+playwright/.auth
+tests
