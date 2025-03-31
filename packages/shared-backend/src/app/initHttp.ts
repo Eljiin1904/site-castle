@@ -62,13 +62,11 @@ export function initHttp(app = express()) {
     }
   });
 
-  // TODO: remove or re-enable depending on the registration designs or strategy
-  // passport.use(Http.discordStrategy());
-  // passport.use(Http.googleStrategy());
+  // TODO: update registrations where necessary once castle.com is setup
+  passport.use(Http.googleStrategy());
   passport.use(Http.localStrategy());
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
-  // passport.use(Http.twitchStrategy());
 
   app.use(
     session({
