@@ -20,3 +20,4 @@ __tests__/
 playwright.config.ts
 playwright/.auth
 tests
+playwright.config.ts

@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "castle-backend.name" -}}
+{{- define "shared-game-server.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "castle-backend.fullname" -}}
+{{- define "shared-game-server.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "castle-backend.chart" -}}
+{{- define "shared-game-server.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "castle-backend.labels" -}}
-helm.sh/chart: {{ include "castle-backend.chart" . }}
-{{ include "castle-backend.selectorLabels" . }}
+{{- define "shared-game-server.labels" -}}
+helm.sh/chart: {{ include "shared-game-server.chart" . }}
+{{ include "shared-game-server.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "castle-backend.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "castle-backend.name" . }}
+{{- define "shared-game-server.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "shared-game-server.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "castle-backend.serviceAccountName" -}}
+{{- define "shared-game-server.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "castle-backend.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "shared-game-server.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

@@ -4,17 +4,24 @@ import { roundStream } from "./helpers/roundStream";
 import { ticketStream } from "./helpers/ticketStream";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
+const logger = getServerLogger({});
+
 export default Sockets.createListener({
   action: "event",
   key: "double-join",
   secure: false,
   callback: async (io, socket) => {
-    const logger = getServerLogger({});
     logger.info("creating double listener");
     socket.join("double");
 
-    await roundStream.waitForInit();
-    await ticketStream.waitForInit();
+    try {
+      logger.info("attaching to database round and ticket streams");
+      await roundStream.waitForInit();
+      await ticketStream.waitForInit();
+      logger.info("database round and ticket streams attached");
+    } catch (err) {
+      logger.error("error attaching to Double round and ticket mongo streams: " + err);
+    }
 
     const activeRound = roundStream.log[0];
 

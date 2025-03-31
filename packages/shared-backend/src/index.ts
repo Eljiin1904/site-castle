@@ -10,10 +10,9 @@ main();
 
 async function main() {
   const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_BACKEND });
+  logger.info("starting up backend");
 
   const { port } = config;
-
-  logger.info("Starting site backend...");
 
   await initConfig();
 

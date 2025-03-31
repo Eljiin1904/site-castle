@@ -29,7 +29,7 @@ export function initHttp(app = express()) {
     }),
   );
 
-  if (env === "development" || env === "devcloud") {
+  if (env === "development") {
     app.use(morgan("dev"));
   }
 
