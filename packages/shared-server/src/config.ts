@@ -30,8 +30,6 @@ export interface ServerConfig extends CoreConfig {
   hunterApiKey: string;
   vpnApiKey: string;
   eosApiKey: string;
-  pushPublicKey: string;
-  pushPrivateKey: string;
   fireblocksApiKey: string;
   fireblocksSecret: string;
   fireblocksTreasuryId: string;

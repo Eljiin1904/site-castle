@@ -5,9 +5,12 @@ import { HandledError } from "@server/services/errors";
 import config from "#app/config";
 import { UnknownUserError } from "../errors/UnknownUserError";
 import { ExistingUserError } from "../errors/ExistingUserError";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 export function googleStrategy() {
+  const logger = getServerLogger({});
   const { siteURL, googleClientId, googleClientSecret } = config;
+  logger.debug("siteURL: " + siteURL);
 
   const strategy = new GoogleStrategy(
     {
@@ -49,10 +52,7 @@ async function verify(
         throw new HandledError("errors.google.taken");
       }
 
-      await Database.collection("users").updateOne(
-        { _id: req.user._id },
-        { $set: { googleId } },
-      );
+      await Database.collection("users").updateOne({ _id: req.user._id }, { $set: { googleId } });
 
       throw new ExistingUserError();
     } else {
@@ -62,11 +62,7 @@ async function verify(
         done(null, user);
       } else {
         if (
-          await Database.exists(
-            "users",
-            { email },
-            { collation: { locale: "en", strength: 2 } },
-          )
+          await Database.exists("users", { email }, { collation: { locale: "en", strength: 2 } })
         ) {
           throw new HandledError("errors.email.taken");
         }
