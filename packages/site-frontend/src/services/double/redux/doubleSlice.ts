@@ -7,6 +7,7 @@ import { StreamUpdate } from "@core/types/database/DatabaseStreamEvent";
 import { Database } from "@core/services/database";
 import { DoubleRoundStatus } from "@core/types/double/DoubleRoundStatus";
 import { Utility } from "@client/services/utility";
+import { DoubleJackpotDetails } from "@core/types/double/DoubleJackpotDetails";
 
 interface DoubleState {
   initialized?: boolean;
@@ -16,12 +17,17 @@ interface DoubleState {
   betAmount: number | undefined;
   lobby?: DoubleRoundStatus;
   processing?: boolean;
+  jackpot: DoubleJackpotDetails;
 }
 
 const initialState: DoubleState = {
   round: {} as DoubleRoundDocument,
   history: [],
   tickets: [],
+  jackpot: {
+    currentStreak: 0,
+    currentPot: 0
+  },
   betAmount: Utility.getLocalInt("double-bet-amount", 0),
 };
 
@@ -34,6 +40,7 @@ export const doubleSlice = createSlice({
       state.history = payload.history;
       state.tickets = payload.tickets.filter((x) => x.roundId === state.round._id);
       state.lobby = payload.round.status;
+      state.jackpot = payload.jackpot;
       state.initialized = true;
     }),
     changeRound: reducer<DoubleRoundDocument>((state, { payload }) => {
@@ -73,6 +80,16 @@ export const doubleSlice = createSlice({
     setProcessing: reducer<boolean>((state, { payload }) => {
       state.processing = payload;
     }),
+    updateJackpot: reducer<DoubleJackpotDetails>((state, { payload }) => {
+      state.jackpot = payload;
+    }),
+    updateJackpotStreak: reducer<StreamUpdate>((state, { payload }) => {
+      const updateFields = payload.updatedFields;
+      if(updateFields.potAmount !== undefined) 
+        state.jackpot.currentPot = updateFields.potAmount as number;        
+      if(updateFields.gameIds !== undefined)
+        state.jackpot.currentStreak = (updateFields.gameIds as Array<string>).length;
+    }),
     resetPlayer: () => initialState,
   }),
 });
@@ -84,5 +101,7 @@ export const {
   updateBets,
   setProcessing,
   setBetAmount,
+  updateJackpot,
+  updateJackpotStreak,
   resetPlayer,
 } = doubleSlice.actions;

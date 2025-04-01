@@ -67,5 +67,11 @@
   "code": {
     "field": "Código",
     "codePlaceholder": "Ingrese el código..."
+  },
+  "tip": {
+    "sendTo": "Enviar a",
+    "tipPlaceholder": "Ingrese el nombre de usuario del destinatario...",
+    "amount": "Cantidad",
+    "amountPlaceholder": "Ingrese la cantidad de tokens..."
   }
 }

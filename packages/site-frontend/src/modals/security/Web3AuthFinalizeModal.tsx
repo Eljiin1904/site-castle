@@ -64,7 +64,7 @@ export const Web3AuthFinalizeModal = ({
         );
       } else if (res.action === "login") {
         dispatch(Users.initUser({ authenticated: true, user: res.user }));
-        Toasts.success(`Welcome back, ${res.user.username}!`);
+        Toasts.success("signin.success", 5000, { username: res.user.username });
         Dialogs.close("primary");
       }
     },

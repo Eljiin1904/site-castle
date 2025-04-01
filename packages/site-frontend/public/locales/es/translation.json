@@ -187,5 +187,28 @@
       "payout": "Pago"
     }
   },
- "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!"
+ "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!",
+ "chat": {
+    "message": "Mensaje",
+    "earn": "Ganar",
+    "tip": "Propina",
+    "login": "Iniciar sesión para chatear",
+    "english": "EN",
+    "highroller": "Gran apostador",
+    "unable": "No se puede chatear",
+    "highRollerRequirements": "Alcanza el nivel {{level}} para chatear.",
+    "generalRequirements": "Debes depositar al menos {{amount}} tokens para chatear.",
+    "muted": "Estás silenciado: {{reason}}",
+    "tipModal": {
+      "title": "Enviar Propina a Usuario",
+      "submit": "Enviar propina",
+      "confirmTitle": "Confirmar Propina",
+      "confirmDescription": "¿Estás seguro de que deseas enviar {{value.username}} {{value.amount}} tokens?",
+      "confirmSuccess": "Envieaste {{value.amount}} tokens a {{value.username}} de propina."
+    },
+    "earnModal": {
+      "title": "Invita amigos, gana tokens",
+      "description": "Comparte tu enlace de referencia y gana tokens GRATIS por cada amigo que se registre!"
+    }
+ }
 }

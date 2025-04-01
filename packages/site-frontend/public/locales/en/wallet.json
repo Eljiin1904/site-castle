@@ -1,7 +1,8 @@
 {
   "title": "Wallet",
   "withdraw": "Withdraw",
-  "witdrawAddress": "Your {{crypto}} withdrawal address",
+  "withdrawAddress": "Your {{crypto}} withdrawal address",
+  "withdrawAddressPlaceholder": "Enter {{crypto}} withdrawal address...",
   "deposit": "Deposit",
   "depositAddress": "Your {{crypto}} deposit address",
   "currency": "Currency",
@@ -15,5 +16,8 @@
     "title": "Deposit Info",
     "description": "Send the amount of {crypto} of your choice to the address above or QR code to receive  in sandcasino wallet"
   },
-  "copied": "Wallet address copied to clipboard."
+  "copied": "Wallet address copied to clipboard.",
+  "withdrawAddressInvalid": "Invalid withdrawal address.",
+  "withdrawAddressRequired": "Withdrawal address is required.",
+  "withdrawAddressValid": "Valid withdrawal address."
 }

@@ -192,5 +192,28 @@
       "payout": "Payout"
     }
   },
-  "levelCongrats": "Congrats on Level {{value.level}}!"
+  "levelCongrats": "Congrats on Level {{value.level}}!",
+  "chat": {
+    "message" : "Message",
+    "earn" : "Earn",
+    "tip": "Tip",
+    "login": "Log in to Chat",
+    "english": "EN",
+    "highroller": "HighRoller",
+    "unable": "Unable to chat",
+    "highRollerRequirements": "Reach level {{level}} to chat.",
+    "generalRequirements": "You must deposit at least {{amount}} tokens to chat.",
+    "muted": "Muted: {{reason}}",
+    "tipModal": {
+      "title": "Tip User",
+      "submit": "Send Tip",
+      "confirmTitle": "Confirm Tip",
+      "confirmDescription": "Are you sure you want to send {{value.username}} {{value.amount}} tokens?",
+      "confirmSuccess": "You tipped {{value.username}} {{value.amount}} tokens."
+    },
+    "earnModal": {
+      "title": "Invite friends, earn tokens!",
+      "description": "Share your referral link and earn FREE tokens from every friend that signs up!"
+    }
+  }
 }

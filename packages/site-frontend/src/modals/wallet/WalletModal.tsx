@@ -62,7 +62,7 @@ export const WalletModal = ({
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader heading={t('title')} onCloseClick={() => Dialogs.close("primary")} />
-      <ModalBody>
+      <ModalBody pt={0}>
             <ModalSection>
             <ButtonGroup 
               gap={16}

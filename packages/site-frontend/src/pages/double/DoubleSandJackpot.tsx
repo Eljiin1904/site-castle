@@ -12,19 +12,17 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 export const DoubleSandJackpot = () => {
 
   const small = useIsMobileLayout();
-  const history = useAppSelector((x) => x.double.history);
-  const last3 = history.slice(0, 3);
-
-  const fillFirstOne = last3[0]?.color === "green";
-  const fillSecondOne = fillFirstOne && last3[1]?.color === "green";
-  const fillThirdOne = fillSecondOne && last3[2]?.color === "green";
+  const jackpot = useAppSelector((x) => x.double.jackpot);
+  const fillFirstOne = jackpot.currentStreak >= 1;
+  const fillSecondOne = jackpot.currentStreak >= 2;
+  const fillThirdOne = jackpot.currentStreak >= 3;
   
   const {t} = useTranslation(["games\\double"]);
   return (<Div>
       <Div fx gap={16} flexCenter justifyContent={small ? "space-between" : "flex-end"}>
         <Div column alignItems={small ? "flex-start" : "flex-end"}>
           <Span size={12} lineHeight={20}>{t('games\\double:jackpot')}</Span>
-          <Tokens fontSize={20} value={20000000000} decimals={0} />
+          <Tokens fontSize={20} value={jackpot.currentPot} decimals={2} />
         </Div>
         <Div gap={8}>
           <DoubleJackpotIcon

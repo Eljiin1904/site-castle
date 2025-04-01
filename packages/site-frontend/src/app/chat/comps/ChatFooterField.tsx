@@ -12,6 +12,8 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LoginModal } from "#app/modals/login/LoginModal";
 import { Users } from "#app/services/users";
 import { ChatInput } from "./ChatInput";
+import { ChatOptionsFooter } from "./ChatOptionsFooter";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatFooterField = () => {
   const channel = useAppSelector((x) => x.chat.channel);
@@ -28,7 +30,7 @@ export const ChatFooterField = () => {
   );
 
   const [muted, setMuted] = useState(Users.isMuted(muteData));
-
+  const {t} = useTranslation();
   const isAdmin = Users.getPermissions(role).manageChat;
   const level = Users.getLevel(xp);
   const canGeneralChat = isAdmin || depositAmount >= generalRequirement;
@@ -43,7 +45,7 @@ export const ChatFooterField = () => {
         size="md"
         fx
         labelSize={14}
-        label="Login to Chat"
+        label={t("chat.login")}
         onClick={() => Dialogs.open("primary", <LoginModal />)}
       />
     );
@@ -53,7 +55,7 @@ export const ChatFooterField = () => {
         message={
           <Div display="block">
             <Span color="dark-gray">
-              {`Muted: ${Strings.kebabToTitle(muteData.reason!)} `}
+              {t('chat.muted',{reason: Strings.kebabToTitle(muteData.reason!)})}
             </Span>
             <Timestamp
               format="timer"
@@ -65,44 +67,32 @@ export const ChatFooterField = () => {
       />
     );
   } else if (channel.startsWith("general") && !canGeneralChat) {
-    return (
+    return (<Div fx column gap={8}>
       <FeedbackCard
-        message={`You must deposit at least ${generalRequirement} tokens`}
+        message={t(`chat.generalRequirements`, { amount: generalRequirement })}
       />
+     <ChatOptionsFooter />
+   </Div>
+    
     );
   } else if (channel === "highroller" && !canHighrollerChat) {
-    return (
-      <FeedbackCard
-        message={`You must be at least level ${highrollerRequirement}`}
-      />
-    );
+    return (<Div fx column gap={8}>
+       <FeedbackCard
+        message={t(`chat.highRollerRequirements`, { level: highrollerRequirement })}
+      />    
+      <ChatOptionsFooter />
+    </Div>
+     );
   } else {
-    return <ChatInput />;
+    return <Div fx column gap={8}>
+      <ChatInput />
+      <ChatOptionsFooter />
+    </Div>;
   }
 };
 
 const FeedbackCard = ({ message }: { message: string | JSX.Element }) => {
   return (
-    <Div
-      fx
-      align="center"
-      justify="space-between"
-      px={11}
-      bg="brown-8"
-      border
-      cursor="not-allowed"
-      style={{ height: "43px" }} // match the TextArea
-    >
-      {typeof message === "string" ? (
-        <Span color="dark-gray">{message}</Span>
-      ) : (
-        message
-      )}
-      <Vector
-        as={SvgSend}
-        size={16}
-        color="dark-gray"
-      />
-    </Div>
+    <ChatInput disabled={true} message={message} />
   );
 };

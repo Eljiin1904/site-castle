@@ -89,6 +89,10 @@
       "field": "Apellido",
       "required": "{{value}} es requerido.",
       "max": "{{value.label}} debe tener no más de {{value.max}} caracteres."
+    },
+    "tip": {
+      "recipientRequired": "Usuario es requerido.",
+      "notEnoughTokens": "No tienes suficientes tokens"
     }
   },
   "errors": {

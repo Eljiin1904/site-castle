@@ -58,6 +58,7 @@ export const TextArea: FC<TextAreaProps> = ({
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleEnter}
         ref={forwardRef}
+        disabled={disabled}
       />
     </Div>
   );

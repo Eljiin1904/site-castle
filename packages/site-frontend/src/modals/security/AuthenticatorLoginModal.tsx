@@ -36,7 +36,7 @@ export const AuthenticatorLoginModal = ({
               loginToken,
             });
             dispatch(Users.initUser({ authenticated: true, user: res.user }));
-            Toasts.success(`Welcome back, ${res.user.username}!`);
+            Toasts.success("register.success", 5000, { username: res.user.username });
             Dialogs.close("primary");
           }}
         />

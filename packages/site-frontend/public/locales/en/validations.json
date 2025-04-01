@@ -89,6 +89,10 @@
       "field": "Last Name",
       "required": "{{value}} is required.",
       "max": "{{value.label}} must be less than {{value.max}} characters."
+    },
+    "tip": {
+      "recipientRequired": "Recipient is required.",
+      "notEnoughTokens": "You don't have enough tokens"
     }
   },
   "errors": {
