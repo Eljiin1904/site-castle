@@ -30,8 +30,6 @@ export const EmojiMenu = ({
     onToggle={setOpen}
     button={<Vector
       as={SvgEmoji}
-      size={16}
-      color="dark-sand"
       hover="highlight"
     />}
     body={<EmojiMenuOptions onClick={handleEmojiClick} onClose={() => setOpen(false)}/>}
@@ -60,7 +58,6 @@ export const EmojiMenuOld = ({
         <Vector
           as={SvgEmoji}
           size={16}
-          color="dark-sand"
           hover="highlight"
         />
       }

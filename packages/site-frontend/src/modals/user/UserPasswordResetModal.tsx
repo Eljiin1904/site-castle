@@ -69,7 +69,7 @@ export const UserResetPasswordModal = ({
               fx
             >
               <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-                <Vector fx as={SvgLock} size={40} color="dark-sand" />
+                <Vector fx as={SvgLock} size={40}/>
               </Div>
               <Heading  as="h2"
                 size={small ? 20 : 24}
@@ -119,22 +119,3 @@ export const UserResetPasswordModal = ({
     </Modal>
   );
 };
-
-{/* <Div
-          column
-          gap={16}
-          flexCenter
-        >
-          <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-            <Vector fx as={SvgLock} size={40} color="dark-sand" />
-          </Div>          
-          <Heading  as="h2"
-            size={small ? 20 : 24}
-            fontWeight="regular"
-            textTransform="uppercase">{t("forgot.title")}
-          </Heading>
-          <Span size={14} color="dark-sand" textAlign="center">
-          {t("forgot.description")}
-          </Span>
-        </Div>
-        /> */}

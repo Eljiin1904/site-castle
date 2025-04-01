@@ -70,7 +70,7 @@ const SearchResultBox = () => {
 const MinCharacters = () => {
   
   const {t} = useTranslation(["home"]);
-  return <Span color="dark-sand">{t('searchMinChars')}</Span>;
+  return <Span>{t('searchMinChars')}</Span>;
 }
 
 const SearchResults = () => {
@@ -87,7 +87,7 @@ const SearchResults = () => {
   const gamesKeys = Object.keys(translated).filter((key) => translated[key].toLocaleLowerCase().includes(currentSearch?.toLocaleLowerCase()));
 
   const result = games.filter((x) => gamesKeys.includes(x.name));
-  if(result.length === 0) return <Span color="dark-sand">{t('searchNotFound')}</Span>;
+  if(result.length === 0) return <Span>{t('searchNotFound')}</Span>;
   
    const items = result?.map((x) => {
       return {

@@ -8,12 +8,7 @@ export const FooterContacts = () => {
   const small = useIsMobileLayout();
   return (<Div gap={20} {...(small ? {flexFlow: "column"} : {})}>
       <Div gap={2}>
-        <Span
-          size={12}
-          color="dark-sand"
-          lineHeight={20}
-          weight="medium"
-        >
+        <Span size={12}>
           {t("footer.support")}
         </Span>
         <Span
@@ -26,12 +21,7 @@ export const FooterContacts = () => {
         </Span>
       </Div>
       <Div gap={2}>
-        <Span
-          size={12}
-          lineHeight={20}
-          color="dark-sand"
-          weight="medium"
-        >
+        <Span size={12}>
           {t("footer.partners")}
         </Span>
         <Span
@@ -44,20 +34,10 @@ export const FooterContacts = () => {
         </Span>
       </Div>
       <Div gap={2}>
-        <Span
-          size={12}
-          lineHeight={20}
-          color="dark-sand"
-          weight="medium"
-        >
+        <Span size={12}>
            {t("footer.press")}
         </Span>
-        <Span
-          size={12}
-          lineHeight={20}
-          color="light-sand"
-          weight="medium"
-        >
+        <Span size={12}>
           {"press@sandcasino.com"}
         </Span>
       </Div>

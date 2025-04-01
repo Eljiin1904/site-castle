@@ -70,7 +70,7 @@ export const BetBoardTicketGrid = ({ betKind }: { betKind: DoubleBetKind }) => {
       >
         <Div gap={12}  center>
           {small && <DoubleBetIcon betKind={betKind} />}
-          <Span color="dark-sand" weight="medium">{ t("games\\double:bet",{count: betCount})}</Span>
+          <Span>{ t("games\\double:bet",{count: betCount})}</Span>
         </Div>
         <Tokens
           value={betAmount * multiplier}

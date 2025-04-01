@@ -1,9 +1,10 @@
 
 .Link {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--yellow-color);
+  font-weight: medium;
+  color: var(--sand-color);
   text-decoration: none;
+  line-height: 20px;
 
   &._hover:hover {
     text-decoration: none;

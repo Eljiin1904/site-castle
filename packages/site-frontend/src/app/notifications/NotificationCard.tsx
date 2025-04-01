@@ -37,7 +37,6 @@ export const NotificationCard = ({
       <Timestamp
         date={notification.timestamp}
         format="elapsed"
-        color="dark-sand"
         size={12}
       />
       {hovered && (

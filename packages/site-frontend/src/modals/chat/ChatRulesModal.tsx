@@ -20,7 +20,7 @@ export const ChatRulesModal = () => {
       <ModalHeader
         heading="Chat Rules"
         onCloseClick={() => Dialogs.close("primary")}
-        headerContent={ <Paragraph color="dark-sand" mt={small ? 16: 24}>
+        headerContent={ <Paragraph mt={small ? 16: 24}>
           {"Learn more about our chat rules. Any behaviour against rules might be banned."}
         </Paragraph>}
       />

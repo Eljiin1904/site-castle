@@ -10,6 +10,7 @@
   "serverSeedHash": "Server Seed Hash",
   "eosBlock": "EOS Block",
   "eosBlockId": "EOS Block ID",
+  "awaitingForEosBlock": "Awaiting EOS Block",
   "confirmBet": {
     "title": "Confirm Bet",
     "message": "Bet {{value.amount}} on {{value.kind}}?"

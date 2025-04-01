@@ -69,12 +69,7 @@ const FairnessLine = ({
       gap={4}
       column={small}
     >
-      <Span
-        size={14}
-        weight="medium"
-        color="dark-sand"
-        lineHeight={20}
-      >
+      <Span>
         {label}
         {": "}
       </Span>

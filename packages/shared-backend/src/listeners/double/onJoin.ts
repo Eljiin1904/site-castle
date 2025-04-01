@@ -2,6 +2,7 @@ import { DoubleRoundDocument } from "@core/types/double/DoubleRoundDocument";
 import { Sockets } from "#app/services/sockets";
 import { roundStream } from "./helpers/roundStream";
 import { ticketStream } from "./helpers/ticketStream";
+import { Database } from "@server/services/database";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 const logger = getServerLogger({});
@@ -24,6 +25,10 @@ export default Sockets.createListener({
     }
 
     const activeRound = roundStream.log[0];
+    const existing = await Database.collection("site-jackpot").findOne({
+      status: { $eq: "pending" },
+      game: { $eq: "double" },
+    });
 
     socket.emit("double-init", {
       round: {
@@ -36,6 +41,10 @@ export default Sockets.createListener({
         return round.roll;
       }),
       tickets: ticketStream.log.filter((x) => x.roundId === activeRound._id),
+      jackpot: {
+        currentPot: existing ? existing.potAmount : 0,
+        currentStreak: existing ? existing.gameIds.length : 0,
+      },
     });
   },
 });

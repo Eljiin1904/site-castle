@@ -5,25 +5,21 @@ import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgCopy } from "@client/svgs/common/SvgCopy";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
-import { ModalField } from "@client/comps/modal/ModalField";
 import { SvgRedo } from "@client/svgs/common/SvgRedo";
-import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Button } from "@client/comps/button/Button";
 import { Cryptos } from "#app/services/cryptos";
-import { WalletAction } from "../WalletAction";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Heading } from "@client/comps/heading/Heading";
+import { Link } from "@client/comps/link/Link";
+import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
 
-export const DepositCryptoBody = ({
-  setAction,
-}: {
-  setAction: (x: WalletAction) => void;
-}) => {
+export const DepositCryptoBody = () => {
   const [cryptoIndex, setCryptoIndex] = useState(0);
   const [rotate, setRotate] = useState(false);
-
+  const { t } = useTranslation(["wallet"]);
   const crypto = Cryptos.infos[cryptoIndex];
 
   const { data, error } = useQuery({
@@ -57,61 +53,60 @@ export const DepositCryptoBody = ({
       column
       gap={20}
     >
-      <Dropdown
-        type="select"
-        fx
-        options={Cryptos.infos.map((x) => ({
-          label: x.name,
-          description: x.kind.replace("_", " "),
-          icon: Cryptos.getIcon(x.symbol),
-        }))}
-        value={cryptoIndex}
-        onChange={(x, i) => setCryptoIndex(i)}
-      />
-      <ModalSection>
-        <ModalLabel>{`Your ${crypto.kind.replace("_", " ")} deposit address`}</ModalLabel>
-        {address ? (
-          <ModalField>
-            <Span
-              flexGrow
-              color="gray"
-              textOverflow="ellipsis"
-            >
-              {address}
-            </Span>
-            <Vector
-              as={SvgRedo}
-              fontSize={18}
-              color="white"
-              ml={8}
-              hover="highlight"
-              onClick={() => setRotate(true)}
-            />
-            <Vector
-              as={SvgCopy}
-              fontSize={18}
-              color="light-blue"
-              ml={8}
-              hover="highlight"
-              onClick={() => {
-                navigator.clipboard.writeText(address);
-                Toasts.success("Wallet address copied to clipboard.");
-              }}
-            />
-          </ModalField>
-        ) : (
-          <ModalField>
-            <Span
-              flexGrow
-              color="gray"
-              textOverflow="ellipsis"
-            >
-              {"..."}
-            </Span>
-          </ModalField>
-        )}
+       <ModalSection>
+        <ModalLabel>{t('currency')}</ModalLabel>
+        <Dropdown
+            type="select"
+            size="md"
+            fx
+            options={Cryptos.infos.map((x) => ({
+              label: `${x.name} (${x.kind.replace("_", " ")})`,
+              icon: Cryptos.getIcon(x.symbol),
+            }))}
+            value={cryptoIndex}
+            onChange={(x, i) => setCryptoIndex(i)}
+          />
       </ModalSection>
-      <Div center>
+
+      <ModalSection>
+        <ModalLabel>{t('depositAddress',{crypto: crypto.kind.replace("_", " ")})}</ModalLabel>
+        {address ? <Div fx>
+          <Div>
+            <Span
+                flexGrow
+                color="gray"
+                textOverflow="ellipsis"
+              >
+                {address}
+              </Span>
+              <Vector
+                as={SvgRedo}
+                fontSize={18}
+                color="white"
+                ml={8}
+                hover="highlight"
+                onClick={() => setRotate(true)}
+              />
+          </Div>
+          <Button
+            kind="tertiary-grey"
+            label={t("common:copy")}
+            onClick={() => {
+              navigator.clipboard.writeText(address);
+              Toasts.success(t('copied'));
+            }}
+            flexGrow={1}
+            size="xssso"
+          />
+        </Div> : <Span
+            flexGrow
+            color="gray"
+            textOverflow="ellipsis"
+          >
+            {"..."}
+          </Span>}
+      </ModalSection>
+      <Div border borderColor="brown-4" gap={20}>
         {address ? (
           <Div
             p={10}
@@ -125,22 +120,29 @@ export const DepositCryptoBody = ({
             style={{ width: "148px", height: "148px" }}
           />
         )}
-      </Div>
-      <NoticeCard
-        kind="info"
-        message={`You will be credited after ${crypto.confirms} confirmation(s). Only send ${crypto.kind.replace("_", " ")} to this address.`}
-      />
-      <Div
-        fx
-        grow
-        align="flex-end"
-      >
-        <Button
-          fx
-          kind="secondary"
-          label="Back to Options"
-          onClick={() => setAction("deposit")}
-        />
+        <Div fx column gap={8} p={20}>
+          <Heading as="h3" size={20} >
+            {t("depositInstructions.title")}
+          </Heading>
+          <Span size={12} weight="medium" lineHeight={20}>
+          {t("depositInstructions.description")}
+          </Span>
+          <Link
+            type="a"
+            href={`#`}
+            hover="none"
+            gap={8}
+          >
+            {t("common:more")}
+            <Vector
+            className="icon left"
+            as={SvgArrowRight}
+            style={{transform: "rotate(270deg)"}}
+            size={10}
+            color="sand"
+          />
+        </Link>
+        </Div>
       </Div>
     </Div>
   );

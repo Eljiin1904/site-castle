@@ -33,7 +33,6 @@ export const AppCookieNotice = () => {
       >
         <Span
           textAlign="center"
-          color="dark-sand"
         >
          {t('cookies')}
         </Span>

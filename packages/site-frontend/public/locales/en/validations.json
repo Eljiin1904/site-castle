@@ -134,6 +134,14 @@
         "invalidCombination": "Invalid bet combination.",
         "maxBetAmount": "The max bet amount is {{value}}."       
       }
+    },
+    "wallet": {
+      "kind": {
+        "required": "Kind is required."
+      },
+      "permissionDenied": "You do not have permission to do that.",
+      "emailNotConfirmed": "Email must be confirmed.",
+      "suspended": "You can't do that while suspended."
     }
   }
 }

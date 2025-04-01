@@ -80,9 +80,7 @@ export function Table<T extends DataSchema>({
           >
             {typeof x.heading === "string" ? (
               <Span
-                weight="medium"
                 size={12}
-                color="dark-sand"
                 textTransform="uppercase"
               >
                 {x.heading}

@@ -59,12 +59,12 @@ export const AffiliateReferAFriendModal = () => {
           <Heading as="h3" size={24} fontWeight="regular" textTransform="uppercase">
             {"Refer a Friend and Earn"} <Span size={24} family="title" color="sand">10%</Span>
           </Heading>
-          <Paragraph color="dark-sand">
+          <Paragraph>
             {"Refer a friend and earn 10% commission from the house edge on all of their bets!"}
           </Paragraph>
           </ModalSection>
           <ModalSection gap={16}>
-            {copied ? <Span color="dark-sand">Copied!</Span>: <TextInput onChange={() => {}} size="lg" type="text" placeholder="Copy to Keyboard" value={referralLink} />}
+            {copied ? <Span>Copied!</Span>: <TextInput onChange={() => {}} size="lg" type="text" placeholder="Copy to Keyboard" value={referralLink} />}
             <Button kind="tertiary-grey" size="lg" label="Copy to Keyboard" onClick={handleCopy}></Button>
           </ModalSection>
       </ModalBody>

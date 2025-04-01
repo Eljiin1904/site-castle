@@ -42,7 +42,7 @@ export const PageNotice: FC<PageNoticeProps> = ({
       {...forwardProps}
     >
       {image && <Img  type="png" path={image} width="256px" />}
-      {icon && <Vector as={icon} size={40} color="dark-sand" />}
+      {icon && <Vector as={icon} size={40} />}
       
       <Heading
         as="h1"
@@ -57,7 +57,6 @@ export const PageNotice: FC<PageNoticeProps> = ({
         display="block"
         className="message"
         fontSize={14}
-        color="dark-sand"
         textAlign="center"
         px={16}
       >
