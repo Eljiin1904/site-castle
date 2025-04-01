@@ -88,15 +88,12 @@ export const WithdrawCryptoBody = ({
   const isValidAddress = currentAddress && !form.errors.address?.key;
 
   const getQuote = async (amount: number| undefined) => {
-    console.log('before qoute');
     form.setValue("tokenAmount", amount);
-    console.log('before qoute');
     const { quote } = await Cryptos.quoteWithdraw({
       kind: crypto.kind,
       tokenAmount: amount ?? 0,
       destinationAddress: form.values.address ?? ''
     });
-    console.log(quote);
     setQuote(quote);
   };
 
