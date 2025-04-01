@@ -79,6 +79,7 @@ describe("Double Game Test ", async () => {
     expect(message.hasOwnProperty("round")).toBe(true);
     expect(message.hasOwnProperty("history")).toBe(true);
     expect(message.hasOwnProperty("tickets")).toBe(true);
+    expect(message.hasOwnProperty("jackpot")).toBe(true);
   });
 
   it("Insert Double Round ", async () => {
