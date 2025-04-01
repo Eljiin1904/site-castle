@@ -1,5 +1,4 @@
 FROM node:23-alpine AS build
-ENV NODE_ENV=devcloud
 # Installing dependencies
 WORKDIR /pidwin
 COPY ./package*.json ./
@@ -12,6 +11,10 @@ COPY packages/site-frontend /pidwin/packages/site-frontend
 
 # Execute script to build frontend
 RUN npm run build-site-frontend
-WORKDIR /pidwin/packages/site-frontend
+
+# Stage 2: Production image using NGINX to serve the built static assets
+FROM nginx:stable-alpine
+COPY --from=build /pidwin/packages/site-frontend/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /pidwin/packages/site-frontend/build /usr/share/nginx/html
 EXPOSE 80
-CMD ["npm", "run", "start", "--", "--port", "80", "--host"]
+CMD ["nginx", "-g", "daemon off;"]
