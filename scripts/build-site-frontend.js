@@ -11,5 +11,6 @@ run("cd ./packages/shared-client && npm install");
 run("cd ./packages/shared-client && npm run build");
 
 run("cd ./packages/site-frontend && npm install");
+run("cd ./packages/site-frontend && npm run build");
 
 process.exit();
