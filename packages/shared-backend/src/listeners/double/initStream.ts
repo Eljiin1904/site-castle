@@ -2,8 +2,8 @@ import { System } from "@server/services/system";
 import { Sockets } from "#app/services/sockets";
 import { roundStream } from "./helpers/roundStream";
 import { ticketStream } from "./helpers/ticketStream";
+import { jackPotStream } from "./helpers/jackPotStream";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
-
 const logger = getServerLogger({});
 
 export default Sockets.createListener({
@@ -36,6 +36,25 @@ export default Sockets.createListener({
         logger.debug("Double insert ticket stream");
         const broadcaster = io.sockets.in("double");
         broadcaster.emit("double-bet-insert", document);
+      }),
+    );
+
+    jackPotStream.on(
+      "insert",
+      System.tryCatch(async (document) => {
+        const broadcaster = io.sockets.in("double");
+        broadcaster.emit("site-jackpot-insert", {
+          currentStreak: document.gameIds.length,
+          currentPot: document.potAmount,
+        });
+      }),
+    );
+
+    jackPotStream.on(
+      "update",
+      System.tryCatch(async (document) => {
+        const broadcaster = io.sockets.in("double");
+        broadcaster.emit("site-jackpot-update", document);
       }),
     );
   },
