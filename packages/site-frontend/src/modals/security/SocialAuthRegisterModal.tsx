@@ -56,7 +56,7 @@ export const SocialAuthRegisterModal = ({
     schema: Validation.object({
       emailRequired: Validation.boolean(),
       username: Validation.username(t("validations:validations.username.field")),
-      email: Validation.email(t("validations:validations.email.field")),
+      email: Validation.emailConditional(t("validations:validations.email.field")),
       password: Validation.password(t("validations:validations.password.field")),
       referralCode: Validation.string(),
     }),
