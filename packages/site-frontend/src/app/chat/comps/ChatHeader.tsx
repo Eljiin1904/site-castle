@@ -41,7 +41,7 @@ export const ChatHeader = () => {
     borderColor="brown-4"
     justify="space-between"
     >
-    <ChatDrowdown />
+    
     <Div
     gap={16}>
       <Div
@@ -107,61 +107,4 @@ export const ChatHeader = () => {
       />
     </Div>
   </Div>);
-};
-
-
-const ChatDrowdown = () => {
-
-  const [open, setOpen] = useState(false);
-  const channel = useAppSelector((x) => x.chat.channel);
-  const dispatch = useDispatch();
-  
-  const options = Chat.channels.map(Chat.getChannelInfo);
-  const value = Chat.channels.indexOf(channel);
-  const onChange = (x: string, i: number) => {
-
-    dispatch(Chat.setChannel(Chat.channels[i]))
-    setOpen(false);
-  };
-
-  return (<Dropdown
-        className="chat-dropdown"
-        type="custom"
-        forceAlign="left"
-        open={open}
-        onToggle={setOpen}
-        button={
-          <Div
-          gap={8}
-          flexCenter
-        >
-          <Vector
-            as={options[value].icon}
-            size={16}
-          />
-          <Vector
-              className="icon left"
-              as={open ? SvgArrowRight: SvgArrowRight}
-              size={12}
-              style={{transform: open ? "rotate(180deg)" : "rotate(0deg)"}}
-            />
-        </Div>
-        }
-        body={
-          <DropdownBody>
-            {options.map((x, i) => {
-              return (
-                <DropdownItem
-                  key={i}
-                  type="action"
-                  label={x.label}
-                  iconLeft={x.icon}
-                  active={value === i}
-                  onClick={() => onChange(x.label, i)}
-                />
-              );
-            })}      
-          </DropdownBody>
-        }
-      />)
 };

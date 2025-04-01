@@ -187,5 +187,17 @@
       "payout": "Pago"
     }
   },
- "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!"
+ "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!",
+ "chat": {
+    "message": "Mensaje",
+    "earn": "Ganar",
+    "tip": "Propina",
+    "login": "Iniciar sesión para chatear",
+    "english": "EN",
+    "highroller": "Gran apostador",
+    "unable": "No se puede chatear",
+    "highRollerRequirements": "Alcanza el nivel {{level}} para chatear.",
+    "generalRequirements": "Debes depositar al menos {{amount}} tokens para chatear.",
+    "muted": "Estás silenciado: {{reason}}"
+ }
 }

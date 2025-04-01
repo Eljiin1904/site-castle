@@ -192,5 +192,17 @@
       "payout": "Payout"
     }
   },
-  "levelCongrats": "Congrats on Level {{value.level}}!"
+  "levelCongrats": "Congrats on Level {{value.level}}!",
+  "chat": {
+    "message" : "Message",
+    "earn" : "Earn",
+    "tip": "Tip",
+    "login": "Log in to Chat",
+    "english": "EN",
+    "highroller": "HighRoller",
+    "unable": "Unable to chat",
+    "highRollerRequirements": "Reach level {{level}} to chat.",
+    "generalRequirements": "You must deposit at least {{amount}} tokens to chat.",
+    "muted": "Muted: {{reason}}"
+  }
 }
