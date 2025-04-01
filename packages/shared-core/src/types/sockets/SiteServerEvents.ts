@@ -19,6 +19,7 @@ import type { HolidayInitialState } from "../rewards/HolidayInitialState";
 import type { SiteActivityDocument } from "../site/SiteActivityDocument";
 import type { SiteBetDocument } from "../site/SiteBetDocument";
 import { HotSiteGameDetails } from "../site/HotSiteGame";
+import { DoubleJackpotDetails } from "../double/DoubleJackpotDetails";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -51,6 +52,8 @@ export interface SiteServerEvents {
   "notifications-insert": (notification: NotificationDocument) => void;
   "notifications-update": (update: StreamUpdate) => void;
   "notifications-delete": (documentId: string) => void;
+  "site-jackpot-insert": (jackpotDetails: DoubleJackpotDetails) => void;
+  "site-jackpot-update": (update: StreamUpdate) => void;
   "site-meta-init": (obj: SiteMetaObject) => void;
   "site-meta-update": (key: SiteMetaId, value: SiteMetaValue) => void;
   "site-settings-init": (obj: SiteSettingObject) => void;
