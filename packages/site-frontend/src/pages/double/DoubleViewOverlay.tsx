@@ -37,18 +37,18 @@ export const DoubleViewOverlay = () => {
 };
 
 const DoubleCountdown = () => {
-  const {t} = useTranslation(["games\\double"]);
+  const { t } = useTranslation(["games\\double"]);
   const statusDate = useAppSelector((x) => x.double.round.statusDate);
   const getRemainder = () => 15000 - Site.timeSince(statusDate);
   const [timer, setTimer] = useState(getRemainder());
-  
+
   useInterval(() => {
     setTimer(getRemainder());
   }, 200);
 
   return (
     <Div
-      className="DoubleTimerOverlay"  
+      className="DoubleTimerOverlay"
       column
       center
       zIndex={10}
@@ -56,7 +56,14 @@ const DoubleCountdown = () => {
       fy
       gap={12}
     >
-      <Span color="light-sand" size={16} weight="medium" lineHeight={24}>{t('games\\double:placeYourBet')}</Span>
+      <Span
+        color="light-sand"
+        size={16}
+        weight="medium"
+        lineHeight={24}
+      >
+        {t("games\\double:placeYourBet")}
+      </Span>
       <Span
         family="title"
         weight="regular"
@@ -71,24 +78,40 @@ const DoubleCountdown = () => {
 };
 
 const DoublePending = () => {
+  const { t } = useTranslation(["games\\double"]);
   const eosBlockNum = useAppSelector((x) => x.double.round.eosBlockNum);
-
   return (
     <Div
+      className="DoubleTimerOverlay"
       column
       center
-      gap={4}
+      zIndex={10}
+      fx
+      fy
+      gap={12}
     >
-      <Span size={12}>{"Awaiting EOS Block"}</Span>
+      <Span
+      color="light-sand"
+        size={16}
+        weight="medium"
+        lineHeight={24}
+      >{t("games\\double:awaitingForEosBlock")}</Span>
       <Link
         type="a"
         href={Random.getBlockUrl(eosBlockNum)}
         fontWeight="semi-bold"
-        fontSize={15}
-        color="light-blue"
+        fontSize={16}
+        color="sand"
       >
         {`#${eosBlockNum}`}
       </Link>
     </Div>
   );
 };
+// Only for testing
+const DoubleCompleted = () => {
+
+  const round = useAppSelector((x) => x.double.round);
+  console.log(round.roll);
+  return (<Span data-testid="game-completed-color">{round.roll?.color}</Span>);
+}

@@ -13,6 +13,7 @@ import { useBetConfirmation } from "#app/hooks/security/useBetConfirmation";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { VerificationModal } from "#app/modals/verification/VerificationModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 let startBetAmount = 0;
 let infiniteGames = false;
@@ -38,6 +39,7 @@ export function useAutoBet() {
   const confirmBet = useBetConfirmation();
   const playSound = useSoundPlayer("dice");
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const handleBet = usePost(async (isMounted) => {
     if (!autoPlaying) {
@@ -62,7 +64,7 @@ export function useAutoBet() {
       ticket = res.ticket;
     } catch (err) {
       dispatch(Dice.setAutoPlaying(false));
-      Toasts.info("Auto play stopped.");
+      Toasts.info("games\\dice:autoPlayStopped");
       throw err;
     }
 
@@ -118,7 +120,7 @@ export function useAutoBet() {
 
     if (!shouldContinue()) {
       dispatch(Dice.setAutoPlaying(false));
-      Toasts.info("Auto play stopped.");
+      Toasts.info("games\\dice:autoPlayStopped");
     } else {
       if (ticket.won) {
         if (winAction === "reset") {
@@ -166,8 +168,8 @@ export function useAutoBet() {
     await confirmBet({
       betAmount,
       onConfirmProps: () => ({
-        heading: "Confirm Bet",
-        message: `Bet ${Intimal.toLocaleString(betAmount)}?`,
+        heading: t("games\\dice:confirmBet.title"),
+        message:  t("games\\dice:confirmBet.message", {value : {amount: Intimal.toLocaleString(betAmount)}})
       }),
     });
 

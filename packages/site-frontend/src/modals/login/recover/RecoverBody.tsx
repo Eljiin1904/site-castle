@@ -48,14 +48,14 @@ export const RecoverBody = ({
           fx
         >
           <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-            <Vector fx as={SvgLock} size={40} color="dark-sand" />
+            <Vector fx as={SvgLock} size={40} />
           </Div>          
           <Heading  as="h2"
             size={small ? 20 : 24}
             fontWeight="regular"
             textTransform="uppercase">{t("forgot.title")}
           </Heading>
-          <Span size={14} color="dark-sand" textAlign="center">
+          <Span textAlign="center">
           {t("forgot.description")}
           </Span>
         </Div>
@@ -90,7 +90,7 @@ export const RecoverBody = ({
           flexCenter
         >
           <Div width={40} px={48} py={28} borderRadius={"full"} border borderColor="brown-4" borderWidth={1}>
-            <Vector fx as={SvgPlane} size={40} color="dark-sand" />
+            <Vector fx as={SvgPlane} size={40} />
           </Div>
           <Heading  as="h2"
             size={small ? 20 : 24}
@@ -99,7 +99,7 @@ export const RecoverBody = ({
             textAlign="center">
               {t("forgot.sent.title")}
           </Heading>
-          <Span size={14} color="dark-sand" textAlign="center">
+          <Span textAlign="center">
           {t("forgot.sent.description")}
           </Span>
           <Div
@@ -110,7 +110,6 @@ export const RecoverBody = ({
             bottom={0}
             textAlign="center"
             fontSize={12}
-            color="dark-sand"
           >
              <Link
               type="action"

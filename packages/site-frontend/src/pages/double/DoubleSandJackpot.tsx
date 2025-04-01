@@ -15,15 +15,15 @@ export const DoubleSandJackpot = () => {
   const history = useAppSelector((x) => x.double.history);
   const last3 = history.slice(0, 3);
 
-  const fillFirstOne = last3[0]?.color === "red";
-  const fillSecondOne = fillFirstOne && last3[1]?.color === "red";
-  const fillThirdOne = fillSecondOne && last3[2]?.color === "red";
+  const fillFirstOne = last3[0]?.color === "green";
+  const fillSecondOne = fillFirstOne && last3[1]?.color === "green";
+  const fillThirdOne = fillSecondOne && last3[2]?.color === "green";
   
   const {t} = useTranslation(["games\\double"]);
   return (<Div>
       <Div fx gap={16} flexCenter justifyContent={small ? "space-between" : "flex-end"}>
         <Div column alignItems={small ? "flex-start" : "flex-end"}>
-          <Span size={12} lineHeight={20} weight="medium" color="dark-sand">{t('games\\double:jackpot')}</Span>
+          <Span size={12} lineHeight={20}>{t('games\\double:jackpot')}</Span>
           <Tokens fontSize={20} value={20000000000} decimals={0} />
         </Div>
         <Div gap={8}>

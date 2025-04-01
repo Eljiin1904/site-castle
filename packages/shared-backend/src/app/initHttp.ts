@@ -21,7 +21,7 @@ export function initHttp(app = express()) {
     cors({
       origin: {
         development: ["http://127.0.0.1:3000", "http://localhost:3000"],
-        devcloud: [`https://dev.${domain}`],
+        devcloud: [`https://dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
         staging: [`https://staging.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
       }[env],
@@ -29,7 +29,7 @@ export function initHttp(app = express()) {
     }),
   );
 
-  if (env === "development" || env === "devcloud") {
+  if (env === "development") {
     app.use(morgan("dev"));
   }
 
@@ -62,13 +62,11 @@ export function initHttp(app = express()) {
     }
   });
 
-  // TODO: remove or re-enable depending on the registration designs or strategy
-  // passport.use(Http.discordStrategy());
-  // passport.use(Http.googleStrategy());
+  // TODO: update registrations where necessary once castle.com is setup
+  passport.use(Http.googleStrategy());
   passport.use(Http.localStrategy());
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
-  // passport.use(Http.twitchStrategy());
 
   app.use(
     session({

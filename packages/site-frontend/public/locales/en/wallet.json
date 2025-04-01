@@ -1,0 +1,19 @@
+{
+  "title": "Wallet",
+  "withdraw": "Withdraw",
+  "witdrawAddress": "Your {{crypto}} withdrawal address",
+  "deposit": "Deposit",
+  "depositAddress": "Your {{crypto}} deposit address",
+  "currency": "Currency",
+  "network": "Network",
+  "withdrawAmount": "Withdraw Amount",
+  "depositAmount": "Deposit Amount",
+  "fee": "Fee",
+  "total": "Total Receiving",
+  "actionWithdraw": "Withdraw Funds",
+  "depositInstructions": {
+    "title": "Deposit Info",
+    "description": "Send the amount of {crypto} of your choice to the address above or QR code to receive  in sandcasino wallet"
+  },
+  "copied": "Wallet address copied to clipboard."
+}

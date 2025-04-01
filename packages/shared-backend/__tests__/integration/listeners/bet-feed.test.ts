@@ -191,7 +191,15 @@ describe("Bet Feed Test ", async () => {
 
     // Joining Feed returns Highroller Bets
     const initMessage: SiteBetDocument[] = await handleInitSocketEvent;
-    expect(initMessage.length).toBe(0);
+
+    expect(initMessage).toStrictEqual({
+      all: [],
+      case_battles: [],
+      cases: [],
+      dice: [],
+      double: [],
+      limbo: [],
+    });
 
     const ticket = await createTestTicket({
       user,
@@ -264,4 +272,34 @@ describe("Bet Feed Test ", async () => {
       "Message not received due to being below threshold",
     );
   }, 10000);
+
+  it("Enter into Lucky Feed", async () => {
+    const user = await Database.collection("users").findOne();
+    if (!user) return;
+
+    // Rejoin Feed
+    const handleInitSocketEvent = new Promise<SiteBetDocument[]>((resolve) => {
+      socket.on("bet-feed-init", (message) => {
+        resolve(message);
+      });
+    });
+
+    // Join Feed for Lucky Feed
+    socket.emit("bet-feed-join", "lucky");
+
+    // Joining Feed returns Highroller Bets
+    const initMessage: SiteBetDocument[] = await handleInitSocketEvent;
+
+    expect(initMessage).toStrictEqual({
+      all: [],
+      case_battles: [],
+      cases: [],
+      dice: [],
+      double: [],
+      limbo: [],
+    });
+
+    // Send Leave Bet Feed Event
+    socket.emit("bet-feed-leave", "lucky");
+  });
 });

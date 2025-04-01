@@ -18,6 +18,7 @@ export const Vector: FC<VectorProps> = ({
   width = size,
   height = size,
   preserveAspectRatio,
+  // color = 'dark-sand',
   ...forwardProps
 }) => {
   return (
@@ -25,7 +26,7 @@ export const Vector: FC<VectorProps> = ({
       className={classNames("Vector", className)}
       display="inline-flex"
       center
-      // color="gray"
+       color={forwardProps.color ?? "dark-sand"}
       {...forwardProps}
     >
       {createElement(as, {

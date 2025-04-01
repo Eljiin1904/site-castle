@@ -7,6 +7,10 @@
   "bet_other": "{{count}} Bets",
   "placeYourBet": "Place Your Bet",
   "jackpot":"Tripple Sand Jackpot",
+  "serverSeedHash": "Server Seed Hash",
+  "eosBlock": "EOS Block",
+  "eosBlockId": "EOS Block ID",
+  "awaitingForEosBlock": "Awaiting EOS Block",
   "confirmBet": {
     "title": "Confirm Bet",
     "message": "Bet {{value.amount}} on {{value.kind}}?"

@@ -26,7 +26,7 @@ export const DobInput: FC<DobInputProps> = ({
   error,
   onChange,
 }) => {
-  const {t} = useTranslation(["common"]);
+  const {t} = useTranslation();
   const handleChange = (key: keyof Birthday, x: number | undefined) => {
     if (!value) {
       value = { day: 0, month: 1, year: 0 };
@@ -35,6 +35,7 @@ export const DobInput: FC<DobInputProps> = ({
     onChange({ ...value });
   };
 
+  const monthOptions = Utility.months.map((x) => t(`fields:dob.months.${x.toLowerCase()}`));
   return (
     <Div
       className={classNames("DobInput", className, {
@@ -45,20 +46,20 @@ export const DobInput: FC<DobInputProps> = ({
     >
       <IntegerInput
         maxLength={2}
-        placeholder={t("common:fields.dob.day")}
+        placeholder={t("fields:dob.day")}
         disabled={disabled}
         value={value?.day === 0 ? undefined : value?.day}
         onChange={(x) => handleChange("day", x)}
       />
       <Dropdown
         type="select"
-        options={Utility.months.slice()}
+        options={monthOptions}
         value={value?.month ? value.month - 1 : 0}
         onChange={(x, i) => handleChange("month", i + 1)}
       />
       <IntegerInput
         maxLength={4}
-        placeholder={t("common:fields.dob.year")}
+        placeholder={t("fields:dob.year")}
         disabled={disabled}
         value={value?.year === 0 ? undefined : value?.year}
         onChange={(x) => handleChange("year", x)}

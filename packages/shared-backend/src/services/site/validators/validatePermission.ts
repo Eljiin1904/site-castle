@@ -8,6 +8,6 @@ export async function validatePermission(
   key: keyof UserPermissions,
 ) {
   if (!Users.getPermissions(user.role)[key]) {
-    throw new HandledError("You do not have permission to do that.");
+    throw new HandledError("validations:errors.wallet.permissionDenied");
   }
 }

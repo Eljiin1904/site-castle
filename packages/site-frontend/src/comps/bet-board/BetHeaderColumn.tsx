@@ -10,9 +10,7 @@ export const BetHeaderColumn: FC<{header: string, hideInMobile?:boolean} & DivPr
 
   return (<Div {...forwardProps}>
     <Span
-      weight="medium"
       size={12}
-      color="dark-sand"
       textTransform="uppercase"
     >
       {header}

@@ -1,0 +1,20 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import * as InputBaseStories from './BaseInput.stories';
+
+# InputBase
+
+Castle InputBase component is the default component to manage all user input data.
+The size property is used to select between two sizes (size?: "sm" | "lg"). 
+classname allows you to select between 3 classes (className?: "" | "grey-background" | "overlay-background")
+
+
+Default Class
+<Canvas of={InputBaseStories.BlackInput} />
+Regular Grey
+<Canvas of={InputBaseStories.GreyInput} />
+Big Grey
+<Canvas of={InputBaseStories.GreyBigInput} />
+Overlay
+<Canvas of={InputBaseStories.OverlayInput} />
+Big Overlay
+<Canvas of={InputBaseStories.OverlayBigInput} />

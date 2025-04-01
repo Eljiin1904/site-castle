@@ -38,7 +38,7 @@ export const BetRow = ({ bet, inserted, animate, game='all' }: {
     borderBottom
     >
       {game  === 'all' && <BetColumn flexBasis={0} grow={3}>{bet.game}</BetColumn>}
-      <BetColumn flexBasis={0} grow={4}  hideInMobile={true}>{username}</BetColumn>
+      <BetColumn flexBasis={0} grow={4}>{username}</BetColumn>
       <BetColumn flexBasis={0} grow={3} hideInMobile={true} >{bet.timestamp.toLocaleTimeString([], {
         hour: "numeric",
         minute: "2-digit",

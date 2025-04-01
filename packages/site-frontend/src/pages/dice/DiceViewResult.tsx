@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
@@ -34,19 +35,23 @@ export const DiceViewResult = () => {
             column
           >
             <Span
-              className="label"
-              color={ticket?.won ? "green" : "red"}
+              className={classNames("label", { won: ticket?.won })}
+              color={ "light-sand"}
+              bg={ticket?.won ? "green" : "red-arrow"}
               fontWeight="regular"
-              size={32}
+              fontFamily="title"
+              px={16}
+              py={8}
+              size={24}
             >
               {ticket
                 ? Numbers.round(ticket.rollValue / 100, 2).toFixed(2)
                 : ""}
             </Span>
             <Vector
-              className="icon"
+              className={classNames("icon", { won: ticket?.won })}
               as={SvgArrowRight}
-              size={16}
+              size={24}
               color={ticket?.won ? "green" : "red"}
             />            
           </Div>

@@ -4,12 +4,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 export const FooterCopyright = () => {
   const {t} = useTranslation();
   return (
-    <Span
-      size={12}
-      lineHeight={20}
-      weight="medium"
-      color="dark-sand"
-    >
+    <Span size={12}>
       {`Copyright © 2025 SandCasino. ${t('footer.copyright')}`}
     </Span>
   );

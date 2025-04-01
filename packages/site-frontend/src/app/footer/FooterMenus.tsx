@@ -99,16 +99,10 @@ const MenuSection = ({ heading, items }: { heading: string; items: MenuItem[] })
             <Vector
               as={icon || SvgExternal}
               size={16}
-              color="dark-sand"
               mr={10}
             />
           )}
-          <Span
-            weight="medium"
-            color="dark-sand"
-            size={14}
-            lineHeight={20}
-          >
+          <Span>
             {label}
           </Span>
         </Link>

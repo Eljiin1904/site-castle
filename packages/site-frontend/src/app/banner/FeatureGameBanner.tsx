@@ -85,7 +85,8 @@ const MobileHeader = ({heading}: {
   return (<Heading
     as={"h2"}
     color={"white"}
-    size={ 20}
+    size={20}
+    lineHeight={24}
     fontWeight="regular"
   >
     {heading}
@@ -99,6 +100,7 @@ const NotMobileHeader = ({heading}: {
     as={"h2"}
     color={"black"}
     size={ 48}
+    lineHeight={40}
     style={{ maxWidth: "100px" }}
     fontWeight="regular"
     textTransform="uppercase"

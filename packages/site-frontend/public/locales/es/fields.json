@@ -16,7 +16,21 @@
     "field": "Fecha de nacimiento",
     "day": "Día",
     "month": "Mes",
-    "year": "Año"
+    "year": "Año",
+    "months": {
+      "january": "Enero",
+      "february": "Febrero",
+      "march": "Marzo",
+      "april": "Abril",
+      "may": "Mayo",
+      "june": "Junio",
+      "july": "Julio",
+      "august": "Agosto",
+      "september": "Septiembre",
+      "october": "Octubre",
+      "november": "Noviembre",
+      "december": "Diciembre"
+    }
   },
   "occupation": {
     "field": "Ocupación",
@@ -33,5 +47,25 @@
     "zipPlaceholder": "Ingrese el código postal...",
     "country": "País",
     "countryPlaceholder": "Ingrese el país..."
+  },
+  "bets": {
+    "amount": "Cantidad",
+    "amountPlaceholder": "Ingrese la cantidad...",
+    "games": "Juegos",
+    "onWin": "En victoria",
+    "onLoss": "En derrota",
+    "stopOnProfit": "Detener en ganancia",
+    "stopOnLoss": "Detener en pérdida",
+    "multiplier": "Multiplicador",
+    "multiplierPlaceholder": "Ingrese el multiplicador...",
+    "rollOver": "Roll Over",
+    "rollUnder": "Roll Under",
+    "rollTargetPlaceholder": "Ingrese el objetivo...",
+    "winChance": "Probabilidad de ganar",
+    "winChancePlaceholder": "Ingrese la probabilidad de ganar..."
+  },
+  "code": {
+    "field": "Código",
+    "codePlaceholder": "Ingrese el código..."
   }
 }

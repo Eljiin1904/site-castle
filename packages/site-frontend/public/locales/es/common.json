@@ -10,6 +10,7 @@
   "close": "Cerrar",
   "amount": "Cantidad",
   "clear": "Limpiar",
+  "max": "Max",
   "enterBetAmount": "Ingrese la cantidad de la apuesta...",
   "recentRolls": "Jugadas Recientes",
   "last100": "Últimas 100",
@@ -18,5 +19,12 @@
   "continue": "Continuar",
   "startPlaying": "¡Comienza a jugar!",
   "accept": "Aceptar",
-  "moreInfo": "Más información"
+  "moreInfo": "Más información",
+  "manual": "Manual",
+  "auto": "Automático",
+  "reset": "Reiniciar",
+  "increase": "Aumentar",
+  "copy": "Copiar",
+  "copied": "Copiado",
+  "more": "Más detalles"
 }

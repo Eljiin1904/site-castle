@@ -17,7 +17,7 @@ const { align, colorize, combine, errors, timestamp, json, simple, printf } = wi
 
 const createLogger = (options: LoggerConfig) => {
   const logger = winston.createLogger({
-    level: options.level || "info",
+    level: options.level || process.env.LOG_LEVEL || "info",
     defaultMeta: {
       service: process.env.LOG_SERVICE || "default",
       module: options.module || "default",
@@ -70,12 +70,7 @@ const createLogger = (options: LoggerConfig) => {
   };
 };
 
-export const getServerLogger = ({
-  logGroupName,
-  logStreamName,
-  level = "info",
-  module,
-}: LoggerConfig) => {
+export const getServerLogger = ({ logGroupName, logStreamName, level, module }: LoggerConfig) => {
   return createLogger({
     logGroupName: logGroupName || "default-log-group",
     logStreamName: logStreamName || "default-log-stream",

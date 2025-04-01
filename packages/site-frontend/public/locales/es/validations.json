@@ -114,6 +114,10 @@
     "discord": {
       "taken": "Discord id ya está vinculado."
     },
+    "metamask": {
+      "noplugin": "MetaMask plug-in no esta installado en el navegador.",
+      "walletlinked": "Usuario autenticado y dirección de billetera ya vinculada."
+    },
     "rateLimit": "Demasiadas solicitudes de registro.",
     "invalidCaptcha": "Falló al pasar la validación de captcha.",
      "games": {
@@ -131,6 +135,14 @@
         "invalidCombination": "Combinación de apuesta inválida.",
         "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."       
       }
+    },
+    "wallet": {
+      "kind": {
+        "invalid": "Tipo de billetera inválido."
+      },
+      "permissionDenied": "No tienes permiso para hacer eso.",
+      "emailNotConfirmed": "El correo electrónico debe ser confirmado.",
+      "suspended": "No puedes hacer eso mientras estás suspendido."
     }
   }
 }

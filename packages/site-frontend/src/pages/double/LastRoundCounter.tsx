@@ -23,7 +23,6 @@ export const LastRoundCounter = ({ color, bait }: { color: DoubleColor; bait: bo
         last100={true}
       />
       <Span
-        color="dark-sand"
         size={12}
         weight="semi-bold"
       >

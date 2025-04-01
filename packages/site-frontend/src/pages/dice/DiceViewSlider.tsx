@@ -73,7 +73,7 @@ const TargetCard = () => {
         top: "50px",
       }}
     >
-      <Span fontSize={sm ? 16: 24}>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
+      <Span fontFamily="title" lineHeight={24} fontWeight="regular" fontSize={sm ? 16: 24}>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
     </Div>
   );
 };

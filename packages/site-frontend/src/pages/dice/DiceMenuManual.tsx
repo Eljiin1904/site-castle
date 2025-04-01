@@ -7,6 +7,7 @@ import { BetInputGroup } from "./BetInputGroup";
 import { useManualBet } from "./useManualBet";
 import { ProfitSection } from "./ProfitSection";
 import { useProfit } from "./useProfit";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceMenuManual = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -50,12 +51,12 @@ const ActionButton = () => {
   const processing = useAppSelector((x) => x.dice.processing);
   const { overMax } = useProfit();
   const handleBet = useManualBet();
-
+  const {t} = useTranslation();
   return (
     <Button
       fx
-      kind="primary-yellow"
-      label={overMax ? "Exceeds Max Profit" : "Place Bet"}
+      kind="primary-green"
+      label={overMax ? t('games\\dice:exceedMaxBet') : t("games\\dice:placeBet")}
       loading={processing}
       disabled={overMax || processing}
       onClick={handleBet}

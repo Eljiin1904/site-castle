@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: castle-backend
+  name: {{ include "shared-game-server.fullname" . | default "shared-game-server" }}
   labels:
-    app: castle-backend
+    app: shared-game-server
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: castle-backend
+      app: shared-game-server
   template:
     metadata:
       annotations:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       labels:
-        app: castle-backend
+        app: shared-game-server
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
-      serviceAccountName: {{ .Values.serviceAccount.name | default "default" }}
+      serviceAccountName: {{ include "shared-game-server.serviceAccountName" . | default "default" }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: castle-backend
+        - name: shared-game-server
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
           imagePullPolicy: {{ .Values.image.app.pullPolicy }}
           envFrom:
@@ -39,10 +39,14 @@ spec:
           env:
             - name: PORT
               value: "{{ .Values.app.port }}"
+          {{- if .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

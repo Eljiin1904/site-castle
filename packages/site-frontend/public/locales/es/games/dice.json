@@ -1,8 +1,17 @@
 {
-  "placeBet": "Hacer apuesta",
-  "betPlaced": "Apuesta realizada",
+  "placeBet": "Apostar",
+  "betPlaced": "Apostado",
   "betBoardHeader": "Apuestas Juego Dados",
   "bet_zero": "{{count}} Apuesta",
   "bet_one": "{{count}} Apuesta",
-  "bet_other": "{{count}} Apuestas"
+  "bet_other": "{{count}} Apuestas",
+  "exceedMaxBet": "Excede Máxima Ganancia",
+  "startAutoPlay": "Iniciar Auto Juego",
+  "profitOnWin": "Ganancia en victoria",
+  "stopAutoPlay": "Detener Juego Automático",
+  "autoPlayStopped": "Juego Automático Detenido",
+  "confirmBet": {
+    "title": "Confirmar Apuesta",
+    "message": "Apostar {{value.amount}}?"
+  }
 }

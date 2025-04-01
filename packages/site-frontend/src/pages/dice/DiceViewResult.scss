@@ -16,9 +16,20 @@
 
   .icon {
     transition: color ease 250ms;
+    margin-top: -7px;
+    color: rgba(var(--red-arrow-rgb-color), 0.8);
+    
+    &.won {
+      color: rgba(var(--green-arrow-rgb-color), 0.8);
+    }
   }
 
   .label {
     transition: color ease 250ms;
+    background: rgba(var(--red-arrow-rgb-color), 0.8);
+    
+    &.won {
+      background: rgba(var(--green-arrow-rgb-color), 0.8);
+    }
   }
 }

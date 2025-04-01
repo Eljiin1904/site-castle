@@ -1,0 +1,19 @@
+{
+  "title": "Billetera",
+  "withdraw": "Retirar",
+  "witdrawAddress": "Tu dirección de retiro de {{crypto}}",
+  "deposit": "Depositar",
+  "depositAddress": "Tu dirección de depósito de {{crypto}}",
+  "currency": "Moneda",
+  "network": "Cripto Red",
+  "withdrawAmount": "Cantidad a retirar",
+  "depositAmount": "Cantidad a depositar",
+  "fee": "Tarifa",
+  "total": "Total a recibir",
+  "actionWithdraw": "Retirar fondos",
+  "depositInstructions": {
+    "title": "Información de depósito",
+    "description": "Envía la cantidad de {{crypto}} de tu elección a la dirección anterior o al código QR para recibir en la billetera de sandcasino"
+  },
+  "copied": "Dirección de billetera copiada al portapapeles."
+}

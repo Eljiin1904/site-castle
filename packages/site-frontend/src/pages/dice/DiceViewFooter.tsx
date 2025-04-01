@@ -8,6 +8,7 @@ import { SvgRedo } from "@client/svgs/common/SvgRedo";
 import { Dice } from "#app/services/dice";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceViewFooter = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -15,8 +16,9 @@ export const DiceViewFooter = () => {
   const targetValue = useAppSelector((x) => x.dice.targetValue);
   const processing = useAppSelector((x) => x.dice.processing);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
-  const sm = layout === "mobile";
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
+  const sm = layout === "mobile";
 
   return (
     <Div
@@ -27,13 +29,13 @@ export const DiceViewFooter = () => {
       bg="brown-6"
     >
       <ModalSection>
-        <ModalLabel>{"Multiplier"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.multiplier")}</ModalLabel>
         <Input
           type="decimal"
           decimals={4}
           iconRight={SvgTimes}
           iconColor="dark-sand"
-          placeholder="Enter multiplier..."
+          placeholder={t("fields:bets.multiplierPlaceholder")}
           value={Dice.getMultiplier({ targetValue, targetKind })}
           disabled={processing || autoPlaying}
           onChange={(x) => {
@@ -55,14 +57,14 @@ export const DiceViewFooter = () => {
       </ModalSection>
       <ModalSection>
         <ModalLabel>
-          {targetKind === "over" ? "Roll Over" : "Roll Under"}
+          {targetKind === "over" ? t("fields:bets.rollOver") :t("fields:bets.rollUnder")}
         </ModalLabel>
         <Input
           type="decimal"
           decimals={2}
           iconRight={SvgRedo}
           iconColor="dark-sand"
-          placeholder="Enter target..."
+          placeholder={t("fields:bets.rollTargetPlaceholder")}
           value={targetValue / 100}
           disabled={processing || autoPlaying}
           onChange={(x) => {
@@ -77,13 +79,13 @@ export const DiceViewFooter = () => {
         />
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Win Chance"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.winChance")}</ModalLabel>
         <Input
           type="decimal"
           decimals={2}
           iconRight={SvgPercent}
           iconColor="dark-sand"
-          placeholder="Enter win chance..."
+          placeholder={t("fields:bets.winChancePlaceholder")}
           value={Dice.getWinChance({ targetValue, targetKind })}
           disabled={processing || autoPlaying}
           onChange={(x) => {
