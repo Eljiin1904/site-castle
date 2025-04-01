@@ -26,6 +26,9 @@ import { waitForAuthenticatorCode } from "#app/modals/security/AuthenticatorCode
 import { WalletAction } from "../WalletAction";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Span } from "@client/comps/span/Span";
+import { Spinner } from "@client/comps/spinner/Spinner";
+import { SvgCheck } from "@client/svgs/common/SvgCheck";
+import { SvgCancel } from "@client/svgs/common/SvgCancel";
 
 const cryptos = Cryptos.infos.filter((x) => x.canWithdraw);
 
@@ -41,6 +44,8 @@ export const WithdrawCryptoBody = ({
   const require2fa = tfaEnabled && settings.withdraw2fa;
   const {t} = useTranslation(["wallet"]);
   const crypto = cryptos[cryptoIndex];
+  const [quote, setQuote] = useState<CryptoQuoteDocument>();
+  const [validatingAddress,setVaidatingAddress] = useState(false);
 
   const form = useForm({
     schema: Validation.object({
@@ -79,6 +84,22 @@ export const WithdrawCryptoBody = ({
     },
   });
 
+  const currentAddress = form.values.address;
+  const isValidAddress = currentAddress && !form.errors.address?.key;
+
+  const getQuote = async (amount: number| undefined) => {
+    console.log('before qoute');
+    form.setValue("tokenAmount", amount);
+    console.log('before qoute');
+    const { quote } = await Cryptos.quoteWithdraw({
+      kind: crypto.kind,
+      tokenAmount: amount ?? 0,
+      destinationAddress: form.values.address ?? ''
+    });
+    console.log(quote);
+    setQuote(quote);
+  };
+
   return (
     <Form
       form={form}
@@ -100,14 +121,39 @@ export const WithdrawCryptoBody = ({
       </ModalSection>
       
       <ModalSection>
-        <ModalLabel>{t('witdrawAddress',{crypto: crypto.kind.replace("_", " ")})}</ModalLabel>
-        <Input
-          type="text"
-          placeholder={`Enter ${crypto.kind.replace("_", " ")} address`}
-          error={form.errors.address?.key ? t(form.errors.address.key, {value: form.errors.address.value}) : undefined}
-          value={form.values.address}
-          onChange={(x) => form.setValue("address", x)}
-        />
+        <ModalLabel>{t('withdrawAddress',{crypto: crypto.kind.replace("_", " ")})}</ModalLabel>
+       
+        <Div align="center">
+          <Input
+            type="text"
+            placeholder={t('withdrawAddressPlaceholder',{crypto: crypto.kind.replace("_", " ")})}
+            error={form.errors.address?.key ? t(form.errors.address.key, {value: form.errors.address.value}) : undefined}
+            value={form.values.address}
+            onChange={(x) => form.setValue("address", x)}
+          />          
+          <Div
+            position="absolute"
+            right={12}
+          >
+            {validatingAddress ? (
+              <Spinner />
+            ) : (
+              <Vector
+                as={isValidAddress ? SvgCheck : SvgCancel}
+                color={isValidAddress ? "green" : currentAddress ? "light-red" : "dark-sand"}
+                hover="highlight"
+                data-tooltip-id="app-tooltip"
+                data-tooltip-content={
+                  isValidAddress
+                    ? t("withdrawAddressValid")
+                    : currentAddress
+                      ? t("withdrawAddressInvalid")
+                      : t("withdrawAddressRequired")
+                }
+              />
+            )}
+          </Div>
+        </Div>
       </ModalSection>
 
 
@@ -120,7 +166,7 @@ export const WithdrawCryptoBody = ({
             placeholder={t("withdrawAmount")}
             error={form.errors.tokenAmount?.key ? t(form.errors.tokenAmount.key, {value: form.errors.tokenAmount.value}) : undefined}
             value={form.values.tokenAmount}
-            onChange={(x) => form.setValue("tokenAmount", x)}
+            onChange={getQuote}
             flexGrow={1}
             iconLeft={Cryptos.getIcon(cryptos[cryptoIndex].symbol)}
           />
@@ -143,25 +189,26 @@ export const WithdrawCryptoBody = ({
         fx
         column
       >
-        <Div fx gap={16} justifyContent="space-between">
+        <Div fx justifyContent="space-between">
           <ModalLabel>{t("withdrawAmount")}</ModalLabel>
           <ModalLabel gap={8}>
             <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
-            <Span>{form.values.tokenAmount}</Span>
+            {/* <Span  color="light-sand">{form.values.tokenAmount}</Span> */}
+            {quote && <Span  color="light-sand">{`${quote.cryptoAmount} (~$${quote.usdAmount.toFixed(2)})`}</Span>}
           </ModalLabel>
         </Div>
-        <Div fx gap={16} justifyContent="space-between">
+        <Div fx justifyContent="space-between">
         <ModalLabel>{t("fee")}</ModalLabel>
           <ModalLabel gap={8}>
             <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
-            <Span>{form.values.tokenAmount}</Span>
+            {quote && <Span  color="light-sand">{`${quote.feeAmount} (~$${quote.feeAmount.toFixed(2)})`}</Span>}
           </ModalLabel>
         </Div>
-        <Div fx gap={16} justifyContent="space-between">
+        <Div fx justifyContent="space-between">
         <ModalLabel>{t("total")}</ModalLabel>
           <ModalLabel gap={8}>
             <Tokens value={form.values.tokenAmount ?? 0} color="dark-sand" fontSize={12} />
-            <Span>{form.values.tokenAmount}</Span>
+            {quote && <Span color="light-sand">{`~${Numbers.round(quote.cryptoAmount - quote.feeAmount, crypto.decimals)} (~$${(quote.usdAmount - quote.feeUsdAmount).toFixed(2)})`}</Span>}
           </ModalLabel>
         </Div>        
         <Button
