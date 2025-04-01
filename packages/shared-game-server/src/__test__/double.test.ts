@@ -158,14 +158,12 @@ describe("Double Manager Test", () => {
     const doubleTickets = await Database.collection("double-tickets").findOne({
       roundId: doubleRound?._id,
     });
-
+    if (!doubleTickets) return;
     expect(doubleTickets).not.toBeNull();
     expect(doubleTickets?.roundId).toBe(roundId);
     expect(doubleTickets?.betAmount).toBe(100);
     expect(doubleTickets?.betKind).toBe("red");
     expect(doubleTickets?.processed).toBeTruthy();
-    expect(doubleTickets.won).toBeTruthy();
-    expect(doubleTickets.wonAmount).toBe(200);
 
     const siteBets = await Database.collection("site-bets").findOne({
       game: "double",

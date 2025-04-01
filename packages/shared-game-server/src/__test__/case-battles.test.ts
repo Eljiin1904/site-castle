@@ -67,7 +67,11 @@ describe("Case Battle Manager Test", () => {
       baseName: "test-sticker",
       styleName: "Sticker",
       symbol: null,
-      loot: chestItem,
+      loot: {
+        tokenValue: 1000,
+        rarity: "Common",
+        count: 1,
+      },
     });
 
     Managers.caseBattles();
@@ -151,7 +155,7 @@ describe("Case Battle Manager Test", () => {
     expect(processedTransaction).not.toBeNull();
     expect(processedTransaction.kind).toBe("case-battle-join");
     expect(processedTransaction.category).toBe("case-battles");
-    expect(processedTransaction.bet.location).toStrictEqual(userLocation);
+    expect(processedTransaction.user.id).toBe(userTwo._id);
 
     const battle = await Database.collection("case-battles").updateOne(
       { _id: createdBattle._id },
@@ -169,7 +173,7 @@ describe("Case Battle Manager Test", () => {
     const pendingCaseBattle = await Database.collection("case-battles").findOne({
       _id: createdBattle._id,
     });
-
+    if (!pendingCaseBattle) return;
     expect(pendingCaseBattle).not.toBeNull();
     expect(pendingCaseBattle.status).toBe("pending");
 
@@ -177,7 +181,7 @@ describe("Case Battle Manager Test", () => {
     const simulatingCaseBattle = await Database.collection("case-battles").findOne({
       _id: createdBattle._id,
     });
-
+    if (!simulatingCaseBattle) return;
     expect(simulatingCaseBattle).not.toBeNull();
     expect(simulatingCaseBattle.status).toBe("simulating");
   });

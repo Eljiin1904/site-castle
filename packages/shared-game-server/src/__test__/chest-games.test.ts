@@ -12,6 +12,7 @@ import {
 import { Intimal } from "@core/services/intimal";
 import { Chests } from "@core/services/chests";
 import { ChestDocument } from "@core/types/chests/ChestDocument";
+import { TransactionDocument } from "@core/types/transactions/TransactionDocument";
 import { Strings } from "@core/services/strings";
 
 describe("Chest Game Manager Test", () => {
@@ -71,7 +72,11 @@ describe("Chest Game Manager Test", () => {
       baseName: "test-sticker",
       styleName: "Sticker",
       symbol: null,
-      loot: chestItem,
+      loot: {
+        tokenValue: 1000,
+        rarity: "Common",
+        count: 1,
+      },
     });
 
     const test_user = createTestUser();
@@ -147,7 +152,7 @@ describe("Chest Game Manager Test", () => {
       })
       .toArray();
 
-    const processedTransaction = transactions[0];
+    const processedTransaction: any = transactions[0];
 
     expect(processedTransaction).not.toBeNull();
     expect(processedTransaction.kind).toBe("case-item-won");
@@ -173,7 +178,7 @@ describe("Chest Game Manager Test", () => {
       .find({ kind: "case-game-win" })
       .toArray();
 
-    const processedChatMessage = chatMessage[0];
+    const processedChatMessage: any = chatMessage[0];
 
     expect(processedChatMessage.user.id).toBe(user._id);
     expect(processedChatMessage.agent).toBe("system");
@@ -235,7 +240,7 @@ describe("Chest Game Manager Test", () => {
       })
       .toArray();
 
-    const processedTransaction = transactions[0];
+    const processedTransaction: any = transactions[0];
 
     expect(processedTransaction).not.toBeNull();
     expect(processedTransaction.kind).toBe("reward-level-case-item");
@@ -256,7 +261,7 @@ describe("Chest Game Manager Test", () => {
       .find({ kind: "level-case-win" })
       .toArray();
 
-    const processedChatMessage = chatMessage[0];
+    const processedChatMessage: any = chatMessage[0];
 
     expect(processedChatMessage.user.id).toBe(user._id);
     expect(processedChatMessage.agent).toBe("system");
@@ -319,7 +324,7 @@ describe("Chest Game Manager Test", () => {
       })
       .toArray();
 
-    const processedTransaction = transactions[0];
+    const processedTransaction: any = transactions[0];
 
     expect(processedTransaction).not.toBeNull();
     expect(processedTransaction.kind).toBe("reward-gem-case-item");
@@ -340,7 +345,7 @@ describe("Chest Game Manager Test", () => {
       .find({ kind: "gem-case-win" })
       .toArray();
 
-    const processedChatMessage = chatMessage[0];
+    const processedChatMessage: any = chatMessage[0];
 
     expect(processedChatMessage.user.id).toBe(user._id);
     expect(processedChatMessage.agent).toBe("system");
@@ -403,7 +408,7 @@ describe("Chest Game Manager Test", () => {
       })
       .toArray();
 
-    const processedTransaction = transactions[0];
+    const processedTransaction: any = transactions[0];
 
     expect(processedTransaction).not.toBeNull();
     expect(processedTransaction.kind).toBe("reward-holiday-case-item");
@@ -415,7 +420,7 @@ describe("Chest Game Manager Test", () => {
       .find({ kind: "reward-holiday-case-drop" })
       .toArray();
 
-    const processedSiteActivity = siteActivity[0];
+    const processedSiteActivity: any = siteActivity[0];
     expect(processedSiteActivity.user.id).toBe(user._id);
     expect(processedSiteActivity.kind).toBe("reward-holiday-case-drop");
 
@@ -424,7 +429,7 @@ describe("Chest Game Manager Test", () => {
       .find({ kind: "holiday-case-win" })
       .toArray();
 
-    const processedChatMessage = chatMessage[0];
+    const processedChatMessage: any = chatMessage[0];
 
     expect(processedChatMessage.user.id).toBe(user._id);
     expect(processedChatMessage.agent).toBe("system");
