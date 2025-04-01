@@ -10,13 +10,16 @@ import { Link } from "@client/comps/link/Link";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import config from "#app/config";
 import { LoginModal } from "../login/LoginModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { ModalSection } from "@client/comps/modal/ModalSection";
+import { TextInput } from "@client/comps/input/TextInput";
 
 export const ChatEarnModal = () => {
   const [copied, setCopied] = useState(false);
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const username = useAppSelector((x) => x.user.username);
   const bodyLayout = useAppSelector((x) => x.style.bodyLayout);
-
+  const {t} = useTranslation();
   const handleCopy = () => {
     navigator.clipboard.writeText(`${config.siteURL}/r/${username}`);
     setCopied(true);
@@ -28,15 +31,13 @@ export const ChatEarnModal = () => {
   return (
     <Modal onBackdropClick={() => Dialogs.close("primary")}>
       <ModalHeader
-        heading="Invite Friends, Earn Tokens"
+        heading={t("chat.earnModal.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Div display="block">
-          <Span fontWeight="semi-bold">
-            {
-              "Share your referral link and earn FREE tokens from every friend that signs up!"
-            }
+          <Span>
+          {t("chat.earnModal.description")}
           </Span>
           <Link
             type="router"
@@ -44,31 +45,13 @@ export const ChatEarnModal = () => {
             ml={4}
             onClick={() => Dialogs.close("primary")}
           >
-            {"Learn More"}
+            {t("common:more")}
           </Link>
         </Div>
-        <Div fx>
-          <Div
-            grow
-            p={12}
-            pl={16}
-            bg="brown-8"
-            border
-          >
-            <Span color="white">{`${config.siteURL}/r/${username}`}</Span>
-          </Div>
-          <Button
-            kind="primary"
-            label={
-              copied
-                ? "Copied!"
-                : bodyLayout === "mobile"
-                  ? "Copy"
-                  : "Copy Link"
-            }
-            onClick={handleCopy}
-          />
-        </Div>
+        <ModalSection gap={16}>
+          <TextInput onChange={() => {}} size="lg" type="text" placeholder="Copy to Keyboard" value={`${config.siteURL}/r/${username}`} />
+          <Button kind={!copied? `primary-yellow`: `tertiary-grey`} size="lg" label={copied ? t('common:copied'): t('common:copyClipboard')} onClick={handleCopy}></Button>
+        </ModalSection>
       </ModalBody>
     </Modal>
   );

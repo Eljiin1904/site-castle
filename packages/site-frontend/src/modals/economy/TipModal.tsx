@@ -16,22 +16,20 @@ import { UserEmailConfirmModal } from "../user/UserEmailConfirmModal";
 import { useSendTip } from "./tip/useSendTip";
 import { LimitSection } from "./tip/LimitSection";
 import { VerificationModal } from "../verification/VerificationModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const TipModal = ({ sendTo }: { sendTo?: string }) => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
-
+  const {t} = useTranslation();
   const handleTip = useSendTip();
 
   const form = useForm({
     schema: Validation.object({
-      lookup: Validation.string().required("Recipient is required."),
-      tipAmount: Validation.currency("Tip amount").max(
-        tokenBalance,
-        "You do not have enough tokens.",
-      ),
+      lookup: Validation.string().required("validations:validations.tip.recipientRequired"),
+      tipAmount: Validation.currency(t("fields:tip.amount"), tokenBalance),
     }),
     initialValues: {
       lookup: sendTo,
@@ -54,38 +52,38 @@ export const TipModal = ({ sendTo }: { sendTo?: string }) => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Tip User"
+        heading={t("chat.tipModal.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <LimitSection />
         <Form form={form}>
           <ModalSection>
-            <ModalLabel>{"Send To"}</ModalLabel>
+            <ModalLabel>{t("fields:tip.sendTo")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter recipient username..."
+              placeholder={t("fields:tip.tipPlaceholder")}
               disabled={form.loading}
-              error={form.errors.lookup}
+              error={form.errors.lookup?.key ? t(form.errors.lookup.key, {value: form.errors.lookup.value}) : undefined}
               value={form.values.lookup}
               onChange={(x) => form.setValue("lookup", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Tip Amount"}</ModalLabel>
+            <ModalLabel>{t("fields:tip.amount")}</ModalLabel>
             <Input
               type="currency"
-              placeholder="Enter token amount..."
+              placeholder={t("fields:tip.amountPlaceholder")}
               disabled={form.loading}
-              error={form.errors.tipAmount}
+              error={form.errors.tipAmount?.key ? t(form.errors.tipAmount.key, {value: form.errors.tipAmount.value}) : undefined}
               value={form.values.tipAmount}
               onChange={(x) => form.setValue("tipAmount", x)}
             />
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Send Tip"
+            kind="primary-yellow"
+            label={t("chat.tipModal.submit")}
             fx
             loading={form.loading}
             mt={4}

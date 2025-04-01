@@ -68,5 +68,11 @@
   "code": {
     "field": "Code",
     "codePlaceholder": "Enter code..."
+  },
+  "tip": {
+    "sendTo": "Send To",
+    "tipPlaceholder": "Enter recipient username...",
+    "amount": "Tip Amount",
+    "amountPlaceholder": "Enter token amount..."
   }
 }

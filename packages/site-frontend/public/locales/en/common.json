@@ -26,5 +26,6 @@
   "increase": "Increase",
   "copy": "Copy",
   "copied": "Copied",
-  "more": "More details"
+  "more": "More details",
+  "copyClipboard": "Copy to Clipboard"
 }

@@ -9,12 +9,14 @@ import { SvgSiteToken } from "@client/svgs/site/SvgSiteToken";
 import { Economy } from "#app/services/economy";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { waitForAuthenticatorCode } from "../../security/AuthenticatorCodeModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export function useSendTip() {
+  const {t} = useTranslation();
   const tfaEnabled = useAppSelector((x) => x.user.tfa.enabled);
   const settings = useAppSelector((x) => x.user.settings);
   const require2fa = tfaEnabled && settings.withdraw2fa;
-
+  
   const handleTip = async ({
     lookup,
     tipAmount,
@@ -23,37 +25,15 @@ export function useSendTip() {
     tipAmount: number;
   }) => {
     const confirmed = await waitForConfirmation({
-      heading: "Confirm Tip",
+      heading: t("chat.tipModal.confirmTitle"),
       message: (
         <Div
           display="block"
           textAlign="center"
         >
-          <Span>{"Are you sure you want to send "}</Span>
-          <Span
-            weight="semi-bold"
-            color="white"
-          >
-            {lookup}
+          <Span>
+            {t("chat.tipModal.confirmDescription",{value: {username: lookup, amount: Intimal.toLocaleString(tipAmount)}})}
           </Span>
-          <Div
-            display="inline-flex"
-            top={3}
-          >
-            <Vector
-              as={SvgSiteToken}
-              size={14}
-              ml={4}
-              mr={2}
-            />
-            <Span
-              weight="semi-bold"
-              color="gold"
-            >
-              {Intimal.toLocaleString(tipAmount)}
-            </Span>
-          </Div>
-          <Span>{" tokens?"}</Span>
         </Div>
       ),
     });
@@ -69,9 +49,7 @@ export function useSendTip() {
 
     await Economy.sendTip({ lookup, tipAmount, tfac });
 
-    Toasts.success(
-      `You tipped ${lookup} ${Intimal.toLocaleString(tipAmount)} tokens.`,
-    );
+    Toasts.success(t('chat.tipModal.confirmSuccess',{value: {username: lookup, amount: Intimal.toLocaleString(tipAmount)}}));
     Dialogs.close("primary");
   };
 

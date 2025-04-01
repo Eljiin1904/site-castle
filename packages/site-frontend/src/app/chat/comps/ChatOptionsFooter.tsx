@@ -19,8 +19,8 @@ export const ChatOptionsFooter = () =>  {
   const {t} = useTranslation();
 
   return(<Div fx gap={8}>
-      <Button size="xssso" label={t('chat.earn')} kind="tertiary-grey" iconLeft={SvgMoney} onClick={() => Dialogs.open("primary", <TipModal />)} />
-      <Button size="xssso" flexGrow label={t('chat.tip')} kind="tertiary-grey" iconLeft={SvgBets} onClick={() => Dialogs.open("primary", <ChatEarnModal />)} />
+      <Button size="xssso" label={t('chat.earn')} kind="tertiary-grey" iconLeft={SvgMoney} onClick={() => Dialogs.open("primary", <ChatEarnModal />)} />
+      <Button size="xssso" flexGrow label={t('chat.tip')} kind="tertiary-grey" iconLeft={SvgBets} onClick={() => Dialogs.open("primary", <TipModal />)} />
       <ChatDrowdown />
   </Div>);
 };
