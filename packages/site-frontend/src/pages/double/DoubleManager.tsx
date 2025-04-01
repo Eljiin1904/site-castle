@@ -23,7 +23,7 @@ export const DoubleManager = () => {
   useSocketListener("double-init", (init) => {
     dispatch(Double.initPlayer(init));
   });
-
+  
   useSocketListener("double-round-insert", (round) => {
     dispatch(Double.changeRound(round));
   });
@@ -35,6 +35,15 @@ export const DoubleManager = () => {
   useSocketListener("double-bet-insert", (bet) => {
     dispatch(Double.updateBets(bet));
   });
+
+  useSocketListener("site-jackpot-insert", (jackpot) => {
+    dispatch(Double.updateJackpot(jackpot));
+  });
+
+  useSocketListener("site-jackpot-update", (streak) => {
+    dispatch(Double.updateJackpotStreak(streak));
+  });
+
 
   return null;
 };

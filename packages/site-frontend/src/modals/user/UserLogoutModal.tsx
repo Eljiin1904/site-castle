@@ -15,7 +15,7 @@ export const UserLogoutModal = () => {
       onConfirm={async () => {
         await Security.logout();
         dispatch(Users.resetUser());
-        Toasts.success(t('signout.success'));
+        Toasts.success('signout.success');
       }}
     />
   );

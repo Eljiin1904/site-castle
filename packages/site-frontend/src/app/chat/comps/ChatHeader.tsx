@@ -14,21 +14,15 @@ import { ChatEarnModal } from "#app/modals/chat/ChatEarnModal";
 import { UserManageBlockModal } from "#app/modals/user/UserManageBlockModal";
 import { TipModal } from "#app/modals/economy/TipModal";
 import { useChatToggle } from "#app/hooks/chat/useChatToggle";
-import { useDispatch } from "react-redux";
-import { Chat } from "#app/services/chat";
 import { SvgRules } from "@client/svgs/common/SvgRules";
 import { SvgOnlineUser } from "@client/svgs/common/SvgOnlineUser";
 import classNames from "classnames";
-import { DropdownBody } from "@client/comps/dropdown/DropdownBody";
-import { DropdownItem } from "@client/comps/dropdown/DropdownItem";
-import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
-import { useState } from "react";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import "./ChatHeader.scss";
 
 export const ChatHeader = () => {
   
-  const activeCount = useAppSelector((x) => x.site.meta.activeCount || 0);
+  
   const toggleChat = useChatToggle();
   const small = useIsMobileLayout();
 
@@ -41,7 +35,7 @@ export const ChatHeader = () => {
     borderColor="brown-4"
     justify="space-between"
     >
-    
+    <UserLevel />
     <Div
     gap={16}>
       <Div
@@ -62,6 +56,12 @@ export const ChatHeader = () => {
       options={[
         {
           type: "action",
+          label: "Chat Rules",
+          iconLeft: SvgRules,
+          onClick: () => Dialogs.open("primary", <ChatRulesModal />)
+        },
+        {
+          type: "action",
           label: "Tip Player",
           iconLeft: SvgCoinStack,
           onClick: () => Dialogs.open("primary", <TipModal />),
@@ -80,25 +80,9 @@ export const ChatHeader = () => {
         },
       ]}
     />
-        <Vector
-          as={SvgOnlineUser}
-          size={16}
-          color="green"
-        />
-        <Span
-          size={14}
-          weight="medium"
-          color="green"
-        >
-          {activeCount}
-        </Span>
+        
       </Div>
-      <Vector
-        as={SvgRules}
-        size={16}
-        hover="highlight"
-        onClick={() => Dialogs.open("primary", <ChatRulesModal />)}
-      />
+      
       <Vector
         as={SvgTimes}
         size={16}
@@ -106,5 +90,22 @@ export const ChatHeader = () => {
         onClick={() => toggleChat()}
       />
     </Div>
+  </Div>);
+};
+
+const UserLevel = () => {
+
+  const activeCount = useAppSelector((x) => x.site.meta.activeCount || 0);
+  
+  return (<Div gap={8} alignItems="center">
+    <Vector
+      as={SvgOnlineUser}
+      color="bright-green"
+    />
+    <Span
+      color="bright-green"
+    >
+      {activeCount}
+    </Span>
   </Div>);
 };

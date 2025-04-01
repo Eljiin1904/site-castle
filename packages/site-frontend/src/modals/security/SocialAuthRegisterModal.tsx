@@ -44,7 +44,7 @@ export const SocialAuthRegisterModal = ({
   const [userCreated, setUserCreated] = useState(false);
   const dispatch = useAppDispatch();
   const small = useIsMobileLayout();
-  const {t} = useTranslation();
+  const {t} = useTranslation(["validations"]);
   
   useEffect(() => {
     if(authenticated) {
@@ -55,9 +55,9 @@ export const SocialAuthRegisterModal = ({
   const form = useForm({
     schema: Validation.object({
       emailRequired: Validation.boolean(),
-      username: Validation.username(t("validations:validations.username.field")),
-      email: Validation.emailConditional(t("validations:validations.email.field")),
-      password: Validation.password(t("validations:validations.password.field")),
+      username: Validation.username(t("validations.username.field")),
+      email: Validation.emailConditional(t("validations.email.field")),
+      password: Validation.password(t("validations.password.field")),
       referralCode: Validation.string(),
     }),
     initialValues: {
@@ -76,7 +76,7 @@ export const SocialAuthRegisterModal = ({
 
         Gtm.trackRegister({ user, strategy: provider });
 
-        Toasts.success(t("register.success", { username: user.username }));
+        Toasts.success("register.success", 5000, { username: user.username });
         setUserCreated(true);
       } catch (err) {
         if (
@@ -136,7 +136,7 @@ export const SocialAuthRegisterModal = ({
             <UsernameField
               placeholder={t("register.form.usernamePlaceholder")}
               disabled={form.loading}
-              error={form.errors.username?.key ? t(`validations:${form.errors.username.key}`, {value: form.errors.username.value}) : undefined}
+              error={form.errors.username?.key ? t(`${form.errors.username.key}`, {value: form.errors.username.value}) : undefined}
               value={form.values.username}
               setError={(x) => form.setError("username",{ key: x || ''})}
               onChange={(x) => form.setValue("username", x)}
@@ -151,7 +151,7 @@ export const SocialAuthRegisterModal = ({
                 autoComplete="email"
                 placeholder={t("register.form.emailPlaceholder")}
                 disabled={form.loading}
-                error={form.errors.email?.key ? t(`validations:${form.errors.email.key}`, {value: form.errors.email.value}) : undefined}
+                error={form.errors.email?.key ? t(`${form.errors.email.key}`, {value: form.errors.email.value}) : undefined}
                 value={form.values.email}
                 onChange={(x) => form.setValue("email", x)}
               />
@@ -165,7 +165,7 @@ export const SocialAuthRegisterModal = ({
               autoComplete="new-password"
               placeholder={t("register.form.passwordPlaceholder")}
               disabled={form.loading}
-              error={form.errors.password?.key ? t(`validations:${form.errors.password.key}`, {value: form.errors.password.value}) : undefined}
+              error={form.errors.password?.key ? t(`${form.errors.password.key}`, {value: form.errors.password.value}) : undefined}
               value={form.values.password}
               onChange={(x) => form.setValue("password", x)}
             />
@@ -178,7 +178,7 @@ export const SocialAuthRegisterModal = ({
                 placeholder={t("register.form.referralPlaceholder")}
                 maxLength={Users.nameMaxLength}
                 disabled={form.loading}
-                error={form.errors.referralCode?.key ? t(`validations:${form.errors.referralCode.key}`, {value: form.errors.referralCode.value}) : undefined}
+                error={form.errors.referralCode?.key ? t(`${form.errors.referralCode.key}`, {value: form.errors.referralCode.value}) : undefined}
                 value={form.values.referralCode}
                 onChange={(x) =>
                   form.setValue("referralCode", x?.replace(/[^a-z0-9]/gi, ""))
