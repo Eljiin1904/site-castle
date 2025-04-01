@@ -19,6 +19,9 @@ import { SvgOnlineUser } from "@client/svgs/common/SvgOnlineUser";
 import classNames from "classnames";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import "./ChatHeader.scss";
+import { ChatRainInfoModal } from "#app/modals/chat/ChatRainInfoModal";
+import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
+import { ChatRainTipModal } from "#app/modals/chat/ChatRainTipModal";
 
 export const ChatHeader = () => {
   
@@ -62,15 +65,15 @@ export const ChatHeader = () => {
         },
         {
           type: "action",
-          label: "Tip Player",
-          iconLeft: SvgCoinStack,
-          onClick: () => Dialogs.open("primary", <TipModal />),
+          label: "Chat Rain How it Works",
+          iconLeft: SvgInfoCircle,
+          onClick: () => Dialogs.open("primary", <ChatRainInfoModal />)
         },
         {
           type: "action",
-          label: "Earn",
-          iconLeft: SvgCoin,
-          onClick: () => Dialogs.open("primary", <ChatEarnModal />),
+          label: "Chat Rain",
+          iconLeft: SvgCoinStack,
+          onClick: () => Dialogs.open("primary", <ChatRainTipModal />),
         },
         {
           type: "action",
