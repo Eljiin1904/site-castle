@@ -32,13 +32,10 @@ service:
   type: ClusterIP
   port: 3000
   tls: []
-
 app:
   port: 3000
-
 resources: {}
 
-# Default liveness and readiness probes
 livenessProbe: {}
   httpGet:
     path: /
@@ -68,6 +65,5 @@ affinity: {}
 
 namespace: shared-reporting-server
 
-# Explicit labels to ensure consistency across resources
 labels:
   app: castle-reporting-server
