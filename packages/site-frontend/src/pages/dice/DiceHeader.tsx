@@ -8,6 +8,10 @@ import { DiceInfoModal } from "#app/modals/dice/DiceInfoModal";
 import { FairnessSeedModal } from "#app/modals/fairness/FairnessSeedModal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Dropdown } from "@client/comps/dropdown/Dropdown";
+import { SvgEllipsisV } from "@client/svgs/common/SvgEllipsisV";
+import { Vector } from "@client/comps/vector/Vector";
+import { Fragment } from "react/jsx-runtime";
 
 export const DiceHeader = () => {
   const {t} = useTranslation();
@@ -28,19 +32,50 @@ export const DiceHeader = () => {
         justify="flex-end"
         gap={8}
       >
-        <Button
-          kind="tertiary-black-overlay"
-          icon={SvgCheckCircle}
-          label={t("menu.fairness")}
-          onClick={() => Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/dice" />)}
-        />
-        <Button
-           kind="tertiary-black-overlay"
-          icon={SvgInfoCircle}
-          onClick={() => Dialogs.open("primary", <DiceInfoModal />)}
-        />
+        {!small && <Fragment>
+          <Button
+            kind="tertiary-black-overlay"
+            icon={SvgCheckCircle}
+            label={t("menu.fairness")}
+            onClick={() => Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/dice" />)}
+          />
+          <Button
+            kind="tertiary-black-overlay"
+            icon={SvgInfoCircle}
+            onClick={() => Dialogs.open("primary", <DiceInfoModal />)}
+          />
+        </Fragment>}
         <VolumeDropdown prefix="dice" />
+        {small && <DiceHeaderMenu />}
       </Div>
     </Div>
   );
+};
+
+
+const DiceHeaderMenu = () => {
+  const {t} = useTranslation();
+  return (<Dropdown
+        type="menu"
+        button={
+          <Button
+            kind="tertiary-black-overlay"
+            icon={SvgEllipsisV}
+          />
+        }
+        options={[
+          {
+            type: "action",
+            label: t("menu.fairness"),
+            iconLeft: SvgCheckCircle,
+            onClick: () => Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/dice" />)
+          },
+          {
+            type: "action",
+            label: "Rules",
+            iconLeft: SvgInfoCircle,
+            onClick: () => Dialogs.open("primary", <DiceInfoModal />)
+          }
+        ]}
+      />)
 };

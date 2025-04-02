@@ -5,12 +5,13 @@ import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
-import "./DiceViewResult.scss";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
+import "./DiceViewResult.scss";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const DiceViewResult = () => {
   const ticket = useAppSelector((x) => x.dice.lastTicket);
-
+  const small = useIsMobileLayout();
   return (
     <Div
       className="DiceViewResult"
@@ -42,7 +43,7 @@ export const DiceViewResult = () => {
               fontFamily="title"
               px={16}
               py={8}
-              size={24}
+              size={small ? 20: 24}
             >
               {ticket
                 ? Numbers.round(ticket.rollValue / 100, 2).toFixed(2)

@@ -1,22 +1,23 @@
 
 .DicePage .DiceViewSlider {
   .rc-slider {
-    height: 24px;
+    height: 17px;
     padding: 0;
     border-radius: 0;
-    border: 8px solid var(--brown-9-color);
+    border: 6px solid;
+    border-color: rgba(var(--black-hover-rgb-color), 0.5);
   }
   
   .rc-slider-track {
-    height: 8px;
+    height: 6px;
   }
 
   .rc-slider-rail {
-    height: 8px;
+    height: 6px;
   }
 
   .rc-slider-handle {
-    margin-top: -24px;
+    margin-top: -18px;
     background-color: unset;
     border: unset !important;
     border-radius: unset;
@@ -43,5 +44,12 @@
     .rc-slider-rail {
       background-color: #e9113c;
     }    
+  }
+
+  .AppBody.mobile & {
+    
+    .rc-slider {
+      border-color: rgba(var(--black-hover-rgb-color), 0.7);
+    }
   }
 }

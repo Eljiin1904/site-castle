@@ -23,8 +23,8 @@ export const DiceViewFooter = () => {
   return (
     <Div
       fx
-      px={sm ? 20 : 16}
-      py={sm ? 16 : 16}
+      px={sm ? 20 : 24}
+      py={sm ? 16 : 24}
       gap={sm ? 8 : 12}
       bg="brown-6"
     >
@@ -32,9 +32,8 @@ export const DiceViewFooter = () => {
         <ModalLabel>{t("fields:bets.multiplier")}</ModalLabel>
         <Input
           type="decimal"
-          decimals={4}
+          decimals={2}
           iconRight={SvgTimes}
-          iconColor="dark-sand"
           placeholder={t("fields:bets.multiplierPlaceholder")}
           value={Dice.getMultiplier({ targetValue, targetKind })}
           disabled={processing || autoPlaying}

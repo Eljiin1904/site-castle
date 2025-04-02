@@ -12,7 +12,7 @@ export const DoubleStatus = ({ status }: { status: "Online" | "Offline" }) => {
       align="center"
       justify="center"
       px={6}
-      bg="brown-9"
+      
       style={{
         width: 115,
       }}

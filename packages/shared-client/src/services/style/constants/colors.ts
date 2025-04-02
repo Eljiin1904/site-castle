@@ -35,7 +35,7 @@ export const colors = {
   "dark-cyan": "#009491",
   brown: "#5f4125",
   "light-brown": "#f8cca4",
-  "brown-9": "#1D1A1960",
+  // "brown-9": "#1D1A1960",
   "brown-6": "#262321" /** Replace this name by black-hover on all elements */,
   "brown-7": "#1D1A19",
   "brown-8": "#1D1A19",

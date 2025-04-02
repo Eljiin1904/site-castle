@@ -36,13 +36,7 @@ const NotMobileContent = () => {
   return (
     <Fragment>
       <BaseFields />
-      <Div
-        fx
-        borderTop
-        pt={16}
-      >
-        <ActionButton />
-      </Div>
+      <ActionButton />
     </Fragment>
   );
 };

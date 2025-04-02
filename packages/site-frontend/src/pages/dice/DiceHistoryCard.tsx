@@ -3,6 +3,8 @@ import { DiceRoll } from "@core/types/dice/DiceRoll";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Dice } from "#app/services/dice";
+import classNames from "classnames";
+import './DiceHistoryCard.scss';
 
 export const DiceHistoryCard = ({ roll }: { roll: DiceRoll }) => {
   const { targetKind, targetValue, rollValue } = roll;
@@ -10,16 +12,13 @@ export const DiceHistoryCard = ({ roll }: { roll: DiceRoll }) => {
 
   return (
     <Div
-      width={64}
+      className={classNames("DiceHistoryCard", { win: isWin })}
       center
-      py={8}
+      py={6}
       px={12}
-      bg={isWin ? "bright-green" : "brown-9"}
     >
       <Span
-        weight="medium"
-        fontSize={12}
-        color={isWin ? "black" : "white"}
+        size={12}       
       >
         {`${Intimal.toLocaleString(rollValue, 2, 2)}`}X
       </Span>

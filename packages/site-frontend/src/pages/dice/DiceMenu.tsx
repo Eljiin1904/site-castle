@@ -25,7 +25,8 @@ export const DiceMenu = () => {
    <ModeMenu />
    <Div
       column
-      p={sm? 20 : 24}
+      px={sm? 20 : 24}
+      py={sm? 16 : 24}
       gap={16}
       bg="brown-6"
       borderColor="brown-4"

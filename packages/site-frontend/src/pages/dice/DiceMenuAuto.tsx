@@ -14,6 +14,7 @@ import { BetInputGroup } from "./BetInputGroup";
 import { useProfit } from "./useProfit";
 import { useAutoBet } from "./useAutoBet";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { SvgPercent } from "@client/svgs/common/SvgPercent";
 
 export const DiceMenuAuto = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -42,20 +43,7 @@ const NotMobileContent = () => {
   return (
     <Fragment>
       <BaseFields />
-      <Div
-        grow
-        column
-        justify="flex-end"
-        gap={8}
-      >
-        <Div
-          fx
-          borderTop
-          pt={16}
-        >
-          <ActionButton />
-        </Div>
-      </Div>
+      <ActionButton />
     </Fragment>
   );
 };
@@ -140,8 +128,7 @@ const BaseFields = () => {
             type="decimal"
             placeholder="0.00"
             value={winIncreaseBy}
-            iconRight={gameCount ? undefined : SvgInfinity}
-            iconColor="dark-sand"
+            iconRight={SvgPercent}
             disabled={autoPlaying || winAction !== "increase"}
             onChange={(x) => dispatch(Dice.setWinIncreaseBy(x))}
             
@@ -171,8 +158,7 @@ const BaseFields = () => {
             type="decimal"
             placeholder="0.00"
             value={lossIncreaseBy}
-            iconRight={gameCount ? undefined : SvgInfinity}
-            iconColor="dark-sand"
+            iconRight={ SvgPercent}           
             disabled={autoPlaying || lossAction !== "increase"}
             onChange={(x) => dispatch(Dice.setLossIncreaseBy(x))}
           />

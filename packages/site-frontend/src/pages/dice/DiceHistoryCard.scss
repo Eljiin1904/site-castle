@@ -1,0 +1,21 @@
+
+.DicePage .DiceHistoryCard {
+  
+  background-color: rgba(var(--dark-brown-rgb-color), 0.7);
+  padding: 6px 12px;
+
+  .Span {
+
+    color: var(--light-sand-color);
+  }
+
+  &.win {
+
+    background-color: var(--bright-green-color);
+
+    .Span {
+
+      color: var(--dark-brown-color);
+    }
+  }
+}
