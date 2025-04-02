@@ -1,0 +1,21 @@
+$red: #5f1519;
+$green: #166336;
+
+.MinesPage .MineCountSlider {
+  
+  .rc-slider-track {
+    background: $red;
+  }
+
+  .rc-slider-rail {
+    background: $green;
+  }
+
+  .mine-counter {
+    background: $red;
+  }
+
+  .gem-counter {
+    background: $green;
+  }
+}

@@ -20,6 +20,8 @@ const kindMap: Record<TransactionKind, boolean> = {
   "double-won": true,
   "limbo-bet": true,
   "limbo-won": true,
+  "mines-bet": true,
+  "mines-won": true,
   "promotion-card-redeem": true,
   "promotion-code-redeem": true,
   "rain-payout": true,

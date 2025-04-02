@@ -10,10 +10,7 @@ import { getXpRate } from "../helpers/getXpRate";
 import { getCommission } from "../helpers/getCommission";
 import { createTransaction } from "./createTransaction";
 
-type BetKind = Extract<
-  TransactionKindData,
-  { bet: TransactionBetData }
->["kind"];
+type BetKind = Extract<TransactionKindData, { bet: TransactionBetData }>["kind"];
 type BetData = UnionSafeOmit<TransactionKindData, "bet">;
 
 export async function createBet({

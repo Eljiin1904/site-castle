@@ -67,6 +67,7 @@ interface FeatureToggles {
   diceEnabled: boolean;
   doubleEnabled: boolean;
   limboEnabled: boolean;
+  minesEnabled: boolean;
 }
 
 interface ThresholdSettings {

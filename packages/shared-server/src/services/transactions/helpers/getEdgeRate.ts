@@ -3,6 +3,7 @@ import { Chests } from "@core/services/chests";
 import { Double } from "@core/services/double";
 import { Limbo } from "@core/services/limbo";
 import { Dice } from "@core/services/dice";
+import { Mines } from "@core/services/mines";
 
 export function getEdgeRate(category: TransactionCategory) {
   switch (category) {
@@ -16,6 +17,8 @@ export function getEdgeRate(category: TransactionCategory) {
       return Dice.edgeRate;
     case "limbo":
       return Limbo.edgeRate;
+    case "mines":
+      return Mines.edgeRate;
     default:
       throw new Error(`Invalid category, getEdgeRate: ${category}`);
   }

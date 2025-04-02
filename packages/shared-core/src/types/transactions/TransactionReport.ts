@@ -166,6 +166,11 @@ interface GameStats {
   limboWagerTokens: number;
   limboWinTokens: number;
   limboEv: number;
+
+  minesBetCount: number;
+  minesWagerTokens: number;
+  minesWinTokens: number;
+  minesEv: number;
 }
 
 interface AffiliateStats {

@@ -167,6 +167,15 @@ async function main() {
     _id: 1,
   });
 
+  await Database.collection("mines-events").createIndex({
+    timestamp: -1,
+  });
+
+  await Database.collection("mines-games").createIndex({
+    "user.id": 1,
+    completed: 1,
+  });
+
   await Database.collection("holiday-events").createIndex({
     endDate: -1,
     startDate: -1,
@@ -261,10 +270,7 @@ async function main() {
     timestamp: -1,
   });
 
-  await Database.collection("tokens").createIndex(
-    { expires: -1 },
-    { expireAfterSeconds: 0 },
-  );
+  await Database.collection("tokens").createIndex({ expires: -1 }, { expireAfterSeconds: 0 });
   await Database.collection("tokens").createIndex({
     kind: 1,
     token: 1,
@@ -325,10 +331,7 @@ async function main() {
       unique: true,
     },
   );
-  await Database.collection("user-holds").createIndex(
-    { expires: -1 },
-    { expireAfterSeconds: 0 },
-  );
+  await Database.collection("user-holds").createIndex({ expires: -1 }, { expireAfterSeconds: 0 });
 
   await Database.collection("user-reports").createIndex({ timeframe: -1 });
   await Database.collection("user-reports").createIndex({

@@ -45,6 +45,7 @@ async function main() {
   await insertDefault("doubleEnabled", true);
   await insertDefault("diceEnabled", true);
   await insertDefault("limboEnabled", true);
+  await insertDefault("minesEnabled", true);
 
   await insertDefault("activityThreshold", 0.01);
   await insertDefault("betHighrollerThreshold", 100);
