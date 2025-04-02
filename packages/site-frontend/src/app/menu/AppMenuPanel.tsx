@@ -47,6 +47,7 @@ const PanelContent = () => {
           className="menu-list"
           column
           justify="flex-start"
+          overflow="hidden"
           fx
         >
           <BaseMenu collapsed={collapsed} />

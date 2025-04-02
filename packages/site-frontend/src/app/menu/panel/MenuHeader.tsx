@@ -21,6 +21,7 @@ export const MenuHeader = ({
       <Div
         hover="highlight"
         onClick={() => handleToggle(!collapsed)}
+        zIndex={15}
       >
         <Vector
           as={SvgMenu}
