@@ -72,7 +72,7 @@ const DiceHeaderMenu = () => {
           },
           {
             type: "action",
-            label: "Rules",
+            label: t("common:rules"),
             iconLeft: SvgInfoCircle,
             onClick: () => Dialogs.open("primary", <DiceInfoModal />)
           }

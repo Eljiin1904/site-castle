@@ -27,5 +27,6 @@
   "copy": "Copy",
   "copied": "Copied",
   "more": "More details",
-  "copyClipboard": "Copy to Clipboard"
+  "copyClipboard": "Copy to Clipboard",
+  "rules": "Rules"
 }
