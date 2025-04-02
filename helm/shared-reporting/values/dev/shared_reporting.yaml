@@ -69,4 +69,4 @@ namespace: shared-reporting-server
 
 # Explicit labels to ensure consistency
 labels:
-  app: castle-reporting-server
+  app: shared-reporting-server
