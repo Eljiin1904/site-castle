@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "castle-admin-backend.fullname" . }}
+  name: {{ include "shared-reporting-server.fullname" . }}
   labels:
-    {{- include "castle-admin-backend.labels" . | nindent 4 }}
+    {{- include "shared-reporting-server.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "castle-admin-backend.fullname" . }}
+    name: {{ include "shared-reporting-server.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
