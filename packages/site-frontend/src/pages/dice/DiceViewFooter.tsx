@@ -28,7 +28,7 @@ export const DiceViewFooter = () => {
       gap={sm ? 8 : 12}
       bg="brown-6"
     >
-      <ModalSection>
+      <ModalSection justifyContent="space-between">
         <ModalLabel>{t("fields:bets.multiplier")}</ModalLabel>
         <Input
           type="decimal"
@@ -54,7 +54,7 @@ export const DiceViewFooter = () => {
           }}
         />
       </ModalSection>
-      <ModalSection>
+      <ModalSection justifyContent="space-between">
         <ModalLabel>
           {targetKind === "over" ? t("fields:bets.rollOver") :t("fields:bets.rollUnder")}
         </ModalLabel>
@@ -77,7 +77,7 @@ export const DiceViewFooter = () => {
           }}
         />
       </ModalSection>
-      <ModalSection>
+      <ModalSection justifyContent="space-between">
         <ModalLabel>{t("fields:bets.winChance")}</ModalLabel>
         <Input
           type="decimal"
