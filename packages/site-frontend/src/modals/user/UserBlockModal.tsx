@@ -6,20 +6,21 @@ import { Span } from "@client/comps/span/Span";
 import { Img } from "@client/comps/img/Img";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserBlockModal = ({ user }: { user: BasicUser }) => {
   const level = Users.getLevel(user.xp);
-
+  const {t} = useTranslation();
   return (
     <ConfirmModal
-      heading="Block User"
-      confirmLabel="Block"
+      heading={t("chat.blockModal.title")}
+      confirmLabel="chat.block"
       onConfirm={async () => {
         await Users.setUserBlocked({
           userId: user.id,
           block: true,
         });
-        Toasts.success(`${user.name} blocked.`);
+        Toasts.success("chat.blockModal.confirmSuccess", 5000, {value: {username: user.name}});
       }}
       message={
         <Div
@@ -28,12 +29,10 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
           pb={24}
           gap={16}
           borderBottom
+          column
         >
-          <UserIcon
-            avatarId={user.avatarId}
-            avatarIndex={user.avatarIndex}
-            width="80px"
-          />
+          <Span>{t('chat.blockModal.description',{value: {username: user.name}})}</Span>
+          
           <Div
             column
             gap={4}
@@ -57,8 +56,6 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
               />
               <Span
                 size={12}
-                weight="medium"
-                color="gray"
                 ml={6}
               >
                 {`Level ${level}`}

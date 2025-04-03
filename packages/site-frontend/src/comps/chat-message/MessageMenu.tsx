@@ -12,13 +12,14 @@ import { ChatAdminModal } from "#app/modals/chat/ChatAdminModal";
 import { UserBlockModal } from "#app/modals/user/UserBlockModal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
   const userId = useAppSelector((x) => x.user._id);
   const role = useAppSelector((x) => x.user.role);
   const text = useAppSelector((x) => x.chat.input);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
   const isAdmin = Users.getPermissions(role).manageChat;
 
   if (message.agent !== "user") {
@@ -32,9 +33,11 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
   return (
     <Div
       position="absolute"
-      px={6}
+      px={4}
       py={4}
-      bg="brown-5"
+      bg="black-hover"
+      border
+      borderColor="brown-4"
       style={{ right: "16px", top: "-20px" }}
     >
       {isAdmin && (
@@ -42,10 +45,9 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
           as={SvgShield}
           size={18}
           p={4}
-          color="orange"
           hover="highlight"
           data-tooltip-id="app-tooltip"
-          data-tooltip-content="Moderate"
+          data-tooltip-content={t("chat.moderate")}
           onClick={() =>
             Dialogs.open("primary", <ChatAdminModal message={message} />)
           }
@@ -55,10 +57,9 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
         as={SvgMention}
         size={18}
         p={4}
-        color="gray"
         hover="highlight"
         data-tooltip-id="app-tooltip"
-        data-tooltip-content="Mention"
+        data-tooltip-content={t("chat.mention")}
         onClick={() => {
           dispatch(Chat.setInput(text + `@${message.user.name} `));
           document.getElementById("chat-input")?.focus();
@@ -68,10 +69,9 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
         as={SvgReply}
         size={18}
         p={4}
-        color="gray"
         hover="highlight"
         data-tooltip-id="app-tooltip"
-        data-tooltip-content="Reply"
+        data-tooltip-content={t("chat.reply")}
         onClick={() => {
           dispatch(Chat.setReplyMessage(message));
           document.getElementById("chat-input")?.focus();
@@ -81,10 +81,10 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
         as={SvgBlock}
         size={18}
         p={4}
-        color="red"
+        color="double-red"
         hover="highlight"
         data-tooltip-id="app-tooltip"
-        data-tooltip-content="Block"
+        data-tooltip-content={t("common:block")}
         onClick={() =>
           Dialogs.open("secondary", <UserBlockModal user={message.user} />)
         }
