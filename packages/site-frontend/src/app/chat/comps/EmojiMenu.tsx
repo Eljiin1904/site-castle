@@ -145,7 +145,7 @@ export const GiphyResults = ({onClick}: {
 }) => {
 
   const search = useAppSelector((x) => x.chat.search) ?? '';
-  const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_API_KEY ?? '');
+  const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_API_KEY ?? '0Z8HMFWZifQhhNBk09IRsVqA1uHQg2Dg');
   const fetchGifs = (offset: number) => gf.search(search, { offset, limit: 10 });
   const fetchTrending = (offset: number) => gf.trending({ offset, limit: 10 });
   const sendGiphy = useSendGiphy();
