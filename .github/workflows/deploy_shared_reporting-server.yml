@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "helm/shared-reporting-server/**"
+      - "helm/shared-reporting/**"
       - "packages/shared-reporting-server/**"
       - ".github/workflows/deploy_shared_reporting-server.yml"
 
