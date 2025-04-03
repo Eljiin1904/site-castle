@@ -18,3 +18,17 @@ export const currency = (name: string) => {
       value: name,
     });
 };
+
+export const currencyMax = (name: string, max: number) => {
+  return number()
+    .max(max,
+      {
+        key: "validations.tip.notEnoughTokens",
+        value: { label: name, max: max },
+      },
+    )
+    .required({
+      key: "validations.mixed.required",
+      value: name,
+    });
+};

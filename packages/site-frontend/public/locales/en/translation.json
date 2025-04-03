@@ -214,6 +214,11 @@
     "earnModal": {
       "title": "Invite friends, earn tokens!",
       "description": "Share your referral link and earn FREE tokens from every friend that signs up!"
-    }
+    },
+    "search": "Search by icon",
+    "emoji": "Emojis",
+    "giphy": "GIFs",
+    "noResults": "No results found"
+
   }
 }

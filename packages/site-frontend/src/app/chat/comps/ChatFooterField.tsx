@@ -41,7 +41,7 @@ export const ChatFooterField = () => {
   if (!authenticated) {
     return (
       <Button
-        kind="primary"
+        kind="primary-yellow"
         size="md"
         fx
         labelSize={14}

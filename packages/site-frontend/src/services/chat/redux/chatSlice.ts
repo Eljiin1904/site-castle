@@ -13,6 +13,8 @@ interface ChatState {
   messages: ChatMessageDocument[];
   rain?: ChatRainDocument;
   replyMessage?: ChatMessageDocument;
+  search?: string;
+  activeTab: "emoji" | "giphy"; 
 }
 
 const initialState: ChatState = {
@@ -20,6 +22,8 @@ const initialState: ChatState = {
   channel: Utility.getLocalString<ChatChannel>("chat-channel", "general-english"),
   input: "",
   messages: [],
+  search: "",
+  activeTab: "emoji"
 };
 
 export const chatSlice = createSlice({
@@ -47,6 +51,12 @@ export const chatSlice = createSlice({
     setRain: reducer<ChatRainDocument>((state, { payload }) => {
       state.rain = payload;
     }),
+    setSearch: reducer<string>((state, { payload }) => {
+      state.search = payload;
+    }),
+    setActiveTab: reducer<"emoji"|"giphy">((state, { payload }) => {
+      state.activeTab = payload;
+    }),
     setReplyMessage: reducer<ChatMessageDocument | undefined>((state, { payload }) => {
       state.replyMessage = payload;
     }),
@@ -61,4 +71,6 @@ export const {
   setInput,
   setRain,
   setReplyMessage,
+  setSearch,
+  setActiveTab
 } = chatSlice.actions;

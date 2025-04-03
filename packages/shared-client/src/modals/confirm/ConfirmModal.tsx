@@ -74,13 +74,13 @@ export const ConfirmModal: FC<ConfirmModalProps> = ({
         >
           <Button
             fx
-            kind="primary-yellow"
+            kind="secondary-yellow"
             label={t(cancelLabel)}
             onClick={handleCancel}
           />
           <Button
             fx
-            kind="secondary-yellow"
+            kind="primary-yellow"
             label={t(confirmLabel)}
             disabled={isLoading}
             onClick={handleConfirm}

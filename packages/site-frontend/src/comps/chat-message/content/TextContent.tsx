@@ -97,17 +97,25 @@ const RichText = ({
           {str}
         </Span>,
       );
-    } else if(str.startsWith(":") && str.length > 1) {
+    } else if(str.startsWith("[:") && str.length > 1) {
 
-      const emote = Chat.emotes.find((x) => x.id === str);
+      const emojiId = str.substring(1, str.length - 1);
+      const emote = Chat.emotes.find((x) => x.id === emojiId);
       if(!emote)
         span.push(str);
       else {
         endSpan(false);
         elements.push(
-          <Img path={emote.src} height="32px" width="32px" type="png" alt={emote.name} />,
+          <Img key={elements.length} path={emote.src} height="32px" width="32px" type="png" alt={emote.name} />,
         );
       }
+    } else if(str.startsWith("[giphy:") && str.length > 1) {
+
+      const gifData = str.substring(7, str.length - 1);
+      endSpan(false);
+      elements.push(
+        <Img key={elements.length} path={gifData} width="240px" type="external" alt="Image from giphy" />,
+      );
     }
     else {
       span.push(str);

@@ -7,7 +7,7 @@ import react from "@vitejs/plugin-react";
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const appEnv = env.NODE_ENV || "development";
-
+  
   console.log("Vite mode:", mode);
   console.log("App environment:", appEnv);
 
@@ -17,7 +17,10 @@ export default ({ mode }) => {
       port: 3000,
     },
     define: {
-      "process.env": { APP_ENV: appEnv },
+      "process.env": { APP_ENV: appEnv,REACT_APP_GIPHY_API_KEY:
+        mode === "production"
+          ? undefined
+          : "0Z8HMFWZifQhhNBk09IRsVqA1uHQg2Dg" },
     },
     css: {
       preprocessorOptions: {
