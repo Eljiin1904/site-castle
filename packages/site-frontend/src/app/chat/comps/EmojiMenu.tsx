@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { DropdownBody } from "@client/comps/dropdown/DropdownBody";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgEmoji } from "@client/svgs/common/SvgEmoji";
@@ -8,150 +7,102 @@ import { Chat } from "#app/services/chat";
 import { Div } from "@client/comps/div/Div";
 import { SvgTimes } from "@client/svgs/common/SvgTimes";
 import { Img } from "@client/comps/img/Img";
-import { EmoteProps } from "#app/services/chat/Chat";
+import { EmoteProps, setActiveTab, setSearch } from "#app/services/chat/Chat";
+import { Input } from "@client/comps/input/Input";
+import { SvgSearch } from "@client/svgs/common/SvgSearch";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Grid} from "@giphy/react-components";
+import { GiphyFetch } from '@giphy/js-fetch-api';
+import type { IGif } from '@giphy/js-types'
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { useSendGiphy } from "../hooks/useSendGiphy";
 
+export const EmojiMenu = () => {
 
-export const EmojiMenu = ({
-  onEmojiClick,
-}: {
-  onEmojiClick: (x: string) => void;
-}) => {
-
-  const [open, setOpen] = useState(false);
-
-  const handleEmojiClick = (x: string) => {
-    setOpen(false);
-    onEmojiClick(x);
-  };
+  const [open, setOpen] = useState(false);  
   return (<Dropdown
+    className="ChatEmojiModalBottom"
     type="custom"
-    menuWidth="280px"
+    menuWidth="338px"
     open={open}
     onToggle={setOpen}
     button={<Vector
       as={SvgEmoji}
       hover="highlight"
     />}
-    body={<EmojiMenuOptions onClick={handleEmojiClick} onClose={() => setOpen(false)}/>}
-    />)
+    body={<EmojiMenuOptions onClick={() => setOpen(false)} />}
+    />);
 };
 
-export const EmojiMenuOld = ({
-  onEmojiClick,
-}: {
-  onEmojiClick: (x: string) => void;
-}) => {
-  const [open, setOpen] = useState(false);
-
-  const handleEmojiClick = (x: string) => {
-    setOpen(false);
-    onEmojiClick(x);
-  };
-
-  return (
-    <Dropdown
-      type="custom"
-      menuWidth="288px"
-      open={open}
-      onToggle={setOpen}
-      button={
-        <Vector
-          as={SvgEmoji}
-          size={16}
-          hover="highlight"
-        />
-      }
-      body={
-        <DropdownBody
-          flexFlow="row-wrap"
-          gap={8}
-          p={8}
-        >
-          {Chat.emojis.map((x, i) => (
-            <EmojiButton
-              key={i}
-              emoji={x}
-              onClick={handleEmojiClick}
-            />
-          ))}
-        </DropdownBody>
-      }
-    />
-  );
-};
-
-const EmojiMenuOptions = ({onClick, onClose}: {
-  onClick: (x: string) => void;
-  onClose: () => void;
-}) => {
-
-  const [currentTab, setCurrentTab] = useState("emotes");
-  return (<Div 
-          fx
-          px={16}
-          py={16}
-          bg="brown-4"
-          column
-          >
-          <Div fx gap={16} px={8}>
-            <EmojiMenuOption selected={currentTab === 'emotes'} label="Emotes" onClick={() => setCurrentTab("emotes")} />
-            <EmojiMenuOption selected={currentTab === 'emoji'} label="Emoji" onClick={() => setCurrentTab("emoji")} />
-            <Vector
-                as={SvgTimes}
-                size={16}
-                color={'dark-sand'}
-                position="absolute"
-                right={0}
-                top={0}
-                hover="highlight"
-                onClick={onClose}
-              />
-          </Div>  
-    {currentTab === "emotes" && <Emotes onClick={onClick} />}
-    {currentTab === "emoji" && <Emojis  onClick={onClick}/>}
-  </Div>)
-};
-
-const EmojiMenuOption = ({selected, label, onClick}: {
-  selected: boolean;
-  label: string;
+const EmojiMenuOptions = ({onClick}: {
   onClick: () => void;
 }) => {
 
-  return (<Span cursor="pointer" size={12} color={selected ? 'sand' : 'dark-sand'} fontWeight="semi-bold" onClick={onClick} textTransform="uppercase">{label}</Span>)
-}
+  const search = useAppSelector((x) => x.chat.search);
+  const activeTab = useAppSelector((x) => x.chat.activeTab);
+  const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
-const Emojis = ({onClick}: {
-  onClick: (x: string) => void;
-}) => {
-
-  return (<Div
-    fx
-    flexFlow="row-wrap"
-    gap={4}
-    mt={12}
-    >
-    {Chat.emojis.map((x, i) => (
-            <EmojiButton
-              key={i}
-              emoji={x}
-              onClick={onClick}
+  return (<Div 
+          fx
+          py={16}
+          bg="brown-4"
+          column
+          gap={16}
+          wrap
+          >
+          <Div fx px={16}>
+            <Input
+                iconLeft={SvgSearch}
+                iconRight={SvgTimes}
+                kind="chat-background"
+                type="text"
+                id="game-search"
+                placeholder={t('chat.search')}
+                value={search}
+                onChange={(search) => dispatch(setSearch(search ?? ''))}
+                onIconRightClick={() => dispatch(setSearch(''))}
+              />
+          </Div>
+          <Div fx justifyContent="center">
+            <EmojiMenuOption label={'emoji'} />
+            <EmojiMenuOption label={'giphy'}  />            
+          </Div>
+          <Div fx px={16} overflow="auto">
+            <Conditional value={activeTab}
+            emoji={<Emojis onClick={onClick} />}
+            giphy={<GiphyResults onClick={onClick} />}
             />
-          ))}
+          </Div>
   </Div>)
 };
 
-const Emotes = ({onClick}: {
-  onClick: (x: string) => void;
+const EmojiMenuOption = ({label}: {
+  label: "emoji" | "giphy";
 }) => {
+
+  const activeTab = useAppSelector((x) => x.chat.activeTab);
+  const dispatch = useAppDispatch();
+  const {t} = useTranslation();
+  const selected = activeTab === label;
+  return (<Span cursor="pointer" pb={8} borderWidth={selected ? 2: 1} borderBottom borderColor={selected ? `sand`:`dark-brown-hover`} flexGrow textAlign="center" size={12} color={selected ? 'sand' : 'dark-sand'} fontWeight="semi-bold" onClick={() => dispatch(setActiveTab(label)) } textTransform="uppercase">{t(`chat.${label}`)}</Span>)
+};
+
+const Emojis = ({onClick}: {
+  onClick: () => void;
+}) => {
+
+  const search = useAppSelector((x) => x.chat.search);
+  const emotes = Chat.emotes.filter(x => !search || x.name.toLowerCase().includes(search.toLowerCase()));
 
   return (<Div
     fx
     flexFlow="row-wrap"
-    gap={4}
-    mt={12}
+    gap={8}
     >
-    {Chat.emotes.map((x, i) => (
+    {emotes.map((x, i) => (
             <EmoteButton
               key={x.id}
               emote={x}
@@ -161,43 +112,60 @@ const Emotes = ({onClick}: {
   </Div>)
 };
 
-
-const EmojiButton = ({
-  emoji,
-  onClick,
-}: {
-  emoji: string;
-  onClick: (x: string) => void;
-}) => {
-  return (
-    <Span
-      size={20}
-      hover="bg-darken"
-      py={6}
-      px={8}
-      onClick={() => onClick(emoji)}
-    >
-      {emoji}
-    </Span>
-  );
-};
-
 const EmoteButton = ({
   emote,
   onClick,
 }: {
   emote: EmoteProps;
-  onClick: (x: string) => void;
+  onClick: () => void;
 }) => {
+  
+  const dispatch = useAppDispatch();
+  const text = useAppSelector((x) => x.chat.input);
+  const onClickEmoji = () => {
+
+    dispatch(Chat.setInput(`${text} [${emote.id}] `));
+    onClick();
+  };
+
   return (
     <Span
-      size={20}
       hover="bg-darken"
-      py={6}
+      py={8}
       px={8}
-      onClick={() => onClick(` ${emote.id}`)}
+      onClick={onClickEmoji}
     >
-      <Img path={emote.src} height="32px" width="32px" type="png" alt={emote.name} />
+      <Img path={emote.src} height="50px" width="50px" type="png" alt={emote.name} />
     </Span>
   );
+};
+
+export const GiphyResults = ({onClick}: {
+  onClick: () => void;
+}) => {
+
+  const search = useAppSelector((x) => x.chat.search) ?? '';
+  const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_API_KEY ?? '');
+  const fetchGifs = (offset: number) => gf.search(search, { offset, limit: 10 });
+  const fetchTrending = (offset: number) => gf.trending({ offset, limit: 10 });
+  const sendGiphy = useSendGiphy();
+  const {t} = useTranslation();
+
+  const onClickGif = (gif:IGif) => {
+
+    sendGiphy(gif.images.downsized_medium.url);
+    onClick();
+  };
+
+  return ( <Div fx>
+    <Grid width={306} 
+      columns={2} 
+      gutter={6} 
+      fetchGifs={search.length ? fetchGifs: fetchTrending} 
+      noResultsMessage={<Span>{t('chat.noResults')}</Span>}
+      key={search}
+      onGifClick={onClickGif}
+      noLink={true}
+    />
+   </Div>);
 };

@@ -11,11 +11,11 @@ import { EmojiMenu } from "./EmojiMenu";
 import { MentionPopout } from "./MentionPopout";
 import { ReplyPopout } from "./ReplyPopout";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import "./ChatInput.scss";
 import { Button } from "@client/comps/button/Button";
 import { SvgQuestionCircle } from "@client/svgs/common/SvgQuestionCircle";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { SvgTimes } from "@client/svgs/common/SvgTimes";
+import "./ChatInput.scss";
 
 export const ChatInput = ({disabled, message}: {
   disabled?: boolean;
@@ -68,12 +68,7 @@ export const ChatInput = ({disabled, message}: {
           bottom={12}
         >
           {disabled ? 
-            <ChatDisabledMessage message={message ?? ''} /> : <EmojiMenu
-            onEmojiClick={(emoji) => {
-              dispatch(Chat.setInput(text + emoji));
-              document.getElementById("chat-input")?.focus();
-            }}
-          />
+            <ChatDisabledMessage message={message ?? ''} /> : <EmojiMenu/>
           }
         </Div>
       </Div>
@@ -87,7 +82,7 @@ const ChatDisabledMessage = ({message}: {message: string | JSX.Element}) => {
 
   const [open, setOpen] = useState(false);
   return (<Dropdown
-      className="ChatMessageDropdown"
+      className="ChatModalBottom"
       type="custom"
       menuWidth="290px"
       open={open}
