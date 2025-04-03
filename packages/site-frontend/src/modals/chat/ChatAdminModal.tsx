@@ -21,12 +21,14 @@ import { waitForConfirmation } from "@client/modals/confirm/ConfirmModal";
 import { ChatMessageCard } from "#app/comps/chat-message/ChatMessageCard";
 import { Users } from "#app/services/users";
 import { Chat } from "#app/services/chat";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatAdminModal = ({
   message,
 }: {
   message: ChatMessageDocument;
 }) => {
+  const { t } = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
       deleteMessage: Validation.boolean().required(),
@@ -191,7 +193,7 @@ export const ChatAdminModal = ({
                   placeholder="Enter end date..."
                   showTimeSelect
                   disabled={form.loading}
-                  error={form.errors.endDate}
+                  error={form.errors.endDate?.key ? t(form.errors.endDate.key, {value: form.errors.endDate.value}) : undefined}
                   value={form.values.endDate}
                   onChange={(x) => form.setValue("endDate", x)}
                 />
