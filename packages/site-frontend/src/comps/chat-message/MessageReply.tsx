@@ -4,6 +4,7 @@ import { Span } from "@client/comps/span/Span";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
 import "./MessageReply.scss";
+import { TextContent } from "./content/TextContent";
 
 export const MessageReply = ({ message }: { message: ChatMessageDocument }) => {
   if (message.kind !== "text" || !message.reply) {
@@ -12,7 +13,7 @@ export const MessageReply = ({ message }: { message: ChatMessageDocument }) => {
 
   const reply = message.reply;
   const roleInfo = Users.getRoleInfo(reply.user.role);
-
+  console.log("reply", reply.text);
   return (
     <Div
       className="MessageReply"
@@ -35,21 +36,16 @@ export const MessageReply = ({ message }: { message: ChatMessageDocument }) => {
         width="18px"
         ml={8}
       />
-      <Span
-        color={roleInfo?.color || "white"}
-        size={12}
-        ml={6}
-      >
-        {reply.user.name}
-      </Span>
-      <Span
-        className="text"
-        size={12}
-        textOverflow="ellipsis"
-        ml={4}
-      >
-        {reply.text}
-      </Span>
+      <Div gap={8}>
+        <Span
+          color={roleInfo?.color || "white"}
+          size={12}
+          ml={6}
+        >
+          {reply.user.name}
+        </Span>
+        <TextContent text={reply.text} isReply={true} />
+      </Div>
     </Div>
   );
 };

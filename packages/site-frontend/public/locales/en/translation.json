@@ -218,7 +218,16 @@
     "search": "Search by icon",
     "emoji": "Emojis",
     "giphy": "GIFs",
-    "noResults": "No results found"
-
+    "noResults": "No results found",
+    "mention": "Mention",
+    "reply": "Reply",
+    "block": "Block",
+    "unblock": "Unblock",
+    "blockModal": {
+      "title": "Block User",
+      "description": "¿Estás seguro de que deseas bloquear a {{value.username}}?",
+      "confirmSuccess": "Has bloqueado a {{value.username}}."
+    },
+    "moderate":"Moderate"
   }
 }

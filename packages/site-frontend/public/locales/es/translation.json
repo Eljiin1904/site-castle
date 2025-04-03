@@ -213,6 +213,16 @@
     "search": "Buscar emojis y GIFs",
     "emoji": "Emojis",
     "giphy": "GIFs",
-    "noResults": "No se encontraron resultados"
+    "noResults": "No se encontraron resultados",
+    "mention": "Mencionar",
+    "reply": "Responder",
+    "block": "Bloquear",
+    "unblock": "Desbloquear",
+    "blockModal": {
+      "title": "Bloquear Usuario",
+      "description": "¿Estás seguro de que deseas bloquear a {{value.username}}?",
+      "confirmSuccess": "Has bloqueado a {{value.username}}."
+    },
+    "moderate": "Moderar"
   }
 }

@@ -4,7 +4,7 @@ import { Link } from "@client/comps/link/Link";
 import { Chat } from "#app/services/chat";
 import { Img } from "@client/comps/img/Img";
 
-export const TextContent = ({ text }: { text: string }) => {
+export const TextContent = ({ text, isReply = false }: { text: string , isReply?: boolean}) => {
   if (Chat.containsBadWord(text)) {
     return (
       <Span
@@ -22,6 +22,7 @@ export const TextContent = ({ text }: { text: string }) => {
       fontSize={12}
       color="light-sand"
       text={text}
+      isReply={isReply}
     />
   );
 };
@@ -30,10 +31,12 @@ const RichText = ({
   fontSize,
   color,
   text,
+  isReply = false,
 }: {
   fontSize: Unit;
   color: Color;
   text: string;
+  isReply?: boolean;
 }) => {
   const span: string[] = [];
   const elements = [];
@@ -106,7 +109,7 @@ const RichText = ({
       else {
         endSpan(false);
         elements.push(
-          <Img key={elements.length} path={emote.src} height="32px" width="32px" type="png" alt={emote.name} />,
+          <Img key={elements.length} path={emote.src} height={isReply ? "16px":"32px"} width={isReply ? "16px":"32px"} type="png" alt={emote.name} />,
         );
       }
     } else if(str.startsWith("[giphy:") && str.length > 1) {
@@ -114,11 +117,11 @@ const RichText = ({
       const gifData = str.substring(7, str.length - 1);
       endSpan(false);
       elements.push(
-        <Img key={elements.length} path={gifData} width="240px" type="external" alt="Image from giphy" />,
+        <Img key={elements.length} path={gifData} width={isReply ? "32px":"240px"} type="external" alt="Image from giphy" />,
       );
     }
     else {
-      span.push(str);
+      elements.push(<Span key={elements.length} size={isReply ? 10: 12} color={color}>{str}</Span>);
     }
   }
 
@@ -128,7 +131,8 @@ const RichText = ({
     <Div
       className="rich-text"
       display="flex"
-      alignItems="center"
+      alignItems="flex-end"
+      wrap
       gap={4}
     >
       {elements.map((x) => x)}
