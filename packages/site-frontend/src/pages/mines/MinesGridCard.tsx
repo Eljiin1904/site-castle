@@ -1,10 +1,10 @@
 import { memo } from "react";
 import classNames from "classnames";
-import { MinesMode } from "#core/types/mines/MinesMode";
-import { Div } from "#client/comps/div/Div";
-import { Img } from "#client/comps/img/Img";
-import { SvgChicken } from "#client/svgs/common/SvgChicken";
-import { Vector } from "#client/comps/vector/Vector";
+import { MinesMode } from "@core/types/mines/MinesMode";
+import { Div } from "@client/comps/div/Div";
+import { Img } from "@client/comps/img/Img";
+import { SvgChicken } from "@client/svgs/common/SvgChicken";
+import { Vector } from "@client/comps/vector/Vector";
 import { Mines } from "#app/services/mines";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { SvgAnimation } from "./SvgAnimation";

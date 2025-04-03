@@ -1,6 +1,6 @@
-import { Conditional } from "#client/comps/conditional/Conditional";
-import { Div } from "#client/comps/div/Div";
-import { PageLoading } from "#client/comps/page/PageLoading";
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { Div } from "@client/comps/div/Div";
+import { PageLoading } from "@client/comps/page/PageLoading";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { MinesHeader } from "./MinesHeader";
 import { MinesFeed } from "./MinesFeed";

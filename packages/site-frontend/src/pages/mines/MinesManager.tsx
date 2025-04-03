@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useUnmount } from "usehooks-ts";
-import { useSoundPreloader } from "#client/hooks/sounds/useSoundPreloader";
-import { useInputQueue } from "#client/hooks/system/useInputQueue";
+import { useSoundPreloader } from "@client/hooks/sounds/useSoundPreloader";
+import { useInputQueue } from "@client/hooks/system/useInputQueue";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { usePresence } from "#app/hooks/sockets/usePresence";
 import { useSocketListener } from "#app/hooks/sockets/useSocketListener";

@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react";
-import { Div } from "#client/comps/div/Div";
+import { Div } from "@client/comps/div/Div";
 import { Mines } from "#app/services/mines";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { MinesGridCard } from "./MinesGridCard";

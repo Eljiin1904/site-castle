@@ -1,7 +1,7 @@
-import { MinesMode } from "#core/types/mines/MinesMode";
-import { ButtonNav } from "#client/comps/button/ButtonNav";
-import { Div } from "#client/comps/div/Div";
-import { Conditional } from "#client/comps/conditional/Conditional";
+import { MinesMode } from "@core/types/mines/MinesMode";
+import { ButtonNav } from "@client/comps/button/ButtonNav";
+import { Div } from "@client/comps/div/Div";
+import { Conditional } from "@client/comps/conditional/Conditional";
 import { Mines } from "#app/services/mines";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";

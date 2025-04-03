@@ -1,4 +1,4 @@
-import { Div } from "#client/comps/div/Div";
+import { Div } from "@client/comps/div/Div";
 import { MinesGrid } from "./MinesGrid";
 import { MinesWinCard } from "./MinesWinCard";
 

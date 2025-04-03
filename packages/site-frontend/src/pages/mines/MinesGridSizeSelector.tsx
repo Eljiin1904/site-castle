@@ -1,7 +1,7 @@
-import { Dropdown } from "#client/comps/dropdown/Dropdown";
-import { ModalLabel } from "#client/comps/modal/ModalLabel";
-import { ModalSection } from "#client/comps/modal/ModalSection";
-import { SvgCategory } from "#client/svgs/common/SvgCategory";
+import { Dropdown } from "@client/comps/dropdown/Dropdown";
+import { ModalLabel } from "@client/comps/modal/ModalLabel";
+import { ModalSection } from "@client/comps/modal/ModalSection";
+import { SvgCategory } from "@client/svgs/common/SvgCategory";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Mines } from "#app/services/mines";

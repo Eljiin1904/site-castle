@@ -1,5 +1,5 @@
-import { usePost } from "#client/hooks/system/usePost";
-import { useSoundPlayer } from "#client/hooks/sounds/useSoundPlayer";
+import { usePost } from "@client/hooks/system/usePost";
+import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
 import { Mines } from "#app/services/mines";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 

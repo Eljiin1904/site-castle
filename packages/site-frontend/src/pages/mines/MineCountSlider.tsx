@@ -1,10 +1,10 @@
-import { Slider } from "#client/comps/slider/Slider";
-import { Div } from "#client/comps/div/Div";
-import { ModalLabel } from "#client/comps/modal/ModalLabel";
-import { ModalSection } from "#client/comps/modal/ModalSection";
-import { ModalField } from "#client/comps/modal/ModalField";
-import { Img } from "#client/comps/img/Img";
-import { Span } from "#client/comps/span/Span";
+import { Slider } from "@client/comps/slider/Slider";
+import { Div } from "@client/comps/div/Div";
+import { ModalLabel } from "@client/comps/modal/ModalLabel";
+import { ModalSection } from "@client/comps/modal/ModalSection";
+import { ModalField } from "@client/comps/modal/ModalField";
+import { Img } from "@client/comps/img/Img";
+import { Span } from "@client/comps/span/Span";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Mines } from "#app/services/mines";

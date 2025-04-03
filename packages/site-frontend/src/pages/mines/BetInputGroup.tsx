@@ -1,19 +1,17 @@
-import { Intimal } from "#core/services/intimal";
-import { Div } from "#client/comps/div/Div";
-import { Input } from "#client/comps/input/Input";
-import { Button } from "#client/comps/button/Button";
-import { ModalSection } from "#client/comps/modal/ModalSection";
-import { ModalLabel } from "#client/comps/modal/ModalLabel";
+import { Intimal } from "@core/services/intimal";
+import { Div } from "@client/comps/div/Div";
+import { Input } from "@client/comps/input/Input";
+import { Button } from "@client/comps/button/Button";
+import { ModalSection } from "@client/comps/modal/ModalSection";
+import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Mines } from "#app/services/mines";
 
-
-export const BetInputGroup({disabled}: {disabled? : boolean}) => {
-
+export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
-  const betAmount = useAppSelector((x) =>  x.mines.betAmount);
-  const dispatch = useAppDispatch()
+  const betAmount = useAppSelector((x) => x.mines.betAmount);
+  const dispatch = useAppDispatch();
 
   const setBetAmount = (x: number | undefined) => {
     dispatch(Mines.setBetAmount(x));
@@ -75,5 +73,4 @@ export const BetInputGroup({disabled}: {disabled? : boolean}) => {
       </Div>
     </ModalSection>
   );
-
-}
+};

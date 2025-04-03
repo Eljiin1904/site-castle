@@ -1,7 +1,7 @@
-import { Intimal } from "#core/services/intimal";
-import { usePost } from "#client/hooks/system/usePost";
-import { Dialogs } from "#client/services/dialogs";
-import { useSoundPlayer } from "#client/hooks/sounds/useSoundPlayer";
+import { Intimal } from "@core/services/intimal";
+import { usePost } from "@client/hooks/system/usePost";
+import { Dialogs } from "@client/services/dialogs";
+import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
 import { useBet2fa } from "#app/hooks/security/useBet2fa";
 import { useBetConfirmation } from "#app/hooks/security/useBetConfirmation";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
