@@ -134,4 +134,15 @@
       }
     }
   }
+
+  &.chat-background {
+
+    background-color: var(--brown-4-color);
+    border: 1px solid var(--dark-sand-color);
+
+    input, .icon {
+    
+      color: var(--dark-sand-color);
+    }
+  }
 }
