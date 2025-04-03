@@ -4,7 +4,6 @@ import { Div } from "@client/comps/div/Div";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { DiceHeader } from "./DiceHeader";
 import { DiceView } from "./DiceView";
-import { DiceFeed } from "./DiceFeed";
 import { DiceMenu } from "./DiceMenu";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
 import { useTranslation } from "@core/services/internationalization/internationalization";

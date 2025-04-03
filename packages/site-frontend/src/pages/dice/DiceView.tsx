@@ -1,14 +1,13 @@
 import { Div } from "@client/comps/div/Div";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { DiceViewSlider } from "./DiceViewSlider";
 import { DiceViewFooter } from "./DiceViewFooter";
 import { DiceHistory } from "./DiceHistory";
 import { DiceViewResult } from "./DiceViewResult";
 import { AutoStatusView } from "./AutoStatusView";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const DiceView = () => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const sm = layout === "mobile";
+  const small = useIsMobileLayout();
 
   return (
     <Div
@@ -19,11 +18,11 @@ export const DiceView = () => {
       bg="brown-8"
       overflow="hidden"
       style={{
-        height: sm ? "350px" : "660px",
+        height: small ? "350px" : "660px",
       }}
     >
       <Div fx position="relative" grow>
-        <DiceHistory />
+        {!small && <DiceHistory />}
         <DiceViewResult />
         <DiceViewSlider />
       </Div>

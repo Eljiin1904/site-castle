@@ -1,8 +1,8 @@
 import { Circle } from "@client/comps/circle/Circle";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
-import "./DoubleStatus.scss";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import "./DoubleStatus.scss";
 
 export const DoubleStatus = ({ status }: { status: "Online" | "Offline" }) => {
   const {t} = useTranslation(["common"]);
@@ -12,7 +12,6 @@ export const DoubleStatus = ({ status }: { status: "Online" | "Offline" }) => {
       align="center"
       justify="center"
       px={6}
-      bg="brown-9"
       style={{
         width: 115,
       }}

@@ -23,6 +23,7 @@ export type InputBaseProps = StyledLayoutProps & {
   disabled?: boolean;
   error?: string;
   size?: "sm" | "lg";
+  kind?: "grey-background" | "overlay-background" | "chat-background";
   onChange: (value: string | undefined) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -43,6 +44,7 @@ export const InputBase: FC<InputBaseProps> = ({
   disabled,
   error,
   size,
+  kind,
   onChange,
   onFocus,
   onBlur,
@@ -54,7 +56,7 @@ export const InputBase: FC<InputBaseProps> = ({
 
   return (
     <Div
-      className={classNames("Input", className, {
+      className={classNames("Input", className, kind, {
         disabled,
         focus: focused,
         lg: size === "lg",

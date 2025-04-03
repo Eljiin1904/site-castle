@@ -209,6 +209,10 @@
     "earnModal": {
       "title": "Invita amigos, gana tokens",
       "description": "Comparte tu enlace de referencia y gana tokens GRATIS por cada amigo que se registre!"
-    }
- }
+    },
+    "search": "Buscar emojis y GIFs",
+    "emoji": "Emojis",
+    "giphy": "GIFs",
+    "noResults": "No se encontraron resultados"
+  }
 }

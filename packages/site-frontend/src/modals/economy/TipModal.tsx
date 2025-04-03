@@ -23,13 +23,13 @@ export const TipModal = ({ sendTo }: { sendTo?: string }) => {
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
-  const {t} = useTranslation();
+  const {t} = useTranslation(["validations"]);
   const handleTip = useSendTip();
 
   const form = useForm({
     schema: Validation.object({
-      lookup: Validation.string().required("validations:validations.tip.recipientRequired"),
-      tipAmount: Validation.currency(t("fields:tip.amount"), tokenBalance),
+      lookup: Validation.string().required("validations.tip.recipientRequired"),
+      tipAmount: Validation.currencyMax(t("fields:tip.amount"), tokenBalance),
     }),
     initialValues: {
       lookup: sendTo,

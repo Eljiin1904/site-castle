@@ -4,11 +4,13 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
 import { Div } from "@client/comps/div/Div";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const ProfitSection = () => {
   const betAmount = useAppSelector((x) => x.dice.betAmount || 0);
   const targetKind = useAppSelector((x) => x.dice.targetKind);
   const targetValue = useAppSelector((x) => x.dice.targetValue);
+  const small = useIsMobileLayout();
   const {t} = useTranslation();
 
   const profit = Dice.getProfit({
@@ -19,7 +21,7 @@ export const ProfitSection = () => {
 
   return (
     <Div fx wrap gap={8} justify="space-between">
-      <ModalLabel>{t("games\\dice:profitOnWin")}</ModalLabel>
+      <ModalLabel mb={small ? 0: 8}>{t("games\\dice:profitOnWin")}</ModalLabel>
       <Tokens value={profit} fontSize={12} vectorColor="light-sand" />
     </Div>
   );

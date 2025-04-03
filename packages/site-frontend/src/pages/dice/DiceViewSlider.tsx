@@ -7,9 +7,9 @@ import { Span } from "@client/comps/span/Span";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
-import { SvgSliderDiceHandle } from "./SvgSliderDiceHandle";
-import "./DiceViewSlider.scss";
 import { Img } from "@client/comps/img/Img";
+import { SvgSlider } from "#app/svgs/dice/SVgSlider";
+import "./DiceViewSlider.scss";
 
 export const DiceViewSlider = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -45,10 +45,9 @@ export const DiceViewSlider = () => {
         value={targetValue}
         handleRender={(node) => (
           <div {...node.props}>
-            <Div center>
+            <Div center bg="black-hover" p={16} width={40} height={40} borderRadius={"full"}>
               <Vector
-                as={SvgSliderDiceHandle}
-                // size={28}
+                as={SvgSlider}
               />
               <TargetCard />
             </Div>
@@ -68,12 +67,11 @@ const TargetCard = () => {
     <Div
       position="absolute"
       p={8}
-      // bg="brown-6"
       style={{
-        top: "50px",
+        top: "40px",
       }}
     >
-      <Span fontFamily="title" lineHeight={24} fontWeight="regular" fontSize={sm ? 16: 24}>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
+      <Span fontFamily="title" color="dark-brown" lineHeight={24} fontWeight="regular" fontSize={24}>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
     </Div>
   );
 };
