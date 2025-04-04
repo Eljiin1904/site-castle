@@ -11,6 +11,7 @@ import steamCallback from "./steamCallback";
 import steam from "./steam";
 import twitchCallback from "./twitchCallback";
 import twitch from "./twitch";
+import linkAccount from "./linkAccount";
 
 const router = Router();
 
@@ -18,6 +19,7 @@ discordCallback(router);
 discord(router);
 googleCallback(router);
 google(router);
+linkAccount(router);
 local(router);
 logout(router);
 nonce(router);

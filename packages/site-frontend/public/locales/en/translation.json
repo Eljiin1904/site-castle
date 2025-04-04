@@ -92,7 +92,8 @@
       "noPopup": "Don't see the {{provider}} login popup window?",
       "redirect": "Redirect to {{provider}} login"
     },
-    "success": "Welcome back, {{value.username}}!"
+    "success": "Welcome back, {{value.username}}!",
+    "failure": "Unable to validate linked account."
   },
   "forgot": {
     "title": "Forgot Password?",
@@ -123,6 +124,12 @@
       "description": "Your password has been successfully reset.",
       "login": "Log In"
     }
+  },
+  "link": {
+    "linkTitle": "Link to your existing account",
+    "linkDescription": "Enter the password to your existing account to link to it.",
+    "linkSubmit": "Link account",
+    "linkFailure": "Unable to validate linked account."
   },
   "register": {
     "title": "Register to SandCasino",

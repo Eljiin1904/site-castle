@@ -96,6 +96,7 @@
     }
   },
   "errors": {
+    "invalidCredentials": "credenciales no válidas.",
     "invalidReferral": "Código de referencia inválido.",
     "email": {
       "taken": "El correo electrónico ya está registrado.",
@@ -111,6 +112,12 @@
     },
     "google": {
       "taken": "Google id ya está vinculado."
+    },
+    "siwe": {
+      "taken": "dirección de billetera ya está vinculado."
+    },
+    "steam": {
+      "taken": "Steam id ya está vinculado."
     },
     "twitch": {
       "taken": "Twitch id ya está vinculado."

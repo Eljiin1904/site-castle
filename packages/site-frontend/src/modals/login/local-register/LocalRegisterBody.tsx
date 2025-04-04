@@ -77,12 +77,12 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
       className="register-body"
     >
       <Heading
-              as="h2"
-              size={small ? 20 : 24}
-              fontWeight="regular"
-              textTransform="uppercase"
-        >
-         {t("register.title")}
+        as="h2"
+        size={small ? 20 : 24}
+        fontWeight="regular"
+        textTransform="uppercase"
+      >
+        {t("register.title")}
       </Heading>
       <CaptchaForm form={form}>
         <ModalSection>
@@ -92,7 +92,7 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
             disabled={form.loading}
             error={form.errors.username?.key ? t(`${form.errors.username.key}`, {value: form.errors.username.value}) : undefined}
             value={form.values.username}
-            setError={(x) => form.setError("username",{ key: x || ''})}
+            setError={(x) => form.setError("username", { key: x || "" })}
             onChange={(x) => form.setValue("username", x)}
           />
         </ModalSection>
@@ -166,17 +166,20 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
         textAlign="center"
         fontSize={12}
       >
-        <Trans 
-          i18nKey="register.disclaimer" 
-          values={{link: t("footer.terms")}}
-          components={[<Link
-            type="a"
-            href={config.siteURL + "/terms-of-service"}
-            fontSize={12}
-            fontWeight="regular"
-          >
-         {t("footer.terms")}
-        </Link>]}/>
+        <Trans
+          i18nKey="register.disclaimer"
+          values={{ link: t("footer.terms") }}
+          components={[
+            <Link
+              type="a"
+              href={config.siteURL + "/terms-of-service"}
+              fontSize={12}
+              fontWeight="regular"
+            >
+              {t("footer.terms")}
+            </Link>,
+          ]}
+        />
       </Div>
       <ModalDivider label="Or" />
       <SSOButtons />

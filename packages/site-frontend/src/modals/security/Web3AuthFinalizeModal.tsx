@@ -13,6 +13,7 @@ import { ethers } from "ethers";
 import { Security } from "#app/services/security";
 import { Users } from "#app/services/users";
 import { SocialAuthRegisterModal } from "./SocialAuthRegisterModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 type SignatureCapture = {
   nonce: string;
@@ -34,6 +35,7 @@ export const Web3AuthFinalizeModal = ({
   const [, , removeReturnTo] = useAuthRedirect();
   const [, , removeSearch] = useAuthSearch();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(["validations"]);
 
   useMount(
     async () => {

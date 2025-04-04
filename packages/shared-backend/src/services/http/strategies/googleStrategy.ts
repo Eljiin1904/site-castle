@@ -5,6 +5,7 @@ import { HandledError } from "@server/services/errors";
 import config from "#app/config";
 import { UnknownUserError } from "../errors/UnknownUserError";
 import { ExistingUserError } from "../errors/ExistingUserError";
+import { UserLinkedElsewhereError } from "../errors/UserLinkedElsewhereError";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 export function googleStrategy() {
@@ -61,10 +62,13 @@ async function verify(
       if (user) {
         done(null, user);
       } else {
-        if (
-          await Database.exists("users", { email }, { collation: { locale: "en", strength: 2 } })
-        ) {
-          throw new HandledError("errors.email.taken");
+        const existingUser = await Database.collection("users").findOne(
+          { email },
+          { collation: { locale: "en", strength: 2 } },
+        );
+        if (existingUser) {
+          // in this case, the user has already registered this email
+          throw new UserLinkedElsewhereError(existingUser._id, googleId);
         }
 
         if (await Database.exists("users", { googleId })) {

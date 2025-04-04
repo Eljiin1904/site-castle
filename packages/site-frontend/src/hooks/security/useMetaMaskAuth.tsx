@@ -30,7 +30,7 @@ export function useMetaMaskAuth() {
 
   const connectMetaMask = async () => {
     if (!provider) {
-      Toasts.error("validation:errors.metamask.noplugin");
+      Toasts.error(new Error("validation:errors.metamask.noplugin"));
       return;
     }
 

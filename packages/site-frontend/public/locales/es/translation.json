@@ -124,6 +124,12 @@
       "submit": "Establecer nueva contraseña"
     }
   },
+  "link": {
+    "linkTitle": "Vincular a su cuenta existente",
+    "linkDescription": "Introduzca la contraseña de su cuenta existente para vincularla.",
+    "linkSubmit": "Vincular cuenta",
+    "linkFailure": "No se puede validar la cuenta vinculada."
+  },
   "register": {
     "title": "Crear una cuenta en SandCasino",
     "form": {

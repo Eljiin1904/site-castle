@@ -1,6 +1,7 @@
 import { AuthenticatedUser } from "@core/types/users/AuthenticatedUser";
 import { UserLinkProvider } from "@core/types/users/UserLinkProvider";
 import { Http } from "@client/services/http";
+import { UserDocument } from "@core/types/users/UserDocument";
 
 export function authSocial({
   provider,
@@ -10,7 +11,7 @@ export function authSocial({
   search: string;
 }): Promise<
   {
-    action: "register" | "login" | "link" | "2fa";
+    action: "register" | "login" | "link" | "link-to-other-provider" | "2fa";
   } & (
     | {
         action: "register";
@@ -23,6 +24,11 @@ export function authSocial({
       }
     | {
         action: "link";
+      }
+    | {
+        action: "link-to-other-provider";
+        userId: string;
+        providerId: string;
       }
     | {
         action: "2fa";

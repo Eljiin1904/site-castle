@@ -29,6 +29,8 @@ export default Http.createApiRoute({
       field = "discordId";
     } else if (provider === "google") {
       field = "googleId";
+    } else if (provider === "siwe") {
+      field = "walletAddress";
     } else if (provider === "steam") {
       field = "steamId";
     } else if (provider === "twitch") {

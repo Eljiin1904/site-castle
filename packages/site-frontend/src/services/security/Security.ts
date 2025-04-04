@@ -9,6 +9,7 @@ export * from "./api/authSession";
 export * from "./api/authSocial";
 export * from "./api/getAuthenticatorSecret";
 export * from "./api/getBetToken";
+export * from "./api/linkAccount";
 export * from "./api/logout";
 export * from "./api/registerLocal";
 export * from "./api/registerSocial";
