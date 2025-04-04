@@ -23,7 +23,7 @@ export const ChatMessageCard = ({
   const small = useIsMobileLayout();
   return (
     <Div
-      className={classNames("ChatMessageCard", {
+      className={classNames("ChatMessageCard",  message.agent, {
         highlight,
       })}
       fx

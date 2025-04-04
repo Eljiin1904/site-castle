@@ -1,6 +1,9 @@
 import { ChatMessageDocument } from "@core/types/chat/ChatMessageDocument";
 import { Img } from "@client/comps/img/Img";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
+import { Div } from "@client/comps/div/Div";
+import { Vector } from "@client/comps/vector/Vector";
+import { SvgOriginalGames } from "#app/svgs/common/SvgOriginalGames";
 
 export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
   if (message.agent === "user") {
@@ -38,19 +41,36 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
     message.kind === "rain-payout"
   ) {
     return (
-      <Img
-        type="jpg"
-        path="/icons/logo"
-        width="32px"
-      />
+      <CastleChatLogo />
     );
   } else {
     return (
-      <Img
-        type="png"
-        path="/icons/unknown"
-        width="32px"
-      />
+      // <Img
+      //   type="png"
+      //   path="/icons/unknown"
+      //   width="32px"
+      // />
+      <CastleChatLogo />
     );
   }
 };
+
+
+const CastleChatLogo = () => {
+
+  return (<Div
+    width={32}
+    height={32}
+    bg="sand"
+    borderRadius={`full`}
+    flexCenter
+    flexShrink
+  >
+    <Vector
+      as={SvgOriginalGames}
+      size={16}
+      color="dark-brown"
+      />
+  </Div>);
+};
+

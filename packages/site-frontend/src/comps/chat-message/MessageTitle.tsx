@@ -89,13 +89,24 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
     message.kind === "rain-payout"
   ) {
     return (
-      <Span
-        size={13}
-        fontWeight="medium"
-        color="gold"
-      >
-        {"Castle.com"}
-      </Span>
+      <Div align="center" gap={8}>
+        <Span
+          size={12}
+          color="sand"
+        >
+          {"Castle.com"}
+        </Span>
+        <Span
+          size={10}
+          color="dark-brown"
+          fontWeight="bold"
+          bg="chat-system"
+          textTransform="uppercase"
+          p={4}
+        >
+          {"Admin"}
+        </Span>
+      </Div>
     );
   } else {
     return null;
