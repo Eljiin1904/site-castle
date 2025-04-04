@@ -13,11 +13,8 @@ import { SvgSearch } from "@client/svgs/common/SvgSearch";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
-import { Grid} from "@giphy/react-components";
-import { GiphyFetch } from '@giphy/js-fetch-api';
-import type { IGif } from '@giphy/js-types'
 import { Conditional } from "@client/comps/conditional/Conditional";
-import { useSendGiphy } from "../hooks/useSendGiphy";
+import { TenorResults } from "#app/app/tenor/comps/TenorResults";
 
 export const EmojiMenu = () => {
 
@@ -68,19 +65,19 @@ const EmojiMenuOptions = ({onClick}: {
           </Div>
           <Div fx justifyContent="center">
             <EmojiMenuOption label={'emoji'} />
-            <EmojiMenuOption label={'giphy'}  />            
+            <EmojiMenuOption label={'gifs'}  />            
           </Div>
           <Div fx px={16} overflow="auto">
             <Conditional value={activeTab}
             emoji={<Emojis onClick={onClick} />}
-            giphy={<GiphyResults onClick={onClick} />}
+            gifs={<TenorResults onClick={onClick} />}
             />
           </Div>
   </Div>)
 };
 
 const EmojiMenuOption = ({label}: {
-  label: "emoji" | "giphy";
+  label: "emoji" | "gifs";
 }) => {
 
   const activeTab = useAppSelector((x) => x.chat.activeTab);
@@ -138,34 +135,4 @@ const EmoteButton = ({
       <Img path={emote.src} height="50px" width="50px" type="png" alt={emote.name} />
     </Span>
   );
-};
-
-export const GiphyResults = ({onClick}: {
-  onClick: () => void;
-}) => {
-
-  const search = useAppSelector((x) => x.chat.search) ?? '';
-  const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_API_KEY ?? '0Z8HMFWZifQhhNBk09IRsVqA1uHQg2Dg');
-  const fetchGifs = (offset: number) => gf.search(search, { offset, limit: 10 });
-  const fetchTrending = (offset: number) => gf.trending({ offset, limit: 10 });
-  const sendGiphy = useSendGiphy();
-  const {t} = useTranslation();
-
-  const onClickGif = (gif:IGif) => {
-
-    sendGiphy(gif.images.downsized_medium.url);
-    onClick();
-  };
-
-  return ( <Div fx>
-    <Grid width={306} 
-      columns={2} 
-      gutter={6} 
-      fetchGifs={search.length ? fetchGifs: fetchTrending} 
-      noResultsMessage={<Span>{t('chat.noResults')}</Span>}
-      key={search}
-      onGifClick={onClickGif}
-      noLink={true}
-    />
-   </Div>);
 };

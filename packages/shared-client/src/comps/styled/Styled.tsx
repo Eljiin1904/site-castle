@@ -36,6 +36,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
       | "stretch";
     flexBasis?: 0;
     flexGrow?: boolean | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+    flexShrink?: boolean;
     flexEven?: boolean;
     width?: "full" | Unit;
     height?: "full" | Unit;
@@ -137,6 +138,7 @@ export function Styled<T extends ElementType>({
   justifyContent = flexCenter ? "center" : undefined,
   flexBasis,
   flexGrow,
+  flexShrink,
   flexEven,
   fx,
   fy,
@@ -201,6 +203,7 @@ export function Styled<T extends ElementType>({
         [`_justify-content-${justifyContent}`]: justifyContent,
         [`_flex-basis-${flexBasis}`]: flexBasis !== undefined,
         [`_flex-grow-${flexGrow}`]: flexGrow,
+        [`_flex-shrink`]: flexShrink,
         ["_flex-even"]: flexEven,
         [`_h-${height}`]: height,
         [`_w-${width}`]: width,

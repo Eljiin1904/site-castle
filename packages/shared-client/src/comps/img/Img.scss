@@ -1,6 +1,7 @@
 
 .Img {  
 
+  flex-shrink: 0;
   img {
     object-fit: cover;
   }

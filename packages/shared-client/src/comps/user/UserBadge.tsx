@@ -27,18 +27,15 @@ export const UserBadge: FC<UserBadgeProps> = ({
       data-tooltip-id="app-tooltip"
       data-tooltip-content={tooltip}
       {...forwardProps}
+      gap={4}
     >
-      <Img
+      {badge && <Img
         type="png"
         path={badge}
         width={`${fontSize + 3}px`}
-      />
+      />}
       <Span
         size={fontSize}
-        family="title"
-        weight="bold"
-        color="gray"
-        ml={3}
       >
         {level}
       </Span>

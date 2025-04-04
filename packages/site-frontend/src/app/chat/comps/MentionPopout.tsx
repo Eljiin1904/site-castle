@@ -34,25 +34,25 @@ export const MentionPopout = ({
 
   return (
     <Div
+      className="ChatModalBottom"
       fx
       column
-      p={8}
-      bg="brown-7"
+      px={16}
+      bg="brown-4"
       border
     >
       {usernames.map((username, i) => (
         <Div
           key={i}
-          fx
-          px={12}
-          py={8}
-          bg="brown-6"
+          fx          
+          py={16}
           hover="highlight"
           onClick={() => handleClick(username)}
+          borderTop={i > 0 ? true : undefined}
+          borderColor="dark-brown-hover"
         >
           <Span
             size={12}
-            color="gray"
           >
             {username}
           </Span>

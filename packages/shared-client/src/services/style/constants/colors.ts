@@ -78,5 +78,6 @@ export const colors = {
   /** Dice colors */
   "red-arrow": "#721912",
   "green-arrow": "#274C2F",
+  "chat-system": '#E15E58'
 } as const;
 

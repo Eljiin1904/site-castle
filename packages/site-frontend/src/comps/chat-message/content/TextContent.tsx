@@ -117,7 +117,7 @@ const RichText = ({
       const gifData = str.substring(7, str.length - 1);
       endSpan(false);
       elements.push(
-        <Img key={elements.length} path={gifData} width={isReply ? "32px":"240px"} type="external" alt="Image from giphy" />,
+        <Img mt={isReply ? undefined: 2} key={elements.length} path={gifData} width={isReply ? "32px":"240px"} type="external" alt="Image from giphy" />,
       );
     }
     else {
