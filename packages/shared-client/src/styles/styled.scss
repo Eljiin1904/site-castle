@@ -113,8 +113,8 @@
   flex-grow: 8;
 }
 
-._flex-even > * {
-  flex: 1 1 0px;
+._flex-shrink {
+  flex-shrink: 0;
 }
 
 ._w-full {
