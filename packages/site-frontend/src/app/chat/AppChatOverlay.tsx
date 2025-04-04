@@ -9,7 +9,6 @@ import { ChatRoom } from "./comps/ChatRoom";
 import { ChatFooter } from "./comps/ChatFooter";
 import { ChatHeader } from "./comps/ChatHeader";
 import { ChatLog } from "./comps/ChatLog";
-import { ChatRain } from "./comps/ChatRain";
 import "./AppChatOverlay.scss";
 
 export const AppChatOverlay = () => {
@@ -66,7 +65,6 @@ const OverlayContent = () => {
       >
         <ChatRoom />
         <ChatHeader />
-        <ChatRain />
         <ChatLog />
         <ChatFooter />
       </Div>
