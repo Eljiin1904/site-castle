@@ -1,10 +1,9 @@
-import { Database } from "@server/services/database";
 import { Validation } from "@core/services/validation";
-import { HandledError } from "@server/services/errors";
 import { Security } from "@server/services/security";
-import { Http } from "#app/services/http";
-import { Site } from "#app/services/site";
+import { Http, UserLinkedElsewhereError } from "#app/services/http";
 import { Users } from "#app/services/users";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { isAlreadyRegistered } from "./utils";
 
 export default Http.createApiRoute({
   type: "post",
@@ -18,23 +17,30 @@ export default Http.createApiRoute({
     linkToken: Validation.token(),
   }),
   callback: async (req, res) => {
+    const logger = getServerLogger({});
+    logger.debug("authenticating via Steam");
     const { username, email, password, referralCode, linkToken } = req.body;
-
-    if (await Database.exists("users", { email }, { collation: { locale: "en", strength: 2 } })) {
-      throw new HandledError("errors.email.taken");
-    }
-    if (
-      await Database.exists("users", { username }, { collation: { locale: "en", strength: 2 } })
-    ) {
-      throw new HandledError("errors.username.taken");
-    }
-
-    await Site.validateEmail(email);
 
     const { steamId } = await Security.getToken({
       kind: "link-steam",
       token: linkToken,
     });
+
+    // this function will return an error if not
+    try {
+      await isAlreadyRegistered(email, username, steamId);
+    } catch (err) {
+      if (err instanceof UserLinkedElsewhereError) {
+        res.json({
+          action: "link-to-other-provider",
+          userId: err.userId,
+          providerId: err.providerId,
+        });
+      } else {
+        logger.error("unexpected error verifying if user is already registered");
+      }
+      return;
+    }
 
     const user = await Users.registerUser(req, {
       strategy: "steam",

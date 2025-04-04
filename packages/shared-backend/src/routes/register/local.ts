@@ -1,10 +1,11 @@
 import { Database } from "@server/services/database";
 import { Validation } from "@core/services/validation";
-import { HandledError } from "@server/services/errors";
+import { UserLinkedElsewhereError } from "#app/services/http";
 import { Security } from "@server/services/security";
 import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { Users } from "#app/services/users";
+import { HandledError } from "@server/services/errors";
 
 const rateLimiter = Security.createRateLimiter({
   keyPrefix: "local-register",
@@ -27,23 +28,20 @@ export default Http.createApiRoute({
   callback: async (req, res, next) => {
     const { username, email, password, referralCode } = req.body;
 
-    if (
-      await Database.exists(
-        "users",
-        { email },
-        { collation: { locale: "en", strength: 2 } },
-      )
-    ) {
-      throw new HandledError("errors.email.taken");
+    const existingUserByEmail = await Database.collection("users").findOne(
+      { email },
+      { collation: { locale: "en", strength: 2 } },
+    );
+    if (existingUserByEmail) {
+      throw new UserLinkedElsewhereError(existingUserByEmail._id, email);
     }
-    if (
-      await Database.exists(
-        "users",
-        { username },
-        { collation: { locale: "en", strength: 2 } },
-      )
-    ) {
-      throw new HandledError("errors.username.taken");
+
+    const existingUserByUsername = await Database.collection("users").findOne(
+      { username },
+      { collation: { locale: "en", strength: 2 } },
+    );
+    if (existingUserByUsername) {
+      throw new HandledError();
     }
 
     await rateLimiter.consume(req.trueIP, 1);

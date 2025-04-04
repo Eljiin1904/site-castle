@@ -22,14 +22,10 @@ import { Checkbox } from "@client/comps/checkbox/Checkbox";
 import { ToggleSlide } from "#app/pages/account/settings/ToggleSlide";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const LocalAuthBody = ({
-  setAction,
-}: {
-  setAction: (x: LoginAction) => void;
-}) => {
+export const LocalAuthBody = ({ setAction }: { setAction: (x: LoginAction) => void }) => {
   const dispatch = useAppDispatch();
   const small = useIsMobileLayout();
-  const {t} = useTranslation(["validations"]);
+  const { t } = useTranslation(["validations"]);
 
   const form = useCaptchaForm({
     schema: Validation.object({
@@ -49,12 +45,12 @@ export const LocalAuthBody = ({
         );
       } else if (res.action === "login") {
         dispatch(Users.initUser({ authenticated: true, user: res.user }));
-        Toasts.success("signin.success",5000, {username: res.user.username});
+        Toasts.success("signin.success", 5000, { username: res.user.username });
         Dialogs.close("primary");
       }
     },
   });
-  
+
   return (
     <Div
       fx
@@ -62,12 +58,12 @@ export const LocalAuthBody = ({
       gap={16}
     >
       <Heading
-              as="h2"
-              size={small ? 20 : 24}
-              fontWeight="regular"
-              textTransform="uppercase"
-        >
-          {t("signin.title")}
+        as="h2"
+        size={small ? 20 : 24}
+        fontWeight="regular"
+        textTransform="uppercase"
+      >
+        {t("signin.title")}
       </Heading>
       <CaptchaForm form={form}>
         <ModalSection>
@@ -78,22 +74,28 @@ export const LocalAuthBody = ({
             autoComplete="username"
             placeholder={t("signin.form.usernamePlaceholder")}
             disabled={form.loading}
-            error={form.errors.username?.key ? t(form.errors.username.key, {value: form.errors.username.value}) : undefined}
+            error={
+              form.errors.username?.key
+                ? t(form.errors.username.key, { value: form.errors.username.value })
+                : undefined
+            }
             value={form.values.username}
             onChange={(x) => form.setValue("username", x)}
           />
         </ModalSection>
         <ModalSection>
-          <ModalLabel>
-          {t("signin.form.password")}
-          </ModalLabel>
+          <ModalLabel>{t("signin.form.password")}</ModalLabel>
           <Input
             type="password"
             id="current-password"
             autoComplete="current-password"
             placeholder={t("signin.form.passwordPlaceholder")}
             disabled={form.loading}
-            error={form.errors.password?.key ? t(form.errors.password.key, {value: form.errors.password.value}) : undefined}
+            error={
+              form.errors.password?.key
+                ? t(form.errors.password.key, { value: form.errors.password.value })
+                : undefined
+            }
             value={form.values.password}
             onChange={(x) => form.setValue("password", x)}
           />
@@ -102,16 +104,17 @@ export const LocalAuthBody = ({
           <Link
             type="action"
             flexGrow
-            onClick={() => setAction("recover")}>
-           {t("signin.forgot")}
+            onClick={() => setAction("recover")}
+          >
+            {t("signin.forgot")}
           </Link>
         </ModalSection>
         <ModalSection>
           <Checkbox
-              label={t("signin.remember")}
-              value={form.values.remember}
-              onChange={(x) => form.setValue("remember", x)}
-            />
+            label={t("signin.remember")}
+            value={form.values.remember}
+            onChange={(x) => form.setValue("remember", x)}
+          />
         </ModalSection>
         <Button
           type="submit"

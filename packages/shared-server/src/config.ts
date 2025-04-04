@@ -57,7 +57,7 @@ config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
 
-export async function loadSecrets() {
+export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
     console.log("fetching secrets");
 
@@ -83,7 +83,11 @@ export async function loadSecrets() {
     const secrets = JSON.parse(res.SecretString ?? "") as Partial<ServerConfig>;
 
     for (const [key, value] of Object.entries(secrets)) {
-      (config as any)[key] = value;
+      if (overrides[key]) {
+        (config as any)[key] = overrides[key];
+      } else {
+        (config as any)[key] = value;
+      }
     }
   } catch (e) {
     console.error("ConfigManager.init failed.");

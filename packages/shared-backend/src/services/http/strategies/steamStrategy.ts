@@ -29,20 +29,14 @@ async function verify(
   done: (error: any, user?: any) => void,
 ) {
   try {
-    const steamId = identifier.replace(
-      "https://steamcommunity.com/openid/id/",
-      "",
-    );
+    const steamId = identifier.replace("https://steamcommunity.com/openid/id/", "");
 
     if (req.isAuthenticated()) {
       if (await Database.exists("users", { steamId })) {
-        throw new HandledError("Steam id is already linked.");
+        throw new HandledError("errors.steam.taken");
       }
 
-      await Database.collection("users").updateOne(
-        { _id: req.user._id },
-        { $set: { steamId } },
-      );
+      await Database.collection("users").updateOne({ _id: req.user._id }, { $set: { steamId } });
 
       throw new ExistingUserError();
     } else {
@@ -52,7 +46,7 @@ async function verify(
         done(null, user);
       } else {
         if (await Database.exists("users", { steamId })) {
-          throw new HandledError("Steam id is already linked.");
+          throw new HandledError("errors.steam.taken");
         }
 
         throw new UnknownUserError(steamId);

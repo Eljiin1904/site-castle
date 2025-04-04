@@ -45,7 +45,12 @@ beforeAll(async () => {
 
   logger.info("Starting site backend...");
 
-  await initConfig();
+  // secrets override needed for integration testing
+  const configOverrides: Record<string, string> = {
+    hcaptchaSecret: "0x0000000000000000000000000000000000000000",
+  };
+
+  await initConfig(configOverrides);
 
   logger.info("Initialized config.");
 

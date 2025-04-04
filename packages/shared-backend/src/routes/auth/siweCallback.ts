@@ -2,7 +2,12 @@ import { addMinutes } from "date-fns";
 import { HandledError } from "@server/services/errors";
 import { Ids } from "@server/services/ids";
 import { Security } from "@server/services/security";
-import { Http, UnknownUserError, ExistingUserError } from "#app/services/http";
+import {
+  Http,
+  UnknownUserError,
+  ExistingUserError,
+  UserLinkedElsewhereError,
+} from "#app/services/http";
 import { Users } from "#app/services/users";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { LOG_LEVEL_CONSTANTS } from "@core/services/logging/constants/LogConstant";
@@ -31,6 +36,9 @@ export default Http.createAuthRoute({
     } else if (err instanceof ExistingUserError) {
       logger.debug("user already registered");
       res.json({ action: "link" });
+    } else if (err instanceof UserLinkedElsewhereError) {
+      logger.debug("providerId: " + err.providerId);
+      res.json({ action: "link-to-other-provider", user: err.userId, linkToken: err.providerId });
     } else if (err instanceof HandledError) {
       logger.error("error performing siwe authentication: " + err);
       next(err);

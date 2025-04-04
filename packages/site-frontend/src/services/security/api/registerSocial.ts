@@ -12,7 +12,10 @@ export function registerSocial({
   linkToken: string;
   referralCode: string | undefined;
 }): Promise<{
+  action: "link-to-other-provider" | null;
+  providerId: string | null;
   user: AuthenticatedUser;
+  userId: string | null;
 }> {
   return Http.post(`/register/${provider}`, data);
 }

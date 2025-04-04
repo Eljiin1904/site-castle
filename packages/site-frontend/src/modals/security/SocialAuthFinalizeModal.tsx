@@ -13,12 +13,15 @@ import { Security } from "#app/services/security";
 import { Users } from "#app/services/users";
 import { AuthenticatorLoginModal } from "./AuthenticatorLoginModal";
 import { SocialAuthRegisterModal } from "./SocialAuthRegisterModal";
+import { SocialAuthLinkExistingModal } from "./SocialAuthLinkExistingModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvider }) => {
   const [, , removeStatus] = useAuthStatus();
   const [, , removeReturnTo] = useAuthRedirect();
   const [search, , removeSearch] = useAuthSearch();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(["validations"]);
 
   useMount(
     async () => {
@@ -40,6 +43,15 @@ export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvid
       } else if (res.action === "link") {
         Toasts.success(`${Strings.capitalize(provider)} linked.`);
         Dialogs.close("primary");
+      } else if (res.action === "link-to-other-provider") {
+        Dialogs.open(
+          "primary",
+          <SocialAuthLinkExistingModal
+            provider={provider}
+            userId={res.userId}
+            providerId={res.providerId}
+          />,
+        );
       } else if (res.action === "2fa") {
         Dialogs.open(
           "primary",

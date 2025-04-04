@@ -12,7 +12,7 @@ export default Http.createAuthRoute({
     if (err instanceof HandledError) {
       next(err);
     } else {
-      next(new HandledError("Invalid credentials."));
+      next(new HandledError("errors.invalidCredentials"));
     }
   },
   onSuccess: async (req, res) => {

@@ -96,6 +96,7 @@
     }
   },
   "errors": {
+    "invalidCredentials": "errors.invalidCredentials",
     "invalidReferral": "Invalid referral code.",
     "email": {
       "taken": "Email is already registered.",
@@ -111,6 +112,12 @@
     },
     "google": {
       "taken": "Google id is already linked."
+    },
+    "siwe": {
+      "taken": "Wallet address is already linked."
+    },
+    "steam": {
+      "taken": "Steam id is already linked."
     },
     "twitch": {
       "taken": "Twitch id is already linked."

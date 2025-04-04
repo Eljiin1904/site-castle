@@ -7,6 +7,7 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Security } from "#app/services/security";
 import { Users } from "#app/services/users";
 import { AuthenticatorCodeForm } from "./AuthenticatorCodeForm";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AuthenticatorLoginModal = ({
   userId,
@@ -16,6 +17,7 @@ export const AuthenticatorLoginModal = ({
   loginToken: string;
 }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(["validations"]);
 
   return (
     <Modal
