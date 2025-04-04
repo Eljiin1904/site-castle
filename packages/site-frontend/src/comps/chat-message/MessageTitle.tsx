@@ -14,12 +14,12 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
 
     return (
       <Div align="center">
-        {/* {"xp" in user && (
+        {"xp" in user && (
           <UserBadge
             xp={user.xp}
             mr={6}
           />
-        )} */}
+        )}
         <Span
           size={12}
           fontWeight="medium"
