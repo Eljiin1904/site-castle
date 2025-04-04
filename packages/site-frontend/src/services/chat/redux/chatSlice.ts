@@ -14,7 +14,7 @@ interface ChatState {
   rain?: ChatRainDocument;
   replyMessage?: ChatMessageDocument;
   search?: string;
-  activeTab: "emoji" | "giphy"; 
+  activeTab: "emoji" | "gifs"; 
 }
 
 const initialState: ChatState = {
@@ -54,7 +54,7 @@ export const chatSlice = createSlice({
     setSearch: reducer<string>((state, { payload }) => {
       state.search = payload;
     }),
-    setActiveTab: reducer<"emoji"|"giphy">((state, { payload }) => {
+    setActiveTab: reducer<"emoji"|"gifs">((state, { payload }) => {
       state.activeTab = payload;
     }),
     setReplyMessage: reducer<ChatMessageDocument | undefined>((state, { payload }) => {
