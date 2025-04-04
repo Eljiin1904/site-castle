@@ -1,0 +1,17 @@
+.TenorCategoryOption {
+
+  position: relative;
+
+  .overlay {
+
+    background-color: rgba(var(--black-hover-rgb-color), 0.2);
+    position: absolute;
+  }
+
+  &:hover {
+
+    .overlay {
+      background-color: rgba(var(--black-hover-rgb-color), 0.5);
+    }
+  }
+}
