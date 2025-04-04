@@ -229,6 +229,9 @@
       "description": "¿Estás seguro de que deseas bloquear a {{value.username}}?",
       "confirmSuccess": "Has bloqueado a {{value.username}}."
     },
+    "level": "Nivel {{level}}",
+    "paused": "Chat en pausa",
+    "notUserFound": "No se encontraron usuarios.",
     "moderate": "Moderar"
   }
 }

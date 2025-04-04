@@ -2,6 +2,8 @@ import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Chat } from "#app/services/chat";
 import { useUsernames } from "../hooks/useUsernames";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { ChatModalBottom } from "./ChatModalBottom";
 
 export const MentionPopout = ({
   text,
@@ -11,7 +13,7 @@ export const MentionPopout = ({
   onMentionClick: (newText: string) => void;
 }) => {
   const usernames = useUsernames(text);
-
+  const {t} = useTranslation();
   const handleClick = (username: string) => {
     const mentions = Chat.parseMentions(text);
 
@@ -32,16 +34,8 @@ export const MentionPopout = ({
     return null;
   }
 
-  return (
-    <Div
-      className="ChatModalBottom"
-      fx
-      column
-      px={16}
-      bg="brown-4"
-      border
-    >
-      {usernames.map((username, i) => (
+  return (<ChatModalBottom column>
+    {usernames.map((username, i) => (
         <Div
           key={i}
           fx          
@@ -61,18 +55,14 @@ export const MentionPopout = ({
       {usernames.length === 0 && (
         <Div
           fx
-          px={12}
-          py={8}
-          bg="brown-6"
+          py={16}
         >
           <Span
             size={12}
-            color="dark-gray"
           >
-            {"No users found."}
+            {t('chat.notUserFound')}
           </Span>
         </Div>
       )}
-    </Div>
-  );
+  </ChatModalBottom>);
 };

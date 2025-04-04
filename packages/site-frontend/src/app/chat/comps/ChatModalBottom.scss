@@ -1,0 +1,16 @@
+.ChatFooter {
+
+  .ChatFooterModalContainer {
+
+    width: calc(100% + 50px);
+    margin-left: -25px;
+    position: relative;
+  }
+
+  .ChatModalBottom {
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}

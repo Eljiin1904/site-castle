@@ -4,7 +4,6 @@ import { Div } from "@client/comps/div/Div";
 import { ConfirmModal } from "@client/modals/confirm/ConfirmModal";
 import { Span } from "@client/comps/span/Span";
 import { Img } from "@client/comps/img/Img";
-import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
@@ -14,6 +13,7 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
   return (
     <ConfirmModal
       heading={t("chat.blockModal.title")}
+      disableMobileFullscreen={false}
       confirmLabel="chat.block"
       onConfirm={async () => {
         await Users.setUserBlocked({
@@ -34,7 +34,6 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
           <Span>{t('chat.blockModal.description',{value: {username: user.name}})}</Span>
           
           <Div
-            column
             gap={4}
           >
             <Span
@@ -58,7 +57,7 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
                 size={12}
                 ml={6}
               >
-                {`Level ${level}`}
+                {t('chat.level',{level: {level}})}
               </Span>
             </Div>
           </Div>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Div } from "@client/comps/div/Div";
 import { TextArea } from "@client/comps/text-area/TextArea";
 import { Vector } from "@client/comps/vector/Vector";
@@ -13,113 +13,97 @@ import { ReplyPopout } from "./ReplyPopout";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Button } from "@client/comps/button/Button";
 import { SvgQuestionCircle } from "@client/svgs/common/SvgQuestionCircle";
-import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { SvgTimes } from "@client/svgs/common/SvgTimes";
+import { SvgEmoji } from "@client/svgs/common/SvgEmoji";
+import { ChatModalBottom } from "./ChatModalBottom";
 import "./ChatInput.scss";
 
 export const ChatInput = ({disabled, message}: {
   disabled?: boolean;
   message?: string | JSX.Element;
 }) => {
+  
+  const [open, setOpen] = useState(false);
   const text = useAppSelector((x) => x.chat.input);
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation()
   const sendMessage = useSendMessage();
 
-  return (
-    <Div fx gap={8} position="relative">
-      <Div fx>
-        <TextArea
-          id="chat-input"
-          className="ChatInput"
-          forwardRef={textAreaRef}
-          placeholder={disabled ? t("chat.unable"): t("chat.message")}
-          value={text}
-          onChange={(x) => dispatch(Chat.setInput(x))}
-          onSubmit={sendMessage}
-          disabled={disabled}
-        />
-        <Div
-          fx
-          position="absolute"
-          style={{ bottom: "calc(100% + 4px)" }}
-        >
-          <ReplyPopout />
-        </Div>
-        <Div
-          fx
-          position="absolute"
-          style={{ bottom: "calc(100% + 4px)" }}
-        >
-          <MentionPopout
-            text={text}
-            onMentionClick={(newText) => {
-              dispatch(Chat.setInput(newText));
-              document.getElementById("chat-input")?.focus();
-            }}
-          />
-        </Div>
-        <Div
-          position="absolute"
-          right={0}
-          center
-          mr={16}
-          bottom={12}
-        >
-          {disabled ? 
-            <ChatDisabledMessage message={message ?? ''} /> : <EmojiMenu/>
-          }
-        </Div>
-      </Div>
+  return (<Fragment>
+    <Div className="ChatFooterModalContainer">
+      <ReplyPopout />
+      <MentionPopout
+        text={text}
+        onMentionClick={(newText) => {
+          dispatch(Chat.setInput(newText));
+          document.getElementById("chat-input")?.focus();
+        }}
+      />
+      {open && disabled && <ChatDisabledMessage onClick={() => setOpen(false)} message={message ?? ''} />}
+      {open && !disabled && <EmojiMenu onClick={() => setOpen(false)} />}
+    </Div>
+    <Div fx gap={8}>
+      <ChatInputTextArea disabled={disabled} setOpen={setOpen} />
       <Button kind="primary-yellow" iconLeft={SvgSend} onClick={sendMessage} disabled={disabled} />
     </Div>
+  </Fragment>);
+};
+
+const ChatInputTextArea = ({disabled, setOpen}: {
+  disabled?: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  
+  const text = useAppSelector((x) => x.chat.input);
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const sendMessage = useSendMessage();
+  const dispatch = useAppDispatch();
+  const {t} = useTranslation();
+
+  return (<Div fx>
+    <TextArea
+      id="chat-input"
+      className="ChatInput"
+      forwardRef={textAreaRef}
+      placeholder={disabled ? t("chat.unable"): t("chat.message")}
+      value={text}
+      onChange={(x) => dispatch(Chat.setInput(x))}
+      onSubmit={sendMessage}
+      disabled={disabled}
+    />
+    <Vector
+      position="absolute"
+      right={0}
+      center
+      mr={16}
+      bottom={12}
+      as={disabled ? SvgQuestionCircle: SvgEmoji}
+      cursor="pointer"
+      hover="highlight"
+      onClick={() => setOpen(currentOpen => !currentOpen)}
+    />
+  </Div>
   );
 };
 
+const ChatDisabledMessage = ({message, onClick}: {
+  message: string | JSX.Element,
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+}) => {
 
-const ChatDisabledMessage = ({message}: {message: string | JSX.Element}) => {
-
-  const [open, setOpen] = useState(false);
-  return (<Dropdown
-      className="ChatModalBottom"
-      type="custom"
-      menuWidth="290px"
-      open={open}
-      onToggle={setOpen}
-      button={
-        <Vector
-        as={SvgQuestionCircle}
-        cursor="pointer"
+  return (<ChatModalBottom   
+    py={16}
+    color="light-sand"
+    >
+      <Vector
+        as={SvgTimes}
+        size={16}
+        color={'dark-sand'}
+        position="absolute"
+        right={20}
+        top={12}
         hover="highlight"
-      /> 
-      }
-      body={<Div 
-          fx
-          px={16}
-          py={16}
-          bg="brown-4"
-          column
-          >
-          <Div fx gap={16} px={8}>
-            <Vector
-                as={SvgTimes}
-                size={16}
-                color={'dark-sand'}
-                position="absolute"
-                right={0}
-                top={0}
-                hover="highlight"
-                onClick={() => setOpen(false)}
-              />
-          </Div>
-          <Div
-          fx
-          flexFlow="row-wrap"
-          gap={4}
-          mt={12}
-          color="light-sand"
-          >{message}</Div> 
-      </Div>}
-    />);
+        onClick={onClick}
+      />
+      {message}
+    </ChatModalBottom>);
 };

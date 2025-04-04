@@ -7,6 +7,7 @@ import { Div } from "@client/comps/div/Div";
 import { useDelay } from "@client/hooks/system/useDelay";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { ChatMessageCard } from "#app/comps/chat-message/ChatMessageCard";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 import "./ChatLog.scss";
 
 export const ChatLog = () => {
@@ -18,6 +19,7 @@ export const ChatLog = () => {
   const [smooth, setSmooth] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
+  const {t} = useTranslation();
 
   const handleButtonClick = () => {
     setPaused(false);
@@ -99,7 +101,7 @@ export const ChatLog = () => {
             fx
             kind="primary-yellow"
             size="md"
-            label="Chat Paused"
+            label={t("chat.paused")}
             labelSize={13}
             onClick={handleButtonClick}
           />
