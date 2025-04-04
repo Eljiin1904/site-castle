@@ -13,13 +13,7 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
     const role = "role" in user ? Users.getRoleInfo(user.role) : undefined;
 
     return (
-      <Div align="center">
-        {"xp" in user && (
-          <UserBadge
-            xp={user.xp}
-            mr={6}
-          />
-        )}
+      <Div align="center" gap={8}>
         <Span
           size={12}
           fontWeight="medium"
@@ -27,6 +21,12 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
         >
           {user.name}
         </Span>
+        {"xp" in user && (
+          <UserBadge
+            xp={user.xp}
+            mr={6}
+          />
+        )}
         {role && (
           <Vector
             className="role-icon"
