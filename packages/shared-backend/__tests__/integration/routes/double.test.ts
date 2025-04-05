@@ -64,14 +64,6 @@ describe("Test Double Game Route", () => {
   it("Post Double Ticket", async () => {
     const user = await Database.collection("users").findOne({ username: "doubleTester" });
     if (!user) return;
-    const [sessionResponse, sessionCookie] = await handleLogin(
-      config.siteAPI,
-      {
-        username: user.username,
-        password: "password123",
-      },
-      hCaptchaToken,
-    );
 
     const roundId = await Ids.incremental({
       key: "doubleRoundId",
@@ -102,7 +94,7 @@ describe("Test Double Game Route", () => {
         betKind: "green",
         betAmount: 10000,
       },
-      sessionCookie,
+      globalSessionCookie,
     );
     const getDoubleResult = await createDoubleTicket.json();
 

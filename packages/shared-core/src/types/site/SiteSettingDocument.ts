@@ -42,6 +42,7 @@ interface XpSettings {
   doubleXpRate: number;
   diceXpRate: number;
   limboXpRate: number;
+  minesXpRate: number;
 }
 
 interface RainSettings {

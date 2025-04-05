@@ -24,6 +24,7 @@ async function main() {
   await insertDefault("doubleXpRate", 1.0);
   await insertDefault("diceXpRate", 0.6);
   await insertDefault("limboXpRate", 0.6);
+  await insertDefault("minesXpRate", 1.5);
 
   await insertDefault("rainTaxRate", 0.01);
   await insertDefault("rainBaseAmount", 10.0);
