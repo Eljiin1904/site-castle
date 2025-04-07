@@ -41,6 +41,10 @@ export function getName(tx: TransactionDocument): string {
       return "Limbo - Bet";
     case "limbo-won":
       return "Limbo - Won";
+    case "mines-bet":
+      return "Mines - Create Game";
+    case "mines-won":
+      return "Mines - Won";
     case "promotion-card-redeem":
       return "Promotions - Redeem Card";
     case "promotion-code-redeem":

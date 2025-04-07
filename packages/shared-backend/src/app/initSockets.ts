@@ -52,6 +52,8 @@ export function initSockets(httpServer: HttpServer) {
     logger.info("hot feed socket active");
     Listeners.limbo(io);
     logger.info("limbo socket active");
+    Listeners.mines(io);
+    logger.info("mines socket active");
     Listeners.notifications(io);
     logger.info("notifications socket active");
     Listeners.site(io);

@@ -58,6 +58,13 @@ export const XpCard = ({
         inputType="decimal"
         onEdit={onEdit}
       />
+      <FieldSection
+        settings={settings}
+        id="minesXpRate"
+        label="Mines"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
     </FieldCard>
   );
 };

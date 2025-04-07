@@ -25,6 +25,8 @@ const map: Record<TransactionKind, TransactionCategory> = {
   "double-won": "double",
   "limbo-bet": "limbo",
   "limbo-won": "limbo",
+  "mines-bet": "mines",
+  "mines-won": "mines",
   "promotion-card-redeem": "promotion",
   "promotion-code-redeem": "promotion",
   "rain-payout": "rain",

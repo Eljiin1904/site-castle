@@ -1,10 +1,4 @@
-import {
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-  useSearchParams,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { AuthReturnPage } from "#app/pages/security/AuthReturnPage";
 import { HomePage } from "#app/pages/home/HomePage";
 import { NotFoundPage } from "#app/pages/not-found/NotFoundPage";
@@ -14,6 +8,7 @@ import { CaseBattlesRouter } from "#app/pages/case-battles/CaseBattlesRouter";
 import { DicePage } from "#app/pages/dice/DicePage";
 import { DoublePage } from "#app/pages/double/DoublePage";
 import { LimboPage } from "#app/pages/limbo/LimboPage";
+import { MinesPage } from "#app/pages/mines/MinesPage";
 import { AboutPage } from "#app/pages/about/AboutPage";
 import { AccountPage } from "#app/pages/account/AccountPage";
 import { UserEmailConfirmPage } from "#app/pages/user/UserEmailConfirmPage";
@@ -39,10 +34,7 @@ export const AppRouter = () => {
   const [params] = useSearchParams();
 
   if (params.has("p")) {
-    localStorage.setItem(
-      "referral-code",
-      JSON.stringify(`p_${params.get("p")}`),
-    );
+    localStorage.setItem("referral-code", JSON.stringify(`p_${params.get("p")}`));
     return (
       <Navigate
         replace
@@ -162,6 +154,10 @@ export const AppRouter = () => {
       <Route
         path="/limbo"
         element={<LimboPage />}
+      />
+      <Route
+        path="/mines"
+        element={<MinesPage />}
       />
       <Route
         path="/fairness/*"

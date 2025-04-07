@@ -1,7 +1,1 @@
-export const games = [
-  "cases",
-  "case-battles",
-  "dice",
-  "double",
-  "limbo",
-] as const;
+export const games = ["cases", "case-battles", "dice", "double", "limbo", "mines"] as const;
