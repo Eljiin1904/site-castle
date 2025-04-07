@@ -1,0 +1,72 @@
+replicaCount: 1
+
+image:
+  app:
+    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-affiliate-api"
+    pullPolicy: Always
+    tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 3000
+  tls: []
+
+ingress:
+  enabled: false
+
+secrets:
+  app: "castle-affiliate-api"
+
+app:
+  port: 3000
+
+resources: {}
+
+livenessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
+  # initialDelaySeconds: 30
+  # periodSeconds: 10
+
+readinessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
+  # initialDelaySeconds: 5
+  # periodSeconds: 5
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+namespace: castle-affiliate-api
+
+# Explicit labels to ensure consistency
+labels:
+  app: castle-affiliate-api
