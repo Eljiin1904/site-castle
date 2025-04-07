@@ -1,5 +1,5 @@
 
-.HomePage .BaseBanner {
+.HomePage .BaseBanner, .GamesPage .BaseBanner {
 
   .AppMain.mobile & {
     width: calc(50% - 10px);
@@ -19,6 +19,7 @@
   .HeaderContent {
 
     width:calc(100% - 40px);
+    // position: absolute;
     bottom: 20px;
     left:20px;
     z-index: 10;

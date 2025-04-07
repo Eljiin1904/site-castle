@@ -56,6 +56,7 @@ export const FeatureGameBanner = ({
           skeleton
           width="100%"
           aspectRatio={ratio ?? "186 / 260"}
+          height={small ? "160px" : "240px"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}
         />     

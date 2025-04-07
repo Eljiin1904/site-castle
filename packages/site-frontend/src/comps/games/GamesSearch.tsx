@@ -9,7 +9,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Site } from "#app/services/site";
 import { GameKindType } from "@core/services/game/Game";
 
-export const HomePageSearch = () => {
+export const GameSearch = () => {
   
   const currentFilter = useAppSelector((x) => x.site.filter);
   const dispatch = useAppDispatch();
