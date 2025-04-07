@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { Strings } from "@core/services/strings";
 import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
 import { Dialogs } from "@client/services/dialogs";
-import { SvgSend } from "@client/svgs/common/SvgSend";
 import { Span } from "@client/comps/span/Span";
 import { Timestamp } from "@client/comps/timestamp/Timestamp";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
@@ -67,27 +65,27 @@ export const ChatFooterField = () => {
       />
     );
   } else if (channel.startsWith("general") && !canGeneralChat) {
-    return (<Div fx column gap={8}>
+    return (<Fragment>
       <FeedbackCard
         message={t(`chat.generalRequirements`, { amount: generalRequirement })}
       />
      <ChatOptionsFooter />
-   </Div>
+   </Fragment>
     
     );
   } else if (channel === "highroller" && !canHighrollerChat) {
-    return (<Div fx column gap={8}>
+    return (<Fragment>
        <FeedbackCard
         message={t(`chat.highRollerRequirements`, { level: highrollerRequirement })}
       />    
       <ChatOptionsFooter />
-    </Div>
+    </Fragment>
      );
   } else {
-    return <Div fx column gap={8}>
+    return <Fragment>
       <ChatInput />
       <ChatOptionsFooter />
-    </Div>;
+    </Fragment>;
   }
 };
 

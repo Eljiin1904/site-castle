@@ -18,7 +18,6 @@ export const VerificationModal = ({
     <Modal
       className="VerificationModal"
       width="md"
-      fixedHeight="500px"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader

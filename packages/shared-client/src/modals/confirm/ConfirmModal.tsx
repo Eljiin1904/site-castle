@@ -12,6 +12,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 export type ConfirmModalProps = {
   heading: string;
   message: string | JSX.Element;
+  disableMobileFullscreen?: boolean;
   cancelLabel?: string;
   confirmLabel?: string;
   onConfirm: () => void | Promise<void>;
@@ -36,6 +37,7 @@ export async function waitForConfirmation(
 export const ConfirmModal: FC<ConfirmModalProps> = ({
   heading,
   message,
+  disableMobileFullscreen = true,
   cancelLabel = "common:cancel",
   confirmLabel = "common:confirm",
   onConfirm,
@@ -57,7 +59,7 @@ export const ConfirmModal: FC<ConfirmModalProps> = ({
   return (
     <Modal
       width="sm"
-      disableMobileFullscreen
+      disableMobileFullscreen={disableMobileFullscreen}
       onBackdropClick={handleCancel}
     >
       <ModalHeader

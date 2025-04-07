@@ -7,6 +7,8 @@ import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Chat } from "#app/services/chat";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { TextContent } from "#app/comps/chat-message/content/TextContent";
+import { ChatModalBottom } from "./ChatModalBottom";
 
 export const ReplyPopout = () => {
   const message = useAppSelector((x) => x.chat.replyMessage);
@@ -16,18 +18,10 @@ export const ReplyPopout = () => {
     return null;
   }
 
-  return (
-    <Div
-      fx
-      align="center"
-      p={8}
-      bg="brown-7"
-      border
-    >
-      <Vector
+  return (<ChatModalBottom py={16}>
+    <Vector
         as={SvgReply}
         size={14}
-        color="gray"
         hover="highlight"
         onClick={() => dispatch(Chat.setReplyMessage(message))}
       />
@@ -38,7 +32,7 @@ export const ReplyPopout = () => {
         ml={8}
       />
       <Span
-        color="light-orange"
+        color="sand"
         size={12}
         ml={6}
       >
@@ -50,7 +44,7 @@ export const ReplyPopout = () => {
         ml={4}
         style={{ maxWidth: "140px" }}
       >
-        {message.text}
+        <TextContent text={message.text} isReply={true} />
       </Span>
       <Div
         grow
@@ -60,11 +54,9 @@ export const ReplyPopout = () => {
           as={SvgTimesCirlce}
           size={14}
           p={4}
-          color="gray"
           hover="highlight"
           onClick={() => dispatch(Chat.setReplyMessage(undefined))}
         />
       </Div>
-    </Div>
-  );
+  </ChatModalBottom>);
 };

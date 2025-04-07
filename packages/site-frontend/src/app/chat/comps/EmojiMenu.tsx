@@ -1,8 +1,4 @@
-import { useState } from "react";
-import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Span } from "@client/comps/span/Span";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgEmoji } from "@client/svgs/common/SvgEmoji";
 import { Chat } from "#app/services/chat";
 import { Div } from "@client/comps/div/Div";
 import { SvgTimes } from "@client/svgs/common/SvgTimes";
@@ -15,25 +11,10 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { TenorResults } from "#app/app/tenor/comps/TenorResults";
+import { ChatModalBottom } from "./ChatModalBottom";
 
-export const EmojiMenu = () => {
 
-  const [open, setOpen] = useState(false);  
-  return (<Dropdown
-    className="ChatEmojiModalBottom"
-    type="custom"
-    menuWidth="338px"
-    open={open}
-    onToggle={setOpen}
-    button={<Vector
-      as={SvgEmoji}
-      hover="highlight"
-    />}
-    body={<EmojiMenuOptions onClick={() => setOpen(false)} />}
-    />);
-};
-
-const EmojiMenuOptions = ({onClick}: {
+export const EmojiMenu = ({onClick}: {
   onClick: () => void;
 }) => {
 
@@ -42,38 +23,39 @@ const EmojiMenuOptions = ({onClick}: {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
 
-  return (<Div 
-          fx
-          py={16}
-          bg="brown-4"
-          column
-          gap={16}
-          wrap
-          >
-          <Div fx px={16}>
-            <Input
-                iconLeft={SvgSearch}
-                iconRight={SvgTimes}
-                kind="chat-background"
-                type="text"
-                id="game-search"
-                placeholder={t('chat.search')}
-                value={search}
-                onChange={(search) => dispatch(setSearch(search ?? ''))}
-                onIconRightClick={() => dispatch(setSearch(''))}
-              />
-          </Div>
-          <Div fx justifyContent="center">
-            <EmojiMenuOption label={'emoji'} />
-            <EmojiMenuOption label={'gifs'}  />            
-          </Div>
-          <Div fx px={16} overflow="auto">
-            <Conditional value={activeTab}
-            emoji={<Emojis onClick={onClick} />}
-            gifs={<TenorResults onClick={onClick} />}
-            />
-          </Div>
-  </Div>)
+  return (<ChatModalBottom px={0} py={16}>
+    <Div 
+    fx
+    column
+    gap={16}
+    wrap
+    height={400} overflow="hidden"
+    >
+    <Div fx px={16}>
+      <Input
+          iconLeft={SvgSearch}
+          iconRight={SvgTimes}
+          kind="chat-background"
+          type="text"
+          id="game-search"
+          placeholder={t('chat.search')}
+          value={search}
+          onChange={(search) => dispatch(setSearch(search ?? ''))}
+          onIconRightClick={() => dispatch(setSearch(''))}
+        />
+    </Div>
+    <Div fx justifyContent="center">
+      <EmojiMenuOption label={'emoji'} />
+      <EmojiMenuOption label={'gifs'}  />            
+    </Div>
+    <Div fx px={16} overflow="auto">
+      <Conditional value={activeTab}
+      emoji={<Emojis onClick={onClick} />}
+      gifs={<TenorResults onClick={onClick} />}
+      />
+    </Div>
+  </Div>
+  </ChatModalBottom>);
 };
 
 const EmojiMenuOption = ({label}: {
