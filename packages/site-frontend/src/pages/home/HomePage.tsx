@@ -1,5 +1,3 @@
-import { Div } from "@client/comps/div/Div";
-import { PageTitle } from "@client/comps/page/PageTitle";
 import { SitePage } from "#app/comps/site-page/SitePage";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
 import { HashManager } from "./HashManager";
@@ -7,12 +5,12 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Conditional } from "@client/comps/conditional/Conditional";
-import { GameDocument } from "@core/types/game/GameDocument";
-import { FeatureGameBanner } from "#app/app/banner/FeatureGameBanner";
 import { HeroBanner } from "#app/app/banner/HeroBanner";
-import { GameSlideProps, HomePageGamesSlider } from "./HomePageGamesSlider";
 import { Game } from "@core/services/game";
-import { HomePageSearch } from "./HomePageSearch";
+import { GameSearch } from "#app/comps/games/GamesSearch";
+import { GameSlideProps, GamesSlider } from "#app/comps/games/GamesSlider";
+import { OriginalGames } from "#app/comps/games/OriginalGames";
+import { FeaturedGames } from "#app/comps/games/FeaturedGames";
 
 export const HomePage = () => {
   
@@ -31,14 +29,14 @@ export const HomePage = () => {
       <HashManager />
       <HeroBanner />
 
-      <HomePageSearch />
+      <GameSearch />
       <Conditional value={filterGames}
         all={<>
-          <FeaturedGamesSection items={featuredGames} showSection={true} />
-          <OriginalGamesSlider />
+          <FeaturedGames items={featuredGames} showSection={true} />
+          <OriginalGames />
         </>}
-        featured={<FeaturedGamesSection items={featuredGames} showSection={true} />}
-        original={<OriginalGamesSlider />}
+        featured={<FeaturedGames items={featuredGames} showSection={true} />}
+        original={<OriginalGames />}
         slots={<SlotGamesSlider />}
         live_casino={<LiveCasinoSlider />}
         game_shows={<GameShowsSlider />}
@@ -55,47 +53,6 @@ export const HomePage = () => {
   );
 };
 
-
-const FeaturedGamesSection = ({items, showSection}: {items: GameDocument[],showSection: boolean}) => {
-
-  const small = useIsMobileLayout();
-  const {t} = useTranslation(["games"]);
-
-  if(!showSection) return null;
-
-  return (<Div
-      id="home-games"
-      column
-      fx
-      gap={small ? 24 : 40}
-    >
-      <PageTitle
-        heading={t('games.featured', {count: 2})}
-      />
-      <Div
-        gap={small ? 20 : 24}
-      >
-        {items.map((x) => <FeatureGameBanner key={x.name} ratio={small ? "150 / 160" : "168 / 180"} objectPositionHorizontal="80%" heading={t(`games:${x.name}`)} to={`/${x.name}`} image={`/graphics/games/${x.name}`}/>)}
-      </Div>
-    </Div>);
-};
-
-const OriginalGamesSlider = () => {
-
-  const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation(["games"]);
-
-  const items = games?.filter((x) => x.category === "original").map((x) => {
-    return {
-      image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
-      subheading: t('games.original',{count: 1}),
-      to: `/${x.name}`
-    };
-  });
-
-  return (<HomePageGamesSlider title={t('games.original', {count: 2})} items={items} type="game"/>);
-};
 const SlotGamesSlider = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
@@ -110,7 +67,7 @@ const SlotGamesSlider = () => {
     };
   });
 
-  return (<HomePageGamesSlider title={t('games.slots')} items={items} type="game"/>);
+  return (<GamesSlider title={t('games.slots')} items={items} type="game"/>);
 };
 const LiveCasinoSlider = () => {
   
@@ -126,7 +83,7 @@ const LiveCasinoSlider = () => {
     };
   });
 
-  return (<HomePageGamesSlider title={t('games.live_casino')} items={items} type="game"/>);
+  return (<GamesSlider title={t('games.live_casino')} items={items} type="game"/>);
 };
 const GameShowsSlider = () => {
   
@@ -142,7 +99,7 @@ const GameShowsSlider = () => {
     };
   });
 
-  return (<HomePageGamesSlider title={t('games.game_shows')} items={items} type="game"/>);
+  return (<GamesSlider title={t('games.game_shows')} items={items} type="game"/>);
 };
 const RecentlyAddedSlider = () => {
   
@@ -158,7 +115,7 @@ const RecentlyAddedSlider = () => {
     };
   });
 
-  return (<HomePageGamesSlider title={t('games.recentlyAdded')} items={items} type="game"/>);
+  return (<GamesSlider title={t('games.recentlyAdded')} items={items} type="game"/>);
 };
 const HotGamesSlider = () => {
   
@@ -174,7 +131,7 @@ const HotGamesSlider = () => {
     };
   });
 
-  return (<HomePageGamesSlider title={t('games.hot')} items={items} type="game"/>);
+  return (<GamesSlider title={t('games.hot')} items={items} type="game"/>);
 };
 const ProvidersSection = () => {
 
@@ -189,7 +146,7 @@ const ProvidersSection = () => {
     {image:"/graphics/providers/hacksaw", heading:t('providers.hackSawGaming'), to:""}
   ];
 
-  return (<HomePageGamesSlider type="provider" title={t('providers.title')} items={providers} />);  
+  return (<GamesSlider type="provider" title={t('providers.title')} items={providers} />);  
 };
 const CategoriesSection = () => {
 
@@ -202,5 +159,5 @@ const CategoriesSection = () => {
       to: `/${x}`
     };
   });
-  return (<HomePageGamesSlider type="category" title={t('menu.categories')} items={items} />);
+  return (<GamesSlider type="category" title={t('menu.categories')} items={items} />);
 };

@@ -52,6 +52,7 @@ export const GameBanner = ({
           path={image}
           skeleton
           width="100%"
+          height={small ? "160px":"180px"}
           aspectRatio={ratio ?? "186 / 260"}
           objectPositionHorizontal={objectPositionHorizontal}
           objectPositionVertical={objectPositionVertical}

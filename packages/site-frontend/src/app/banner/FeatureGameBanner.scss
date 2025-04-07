@@ -1,6 +1,6 @@
-.HomePage .FeatureGameBanner {
+.HomePage .FeatureGameBanner, .GamesPage .FeatureGameBanner {
 
-  max-height: 200px;
+  max-height: 240px;
   
   .AppMain.mobile & {
     width: calc(50% - 10px);

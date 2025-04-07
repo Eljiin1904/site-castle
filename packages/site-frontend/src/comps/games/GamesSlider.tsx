@@ -19,7 +19,7 @@ export type GameSlideProps = {
   to: string
 };
 
-export const HomePageGamesSlider = ({title, items, type }: {
+export const GamesSlider = ({title, items, type }: {
   title: string,
   items : GameSlideProps[],
   type: "category" | "game" | "provider"
