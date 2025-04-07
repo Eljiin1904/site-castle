@@ -21,6 +21,7 @@ async function main() {
   Managers.double();
   Managers.dice();
   Managers.limbo();
+  Managers.mines();
   Managers.races();
   Managers.raffles();
 

@@ -42,6 +42,7 @@ interface XpSettings {
   doubleXpRate: number;
   diceXpRate: number;
   limboXpRate: number;
+  minesXpRate: number;
 }
 
 interface RainSettings {
@@ -67,6 +68,7 @@ interface FeatureToggles {
   diceEnabled: boolean;
   doubleEnabled: boolean;
   limboEnabled: boolean;
+  minesEnabled: boolean;
 }
 
 interface ThresholdSettings {

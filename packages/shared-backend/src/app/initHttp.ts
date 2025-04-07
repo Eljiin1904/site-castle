@@ -107,6 +107,7 @@ export function initHttp(app = express()) {
   app.use("/games", Routes.games);
   app.use("/limbo", Routes.limbo);
   app.use("/market", Routes.market);
+  app.use("/mines", Routes.mines);
   app.use("/notifications", Routes.notifications);
   app.use("/register", Routes.register);
   app.use("/rewards", Routes.rewards);

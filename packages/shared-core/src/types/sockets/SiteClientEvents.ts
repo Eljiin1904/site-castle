@@ -24,6 +24,8 @@ export interface SiteClientEvents {
   "hot-feed-leave": () => void;
   "limbo-join": (userId: string) => void;
   "limbo-leave": () => void;
+  "mines-join": (userId: string) => void;
+  "mines-leave": () => void;
   "notifications-join": () => void;
   "notifications-leave": () => void;
   "notifications-delete": () => void;

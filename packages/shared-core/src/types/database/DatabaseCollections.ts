@@ -59,6 +59,8 @@ import type { UserSeedPairDocument } from "../users/UserSeedPairDocument";
 import type { UserSessionDocument } from "../users/UserSessionDocument";
 import { SiteGameDisplayDocument } from "../site/SiteGameDisplayDocument";
 import { SiteJackPotDocument } from "../site/SiteJackpotDocument";
+import { MinesGameDocument } from "../mines/MinesGameDocument";
+import { MinesEventDocument } from "../mines/MinesEventDocument";
 
 export interface DatabaseCollections {
   ["admin-log"]: AdminLogDocument;
@@ -93,6 +95,8 @@ export interface DatabaseCollections {
   ["limbo-tickets"]: LimboTicketDocument;
   ["market-inventories"]: MarketInventoryDocument;
   ["market-items"]: MarketItemDocument;
+  ["mines-events"]: MinesEventDocument;
+  ["mines-games"]: MinesGameDocument;
   ["notifications"]: NotificationDocument;
   ["promotion-codes"]: PromotionCodeDocument;
   ["promotion-tickets"]: PromotionTicketDocument;

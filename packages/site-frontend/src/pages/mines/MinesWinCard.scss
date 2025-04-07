@@ -1,0 +1,25 @@
+
+@keyframes MinesWinCard-pop-in {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.MinesPage .MinesWinCard {
+
+  .inner-content {
+    animation: MinesWinCard-pop-in 100ms ease-in;
+    animation-fill-mode: backwards;
+  }
+
+  &.delay {
+    .inner-content {
+      animation-delay: 100ms;
+    }
+  }
+}

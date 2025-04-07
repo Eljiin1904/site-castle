@@ -24,13 +24,7 @@ export async function aggregateReport({
   return report;
 }
 
-function createPipeline({
-  minDate,
-  maxDate,
-}: {
-  minDate: Date;
-  maxDate: Date;
-}) {
+function createPipeline({ minDate, maxDate }: { minDate: Date; maxDate: Date }) {
   const pipeline = [
     {
       $match: {
@@ -157,6 +151,10 @@ function createPipeline({
         limboWagerTokens: "sum",
         limboWinTokens: "sum",
         limboEv: "sum",
+        minesBetCount: "sum",
+        minesWagerTokens: "sum",
+        minesWinTokens: "sum",
+        minesEv: "sum",
         affiliateCommissionTokens: "sum",
         affiliateClaimTokens: "sum",
         affiliateReloadTokens: "sum",

@@ -13,6 +13,7 @@ import { siteSlice } from "./services/site/redux/siteSlice";
 import { socketSlice } from "./services/sockets/redux/socketSlice";
 import { supportSlice } from "./services/support/redux/supportSlice";
 import { userSlice } from "./services/users/redux/userSlice";
+import { minesSlice } from "./services/mines/redux/minesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     dice: diceSlice.reducer,
     holiday: holidaySlice.reducer,
     limbo: limboSlice.reducer,
+    mines: minesSlice.reducer,
     notifications: notificationsSlice.reducer,
     site: siteSlice.reducer,
     socket: socketSlice.reducer,

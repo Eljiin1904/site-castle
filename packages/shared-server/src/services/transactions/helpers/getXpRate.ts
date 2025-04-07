@@ -15,6 +15,8 @@ export async function getXpRate(category: TransactionCategory) {
       return settings.diceXpRate;
     case "limbo":
       return settings.limboXpRate;
+    case "mines":
+      return settings.minesXpRate;
     default:
       throw new Error(`Invalid category, getXpRate: ${category}`);
   }

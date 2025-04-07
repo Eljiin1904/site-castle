@@ -39,6 +39,8 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["limbo-tickets"]: config.env,
   ["market-inventories"]: config.env,
   ["market-items"]: config.env,
+  ["mines-events"]: config.env,
+  ["mines-games"]: config.env,
   ["notifications"]: config.env,
   ["promotion-codes"]: config.env,
   ["promotion-tickets"]: config.env,

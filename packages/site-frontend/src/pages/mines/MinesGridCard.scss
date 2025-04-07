@@ -1,0 +1,103 @@
+$red: #D23434;
+$dark-red: #5f1519;
+$darkest-red: #380c0e;
+$green: #21be65;
+$dark-green: #166336;
+$darkest-green: #0c3a20;
+$purple: #7937c4;
+$dark-purple: #51256e;
+$darkest-purple: #2b193a;
+$yellow: #FDB022;
+$dark-yellow: #5e3f08;
+$gray: var(--gray-5-color);
+$dark-gray: var(--gray-6-color);
+
+@mixin border-gradient($start, $end) {
+  border-image-slice: 1;
+  border-image-repeat: stretch;
+  border-image-source: linear-gradient(180deg, $start 0.01%, $end 100%);
+}
+
+@mixin background-gradient($color, $opacity-start, $opacity-end) {
+  background-image: linear-gradient(180deg, rgba($color, $opacity-start), rgba($color, $opacity-end));
+}
+
+@keyframes MinesGridCard-fill {
+  from { clip-path: inset(100% 0 0 0) }
+  to { clip-path: inset(0 0 0 0) }
+}
+
+@keyframes MinesGridCard-pop-in {
+  0% { transform: scale(0.6) }
+  50% { transform: scale(1.2) }
+  100% { transform: scale(1) }
+}
+
+.MinesPage .MinesGridCard {
+
+  &.revealed {
+    .icon {
+      animation: MinesGridCard-pop-in 200ms ease-out;
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &.visible:not(.revealed) {
+    background-color: var(--gray-7-color);
+    .icon {
+      opacity: 0.5;
+    }
+  }
+
+  &:hover:not(.disabled) {
+    cursor: pointer;
+    @include border-gradient($gray, $yellow);
+  }
+
+  &.auto {
+    background-color: $darkest-purple;
+    @include border-gradient($dark-purple, $purple);
+    @include background-gradient($purple, 0.05, 0.2);
+
+    &:hover:not(.disabled) {
+      @include border-gradient($dark-purple, $yellow);
+    }
+  }
+
+  &.queued {
+    background-color: $dark-gray;
+    @include border-gradient($gray, $yellow);
+    @include background-gradient($yellow, 0.05, 0.2);
+  }
+
+  &.revealed {
+    background-color: $darkest-green;
+    @include border-gradient($dark-green, $green);
+    @include background-gradient($green, 0.05, 0.2);
+  }
+
+  &.revealed.mined:not(.animating) {
+    background-color: $darkest-red;
+    @include border-gradient($dark-red, $red);
+    @include background-gradient($red, 0.05, 0.2);
+  }
+
+  &.animating {
+    background-color: $dark-gray;
+    @include border-gradient($gray, $yellow);
+    @include background-gradient($yellow, 0.05, 0.2);
+
+    .animation .background {
+      color: $dark-yellow;
+    }
+
+    .animation .fill {
+      color: $yellow;
+      clip-path: inset(100% 0 0 0);
+      animation: MinesGridCard-fill 200ms ease-in-out forwards;
+    }
+  }
+}

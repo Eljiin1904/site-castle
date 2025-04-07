@@ -20,6 +20,8 @@ import type { SiteActivityDocument } from "../site/SiteActivityDocument";
 import type { SiteBetDocument } from "../site/SiteBetDocument";
 import { HotSiteGameDetails } from "../site/HotSiteGame";
 import { DoubleJackpotDetails } from "../double/DoubleJackpotDetails";
+import type { MinesInitialState } from "../mines/MinesInitialState";
+import type { MinesEventDocument } from "../mines/MinesEventDocument";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -48,6 +50,8 @@ export interface SiteServerEvents {
   "holiday-raffle-update": (update: StreamUpdate) => void;
   "limbo-init": (x: LimboInitialState) => void;
   "limbo-insert": (bet: LimboTicketDocument) => void;
+  "mines-init": (x: MinesInitialState) => void;
+  "mines-insert": (x: MinesEventDocument) => void;
   "notifications-init": (notifications: NotificationDocument[]) => void;
   "notifications-insert": (notification: NotificationDocument) => void;
   "notifications-update": (update: StreamUpdate) => void;

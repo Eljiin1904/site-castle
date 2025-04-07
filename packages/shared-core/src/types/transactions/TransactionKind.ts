@@ -39,6 +39,8 @@ export type TransactionKindData =
   | DoubleWonData
   | LimboBetData
   | LimboWonData
+  | MinesBetData
+  | MinesWonData
   | PromotionCardRedeemData
   | PromotionCodeRedeemData
   | RainPayoutData
@@ -194,6 +196,23 @@ interface LimboWonData {
   kind: "limbo-won";
   gameId: string;
   targetValue: number;
+  multiplier: number;
+}
+
+interface MinesBetData {
+  kind: "mines-bet";
+  bet: TransactionBetData;
+  gameId: string;
+  gridSize: number;
+  mineCount: number;
+}
+
+interface MinesWonData {
+  kind: "mines-won";
+  gameId: string;
+  gridSize: number;
+  mineCount: number;
+  revealCount: number;
   multiplier: number;
 }
 
