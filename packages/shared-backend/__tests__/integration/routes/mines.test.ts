@@ -1,9 +1,8 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeAll, beforeEach } from "vitest";
 import { Database } from "@server/services/database";
 import { createTestUser, fetchWithCookie, handleLogin } from "../../testUtility";
 import bcrypt from "bcrypt";
 import config from "#app/config";
-import { gridSizes } from "@core/services/mines/Mines";
 
 const BASE_URL = config.siteAPI;
 const hCaptchaToken = "10000000-aaaa-bbbb-cccc-000000000001"; // from hCatcha's integration test guidance
