@@ -1,4 +1,4 @@
-name: Shared Reporting Server CI
+name: Affiliate API CI
 
 on:
   workflow_dispatch:

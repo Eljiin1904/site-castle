@@ -4,7 +4,7 @@ ENV NODE_ENV=devcloud \
 WORKDIR /pidwin
 COPY . .
 RUN npm run init
-WORKDIR /pidwin/packages/shared-affiliate-api
+WORKDIR /pidwin/packages/shared-admin-backend
 RUN npm uninstall bcrypt
 RUN npm install bcryptjs
 RUN npm install bcrypt
@@ -14,11 +14,11 @@ FROM node:23-alpine AS production
 ENV NODE_ENV=devcloud
 ENV PORT=3000
 COPY --from=build /pidwin/node_modules /pidwin/node_modules
-COPY --from=build /pidwin/packages/shared-affiliate-api /pidwin/packages/shared-affiliate-api
-COPY --from=build /pidwin/packages/shared-core/build /pidwin/packages/shared-core/build
-COPY --from=build /pidwin/packages/shared-server/build /pidwin/packages/shared-server/build
+COPY --from=build /pidwin/packages/shared-admin-backend /pidwin/packages/shared-admin-backend
+COPY --from=build /pidwin/packages/shared-core /pidwin/packages/shared-core
+COPY --from=build /pidwin/packages/shared-server /pidwin/packages/shared-server
 
-WORKDIR /pidwin/packages/shared-affiliate-api
+WORKDIR /pidwin/packages/shared-admin-backend
 
 EXPOSE 3000
 CMD ["npm", "run", "start"]
