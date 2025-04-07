@@ -182,7 +182,7 @@ export const VerificationOneWholeForm = ({
       >
         <Button
           type="submit"
-          kind="primary"
+          kind="primary-yellow"
           label={t("common:submit")}
           width={layout === "mobile" ? "full" : 128}
           loading={form.loading}
