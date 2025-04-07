@@ -84,6 +84,7 @@ export const ChatHeader = () => {
       </Div>
       
       <Vector
+        className="closeChat"
         as={SvgTimes}
         size={16}
         hover="highlight"
