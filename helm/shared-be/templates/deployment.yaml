@@ -32,16 +32,12 @@ spec:
           ports:
             - name: https
               containerPort: {{ .Values.envoy.port }}
-            - name: admin
-              containerPort: {{ .Values.envoy.adminPort }}
           volumeMounts:
             - name: envoy-config
               mountPath: /etc/envoy
             - name: tls-certs
               mountPath: /etc/certs
               readOnly: true
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}  
         - name: castle-backend
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
           imagePullPolicy: {{ .Values.image.app.pullPolicy }}
