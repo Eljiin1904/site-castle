@@ -10,7 +10,6 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { SvgEllipsisV } from "@client/svgs/common/SvgEllipsisV";
-import { Vector } from "@client/comps/vector/Vector";
 import { Fragment } from "react/jsx-runtime";
 
 export const DiceHeader = () => {

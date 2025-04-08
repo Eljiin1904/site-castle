@@ -66,7 +66,7 @@ export const VerificationOnePartThreeForm = ({
         <Button
           fx
           type="submit"
-          kind="primary"
+          kind="primary-yellow"
           label={t("common:startPlaying")}
           loading={form.loading}
         />

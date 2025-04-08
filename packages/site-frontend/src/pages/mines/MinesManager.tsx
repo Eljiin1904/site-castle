@@ -32,6 +32,7 @@ export const MinesManager = memo(() => {
 
   useSocketListener("mines-insert", (game) => {
     dispatch(Mines.updateFeed(game));
+    dispatch(Mines.updateHistory(game));
   });
 
   useUnmount(() => {

@@ -1,7 +1,7 @@
 import { FC, RefObject } from "react";
 import classNames from "classnames";
 import { Intimal } from "@core/services/intimal";
-import { StyledLayoutProps } from "../styled/Styled";
+import { StyledLayoutProps, StyledProps } from "../styled/Styled";
 import { Div } from "../div/Div";
 import { Span } from "../span/Span";
 import { Vector } from "../vector/Vector";
@@ -17,6 +17,7 @@ export type TokensProps = StyledLayoutProps & {
   decimals?: number;
   integer?: boolean;
   family?: "text" | "title";
+  weight?: StyledProps["fontWeight"];
   valueRef?: RefObject<HTMLElement>;
 };
 
@@ -30,6 +31,7 @@ export const Tokens: FC<TokensProps> = ({
   decimals = 2,
   integer,
   family = "text",
+  weight = "medium",
   hideIcon,
   valueRef,
   ...forwardProps
@@ -64,14 +66,14 @@ export const Tokens: FC<TokensProps> = ({
         family={family}
         size={fontSize}
         color={color}
-        fontWeight="medium"
+        fontWeight={weight}
       >
         {accent === "negative" && value > 0 && "-"}
         {/* {accent === "positive" && "+"} */}
       </Span>
       <Span
         family={family}
-        fontWeight="medium"
+        fontWeight={weight}
         forwardRef={valueRef}
         size={fontSize}
         color={color}

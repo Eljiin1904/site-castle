@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { Numbers } from "@core/services/numbers";
 import { Button } from "@client/comps/button/Button";
-import { Div } from "@client/comps/div/Div";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Span } from "@client/comps/span/Span";
 import { Tokens } from "@client/comps/tokens/Tokens";
@@ -17,6 +16,8 @@ import { BetInputGroup } from "./BetInputGroup";
 import { useCashout } from "./useCashout";
 import { useManualBet } from "./useManualBet";
 import { usePlaying } from "./usePlaying";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import classNames from "classnames";
 
 export const MinesMenuManual = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -48,44 +49,47 @@ const NotMobileContent = () => {
     <Fragment>
       <BaseFields />
       <GameStateView />
-      <Div grow />
-      <Div
-        fx
-        column
-        pt={16}
-        gap={12}
-        borderTop
-      >
-        <RandomButton />
-        <ActionButton />
-      </Div>
+      <RandomButton />
+      <ActionButton />
     </Fragment>
   );
 };
 
+
 const ActionButton = () => {
   const processing = useAppSelector((x) => x.mines.processing);
   const revealCount = useAppSelector((x) => x.mines.game?.revealCount) || 0;
+  const game = useAppSelector((x) => x.mines.game);
+  const { payout } = Mines.getPayout(game ?? {
+    betAmount:  0,
+    gridSize: 4,
+    mineCount:  1,
+    revealCount: 0
+  });
+  
   const playing = usePlaying();
   const handleBet = useManualBet();
   const handleCashout = useCashout();
+  const {t} = useTranslation(["games\\mines"]);
 
   if (playing) {
     return (
       <Button
         fx
-        kind="primary"
-        label="Cashout"
+        kind="primary-green"
+        label={t("cashout")}
         disabled={processing || revealCount === 0}
         onClick={handleCashout}
-      />
+      >
+        <Tokens value={payout} />
+      </Button>
     );
   }
   return (
     <Button
       fx
-      kind="primary"
-      label="Play"
+      kind="primary-green"
+      label={t("games\\mines:placeBet")}
       loading={processing}
       disabled={processing}
       onClick={handleBet}
@@ -99,7 +103,7 @@ const RandomButton = () => {
   const gridSize = useAppSelector((x) => x.mines.gridSize);
   const reveals = useAppSelector((x) => x.mines.game?.reveals) || [];
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\mines"]);
   const handleClick = () => {
     const revealIndex = Mines.getRandomReveal({ gridSize, reveals });
     const queued = inputQueue.includes(revealIndex);
@@ -114,8 +118,8 @@ const RandomButton = () => {
   return (
     <Button
       fx
-      kind="secondary"
-      label="Pick Random Tile"
+      kind="primary-green"
+      label={t("pickRandom")}
       onClick={handleClick}
     />
   );
@@ -140,6 +144,10 @@ const GameStateView = () => {
   const gridSize = useAppSelector((x) => x.mines.gridSize);
   const mineCount = useAppSelector((x) => x.mines.mineCount);
   const game = useAppSelector((x) => x.mines.game);
+  const processing = useAppSelector((x) => x.mines.processing);
+  const playing = usePlaying();
+  const disabled = processing || playing;
+  const {t} = useTranslation(["games\\mines"]);
 
   if (!game || game.completed) {
     return null;
@@ -162,37 +170,47 @@ const GameStateView = () => {
   return (
     <Fragment>
       <ModalSection>
-        <ModalLabel>{"Current Tile"}</ModalLabel>
+        <ModalLabel>{t('currentTile')}</ModalLabel>
         {game.revealCount === 0 ? (
           <ModalField
-            color="dark-gray"
-            style={{ height: "42px" }} // keep the same height as below
+            borderColor="brown-4"
+            height={40}
+            justifyContent="space-between"
+            className={classNames("MinesGameInput", {disabled})}
           >
-            {"No tiles revealed"}
+           <Span>
+           {t('notTilesRevealed')}
+           </Span>
           </ModalField>
         ) : (
-          <ModalField justify="space-between">
+          <ModalField 
+            borderColor="brown-4"
+            height={40}
+            justifyContent="space-between"
+            className={classNames("MinesGameInput", {disabled})}
+          >
             <Tokens value={current.payout} />
             <Span
-              family="title"
-              weight="bold"
-              color="light-blue"
+             color="sand"
             >
-              {`${Numbers.floor(current.multiplier, 2).toFixed(2)}x`}
+              {`${Numbers.floor(current.multiplier, 2).toFixed(2)}X`}
             </Span>
           </ModalField>
         )}
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Next Tile"}</ModalLabel>
-        <ModalField justify="space-between">
+        <ModalLabel>{t('nextTile')}</ModalLabel>
+        <ModalField  
+          borderColor="brown-4"
+          height={40}
+          justifyContent="space-between"
+          className={classNames("MinesGameInput", {disabled})}
+        >
           <Tokens value={next.payout} />
           <Span
-            family="title"
-            weight="bold"
-            color="light-blue"
+            color="sand"
           >
-            {`${Numbers.floor(next.multiplier, 2).toFixed(2)}x`}
+            {`${Numbers.floor(next.multiplier, 2).toFixed(2)}X`}
           </Span>
         </ModalField>
       </ModalSection>

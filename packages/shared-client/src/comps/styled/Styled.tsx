@@ -21,6 +21,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
       | "flex"
       | "inline-flex"
       | "inline-block"
+      | "grid"
       | "none"
       | "inherit";
     overflow?: "visible" | "auto" | "hidden";
@@ -85,6 +86,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
     textOverflow?: "clip" | "ellipsis";
     zIndex?: 1 | 2 | 3 | 4 | 5 | 10 | 11 | 12 | 13 | 14 | 15;
     boxShadow?: 1 | 2 | 3 | 4;
+    disabledSelect?: boolean,
     style?: CSSProperties | any;
     objectFitPosition?: "center" | "top" | "bottom" | "left" | "right" | "20%" | "40%" | "60%" | "80%";
     objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
@@ -94,6 +96,7 @@ export type StyledElement = (props: {
   id?: string;
   className?: string;
   children?: any;
+  disabledSelect?: boolean;
   style?: CSSProperties | any;
 }) => null;
 
@@ -121,6 +124,7 @@ export type StyledLayoutProps = {
   mb?: Unit;
   gap?: Unit;
   hover?: StyledProps["hover"];
+  disabledSelect?: boolean;
   style?: CSSProperties | any;
 };
 
@@ -187,6 +191,7 @@ export function Styled<T extends ElementType>({
   textOverflow,
   zIndex,
   boxShadow,
+  disabledSelect,
   ...forwardProps
 }: StyledProps<T>) {
   return createElement(
@@ -243,6 +248,7 @@ export function Styled<T extends ElementType>({
         [`_text-overflow-${textOverflow}`]: textOverflow,
         [`_z-index-${zIndex}`]: zIndex,
         [`_box-shadow-${boxShadow}`]: boxShadow,
+        ["_no-select"]: disabledSelect
       }),
     },
     children as ReactNode,

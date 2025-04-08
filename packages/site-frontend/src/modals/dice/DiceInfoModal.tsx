@@ -6,8 +6,10 @@ import { Dialogs } from "@client/services/dialogs";
 import { UnorderedList } from "@client/comps/list/UnorderedList";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dice } from "#app/services/dice";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DiceInfoModal = () => {
+  const {t} = useTranslation(["games\\dice"]);
   const xpRate = useAppSelector((x) => x.site.settings.diceXpRate);
   const rtp = 1 - Dice.edgeRate;
 
@@ -17,7 +19,7 @@ export const DiceInfoModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Dice Rules"
+        heading={t("rules.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
@@ -25,11 +27,11 @@ export const DiceInfoModal = () => {
           fx
           itemSize={14}
           items={[
-            "Min multiplier is 1.0105x.",
-            "Max multiplier is 9600x.",
-            `Max profit is ${Intimal.toLocaleString(Dice.maxProfit, 0)} tokens.`,
-            `RTP is ${rtp * 100}%.`,
-            `1.00 tokens wagered = ${xpRate.toFixed(2)} XP.`,
+            t("rules.rule1"),
+            t("rules.rule2"),
+            t("rules.rule3",{max:Intimal.toLocaleString(Dice.maxProfit, 0)}),
+            t("rules.rule4",{percent: rtp * 100}),
+            t("rules.rule5",{exp: xpRate.toFixed(2)})
           ]}
         />
       </ModalBody>

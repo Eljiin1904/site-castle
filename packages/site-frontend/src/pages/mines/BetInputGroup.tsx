@@ -7,11 +7,13 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Mines } from "#app/services/mines";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const betAmount = useAppSelector((x) => x.mines.betAmount);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const setBetAmount = (x: number | undefined) => {
     dispatch(Mines.setBetAmount(x));
@@ -29,45 +31,39 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
 
   return (
     <ModalSection>
-      <ModalLabel>{"Bet Amount"}</ModalLabel>
-      <Div align="center">
+      <ModalLabel>{t("fields:bets.amount")}</ModalLabel>
+      <Div align="center" justify="space-between" gap={8}>
         <Input
           type="currency"
-          placeholder="Enter bet amount..."
+          placeholder={t("fields:bets.amountPlaceholder")}
           value={betAmount}
           disabled={disabled}
           onChange={(x) => setBetAmount(x)}
         />
-        <Div
-          position="absolute"
-          right={4}
-          gap={4}
-        >
+        <Div>
           <Button
-            kind="secondary"
-            size="xs"
+            kind="tertiary-grey"
             label="1/2"
-            labelSize={13}
-            width={48}
+            width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x / 2)}
+            size="xssso"
           />
           <Button
-            kind="secondary"
-            size="xs"
-            label="2x"
-            labelSize={13}
-            width={48}
+            kind="tertiary-grey"
+            label="2X"
+            width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}
+            size="xssso"
           />
           <Button
-            kind="secondary"
-            size="xs"
-            label="Max"
-            labelSize={13}
-            width={48}
+            kind="tertiary-grey"
+            label="MAX"
+            width={40}
+            disabled={disabled}
             onClick={() => setBetAmount(Intimal.floor(tokenBalance))}
+            size="xssso"
           />
         </Div>
       </Div>

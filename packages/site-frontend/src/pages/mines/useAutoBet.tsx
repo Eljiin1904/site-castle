@@ -11,11 +11,11 @@ import { LoginModal } from "#app/modals/login/LoginModal";
 import { UserEmailConfirmModal } from "#app/modals/user/UserEmailConfirmModal";
 import { Mines } from "#app/services/mines";
 import { Gtm } from "#app/services/gtm";
-import { VerificationTwoModal } from "#app/modals/verification/VerificationTwoModal";
 import { useBet2fa } from "#app/hooks/security/useBet2fa";
 import { useBetConfirmation } from "#app/hooks/security/useBetConfirmation";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 let startBetAmount = 0;
 let infiniteGames = false;
@@ -37,6 +37,7 @@ export function useAutoBet() {
   const autoIndexes = useAppSelector((x) => x.mines.autoIndexes);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const autoPnl = useAppSelector((x) => x.mines.autoPnl);
+  const {t} = useTranslation(["games\\mines"]);
 
   const [next, setNext] = useState(false);
   const cancelled = useRef(false);
@@ -54,7 +55,7 @@ export function useAutoBet() {
   const stopAuto = () => {
     setNext(false);
     dispatch(Mines.setAutoPlaying(false));
-    Toasts.info("Auto play stopped.");
+    Toasts.info("games\\mines:autoPlayStopped");
   };
 
   const handleBet = usePost(
@@ -211,21 +212,19 @@ export function useAutoBet() {
     }
     if (kycTier < 1) {
       return Dialogs.open("primary", <UserEmailConfirmModal />);
-    } else if (kycTier < 2) {
-      return Dialogs.open("primary", <VerificationTwoModal />);
-    }
+    } 
     if (betAmount === undefined) {
-      throw new Error("Invalid bet amount.");
+      throw new Error("validations:errors.games.invalidBetAmount");
     }
     if (betAmount > tokenBalance) {
-      throw new Error("You do not have enough tokens.");
+      throw new Error("validations:errors.games.notEnoughTokens");
     }
 
     await confirmBet({
       betAmount,
       onConfirmProps: () => ({
-        heading: "Confirm Bet",
-        message: `Bet ${Intimal.toLocaleString(betAmount)}?`,
+        heading: t('confirmBet.title'),
+        message:  t("confirmBet.message", {value : {amount: Intimal.toLocaleString(betAmount)}})
       }),
     });
 
