@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Conditional } from "#client/comps/conditional/Conditional";
+import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { VerificationTwoWholeForm } from "./VerificationTwoWholeForm";
 import { VerificationTwoPartOneForm } from "./VerificationTwoPartOneForm";

@@ -8,3 +8,4 @@ export * from "./utils/importJson";
 export * from "./utils/popup";
 export * from "./utils/updateLocal";
 export * from "./utils/waitForFrames";
+export * from "./utils/waitForDuration";

@@ -13,5 +13,13 @@
   "confirmBet": {
     "title": "Confirm Bet",
     "message": "Bet {{value.amount}}?"
+  },
+  "rules": {
+    "title": "Dice Rules",
+    "rule1":"Min multiplier is 1.0105x.",
+    "rule2":"Max multiplier is 9600x.",
+    "rule3": "Max profit is {{max}} tokens.",
+    "rule4": "RTP is {{percent}}%.",
+    "rule5": "1.00 tokens wagered = {{exp}} XP."
   }
 }

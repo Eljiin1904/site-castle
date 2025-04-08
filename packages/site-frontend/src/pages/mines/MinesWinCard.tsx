@@ -2,23 +2,20 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
-import { Img } from "@client/comps/img/Img";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Span } from "@client/comps/span/Span";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgTimesCirlce } from "@client/svgs/common/SvgTimesCircle";
 import { Mines } from "#app/services/mines";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 import "./MinesWinCard.scss";
 
 export const MinesWinCard = () => {
-  const [hovered, setHovered] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-
+  const {t} = useTranslation(["games\\mines"]);
   const game = useAppSelector((x) => x.mines.game);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const small = layout === "mobile";
+  const small = useIsMobileLayout();
   const delay = autoPlaying;
 
   useEffect(() => setDismissed(false), [game]);
@@ -44,52 +41,55 @@ export const MinesWinCard = () => {
         className="inner-content"
         column
         center
-        pb={small ? 16 : 20}
-        pt={4}
-        bg="gray-8"
+        p={24}
+        gap={8}
+        bg="dark-brown"
         border
-        borderColor="gray-4"
-        boxShadow={2}
+        borderColor="bright-green"
+        borderWidth={2}
         pointerEvents="all"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
         style={{
-          width: small ? "150px" : "200px",
+          minWidth: "150px"
         }}
       >
-        <Img
-          type="png"
-          path="/icons/mines-gem-group"
-          width={small ? "80px" : "120px"}
-        />
         <Span
-          family="title"
-          weight="bold"
-          color="white"
-          size={small ? 14 : 20}
+          color="light-sand"
+          size={16}
+          textTransform="uppercase"
+          fontFamily="title"
+          weight="regular"
+          lineHeight={24}
         >
-          {`${Numbers.floor(multiplier, 2).toFixed(2)}x`}
+          {t("winModal.title")}
         </Span>
         <Tokens
           value={payout}
           accent="positive"
-          mt={8}
+          fontSize={48}
+          color="bright-green"
+          family="title"
+          weight="regular"
         />
-        {hovered && (
-          <Vector
-            as={SvgTimesCirlce}
-            position="absolute"
-            top={8}
-            right={8}
-            hover="highlight"
-            data-tooltip-id="app-tooltip"
-            data-tooltip-content="Dismiss"
-            onClick={() => {
-              setDismissed(true);
-              setHovered(false);
-            }}
-          />
-        )}
+        <Div fx gap={8} center borderTop borderColor="dark-brown-active" pt={16} mt={16}>
+          <Span
+            family="title"
+            weight="regular"
+            color="light-sand"
+            textTransform="uppercase"
+            size={small ? 14 : 16}
+          >
+            {t('winModal.multiplier')}
+          </Span>
+          <Span
+            family="title"
+            weight="regular"
+            color="bright-green"
+            size={small ? 14 : 16}
+          >
+            {`${Numbers.floor(multiplier, 2).toFixed(2)}X`}
+          </Span>
+        </Div>
+        
       </Div>
     </Div>
   );

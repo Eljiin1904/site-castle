@@ -9,8 +9,8 @@ import { Mines } from "#app/services/mines";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { LoginModal } from "#app/modals/login/LoginModal";
 import { UserEmailConfirmModal } from "#app/modals/user/UserEmailConfirmModal";
-import { VerificationTwoModal } from "#app/modals/verification/VerificationTwoModal";
 import { Gtm } from "#app/services/gtm";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export function useManualBet() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -23,6 +23,7 @@ export function useManualBet() {
   const bet2fa = useBet2fa();
   const playSound = useSoundPlayer("mines");
   const dispatch = useAppDispatch();
+  const {t} = useTranslation(["games\\mines"]);
 
   const handleBet = usePost(
     async (isMounted) => {
@@ -31,21 +32,19 @@ export function useManualBet() {
       }
       if (kycTier < 1) {
         return Dialogs.open("primary", <UserEmailConfirmModal />);
-      } else if (kycTier < 2) {
-        return Dialogs.open("primary", <VerificationTwoModal />);
       }
       if (betAmount === undefined) {
-        throw new Error("Invalid bet amount.");
+        throw new Error("validations:errors.games.invalidBetAmount");
       }
       if (betAmount > tokenBalance) {
-        throw new Error("You do not have enough tokens.");
+        throw new Error("validations:errors.games.notEnoughTokens");
       }
 
       await confirmBet({
         betAmount,
         onConfirmProps: () => ({
-          heading: "Confirm Bet",
-          message: `Bet ${Intimal.toLocaleString(betAmount)}?`,
+          heading: t('confirmBet.title'),
+          message:  t("confirmBet.message", {value : {amount: Intimal.toLocaleString(betAmount)}})
         }),
       });
 

@@ -8,38 +8,47 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { MinesMenuAuto } from "./MinesMenuAuto";
 import { MinesMenuManual } from "./MinesMenuManual";
 import { usePlaying } from "./usePlaying";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+
 
 export const MinesMenu = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const mode = useAppSelector((x) => x.mines.mode);
   const sm = layout === "mobile";
 
-  return (
-    <Div
+  return (<Div wrap style={
+    sm
+      ? undefined
+      : {
+          minWidth: "320px",
+          maxWidth: "320px",
+        }
+  }>
+   <ModeMenu />
+   <Div
       column
-      p={16}
-      gap={12}
-      bg="gray-6"
-      border
+      px={sm? 20 : 24}
+      py={sm? 16 : 24}
+      gap={16}
+      bg="brown-6"
+      borderColor="brown-4"
+      borderTop
+      fx
       style={
         sm
           ? undefined
           : {
-              minWidth: "320px",
-              maxWidth: "320px",
-              minHeight: "608px",
-              maxHeight: "608px",
+              minHeight: "608px"
             }
       }
     >
-      {!sm && <ModeMenu />}
       <Conditional
         value={mode}
         manual={<MinesMenuManual />}
         auto={<MinesMenuAuto />}
       />
-      {sm && <ModeMenu />}
     </Div>
+   </Div>
   );
 };
 
@@ -49,7 +58,7 @@ const ModeMenu = () => {
   const playing = usePlaying();
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
   const modeHandler = (x: MinesMode) => {
     return () => dispatch(Mines.setMode(x));
   };
@@ -59,12 +68,12 @@ const ModeMenu = () => {
       disabled={processing || autoPlaying || playing}
       options={[
         {
-          label: "Manual",
+          label: t("common:manual"),
           active: mode === "manual",
           onClick: modeHandler("manual"),
         },
         {
-          label: "Auto",
+          label: t("common:auto"),
           active: mode === "auto",
           onClick: modeHandler("auto"),
         },

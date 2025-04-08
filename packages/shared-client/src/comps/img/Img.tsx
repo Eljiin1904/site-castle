@@ -19,6 +19,7 @@ export type ImgProps = Omit<StyledLayoutProps, "width" | "height"> & {
   objectFit?: StyledProps["objectFit"];
   objectPositionVertical?: StyledProps["objectFitPosition"];
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
+  p?: Unit
 };
 
 export const Img: FC<ImgProps> = ({
