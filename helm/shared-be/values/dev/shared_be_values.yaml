@@ -85,4 +85,4 @@ volumes:
       name: castle-backend-envoy-config # Use the chart's name for the ConfigMap
   - name: tls-certs
     secret:
-      secretName: {{ .Values.envoy.certificateSecret }}
+      secretName: "shared-backend-tls"
