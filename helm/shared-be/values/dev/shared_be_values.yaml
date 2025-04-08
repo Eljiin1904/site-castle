@@ -71,3 +71,11 @@ namespace: shared-backend
 # Explicit labels to ensure consistency across resources
 labels:
   app: castle-backend
+
+
+envoy:
+  enabled: true
+  image: "envoyproxy/envoy:v1.29.0" # Use a stable Envoy version
+  port: 8443 # Port Envoy will listen on for HTTPS
+  adminPort: 9901 # Envoy admin interface port (for debugging)
+  certificateSecret: "shared-backend-tls" # Name of the secret in the current namespace
