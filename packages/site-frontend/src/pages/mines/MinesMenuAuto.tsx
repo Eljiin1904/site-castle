@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
-import { Button } from "#client/comps/button/Button";
+import { Button } from "@client/comps/button/Button";
 import { ButtonGroup } from "@client/comps/button/ButtonGroup";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { ModalSection } from "@client/comps/modal/ModalSection";
@@ -24,6 +24,7 @@ import { BetInputGroup } from "./BetInputGroup";
 import { MineCountSlider } from "./MineCountSlider";
 import { MinesGridSizeSelector } from "./MinesGridSizeSelector";
 import { useAutoBet } from "./useAutoBet";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const MinesMenuAuto = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -49,34 +50,12 @@ const MobileContent = () => {
 };
 
 const NotMobileContent = () => {
-  return (
-    <Div
-      column
-      overflow="hidden"
-    >
-      <Div
-        column
-        overflow="hidden"
-      >
-        <Div
-          column
-          gap={12}
-          pb={12}
-          overflow="auto"
-          enableScrollbar
-        >
-          <BaseFields />
-        </Div>
-      </Div>
-      <Div
-        fx
-        pt={16}
-        borderTop
-      >
+  return (<Fragment>
+        <BaseFields />
         <ActionButton />
-      </Div>
-    </Div>
-  );
+      </Fragment>);
+
+  
 };
 
 const ActionButton = () => {
@@ -87,6 +66,7 @@ const ActionButton = () => {
   const autoIndexes = useAppSelector((x) => x.mines.autoIndexes);
   const processing = useAppSelector((x) => x.mines.processing);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation(["games\\mines"]);
 
   const handleStartAuto = useAutoBet();
 
@@ -94,12 +74,13 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="primary"
-        label="Stop Auto Play"
+        kind="primary-green"
+        label={t('games\\mines:stopAutoPlay')}
         onClick={() => dispatch(Mines.setAutoPlaying(false))}
       />
     );
   } else {
+    
     const revealCount = autoIndexes.length;
 
     const { profit } = Mines.getPayout({
@@ -111,12 +92,12 @@ const ActionButton = () => {
 
     const hasMaxProfit = profit >= Mines.maxProfit;
     const disabled = processing || revealCount === 0 || hasMaxProfit;
-
+  
     return (
       <Button
         fx
-        kind="primary"
-        label={hasMaxProfit ? "Exceeds Max Profit" : "Start Auto Play"}
+        kind="primary-green"
+        label={hasMaxProfit ? t('games\\mines:exceedMaxBet') : t('games\\mines:startAutoPlay')}
         disabled={disabled}
         onClick={handleStartAuto}
       />
@@ -147,18 +128,18 @@ const GamesInput = () => {
   const gameCount = useAppSelector((x) => x.mines.gameCount);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
   return (
     <ModalSection>
-      <ModalLabel>{"Games"}</ModalLabel>
+      <ModalLabel>{t("fields:bets.games")}</ModalLabel>
       <Input
         type="integer"
         placeholder="0"
         value={gameCount}
-        iconLeft={SvgChicken}
         iconRight={gameCount ? undefined : SvgInfinity}
         disabled={autoPlaying}
         onChange={(x) => dispatch(Mines.setGameCount(x))}
+        iconColor="dark-sand"
       />
     </ModalSection>
   );
@@ -169,52 +150,49 @@ const IndexSection = () => {
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const count = autoIndexes.length;
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <ModalSection>
-      <ModalLabel>{"Tile Pattern"}</ModalLabel>
-      <ModalField>
+      <ModalLabel>{t('tilePattern')}</ModalLabel>
+      <ModalField
+      align="center"
+      gap={12}
+      borderColor="brown-4"
+      height={40}
+      justifyContent="space-between"
+      >
         <Div
           grow
           align="center"
           gap={12}
         >
-          <Vector
-            as={SvgCategory}
-            size={16}
-            color="light-purple"
-          />
           <Span
-            weight="medium"
-            color="light-gray"
+            color="dark-sand"
           >
-            {count}
-            {" tile"}
-            {count !== 1 && "s"}
-            {" selected"}
+            {t('tileSelected',{count: count})}
           </Span>
         </Div>
-        <Vector
-          as={SvgCancel}
-          size={16}
-          color="light-red"
-          data-tooltip-id="app-tooltip"
-          data-tooltip-content="Clear"
-          hover="highlight"
-          cursor={autoPlaying ? "not-allowed" : "pointer"}
-          onClick={autoPlaying ? undefined : () => dispatch(Mines.clearAutoIndexes())}
-        />
         <Vector
           as={SvgRedo}
           ml={4}
           size={16}
-          color="light-blue"
           data-tooltip-id="app-tooltip"
-          data-tooltip-content="Reset"
+          data-tooltip-content={t('reset')}
           hover="highlight"
           cursor={autoPlaying ? "not-allowed" : "pointer"}
           onClick={autoPlaying ? undefined : () => dispatch(Mines.setGame(undefined))}
         />
+        <Vector
+        as={SvgCancel}
+        size={16}
+        color="double-red"
+        data-tooltip-id="app-tooltip"
+        data-tooltip-content={t('clear')}
+        hover="highlight"
+        cursor={autoPlaying ? "not-allowed" : "pointer"}
+        onClick={autoPlaying ? undefined : () => dispatch(Mines.clearAutoIndexes())}
+      />
+      
       </ModalField>
     </ModalSection>
   );
@@ -225,7 +203,7 @@ const PayoutSection = () => {
   const gridSize = useAppSelector((x) => x.mines.gridSize);
   const mineCount = useAppSelector((x) => x.mines.mineCount);
   const autoIndexes = useAppSelector((x) => x.mines.autoIndexes);
-
+  const {t} = useTranslation(["games\\mines"]);
   const { profit, payout, multiplier } = Mines.getPayout({
     betAmount,
     gridSize,
@@ -237,20 +215,21 @@ const PayoutSection = () => {
 
   return (
     <ModalSection>
-      <ModalLabel>{"Payout"}</ModalLabel>
+      <ModalLabel>{t('payout')}</ModalLabel>
       {overMaxProfit ? (
         <ModalField fontSize={12}>
-          <Span>{"Exceeds Max Profit"}</Span>
+          <Span>{t('exceedMaxBet')}</Span>
         </ModalField>
       ) : (
-        <ModalField justify="space-between">
+        <ModalField  
+        borderColor="brown-4"
+        height={40}
+        justifyContent="space-between">
           <Tokens value={payout} />
           <Span
-            family="title"
-            weight="bold"
-            color="light-blue"
+            color="sand"
           >
-            {`${Numbers.floor(multiplier, 2).toFixed(2)}x`}
+            {`${Numbers.floor(multiplier, 2).toFixed(2)}X`}
           </Span>
         </ModalField>
       )}
@@ -263,14 +242,26 @@ const WinSection = () => {
   const winIncreaseBy = useAppSelector((x) => x.mines.winIncreaseBy);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <ModalSection>
-      <ModalLabel>{"On Win"}</ModalLabel>
+      <ModalLabel>{t("fields:bets.onWin")}</ModalLabel>
       <Div
         fx
         align="center"
+        gap={8}
       >
+        <Div>
+          <ButtonGroup
+            options={[t('common:reset'), t('common:increase')]}
+            size="xssso"
+            value={["reset", "increase"].indexOf(winAction)}
+            disabled={autoPlaying}
+            setValue={(x) =>
+              dispatch(Mines.setWinAction(x === 0 ? "reset" : "increase"))
+            }
+          />
+        </Div>
         <Input
           type="decimal"
           placeholder="0.00"
@@ -278,21 +269,8 @@ const WinSection = () => {
           iconRight={SvgPercent}
           disabled={autoPlaying || winAction !== "increase"}
           onChange={(x) => dispatch(Mines.setWinIncreaseBy(x))}
-          style={{ paddingLeft: "182px" }}
-        />
-        <Div
-          position="absolute"
-          left={4}
-        >
-          <ButtonGroup
-            options={["Reset", "Increase By"]}
-            size="xs"
-            labelSize={13}
-            value={["reset", "increase"].indexOf(winAction)}
-            disabled={autoPlaying}
-            setValue={(x) => dispatch(Mines.setWinAction(x === 0 ? "reset" : "increase"))}
-          />
-        </Div>
+          
+        />          
       </Div>
     </ModalSection>
   );
@@ -303,37 +281,36 @@ const LossSection = () => {
   const lossIncreaseBy = useAppSelector((x) => x.mines.lossIncreaseBy);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <ModalSection>
-      <ModalLabel>{"On Loss"}</ModalLabel>
-      <Div
-        fx
-        align="center"
-      >
-        <Input
-          type="decimal"
-          placeholder="0.00"
-          value={lossIncreaseBy}
-          iconRight={SvgPercent}
-          disabled={autoPlaying || lossAction !== "increase"}
-          onChange={(x) => dispatch(Mines.setLossIncreaseBy(x))}
-          style={{ paddingLeft: "182px" }}
-        />
+      <ModalLabel>{t("fields:bets.onLoss")}</ModalLabel>
         <Div
-          position="absolute"
-          left={4}
+          fx
+          align="center"
+          gap={8}
         >
-          <ButtonGroup
-            options={["Reset", "Increase By"]}
-            size="xs"
-            labelSize={13}
-            value={["reset", "increase"].indexOf(lossAction)}
-            disabled={autoPlaying}
-            setValue={(x) => dispatch(Mines.setLossAction(x === 0 ? "reset" : "increase"))}
+          <Div>
+            <ButtonGroup
+              options={[t('common:reset'), t('common:increase')]}
+              size="xssso"
+              labelSize={12}
+              value={["reset", "increase"].indexOf(lossAction)}
+              disabled={autoPlaying}
+              setValue={(x) =>
+                dispatch(Mines.setLossAction(x === 0 ? "reset" : "increase"))
+              }
+            />
+          </Div>
+          <Input
+            type="decimal"
+            placeholder="0.00"
+            value={lossIncreaseBy}
+            iconRight={ SvgPercent}           
+            disabled={autoPlaying || lossAction !== "increase"}
+            onChange={(x) => dispatch(Mines.setLossIncreaseBy(x))}
           />
         </Div>
-      </Div>
     </ModalSection>
   );
 };
@@ -342,17 +319,17 @@ const StopProfitSection = () => {
   const profitLimit = useAppSelector((x) => x.mines.profitLimit);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <ModalSection>
-      <ModalLabel>{"Stop on Profit"}</ModalLabel>
-      <Input
-        type="currency"
-        placeholder="0.00"
-        value={profitLimit}
-        disabled={autoPlaying}
-        onChange={(x) => dispatch(Mines.setProfitLimit(x))}
-      />
+      <ModalLabel>{t("fields:bets.stopOnProfit")}</ModalLabel>
+        <Input
+          type="currency"
+          placeholder="0.00"
+          value={profitLimit}
+          disabled={autoPlaying}
+          onChange={(x) => dispatch(Mines.setProfitLimit(x))}
+        />
     </ModalSection>
   );
 };
@@ -361,17 +338,17 @@ const StopLossSection = () => {
   const lossLimit = useAppSelector((x) => x.mines.lossLimit);
   const autoPlaying = useAppSelector((x) => x.mines.autoPlaying);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <ModalSection>
-      <ModalLabel>{"Stop on Loss"}</ModalLabel>
-      <Input
-        type="currency"
-        placeholder="0.00"
-        value={lossLimit}
-        disabled={autoPlaying}
-        onChange={(x) => dispatch(Mines.setLossLimit(x))}
-      />
+      <ModalLabel>{t("fields:bets.stopOnLoss")}</ModalLabel>
+        <Input
+          type="currency"
+          placeholder="0.00"
+          value={lossLimit}
+          disabled={autoPlaying}
+          onChange={(x) => dispatch(Mines.setLossLimit(x))}
+        />
     </ModalSection>
   );
 };

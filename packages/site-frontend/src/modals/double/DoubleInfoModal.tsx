@@ -6,8 +6,11 @@ import { Dialogs } from "@client/services/dialogs";
 import { UnorderedList } from "@client/comps/list/UnorderedList";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Double } from "#app/services/double";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const DoubleInfoModal = () => {
+  
+  const {t} = useTranslation(["games\\double"]);
   const xpRate = useAppSelector((x) => x.site.settings.doubleXpRate);
   const rtp = 1 - Double.edgeRate;
 
@@ -17,7 +20,7 @@ export const DoubleInfoModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Double Rules"
+        heading={t("rules.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
@@ -25,13 +28,12 @@ export const DoubleInfoModal = () => {
           fx
           itemSize={14}
           items={[
-            "You can't bet more than once per color, per round.",
-            "You can't bet on both CT and T in the same round.",
-            `CT and T max bet is ${Intimal.toLocaleString(Double.getMaxBetAmount("red"), 0)} tokens.`,
-            `Bait max bet is ${Intimal.toLocaleString(Double.getMaxBetAmount("bait"), 0)} tokens.`,
-            `Green max bet is ${Intimal.toLocaleString(Double.getMaxBetAmount("green"), 0)} tokens.`,
-            `RTP is ${rtp * 100}%.`,
-            `1.00 tokens wagered = ${xpRate.toFixed(2)} XP.`,
+            t("rules.rule1"),
+            t("rules.rule2",{tokens: Intimal.toLocaleString(Double.getMaxBetAmount("red"), 0)}),
+            t("rules.rule3",{tokens: Intimal.toLocaleString(Double.getMaxBetAmount("bait"), 0)}),
+            t("rules.rule4",{tokens: Intimal.toLocaleString(Double.getMaxBetAmount("green"), 0)}),
+            t("rules.rule5", { percent: rtp * 100 }),
+            t("rules.rule6", { exp: xpRate.toFixed(2) }),
           ]}
         />
       </ModalBody>

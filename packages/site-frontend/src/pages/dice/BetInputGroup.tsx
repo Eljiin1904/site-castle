@@ -47,6 +47,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x / 2)}
+             size="xssso"
           />
           <Button
             kind="tertiary-grey"
@@ -54,6 +55,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}
+             size="xssso"
           />
           <Button
             kind="tertiary-grey"
@@ -61,6 +63,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
             width={40}
             disabled={disabled}
             onClick={() => setBetAmount(tokenBalance)}
+            size="xssso"
           />
         </Div>
       </Div>

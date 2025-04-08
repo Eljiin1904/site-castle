@@ -128,7 +128,7 @@ export const VerificationOnePartTwoForm = ({
         <Button
           fx
           type="submit"
-          kind="primary"
+          kind="primary-yellow"
           label={t("common:continue")}
           loading={form.loading}
         />

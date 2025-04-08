@@ -26,7 +26,7 @@ export default Http.createApiRoute({
 
     await Site.validateToggle("minesEnabled");
     await Site.validateSuspension(user);
-    await Site.validateKycTier(user, 2);
+    await Site.validateKycTier(user, 1);
     await Site.validateTokenBalance(user, betAmount);
 
     const hasExisting = await Database.exists("mines-games", {

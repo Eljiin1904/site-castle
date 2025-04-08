@@ -14,5 +14,14 @@
   "confirmBet": {
     "title": "Confirmar apuesta",
     "message": "Apostar {{value.amount}} en {{value.kind}}?"
+  },
+  "rules": {
+    "title": "Reglas de Doble",
+    "rule1":"No puedes apostar más de una vez por color, por ronda.",
+    "rule2":"La apuesta máxima de CT y T es {{tokens}} tokens.",
+    "rule3": "La apuesta máxima de cebo es {{tokens}} tokens.",
+    "rule4": "La apuesta máxima de verde es {{tokens}} tokens.",
+    "rule5": "RTP es {{percent}}%.",
+    "rule6": "1.00 tokens apostados = {{exp}} XP."
   }
 }

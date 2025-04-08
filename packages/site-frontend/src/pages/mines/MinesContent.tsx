@@ -3,9 +3,10 @@ import { Div } from "@client/comps/div/Div";
 import { PageLoading } from "@client/comps/page/PageLoading";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { MinesHeader } from "./MinesHeader";
-import { MinesFeed } from "./MinesFeed";
 import { MinesMenu } from "./MinesMenu";
 import { MinesView } from "./MinesView";
+import { BetBoard } from "#app/comps/bet-board/BetBoard";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const MinesContent = () => {
   const initialized = useAppSelector((x) => x.mines.initialized);
@@ -25,8 +26,8 @@ export const MinesContent = () => {
     );
   }
 };
-
 const MobileContent = () => {
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <Div
       fx
@@ -36,17 +37,17 @@ const MobileContent = () => {
       <MinesHeader />
       <MinesView />
       <MinesMenu />
-      <MinesFeed />
+      <BetBoard px={20} mt={40}  mb={40} title={t("betBoardHeader")} game="mines" />
     </Div>
   );
 };
 
 const NotMobileContent = () => {
+  const {t} = useTranslation(["games\\mines"]);
   return (
     <Div
       fx
       column
-      gap={24}
     >
       <MinesHeader />
       <Div
@@ -56,7 +57,7 @@ const NotMobileContent = () => {
         <MinesMenu />
         <MinesView />
       </Div>
-      <MinesFeed />
+      <BetBoard mt={56} mb={56} title={t("betBoardHeader")} game="mines" />    
     </Div>
   );
 };

@@ -28,6 +28,9 @@ export const BetBoard = ({title, game = 'all',  ...forwardProps}: BetBoardProps)
     case 'dice':
       filteredBets = bets?.dice || [];
       break;
+    case 'mines':
+      filteredBets = bets?.mines || [];
+      break;
     case 'double':
       filteredBets = bets?.double || [];
       break;

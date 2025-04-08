@@ -42,8 +42,9 @@ export const MinesGrid = memo(() => {
     >
       <Div
         display="grid"
-        p={sm ? 14 : 32}
-        gap={6}
+        px={sm ? 20 : 40}
+        py={sm ? 0 : 40}
+        gap={8}
         style={{
           maxHeight: sm ? "350px" : "604px",
           aspectRatio: 1,
