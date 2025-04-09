@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: castle-backend-envoy-config
-  namespace: {{ .Values.namespace | default "shared-backend" }}
+  namespace: shared-backend
 data:
   envoy.yaml: |
     static_resources:
@@ -21,7 +21,7 @@ data:
               route_config:
                 name: local_route
                 virtual_hosts:
-                - name: backend
+                - name: castle-backend
                   domains: ["*"]
                   routes:
                   - match:
@@ -38,8 +38,10 @@ data:
               "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
               common_tls_context:
                 tls_certificates:
-                - certificate_chain: { "filename": "/etc/certs/tls.crt" }
-                  private_key: { "filename": "/etc/certs/tls.key" }
+                - certificate_chain:
+                    filename: "/etc/certs/tls.crt"
+                  private_key:
+                    filename: "/etc/certs/tls.key"
       clusters:
       - name: backend
         connect_timeout: 0.25s
@@ -53,4 +55,4 @@ data:
                 address:
                   socket_address:
                     address: 127.0.0.1
-                    port_value: 3000
+                    port_value: 30000
