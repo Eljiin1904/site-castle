@@ -45,10 +45,15 @@ export const DiceViewSlider = () => {
         value={targetValue}
         handleRender={(node) => (
           <div {...node.props}>
-            <Div center bg="black-hover" p={16} width={40} height={40} borderRadius={"full"}>
-              <Vector
-                as={SvgSlider}
-              />
+            <Div
+              center
+              bg="black-hover"
+              p={16}
+              width={40}
+              height={40}
+              borderRadius={"full"}
+            >
+              <Vector as={SvgSlider} />
               <TargetCard />
             </Div>
           </div>
@@ -71,7 +76,15 @@ const TargetCard = () => {
         top: "40px",
       }}
     >
-      <Span fontFamily="title" color="dark-brown" lineHeight={24} fontWeight="regular" fontSize={24}>{Numbers.round(targetValue / 100, 2).toFixed(2)}</Span>
+      <Span
+        fontFamily="title"
+        color="dark-brown"
+        lineHeight={24}
+        fontWeight="regular"
+        fontSize={24}
+      >
+        {Numbers.round(targetValue / 100, 2).toFixed(2)}
+      </Span>
     </Div>
   );
 };

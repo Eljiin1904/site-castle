@@ -13,7 +13,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const betAmount = useAppSelector((x) => x.dice.betAmount);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const setBetAmount = (x: number | undefined) => {
     dispatch(Dice.setBetAmount(x));
@@ -32,7 +32,11 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   return (
     <ModalSection>
       <ModalLabel>{t("fields:bets.amount")}</ModalLabel>
-      <Div align="center" justify="space-between" gap={8}>
+      <Div
+        align="center"
+        justify="space-between"
+        gap={8}
+      >
         <Input
           type="currency"
           placeholder={t("fields:bets.amountPlaceholder")}

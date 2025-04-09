@@ -28,7 +28,7 @@ export const DiceContent = () => {
 };
 
 const MobileContent = () => {
-  const {t} = useTranslation(["games\\dice"]);
+  const { t } = useTranslation(["games\\dice"]);
   return (
     <Div
       fx
@@ -38,13 +38,19 @@ const MobileContent = () => {
       <DiceHeader />
       <DiceView />
       <DiceMenu />
-      <BetBoard px={20} mt={40}  mb={40} title={t("games\\dice:betBoardHeader")} game="dice" />
+      <BetBoard
+        px={20}
+        mt={40}
+        mb={40}
+        title={t("games\\dice:betBoardHeader")}
+        game="dice"
+      />
     </Div>
   );
 };
 
 const NotMobileContent = () => {
-  const {t} = useTranslation(["games\\dice"]);
+  const { t } = useTranslation(["games\\dice"]);
   return (
     <Div
       fx
@@ -58,7 +64,12 @@ const NotMobileContent = () => {
         <DiceMenu />
         <DiceView />
       </Div>
-      <BetBoard mt={56} mb={56} title={t("games\\dice:betBoardHeader")} game="dice" />    
+      <BetBoard
+        mt={56}
+        mb={56}
+        title={t("games\\dice:betBoardHeader")}
+        game="dice"
+      />
     </Div>
   );
 };

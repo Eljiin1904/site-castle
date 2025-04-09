@@ -52,7 +52,7 @@ const ActionButton = () => {
   const processing = useAppSelector((x) => x.dice.processing);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation(["games\\dice"]);
+  const { t } = useTranslation(["games\\dice"]);
   const { overMax } = useProfit();
 
   const handleStartAuto = useAutoBet();
@@ -62,7 +62,7 @@ const ActionButton = () => {
       <Button
         fx
         kind="primary-green"
-        label={t('games\\dice:stopAutoPlay')}
+        label={t("games\\dice:stopAutoPlay")}
         onClick={() => dispatch(Dice.setAutoPlaying(false))}
       />
     );
@@ -71,7 +71,7 @@ const ActionButton = () => {
       <Button
         fx
         kind="primary-green"
-        label={overMax ? t('games\\dice:exceedMaxBet') : t('games\\dice:startAutoPlay')}
+        label={overMax ? t("games\\dice:exceedMaxBet") : t("games\\dice:startAutoPlay")}
         disabled={overMax || processing}
         onClick={handleStartAuto}
       />
@@ -89,7 +89,7 @@ const BaseFields = () => {
   const lossLimit = useAppSelector((x) => x.dice.lossLimit);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Fragment>
@@ -115,13 +115,11 @@ const BaseFields = () => {
         >
           <Div>
             <ButtonGroup
-              options={[t('common:reset'), t('common:increase')]}
+              options={[t("common:reset"), t("common:increase")]}
               size="xssso"
               value={["reset", "increase"].indexOf(winAction)}
               disabled={autoPlaying}
-              setValue={(x) =>
-                dispatch(Dice.setWinAction(x === 0 ? "reset" : "increase"))
-              }
+              setValue={(x) => dispatch(Dice.setWinAction(x === 0 ? "reset" : "increase"))}
             />
           </Div>
           <Input
@@ -131,34 +129,31 @@ const BaseFields = () => {
             iconRight={SvgPercent}
             disabled={autoPlaying || winAction !== "increase"}
             onChange={(x) => dispatch(Dice.setWinIncreaseBy(x))}
-            
-          />          
+          />
         </Div>
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t("fields:bets.onLoss")}</ModalLabel>
         <Div
-         fx
-         align="center"
-         gap={8}
+          fx
+          align="center"
+          gap={8}
         >
           <Div>
             <ButtonGroup
-              options={[t('common:reset'), t('common:increase')]}
+              options={[t("common:reset"), t("common:increase")]}
               size="xssso"
               labelSize={12}
               value={["reset", "increase"].indexOf(lossAction)}
               disabled={autoPlaying}
-              setValue={(x) =>
-                dispatch(Dice.setLossAction(x === 0 ? "reset" : "increase"))
-              }
+              setValue={(x) => dispatch(Dice.setLossAction(x === 0 ? "reset" : "increase"))}
             />
           </Div>
           <Input
             type="decimal"
             placeholder="0.00"
             value={lossIncreaseBy}
-            iconRight={ SvgPercent}           
+            iconRight={SvgPercent}
             disabled={autoPlaying || lossAction !== "increase"}
             onChange={(x) => dispatch(Dice.setLossIncreaseBy(x))}
           />

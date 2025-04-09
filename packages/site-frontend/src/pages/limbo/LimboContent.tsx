@@ -8,6 +8,9 @@ import { LimboFeed } from "./LimboFeed";
 import { LimboMenu } from "./LimboMenu";
 import { LimboView } from "./LimboView";
 import { LimboHeader } from "./LimboHeader";
+import { DoubleStatus } from "../double/DoubleStatus";
+import { BetBoard } from "#app/comps/bet-board/BetBoard";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const LimboContent = () => {
   const initialized = useAppSelector((x) => x.limbo.initialized);
@@ -20,7 +23,7 @@ export const LimboContent = () => {
       <Conditional
         value={layout}
         mobile={<MobileContent />}
-        tablet={<NotMobileContent />}
+        tablet={<MobileContent />}
         laptop={<NotMobileContent />}
         desktop={<NotMobileContent />}
       />
@@ -29,6 +32,8 @@ export const LimboContent = () => {
 };
 
 const MobileContent = () => {
+  const { t } = useTranslation(["games\\limbo"]);
+
   return (
     <Div
       fx
@@ -38,19 +43,26 @@ const MobileContent = () => {
       <LimboHeader />
       <LimboView />
       <LimboMenu />
-      <LimboFeed />
+      <BetBoard
+        px={20}
+        mt={40}
+        mb={40}
+        title={t("games\\limbo:betBoardHeader")}
+        game="limbo"
+      />
     </Div>
   );
 };
 
 const NotMobileContent = () => {
+  const { t } = useTranslation(["games\\limbo"]);
+
   return (
     <Div
       fx
       column
       gap={24}
     >
-      <LimboHeader />
       <Div
         fx
         gap={24}
@@ -58,7 +70,13 @@ const NotMobileContent = () => {
         <LimboMenu />
         <LimboView />
       </Div>
-      <LimboFeed />
+      <BetBoard
+        px={20}
+        mt={40}
+        mb={40}
+        title={t("games\\limbo:betBoardHeader")}
+        game="limbo"
+      />
     </Div>
   );
 };
