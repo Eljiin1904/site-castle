@@ -1,10 +1,11 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useEffect, useState } from "react";
+import config from "#app/config";
 
 export const useFetchTenorResults = () => {
 
-  const apiKey = 'AIzaSyBY-6MK_yUsCALRs4ZXdWbJ4g_mKCgyU3g';
+  const apiKey = config.tenorAPIKey;
   const search = useAppSelector((x) => x.chat.search) ?? '';
   const [images, setImages] = useState<any[]>([]);
   const {i18n} = useTranslation();

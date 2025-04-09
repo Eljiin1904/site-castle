@@ -1,10 +1,11 @@
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { TenorCategory } from "@core/types/tenor/TenorCategory";
 import { useEffect, useState } from "react";
+import config from "#app/config";
 
 export const useFetchTenorCategories = () => {
 
-  const apiKey = 'AIzaSyBY-6MK_yUsCALRs4ZXdWbJ4g_mKCgyU3g';// useAppSelector((x) => x.chat.tenorApiKey);
+  const apiKey = config.tenorAPIKey;
   const [categories, setCategories] = useState<TenorCategory[]>([]);
   const [categoryType, setCategoryType] = useState<"featured"|"trending">('featured');
   const {i18n} = useTranslation();

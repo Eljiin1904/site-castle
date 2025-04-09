@@ -11,6 +11,7 @@ export interface SiteFrontendConfig extends FrontendConfig {
   pushPublicKey: string;
   intercomAppId: string;
   gtmId: string;
+  tenorAPIKey: string;
 }
 
 const config = frontendConfig as SiteFrontendConfig;
@@ -25,6 +26,7 @@ config.telegramURL = "https://t.me/chickendotgg";
 config.instagramURL = "https://t.me/chickendotgg";
 config.intercomAppId = "b81gk8j9";
 config.gtmId = "GTM-WV5NCV94";
+config.tenorAPIKey = "AIzaSyBY-6MK_yUsCALRs4ZXdWbJ4g_mKCgyU3g";
 
 if (config.env === "development" || config.env === "devcloud") {
   config.hcaptchaSiteKey = "3ccdf630-d540-4b65-86ef-5d0fc271d413";
