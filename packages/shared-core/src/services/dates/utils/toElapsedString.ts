@@ -10,9 +10,9 @@ export function toElapsedString(date: Date | undefined, showSeconds: boolean) {
 
   interval = Math.floor(seconds / 31536000);
   if (interval > 1) {
-    return interval + " years ago";
+    return interval + "y ago";
   } else if (interval === 1) {
-    return "1 year ago";
+    return "1y ago";
   }
 
   interval = Math.floor(seconds / 2592000);
@@ -24,27 +24,27 @@ export function toElapsedString(date: Date | undefined, showSeconds: boolean) {
 
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + " days ago";
+    return interval + "d ago";
   } else if (interval === 1) {
-    return "1 day ago";
+    return "1d ago";
   }
 
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + " hours ago";
+    return interval + "h ago";
   } else if (interval === 1) {
-    return "1 hour ago";
+    return "1h ago";
   }
 
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + " minutes ago";
+    return interval + "m ago";
   } else if (interval === 1) {
-    return "1 minute ago";
+    return "1m ago";
   }
 
   if (showSeconds && seconds > 1) {
-    return Math.floor(seconds) + " seconds ago";
+    return Math.floor(seconds) + "s ago";
   }
 
   return "just now";
