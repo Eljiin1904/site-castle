@@ -19,8 +19,11 @@ export const NotificationCard = ({
 }) => {
   // const [hovered, setHovered] = useState(false);
   const message = Notifications.getMessage(notification);
+  const icon = Notifications.getIcon(notification);
   const small = useIsMobileLayout();
   const handleDelete = useDelete();
+
+  console.log("NotificationCard", notification, message);
 
   return (
     <Div
@@ -36,7 +39,7 @@ export const NotificationCard = ({
       fx
       gap={16}
     >
-      <Vector as={SvgTimesCirlce} size={16} color="light-sand" />
+      <Vector as={icon} size={16} color="light-sand" />
       <Paragraph color="light-sand">{message}</Paragraph>
       <Timestamp
         date={notification.timestamp}

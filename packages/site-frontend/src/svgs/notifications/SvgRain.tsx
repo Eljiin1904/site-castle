@@ -1,0 +1,15 @@
+import { SVGProps } from "react";
+
+export const SvgRain = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M16 11.3V10.35V9.41V8.47V7.53V6.59V5.65V4.71V3.77V2.83V1.89V0.94H15.06V0H13.99H12.93H11.87H10.81H9.75H8.69H7.63H6.56H5.64H4.7H3.76H2.82H1.88H0.94H0V0.94V1.89V2.83V3.77V4.71V5.65V6.59V7.53V8.47V9.41V10.35V11.3H0.94V12.24H1.88H2.82V13.18V14.12V15.06V16H3.76V15.06H4.7V14.12H5.64V13.18H6.59V12.24H7.53V12.23H7.63H8.69H9.75H10.81H11.87H12.93H13.99H16V11.3Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
