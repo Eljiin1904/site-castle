@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import { Button } from "@client/comps/button/Button";
 import { Conditional } from "@client/comps/conditional/Conditional";
-import { Div } from "@client/comps/div/Div";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BetInputGroup } from "./BetInputGroup";
 import { ProfitSection } from "./ProfitSection";
 import { useManualBet } from "./useManualBet";
 import { useProfit } from "./useProfit";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const LimboMenuManual = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -35,14 +35,7 @@ const NotMobileContent = () => {
   return (
     <Fragment>
       <BaseFields />
-      <Div grow />
-      <Div
-        fx
-        borderTop
-        pt={16}
-      >
-        <ActionButton />
-      </Div>
+      <ActionButton />
     </Fragment>
   );
 };
@@ -51,12 +44,14 @@ const ActionButton = () => {
   const processing = useAppSelector((x) => x.limbo.processing);
   const { overMax } = useProfit();
   const handleBet = useManualBet();
+  const { t } = useTranslation();
 
   return (
     <Button
       fx
-      kind="primary"
-      label={overMax ? "Exceeds Max Profit" : "Play"}
+      kind="primary-green"
+      label={overMax ? t("games\\limbo:exceedMaxBet") : t("games\\limbo:placeBet")}
+      // label={overMax ? "Exceeds Max Profit" : "Play"}
       loading={processing}
       disabled={overMax || processing}
       onClick={handleBet}
