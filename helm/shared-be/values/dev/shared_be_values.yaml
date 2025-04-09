@@ -74,15 +74,15 @@ labels:
 
 envoy:
   enabled: true
-  image: "envoyproxy/envoy:v1.29.0" # Use a stable Envoy version
-  port: 8443 # Port Envoy will listen on for HTTPS
-  adminPort: 9901 # Envoy admin interface port (for debugging)
-  certificateSecret: "shared-backend-tls" # Name of the secret in the current namespace
+  image: "envoyproxy/envoy:v1.29.0"  
+  port: 8443  
+  adminPort: 9901  
+  certificateSecret: "shared-backend-tls"  
 
-volumes: []
+volumes:
   - name: envoy-config
     configMap:
-      name: castle-backend-envoy-config # Use the chart's name for the ConfigMap
+      name: castle-backend-envoy-config 
   - name: tls-certs
     secret:
       secretName: "shared-backend-tls"
