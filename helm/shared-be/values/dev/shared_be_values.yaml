@@ -80,10 +80,10 @@ envoy:
   certificateSecret: "shared-backend-tls" # Name of the secret in the current namespace
 
 volumes: []
-  # - name: envoy-config
-  #   configMap:
-  #     name: castle-backend-envoy-config # Use the chart's name for the ConfigMap
-  # - name: tls-certs
-  #   secret:
-  #     secretName: "shared-backend-tls"
+  - name: envoy-config
+    configMap:
+      name: castle-backend-envoy-config # Use the chart's name for the ConfigMap
+  - name: tls-certs
+    secret:
+      secretName: "shared-backend-tls"
 
