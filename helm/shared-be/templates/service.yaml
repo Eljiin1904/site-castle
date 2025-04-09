@@ -11,9 +11,9 @@ spec:
       port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
-    # - name: https # Service port name for clarity
-    #   port: 443 # Standard HTTPS port that KONG will target
-    #   targetPort: https # Must match the Envoy container port name
-    #   protocol: TCP
+    - name: https # Service port name for clarity
+      port: 443 # Standard HTTPS port that KONG will target
+      targetPort: https # Must match the Envoy container port name
+      protocol: TCP
   selector:
     app: castle-backend
