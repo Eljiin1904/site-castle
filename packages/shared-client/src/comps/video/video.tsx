@@ -55,7 +55,7 @@ export const Video: FC<VideoProps> = ({
   const [loading, setLoading] = useState(false);
   const [showDefault, setShowDefault] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  // const logger = getBrow({});
+
   const hide = (loading && skeleton) || showDefault;
   const isStatic = type === "mp4" || type === "mov";
   const src = isStatic ? `${config.staticURL}${path}.${type}` : path;
@@ -123,11 +123,8 @@ export const Video: FC<VideoProps> = ({
           objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}`,
         }}
         onCanPlay={() => setPlayBack()}
-        onLoad={() => {
-          setLoading(false);
-        }}
         onError={() => {
-          setLoading(false);
+          pauseVideo();
           setShowDefault(true);
         }}
       >

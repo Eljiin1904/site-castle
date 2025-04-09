@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { Button } from "@client/comps/button/Button";
 import { Conditional } from "@client/comps/conditional/Conditional";
-import { Div } from "@client/comps/div/Div";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BetInputGroup } from "./BetInputGroup";
 import { ProfitSection } from "./ProfitSection";

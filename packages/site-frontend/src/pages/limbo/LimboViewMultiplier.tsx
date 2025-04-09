@@ -4,7 +4,6 @@ import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Img } from "@client/comps/img/Img";
 import { Video } from "@client/comps/video/video";
 
 export const LimboViewMultiplier = () => {
@@ -55,7 +54,7 @@ export const LimboViewMultiplier = () => {
         resetPause={!processing}
         play={processing != undefined && processing}
       />
-      <Div mt={sm ? 40 : 40}>
+      <Div mt={40}>
         <Span
           forwardRef={valueRef}
           family="title"
