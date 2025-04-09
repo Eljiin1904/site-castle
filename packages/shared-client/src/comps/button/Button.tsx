@@ -9,9 +9,10 @@ import "./Button.scss";
 
 export type ButtonProps = StyledLayoutProps & {
   type?: "button" | "submit";
-  kind: "primary" | "secondary" | "tertiary" | "quaternary"| "custom" | "primary-green" |
-   "primary-black" | "secondary-black" | "primary-yellow" | "secondary-yellow" | "tertiary-grey" | "tertiary-black-overlay" | "tertiary-white-overlay";
-  size?: "xs" | "sm" | "md" | "lg" | "sso" | 'xssso';
+  kind: "primary" | "secondary" | "tertiary" | "custom" | "primary-green" |
+   "primary-black" | "secondary-black" | "primary-yellow" | "secondary-yellow" | "tertiary-grey" | "secondary-grey" |
+   "tertiary-black-overlay" | "tertiary-white-overlay";
+  size?: "xs" | "sm" | "md" | "lg" | "sso" | "xssso" | "icon";
   label?: string;
   labelSize?: Unit;
   labelWeight?: StyledProps["fontWeight"];

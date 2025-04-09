@@ -83,27 +83,6 @@
       }
     }
   }
-  
-  &.quaternary {
-    background: linear-gradient(0deg, var(--black-color) 0%, var(--black-color) 100%);
-    border: 1px solid var(--brown-4-color);
-
-    .icon {
-      color: var(--dark-brown-color);
-    }
-
-    &:hover {
-      background: var(--sand-color);
-      .label {
-        color: var(--black-color);
-      }
-    }
-
-    &:disabled {
-      background: var(--brown-8-color);
-      border: 1px solid var(--brown-8-color);
-    }
-  }
 }
 /*New Button Styles following brands guidelines */
 .Button {
@@ -193,6 +172,11 @@
 
   &.size-sso {
     height: 40px;
+  }
+
+  &.size-icon {
+
+    padding: 0 10px;
   }
 
   &.primary-black {
@@ -292,6 +276,33 @@
       }
     }
   }
+  &.secondary-grey {
+
+    background: var(--brown-4-color);
+    border: 1px solid var(--dark-brown-hover-color);
+
+    span, .icon {
+        color: var(--dark-sand-color);
+    }
+
+    &:hover {
+      background: var(--brown-4-color);
+
+      span, .icon {
+        color: var(--light-sand-color);
+      }
+    }
+
+    &:active, &.active {
+
+      background-color: var(--brown-4-color);
+
+      span, .icon {
+        color: var(--sand-color);
+      }
+    }
+  }
+
   &.tertiary-black-overlay {
 
     background: var(--black-overlay-color);
