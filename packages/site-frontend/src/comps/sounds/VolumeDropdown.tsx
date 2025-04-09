@@ -17,7 +17,6 @@ export type VolumeDropdownProps = {
     | "primary"
     | "secondary"
     | "tertiary"
-    | "quaternary"
     | "custom"
     | "primary-black"
     | "secondary-black"
