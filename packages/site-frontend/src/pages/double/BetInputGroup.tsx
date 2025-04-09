@@ -150,42 +150,49 @@ const LaptopDesktopContent = () => {
             kind="tertiary-grey"
             label={t("common:clear")}
             onClick={() => setBetAmount(undefined)}
+            size="xssso"
           />         
           <Button
             kind="tertiary-grey"
             label="+1"
             width={48}
             onClick={() => handleMath((x) => x + Intimal.fromDecimal(1))}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="+10"
             width={48}
             onClick={() => handleMath((x) => x + Intimal.fromDecimal(10))}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="+100"
             width={48}
             onClick={() => handleMath((x) => x + Intimal.fromDecimal(100))}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="1/2"
             width={48}
             onClick={() => handleMath((x) => x / 2)}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="2X"
             width={48}
             onClick={() => handleMath((x) => x * 2)}
+            size="xssso"
           />
           <Button
             kind="tertiary-grey"
             label="Max"
             width={48}
             onClick={() => setBetAmount(tokenBalance)}
+            size="xssso"
           />
         </Div>
       </Div>

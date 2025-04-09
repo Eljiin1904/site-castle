@@ -13,5 +13,13 @@
   "confirmBet": {
     "title": "Confirmar Apuesta",
     "message": "Apostar {{value.amount}}?"
+  },
+  "rules": {
+    "title": "Reglas de Dados",
+    "rule1":"El multiplicador mínimo es 1.0105x.",
+    "rule2":"El multiplicador máximo es 9600x.",
+    "rule3": "La ganancia máxima es de {{max}} tokens.",
+    "rule4": "RTP es {{percent}}%.",
+    "rule5": "1.00 tokens apostados = {{exp}} XP."
   }
 }

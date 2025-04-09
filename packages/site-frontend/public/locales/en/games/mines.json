@@ -1,0 +1,40 @@
+{
+  "placeBet": "Play",
+  "cashout": "Cashout",
+  "betPlaced": "Bet Placed",
+  "betBoardHeader": "Mines Game Bets",
+  "payout": "Payout",
+  "bet_zero": "{{count}} Bet",
+  "bet_one": "{{count}} Bet",
+  "bet_other": "{{count}} Bets",
+  "exceedMaxBet": "Exceeds Max Profit",
+  "startAutoPlay": "Start Auto Play",
+  "profitOnWin": "Profit on Win",
+  "stopAutoPlay": "Stop Auto Play",
+  "autoPlayStopped": "Auto Play Stopped",
+  "confirmBet": {
+    "title": "Confirm Bet",
+    "message": "Bet {{value.amount}}?"
+  },
+  "gridSize": "Grid Size",
+  "mineCount": "Mine Count",
+  "currentTile": "Current Tile",
+  "notTilesRevealed": "No tiles revealed",
+  "nextTile": "Next Tile",
+  "pickRandom": "Pick Random Tile",
+  "tilePattern": "Tile Pattern",
+  "tileSelected_one": "{{count}} tile selected",
+  "tileSelected_other": "{{count}} tiles selected",
+  "reset": "Reset",
+  "clear": "Clear",
+  "winModal": {
+    "title": "You Win",
+    "multiplier": "Multiplyer"
+  },
+  "rules": {
+    "title": "Mines Rules",
+    "rule1": "Max profit is {{max}} tokens.",
+    "rule2": "RTP is {{percent}}%.",
+    "rule3": "1.00 tokens wagered = {{exp}} XP."
+  }
+}

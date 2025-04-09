@@ -14,5 +14,14 @@
   "confirmBet": {
     "title": "Confirm Bet",
     "message": "Bet {{value.amount}} on {{value.kind}}?"
+  },
+  "rules": {
+    "title": "Double Rules",
+    "rule1":"You can't bet more than once per color, per round.",
+    "rule2":"CT and T max bet is {{tokens}} tokens.",
+    "rule3": "Bait max bet is {{tokens}} tokens.",
+    "rule4": "Green max bet is {{tokens}} tokens.",
+    "rule5": "RTP is {{percent}%.",
+    "rule6": "1.00 tokens wagered = {{exp}} XP."
   }
 }
