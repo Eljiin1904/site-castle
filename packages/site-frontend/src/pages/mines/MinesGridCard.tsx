@@ -3,14 +3,15 @@ import classNames from "classnames";
 import { MinesMode } from "@core/types/mines/MinesMode";
 import { Div } from "@client/comps/div/Div";
 import { Img } from "@client/comps/img/Img";
+import { Video } from "@client/comps/video/Video";
 import { Vector } from "@client/comps/vector/Vector";
 import { Mines } from "#app/services/mines";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { SvgAnimation } from "./SvgAnimation";
 import { SvgDiamond } from "#app/svgs/mines/SvgDiamond";
-import "./MinesGridCard.scss";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import "./MinesGridCard.scss";
 
 type MinesGridCardProps = {
   index: number;
@@ -96,25 +97,9 @@ const StateIcon = ({
       />
     );
   } else if (mined) {
-    return (
-      <Img
-        className="icon"
-        type="png"
-        path={revealed ? "/icons/mines-bomb" : "/icons/mines-bomb-ns"}
-        width="100%"
-        style={{ padding: `${padding}px` }}
-      />
-    );
+    return (<BombInCell revealed={revealed} />);
   } else if (visible) {
-    return (
-      <Img
-        className="icon"
-        type="png"
-        path={revealed ? "/icons/mines-gem" : "/icons/mines-gem-ns"}
-        width="100%"
-        style={{ padding: `${padding}px` }}
-      />
-    );
+    return (<GemInCell revealed={revealed} />);
   } else {
     return (
       <Vector
@@ -126,4 +111,67 @@ const StateIcon = ({
       />
     );
   }
+};
+
+const GemInCell = ({revealed}: {revealed?: boolean}) => {
+
+  const small = useIsMobileLayout();
+  const gridSize = useAppSelector((x) => x.mines.gridSize);
+ 
+  const padding = Math.min((small ? 8: 16) * 4 / gridSize, 16);
+
+  if(revealed)
+    return (<Video 
+      type="mp4" 
+      path="/videos/gem" 
+      autoplay={true}
+      muted={true}
+      width="100%" 
+      alt="Gem video"
+      altImage="/icons/mines-gem"
+      altPadding={padding}
+      ></Video>);
+  
+  else
+  return (
+    <Img
+      className="icon"
+      type="png"
+      path={revealed ? "/icons/mines-gem" : "/icons/mines-gem-ns"}
+      width="100%"
+      style={{ padding: `${padding}px` }}
+    />
+  );
+
+};
+
+const BombInCell = ({revealed}: {revealed?: boolean}) => {
+
+  const small = useIsMobileLayout();
+  const gridSize = useAppSelector((x) => x.mines.gridSize); 
+  const padding = Math.min((small ? 8: 16) * 4 / gridSize, 16);
+  
+  if(revealed)
+    return (<Video 
+      type="mp4" 
+      path="/videos/bomb" 
+      autoplay={true}
+      muted={true}
+      width="100%" 
+      alt="Gem video"
+      altImage="/icons/mines-bomb"
+      altPadding={padding}
+      ></Video>);
+  
+  else
+  return (
+    <Img
+      className="icon"
+      type="png"
+      path={revealed ? "/icons/mines-bomb" : "/icons/mines-bomb-ns"}
+      width="100%"
+      style={{ padding: `${padding}px` }}
+    />
+  );
+
 };

@@ -28,7 +28,7 @@ export const MinesGrid = memo(() => {
           revealed: game?.reveals.includes(i),
           autoSelected: mode === "auto" && autoIndexes.includes(i),
           queued: inputQueue.includes(i),
-          animating: !mined && animateIndexes.includes(i),
+          animating: false,// !mined && animateIndexes.includes(i)
         };
       }),
     [mode, gridSize, game, autoIndexes, animateIndexes, inputQueue],

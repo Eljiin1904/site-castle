@@ -1,0 +1,13 @@
+
+.Video {  
+
+  flex-shrink: 0;
+  
+  &.hide {
+    video {
+      visibility: hidden;
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+}
