@@ -9,3 +9,4 @@ export * from "./redux/notificationsSlice";
 export * from "./utils/getMessage";
 export * from "./utils/getToastKind";
 export * from "./utils/toast";
+export * from "./utils/getIcon";

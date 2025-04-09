@@ -9,7 +9,9 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Site } from "#app/services/site";
 import { GameKindType } from "@core/services/game/Game";
 
-export const GameSearch = () => {
+export const GameSearch = ({home = false}: {
+  home?: boolean;
+}) => {
   
   const currentFilter = useAppSelector((x) => x.site.filter);
   const dispatch = useAppDispatch();
@@ -29,13 +31,13 @@ export const GameSearch = () => {
       flexGrow
     >
       <SiteSearch />
-      <ButtonGroup
+      {home && <ButtonGroup
           options={gameOptions}
           size={small ? "sm" : "md"}
           gap={small ? 12 : 16}
           value={value}  
           setValue={(x) => dispatch(Site.setFilter(gameValues[x]))}
-      />
+      />}
     </Div>
   );
 };

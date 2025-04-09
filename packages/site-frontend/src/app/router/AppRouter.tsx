@@ -28,7 +28,7 @@ import { MarketRouter } from "#app/pages/market/MarketRouter";
 import { RacePage } from "#app/pages/race/RacePage";
 import { HolidayRouter } from "#app/pages/holiday/HolidayRouter";
 import { BetsPage } from "#app/pages/bets/BetsPage";
-import { OriginalGamesPage } from "#app/pages/games/OriginalGamesPage";
+import { GamesRoute } from "#app/pages/games/GamesRouter";
 
 export const AppRouter = () => {
   const { pathname } = useLocation();
@@ -63,9 +63,10 @@ export const AppRouter = () => {
         element={<UserLoginPage />}
       />
       <Route
-        path="/original-games"
-        element={<OriginalGamesPage />}
+        path="/games/*"
+        element={<GamesRoute />}
       />
+
       <Route
         path="/auth/:provider"
         element={<AuthReturnPage />}
