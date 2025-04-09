@@ -233,5 +233,10 @@
     "paused": "Chat en pausa",
     "notUserFound": "No se encontraron usuarios.",
     "moderate": "Moderar"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "all": "Todas las notificaciones",
+    "noNotifications": "No tienes notificaciones."
   }
 }

@@ -239,5 +239,10 @@
     "paused": "Chat paused",
     "notUserFound": "No users found.",
     "moderate":"Moderate"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "all": "All Notifications",
+    "noNotifications": "You don't have any notifications."
   }
 }
