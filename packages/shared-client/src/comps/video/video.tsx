@@ -1,32 +1,25 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import config from "#client/config";
-import { SvgChicken } from "#client/svgs/common/SvgChicken";
 import { Div } from "../div/Div";
 import { Placeholder } from "../placeholder/Placeholder";
-import { StyledLayoutProps, StyledProps } from "../styled/Styled";
-import { Vector } from "../vector/Vector";
+import { StyledLayoutProps } from "../styled/Styled";
+import { Img } from "../img/Img";
 import "./Video.scss";
 
 export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
-  type: "mp4" | "mov" | "avi";
+  type: "mp4" | "mov";
   path: string;
   width: string;
   height?: string;
   alt?: string;
   skeleton?: boolean;
-  aspectRatio?: string;
-  objectFit?: StyledProps["objectFit"];
-  objectPositionVertical?: StyledProps["objectFitPosition"];
-  objectPositionHorizontal?: StyledProps["objectFitPosition"];
+  autoplay?: boolean;
   loop?: boolean;
-  autoPlay?: boolean;
   muted?: boolean;
-  controls?: boolean;
-  play?: boolean;
-  pause?: boolean;
-  resetPause?: boolean;
-  playBackSpeed: 1 | 1.5 | 2 | 2.5 | 3;
+  altImage?: string;
+  altPadding?: number;
+  scale?: number;
 };
 
 export const Video: FC<VideoProps> = ({
@@ -35,21 +28,14 @@ export const Video: FC<VideoProps> = ({
   path,
   width,
   height = width,
-  alt = "image",
+  alt = "video",
   style,
   skeleton,
-  aspectRatio,
-  objectFit = "cover",
-  objectPositionVertical = "center",
-  objectPositionHorizontal = "center",
+  autoplay = false,
   loop = false,
-  autoPlay = true,
-  muted = true,
-  controls = true,
-  play = false,
-  pause = false,
-  resetPause = false,
-  playBackSpeed = 1,
+  muted = false,
+  altImage,
+  altPadding = 0,
   ...forwardProps
 }) => {
   const [loading, setLoading] = useState(false);
@@ -57,8 +43,7 @@ export const Video: FC<VideoProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const hide = (loading && skeleton) || showDefault;
-  const isStatic = type === "mp4" || type === "mov";
-  const src = isStatic ? `${config.staticURL}${path}.${type}` : path;
+  const src =  `${config.staticURL}${path}.${type}`;
 
   useLayoutEffect(() => {
     setLoading(false);
@@ -66,43 +51,10 @@ export const Video: FC<VideoProps> = ({
   }, [path]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (play) {
-        resetVideo();
-        playVideo();
-      }
-      if (pause) {
-        pauseVideo();
-      }
-      if (resetPause) {
-        resetVideo();
-        pauseVideo();
-      }
-    }
-  }, [videoRef, play, pause, resetPause]);
-
-  const playVideo = () => {
-    if (videoRef.current) {
-      videoRef.current?.play().catch((error) => {
-        console.log(`Error attempting to play: ${error}`);
-      });
-    }
-  };
-  const pauseVideo = () => {
-    if (videoRef.current) {
-      videoRef.current?.pause();
-    }
-  };
-  const resetVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-    }
-  };
-  const setPlayBack = () => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = playBackSpeed;
-    }
-  };
+    setTimeout(() => {
+      setLoading(!videoRef.current?.canPlayType(type));
+    });
+  }, []);
 
   return (
     <Div
@@ -110,43 +62,35 @@ export const Video: FC<VideoProps> = ({
       style={{ ...style, width, height, aspectRatio }}
       {...forwardProps}
     >
+      {showDefault &&  altImage && (
+          <Img
+          className="alt-image"
+          type="png"
+          path={altImage}
+          width={width}
+          height={height}
+          style={{ padding: `${altPadding}px` }}
+        />
+      )}
       <video
         ref={videoRef}
         height={height}
         width={width}
-        controls={controls}
-        autoPlay={autoPlay}
-        muted={muted} // Muted has to be true for autoplay to work
+        autoPlay={autoplay}
         loop={loop}
-        style={{
-          objectFit: `${objectFit}`,
-          objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}`,
+        muted={muted}
+        src={src}
+        onLoad={() => {
+          setLoading(false);
+          alert("Video loaded");
         }}
-        onCanPlay={() => setPlayBack()}
         onError={() => {
-          pauseVideo();
+          setLoading(false);
           setShowDefault(true);
         }}
       >
-        <source src={src} />
+        <source src={src} type={`video/${type}`} />
         {loading && skeleton && <Placeholder />}
-        {showDefault && (
-          <Div
-            center
-            fx
-            fy
-            p={24}
-            bg="brown-6"
-          >
-            <Vector
-              as={SvgChicken}
-              width="100%"
-              height="100%"
-              color="brown-5"
-              style={{ height: "100%" }}
-            />
-          </Div>
-        )}
       </video>
     </Div>
   );
