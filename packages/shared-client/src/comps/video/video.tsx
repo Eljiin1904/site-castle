@@ -3,7 +3,7 @@ import classNames from "classnames";
 import config from "#client/config";
 import { Div } from "../div/Div";
 import { Placeholder } from "../placeholder/Placeholder";
-import { StyledLayoutProps } from "../styled/Styled";
+import { StyledLayoutProps, StyledProps } from "../styled/Styled";
 import { Img } from "../img/Img";
 import "./Video.scss";
 
@@ -14,9 +14,18 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   height?: string;
   alt?: string;
   skeleton?: boolean;
-  autoplay?: boolean;
+  aspectRatio?: string;
+  objectFit?: StyledProps["objectFit"];
+  objectPositionVertical?: StyledProps["objectFitPosition"];
+  objectPositionHorizontal?: StyledProps["objectFitPosition"];
   loop?: boolean;
+  autoplay?: boolean;
   muted?: boolean;
+  controls?: boolean;
+  play?: boolean;
+  pause?: boolean;
+  resetPause?: boolean;
+  playBackSpeed: 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4;
   altImage?: string;
   altPadding?: number;
   scale?: number;
@@ -31,9 +40,18 @@ export const Video: FC<VideoProps> = ({
   alt = "video",
   style,
   skeleton,
-  autoplay = false,
+  aspectRatio,
+  objectFit = "cover",
+  objectPositionVertical = "center",
+  objectPositionHorizontal = "center",
   loop = false,
-  muted = false,
+  autoplay = true,
+  muted = true,
+  controls = true,
+  play = false,
+  pause = false,
+  resetPause = false,
+  playBackSpeed = 1,
   altImage,
   altPadding = 0,
   ...forwardProps
@@ -51,15 +69,49 @@ export const Video: FC<VideoProps> = ({
   }, [path]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(!videoRef.current?.canPlayType(type));
-    });
-  }, []);
+    if (videoRef.current) {
+      if (play) {
+        resetVideo();
+        playVideo();
+      }
+      if (pause) {
+        pauseVideo();
+      }
+      if (resetPause) {
+        resetVideo();
+        pauseVideo();
+      }
+    }
+  }, [videoRef, play, pause, resetPause]);
+
+  const playVideo = () => {
+    if (videoRef.current) {
+      videoRef.current?.play().catch((error) => {
+        console.log(`Error attempting to play: ${error}`);
+      });
+    }
+  };
+  const pauseVideo = () => {
+    if (videoRef.current) {
+      videoRef.current?.pause();
+    }
+  };
+  const resetVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+    }
+  };
+  const setPlayBack = () => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = playBackSpeed;
+    }
+  };
 
   return (
     <Div
       className={classNames("Video", className, { hide })}
       style={{ ...style, width, height, aspectRatio }}
+      overflow="hidden"
       {...forwardProps}
     >
       {showDefault &&  altImage && (
@@ -76,21 +128,26 @@ export const Video: FC<VideoProps> = ({
         ref={videoRef}
         height={height}
         width={width}
+        controls={controls}
         autoPlay={autoplay}
+        muted={muted} // Muted has to be true for autoplay to work
         loop={loop}
-        muted={muted}
-        src={src}
+        style={{
+          objectFit: `${objectFit}`,
+          objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}`,
+        }}
+        onCanPlay={() => setPlayBack()}
         onLoad={() => {
           setLoading(false);
-          alert("Video loaded");
-        }}
+        }}        
         onError={() => {
-          setLoading(false);
+          pauseVideo();
           setShowDefault(true);
         }}
       >
         <source src={src} type={`video/${type}`} />
-        {loading && skeleton && <Placeholder />}
+      {loading && skeleton && <Placeholder />}
+        
       </video>
     </Div>
   );
