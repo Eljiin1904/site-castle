@@ -13,11 +13,11 @@ export const LimboHistoryCard = ({ roll }: { roll: LimboRoll }) => {
       width={64}
       center
       py={8}
-      bg={isWin ? "green" : "brown-5"}
+      bg={isWin ? "sand" : "black-overlay"}
     >
       <Span
         weight="semi-bold"
-        color={isWin ? "black" : "gray"}
+        color={isWin ? "black" : "light-sand"}
       >
         {`${Numbers.floor(rollMultiplier, 2).toFixed(2)}x`}
       </Span>

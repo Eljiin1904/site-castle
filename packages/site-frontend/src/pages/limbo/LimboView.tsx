@@ -22,9 +22,9 @@ export const LimboView = () => {
         height: sm ? "350px" : "608px",
       }}
     >
-      <LimboHistory />
       <LimboHeader />
       <LimboViewMultiplier />
+      <LimboHistory />
       <LimboViewFooter />
       <AutoStatusView />
     </Div>
