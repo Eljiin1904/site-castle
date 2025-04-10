@@ -61,7 +61,7 @@ export const limboSlice = createSlice({
         won: payload.won,
       });
 
-      if (history.length > 5) {
+      if (history.length > 15) {
         history.pop();
       }
 
