@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { MinesMode } from "@core/types/mines/MinesMode";
 import { Div } from "@client/comps/div/Div";
 import { Img } from "@client/comps/img/Img";
-import { Video } from "@client/comps/video/Video";
 import { Vector } from "@client/comps/vector/Vector";
 import { Mines } from "#app/services/mines";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
@@ -12,6 +11,7 @@ import { SvgDiamond } from "#app/svgs/mines/SvgDiamond";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./MinesGridCard.scss";
+import { Video } from "@client/comps/video/Video";
 
 type MinesGridCardProps = {
   index: number;
@@ -130,6 +130,8 @@ const GemInCell = ({revealed}: {revealed?: boolean}) => {
       alt="Gem video"
       altImage="/icons/mines-gem"
       altPadding={padding}
+      controls={false}
+      playBackSpeed={1}
       ></Video>);
   
   else
@@ -161,6 +163,8 @@ const BombInCell = ({revealed}: {revealed?: boolean}) => {
       alt="Gem video"
       altImage="/icons/mines-bomb"
       altPadding={padding}
+      controls={false}
+      playBackSpeed={1}
       ></Video>);
   
   else
