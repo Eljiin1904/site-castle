@@ -24,6 +24,7 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   controls?: boolean;
   play?: boolean;
   pause?: boolean;
+  reset?: boolean;
   resetPause?: boolean;
   playBackSpeed: 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4;
   altImage?: string;
@@ -50,6 +51,7 @@ export const Video: FC<VideoProps> = ({
   controls = true,
   play = false,
   pause = false,
+  reset = false,
   resetPause = false,
   playBackSpeed = 1,
   altImage,
@@ -81,8 +83,11 @@ export const Video: FC<VideoProps> = ({
         resetVideo();
         pauseVideo();
       }
+      if (reset) {
+        resetVideo();
+      }
     }
-  }, [videoRef, play, pause, resetPause]);
+  }, [videoRef, play, pause, reset, resetPause]);
 
   const playVideo = () => {
     if (videoRef.current) {

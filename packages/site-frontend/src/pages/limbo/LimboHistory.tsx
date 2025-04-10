@@ -4,14 +4,33 @@ import { LimboHistoryCard } from "./LimboHistoryCard";
 
 export const LimboHistory = () => {
   const history = useAppSelector((x) => x.limbo.history);
-  const reversed = [...history].reverse();
+  const layout = useAppSelector((x) => x.style.mainLayout);
+
+  const getHistoryLength = () => {
+    switch (layout) {
+      case "desktop":
+        return 12;
+      case "laptop":
+        return 10;
+      case "tablet":
+        return 10;
+      case "mobile":
+        return 5;
+      default:
+        return 5;
+    }
+  };
+  const reversed = [...history].reverse().slice(0, getHistoryLength());
 
   return (
     <Div
       fx
-      justify="flex-end"
+      position="absolute"
+      bottom={100}
+      zIndex={2}
+      justify="center"
       p={16}
-      gap={4}
+      gap={14}
     >
       {reversed.map((roll, i) => (
         <LimboHistoryCard

@@ -9,6 +9,8 @@ import { Video } from "@client/comps/video/Video";
 export const LimboViewMultiplier = () => {
   const ticket = useAppSelector((x) => x.limbo.lastTicket);
   const processing = useAppSelector((x) => x.limbo.processing);
+  const isAutoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
+
   const layout = useAppSelector((x) => x.style.mainLayout);
   const sm = layout === "mobile";
   const valueRef = useRef<HTMLElement>(null);
@@ -46,15 +48,15 @@ export const LimboViewMultiplier = () => {
         width="100%"
         aspectRatio={"16 / 9"}
         position="absolute"
-        loop={true}
-        autoPlay={false}
+        loop={processing || isAutoPlaying}
+        autoPlay={processing || isAutoPlaying}
         muted={true}
         controls={false}
-        playBackSpeed={3}
-        resetPause={!processing}
-        play={processing != undefined && processing}
+        playBackSpeed={4}
+        reset={!processing}
+        play={(processing != undefined && processing) || isAutoPlaying}
       />
-      <Div mt={40}>
+      <Div mt={sm ? 64 : 80}>
         <Span
           forwardRef={valueRef}
           family="title"
