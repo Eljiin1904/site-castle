@@ -6,7 +6,7 @@ import { Div } from "../div/Div";
 import { Placeholder } from "../placeholder/Placeholder";
 import { StyledLayoutProps, StyledProps } from "../styled/Styled";
 import { Vector } from "../vector/Vector";
-import "./Video.scss";
+import "./video.scss";
 
 export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   type: "mp4" | "mov" | "avi";
