@@ -37,24 +37,28 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Pull latest Docker image
+        run: |
+          docker pull ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-affiliate-api:latest || true
+
       - name: Set image tag
         id: set-image-tag
         run: |
-          # Generate an immutable version tag using a timestamp
           IMAGE_TAG="v1.0.$(date +%s)"
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
-      - name: Build and tag Docker image
+      - name: Build Docker image using cache
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
-          # Build the Docker image from the castle-affiliate-api Dockerfile
-          docker build -t pidwin/castle-affiliate-api -f ./packages/shared-affiliate-api/Dockerfile .
-          # Tag the image with the generated version tag
-          docker tag pidwin/castle-affiliate-api:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-affiliate-api:$IMAGE_TAG
-          # Optionally, tag it as 'latest' for fallback purposes
-          docker tag pidwin/castle-affiliate-api:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-affiliate-api:latest
+          docker build \
+            --cache-from ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-affiliate-api:latest \
+            -t pidwin/castle-affiliate-api \
+            -f ./packages/shared-affiliate-api/Dockerfile .
 
+          docker tag pidwin/castle-affiliate-api:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-affiliate-api:$IMAGE_TAG
+          docker tag pidwin/castle-affiliate-api:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-affiliate-api:latest
+          
       - name: Push Docker images to ECR
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
