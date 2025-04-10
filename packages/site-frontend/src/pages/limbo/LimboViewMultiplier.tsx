@@ -6,6 +6,7 @@ import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Video } from "@client/comps/video/Video";
 
+
 export const LimboViewMultiplier = () => {
   const ticket = useAppSelector((x) => x.limbo.lastTicket);
   const processing = useAppSelector((x) => x.limbo.processing);
@@ -49,7 +50,7 @@ export const LimboViewMultiplier = () => {
         aspectRatio={"16 / 9"}
         position="absolute"
         loop={processing || isAutoPlaying}
-        autoPlay={processing || isAutoPlaying}
+        autoplay={processing || isAutoPlaying}
         muted={true}
         controls={false}
         playBackSpeed={4}
