@@ -57,7 +57,7 @@ jobs:
           docker build \
             --cache-from ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest \
             -t pidwin/castle-game-server \
-            -f ./packages/shared-affiliate-api/Dockerfile .
+            -f ./packages/shared-game-server/Dockerfile .
 
           docker tag pidwin/castle-game-server:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:$IMAGE_TAG
           docker tag pidwin/castle-game-server:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-game-server:latest
