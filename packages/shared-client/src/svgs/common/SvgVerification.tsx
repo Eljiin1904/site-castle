@@ -1,0 +1,15 @@
+import { SVGProps } from "react";
+
+export const SvgVerification = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M16 0H0.94V0.921569H0V11.9902H15.06V11.0686H16V0ZM13.18 3.68627V4.60784H9.42V2.76471H13.18V3.68627ZM10.35 6.46078H14.11V7.38235V8.30392H9.4V6.46078H10.34H10.35ZM6.59 3.68627V5.52941H5.65V6.45098H3.77V5.52941H2.83V3.68627H3.77V2.76471H5.65V3.68627H6.59ZM2.82 7.38235H6.59V8.30392H7.53V9.22549H1.88V8.30392H2.82V7.38235Z" 
+      clipRule="evenodd"
+    />
+  </svg>
+);
