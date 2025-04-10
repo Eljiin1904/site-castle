@@ -25,11 +25,15 @@ import { UserLogoutModal } from "../user/UserLogoutModal";
 import { SvgGlobe } from "@client/svgs/common/SvgGlobe";
 import { LanguageModal } from "./LanguageModal";
 import { WalletModal } from "../wallet/WalletModal";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
 export const UserMenuModal = () => {
   
+  const auth = useAppSelector((x) => x.user.authenticated);
   const {t, i18n} = useTranslation();
-
+  if (!auth) {
+    return null;
+  }
   return (
     <Modal
       width="sm"

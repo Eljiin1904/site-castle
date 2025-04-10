@@ -41,7 +41,18 @@
     "original_one": "Juego Original",
     "original_other": "Juegos Originales",
     "hot": "Juegos populares",
-    "recentlyAdded": "Recién agregados"
+    "recentlyAdded": "Recién agregados",
+    "sort": {
+      "title": "Ordenar por",
+      "popular": "Popular",
+      "featured": "Destacados",
+      "az": "A-Z",
+      "za": "Z-A"
+    },
+    "provider": {
+      "title": "Proveedor",
+      "all": "Todos"
+    }
   },
   "providers": {
     "title": "Proveedores",
@@ -233,5 +244,10 @@
     "paused": "Chat en pausa",
     "notUserFound": "No se encontraron usuarios.",
     "moderate": "Moderar"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "all": "Todas las notificaciones",
+    "noNotifications": "No tienes notificaciones."
   }
 }

@@ -13,7 +13,7 @@ export const MinesGrid = memo(() => {
   const inputQueue = useAppSelector((x) => x.mines.inputQueue);
   const layout = useAppSelector((x) => x.style.mainLayout);
   const sm = layout === "mobile";
-
+  const gap = gridSize > 15 ? 2 : gridSize > 10 ? 4 : gridSize > 5 ? 6 : 8;
   const tiles = useMemo(
     () =>
       [...Array(Mines.getTileCount(gridSize))].map((x, i) => {
@@ -28,7 +28,7 @@ export const MinesGrid = memo(() => {
           revealed: game?.reveals.includes(i),
           autoSelected: mode === "auto" && autoIndexes.includes(i),
           queued: inputQueue.includes(i),
-          animating: !mined && animateIndexes.includes(i),
+          animating: false,// !mined && animateIndexes.includes(i)
         };
       }),
     [mode, gridSize, game, autoIndexes, animateIndexes, inputQueue],
@@ -44,7 +44,7 @@ export const MinesGrid = memo(() => {
         display="grid"
         px={sm ? 20 : 40}
         py={sm ? 0 : 40}
-        gap={8}
+        gap={gap}
         style={{
           maxHeight: sm ? "350px" : "604px",
           aspectRatio: 1,

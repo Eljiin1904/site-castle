@@ -3,7 +3,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { MinesHistoryCard } from "./MinesHistoryCard";
 
 export const MinesHistory = () => {
-  const history = useAppSelector((x) => x.mines.history);
+  const history = useAppSelector((x) => x.mines.feed);
   const reversed = [...history].reverse();
 
   return (

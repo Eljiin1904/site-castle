@@ -13,7 +13,7 @@ export const MessageReply = ({ message }: { message: ChatMessageDocument }) => {
 
   const reply = message.reply;
   const roleInfo = Users.getRoleInfo(reply.user.role);
-  console.log("reply", reply.text);
+  
   return (
     <Div
       className="MessageReply"

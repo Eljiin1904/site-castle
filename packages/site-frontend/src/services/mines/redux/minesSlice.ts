@@ -5,11 +5,9 @@ import { MinesMode } from "@core/types/mines/MinesMode";
 import { MinesGameState } from "@core/types/mines/MinesGameState";
 import { Mines } from "@core/services/mines";
 import { Utility } from "@client/services/utility";
-import { MinesResult } from "@core/types/mines/MinesResult";
 
 interface MinesState {
   initialized?: boolean;
-  history: MinesEventDocument[];
   game?: MinesGameState;
   feed: MinesEventDocument[];
   mode: MinesMode;
@@ -35,7 +33,6 @@ type PostAction = "reset" | "increase";
 
 const initialState: MinesState = {
   feed: [],
-  history: [],
   mode: "manual",
   betAmount: Utility.getLocalInt("mines-bet-amount", 0),
   mineCount: Utility.getLocalInt("mines-mine-count", 5) ?? 5,
@@ -53,7 +50,6 @@ export const minesSlice = createSlice({
   initialState,
   reducers: ({ reducer }) => ({
     initPlayer: reducer<MinesInitialState>((state, { payload }) => {
-      state.history = payload.feed || [];
       state.game = payload.game;
       state.feed = payload.feed;
 
@@ -66,20 +62,6 @@ export const minesSlice = createSlice({
     }),
     setGame: reducer<MinesGameState | undefined>((state, { payload }) => {
       state.game = payload;
-    }),
-    updateHistory: reducer<MinesEventDocument>((state, { payload }) => {
-      const history = state.history.slice();
-
-      history.unshift({
-        ...payload,
-        inserted: true,
-      });
-
-      if (history.length > 12) {
-        history.pop();
-      }
-
-      state.history = history;
     }),
     updateFeed: reducer<MinesEventDocument>((state, { payload }) => {
       const feed = state.feed.slice();
@@ -226,7 +208,6 @@ export const {
   initPlayer,
   setGame,
   updateFeed,
-  updateHistory,
   setMode,
   setBetAmount,
   setGridSize,

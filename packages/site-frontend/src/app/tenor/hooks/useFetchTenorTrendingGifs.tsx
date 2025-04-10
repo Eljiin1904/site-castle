@@ -1,6 +1,7 @@
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { TenorImage } from "@core/types/tenor/TenorImage";
 import { useEffect, useState } from "react";
+import config from "#app/config";
 
 /**
  * Custom hook to fetch trending gifs from Tenor API.
@@ -8,7 +9,7 @@ import { useEffect, useState } from "react";
  */
 export const useFetchTenorTrendingGifs = () => {
 
-  const apiKey = 'AIzaSyBY-6MK_yUsCALRs4ZXdWbJ4g_mKCgyU3g';
+  const apiKey = config.tenorAPIKey;
   const [trendingGifs, setTrendingGifs] = useState<TenorImage[]>([]);
   const {i18n} = useTranslation();
   const lang = i18n.language.split("-")[0];

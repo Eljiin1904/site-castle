@@ -11,7 +11,7 @@ import "./DropdownButton.scss";
 export type DropdownButtonProps = {
   className?: string;
   kind?: "dark" | "secondary";
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
   icon?: Svg;
   tag?: string,
   label: string;

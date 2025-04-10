@@ -28,6 +28,8 @@ import { MarketRouter } from "#app/pages/market/MarketRouter";
 import { RacePage } from "#app/pages/race/RacePage";
 import { HolidayRouter } from "#app/pages/holiday/HolidayRouter";
 import { BetsPage } from "#app/pages/bets/BetsPage";
+import { GamesRoute } from "#app/pages/games/GamesRouter";
+import { GamesByCategoryPage } from "#app/pages/games/GamesByCategoryPage";
 import { OriginalGamesPage } from "#app/pages/games/OriginalGamesPage";
 
 export const AppRouter = () => {
@@ -63,9 +65,30 @@ export const AppRouter = () => {
         element={<UserLoginPage />}
       />
       <Route
-        path="/original-games"
+        path="/featured"
         element={<OriginalGamesPage />}
       />
+      <Route
+        path="/original"
+        element={<OriginalGamesPage />}
+      />
+      <Route
+        path="/slots"
+        element={<GamesByCategoryPage category="slots" />}
+      />
+      <Route
+        path="/live-casino"
+        element={<GamesByCategoryPage category="live_casino" />}
+      />
+      <Route
+        path="/game-shows"
+        element={<GamesByCategoryPage category="game_shows" />}
+      />
+      <Route
+        path="/games/*"
+        element={<GamesRoute />}
+      />
+
       <Route
         path="/auth/:provider"
         element={<AuthReturnPage />}

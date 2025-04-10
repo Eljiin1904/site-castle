@@ -1,15 +1,14 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import config from "#client/config";
-import { SvgChicken } from "#client/svgs/common/SvgChicken";
 import { Div } from "../div/Div";
 import { Placeholder } from "../placeholder/Placeholder";
 import { StyledLayoutProps, StyledProps } from "../styled/Styled";
-import { Vector } from "../vector/Vector";
-import "./video.scss";
+import { Img } from "../img/Img";
+import "./Video.scss";
 
 export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
-  type: "mp4" | "mov" | "avi";
+  type: "mp4" | "mov";
   path: string;
   width: string;
   height?: string;
@@ -20,7 +19,7 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   objectPositionVertical?: StyledProps["objectFitPosition"];
   objectPositionHorizontal?: StyledProps["objectFitPosition"];
   loop?: boolean;
-  autoPlay?: boolean;
+  autoplay?: boolean;
   muted?: boolean;
   controls?: boolean;
   play?: boolean;
@@ -28,6 +27,9 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   reset?: boolean;
   resetPause?: boolean;
   playBackSpeed: 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4;
+  altImage?: string;
+  altPadding?: number;
+  scale?: number;
 };
 
 export const Video: FC<VideoProps> = ({
@@ -36,7 +38,7 @@ export const Video: FC<VideoProps> = ({
   path,
   width,
   height = width,
-  alt = "image",
+  alt = "video",
   style,
   skeleton,
   aspectRatio,
@@ -44,7 +46,7 @@ export const Video: FC<VideoProps> = ({
   objectPositionVertical = "center",
   objectPositionHorizontal = "center",
   loop = false,
-  autoPlay = true,
+  autoplay = true,
   muted = true,
   controls = true,
   play = false,
@@ -52,6 +54,8 @@ export const Video: FC<VideoProps> = ({
   reset = false,
   resetPause = false,
   playBackSpeed = 1,
+  altImage,
+  altPadding = 0,
   ...forwardProps
 }) => {
   const [loading, setLoading] = useState(false);
@@ -59,8 +63,7 @@ export const Video: FC<VideoProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const hide = (loading && skeleton) || showDefault;
-  const isStatic = type === "mp4" || type === "mov";
-  const src = isStatic ? `${config.staticURL}${path}.${type}` : path;
+  const src = `${config.staticURL}${path}.${type}`;
 
   useLayoutEffect(() => {
     setLoading(false);
@@ -113,14 +116,25 @@ export const Video: FC<VideoProps> = ({
     <Div
       className={classNames("Video", className, { hide })}
       style={{ ...style, width, height, aspectRatio }}
+      overflow="hidden"
       {...forwardProps}
     >
+      {showDefault &&  altImage && (
+          <Img
+          className="alt-image"
+          type="png"
+          path={altImage}
+          width={width}
+          height={height}
+          style={{ padding: `${altPadding}px` }}
+        />
+      )}
       <video
         ref={videoRef}
         height={height}
         width={width}
         controls={controls}
-        autoPlay={autoPlay}
+        autoPlay={autoplay}
         muted={muted} // Muted has to be true for autoplay to work
         loop={loop}
         style={{
@@ -128,30 +142,17 @@ export const Video: FC<VideoProps> = ({
           objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}`,
         }}
         onCanPlay={() => setPlayBack()}
+        onLoad={() => {
+          setLoading(false);
+        }}        
         onError={() => {
           pauseVideo();
           setShowDefault(true);
         }}
       >
-        <source src={src} />
-        {loading && skeleton && <Placeholder />}
-        {showDefault && (
-          <Div
-            center
-            fx
-            fy
-            p={24}
-            bg="brown-6"
-          >
-            <Vector
-              as={SvgChicken}
-              width="100%"
-              height="100%"
-              color="brown-5"
-              style={{ height: "100%" }}
-            />
-          </Div>
-        )}
+        <source src={src} type={`video/${type}`} />
+      {loading && skeleton && <Placeholder />}
+        
       </video>
     </Div>
   );

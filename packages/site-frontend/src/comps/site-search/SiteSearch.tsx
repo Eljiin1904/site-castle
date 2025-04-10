@@ -37,7 +37,7 @@ export const SiteSearch = () => {
     
   },[]);
 
-  return (<Div position="relative" fx zIndex={13}>
+  return (<Div fx zIndex={13} position="static">
       {open && <Div className="SearchOverlay" fx fy position="fixed" top={0} left={0} onClick={() => setOpen(false)}/>}
       <Input
       iconLeft={SvgSearch}
@@ -62,7 +62,7 @@ const SearchResultBox = () => {
   const currentSearch = useAppSelector((x) => x.site.search);
   const searchLength = currentSearch?.length || 0;
 
-  return (<Div fx className="SearchResult" position="absolute" left={0} top={56} bg="black-hover" px={small ? 0: 24} py={small? 16: 32} zIndex={15}>
+  return (<Div fx className="SearchResult" position="absolute" left={0} top={56} bg="black-hover" px={small ? 20: 24} py={small? 16: 32} zIndex={15}>
       {searchLength < 3 ? <MinCharacters /> : <SearchResults />}
   </Div>)
 };

@@ -1,38 +1,31 @@
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Button } from "@client/comps/button/Button";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
-
+import { ClearNotificationsButton } from "./ClearNotificationsButton";
 
 export const NotificationHeader = ({heading}: {heading: string}) => {
   
-  const layout = useAppSelector((x) => x.style.bodyLayout);
-  const small = layout === "mobile";
+  const small = useIsMobileLayout();
 
   return (<Div
           fx
           flexCenter
-          py={16}
-          px={24}          
+          py={12}
+          px={small ? 0: 24}          
           borderBottom
           borderColor="dark-brown-hover"
+          column={small}
+          gap={16}
         >
           <Heading
               as="h2"
-              size={small ? 18 : 20}
+              size={small ? 16 : 16}
               fontWeight="regular"
+              textTransform="uppercase"
               fx
             >
               {heading}
             </Heading>
-            <Button
-              kind="custom"
-              bg="brown-4"
-              label="Clear"
-              borderColor="dark-brown-hover"
-              labelColor="dark-sand"
-              border
-              onClick={() => {}}
-            />
+            <ClearNotificationsButton />
     </Div>);
 };

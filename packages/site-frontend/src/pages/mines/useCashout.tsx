@@ -10,7 +10,6 @@ export function useCashout() {
   const handleCashout = usePost(
     async () => {
       const { state } = await Mines.cashout();
-      console.log("Mines cashout", state);
       dispatch(Mines.setGame(state));
       playSound("mines-diffused");
     },

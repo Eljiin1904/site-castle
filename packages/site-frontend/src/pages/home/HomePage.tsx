@@ -11,6 +11,8 @@ import { GameSearch } from "#app/comps/games/GamesSearch";
 import { GameSlideProps, GamesSlider } from "#app/comps/games/GamesSlider";
 import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
+import { GamesSection } from "#app/comps/games/GamesSection";
+import { Div } from "@client/comps/div/Div";
 
 export const HomePage = () => {
   
@@ -29,7 +31,9 @@ export const HomePage = () => {
       <HashManager />
       <HeroBanner />
 
-      <GameSearch />
+      <Div fx>
+        <GameSearch home />
+      </Div>
       <Conditional value={filterGames}
         all={<>
           <FeaturedGames items={featuredGames} showSection={true} />
@@ -37,9 +41,9 @@ export const HomePage = () => {
         </>}
         featured={<FeaturedGames items={featuredGames} showSection={true} />}
         original={<OriginalGames />}
-        slots={<SlotGamesSlider />}
-        live_casino={<LiveCasinoSlider />}
-        game_shows={<GameShowsSlider />}
+        slots={<GamesSection category="slots" />}
+        live_casino={<GamesSection category="live_casino" />}
+        game_shows={<GamesSection category="game_shows"  />}
       />
 
       <HotGamesSlider />
@@ -53,54 +57,7 @@ export const HomePage = () => {
   );
 };
 
-const SlotGamesSlider = () => {
-  
-  const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation(["games"]);
 
-  const items = games?.filter((x) => x.category === "slots").map((x) => {
-    return {
-      image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
-      subheading: t('games.slots'),
-      to: `/${x.name}`
-    };
-  });
-
-  return (<GamesSlider title={t('games.slots')} items={items} type="game"/>);
-};
-const LiveCasinoSlider = () => {
-  
-  const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation(["games"]);
-
-  const items = games?.filter((x) => x.category === "live_casino").map((x) => {
-    return {
-      image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
-      subheading: t('games.live_casino'),
-      to: `/${x.name}`
-    };
-  });
-
-  return (<GamesSlider title={t('games.live_casino')} items={items} type="game"/>);
-};
-const GameShowsSlider = () => {
-  
-  const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation(["games"]);
-
-  const items = games?.filter((x) => x.category === "game_shows").map((x) => {
-    return {
-      image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
-      subheading: t('games.game_shows'),
-      to: `/${x.name}`
-    };
-  });
-
-  return (<GamesSlider title={t('games.game_shows')} items={items} type="game"/>);
-};
 const RecentlyAddedSlider = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
@@ -156,7 +113,7 @@ const CategoriesSection = () => {
     return {
       image: `/graphics/categories/${x}`,
       heading: t(`games.${x}`,{count: 1}),
-      to: `/${x}`
+      to: `/${x.replaceAll("_","-")}`
     };
   });
   return (<GamesSlider type="category" title={t('menu.categories')} items={items} />);

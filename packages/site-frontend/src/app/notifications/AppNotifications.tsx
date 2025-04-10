@@ -6,57 +6,135 @@ import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Button } from "@client/comps/button/Button";
 import { SvgBell } from "@client/svgs/common/SvgBell";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgCircle } from "@client/svgs/common/SvgCircle";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Notifications } from "#app/services/notifications";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { NotificationCard } from "./NotificationCard";
-import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { NotificationHeader } from "./NotificationHeader";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { Dialogs } from "@client/services/dialogs";
+import { Modal } from "@client/comps/modal/Modal";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
+import { ClearNotificationsButton } from "./ClearNotificationsButton";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const AppNotifications = () => {
+
+  const layout = useAppSelector((x) => x.style.mainLayout);
+
+  return (<Conditional 
+    value={layout} 
+    mobile={<UserAppNotificationsMenuMobile />}
+    tablet={<UserAppNotificationsMenuDesktop />}
+    laptop={<UserAppNotificationsMenuDesktop />}
+    desktop={<UserAppNotificationsMenuDesktop />}
+    />);
+};
+
+export const UserAppNotificationsMenuDesktop = () => {
   const open = useAppSelector((x) => x.notifications.open);
-  const log = useAppSelector((x) => x.notifications.log);
   const dispatch = useAppDispatch();
 
   return (
     <Dropdown
       type="custom"
-      menuWidth="280px"
+      menuWidth="328px"
       forceAlign="right"
       clampHeight
       open={open}
       onToggle={() => {
         dispatch(Notifications.setOpen(!open));
       }}
-      button={
-        <Button
-          kind="tertiary-black-overlay"
-          size="sm"
-          icon={SvgBell}
-        >
-          {log.length > 0 && (
-            <Vector
-              as={SvgCircle}
-              size={6}
-              position="absolute"
-              bottom={6}
-              right={6}
-              color="yellow"
-              border
-              borderWidth={2}
-              borderRadius="full"
-              borderColor="brown-5"
-            />
-          )}
-        </Button>
-      }
-      body={<BodyContent log={log} />}
+      button={<NotificationsMenuButton />}
+      body={<BodyContent/>}
     />
   );
 };
 
-const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
+const UserAppNotificationsMenuMobile = () => {
+
+  return (<Div
+    flexCenter
+    onClick={() => Dialogs.open("primary", <UserNotificationsModal />)}
+  >
+    <NotificationsMenuButton />
+  </Div>);
+};
+
+const UserNotificationsModal = () => {
+  
+  const log = useAppSelector((x) => x.notifications.log);
+  const small = useIsMobileLayout();
+  const {t} = useTranslation();
+
+  return (
+    <Modal
+      width="sm"
+      onBackdropClick={() => Dialogs.close("primary")}
+    >
+      <ModalHeader
+        heading={t("notifications.title")}
+        onCloseClick={() => Dialogs.close("primary")}
+      />
+      <Div
+        fx
+        column
+        px={20}
+      >
+      {log.length === 0 ?  <Span color="white">{t("notifications.noNotifications")}</Span>: <Div fx column>
+      <ClearNotificationsButton />
+        <Div fx column px={small ? 0: 24}>
+          {log.slice(0, Math.min(10, log.length)).map((notification) => (
+            <NotificationCard
+              key={notification._id}
+              notification={notification}
+              last={notification._id === log[log.length - 1]._id}
+            />
+          ))}
+        </Div>
+      </Div>}
+
+      </Div>
+    </Modal>
+  );
+};
+
+const NotificationsMenuButton = () => {
+
+  const log = useAppSelector((x) => x.notifications.log);
+  return (<Button
+    kind="custom"
+    bg="black-hover"
+    size="icon"
+    position="relative"
+  >
+    <Vector
+      as={SvgBell}
+      size={20}
+      color={log.length > 0 ? "sand" : "dark-sand"}
+      hover="highlight"
+    />
+    {log.length > 0 && (
+      <Div
+        bg="sand"
+        width={14}
+        height={14}
+        position="absolute"
+        bottom={8}
+        left={16}
+        color="sand"
+        border
+        borderWidth={4}
+      />
+    )}
+  </Button>);
+};
+
+const BodyContent = () => {
+  
+  const log = useAppSelector((x) => x.notifications.log);
+  const {t} = useTranslation();
   let content;
   
   if (log.length === 0) {
@@ -66,7 +144,7 @@ const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
         py={16}
         px={24}
       >
-        <Span color="white">{"You don't have any notifications."}</Span>
+        <Span color="white">{t("notifications.noNotifications")}</Span>
       </Div>
     );
   } else {
@@ -76,7 +154,7 @@ const BodyContent = ({ log }: { log: NotificationDocument[] }) => {
         column
         overflow="auto"
       >
-        <NotificationHeader heading="NOTIFICATIONS" />
+        <NotificationHeader heading={t("notifications.title")} />
         <Div fx column px={24}>
           {log.slice(0, Math.min(10, log.length)).map((notification) => (
             <NotificationCard
