@@ -6,6 +6,7 @@ on:
     branches:
       - main 
     paths:
+      - "helm/site-frontend/**"
       - "packages/site-frontend/**"
       - ".github/workflows/deploy_fe.yml"
 
