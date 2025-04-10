@@ -12,6 +12,7 @@ import { GameSlideProps, GamesSlider } from "#app/comps/games/GamesSlider";
 import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
 import { GamesSection } from "#app/comps/games/GamesSection";
+import { Div } from "@client/comps/div/Div";
 
 export const HomePage = () => {
   
@@ -30,7 +31,9 @@ export const HomePage = () => {
       <HashManager />
       <HeroBanner />
 
-      <GameSearch home />
+      <Div fx>
+        <GameSearch home />
+      </Div>
       <Conditional value={filterGames}
         all={<>
           <FeaturedGames items={featuredGames} showSection={true} />
@@ -110,7 +113,7 @@ const CategoriesSection = () => {
     return {
       image: `/graphics/categories/${x}`,
       heading: t(`games.${x}`,{count: 1}),
-      to: `/games/${x}`
+      to: `/${x.replaceAll("_","-")}`
     };
   });
   return (<GamesSlider type="category" title={t('menu.categories')} items={items} />);

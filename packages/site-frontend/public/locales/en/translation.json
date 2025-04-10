@@ -41,7 +41,18 @@
     "original_one": "Original Game",
     "original_other": "Original Games",
     "hot": "Hot Games",
-    "recentlyAdded": "Recently Added"
+    "recentlyAdded": "Recently Added",
+    "sort": {
+      "title": "Sort By",
+      "popular": "Popular",
+      "featured": "Featured",
+      "az": "A-Z",
+      "za": "Z-A"
+    },
+    "provider": {
+      "title": "Provider",
+      "all": "All"
+    }
   },
   "providers": {
     "title": "Providers",

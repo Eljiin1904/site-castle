@@ -29,6 +29,7 @@ export const GameSearch = ({home = false}: {
       column
       gap={24}
       flexGrow
+      position="static"
     >
       <SiteSearch />
       {home && <ButtonGroup

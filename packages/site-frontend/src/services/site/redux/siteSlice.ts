@@ -11,7 +11,7 @@ import { Utility } from "@client/services/utility";
 import { Site } from "@core/services/site";
 import { GameDocument } from "@core/types/game/GameDocument";
 import { Game } from "@core/services/game";
-import { GameKindType } from "@core/services/game/Game";
+import { GameKindType, GameSortType } from "@core/services/game/Game";
 import { HotSiteGameDetails } from "@core/types/site/HotSiteGame";
 import { SiteGame } from "@core/types/site/SiteGame";
 
@@ -29,6 +29,7 @@ interface SiteState {
   hotGames?: HotSiteGameDetails[];
   search?: string;
   filter?: Game.GameKindType;
+  sortBy?: Game.GameSortType;
 }
 
 type SettingUpdate = {
@@ -143,6 +144,9 @@ export const siteSlice = createSlice({
     setFilter: reducer<GameKindType | undefined>((state, { payload }) => {
       state.filter = payload;
     }),
+    setSort: reducer<GameSortType | undefined>((state, { payload }) => {
+      state.sortBy = payload;
+    }),
     updateHotGames: reducer<HotSiteGameDetails[] | undefined>((state, { payload }) => {
       state.hotGames = payload;
     })
@@ -164,6 +168,7 @@ export const {
   initGames,
   setSearch,
   setFilter,
+  setSort,
   updateHotGames
 } = siteSlice.actions;
 

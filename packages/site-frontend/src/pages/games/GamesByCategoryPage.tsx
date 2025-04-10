@@ -5,6 +5,9 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { PageBanner } from "#app/comps/site-page/PageBanner";
 import { GamesSection } from "#app/comps/games/GamesSection";
 import { GameSearch } from "#app/comps/games/GamesSearch";
+import { Div } from "@client/comps/div/Div";
+import { GameSort } from "#app/comps/games/GameSort";
+import { GameProvider } from "#app/comps/games/GameProvider";
 
 
 export const GamesByCategoryPage = ({category}: {
@@ -21,7 +24,11 @@ export const GamesByCategoryPage = ({category}: {
       gap={small ? 32: 56}
       pb={small ? 32: 56}
     >
-    <GameSearch />
+    <Div fx justifyContent="space-between" alignItems="center" gap={small ? 16: 24} column={small}>
+      <GameSearch />
+      <GameProvider />
+      <GameSort />
+    </Div>
     <GamesSection category={category}/>
     </SitePage>
   </Fragment>
