@@ -13,51 +13,46 @@ data:
             address: 0.0.0.0
             port_value: 8443
         filter_chains:
-        - filter_chain_match:
-            transport_protocol: "tls"
-          tls_context:
-            name: "downstream_tls"
-            common_tls_context:
-              tls_certificates:
-              - certificate_chain:
-                  filename: "/etc/certs/tls.crt"
-                private_key:
-                  filename: "/etc/certs/tls.key"
-          filters:
+        - filters:
           - name: envoy.filters.network.http_connection_manager
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-              stat_prefix: "backend_service"
-              access_log:
-                - name: envoy.access_loggers.stdout
-                  typed_config:
-                    "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
-                    format: "[%START_TIME%] \"%REQ(:METHOD:)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%\" %RESPONSE_CODE% %RESPONSE_FLAGS% %RESPONSE_CODE_DETAILS% %CONNECTION_TERMINATION_DETAILS%\" %UPSTREAM_HOST% %UPSTREAM_CLUSTER% %UPSTREAM_LOCAL_ADDRESS% %DOWNSTREAM_LOCAL_ADDRESS% %DOWNSTREAM_REMOTE_ADDRESS% %REQUEST(X-FORWARDED-FOR)% %REQUEST(USER-AGENT)% %REQUEST(X-REQUEST-ID)% %REQUEST(:AUTHORITY:)% %UPSTREAM_ADDRESS% %UPSTREAM_REQUEST_ID% %UPSTREAM_TRANSPORT_FAILURE_REASON% %REQUEST_DURATION% %RESPONSE_DURATION% %RESPONSE.BYTES_BY_BODY% %RESPONSE.BYTES_BY_HEADER% %UPSTREAM_SERVICE_TIME%\n"
+              stat_prefix: ingress_http
               route_config:
-                name: "backend_route"
+                name: local_route
                 virtual_hosts:
-                - name: "backend"
-                  domains:
-                  - "*"
+                - name: castle-backend
+                  domains: ["*"]
                   routes:
                   - match:
                       prefix: "/"
                     route:
-                      cluster: "backend"
+                      cluster: backend
               http_filters:
               - name: envoy.filters.http.router
                 typed_config:
                   "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+          transport_socket:
+            name: envoy.transport_sockets.tls
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+              common_tls_context:
+                tls_certificates:
+                - certificate_chain:
+                    filename: "/etc/certs/tls.crt"
+                  private_key:
+                    filename: "/etc/certs/tls.key"
       clusters:
-      - name: "backend"
-        type: STATIC
-        lb_policy: ROUND_ROBIN
+      - name: backend
+        connect_timeout: 0.25s
+        type: strict_dns
+        lb_policy: round_robin
         load_assignment:
-          cluster_name: "backend"
+          cluster_name: backend
           endpoints:
           - lb_endpoints:
             - endpoint:
                 address:
                   socket_address:
-                    address: "127.0.0.1"
-                    port_value: 3000
+                    address: 127.0.0.1
+                    port_value: 30000

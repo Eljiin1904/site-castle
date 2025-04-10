@@ -14,6 +14,7 @@ import { Limbo } from "#app/services/limbo";
 import { BetInputGroup } from "./BetInputGroup";
 import { useAutoBet } from "./useAutoBet";
 import { useProfit } from "./useProfit";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const LimboMenuAuto = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -43,7 +44,6 @@ const NotMobileContent = () => {
     <Fragment>
       <BaseFields />
       <Div
-        grow
         column
         justify="flex-end"
         gap={8}
@@ -51,7 +51,6 @@ const NotMobileContent = () => {
         <Div
           fx
           borderTop
-          pt={16}
         >
           <ActionButton />
         </Div>
@@ -63,6 +62,7 @@ const NotMobileContent = () => {
 const ActionButton = () => {
   const processing = useAppSelector((x) => x.limbo.processing);
   const autoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
+  const { t } = useTranslation(["games\\limbo"]);
   const dispatch = useAppDispatch();
 
   const { overMax } = useProfit();
@@ -73,8 +73,8 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="primary"
-        label="Stop Auto Play"
+        kind="primary-green"
+        label={t("games\\limbo:stopAutoPlay")}
         onClick={() => dispatch(Limbo.setAutoPlaying(false))}
       />
     );
@@ -82,8 +82,8 @@ const ActionButton = () => {
     return (
       <Button
         fx
-        kind="primary"
-        label={overMax ? "Exceeds Max Profit" : "Start Auto Play"}
+        kind="primary-green"
+        label={overMax ? t("games\\limbo:exceedMaxBet") : t("games\\limbo:startAutoPlay")}
         disabled={overMax || processing}
         onClick={handleStartAuto}
       />
@@ -100,8 +100,9 @@ const BaseFields = () => {
   const profitLimit = useAppSelector((x) => x.limbo.profitLimit);
   const winAction = useAppSelector((x) => x.limbo.winAction);
   const winIncreaseBy = useAppSelector((x) => x.limbo.winIncreaseBy);
-
   const dispatch = useAppDispatch();
+
+  const { t } = useTranslation();
 
   return (
     <Fragment>
@@ -118,11 +119,22 @@ const BaseFields = () => {
         />
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"On Win"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.onWin")}</ModalLabel>
         <Div
           fx
           align="center"
+          gap={8}
         >
+          <Div>
+            <ButtonGroup
+              options={[t("common:reset"), t("common:increase")]}
+              size="xs"
+              value={["reset", "increase"].indexOf(winAction)}
+              disabled={autoPlaying}
+              setValue={(x) => dispatch(Limbo.setWinAction(x === 0 ? "reset" : "increase"))}
+            />
+          </Div>
+
           <Input
             type="decimal"
             placeholder="0.00"
@@ -130,31 +142,26 @@ const BaseFields = () => {
             iconRight={SvgPercent}
             disabled={autoPlaying || winAction !== "increase"}
             onChange={(x) => dispatch(Limbo.setWinIncreaseBy(x))}
-            style={{ paddingLeft: "182px" }}
           />
-          <Div
-            position="absolute"
-            left={4}
-          >
-            <ButtonGroup
-              options={["Reset", "Increase By"]}
-              size="xs"
-              labelSize={13}
-              value={["reset", "increase"].indexOf(winAction)}
-              disabled={autoPlaying}
-              setValue={(x) =>
-                dispatch(Limbo.setWinAction(x === 0 ? "reset" : "increase"))
-              }
-            />
-          </Div>
         </Div>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"On Loss"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.onLoss")}</ModalLabel>
         <Div
           fx
           align="center"
+          gap={8}
         >
+          <Div>
+            <ButtonGroup
+              options={[t("common:reset"), t("common:increase")]}
+              size="xs"
+              labelSize={13}
+              value={["reset", "increase"].indexOf(lossAction)}
+              disabled={autoPlaying}
+              setValue={(x) => dispatch(Limbo.setLossAction(x === 0 ? "reset" : "increase"))}
+            />
+          </Div>
           <Input
             type="decimal"
             placeholder="0.00"
@@ -162,23 +169,7 @@ const BaseFields = () => {
             iconRight={SvgPercent}
             disabled={autoPlaying || lossAction !== "increase"}
             onChange={(x) => dispatch(Limbo.setLossIncreaseBy(x))}
-            style={{ paddingLeft: "182px" }}
           />
-          <Div
-            position="absolute"
-            left={4}
-          >
-            <ButtonGroup
-              options={["Reset", "Increase By"]}
-              size="xs"
-              labelSize={13}
-              value={["reset", "increase"].indexOf(lossAction)}
-              disabled={autoPlaying}
-              setValue={(x) =>
-                dispatch(Limbo.setLossAction(x === 0 ? "reset" : "increase"))
-              }
-            />
-          </Div>
         </Div>
       </ModalSection>
       <ModalSection>

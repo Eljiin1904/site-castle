@@ -50,10 +50,8 @@ describe("Dice Game Test ", async () => {
       });
     });
 
-    // Join the Bet Feed to receive all Bets
     socket.emit("dice-join", user._id);
 
-    //Expect initial Bet Feed to be Empty
     const message: any = await handleSocketEvents;
     expect(message.hasOwnProperty("feed")).toBe(true);
     expect(message.hasOwnProperty("history")).toBe(true);
@@ -63,7 +61,7 @@ describe("Dice Game Test ", async () => {
     const user = await Database.collection("users").findOne({ username: "diceTester1" });
     if (!user) return;
 
-    // Create and InsertTicket for Dice
+    // Create and Insert Ticket for Dice
     let ticket = await createTestTicket({
       user,
       targetKind: "over",
@@ -76,7 +74,7 @@ describe("Dice Game Test ", async () => {
 
     if (socket == null) return;
 
-    // // Capture Message for insert
+    // Capture Message for insert
     const handleSocketEvents = new Promise<DiceTicketDocument>((resolve) => {
       socket.on("dice-insert", (message) => {
         resolve(message);
@@ -90,7 +88,6 @@ describe("Dice Game Test ", async () => {
     expect(message.user.id).toBe(user._id);
     expect(message.won).toBe(true);
 
-    // Send Leave Bet Feed Event
     socket.emit("dice-leave");
     ticket = await createTestTicket({
       user,

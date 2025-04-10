@@ -14,40 +14,44 @@ export const DiceMenu = () => {
   const mode = useAppSelector((x) => x.dice.mode);
   const sm = layout === "mobile";
 
-  return (<Div wrap style={
-    sm
-      ? undefined
-      : {
-          minWidth: "320px",
-          maxWidth: "320px",
-        }
-  }>
-   <ModeMenu />
-   <Div
-      column
-      px={sm? 20 : 24}
-      py={sm? 16 : 24}
-      gap={16}
-      bg="brown-6"
-      borderColor="brown-4"
-      borderTop
-      fx
+  return (
+    <Div
+      wrap
       style={
         sm
           ? undefined
           : {
-              minHeight: "608px",
-              maxHeight: "608px",
+              minWidth: "320px",
+              maxWidth: "320px",
             }
       }
     >
-      <Conditional
-        value={mode}
-        manual={<DiceMenuManual />}
-        auto={<DiceMenuAuto />}
-      />
+      <ModeMenu />
+      <Div
+        column
+        px={sm ? 20 : 24}
+        py={sm ? 16 : 24}
+        gap={16}
+        bg="brown-6"
+        borderColor="brown-4"
+        borderTop
+        fx
+        style={
+          sm
+            ? undefined
+            : {
+                minHeight: "608px",
+                maxHeight: "608px",
+              }
+        }
+      >
+        <Conditional
+          value={mode}
+          manual={<DiceMenuManual />}
+          auto={<DiceMenuAuto />}
+        />
+      </Div>
     </Div>
-   </Div>
   );
 };
 
@@ -56,7 +60,7 @@ const ModeMenu = () => {
   const processing = useAppSelector((x) => x.dice.processing);
   const autoPlaying = useAppSelector((x) => x.dice.autoPlaying);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const modeHandler = (x: DiceMode) => {
     return () => dispatch(Dice.setMode(x));
   };

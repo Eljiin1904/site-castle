@@ -4,9 +4,11 @@ import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { Video } from "@client/comps/video/video";
 
 export const LimboViewMultiplier = () => {
   const ticket = useAppSelector((x) => x.limbo.lastTicket);
+  const processing = useAppSelector((x) => x.limbo.processing);
   const layout = useAppSelector((x) => x.style.mainLayout);
   const sm = layout === "mobile";
   const valueRef = useRef<HTMLElement>(null);
@@ -33,30 +35,47 @@ export const LimboViewMultiplier = () => {
       className="LimboViewMultiplier"
       fx
       grow
-      center
+      justify="center"
       px={sm ? 16 : 32}
       bottom={16}
     >
-      <Span
-        forwardRef={valueRef}
-        family="title"
-        weight="bold"
-        color={color}
-        size={sm ? 48 : 100}
-        style={ticket ? { transition: "color 250ms ease 150ms" } : undefined}
-      >
-        {"1.00"}
-      </Span>
-      <Span
-        family="title"
-        weight="bold"
-        color={color}
-        size={sm ? 40 : 80}
-        ml={sm ? 4 : 8}
-        style={ticket ? { transition: "color 250ms ease 150ms" } : undefined}
-      >
-        {"x"}
-      </Span>
+      <Video
+        type="mp4"
+        path={"/graphics/animations/rocket_fast"}
+        skeleton
+        width="100%"
+        aspectRatio={"16 / 9"}
+        position="absolute"
+        loop={true}
+        autoPlay={false}
+        muted={true}
+        controls={false}
+        playBackSpeed={3}
+        resetPause={!processing}
+        play={processing != undefined && processing}
+      />
+      <Div mt={40}>
+        <Span
+          forwardRef={valueRef}
+          family="title"
+          weight="bold"
+          color={color}
+          size={sm ? 48 : 100}
+          style={ticket ? { transition: "color 250ms ease 150ms" } : undefined}
+        >
+          {"1.00"}
+        </Span>
+        <Span
+          family="title"
+          weight="bold"
+          color={color}
+          size={sm ? 40 : 80}
+          ml={sm ? 4 : 8}
+          style={ticket ? { transition: "color 250ms ease 150ms" } : undefined}
+        >
+          {"x"}
+        </Span>
+      </Div>
     </Div>
   );
 };

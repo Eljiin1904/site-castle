@@ -4,6 +4,7 @@ import { AutoStatusView } from "./AutoStatusView";
 import { LimboHistory } from "./LimboHistory";
 import { LimboViewMultiplier } from "./LimboViewMultiplier";
 import { LimboViewFooter } from "./LimboViewFooter";
+import { LimboHeader } from "./LimboHeader";
 
 export const LimboView = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -22,6 +23,7 @@ export const LimboView = () => {
       }}
     >
       <LimboHistory />
+      <LimboHeader />
       <LimboViewMultiplier />
       <LimboViewFooter />
       <AutoStatusView />

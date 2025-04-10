@@ -7,11 +7,13 @@ import { ModalSection } from "@client/comps/modal/ModalSection";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Limbo } from "#app/services/limbo";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   const betAmount = useAppSelector((x) => x.limbo.betAmount);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const setBetAmount = (x: number | undefined) => {
     dispatch(Limbo.setBetAmount(x));
@@ -29,37 +31,37 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
 
   return (
     <ModalSection>
-      <ModalLabel>{"Bet Amount"}</ModalLabel>
+      <ModalLabel>{t("fields:bets.amount")}</ModalLabel>
+
       <Div align="center">
         <Input
           type="currency"
-          placeholder="Enter bet amount..."
+          placeholder={t("fields:bets.amountPlaceholder")}
           value={betAmount}
           disabled={disabled}
           onChange={(x) => setBetAmount(x)}
         />
-        <Div
-          position="absolute"
-          right={4}
-          gap={4}
-        >
+        <Div>
           <Button
-            kind="secondary"
-            size="xs"
+            kind="tertiary-grey"
             label="1/2"
-            labelSize={13}
-            width={48}
+            width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x / 2)}
           />
           <Button
-            kind="secondary"
-            size="xs"
+            kind="tertiary-grey"
             label="2x"
-            labelSize={13}
-            width={48}
+            width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}
+          />
+          <Button
+            kind="tertiary-grey"
+            label="MAX"
+            width={40}
+            disabled={disabled}
+            onClick={() => setBetAmount(tokenBalance)}
           />
         </Div>
       </Div>

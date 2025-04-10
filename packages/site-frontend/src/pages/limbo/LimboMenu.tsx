@@ -11,48 +11,62 @@ import { Limbo } from "#app/services/limbo";
 
 import { LimboMenuAuto } from "./LimboMenuAuto";
 import { LimboMenuManual } from "./LimboMenuManual";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const LimboMenu = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const mode = useAppSelector((x) => x.limbo.mode);
   const sm = layout === "mobile";
+  const md = layout === "tablet";
 
   return (
     <Div
-      column
-      p={16}
-      gap={12}
-      bg="brown-6"
-      border
+      wrap
       style={
-        sm
+        sm || md
           ? undefined
           : {
               minWidth: "320px",
               maxWidth: "320px",
-              minHeight: "608px",
-              // maxHeight: "608px", // Button is going off screen on a 14 in screen
             }
       }
     >
-      {!sm && <ModeMenu />}
-      <Conditional
-        value={mode}
-        manual={<LimboMenuManual />}
-        auto={<LimboMenuAuto />}
-      />
-      {sm && <ModeMenu />}
+      <ModeMenu />
+      <Div
+        column
+        px={sm ? 20 : 24}
+        py={sm ? 16 : 24}
+        gap={16}
+        bg="brown-6"
+        borderColor="brown-4"
+        borderTop
+        fx
+        style={
+          sm
+            ? undefined
+            : {
+                minHeight: "608px",
+                maxHeight: "608px",
+              }
+        }
+      >
+        <Conditional
+          value={mode}
+          manual={<LimboMenuManual />}
+          auto={<LimboMenuAuto />}
+        />
+      </Div>
     </Div>
   );
 };
 
 const ModeMenu = () => {
-  const dispatch = useAppDispatch();
-
   const autoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
   const mode = useAppSelector((x) => x.limbo.mode);
   const processing = useAppSelector((x) => x.limbo.processing);
 
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const modeHandler = (x: LimboMode) => {
     return () => dispatch(Limbo.setMode(x));
   };
@@ -62,12 +76,12 @@ const ModeMenu = () => {
       disabled={processing || autoPlaying}
       options={[
         {
-          label: "Manual",
+          label: t("common:manual"),
           active: mode === "manual",
           onClick: modeHandler("manual"),
         },
         {
-          label: "Auto",
+          label: t("common:auto"),
           active: mode === "auto",
           onClick: modeHandler("auto"),
         },
