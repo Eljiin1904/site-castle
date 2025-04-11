@@ -61,6 +61,7 @@ export const UserMenuDesktop = () => {
           borderWidth={1}
           border
           p={4}
+          overflow="hidden"
         >
           <UserIcon
             avatarIndex={avatarIndex}
