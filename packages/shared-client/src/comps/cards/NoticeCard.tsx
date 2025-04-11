@@ -42,7 +42,6 @@ export const NoticeCard: FC<NoticeCardProps> = ({
       <Div
         grow
         align="center"
-        color="gray"
         fontSize={messageSize}
       >
         {message}

@@ -33,7 +33,7 @@ export const UserCard = () => {
       >
         <UserCardData label={t("fields:username")} data={username} />
         <UserCardData label={t("fields:email")} data={email} />
-        <UserCardData label={t("fields:date.joined")} border={false} data={registerDate.toLocaleDateString("en-US", {
+        <UserCardData label={t("fields:date.joined")} border={false} data={registerDate?.toLocaleDateString("en-US", {
           day: "numeric",
           month: "short",
           year: "numeric",
