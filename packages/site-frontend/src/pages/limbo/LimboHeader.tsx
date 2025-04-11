@@ -28,10 +28,9 @@ export const LimboHeader = () => {
       fx
       width={"full"}
     >
-      <LimboStatus />
-
       <Div
         fx
+        align="flex-start"
         justify="flex-end"
         gap={8}
       >
@@ -88,3 +87,4 @@ const LimboHeaderMenu = () => {
     />
   );
 };
+

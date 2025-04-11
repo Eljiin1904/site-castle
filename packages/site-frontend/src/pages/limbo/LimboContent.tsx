@@ -21,7 +21,7 @@ export const LimboContent = () => {
       <Conditional
         value={layout}
         mobile={<MobileContent />}
-        tablet={<MobileContent />}
+        tablet={<NotMobileContent />}
         laptop={<NotMobileContent />}
         desktop={<NotMobileContent />}
       />
@@ -36,9 +36,8 @@ const MobileContent = () => {
     <Div
       fx
       column
-      gap={20}
+      gap={16}
     >
-      <LimboHeader />
       <LimboView />
       <LimboMenu />
       <BetBoard
@@ -59,7 +58,6 @@ const NotMobileContent = () => {
     <Div
       fx
       column
-      gap={24}
     >
       <Div
         fx
@@ -69,9 +67,8 @@ const NotMobileContent = () => {
         <LimboView />
       </Div>
       <BetBoard
-        px={20}
-        mt={40}
-        mb={40}
+        mt={56}
+        mb={56}
         title={t("games\\limbo:betBoardHeader")}
         game="limbo"
       />

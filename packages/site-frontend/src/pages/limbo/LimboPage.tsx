@@ -1,15 +1,15 @@
-import { SitePage } from "#app/comps/site-page/SitePage";
+import { GamePage } from "#app/comps/game-page/GamePage";
 import { LimboContent } from "./LimboContent";
 import { LimboManager } from "./LimboManager";
 
 export const LimboPage = () => {
   return (
-    <SitePage
-      className="LimboPage"
-      title="Limbo"
-    >
+    <GamePage
+        className="LimboPage"
+        title="Limbo"
+      >
       <LimboManager />
       <LimboContent />
-    </SitePage>
+    </GamePage>
   );
 };

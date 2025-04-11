@@ -17,7 +17,7 @@ export const LimboViewMultiplier = () => {
   const valueRef = useRef<HTMLElement>(null);
 
   const multiplier = ticket ? ticket.rollMultiplier : 1;
-  const color = ticket ? (ticket.won ? "green" : "light-red") : "light-gray";
+  const color = ticket ? (ticket.won ? "bright-green" : "double-red") : "light-sand";
 
   const counter = useCountUp({
     ref: valueRef,
@@ -38,9 +38,9 @@ export const LimboViewMultiplier = () => {
       className="LimboViewMultiplier"
       fx
       grow
-      justify="center"
-      px={sm ? 16 : 32}
-      bottom={16}
+      center
+      alignItems="flex-start"
+      px={sm ? 16 : 40}
     >
       <Video
         type="mp4"
@@ -57,26 +57,28 @@ export const LimboViewMultiplier = () => {
         reset={!processing}
         play={(processing != undefined && processing) || isAutoPlaying}
       />
-      <Div mt={sm ? 64 : 80}>
+      <Div mt={32}>
         <Span
           forwardRef={valueRef}
           family="title"
-          weight="bold"
+          weight="regular"
           color={color}
-          size={sm ? 48 : 100}
+          size={sm ? 56 : 80}
+          lineHeight={sm ? 56 : 80}
           style={ticket ? { transition: "color 250ms ease 150ms" } : undefined}
         >
           {"1.00"}
         </Span>
         <Span
           family="title"
-          weight="bold"
+          weight="regular"
           color={color}
-          size={sm ? 40 : 80}
+          size={sm ? 56 : 80}
+          lineHeight={sm ? 56 : 80}
           ml={sm ? 4 : 8}
           style={ticket ? { transition: "color 250ms ease 150ms" } : undefined}
         >
-          {"x"}
+          {"X"}
         </Span>
       </Div>
     </Div>

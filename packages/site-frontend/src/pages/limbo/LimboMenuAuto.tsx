@@ -43,18 +43,7 @@ const NotMobileContent = () => {
   return (
     <Fragment>
       <BaseFields />
-      <Div
-        column
-        justify="flex-end"
-        gap={8}
-      >
-        <Div
-          fx
-          borderTop
-        >
-          <ActionButton />
-        </Div>
-      </Div>
+      <ActionButton />
     </Fragment>
   );
 };
@@ -64,7 +53,6 @@ const ActionButton = () => {
   const autoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
   const { t } = useTranslation(["games\\limbo"]);
   const dispatch = useAppDispatch();
-
   const { overMax } = useProfit();
 
   const handleStartAuto = useAutoBet();
@@ -101,14 +89,13 @@ const BaseFields = () => {
   const winAction = useAppSelector((x) => x.limbo.winAction);
   const winIncreaseBy = useAppSelector((x) => x.limbo.winIncreaseBy);
   const dispatch = useAppDispatch();
-
   const { t } = useTranslation();
 
   return (
     <Fragment>
       <BetInputGroup disabled={autoPlaying} />
       <ModalSection>
-        <ModalLabel>{"Games"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.games")}</ModalLabel>
         <Input
           type="integer"
           placeholder="0"
@@ -116,6 +103,7 @@ const BaseFields = () => {
           iconRight={gameCount ? undefined : SvgInfinity}
           disabled={autoPlaying}
           onChange={(x) => dispatch(Limbo.setGameCount(x))}
+          iconColor="dark-sand"
         />
       </ModalSection>
       <ModalSection>
@@ -128,7 +116,7 @@ const BaseFields = () => {
           <Div>
             <ButtonGroup
               options={[t("common:reset"), t("common:increase")]}
-              size="xs"
+              size="xssso"
               value={["reset", "increase"].indexOf(winAction)}
               disabled={autoPlaying}
               setValue={(x) => dispatch(Limbo.setWinAction(x === 0 ? "reset" : "increase"))}
@@ -155,8 +143,8 @@ const BaseFields = () => {
           <Div>
             <ButtonGroup
               options={[t("common:reset"), t("common:increase")]}
-              size="xs"
-              labelSize={13}
+               size="xssso"
+              labelSize={12}
               value={["reset", "increase"].indexOf(lossAction)}
               disabled={autoPlaying}
               setValue={(x) => dispatch(Limbo.setLossAction(x === 0 ? "reset" : "increase"))}
@@ -173,7 +161,7 @@ const BaseFields = () => {
         </Div>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Stop on Profit"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.stopOnProfit")}</ModalLabel>
         <Input
           type="currency"
           placeholder="0.00"
@@ -183,7 +171,7 @@ const BaseFields = () => {
         />
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Stop on Loss"}</ModalLabel>
+        <ModalLabel>{t("fields:bets.stopOnLoss")}</ModalLabel>
         <Input
           type="currency"
           placeholder="0.00"

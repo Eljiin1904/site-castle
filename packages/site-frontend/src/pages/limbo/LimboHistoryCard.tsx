@@ -3,6 +3,8 @@ import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Limbo } from "#app/services/limbo";
+import classNames from "classnames";
+import './LimboHistoryCard.scss';
 
 export const LimboHistoryCard = ({ roll }: { roll: LimboRoll }) => {
   const { targetValue, rollValue, rollMultiplier } = roll;
@@ -10,16 +12,15 @@ export const LimboHistoryCard = ({ roll }: { roll: LimboRoll }) => {
 
   return (
     <Div
-      width={64}
+      className={classNames("LimboHistoryCard", { win: isWin })}
       center
-      py={8}
-      bg={isWin ? "sand" : "black-overlay"}
+      py={6}
+      px={12}
     >
       <Span
-        weight="semi-bold"
-        color={isWin ? "black" : "light-sand"}
+       size={12}  
       >
-        {`${Numbers.floor(rollMultiplier, 2).toFixed(2)}x`}
+        {`${Numbers.floor(rollMultiplier, 2).toFixed(2)}X`}
       </Span>
     </Div>
   );

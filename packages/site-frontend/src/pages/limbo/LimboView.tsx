@@ -1,14 +1,13 @@
 import { Div } from "@client/comps/div/Div";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { AutoStatusView } from "./AutoStatusView";
 import { LimboHistory } from "./LimboHistory";
 import { LimboViewMultiplier } from "./LimboViewMultiplier";
 import { LimboViewFooter } from "./LimboViewFooter";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { LimboHeader } from "./LimboHeader";
 
 export const LimboView = () => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const sm = layout === "mobile";
+  const small = useIsMobileLayout();
 
   return (
     <Div
@@ -19,14 +18,16 @@ export const LimboView = () => {
       bg="brown-8"
       overflow="hidden"
       style={{
-        height: sm ? "350px" : "608px",
+        height: small ? "350px" : "660px",
       }}
     >
-      <LimboHeader />
-      <LimboViewMultiplier />
-      <LimboHistory />
+      <Div fx position="relative" grow>
+        <LimboHeader />
+        {!small && <LimboHistory />}
+        <LimboViewMultiplier />
+      </Div>
       <LimboViewFooter />
       <AutoStatusView />
     </Div>
   );
-};
+}

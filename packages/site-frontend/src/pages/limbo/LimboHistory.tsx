@@ -25,12 +25,12 @@ export const LimboHistory = () => {
   return (
     <Div
       fx
-      position="absolute"
-      bottom={100}
-      zIndex={2}
-      justify="center"
+      justify="flex-end"
       p={16}
-      gap={14}
+      gap={16}
+      position="absolute"
+      bottom={0}
+      zIndex={1}
     >
       {reversed.map((roll, i) => (
         <LimboHistoryCard
