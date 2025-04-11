@@ -11,9 +11,11 @@ import { LoginModal } from "#app/modals/login/LoginModal";
 import { UserEmailConfirmModal } from "#app/modals/user/UserEmailConfirmModal";
 import { Gtm } from "#app/services/gtm";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { VerificationModal } from "#app/modals/verification/VerificationModal";
 
 export function useManualBet() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
+  const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const betAmount = useAppSelector((x) => x.mines.betAmount);
@@ -27,11 +29,15 @@ export function useManualBet() {
 
   const handleBet = usePost(
     async (isMounted) => {
+
       if (!authenticated) {
         return Dialogs.open("primary", <LoginModal />);
       }
-      if (kycTier < 1) {
+      if (!emailConfirmed) {
         return Dialogs.open("primary", <UserEmailConfirmModal />);
+      }
+      if (kycTier < 1) {
+        return Dialogs.open("primary", <VerificationModal />);
       }
       if (betAmount === undefined) {
         throw new Error("validations:errors.games.invalidBetAmount");

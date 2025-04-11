@@ -16,12 +16,14 @@ import { useBetConfirmation } from "#app/hooks/security/useBetConfirmation";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { VerificationModal } from "#app/modals/verification/VerificationModal";
 
 let startBetAmount = 0;
 let infiniteGames = false;
 
 export function useAutoBet() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
+  const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const betAmount = useAppSelector((x) => x.mines.betAmount);
@@ -210,16 +212,19 @@ export function useAutoBet() {
     if (!authenticated) {
       return Dialogs.open("primary", <LoginModal />);
     }
-    if (kycTier < 1) {
+    if (!emailConfirmed) {
       return Dialogs.open("primary", <UserEmailConfirmModal />);
-    } 
+    }
+    if (kycTier < 1) {
+      return Dialogs.open("primary", <VerificationModal />);
+    }
     if (betAmount === undefined) {
       throw new Error("validations:errors.games.invalidBetAmount");
     }
     if (betAmount > tokenBalance) {
       throw new Error("validations:errors.games.notEnoughTokens");
     }
-
+    
     await confirmBet({
       betAmount,
       onConfirmProps: () => ({
