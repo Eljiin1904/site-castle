@@ -35,7 +35,7 @@ export const TransactionsTable = ({
       columns={[
         {
           hidden: mainLayout !== "mobile",
-          heading:t("transactions.transaction"),
+          heading:t("transactions.transaction",{count: 1}),
           grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
@@ -73,7 +73,7 @@ export const TransactionsTable = ({
         },
         {
           hidden: mainLayout !== "mobile",
-          heading: "Amount",
+          heading: t("transactions.headers.amount"),
           grow: 2,
           justify: "flex-end",
           rowRenderer: (x) => (

@@ -47,5 +47,28 @@
       "vault": "Vault",
       "other": "Other"
     }
+  },
+  "history": {
+    "title": "Game History",
+    "game_one": "Game",
+    "game_other": "Games",
+    "loading": "Loading game history...",
+    "notFound": "No game history found.",
+    "refetch": "Refetch Game History",
+    "perPage": "Per Page",
+    "headers": {
+      "id": "ID",
+      "gameId": "Game ID",
+      "date": "Date",
+      "status": "Status",
+      "balanceBefore": "Bal. Before",
+      "amount": "Amount",
+      "balanceAfter": "Bal. After"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed"
+    }
   }
 }

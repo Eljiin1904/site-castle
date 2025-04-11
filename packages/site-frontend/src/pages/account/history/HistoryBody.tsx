@@ -8,13 +8,14 @@ import { Users } from "#app/services/users";
 import { HistoryTable } from "./HistoryTable";
 import { HistoryHeader } from "./HistoryHeader";
 import { HistoryFooter } from "./HistoryFooter";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const HistoryBody = () => {
-  const limit = 10;
   const [category, setCategory] = useState<TransactionCategory | undefined>();
   const [page, setPage] = useState(1);
-
-  useEffect(() => setPage(1), [category]);
+  const [limit, setLimit] = useState(10);
+  const { t } = useTranslation(["accounts","validations"]);
+  useEffect(() => setPage(1), [category,limit]);
 
   const query = useQuery({
     queryKey: ["history", category, limit, page],
@@ -23,14 +24,15 @@ export const HistoryBody = () => {
   });
 
   const transactions = query.data?.transactions || [];
+  const total = query.data?.total || 0;
 
   if (query.error) {
     return (
       <PageNotice
         image="/graphics/notice-chicken-error"
         title="Error"
-        message="Something went wrong, please refetch your game history."
-        buttonLabel="Refetch Game History"
+        message={t("errors.queries.history")}
+        buttonLabel={t("history.refetch")}
         description={Errors.getMessage(query.error)}
         onButtonClick={query.refetch}
       />
@@ -40,22 +42,30 @@ export const HistoryBody = () => {
     <Div
       fx
       column
+      gap={40}
     >
       <HistoryHeader
         category={category}
         isLoading={query.isLoading}
         setCategory={setCategory}
+        limit={limit}
+        setLimit={setLimit}
         onRefreshClick={() => (page === 1 ? query.refetch() : setPage(1))}
       />
-      <HistoryTable
-        transactions={transactions}
-        isLoading={query.isLoading}
-      />
-      <HistoryFooter
+      <Div fx column gap={16}>
+        <HistoryTable
+          transactions={transactions}
+          isLoading={query.isLoading}
+        />
+        <HistoryFooter
         page={page}
-        hasNext={transactions.length !== 0 && transactions.length % limit === 0}
-        setPage={setPage}
-      />
+          hasNext={transactions.length !== 0 && transactions.length % limit === 0}
+          setPage={setPage}
+          limit={limit}
+          total={total}
+          inPage={transactions.length}
+        />
+      </Div>      
     </Div>
   );
 };
