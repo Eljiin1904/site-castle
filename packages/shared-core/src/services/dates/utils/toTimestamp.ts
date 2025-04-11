@@ -1,7 +1,7 @@
 export function toTimestamp(date: Date, options?: Intl.DateTimeFormatOptions) {
   const defaultOptions: Intl.DateTimeFormatOptions = {
     hour: "2-digit",
-    hour12: false,
+    hour12: true,
     minute: "numeric",
     weekday: "short",
     day: "numeric",
