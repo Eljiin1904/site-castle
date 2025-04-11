@@ -153,6 +153,9 @@
       "permissionDenied": "You do not have permission to do that.",
       "emailNotConfirmed": "Email must be confirmed.",
       "suspended": "You can't do that while suspended."
+    },
+    "queries": {
+      "transactions": "Something went wrong, please refetch your transactions."
     }
   }
 }

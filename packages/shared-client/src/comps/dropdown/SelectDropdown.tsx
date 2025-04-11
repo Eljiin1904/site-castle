@@ -7,6 +7,7 @@ import { DropdownItem } from "./DropdownItem";
 
 type Option =
   | string
+  | number
   | {
       icon?: Svg;
       label: string;
@@ -42,8 +43,8 @@ export const SelectDropdown: FC<SelectDropdownProps> = ({
   const [open, setOpen] = useState(false);
 
   const getOptionInfo = (x: Option) => {
-    if (typeof x === "string") {
-      return { label: x };
+    if (typeof x === "string" || typeof x === "number") {
+      return { label: x.toString() };
     } else {
       return x;
     }
@@ -69,7 +70,7 @@ export const SelectDropdown: FC<SelectDropdownProps> = ({
       button={
         <DropdownButton
           // kind={buttonKind}
-          icon={icon || currentInfo.icon}
+          icon={icon ?? currentInfo.icon}
           tag={tag}
           label={currentInfo.label}
           description={currentInfo.description}

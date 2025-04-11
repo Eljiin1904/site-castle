@@ -2,13 +2,46 @@
   "title": "Account",
   "profile": "Profile Information",
   "stats": "User Stats",
-  "transactions": "Transactions",
-  "gameHistory": "Game History",
+ "gameHistory": "Game History",
   "verification": "Verification",
   "settings": "Settings",
   "progress": "Account Progress",
   "avatar": {
     "title": "Change Avatar",
     "success": "Avatar changed successfully."
+  },
+  "transactions": {
+    "title": "Transactions",
+    "refetch": "Refetch Transactions",
+    "loading": "Loading transactions...",
+    "notFound": "No transactions found.",
+    "perPage": "Per Page",
+    "headers": {
+      "id": "ID",
+      "type": "Type",
+      "date": "Date",
+      "status": "Status",
+      "balanceBefore": "Bal. Before",
+      "amount": "Amount",
+      "balanceAfter": "Bal. After"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed"
+    },
+    "type": {
+      "all": "All Transactions",
+      "deposits": "Deposits",
+      "withdrawals": "Withdrawals",
+      "tips": "Tips",
+      "races": "Races",
+      "rain": "Rain",
+      "referrals": "Referrals",
+      "rewards": "Rewards",
+      "promotion": "Promotion",     
+      "vault": "Vault",
+      "other": "Other"
+    }
   }
 }

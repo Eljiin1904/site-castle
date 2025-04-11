@@ -2,7 +2,6 @@
   "title": "Cuenta",
   "profile": "Información del perfil",
   "stats": "Estadísticas del usuario",
-  "transactions": "Transacciones",
   "gameHistory": "Historial de juegos",
   "verification": "Verificación",
   "settings": "Configuraciones",
@@ -10,5 +9,39 @@
   "avatar": {
     "title": "Cambiar avatar",
     "success": "Avatar cambiado con éxito."
+  },
+  "transactions": {
+    "title": "Transacciones",
+    "refetch": "Volver a cargar transacciones",
+    "loading": "Cargando transacciones...",
+    "notFound": "No se encontraron transacciones.",
+    "perPage": "Por página",
+    "headers": {
+      "id": "ID",
+      "type": "Tipo",
+      "date": "Fecha",
+      "status": "Estado",
+      "balanceBefore": "Bal. Antes",
+      "amount": "Cantidad",
+      "balanceAfter": "Bal. Después"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "completed": "Completado",
+      "failed": "Fallido"
+    },
+    "type": {
+      "all": "Todas las transacciones",
+      "deposits": "Depósitos",
+      "withdrawals": "Retiros",
+      "tips": "Propinas",
+      "races": "Carreras",
+      "rain": "Lluvia",
+      "referrals": "Referencias",
+      "rewards": "Recompensas",
+      "promotion": "Promoción",     
+      "vault": "Bóveda",
+      "other": "Otro"
+    }
   }
 }
