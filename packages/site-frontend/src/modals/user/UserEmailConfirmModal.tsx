@@ -83,13 +83,13 @@ export const UserEmailConfirmModal = ({
           >
             <Button
               type="submit"
-              kind="tertiary-grey"
+              kind="primary-yellow"
               label={t("common:submit")}
               fx
               loading={form.loading}
             />
             <Button
-              kind="primary-yellow"
+              kind="tertiary-grey"
               label={t("register.changeEmail")}
               fx
               loading={form.loading}

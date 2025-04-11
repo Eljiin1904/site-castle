@@ -8,43 +8,46 @@ import { Button } from "@client/comps/button/Button";
 import { SvgRedo } from "@client/svgs/common/SvgRedo";
 import { CardSection } from "@client/comps/cards/CardSection";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { PageTitle } from "@client/comps/page/PageTitle";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Div } from "@client/comps/div/Div";
+import { Span } from "@client/comps/span/Span";
 
 export const TransactionsHeader = ({
   category,
   isLoading,
   setCategory,
+  limit,
+  setLimit,
   onRefreshClick,
 }: {
   category: TransactionCategory | undefined;
   isLoading: boolean;
   setCategory: (x: TransactionCategory | undefined) => void;
+  limit: number;
+  setLimit: (x: number) => void;
   onRefreshClick: () => void;
 }) => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
-  const collapse = layout === "mobile";
+  const small = useIsMobileLayout();
+  const { t } = useTranslation(["account"]);
 
+  const indexes = [10, 20, 30, 40];
   return (
-    <CardSection
-      position="top"
-      justify={collapse ? "space-between" : undefined}
+    <Div
+      justify={small ? "space-between" : undefined}
       align="center"
-      gap={12}
+      gap={small ? 20: 24}
     >
-      {!collapse && (
-        <Heading
-          as="h2"
-          fx
-        >
-          {"Transactions"}
-        </Heading>
+      {!small && (
+        <PageTitle
+          heading={t('transactions.title')}
+        />
       )}
       <Dropdown
         type="select"
-        icon={SvgFilter}
-        width={collapse ? "full" : undefined}
-        options={["All Transactions", ...Transactions.notGameCategories].map(
-          Strings.kebabToTitle,
-        )}
+        fx={small}
+        options={['all', ...Transactions.notGameCategories].map((x) => t(`transactions.type.${x}`))}
         value={
           category ? Transactions.notGameCategories.indexOf(category) + 1 : 0
         }
@@ -54,12 +57,22 @@ export const TransactionsHeader = ({
           )
         }
       />
+      <Span flexShrink>Per Page</Span>
+        
+      <Dropdown
+        type="select"
+        fx={small}
+        size="sm"
+        options={indexes}
+        value={indexes.indexOf(limit)}
+        onChange={(x, i) => setLimit(indexes[i])}
+      />
       <Button
-        kind="secondary"
+        kind="tertiary-grey"
         icon={SvgRedo}
         disabled={isLoading}
         onClick={onRefreshClick}
       />
-    </CardSection>
+    </Div>
   );
 };

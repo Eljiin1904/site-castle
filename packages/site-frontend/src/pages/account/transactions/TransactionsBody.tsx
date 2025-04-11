@@ -8,13 +8,16 @@ import { Users } from "#app/services/users";
 import { TransactionsHeader } from "./TransactionsHeader";
 import { TransactionsTable } from "./TransactionsTable";
 import { TransactionsFooter } from "./TransactionsFooter";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const TransactionsBody = () => {
-  const limit = 10;
-  const [category, setCategory] = useState<TransactionCategory | undefined>();
-  const [page, setPage] = useState(1);
 
-  useEffect(() => setPage(1), [category]);
+  const [category, setCategory] = useState<TransactionCategory | undefined>();
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const { t } = useTranslation(["accounts","validations"]);
+
+  useEffect(() => setPage(1), [category,limit]);
 
   const query = useQuery({
     queryKey: ["transactions", category, limit, page],
@@ -30,8 +33,8 @@ export const TransactionsBody = () => {
       <PageNotice
         image="/graphics/notice-chicken-error"
         title="Error"
-        message="Something went wrong, please refetch your transactions."
-        buttonLabel="Refetch Transactions"
+        message={t("errors.queries.transactions")}
+        buttonLabel={t("transactions.refetch")}
         description={Errors.getMessage(query.error)}
         onButtonClick={query.refetch}
       />
@@ -41,11 +44,14 @@ export const TransactionsBody = () => {
     <Div
       fx
       column
+      gap={40}
     >
       <TransactionsHeader
         category={category}
         isLoading={query.isLoading}
         setCategory={setCategory}
+        limit={limit}
+        setLimit={setLimit}
         onRefreshClick={() => (page === 1 ? query.refetch() : setPage(1))}
       />
       <TransactionsTable

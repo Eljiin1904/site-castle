@@ -144,7 +144,7 @@ const AccountMenu = () => {
   const items = [
     { label: t("profile"), to: "/account", icon: SvgUser, end: true },
     { label: t("stats"), to: "/account/stats", icon: SvgStats },
-    { label: t("transactions"), to: "/account/transactions", icon: SvgTransaction },
+    { label: t("transactions.title"), to: "/account/transactions", icon: SvgTransaction },
     { label: t("gameHistory"), to: "/account/game-history", icon: SvgBets },
     { label: t("verification"), to: "/account/verification", icon: SvgVerification },
     { label: t("settings"), to: "/account/settings", icon: SvgSettings }

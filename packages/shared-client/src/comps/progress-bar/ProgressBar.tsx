@@ -12,7 +12,7 @@ export type ProgressBarProps = Omit<StyledLayoutProps, "height"> & {
 export const ProgressBar: FC<ProgressBarProps> = ({
   height,
   progress,
-  fillColor = "yellow",
+  fillColor = "sand",
   ...forwardProps
 }) => {
   return (
@@ -21,7 +21,6 @@ export const ProgressBar: FC<ProgressBarProps> = ({
       fx
       height={height}
       bg="brown-4"
-      borderRadius={height === 4 ? 2 : 4}
       overflow="hidden"
       {...forwardProps}
     >
