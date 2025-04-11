@@ -3,8 +3,10 @@
 
   .table-header, 
   .table-item {
-    height: 48px;
-    padding: 0 16px;
+    height: 56px;
+    padding: 0;
+    border-bottom: 1px solid var(--brown-4-color);
+    flex-wrap: wrap;
   }
 
   .table-item:hover {
