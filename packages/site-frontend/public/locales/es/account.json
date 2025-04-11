@@ -12,6 +12,8 @@
   },
   "transactions": {
     "title": "Transacciones",
+    "transaction_one": "Transacción",
+    "transaction_other": "Transacciones",
     "refetch": "Volver a cargar transacciones",
     "loading": "Cargando transacciones...",
     "notFound": "No se encontraron transacciones.",
@@ -28,7 +30,9 @@
     "status": {
       "pending": "Pendiente",
       "completed": "Completado",
-      "failed": "Fallido"
+      "failed": "Fallido",
+      "cancelled": "Cancelada",
+      "proccessing": "Procesando"
     },
     "type": {
       "all": "Todas las transacciones",

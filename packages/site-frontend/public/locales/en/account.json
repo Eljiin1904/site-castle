@@ -12,6 +12,8 @@
   },
   "transactions": {
     "title": "Transactions",
+    "transaction_one": "Transaction",
+    "transaction_other": "Transactions",
     "refetch": "Refetch Transactions",
     "loading": "Loading transactions...",
     "notFound": "No transactions found.",
@@ -28,7 +30,9 @@
     "status": {
       "pending": "Pending",
       "completed": "Completed",
-      "failed": "Failed"
+      "failed": "Failed",
+      "cancelled": "Cancelled",
+      "proccessing": "Processing"
     },
     "type": {
       "all": "All Transactions",
