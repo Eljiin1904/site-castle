@@ -116,8 +116,32 @@
   flex-grow: 8;
 }
 
-._flex-shrink {
+._flex-shrink-true {
   flex-shrink: 0;
+}
+._flex-shrink-1 {
+  flex-shrink: 1;
+}
+._flex-shrink-2 {
+  flex-shrink: 2;
+}
+._flex-shrink-3 {
+  flex-shrink: 3;
+}
+._flex-shrink-4 {
+  flex-shrink: 4;
+}
+._flex-shrink-5 {
+  flex-shrink: 5;
+}
+._flex-shrink-6 {
+  flex-shrink: 6;
+}
+._flex-shrink-7 {
+  flex-shrink: 7;
+}
+._flex-shrink-8 {
+  flex-shrink: 8;
 }
 
 ._w-full {
