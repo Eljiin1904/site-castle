@@ -16,24 +16,23 @@ import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserAvatarEditModal = () => {
   const imageId = useAppSelector((x) => x.user.avatarId);
   const avatarIndex = useAppSelector((x) => x.user.avatarIndex);
-
+  const {t} = useTranslation(["account","validations"]);
   const form = useCaptchaForm({
     schema: Validation.object({
-      image: Validation.mixed<ImageInputValue>().required("Image is required."),
-      crop: Validation.mixed<ImageCropperValue>().required(
-        "Invalid crop result.",
-      ),
+      image: Validation.mixed<ImageInputValue>().required("avatar.required"),
+      crop: Validation.mixed<ImageCropperValue>().required("avatar.cropArea"),
     }),
     onSubmit: async ({ image, crop, captchaToken }) => {
       const avatar = { ...image, ...crop };
 
       await Users.editAvatar({ avatar, captchaToken });
 
-      Toasts.success("Avatar changed.");
+      Toasts.success(t("avatar.success"));
       Dialogs.close("primary");
     },
   });
@@ -44,7 +43,7 @@ export const UserAvatarEditModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Change Avatar"
+        heading={t("avatar.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
@@ -69,18 +68,20 @@ export const UserAvatarEditModal = () => {
                   ? `/avatars/${imageId}`
                   : `/avatars-default/${avatarIndex.toString().padStart(3, "0")}`,
               }}
-              error={form.errors.image}
+              error={form.errors.image?.key
+                ? t(form.errors.image.key, { value: form.errors.image.value })
+                : undefined}
               value={form.values.image}
               onChange={(x) => {
                 if (x.file) {
                   if (x.file.type !== "image/jpeg") {
-                    form.setError("image", "File type must be jpeg.");
+                    form.setError("image", {key: "avatar.fileType", value: x.file.type});
                   } else if (x.file.size > 2 * 1024 * 1024) {
-                    form.setError("image", "File size must be less than 2MB.");
+                    form.setError("image", {key: "avatar.fileSize", value:"2"});
                   } else if (x.image.width < 256 || x.image.height < 256) {
                     form.setError(
                       "image",
-                      "Image size must be at least 256x256.",
+                      {key: "avatar.fileSize", value:"256x256"}
                     );
                   } else {
                     form.setError("image", undefined);
@@ -99,16 +100,16 @@ export const UserAvatarEditModal = () => {
           >
             {form.values.image && (
               <Button
-                kind="secondary"
-                label="Back"
+                kind="secondary-yellow"
+                label={t("common:back")}
                 fx
                 onClick={() => form.setValue("image", undefined)}
               />
             )}
             <Button
               type="submit"
-              kind="primary"
-              label="Submit"
+              kind="primary-yellow"
+              label={t("common:submit")}
               fx
               loading={form.loading}
             />

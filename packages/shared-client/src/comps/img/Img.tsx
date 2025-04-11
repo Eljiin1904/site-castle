@@ -1,11 +1,9 @@
 import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import config from "#client/config";
-import { SvgChicken } from "#client/svgs/common/SvgChicken";
 import { Div } from "../div/Div";
 import { Placeholder } from "../placeholder/Placeholder";
 import { StyledLayoutProps, StyledProps } from "../styled/Styled";
-import { Vector } from "../vector/Vector";
 import "./Img.scss";
 
 export type ImgProps = Omit<StyledLayoutProps, "width" | "height"> & {
@@ -44,6 +42,7 @@ export const Img: FC<ImgProps> = ({
   const hide = (loading && skeleton) || showDefault;
   const isStatic = type === "png" || type === "jpg";
   const src = isStatic ? `${config.staticURL}${path}.${type}` : path;
+  const notFoundPath = `${config.staticURL}/graphics/not-found.jpg`;
 
   useLayoutEffect(() => {
     setLoading(false);
@@ -86,13 +85,7 @@ export const Img: FC<ImgProps> = ({
           p={24}
           bg="brown-6"
         >
-          <Vector
-            as={SvgChicken}
-            width="100%"
-            height="100%"
-            color="brown-5"
-            style={{ height: "100%" }}
-          />
+          <img className="defaultImg" src={notFoundPath} alt="not-found" width={"100%"} height={"100%"}  style={{ objectFit: "contain" }} />
         </Div>
       )}
     </Div>

@@ -74,9 +74,9 @@
     },
     "avatar": {
       "field": "Avatar",
-      "fileType": "File type must be {{value.type}}.",
-      "fileSize": "File size must be less than {{value.size}}MB.",
-      "imageSize": "Image size must be at least {{value.width}}x{{value.height}}.",
+      "fileType": "File type must be {{value}}.",
+      "fileSize": "File size must be less than {{value}}MB.",
+      "imageSize": "Image size must be at least {{value}}.",
       "cropArea": "Invalid crop area.",
       "required": "{{value}} is required."
     },

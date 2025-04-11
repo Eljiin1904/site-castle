@@ -6,5 +6,9 @@
   "gameHistory": "Historial de juegos",
   "verification": "Verificación",
   "settings": "Configuraciones",
-  "progress": "Progreso de la cuenta"
+  "progress": "Progreso de la cuenta",
+  "avatar": {
+    "title": "Cambiar avatar",
+    "success": "Avatar cambiado con éxito."
+  }
 }

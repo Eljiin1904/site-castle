@@ -74,9 +74,9 @@
     },
     "file": {
       "field": "Avatar",
-      "fileType": "El archivo debe ser {{value.type}}.",
-      "fileSize": "El archivo debe ser menor de {{value.size}}MB.",
-      "imageSize": "La imagen debe ser de al menos {{value.width}}x{{value.height}}.",
+      "fileType": "El archivo debe ser {{value}}.",
+      "fileSize": "El archivo debe ser menor de {{value}}MB.",
+      "imageSize": "La imagen debe ser de al menos {{value}}.",
       "cropArea": "Invalida área de recorte.",
       "required": "{{value}} es requerida."
     },
