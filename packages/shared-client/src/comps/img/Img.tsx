@@ -82,8 +82,6 @@ export const Img: FC<ImgProps> = ({
           center
           fx
           fy
-          p={24}
-          bg="brown-6"
         >
           <img className="defaultImg" src={notFoundPath} alt="not-found" width={"100%"} height={"100%"}  style={{ objectFit: "contain" }} />
         </Div>
