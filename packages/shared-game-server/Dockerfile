@@ -5,10 +5,10 @@ WORKDIR /pidwin
 COPY . .
 RUN npm run init
 WORKDIR /pidwin/packages/shared-game-server
-# RUN npm uninstall bcrypt
-# RUN npm install bcryptjs
-# RUN npm install bcrypt
-# RUN npm run build
+RUN npm uninstall bcrypt
+RUN npm install bcryptjs
+RUN npm install bcrypt
+RUN npm run build
 
 FROM node:23-alpine AS production
 ENV NODE_ENV=devcloud
