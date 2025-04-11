@@ -10,6 +10,7 @@ import { Dialogs } from "@client/services/dialogs";
 import { Dates } from "@core/services/dates";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { TransactionModal } from "#app/modals/transaction/TransactionModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const TransactionsTable = ({
   transactions,
@@ -19,13 +20,13 @@ export const TransactionsTable = ({
   isLoading: boolean;
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
-
+  const {t} = useTranslation(["account","fields"]);
   return (
     <Table
       data={transactions}
       loading={isLoading}
       autoScroll={mainLayout === "mobile"}
-      emptyMessage="No transactions found."
+      emptyMessage={t("transactions.notFound")}
       onRowProps={(x) => ({
         type: "action",
         onClick: () =>
@@ -34,7 +35,7 @@ export const TransactionsTable = ({
       columns={[
         {
           hidden: mainLayout !== "mobile",
-          heading: "Transaction",
+          heading:t("transactions.transaction"),
           grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
@@ -43,32 +44,28 @@ export const TransactionsTable = ({
               gap={2}
             >
               <Span
-                weight="medium"
                 size={12}
-                color="white"
+                color="light-sand"
               >
                 {Transactions.getName(x)}
               </Span>
               <Div gap={3}>
                 <Span
-                  weight="medium"
                   size={12}
                 >
                   {"#"}
                   {x._id}
                 </Span>
                 <Span
-                  weight="medium"
                   size={12}
                 >
                   {"-"}
                 </Span>
                 <Span
-                  weight="medium"
                   size={12}
                   color={Transactions.getStatusColor(x.status)}
                 >
-                  {Strings.kebabToTitle(x.status)}
+                  {Strings.kebabToTitle(t(`transactions.status.${x.status}`))}
                 </Span>
               </Div>
             </Div>
@@ -85,14 +82,11 @@ export const TransactionsTable = ({
               align="flex-end"
             >
               <Tokens
-                value={x.amount}
-                accent={x.amount > 0 ? "positive" : "negative"}
+                value={x.amount}               
                 hideIcon
                 fontSize={12}
               />
               <Span
-                family="title"
-                weight="medium"
                 size={12}
               >
                 {`(${Intimal.toLocaleString(x.balance + x.amount)})`}
@@ -102,13 +96,13 @@ export const TransactionsTable = ({
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Type",
+          heading: t("transactions.headers.type"),
           grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span
-              weight="medium"
-              color="white"
+              color="light-sand"
+              size={12}
             >
               {Transactions.getName(x)}
             </Span>
@@ -116,27 +110,27 @@ export const TransactionsTable = ({
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "ID",
-          grow: 2,
+          heading: t("transactions.headers.id"),
+          grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span
-              weight="medium"
-              color="white"
+              color="light-sand"
+              size={12}
             >
-              {x._id}
+              #{x._id}
             </Span>
           ),
         },
         {
           hidden: mainLayout === "mobile" || mainLayout === "tablet",
-          heading: "Timestamp",
-          grow: 2,
+          heading: t("transactions.headers.date"),
+          grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span
-              weight="medium"
-              color="white"
+              color="light-sand"
+              size={12}
             >
               {Dates.toTimestamp(x.timestamp)}
             </Span>
@@ -144,44 +138,45 @@ export const TransactionsTable = ({
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Status",
-          grow: 1,
+          heading: t("transactions.headers.status"),
+          grow: 2,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span
-              weight="medium"
+              size={12}
               color={Transactions.getStatusColor(x.status)}
             >
-              {Strings.kebabToTitle(x.status)}
+             {Strings.kebabToTitle(t(`transactions.status.${x.status}`))}
             </Span>
           ),
         },
         {
           hidden: mainLayout === "mobile" || mainLayout === "tablet",
-          heading: "Balance Before",
+          heading: t("transactions.headers.balanceBefore"),
           grow: 2,
-          justify: "flex-end",
-          rowRenderer: (x) => <Tokens value={x.balance} />,
+          justify: "flex-start",
+          rowRenderer: (x) => <Tokens fontSize={12} value={x.balance} />,
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Amount",
+          heading: t("transactions.headers.amount"),
           grow: 2,
-          justify: "flex-end",
+          justify: "flex-start",
           rowRenderer: (x) => (
             <Tokens
               value={x.amount}
-              accent={x.amount > 0 ? "positive" : "negative"}
+              fontSize={12}
             />
           ),
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Balance After",
+          heading:t("transactions.headers.balanceAfter"),
           grow: 2,
           justify: "flex-end",
           rowRenderer: (x) => (
             <Tokens
+              fontSize={12}
               value={
                 x.status === "cancelled" ? x.balance : x.balance + x.amount
               }

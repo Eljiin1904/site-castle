@@ -32,7 +32,7 @@ export const TransactionsHeader = ({
   const small = useIsMobileLayout();
   const { t } = useTranslation(["account"]);
 
-  const indexes = [10, 20, 30, 40];
+  const indexes = [10, 20, 25, 50];
   return (
     <Div
       justify={small ? "space-between" : undefined}
