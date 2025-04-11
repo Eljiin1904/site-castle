@@ -73,5 +73,8 @@
     "tipPlaceholder": "Ingrese el nombre de usuario del destinatario...",
     "amount": "Cantidad",
     "amountPlaceholder": "Ingrese la cantidad de tokens..."
+  },
+  "date": {
+    "joined": "Fecha de registro"
   }
 }

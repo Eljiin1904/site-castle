@@ -1,13 +1,18 @@
-import { Fragment } from "react";
+import { PageTitle } from "@client/comps/page/PageTitle";
 import { UserCard } from "./UserCard";
-import { StatCardGrid } from "./StatCardGrid";
+import { Div } from "@client/comps/div/Div";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ProfileBody = () => {
+  const {t} = useTranslation(["account"]);
+  
   return (
-    <Fragment>
-      <h2>Profile Information</h2>
+    <Div fx column gap={40}>
+      <PageTitle
+        heading={t('profile')}
+      />
       <UserCard />
-      <StatCardGrid />
-    </Fragment>
+      {/* <StatCardGrid /> */}
+    </Div>
   );
 };

@@ -1,6 +1,5 @@
-import { Intimal } from "@core/services/intimal";
+import {Fragment} from "react";
 import { Div } from "@client/comps/div/Div";
-import { Card } from "@client/comps/cards/Card";
 import { Img } from "@client/comps/img/Img";
 import { ProgressBar } from "@client/comps/progress-bar/ProgressBar";
 import { Span } from "@client/comps/span/Span";
@@ -11,116 +10,139 @@ import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useUserLevel } from "#app/hooks/users/useUserLevel";
 import { UserAvatarEditModal } from "#app/modals/user/UserAvatarEditModal";
-import { Users } from "#app/services/users";
+import { Intimal } from "@core/services/intimal";
+import { Users } from "@client/services/users";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import './UserCard.scss';
 
 export const UserCard = () => {
-  const mainLayout = useAppSelector((x) => x.style.mainLayout);
-  const small = mainLayout === "mobile";
+  
+  const {t} = useTranslation(["account","fields"]);
   const username = useAppSelector((x) => x.user.username);
-  const avatarIndex = useAppSelector((x) => x.user.avatarIndex);
-  const avatarId = useAppSelector((x) => x.user.avatarId);
-  const registerDate = useAppSelector((x) => x.user.registerDate);
-  const { level, levelProgress, levelGoal } = useUserLevel();
+  const email = useAppSelector((x) => x.user.email);
+  
+  const registerDate = useAppSelector((x) => x.user.registerDate);  
 
-  return (
-    <Card p={16}>
-      <Div
-        hover="highlight"
-        onClick={() => Dialogs.open("primary", <UserAvatarEditModal />)}
-      >
-        <UserIcon
-          avatarIndex={avatarIndex}
-          avatarId={avatarId}
-          width={small ? "68px" : "80px"}
-        />
-        <Div
-          position="absolute"
-          bottom={0}
-          left={0}
-          bg="yellow"
-          p={small ? 4 : 6}
-        >
-          <Vector
-            as={SvgEdit}
-            color="black"
-            size={small ? 10 : 12}
-          />
-        </Div>
-      </Div>
+  return (<Fragment>
+    <Div fx gap={40}>
+      <UserAvatar />
       <Div
         column
         fx
-        ml={20}
       >
-        <Div align="center">
-          <Span
-            family="title"
-            weight="semi-bold"
-            size={small ? 16 : 20}
-            color="white"
-          >
-            {username}
-          </Span>
-          <Div
-            grow
-            justify="flex-end"
-          >
-            {!small && (
-              <Span
-                weight="semi-bold"
-                size={small ? 10 : 12}
-              >
-                {"Joined:"}
-              </Span>
-            )}
-            <Span
-              weight="semi-bold"
-              size={small ? 10 : 12}
-              ml={4}
-              color="white"
-            >
-              {registerDate.toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })}
-            </Span>
-          </Div>
-        </Div>
-        <ProgressBar
-          height={8}
-          progress={levelProgress / levelGoal}
-          my={small ? 10 : 12}
-        />
-        <Div
-          fx
-          align="center"
-        >
-          <Div align="center">
-            <Img
-              type="png"
-              path={Users.getLevelBadge(level)}
-              width="20px"
-            />
-            <Span
-              size={12}
-              weight="medium"
-              ml={6}
-            >
-              {small ? level : `Level ${level}`}
-            </Span>
-          </Div>
-          <Span
-            flexGrow
-            textAlign="right"
-            family="title"
-            weight="bold"
-            size={small ? 10 : 12}
-          >
-            {`${Intimal.toLocaleString(levelProgress, 0)} / ${Intimal.toLocaleString(levelGoal, 0)} XP`}
-          </Span>
-        </Div>
+        <UserCardData label={t("fields:username")} data={username} />
+        <UserCardData label={t("fields:email")} data={email} />
+        <UserCardData label={t("fields:date.joined")} border={false} data={registerDate.toLocaleDateString("en-US", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })} />        
       </Div>
-    </Card>
+    </Div>
+    <UserCardLevel />
+    </Fragment>
   );
+};
+
+const UserAvatar = () => {
+
+  const avatarIndex = useAppSelector((x) => x.user.avatarIndex);
+  const avatarId = useAppSelector((x) => x.user.avatarId);
+  const small = useIsMobileLayout();
+
+  return (<Div
+  className="UserCard"
+    hover="highlight"
+    onClick={() => Dialogs.open("primary", <UserAvatarEditModal />)}
+    style={{width: small ? "68px" : "131px", height: small ? "68px" : "131px"}}
+  >
+    <UserIcon
+      avatarIndex={avatarIndex}
+      avatarId={avatarId}
+      width={small ? "68px" : "131px"}
+    />
+    <Div
+      className="EditAvatar"
+      position="absolute"
+      top={0}
+      right={0}
+      p={small ? 4 : 8}
+    >
+      <Vector
+        as={SvgEdit}
+        color="light-sand"
+        size={small ? 10 : 16}
+      />
+    </Div>
+  </Div>)
+};
+
+const UserCardData = ({label, data, border = true}:
+{
+label: string;
+data: string | number;
+border?: boolean;
+}) => {
+
+  return (<Div 
+    fx 
+    justifyContent="space-between"
+    borderBottom={border}
+    borderColor="brown-4"
+    py={16}
+  >
+    <Span>
+      {label}
+    </Span>
+    <Span
+      size={16}
+      lineHeight={24}
+      family="title"
+      weight="regular"
+      color="light-sand"
+      textTransform="uppercase"
+    >
+      {data}
+    </Span>
+  </Div>);
+};
+
+const UserCardLevel = () => {
+  const { level, levelProgress, levelGoal } = useUserLevel();
+  const {t} = useTranslation(["account"]);
+  return(<Div fx borderTop borderColor="brown-4" pt={16} column gap={16}>
+    <Div fx justifyContent="space-between">
+      <Span>{t("progress")}</Span>
+      <Div>
+        <Span 
+        color="light-sand"
+        >
+          {`${Intimal.toLocaleString(levelProgress, 0)}`}
+        </Span>
+        <Span>
+          {`/ ${Intimal.toLocaleString(levelGoal, 0)} XP`}
+        </Span>
+      </Div>
+    </Div>
+    <ProgressBar height={8}  progress={levelProgress / levelGoal} />
+    <Div fx justifyContent="space-between">
+      <Div gap={4}>
+        <Img
+          type="png"
+          path={Users.getLevelBadge(level)}
+          width="20px"
+        />
+        <Span>{level}</Span>
+      </Div>
+      <Div gap={4}>
+        <Span>{level+1}</Span>
+        <Img
+          type="png"
+          path={Users.getLevelBadge(level+1)}
+          width="20px"
+        />       
+      </Div>
+    </Div>
+  </Div>);
 };

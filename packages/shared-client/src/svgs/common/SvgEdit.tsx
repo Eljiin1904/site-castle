@@ -7,9 +7,16 @@ export const SvgEdit = (props: SVGProps<SVGSVGElement>) => (
   >
     <path
       fill="currentColor"
-      fillRule="evenodd"
-      d="m12.975.439 2.586 2.586a1.5 1.5 0 0 1 0 2.121l-1.177 1.177-4.707-4.707L10.854.439a1.5 1.5 0 0 1 2.121 0ZM1.646 9.646l6.97-6.969 4.707 4.707-6.969 6.97a.5.5 0 0 1-.222.128l-5.5 1.5a.5.5 0 0 1-.614-.614l1.5-5.5a.5.5 0 0 1 .128-.222Z"
+      fillRule="evenodd"      
+      d="M8.1 3.5L0.3 11.3C0.1 11.5 0 11.7 0 12V15C0 15.6 0.4 16 1 16H4C4.3 16 4.5 15.9 4.7 15.7L12.5 7.9L8.1 3.5Z"
+      clipRule="evenodd"
+    />
+    <path
+      fill="currentColor"
+      fillRule="evenodd"      
+      d="M15.7 3.3L12.7 0.3C12.3 -0.1 11.7 -0.1 11.3 0.3L9.5 2.1L13.9 6.5L15.7 4.7C16.1 4.3 16.1 3.7 15.7 3.3Z"
       clipRule="evenodd"
     />
   </svg>
 );
+

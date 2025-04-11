@@ -74,5 +74,8 @@
     "tipPlaceholder": "Enter recipient username...",
     "amount": "Tip Amount",
     "amountPlaceholder": "Enter token amount..."
+  },
+  "date": {
+    "joined": "Date Joined"
   }
 }
