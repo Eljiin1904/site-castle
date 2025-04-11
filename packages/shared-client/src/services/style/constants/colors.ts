@@ -21,7 +21,6 @@ export const colors = {
   "light-red": "#ff7a85",
   "bright-red": "#F03030",
   "dark-red": "#78010b",
-  orange: "#f58711",
   "light-orange": "#ffba70",
   "dark-orange": "#a15400",
   blue: "#236ede",
@@ -79,6 +78,7 @@ export const colors = {
   "red-arrow": "#721912",
   "green-arrow": "#274C2F",
   "chat-system": '#E15E58',
-  "auto-gem": "#C7C5BD"
+  "auto-gem": "#C7C5BD",
+  "orange": "#E9A23B"
 } as const;
 

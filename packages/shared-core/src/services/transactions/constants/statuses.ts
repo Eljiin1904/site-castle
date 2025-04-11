@@ -3,4 +3,5 @@ export const statuses = [
   "cancelled",
   "processing",
   "completed",
+  "failed",
 ] as const;
