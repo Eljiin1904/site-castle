@@ -155,7 +155,8 @@
       "suspended": "You can't do that while suspended."
     },
     "queries": {
-      "transactions": "Something went wrong, please refetch your transactions."
+      "transactions": "Something went wrong, please refetch your transactions.",
+      "history": "Something went wrong, please refetch your game history."
     }
   }
 }

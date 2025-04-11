@@ -154,6 +154,10 @@
       "permissionDenied": "No tienes permiso para hacer eso.",
       "emailNotConfirmed": "El correo electrónico debe ser confirmado.",
       "suspended": "No puedes hacer eso mientras estás suspendido."
+    },
+    "queries": {
+      "transactions": "Algo salió mal, por favor vuelve a cargar tus transacciones.",
+      "user": "Algo salió mal, por favor vuelve a cargar tu información de usuario."
     }
   }
 }

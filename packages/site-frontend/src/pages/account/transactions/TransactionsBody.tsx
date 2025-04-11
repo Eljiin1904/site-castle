@@ -27,6 +27,7 @@ export const TransactionsBody = () => {
   });
 
   const transactions = query.data?.transactions || [];
+  const total = query.data?.total || 0;
 
   if (query.error) {
     return (
@@ -54,15 +55,20 @@ export const TransactionsBody = () => {
         setLimit={setLimit}
         onRefreshClick={() => (page === 1 ? query.refetch() : setPage(1))}
       />
-      <TransactionsTable
-        transactions={transactions}
-        isLoading={query.isLoading}
-      />
-      <TransactionsFooter
-        page={page}
-        hasNext={transactions.length !== 0 && transactions.length % limit === 0}
-        setPage={setPage}
-      />
+      <Div fx column gap={16}>
+        <TransactionsTable
+          transactions={transactions}
+          isLoading={query.isLoading}
+        />
+        <TransactionsFooter
+          page={page}
+          hasNext={transactions.length !== 0 && transactions.length % limit === 0}
+          setPage={setPage}
+          limit={limit}
+          total={total}
+          inPage={transactions.length}
+        />
+      </Div>
     </Div>
   );
 };

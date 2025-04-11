@@ -32,8 +32,11 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
   return (
     <ModalSection>
       <ModalLabel>{t("fields:bets.amount")}</ModalLabel>
-
-      <Div align="center">
+      <Div
+        align="center"
+        justify="space-between"
+        gap={8}
+      >
         <Input
           type="currency"
           placeholder={t("fields:bets.amountPlaceholder")}
@@ -48,13 +51,15 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x / 2)}
+             size="xssso"
           />
           <Button
             kind="tertiary-grey"
-            label="2x"
+            label="2X"
             width={40}
             disabled={disabled}
             onClick={() => handleMath((x) => x * 2)}
+             size="xssso"
           />
           <Button
             kind="tertiary-grey"
@@ -62,6 +67,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
             width={40}
             disabled={disabled}
             onClick={() => setBetAmount(tokenBalance)}
+            size="xssso"
           />
         </Div>
       </Div>

@@ -51,7 +51,6 @@ const ActionButton = () => {
       fx
       kind="primary-green"
       label={overMax ? t("games\\limbo:exceedMaxBet") : t("games\\limbo:placeBet")}
-      // label={overMax ? "Exceeds Max Profit" : "Play"}
       loading={processing}
       disabled={overMax || processing}
       onClick={handleBet}

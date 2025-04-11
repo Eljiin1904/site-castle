@@ -20,7 +20,7 @@ export const AutoStatusView = () => {
       center
       pointerEvents="none"
       style={{
-        bottom: sm ? "108px" : "128px",
+        bottom: sm ? "100px" : "128px",
         zIndex: "1",
       }}
     >

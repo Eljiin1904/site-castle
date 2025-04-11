@@ -12,6 +12,8 @@
   },
   "transactions": {
     "title": "Transactions",
+    "transaction_one": "Transaction",
+    "transaction_other": "Transactions",
     "refetch": "Refetch Transactions",
     "loading": "Loading transactions...",
     "notFound": "No transactions found.",
@@ -28,7 +30,9 @@
     "status": {
       "pending": "Pending",
       "completed": "Completed",
-      "failed": "Failed"
+      "failed": "Failed",
+      "cancelled": "Cancelled",
+      "proccessing": "Processing"
     },
     "type": {
       "all": "All Transactions",
@@ -42,6 +46,29 @@
       "promotion": "Promotion",     
       "vault": "Vault",
       "other": "Other"
+    }
+  },
+  "history": {
+    "title": "Game History",
+    "game_one": "Game",
+    "game_other": "Games",
+    "loading": "Loading game history...",
+    "notFound": "No game history found.",
+    "refetch": "Refetch Game History",
+    "perPage": "Per Page",
+    "headers": {
+      "id": "ID",
+      "gameId": "Game ID",
+      "date": "Date",
+      "status": "Status",
+      "balanceBefore": "Bal. Before",
+      "amount": "Amount",
+      "balanceAfter": "Bal. After"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed"
     }
   }
 }

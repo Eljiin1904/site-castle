@@ -9,6 +9,7 @@ export function getTransactions(data: {
   page: number;
 }): Promise<{
   transactions: TransactionDocument[];
+  total: number;
 }> {
   return Http.post("/users/get-transactions", data);
 }

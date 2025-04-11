@@ -12,6 +12,8 @@
   },
   "transactions": {
     "title": "Transacciones",
+    "transaction_one": "Transacción",
+    "transaction_other": "Transacciones",
     "refetch": "Volver a cargar transacciones",
     "loading": "Cargando transacciones...",
     "notFound": "No se encontraron transacciones.",
@@ -28,7 +30,9 @@
     "status": {
       "pending": "Pendiente",
       "completed": "Completado",
-      "failed": "Fallido"
+      "failed": "Fallido",
+      "cancelled": "Cancelada",
+      "proccessing": "Procesando"
     },
     "type": {
       "all": "Todas las transacciones",
@@ -42,6 +46,29 @@
       "promotion": "Promoción",     
       "vault": "Bóveda",
       "other": "Otro"
+    }
+  },
+  "history": {
+    "title": "Historial de juegos",
+    "game_one": "Juego",
+    "game_other": "Juegos",
+    "loading": "Cargando historial de juegos...",
+    "notFound": "No se encontró historial de juegos.",
+    "refetch": "Volver a cargar historial de juegos",
+    "perPage": "Por página",
+    "headers": {
+      "id": "ID",
+      "gameId": "ID del juego",
+      "date": "Fecha",
+      "status": "Estado",
+      "balanceBefore": "Bal. Antes",
+      "amount": "Cantidad",
+      "balanceAfter": "Bal. Después"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "completed": "Completado",
+      "failed": "Fallido"
     }
   }
 }

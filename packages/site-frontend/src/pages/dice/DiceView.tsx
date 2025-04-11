@@ -5,6 +5,7 @@ import { DiceHistory } from "./DiceHistory";
 import { DiceViewResult } from "./DiceViewResult";
 import { AutoStatusView } from "./AutoStatusView";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { DiceHeader } from "./DiceHeader";
 
 export const DiceView = () => {
   const small = useIsMobileLayout();
@@ -22,6 +23,7 @@ export const DiceView = () => {
       }}
     >
       <Div fx position="relative" grow>
+        <DiceHeader />
         {!small && <DiceHistory />}
         <DiceViewResult />
         <DiceViewSlider />

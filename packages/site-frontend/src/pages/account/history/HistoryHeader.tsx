@@ -1,61 +1,73 @@
 import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
-import { Strings } from "@core/services/strings";
 import { Transactions } from "@core/services/transactions";
-import { CardSection } from "@client/comps/cards/CardSection";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { Heading } from "@client/comps/heading/Heading";
-import { SvgFilter } from "@client/svgs/common/SvgFilter";
 import { SvgRedo } from "@client/svgs/common/SvgRedo";
 import { Button } from "@client/comps/button/Button";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { Div } from "@client/comps/div/Div";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { PageTitle } from "@client/comps/page/PageTitle";
+import { Span } from "@client/comps/span/Span";
 
 export const HistoryHeader = ({
   category,
   isLoading,
   setCategory,
+  limit,
+  setLimit,
   onRefreshClick,
 }: {
   category: TransactionCategory | undefined;
   isLoading: boolean;
   setCategory: (x: TransactionCategory | undefined) => void;
+  limit: number;
+  setLimit: (x: number) => void;
   onRefreshClick: () => void;
 }) => {
-  const mainLayout = useAppSelector((x) => x.style.mainLayout);
-  const collapse = mainLayout === "mobile";
-
+  const small = useIsMobileLayout();
+  const { t } = useTranslation(["account","games"]);
+  const indexes = [10, 20, 25, 50];
   return (
-    <CardSection
-      position="top"
-      justify={collapse ? "space-between" : undefined}
+    <Div
+      justify={small ? "space-between" : undefined}
       align="center"
-      gap={12}
+      gap={small ? 20: 24}
     >
-      {!collapse && (
-        <Heading
-          as="h2"
-          fx
-        >
-          {"Game History"}
-        </Heading>
+      {!small && (
+        <PageTitle
+          heading={t('history.title')}
+        />
       )}
+      <Div gap={12}>
+        <Dropdown
+          type="select"
+          fx={small}
+          options={['all_games', ...Transactions.gameCategories].map((x) => t(`games:${x.replaceAll('-', '_')}`))}
+          value={
+            category ? Transactions.gameCategories.indexOf(category) + 1 : 0
+          }
+          onChange={(x, i) =>
+            setCategory(
+              i === 0 ? undefined : Transactions.gameCategories[i - 1],
+            )
+          }
+        />
+        <Button
+          kind="tertiary-grey"
+          icon={SvgRedo}
+          disabled={isLoading}
+          onClick={onRefreshClick}
+        />
+      </Div>
+      <Span flexShrink>{t("history.perPage")}</Span>
       <Dropdown
         type="select"
-        icon={SvgFilter}
-        width={collapse ? "full" : undefined}
-        options={["All Games", ...Transactions.gameCategories].map(
-          Strings.kebabToTitle,
-        )}
-        value={category ? Transactions.gameCategories.indexOf(category) + 1 : 0}
-        onChange={(x, i) =>
-          setCategory(i === 0 ? undefined : Transactions.gameCategories[i - 1])
-        }
+        fx={small}
+        size="sm"
+        options={indexes}
+        value={indexes.indexOf(limit)}
+        onChange={(x, i) => setLimit(indexes[i])}
       />
-      <Button
-        kind="secondary"
-        icon={SvgRedo}
-        disabled={isLoading}
-        onClick={onRefreshClick}
-      />
-    </CardSection>
+    </Div>
   );
 };

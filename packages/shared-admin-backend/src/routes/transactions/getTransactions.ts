@@ -71,6 +71,8 @@ export default Http.createApiRoute({
       })
       .toArray();
 
-    res.json({ transactions });
+    const total = await Database.collection("transactions").countDocuments(filter);
+
+    res.json({ transactions , total});
   },
 });

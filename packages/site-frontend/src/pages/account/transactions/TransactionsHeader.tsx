@@ -1,13 +1,8 @@
 import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
-import { Strings } from "@core/services/strings";
 import { Transactions } from "@core/services/transactions";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { Heading } from "@client/comps/heading/Heading";
-import { SvgFilter } from "@client/svgs/common/SvgFilter";
 import { Button } from "@client/comps/button/Button";
 import { SvgRedo } from "@client/svgs/common/SvgRedo";
-import { CardSection } from "@client/comps/cards/CardSection";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { PageTitle } from "@client/comps/page/PageTitle";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useTranslation } from "@core/services/internationalization/internationalization";
@@ -32,7 +27,7 @@ export const TransactionsHeader = ({
   const small = useIsMobileLayout();
   const { t } = useTranslation(["account"]);
 
-  const indexes = [10, 20, 30, 40];
+  const indexes = [10, 20, 25, 50];
   return (
     <Div
       justify={small ? "space-between" : undefined}
@@ -44,21 +39,28 @@ export const TransactionsHeader = ({
           heading={t('transactions.title')}
         />
       )}
-      <Dropdown
-        type="select"
-        fx={small}
-        options={['all', ...Transactions.notGameCategories].map((x) => t(`transactions.type.${x}`))}
-        value={
-          category ? Transactions.notGameCategories.indexOf(category) + 1 : 0
-        }
-        onChange={(x, i) =>
-          setCategory(
-            i === 0 ? undefined : Transactions.notGameCategories[i - 1],
-          )
-        }
-      />
-      <Span flexShrink>Per Page</Span>
-        
+      <Div gap={12}>
+        <Dropdown
+          type="select"
+          fx={small}
+          options={['all', ...Transactions.notGameCategories].map((x) => t(`transactions.type.${x}`))}
+          value={
+            category ? Transactions.notGameCategories.indexOf(category) + 1 : 0
+          }
+          onChange={(x, i) =>
+            setCategory(
+              i === 0 ? undefined : Transactions.notGameCategories[i - 1],
+            )
+          }
+        />
+        <Button
+          kind="tertiary-grey"
+          icon={SvgRedo}
+          disabled={isLoading}
+          onClick={onRefreshClick}
+        />
+      </Div>      
+      <Span flexShrink>{t("transactions.perPage")}</Span>        
       <Dropdown
         type="select"
         fx={small}
@@ -66,13 +68,7 @@ export const TransactionsHeader = ({
         options={indexes}
         value={indexes.indexOf(limit)}
         onChange={(x, i) => setLimit(indexes[i])}
-      />
-      <Button
-        kind="tertiary-grey"
-        icon={SvgRedo}
-        disabled={isLoading}
-        onClick={onRefreshClick}
-      />
+      />      
     </Div>
   );
 };

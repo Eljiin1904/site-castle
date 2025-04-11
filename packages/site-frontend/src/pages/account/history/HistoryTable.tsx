@@ -9,6 +9,7 @@ import { Tokens } from "@client/comps/tokens/Tokens";
 import { Dialogs } from "@client/services/dialogs";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { TransactionModal } from "#app/modals/transaction/TransactionModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const HistoryTable = ({
   transactions,
@@ -18,13 +19,13 @@ export const HistoryTable = ({
   isLoading: boolean;
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
-
+  const {t} = useTranslation(["account","fields"]);
   return (
     <Table
       data={transactions}
       loading={isLoading}
       autoScroll={mainLayout === "mobile"}
-      emptyMessage="No game history found."
+      emptyMessage={t("history.notFound")}
       onRowProps={(x) => ({
         type: "action",
         onClick: () =>
@@ -33,7 +34,7 @@ export const HistoryTable = ({
       columns={[
         {
           hidden: mainLayout !== "mobile",
-          heading: "Transaction",
+          heading: t("transactions.transaction",{count: 1}),
           grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
@@ -42,14 +43,12 @@ export const HistoryTable = ({
               gap={2}
             >
               <Span
-                weight="medium"
                 size={12}
-                color="white"
+                color="light-sand"
               >
                 {Transactions.getName(x)}
               </Span>
               <Span
-                weight="medium"
                 size={12}
               >
                 {"#"}
@@ -60,7 +59,7 @@ export const HistoryTable = ({
         },
         {
           hidden: mainLayout !== "mobile",
-          heading: "Amount",
+          heading: t("history.headers.amount"),
           grow: 2,
           justify: "flex-end",
           rowRenderer: (x) => (
@@ -75,8 +74,6 @@ export const HistoryTable = ({
                 fontSize={12}
               />
               <Span
-                weight="medium"
-                family="title"
                 size={12}
               >
                 {`(${Intimal.toLocaleString(x.balance + x.amount)})`}
@@ -86,14 +83,11 @@ export const HistoryTable = ({
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Transaction",
+          heading: t("transactions.transaction",{count: 1}),
           grow: 3,
           justify: "flex-start",
           rowRenderer: (x) => (
-            <Span
-              weight="medium"
-              color="white"
-            >
+            <Span color="light-sand" size={12}>
               {Transactions.getName(x)}
             </Span>
           ),
@@ -104,56 +98,47 @@ export const HistoryTable = ({
           grow: 2,
           justify: "flex-start",
           rowRenderer: (x) => (
-            <Span
-              weight="medium"
-              color="white"
-            >
-              {x._id}
+            <Span color="light-sand" size={12}>
+             #{x._id}
             </Span>
           ),
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Game ID",
+          heading: t("history.headers.gameId"),
           grow: 2,
           justify: "flex-start",
           rowRenderer: (x) => (
-            <Span
-              weight="medium"
-              color="white"
-            >
+            <Span color="light-sand" size={12}>
               {"gameId" in x ? x.gameId : "N/A"}
             </Span>
           ),
         },
         {
           hidden: mainLayout === "mobile" || mainLayout === "tablet",
-          heading: "Timestamp",
+          heading:  t("history.headers.date"),
           grow: 2,
           justify: "flex-start",
           rowRenderer: (x) => (
-            <Span
-              weight="medium"
-              color="white"
-            >
+            <Span color="light-sand" size={12}>
               {Dates.toTimestamp(x.timestamp)}
             </Span>
           ),
         },
         {
           hidden: mainLayout === "mobile" || mainLayout === "tablet",
-          heading: "Balance Before",
+          heading:  t("history.headers.balanceBefore"),
           grow: 2,
           justify: "flex-end",
-          rowRenderer: (x) => <Tokens value={x.balance} />,
+          rowRenderer: (x) => <Tokens fontSize={12} value={x.balance} />,
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Amount",
+          heading: t("history.headers.amount"),
           grow: 2,
           justify: "flex-end",
           rowRenderer: (x) => (
-            <Tokens
+            <Tokens fontSize={12}
               value={x.amount}
               accent={x.amount > 0 ? "positive" : "negative"}
             />
@@ -161,10 +146,10 @@ export const HistoryTable = ({
         },
         {
           hidden: mainLayout === "mobile",
-          heading: "Balance After",
+          heading: t("history.headers.balanceAfter"),
           grow: 2,
           justify: "flex-end",
-          rowRenderer: (x) => <Tokens value={x.balance + x.amount} />,
+          rowRenderer: (x) => <Tokens fontSize={12} value={x.balance + x.amount} />,
         },
       ]}
     />

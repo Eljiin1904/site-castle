@@ -7,6 +7,7 @@ import { SvgTimes } from "@client/svgs/common/SvgTimes";
 import { Limbo } from "#app/services/limbo";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const LimboViewFooter = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -15,40 +16,39 @@ export const LimboViewFooter = () => {
   const autoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
   const sm = layout === "mobile";
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   return (
     <Div
       fx
-      px={sm ? 10 : 16}
-      py={sm ? 12 : 16}
-      gap={sm ? 6 : 12}
+      px={sm ? 20 : 24}
+      py={sm ? 16 : 24}
+      gap={sm ? 8 : 12}
       bg="brown-6"
     >
-      <ModalSection>
-        <ModalLabel>{"Multiplier"}</ModalLabel>
-        <Div align="center">
-          <Input
-            type="decimal"
-            decimals={2}
-            iconRight={SvgTimes}
-            placeholder="Enter multiplier..."
-            value={Limbo.getMultiplier({ targetValue })}
-            disabled={processing || autoPlaying}
-            onChange={(x) =>
-              dispatch(
-                Limbo.setTargetValue(Limbo.getTargetFromMultiplier(x || 0)),
-              )
-            }
-          />
-        </Div>
+      <ModalSection justifyContent="space-between">
+        <ModalLabel>{t("fields:bets.multiplier")}</ModalLabel>
+        <Input
+          type="decimal"
+          decimals={2}
+          iconRight={SvgTimes}
+          placeholder={t("fields:bets.multiplierPlaceholder")}
+          value={Limbo.getMultiplier({ targetValue })}
+          disabled={processing || autoPlaying}
+          onChange={(x) =>
+            dispatch(
+              Limbo.setTargetValue(Limbo.getTargetFromMultiplier(x || 0)),
+            )
+          }
+        />
       </ModalSection>
-      <ModalSection>
-        <ModalLabel>{"Win Chance"}</ModalLabel>
+      <ModalSection justifyContent="space-between">
+        <ModalLabel>{t("fields:bets.winChance")}</ModalLabel>
         <Input
           type="decimal"
           decimals={6}
           iconRight={SvgPercent}
-          placeholder="Enter win chance..."
+          placeholder={t("fields:bets.winChancePlaceholder")}
           value={Limbo.getWinChance({ targetValue })}
           disabled={processing || autoPlaying}
           onChange={(x) =>

@@ -2,7 +2,6 @@ import { PageLoading } from "@client/comps/page/PageLoading";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Div } from "@client/comps/div/Div";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { DiceHeader } from "./DiceHeader";
 import { DiceView } from "./DiceView";
 import { DiceMenu } from "./DiceMenu";
 import { BetBoard } from "#app/comps/bet-board/BetBoard";
@@ -35,7 +34,6 @@ const MobileContent = () => {
       column
       gap={16}
     >
-      <DiceHeader />
       <DiceView />
       <DiceMenu />
       <BetBoard
@@ -56,7 +54,6 @@ const NotMobileContent = () => {
       fx
       column
     >
-      <DiceHeader />
       <Div
         fx
         gap={24}

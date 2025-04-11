@@ -75,6 +75,7 @@ export function Table<T extends DataSchema>({
           <Div
             key={i}
             grow={x.grow}
+            flexBasis={0}
             align="center"
             justify={x.justify}
           >
@@ -127,6 +128,7 @@ export function Table<T extends DataSchema>({
                 <Div
                   key={columnIndex}
                   grow={column.grow}
+                  flexBasis={0}
                   align="center"
                   justify={column.justify}
                 >

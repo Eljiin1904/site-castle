@@ -17,47 +17,46 @@ export const LimboMenu = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const mode = useAppSelector((x) => x.limbo.mode);
   const sm = layout === "mobile";
-  const md = layout === "tablet";
 
   return (
-    <Div
-      wrap
-      style={
-        sm || md
-          ? undefined
-          : {
-              minWidth: "320px",
-              maxWidth: "320px",
-            }
-      }
-    >
-      <ModeMenu />
       <Div
-        column
-        px={sm ? 20 : 24}
-        py={sm ? 16 : 24}
-        gap={16}
-        bg="brown-6"
-        borderColor="brown-4"
-        borderTop
-        fx
+        wrap
         style={
           sm
             ? undefined
             : {
-                minHeight: "608px",
-                maxHeight: "608px",
+                minWidth: "320px",
+                maxWidth: "320px",
               }
         }
       >
-        <Conditional
-          value={mode}
-          manual={<LimboMenuManual />}
-          auto={<LimboMenuAuto />}
-        />
+        <ModeMenu />
+        <Div
+          column
+          px={sm ? 20 : 24}
+          py={sm ? 16 : 24}
+          gap={16}
+          bg="brown-6"
+          borderColor="brown-4"
+          borderTop
+          fx
+          style={
+            sm
+              ? undefined
+              : {
+                  minHeight: "608px",
+                  maxHeight: "608px",
+                }
+          }
+        >
+          <Conditional
+            value={mode}
+            manual={<LimboMenuManual />}
+            auto={<LimboMenuAuto />}
+          />
+        </Div>
       </Div>
-    </Div>
-  );
+    );
 };
 
 const ModeMenu = () => {
