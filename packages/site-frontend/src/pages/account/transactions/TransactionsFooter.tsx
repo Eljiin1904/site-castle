@@ -23,6 +23,8 @@ export const TransactionsFooter = ({
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = layout === "mobile" || layout === "tablet";
 
+  if(total === 0) 
+    return null;
   return (
     <Div fx center>
       {!small && <Span position="absolute" left={0}>

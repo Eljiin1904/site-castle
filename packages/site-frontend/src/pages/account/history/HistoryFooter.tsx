@@ -24,6 +24,9 @@ export const HistoryFooter = ({
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = layout === "mobile" || layout === "tablet";
 
+  if(total === 0) 
+    return null;
+
   return (<Div fx center>
     {!small && <Span position="absolute" left={0}>
       {(page - 1)*limit + inPage}/{total} {t("transactions.transaction",{count: total})}
