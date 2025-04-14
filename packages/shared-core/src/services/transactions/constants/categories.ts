@@ -1,11 +1,14 @@
 export const categories = [
-  "cases",
+  "duel",
   "case-battles",
-  "deposits",
+  "crash",
   "dice",
-  "double",
   "limbo",
+  "blackjack",
   "mines",
+  "double",
+  "cases",  
+  "deposits",  
   "withdrawals",
   "tips",
   "races",
@@ -18,12 +21,15 @@ export const categories = [
 ] as const;
 
 export const gameCategories: ReadonlyArray<(typeof categories)[number]> = [
-  "cases",
+  "duel",
   "case-battles",
+  "crash",
   "dice",
-  "double",
   "limbo",
+  "blackjack",
   "mines",
+  "double",
+  "cases"  
 ];
 
 export const notGameCategories: ReadonlyArray<(typeof categories)[number]> = [

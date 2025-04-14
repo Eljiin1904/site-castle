@@ -27,6 +27,18 @@ export function getName(tx: TransactionDocument): string {
       return `Deposit Skin - ${Strings.kebabToTitle(tx.provider)}`;
     case "deposit-swapped":
       return "Deposit Swapped";
+    case "duel-bet":
+      return "Duel - Bet";
+    case "duel-won":
+      return "Duel - Won";
+    case "crash-bet":
+      return "Crash - Bet";
+    case "crash-won":
+      return "Crash - Won";
+    case "blackjack-bet":
+      return "Blackjack - Bet";
+    case "blackjack-won":
+      return "Blackjack - Won";  
     case "dice-bet":
       return "Dice - Bet";
     case "dice-won":

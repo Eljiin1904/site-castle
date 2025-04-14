@@ -41,6 +41,12 @@ export type TransactionKindData =
   | LimboWonData
   | MinesBetData
   | MinesWonData
+  | DuelBetData
+  | DuelWonData
+  | CrashBetData
+  | CrashWonData
+  | BlackjackBetData
+  | BlackjackWonData
   | PromotionCardRedeemData
   | PromotionCodeRedeemData
   | RainPayoutData
@@ -152,6 +158,44 @@ interface DepositSwappedData {
   usdAmount: number;
   feeUsdAmount: number;
 }
+/* Review needed fields */
+interface DuelBetData {
+  kind: "duel-bet";
+  bet: TransactionBetData;
+  gameId: string;
+}
+interface DuelWonData {
+  kind: "duel-won";
+  gameId: string;
+  multiplier: number;
+}
+
+interface CrashBetData {
+  kind: "crash-bet";
+  bet: TransactionBetData;
+  gameId: string;
+}
+
+interface CrashWonData {
+  kind: "crash-won";
+  gameId: string;
+  multiplier: number;
+  targetValue: number;
+  targetKind: DiceTargetKind;
+}
+interface BlackjackBetData {
+  kind: "blackjack-bet";
+  bet: TransactionBetData;
+  gameId: string;
+}
+interface BlackjackWonData {
+  kind: "blackjack-won";
+  gameId: string;
+  multiplier: number;
+  targetValue: number;
+  targetKind: DiceTargetKind;
+}
+/**End review */
 
 interface DiceBetData {
   kind: "dice-bet";

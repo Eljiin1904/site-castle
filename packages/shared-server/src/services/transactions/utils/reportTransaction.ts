@@ -213,6 +213,7 @@ function getGameUpdates({
   $inc: ReportRecord;
   $max: ReportRecord;
 }) {
+
   if (tx.user.tags.includes("cheeky")) {
     return;
   }
@@ -228,6 +229,10 @@ function getGameUpdates({
     tx.kind === "double-won" ||
     tx.kind === "dice-won" ||
     tx.kind === "limbo-won" ||
+    tx.kind === "crash-won" ||
+    tx.kind === "duel-won" ||
+    tx.kind === "blackjack-won" ||
+    tx.kind === "mines-won" ||
     tx.kind === "reward-gem-case-item" ||
     tx.kind === "reward-holiday-case-item" ||
     tx.kind === "reward-level-case-item"
@@ -265,6 +270,39 @@ function getGameUpdates({
     $inc.limboEv = tx.bet.ev;
   } else if (tx.kind === "limbo-won") {
     $inc.limboWinTokens = tx.value;
+  }
+  //New Games
+  else if(tx.kind === "duel-bet") {
+    $inc.duelBetCount = 1;
+    $inc.duelWagerTokens = tx.value;
+    $inc.duelEv = tx.bet.ev;
+  }
+  else if (tx.kind === "duel-won") {
+    $inc.duelWinTokens = tx.value;
+  }
+  else if (tx.kind === "crash-bet") {
+    $inc.crashBetCount = 1;
+    $inc.crashWagerTokens = tx.value;
+    $inc.crashEv = tx.bet.ev;
+  }
+  else if (tx.kind === "crash-won") {
+    $inc.crashWinTokens = tx.value;
+  }
+  else if (tx.kind === "blackjack-bet") {
+    $inc.blackjackBetCount = 1;
+    $inc.blackjackWagerTokens = tx.value;
+    $inc.blackjackEv = tx.bet.ev;
+  }
+  else if (tx.kind === "blackjack-won") {
+    $inc.blackjackWinTokens = tx.value;
+  }
+  else if (tx.kind === "mines-bet") {
+    $inc.minesBetCount = 1;
+    $inc.minesWagerTokens = tx.value;
+    $inc.minesEv = tx.bet.ev;
+  }
+  else if (tx.kind === "mines-won") {
+    $inc.minesWinTokens = tx.value;
   }
 }
 

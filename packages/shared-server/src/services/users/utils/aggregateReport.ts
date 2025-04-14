@@ -165,11 +165,11 @@ function createPipeline({
         wonAmount: {
           $sum: "$wonAmount",
         },
-        caseBetCount: {
-          $sum: "$caseBetCount",
+        duelBetCount: {
+          $sum: "$duelBetCount",
         },
-        caseWagerAmount: {
-          $sum: "$caseWagerAmount",
+        duelWagerAmount: {
+          $sum: "$duelWagerAmount",
         },
         caseBattleBetCount: {
           $sum: "$caseBattleBetCount",
@@ -177,11 +177,11 @@ function createPipeline({
         caseBattleWagerAmount: {
           $sum: "$caseBattleWagerAmount",
         },
-        doubleBetCount: {
-          $sum: "$doubleBetCount",
+        crashBetCount: {
+          $sum: "$crashBetCount",
         },
-        doubleWagerAmount: {
-          $sum: "$doubleWagerAmount",
+        crashWagerAmount: {
+          $sum: "$crashWagerAmount",
         },
         diceBetCount: {
           $sum: "$diceBetCount",
@@ -195,6 +195,30 @@ function createPipeline({
         limboWagerAmount: {
           $sum: "$limboWagerAmount",
         },
+        blackjackBetCount: {
+          $sum: "$blackjackBetCount",
+        },
+        blackjackWagerAmount: {
+          $sum: "$blackjackWagerAmount",
+        },
+        minesBetCount: {
+          $sum: "$minesBetCount",
+        },
+        minesWagerAmount: {
+          $sum: "$minesWagerAmount",
+        },
+        doubleBetCount: {
+          $sum: "$doubleBetCount",
+        },
+        doubleWagerAmount: {
+          $sum: "$doubleWagerAmount",
+        },
+        caseBetCount: {
+          $sum: "$caseBetCount",
+        },
+        caseWagerAmount: {
+          $sum: "$caseWagerAmount",
+        }
       },
     },
     {
@@ -246,16 +270,24 @@ function getDefaultReport(): UserReport {
     evAmount: 0,
     wagerAmount: 0,
     wonAmount: 0,
-    caseBetCount: 0,
-    caseWagerAmount: 0,
+    duelBetCount: 0,
+    duelWagerAmount: 0,
+    crashBetCount: 0,
+    crashWagerAmount: 0,
     caseBattleBetCount: 0,
     caseBattleWagerAmount: 0,
-    doubleBetCount: 0,
-    doubleWagerAmount: 0,
     diceBetCount: 0,
     diceWagerAmount: 0,
     limboBetCount: 0,
     limboWagerAmount: 0,
+    blackjackBetCount: 0,
+    blackjackWagerAmount: 0,
+    minesBetCount: 0,
+    minesWagerAmount: 0,
+    doubleBetCount: 0,
+    doubleWagerAmount: 0,
+    caseBetCount: 0,
+    caseWagerAmount: 0,
     rewardCreditCount: 0,
     rewardCreditAmount: 0,
   };

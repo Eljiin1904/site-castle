@@ -51,8 +51,8 @@ export interface UserStats {
   blackjackWagerAmount?: number;
   minesBetCount?: number;
   minesWagerAmount?: number;
-  caseBetCount?: number;
-  caseWagerAmount?: number;  
   doubleBetCount?: number;
   doubleWagerAmount?: number;
+  caseBetCount?: number;
+  caseWagerAmount?: number;  
 }

@@ -142,35 +142,51 @@ interface EconomyStats {
 }
 
 interface GameStats {
-  caseBetCount: number;
-  caseWagerTokens: number;
-  caseWinTokens: number;
-  casesEv: number;
+  
+  duelBetCount: number;
+  duelWagerTokens: number;
+  duelWinTokens: number;
+  duelEv: number;
 
   caseBattleBetCount: number;
   caseBattleWagerTokens: number;
   caseBattleWinTokens: number;
   caseBattlesEv: number;
 
-  doubleBetCount: number;
-  doubleWagerTokens: number;
-  doubleWinTokens: number;
-  doubleEv: number;
+  crashBetCount: number;
+  crashWagerTokens: number;
+  crashWinTokens: number;
+  crashEv: number;
 
   diceBetCount: number;
   diceWagerTokens: number;
   diceWinTokens: number;
   diceEv: number;
-
+  
   limboBetCount: number;
   limboWagerTokens: number;
   limboWinTokens: number;
   limboEv: number;
 
+  blackjackBetCount: number;
+  blackjackWagerTokens: number;
+  blackjackWinTokens: number;
+  blackjackEv: number;
+
   minesBetCount: number;
   minesWagerTokens: number;
   minesWinTokens: number;
   minesEv: number;
+  
+  doubleBetCount: number;
+  doubleWagerTokens: number;
+  doubleWinTokens: number;
+  doubleEv: number;
+
+  caseBetCount: number;
+  caseWagerTokens: number;
+  caseWinTokens: number;
+  casesEv: number;
 }
 
 interface AffiliateStats {

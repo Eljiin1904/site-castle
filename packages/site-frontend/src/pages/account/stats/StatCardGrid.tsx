@@ -8,7 +8,6 @@ import { SvgRain } from "@client/svgs/common/SvgRain";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { StatCardSection } from "./StatCardSection";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { SvgDuel } from "@client/svgs/common/SvgDuel";
 import { SvgCrash } from "@client/svgs/common/SvgCrash";
 import { SvgLimbo } from "@client/svgs/common/SvgLimbo";
@@ -62,7 +61,7 @@ export const StatCardGrid = () => {
           <StatCardSection
             label={t("games:crash")}
             icon={SvgCrash}
-            count={stats.crashWagerAmount || 0}
+            count={stats.crashBetCount || 0}
           />
           <StatCardSection
             label={t("games:dice")}
@@ -113,17 +112,17 @@ export const StatCardGrid = () => {
           <StatCardSection
             label={t("games:duel")}
             icon={SvgDuel}
-            count={stats.duelWagerAmount || 0}
+            tokens={stats.duelWagerAmount || 0}
           />
           <StatCardSection
            label={t("games:case_battles")}
             icon={SvgBattle}
-            count={stats.caseBattleWagerAmount || 0}
+            tokens={stats.caseBattleWagerAmount || 0}
           />
           <StatCardSection
             label={t("games:crash")}
             icon={SvgCrash}
-            count={stats.crashWagerAmount || 0}
+            tokens={stats.crashWagerAmount || 0}
           />
           <StatCardSection
             label={t("games:dice")}
@@ -138,12 +137,12 @@ export const StatCardGrid = () => {
            <StatCardSection
             label={t("games:blackjack")}
             icon={SvgBlackjack}
-            count={stats.blackjackWagerAmount || 0}
+            tokens={stats.blackjackWagerAmount || 0}
           />
           <StatCardSection
             label={t("games:mines")}
             icon={SvgMines}
-            count={stats.minesWagerAmount || 0}
+            tokens={stats.minesWagerAmount || 0}
           />
           <StatCardSection
             label={t("games:cases")}

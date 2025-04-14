@@ -11,9 +11,9 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
     stats.wagerAmount = tx.value;
 
     switch (category) {
-      case "cases": {
-        stats.caseBetCount = 1;
-        stats.caseWagerAmount = tx.value;
+      case "duel": {
+        stats.duelBetCount = 1;
+        stats.duelWagerAmount = tx.value;
         break;
       }
       case "case-battles": {
@@ -21,9 +21,9 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
         stats.caseBattleWagerAmount = tx.value;
         break;
       }
-      case "double": {
-        stats.doubleBetCount = 1;
-        stats.doubleWagerAmount = tx.value;
+      case "crash": {
+        stats.crashBetCount = 1;
+        stats.crashWagerAmount = tx.value;
         break;
       }
       case "dice": {
@@ -35,15 +35,39 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
         stats.limboBetCount = 1;
         stats.limboWagerAmount = tx.value;
         break;
+      }  
+      case "blackjack": {
+        stats.blackjackBetCount = 1;
+        stats.blackjackWagerAmount = tx.value;
+        break;
       }
+      case "mines": {
+        stats.minesBetCount = 1;
+        stats.minesWagerAmount = tx.value;
+        break;
+      }    
+      case "double": {
+        stats.doubleBetCount = 1;
+        stats.doubleWagerAmount = tx.value;
+        break;
+      }
+      case "cases": {
+        stats.caseBetCount = 1;
+        stats.caseWagerAmount = tx.value;
+        break;
+      }      
     }
   } else if (
     [
+      "duel-won",
+      "crash-won",
       "case-battle-won",
       "case-item-won",
       "double-won",
       "dice-won",
       "limbo-won",
+      "blackjack-won",
+      "mines-won"
     ].includes(kind)
   ) {
     stats.wonAmount = tx.value;
