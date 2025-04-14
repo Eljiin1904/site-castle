@@ -19,26 +19,18 @@ export const StatCardSection = ({
     <CardSection>
       <Div
         grow
-        gap={6}
+        gap={12}
       >
         <Vector
           as={icon}
-          color="yellow"
         />
-        <Span
-          weight="medium"
-          color="white"
-        >
+        <Span>
           {label}
         </Span>
       </Div>
       {tokens !== undefined && <Tokens value={tokens} />}
       {count !== undefined && (
-        <Span
-          family="title"
-          weight="bold"
-          color="white"
-        >
+        <Span color="light-sand">
           {count}
         </Span>
       )}

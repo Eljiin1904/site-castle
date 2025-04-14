@@ -21,6 +21,7 @@ import { SvgSettings } from "@client/svgs/common/SvgSettings";
 import { SvgVerification } from "@client/svgs/common/SvgVerification";
 import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { SvgStats } from "@client/svgs/common/SvgStats";
+import { StatsBody } from "./stats/StatsBody";
 
 export const AccountPageOld = () => {
   return (
@@ -143,7 +144,7 @@ const AccountMenu = () => {
   const {t} = useTranslation(['account']);
   const items = [
     { label: t("profile"), to: "/account", icon: SvgUser, end: true },
-    { label: t("stats"), to: "/account/stats", icon: SvgStats },
+    { label: t("stats.title"), to: "/account/stats", icon: SvgStats },
     { label: t("transactions.title"), to: "/account/transactions", icon: SvgTransaction },
     { label: t("gameHistory"), to: "/account/game-history", icon: SvgBets },
     { label: t("verification"), to: "/account/verification", icon: SvgVerification },
@@ -207,6 +208,10 @@ const AccountView = () => {
             <Route
               index
               element={<ProfileBody />}
+            />
+            <Route
+              path="/stats"
+              element={<StatsBody />}
             />
             <Route
               path="/settings"

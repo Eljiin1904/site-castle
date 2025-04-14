@@ -12,13 +12,13 @@ export const CardSection: FC<CardSectionProps> = ({
   return (
     <Div
       fx
-      px={16}
-      py={14}
-      bg="brown-6"
+      px={24}
+      py={12}
       borderLeft={position === "top" || position === "bottom"}
       borderRight={position === "top" || position === "bottom"}
       borderTop={position === "middle" || position === "top"}
       borderBottom={position === "bottom"}
+      borderColor="brown-4"
       {...forwardProps}
     />
   );

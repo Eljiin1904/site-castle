@@ -37,14 +37,22 @@ export interface UserStats {
   evAmount?: number;
   wagerAmount?: number;
   wonAmount?: number;
-  caseBetCount?: number;
-  caseWagerAmount?: number;
+  duelBetCount?: number;
+  duelWagerAmount?: number;
   caseBattleBetCount?: number;
   caseBattleWagerAmount?: number;
-  doubleBetCount?: number;
-  doubleWagerAmount?: number;
+  crashBetCount?: number;
+  crashWagerAmount?: number;
   diceBetCount?: number;
   diceWagerAmount?: number;
   limboBetCount?: number;
   limboWagerAmount?: number;
+  blackjackBetCount?: number;
+  blackjackWagerAmount?: number;
+  minesBetCount?: number;
+  minesWagerAmount?: number;
+  caseBetCount?: number;
+  caseWagerAmount?: number;  
+  doubleBetCount?: number;
+  doubleWagerAmount?: number;
 }

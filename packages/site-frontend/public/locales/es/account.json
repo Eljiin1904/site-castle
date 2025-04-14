@@ -1,7 +1,6 @@
 {
   "title": "Cuenta",
   "profile": "Información del perfil",
-  "stats": "Estadísticas del usuario",
   "gameHistory": "Historial de juegos",
   "verification": "Verificación",
   "settings": "Configuraciones",
@@ -70,5 +69,19 @@
       "completed": "Completado",
       "failed": "Fallido"
     }
+  },
+  "stats": {
+    "title": "Estadísticas del usuario",
+    "allStats": "Todas las estadísticas",
+    "wagered": "Apostado",
+    "economy": "Economía",
+    "totalBets": "Total de apuestas",
+    "totalWagered": "Total apostado",
+    "tipsSent": "Propinas enviadas",
+    "tipsReceived": "Propinas recibidas",
+    "netTips": "Propinas netas",
+    "rainRecieved": "Lluvia recibida",
+    "boostsReceived": "Impulsos recibidos",
+    "totalRewards": "Total de recompensas"
   }
 }

@@ -1,8 +1,7 @@
 {
   "title": "Account",
   "profile": "Profile Information",
-  "stats": "User Stats",
- "gameHistory": "Game History",
+  "gameHistory": "Game History",
   "verification": "Verification",
   "settings": "Settings",
   "progress": "Account Progress",
@@ -70,5 +69,19 @@
       "completed": "Completed",
       "failed": "Failed"
     }
+  },
+  "stats": {
+    "title": "User Stats",
+    "allStats": "All Stats",
+    "wagered": "Wagered",
+    "economy": "Economy",
+    "totalBets": "Total Bets",
+    "totalWagered": "total Wagered",
+    "tipsSent": "Tips Sent",
+    "tipsReceived": "Tips Received",
+    "netTips": "Net Tips",
+    "rainRecieved": "Rain Received",
+    "boostsReceived": "Boosts Received",
+    "totalRewards": "Total Rewards"
   }
 }

@@ -6,7 +6,7 @@ import Backend from "i18next-http-backend";
 //"https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
 const locizeOptions = {
   referenceLng: "en",
-  loadPath: "https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
+  loadPath: "http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json",
   crossDomain: true,
 };
 
