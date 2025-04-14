@@ -49,7 +49,6 @@ const NotMobileContent = () => {
       fx
       column
     >
-      <MinesHeader />
       <Div
         fx
         gap={24}
