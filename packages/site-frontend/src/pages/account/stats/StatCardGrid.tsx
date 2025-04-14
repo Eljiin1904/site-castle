@@ -30,7 +30,7 @@ export const StatCardGrid = () => {
     <Div
       fx
       column
-      gap={24}
+      gap={small ? 16: 24}
     >
       <PageTitle heading={t('stats.allStats')} />
       <Div
@@ -97,6 +97,7 @@ export const StatCardGrid = () => {
             label={t("stats.totalBets")}
             icon={SvgBets}
             count={stats.betCount || 0}
+            borderBottom={false}
           />
         </Card>
         <Card column>
@@ -158,6 +159,7 @@ export const StatCardGrid = () => {
             label={t("stats.totalWagered")}
             icon={SvgBets}
             tokens={stats.wagerAmount || 0}
+            borderBottom={false}
           />
         </Card>
         <Card column>
@@ -203,6 +205,7 @@ export const StatCardGrid = () => {
             label={t("stats.totalRewards")}
             icon={SvgVIP}
             tokens={stats.rewardAmount || 0}
+            borderBottom={false}
           />
         </Card>
       </Div>
