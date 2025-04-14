@@ -2,6 +2,7 @@ import { Div } from "@client/comps/div/Div";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { StatsHeader } from "./StatsHeader";
 import { StatCardGrid } from "./StatCardGrid";
+import { StatsWidgets } from "./StatsWidgets";
 
 export const StatsBody = () => {
   const { t } = useTranslation(["accounts","validations"]);
@@ -35,6 +36,7 @@ export const StatsBody = () => {
     >
       <StatsHeader/>
       <Div fx column gap={16}>
+        <StatsWidgets />
         <StatCardGrid/>
       </Div>      
     </Div>

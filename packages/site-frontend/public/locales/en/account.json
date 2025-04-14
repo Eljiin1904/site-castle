@@ -76,12 +76,13 @@
     "wagered": "Wagered",
     "economy": "Economy",
     "totalBets": "Total Bets",
-    "totalWagered": "total Wagered",
+    "totalWagered": "Total Wagered",
     "tipsSent": "Tips Sent",
     "tipsReceived": "Tips Received",
     "netTips": "Net Tips",
     "rainRecieved": "Rain Received",
     "boostsReceived": "Boosts Received",
-    "totalRewards": "Total Rewards"
+    "totalRewards": "Total Rewards",
+    "mostPopularGame": "Most Popular Game"
   }
 }
