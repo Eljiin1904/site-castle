@@ -118,7 +118,7 @@ const RandomButton = () => {
   return (
     <Button
       fx
-      kind="primary-green"
+      kind="tertiary-grey"
       label={t("pickRandom")}
       onClick={handleClick}
     />
