@@ -18,6 +18,7 @@ export type TokensProps = StyledLayoutProps & {
   integer?: boolean;
   family?: "text" | "title";
   weight?: StyledProps["fontWeight"];
+  justifyContent?: StyledProps["justifyContent"];
   valueRef?: RefObject<HTMLElement>;
 };
 
