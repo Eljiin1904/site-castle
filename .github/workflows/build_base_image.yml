@@ -1,4 +1,4 @@
-name: Castle Backend CI
+name: Castle Base Image CI
 
 on:
   workflow_dispatch:

@@ -1,14 +1,4 @@
-FROM node:23-alpine AS build
-ENV NODE_ENV=devcloud \
-    PORT=3000
-WORKDIR /pidwin
-COPY . .
-RUN npm run init
-WORKDIR /pidwin/packages/shared-game-server
-RUN npm uninstall bcrypt
-RUN npm install bcryptjs
-RUN npm install bcrypt
-RUN npm run build
+FROM 183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-base AS build
 
 FROM node:23-alpine AS production
 ENV NODE_ENV=devcloud
