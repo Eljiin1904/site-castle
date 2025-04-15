@@ -49,7 +49,7 @@ jobs:
       - name: Build and tag Docker image
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
-          docker build -t pidwin/castle-base -f .
+          docker build -t pidwin/castle-base .
           # Tag the image with the generated version tag
           docker tag pidwin/castle-base:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-base:$IMAGE_TAG
           # Optionally, tag it as 'latest' for fallback purposes
