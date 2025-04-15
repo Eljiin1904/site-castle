@@ -1,4 +1,4 @@
-FROM 183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-base AS build
+FROM 183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-base:latest AS build
 
 FROM node:23-alpine AS production
 ENV NODE_ENV=devcloud
