@@ -4,8 +4,3 @@ ENV NODE_ENV=devcloud \
 WORKDIR /pidwin
 COPY . .
 RUN npm run init
-WORKDIR /pidwin/packages/shared-backend
-RUN npm uninstall bcrypt
-RUN npm install bcryptjs
-RUN npm install bcrypt
-RUN npm run build
