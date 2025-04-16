@@ -14,6 +14,7 @@ import { AppManager } from "./app/manager/AppManager";
 import { AppMenu } from "./app/menu/AppMenu";
 import { AppProvider } from "./app/provider/AppProvider";
 import { AppRouter } from "./app/router/AppRouter";
+import { ChartTooltip } from "../../shared-client/src/app/tooltip/ChartTooltip";
 
 export function App() {
   return (
@@ -26,6 +27,7 @@ export function App() {
             <AppBody bg="brown-7">
               <AppDialog />
               <AppTooltip />
+              <ChartTooltip />
               <Div
                 fy
                 overflow="hidden"
