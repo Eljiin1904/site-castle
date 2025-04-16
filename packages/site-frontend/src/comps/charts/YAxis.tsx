@@ -11,18 +11,17 @@ import { Tokens } from "@client/comps/tokens/Tokens";
  * @param borderColor color of the border of the Y axis, default value is 'brown-4'
  * @returns YAxis component to be used in charts
  */
-export const YAxis = ({min = 0, max = 1, isToken = false, labels, borderColor = 'brown-4'} : {
+export const YAxis = ({min = 0, max = 5, isToken = false, labels, borderColor = 'brown-4'} : {
   min?: number,
   max?: number,
   isToken?: boolean
-  labels?: string[],
+  labels: string[],
   borderColor?: Color
 }) => {
 
   let indexes:{value: number, label: string}[] = [];
 
-  if(labels?.length) {
-
+  if(labels.length > 0) {
     indexes = [{value: 0, label: ""},...labels.map((label, index) => {
       const value = min + ((max - min) / (labels.length - 1)) * index;
       return {value, label};
@@ -37,7 +36,7 @@ export const YAxis = ({min = 0, max = 1, isToken = false, labels, borderColor = 
       indexes.push({value, label});
     }
   }
-
+ 
   return (
     <Div
       fy

@@ -13,18 +13,18 @@ export const Chart = ({
   label?: string | JSX.Element,
   fillColor?: Color,
   strokeColor?: Color,
-  values?: {label: string, value: number}[]
+  values: {label: string, value: number}[]
 }) => {
 
   const areaHeight = 224;
   const xValues = values.map((item) => item.label);
   const yValues = values.map((item) => item.value);
-  const min = Math.min(...yValues);
-  const max = Math.max(...yValues);
+
+  const min =  yValues.length ? Math.min(...yValues) : 0;
+  const max =  yValues.length ? Math.max(...yValues) : 5;
   const step = (max - min) / 5;
 
-  const yLabels = [min, min + step, min + (step * 2), min + (step * 3), min + (step * 4), max].map((item) => item.toFixed(1));
-  
+  const yLabels = values.length  ? [min, min + step, min + (step * 2), min + (step * 3), min + (step * 4), max].map((item) => item.toFixed(1)): [];
   const xJumpPercent = 100 / (values.length - 1);
   const points = [...values.map((item, index) => {
     const x = index * xJumpPercent;

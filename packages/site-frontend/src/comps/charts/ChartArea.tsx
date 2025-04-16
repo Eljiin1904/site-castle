@@ -7,8 +7,7 @@ export const ChartArea = ({ data, fillColor, strokeColor = 'sand'} : {
   strokeColor?: Color
 }) => {
 
-  
-  const polylinePoints = '0 0,'+data.map((item) => `${item.x} ${item.y}`).join(", ")+ `, 100 0`;  
+  const polylinePoints = data.length > 0 ? `0 0,${ data.map((item) => `${item.x} ${item.y}`).join(", ")},100 0` : '0 0,100 0';
   return (
     <Div
       className="ChartArea"
