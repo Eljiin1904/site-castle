@@ -103,5 +103,51 @@
       "wagered": "Total apostado en {{period}} en {{game}}",
       "pnl": "Ganancias y pérdidas en {{period}} en {{game}}"
     }
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "authenticatorMustBeEnabled": "Authenticator debe estar habilitado.",
+    "login2fa": {
+      "title": "2FA de inicio de sesión",
+      "description": "Requerir 2FA al iniciar sesión.",
+      "success": "2FA de inicio de sesión se ha {{action}} con éxito.",
+      "error": "Error al actualizar 2FA."
+    },
+    "bet2fa": {
+      "title": "2FA de apuestas",
+      "description": "Requerir 2FA al apostar en la primera vez.",
+      "success": "2FA de apuestas se ha {{action}} con éxito.",
+      "error": "Error al actualizar 2FA."
+    },
+    "withdraw2fa": {
+      "title": "2FA de retiro",
+      "description": "Requerir 2FA al retirar y dar propinas.",
+      "success": "2FA de retiro se ha {{action}} con éxito.",
+      "error": "Error al actualizar 2FA."
+    },
+    "largeBetConfirm": {
+      "title": "Confirmar grandes apuestas",
+      "description": "Confirmar apuestas superiores al 70% de tu saldo actual.",
+      "success": "La confirmación de grandes apuestas se ha {{action}} con éxito.",
+      "error": "Error al actualizar la confirmación de grandes apuestas."
+    },
+    "unusualBetConfirm": {
+      "title": "Confirmar apuestas inusuales",
+      "description": "Confirmar apuestas superiores a 10 veces la cantidad de tu apuesta anterior.",
+      "success": "La confirmación de apuestas inusuales se ha {{action}} con éxito.",
+      "error": "Error al actualizar la confirmación de apuestas inusuales."
+    },
+    "receiveTips": {
+      "title": "Recibir propinas",
+      "description": "Permitir recibir propinas de otros jugadores.",
+      "success": "Recibir propinas se ha {{action}} con éxito.",
+      "error": "Error al actualizar recibir propinas."
+    },
+    "hiddenMode": {
+      "title": "Modo oculto",
+      "description": "Ocultar mi información de usuario en feeds públicos.",
+      "success": "El modo oculto se ha {{action}} con éxito.",
+      "error": "Error al actualizar el modo oculto."
+    }
   }
 }

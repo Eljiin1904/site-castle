@@ -29,5 +29,7 @@
   "more": "More details",
   "copyClipboard": "Copy to Clipboard",
   "rules": "Rules",
-  "back": "Back"
+  "back": "Back",
+  "enabled": "enabled",
+  "disabled": "disabled"
 }

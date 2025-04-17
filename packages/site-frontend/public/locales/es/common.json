@@ -29,5 +29,7 @@
   "more": "Más detalles",
   "copyClipboard": "Copiar",
   "rules": "Reglas",
-  "back": "Atrás"
+  "back": "Atrás",
+  "enabled": "habilitado",
+  "disabled": "deshabilitado"
 }

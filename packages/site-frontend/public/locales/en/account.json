@@ -103,5 +103,51 @@
       "wagered": "Total Wagered in the {{period}} for {{game}}",
       "pnl": "Profit and Loss in the {{period}} for {{game}}"
     }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "authenticatorMustBeEnabled": "Authenticator must be enabled.",
+    "login2fa": {
+      "title": "Login 2FA",
+      "description": "Require 2FA on login.",
+      "success": "Login 2FA has been successfully {{action}}.",
+      "error": "Error updating 2FA."
+    },
+    "bet2fa": {
+      "title": "Bet 2FA",
+      "description": "Require 2FA on the first bet of a session.",
+      "success": "Bet 2FA has been successfully {{action}}.",
+      "error": "Error updating 2FA."
+    },
+    "withdraw2fa": {
+      "title": "Withdraw 2FA",
+      "description": "Require 2FA on withdraw and tipping.",
+      "success": "Withdraw 2FA has been successfully {{action}}.",
+      "error": "Error updating 2FA."
+    },
+    "largeBetConfirm": {
+      "title": "Confirm Large Bets",
+      "description": "Confirm bets over 70% of your current balance..",
+      "success": "Large bet confirmation has been successfully {{action}}.",
+      "error": "Error updating large bet confirmation."
+    },
+    "unusualBetConfirm": {
+      "title": "Confirm Unusual Bets",
+      "description": "Confirm bets over 10x the amount of your previous bet.",
+      "success": "Unusual bet confirmation has been successfully {{action}}.",
+      "error": "Error updating unusual bet confirmation."
+    },
+    "receiveTips": {
+      "title": "Receive Tips",
+      "description": "Allow receiving tips from other players.",
+      "success": "Receive tips has been successfully {{action}}.",
+      "error": "Error updating receive tips."
+    },
+    "hiddenMode": {
+      "title": "Hidden Mode",
+      "description": "Hide my user info in public feeds.",
+      "success": "Hidden mode has been successfully {{action}}.",
+      "error": "Error updating hidden mode."
+    }
   }
 }
