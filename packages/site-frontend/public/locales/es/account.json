@@ -149,5 +149,33 @@
       "success": "El modo oculto se ha {{action}} con éxito.",
       "error": "Error al actualizar el modo oculto."
     }
+  },
+  "linkedAccounts": {
+    "title": "Cuentas vinculadas",
+    "steam": {
+      "title": "Steam",
+      "description": "Vincular tu cuenta de Steam."
+    },
+    "discord": {
+      "title": "Discord",
+      "description": "Vincular tu cuenta de Discord."
+    },
+    "twitch": {
+      "title": "Twitch",
+      "description": "Vincular tu cuenta de Twitch."
+    },
+    "google": {
+      "title": "Google",
+      "description": "Vincular tu cuenta de Google."
+    },
+    "unlinkModal": {
+      "title": "Desvincular {{name}}",
+      "success": "{{value.name}} desvinculado con éxito."
+    },
+    "linkModal": {
+      "title": "Vincular {{value.name}}",
+      "success": "{{value.name}} vinculado con éxito.",
+      "heading": "Iniciando sesión en {{name}}"
+    }
   }
 }

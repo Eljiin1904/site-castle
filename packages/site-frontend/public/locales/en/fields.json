@@ -10,7 +10,8 @@
   "password": {
     "field": "Password",
     "confirmField": "Confirm Password",
-    "newField": "New Password"
+    "newField": "New Password",
+    "placeholder": "Enter password..."
   },
   "dob": {
     "field": "Date of Birth",

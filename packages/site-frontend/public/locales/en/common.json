@@ -31,5 +31,8 @@
   "rules": "Rules",
   "back": "Back",
   "enabled": "enabled",
-  "disabled": "disabled"
+  "disabled": "disabled",
+  "link": "Link",
+  "unlink": "Unlink",
+  "connected": "Connected"
 }

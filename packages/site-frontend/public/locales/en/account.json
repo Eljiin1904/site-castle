@@ -149,5 +149,33 @@
       "success": "Hidden mode has been successfully {{action}}.",
       "error": "Error updating hidden mode."
     }
+  },
+  "linkedAccounts": {
+    "title": "Linked Accounts",
+    "steam": {
+      "title": "Steam",
+      "description": "Link your steam account."
+    },
+    "discord": {
+      "title": "Discord",
+      "description": "Link your discord account."
+    },
+    "twitch": {
+      "title": "Twitch",
+      "description": "Link your twitch account."
+    },
+    "google": {
+      "title": "Google",
+      "description": "Link your google account."
+    },
+    "unlinkModal": {
+      "title": "Unlink {{name}}",
+      "success": "{{value.name}} account has been successfully unlinked."
+    },
+    "linkModal": {
+      "title": "Link {{name}}",
+      "success": "{{value.name}} account has been successfully linked.",
+      "heading": "Loggin in with {{name}}"
+    }
   }
 }

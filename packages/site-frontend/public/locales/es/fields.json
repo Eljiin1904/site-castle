@@ -10,7 +10,8 @@
   "password": {
     "field": "Contraseña",
     "confirmField": "Confirmar contraseña",
-    "newField": "Nueva contraseña"
+    "newField": "Nueva contraseña",
+    "placeholder": "Ingrese la contraseña..."
   },
   "dob": {
     "field": "Fecha de nacimiento",

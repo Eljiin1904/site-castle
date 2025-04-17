@@ -31,5 +31,8 @@
   "rules": "Reglas",
   "back": "Atrás",
   "enabled": "habilitado",
-  "disabled": "deshabilitado"
+  "disabled": "deshabilitado",
+  "link": "Vincular",
+  "unlink": "Desvincular",
+  "connected": "Conectado"
 }
