@@ -115,12 +115,12 @@ export default Http.createApiRoute({
         for (let i = 6; i >= 0; i--) {
           const date = new Date();
           date.setDate(date.getDate() - i);
-          const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+          const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
           values.push({ label: dayOfWeek, value: 0 });
         }       
         transactions.forEach((transaction) => {
           const date = new Date(transaction.timestamp);
-          const day = date.toLocaleDateString("en-US", { weekday: "long" });
+          const day = date.toLocaleDateString("en-US", { weekday: "short" });
           const value = type === 'pnl' ? transaction.amount : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === day);
