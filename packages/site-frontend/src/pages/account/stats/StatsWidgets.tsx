@@ -9,6 +9,8 @@ import { Vector } from "@client/comps/vector/Vector";
 import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useMostPopularGame } from "./useMostPopularGame";
+import { SvgDeposit } from "#app/svgs/notifications/SvgDeposit";
+import { SvgWithdraw } from "#app/svgs/notifications/SvgWithdraw";
 
 export const StatsWidgets = ({setSelectedChart}:{
   setSelectedChart: (x:string) => void;
@@ -24,25 +26,41 @@ export const StatsWidgets = ({setSelectedChart}:{
   
   return (<Div
     fx
+    column
     gap={24}
     wrap={small}
   >
+    <Div gap={24} fx>
     <StatWidget
       title={t(`games:${popularGameData?.game}`)}
       description={t('stats.mostPopularGame')}
       icon={popularGameData.icon ?? SvgBets} />
-    <StatWidget
+      <StatWidget
       tokens={stats.wagerAmount}
       description={t('stats.totalWagered')}
       icon={SvgTransaction}
       onClick={() => setSelectedChart('wagered')}
       />
-    <StatWidget
-       tokens={ (stats.wagerProfitLoss ?? 0 )}
-      description={t('stats.pnlShort')}
-      icon={SvgBets}
-      onClick={() => setSelectedChart('pnl')}
+    </Div>
+    <Div gap={24} fx>
+      <StatWidget
+        tokens={ (stats.depositAmount ?? 0 )}
+        description={t('transactions.type.deposits')}
+        icon={SvgDeposit}
       />
+      <StatWidget
+        tokens={ (stats.withdrawAmount ?? 0 )}
+        description={t('transactions.type.withdrawals')}
+        icon={SvgWithdraw}
+      />
+      <StatWidget
+        tokens={ (stats.wagerProfitLoss ?? 0 )}
+        description={t('stats.pnlShort')}
+        icon={SvgBets}
+        onClick={() => setSelectedChart('pnl')}
+      />
+    </Div>
+    
   </Div>)
 };
 
@@ -56,7 +74,7 @@ const StatWidget = ({title, tokens, description,icon, onClick}:{
   
     const layout = useAppSelector((x) => x.style.mainLayout);
     const small = layout === "mobile" || layout === "tablet";
-    return (<CardSection cursor="pointer" onClick={onClick} border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
+    return (<CardSection cursor={onClick ? "pointer": "auto"} hover={onClick ? "highlight": "none"} onClick={onClick} border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
           <Div column gap={12} grow>
             {tokens !== undefined && <Tokens fontSize={24} value={tokens} justifyContent="flex-start" />}
             {title !== undefined && <Heading  
