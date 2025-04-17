@@ -45,8 +45,8 @@ export const ToggleSlide = ({
     } else {
       await Users.toggleSetting({ id, value });
     }
-    const action = t(`common:${value ? "enabled" : "disabled"}`)
-    Toasts.success(t(`preferences.${id}.success`, {action: action} ));
+    const action = t(`common:${value ? "enabled" : "disabled"}`);
+    Toasts.success(`account:preferences.${id}.success`, 5000, {action: action});
   }, setLoading);
 
   return (
