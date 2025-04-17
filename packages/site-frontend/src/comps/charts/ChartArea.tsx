@@ -3,10 +3,11 @@ import { Dot } from "./Dot";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
-export const ChartArea = ({ data, fillColor, strokeColor = 'sand'} : {
+export const ChartArea = ({ data, fillColor, strokeColor = 'sand', left} : {
   data: {x: number, y: number, label: string, value: number}[],
   fillColor?: Color,
-  strokeColor?: Color
+  strokeColor?: Color,
+  left: Unit
 }) => {
 
   const startingPoints = data.length > 0 ? `0 0,${ data.map((item) => `${item.x} 0`).join(", ")},100 0` : '';
@@ -20,7 +21,7 @@ export const ChartArea = ({ data, fillColor, strokeColor = 'sand'} : {
       bottom={0}
       position="absolute"
       fy
-      ml={24}
+      ml={left}
       center
       style={{width: "calc(100% - 24px)",transform: "scaleY(-1)"}}
     >

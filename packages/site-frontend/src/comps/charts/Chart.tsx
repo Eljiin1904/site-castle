@@ -10,12 +10,14 @@ export const Chart = ({
   fillColor = 'sand',
   strokeColor = 'sand',
   height = 320,
+  left = 24,
 }: {
   label?: string | JSX.Element,
   fillColor?: Color,
   strokeColor?: Color,
   values: {label: string, value: number}[],
   height?: Unit,
+  left?: Unit,
 }) => {
 
   const xValues = values.map((item) => item.label);
@@ -45,8 +47,8 @@ export const Chart = ({
       {typeof label === "string" ? <AreaLabel label={label} /> : <AreaLabel >{label} </AreaLabel>}
       <Div fx>      
         <YAxis labels={yLabels} isToken />
-        <XAxis labels={xValues}/>
-        <ChartArea fillColor={fillColor} strokeColor={strokeColor} data={points} />
+        <XAxis labels={xValues} left={left}/>
+        <ChartArea fillColor={fillColor} strokeColor={strokeColor} data={points} left={left} />
       </Div>
   </Div>);
 };
