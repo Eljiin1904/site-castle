@@ -101,7 +101,7 @@ export default Http.createApiRoute({
           const ampm = chartTime < 12 ? "AM" : "PM";
           const hour = chartTime % 12 === 0 ? 12 : (chartTime % 12 < 10 ? `0${chartTime % 12}` : chartTime % 12);
           const hourLabel = `${hour} ${ampm}`;
-          const value = type === 'pnl' ? transaction.amount : transaction.stats?.wagerAmount ?? 0;
+          const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === hourLabel);
           if (existing) {
@@ -121,7 +121,7 @@ export default Http.createApiRoute({
         transactions.forEach((transaction) => {
           const date = new Date(transaction.timestamp);
           const day = date.toLocaleDateString("en-US", { weekday: "short" });
-          const value = type === 'pnl' ? transaction.amount : transaction.stats?.wagerAmount ?? 0;
+          const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === day);
           if (existing) {
@@ -148,7 +148,7 @@ export default Http.createApiRoute({
           const labelMonth = date.toLocaleDateString("en-US", { month: "long" });
           const label = `${labelMonth} ${labelDay === 0 ? 1 : labelDay}`;
          
-          const value = type === 'pnl' ? transaction.amount : transaction.stats?.wagerAmount ?? 0;
+          const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === label);
           if (existing) {
@@ -172,7 +172,7 @@ export default Http.createApiRoute({
         transactions.forEach((transaction) => {
           const date = new Date(transaction.timestamp);
           const label = date.toLocaleDateString("en-US", { month: "short" , year: "2-digit"}).trim();
-          const value = type === 'pnl' ? transaction.amount : transaction.stats?.wagerAmount ?? 0;
+          const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === label);          
           if (existing) {
@@ -196,7 +196,7 @@ export default Http.createApiRoute({
         transactions.forEach((transaction) => {
           const date = new Date(transaction.timestamp);
           const label = date.toLocaleDateString("en-US", {month: "short", year: "2-digit"});
-          const value = type === 'pnl' ? transaction.amount : transaction.stats?.wagerAmount ?? 0;
+          const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === label);
           if (existing) {
