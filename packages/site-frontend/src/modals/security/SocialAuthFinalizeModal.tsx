@@ -41,7 +41,7 @@ export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvid
           />,
         );
       } else if (res.action === "link") {
-        Toasts.success(`${Strings.capitalize(provider)} linked.`);
+        Toasts.success(`account:linkedAccounts.linkModal.success`, 5000, {name: t(`account:linkedAccounts.${provider}.title`) });
         Dialogs.close("primary");
       } else if (res.action === "link-to-other-provider") {
         Dialogs.open(
@@ -79,7 +79,7 @@ export const SocialAuthFinalizeModal = ({ provider }: { provider: UserLinkProvid
       disableBackdrop
     >
       <ModalHeader
-        heading={`Logging in with ${Strings.capitalize(provider)}`}
+        heading={t("account:linkedAccounts.linkModal.heading", { name: t(`account:linkedAccounts.${provider}.title`) })}
         hideClose
       />
       <ModalBody>

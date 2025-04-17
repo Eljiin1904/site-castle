@@ -17,7 +17,7 @@ export const AuthenticatorLoginModal = ({
   loginToken: string;
 }) => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["validations"]);
+  const { t } = useTranslation([]);
 
   return (
     <Modal
@@ -26,7 +26,7 @@ export const AuthenticatorLoginModal = ({
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Login 2FA"
+        heading={t("login2fa")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>

@@ -93,7 +93,7 @@ export const DepositCryptoBody = () => {
             label={t("common:copy")}
             onClick={() => {
               navigator.clipboard.writeText(address);
-              Toasts.success(t('copied'));
+              Toasts.success('common:copied');
             }}
             flexGrow={1}
             size="xssso"

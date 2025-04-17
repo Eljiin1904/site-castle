@@ -28,7 +28,7 @@ export const VerificationOnePartThreeForm = ({
     onSubmit: async (values) => {
       await Users.verifyTier1Part3(values);
 
-      Toasts.success(t("accountSetup.completed"));
+      Toasts.success("accountSetup.completed");
 
       if (!disableClose) {
         Dialogs.close("primary");
