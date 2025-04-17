@@ -38,7 +38,7 @@ export const StatsWidgets = ({setSelectedChart}:{
       onClick={() => setSelectedChart('wagered')}
       />
     <StatWidget
-       tokens={ (stats.wonAmount ?? 0) - (stats.wagerAmount ?? 0 )}
+       tokens={ (stats.wagerProfitLoss ?? 0 )}
       description={t('stats.pnlShort')}
       icon={SvgBets}
       onClick={() => setSelectedChart('pnl')}
