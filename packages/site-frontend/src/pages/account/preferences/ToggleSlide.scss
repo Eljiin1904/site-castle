@@ -1,0 +1,18 @@
+.ToggleSlide {
+
+  .label {
+    color: var(--dark-sand-color);
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .description-text {
+    font-size: 12px;
+    line-height: 20px;
+    position: absolute;
+    left: 0;
+    bottom: -24px;
+    text-align: left;
+    color: var(--dark-sand-color);
+  }
+}
