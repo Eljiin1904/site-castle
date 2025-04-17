@@ -10,7 +10,9 @@ import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useMostPopularGame } from "./useMostPopularGame";
 
-export const StatsWidgets = () => {
+export const StatsWidgets = ({setSelectedChart}:{
+  setSelectedChart: (x:string) => void;
+}) => {
 
   const {t} = useTranslation(["account"]);
   const stats = useAppSelector((x) => x.user.stats);
@@ -32,24 +34,29 @@ export const StatsWidgets = () => {
     <StatWidget
       tokens={stats.wagerAmount}
       description={t('stats.totalWagered')}
-      icon={SvgTransaction} />
+      icon={SvgTransaction}
+      onClick={() => setSelectedChart('wagered')}
+      />
     <StatWidget
-       tokens={stats.rewardAmount}
-      description={t('stats.totalRewards')}
-      icon={SvgBets} />
+       tokens={ (stats.wonAmount ?? 0) - (stats.wagerAmount ?? 0 )}
+      description={t('stats.pnlShort')}
+      icon={SvgBets}
+      onClick={() => setSelectedChart('pnl')}
+      />
   </Div>)
 };
 
-const StatWidget = ({title, tokens, description,icon}:{
+const StatWidget = ({title, tokens, description,icon, onClick}:{
   title?:string,
   tokens?: number;
   description:string,
-  icon:Svg
+  icon:Svg,
+  onClick?: () => void;
 }) => {
   
     const layout = useAppSelector((x) => x.style.mainLayout);
     const small = layout === "mobile" || layout === "tablet";
-    return (<CardSection border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
+    return (<CardSection cursor="pointer" onClick={onClick} border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
           <Div column gap={12} grow>
             {tokens !== undefined && <Tokens fontSize={24} value={tokens} justifyContent="flex-start" />}
             {title !== undefined && <Heading  

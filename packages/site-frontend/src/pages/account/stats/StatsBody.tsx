@@ -1,42 +1,32 @@
 import { Div } from "@client/comps/div/Div";
-import { useTranslation } from "@core/services/internationalization/internationalization";
 import { StatsHeader } from "./StatsHeader";
 import { StatCardGrid } from "./StatCardGrid";
 import { StatsWidgets } from "./StatsWidgets";
+import { WageredChart } from "./WageredChart";
+import { useState } from "react";
+import { DateRangeType } from "@core/services/transactions/Transactions";
+import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
+import { PnLChart } from "./PnLChart";
 
 export const StatsBody = () => {
-  const { t } = useTranslation(["accounts","validations"]);
+  
+  const [dateRange, setDateRange] = useState<DateRangeType>("thisMonth");
+  const [category, setCategory] = useState<TransactionCategory | undefined>();
+  const [selectedChart, setSelectedChart] = useState<string | undefined>('wagered');
 
-  // const query = useQuery({
-  //   queryKey: ["history", category, limit, page],
-  //   queryFn: () => Users.getTransactions({ category, limit, page, game: true }),
-  //   placeholderData: (prev) => prev,
-  // });
-
-  // const transactions = query.data?.transactions || [];
-  // const total = query.data?.total || 0;
-
-  // if (query.error) {
-  //   return (
-  //     <PageNotice
-  //       image="/graphics/notice-chicken-error"
-  //       title="Error"
-  //       message={t("errors.queries.history")}
-  //       buttonLabel={t("history.refetch")}
-  //       description={Errors.getMessage(query.error)}
-  //       onButtonClick={query.refetch}
-  //     />
-  //   );
-  // }
   return (
     <Div
       fx
       column
       gap={40}
     >
-      <StatsHeader/>
+      <StatsHeader dateRange={dateRange} setDateRange={setDateRange} category={category} setCategory={setCategory}/>
       <Div fx column gap={16}>
-        <StatsWidgets />
+        {selectedChart === 'wagered' && <WageredChart dateRange={dateRange} game={category} />}
+        {selectedChart === 'pnl' && <PnLChart dateRange={dateRange} game={category} />}
+        <StatsWidgets setSelectedChart={setSelectedChart} />
+      </Div>
+      <Div fx column>       
         <StatCardGrid/>
       </Div>      
     </Div>
