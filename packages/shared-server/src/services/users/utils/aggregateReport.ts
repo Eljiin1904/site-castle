@@ -162,6 +162,9 @@ function createPipeline({
         wagerAmount: {
           $sum: "$wagerAmount",
         },
+        wagerProfitLoss: {
+          $sum: "$wagerProfitLoss",
+        },
         wonAmount: {
           $sum: "$wonAmount",
         },
@@ -269,6 +272,7 @@ function getDefaultReport(): UserReport {
     betCount: 0,
     evAmount: 0,
     wagerAmount: 0,
+    wagerProfitLoss: 0,
     wonAmount: 0,
     duelBetCount: 0,
     duelWagerAmount: 0,

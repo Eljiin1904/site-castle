@@ -9,7 +9,7 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
     stats.betCount = 1;
     stats.evAmount = tx.bet.ev;
     stats.wagerAmount = tx.value;
-
+    stats.wagerProfitLoss = -tx.value;
     switch (category) {
       case "duel": {
         stats.duelBetCount = 1;
@@ -71,6 +71,7 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
     ].includes(kind)
   ) {
     stats.wonAmount = tx.value;
+    stats.wagerProfitLoss = tx.value - (tx.stats?.wagerAmount ?? 0);
   } else if (category === "deposits") {
     stats.profitLoss = tx.value;
     stats.depositCount = 1;
