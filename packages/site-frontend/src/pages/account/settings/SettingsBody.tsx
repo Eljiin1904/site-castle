@@ -1,7 +1,6 @@
 import { Div } from "@client/comps/div/Div";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { UserCard } from "./UserCard";
-import { LinkCard } from "./LinkCard";
 import { TradeUrlCard } from "./TradeUrlCard";
 
 export const SettingsBody = () => {
@@ -19,7 +18,6 @@ export const SettingsBody = () => {
         gap={16}
       >
         <UserCard />
-        <LinkCard />
       </Div>
       <Div
         fx

@@ -23,6 +23,7 @@ import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { SvgStats } from "@client/svgs/common/SvgStats";
 import { StatsBody } from "./stats/StatsBody";
 import { PreferencesBody } from "./preferences/PreferencesBody";
+import { LinkedAccountsBody } from "./linked-accounts/LinkedAccountsBody";
 
 export const AccountPageOld = () => {
   return (
@@ -150,6 +151,7 @@ const AccountMenu = () => {
     { label: t("gameHistory"), to: "/account/game-history", icon: SvgBets },
     { label: t("verification"), to: "/account/verification", icon: SvgVerification },
     { label: t("settings"), to: "/account/settings", icon: SvgSettings },
+    { label: t("linkedAccounts.title"), to: "/account/linked-accounts", icon: SvgSettings },
     { label: t("preferences.title"), to: "/account/preferences", icon: SvgSettings }
   ];
 
@@ -230,6 +232,10 @@ const AccountView = () => {
             <Route
               path="/verification"
               element={<VerificationBody />}
+            />
+            <Route
+              path="/linked-accounts"
+              element={<LinkedAccountsBody />}
             />
             <Route
               path="/preferences"
