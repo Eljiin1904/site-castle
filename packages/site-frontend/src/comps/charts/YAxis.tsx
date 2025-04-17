@@ -15,28 +15,10 @@ export const YAxis = ({min = 0, max = 5, isToken = false, labels, borderColor = 
   min?: number,
   max?: number,
   isToken?: boolean
-  labels: string[],
+  labels: number[],
   borderColor?: Color
 }) => {
 
-  let indexes:{value: number, label: string}[] = [];
-
-  if(labels.length > 0) {
-    indexes = [{value: 0, label: ""},...labels.map((label, index) => {
-      const value = min + ((max - min) / (labels.length - 1)) * index;
-      return {value, label};
-    })];
-  }
-  else {
-
-    const step = (max - min) / 5;
-    for (let i = 0; i < 6; i++) {
-      const value = min + (step * i);
-      const label = i == 0 ? "" : value.toFixed(1);
-      indexes.push({value, label});
-    }
-  }
- 
   return (
     <Div
       fy
@@ -49,9 +31,9 @@ export const YAxis = ({min = 0, max = 5, isToken = false, labels, borderColor = 
       style={{transform: "translateX(-100%)"}}
     >
       <Div column wrap justifyContent="space-between" flexShrink={1} style={{height: "calc(100% + 12px)"}}>
-        {indexes?.reverse().map(item  => {
-          return (isToken && item.label.length > 0 ? <Tokens key={item.label} value={item.value} fontSize={12} color="dark-sand" decimals={ item.value < 10000000 ? 1: 0} /> : <Span key={item.label} size={12} lineHeight={12} textAlign="right">
-            {item.label}
+        {labels?.map(item  => {
+          return (isToken ? <Tokens key={item} value={item} fontSize={12} color="dark-sand" decimals={ item < 10000000 ? 1: 0} /> : <Span key={item} size={12} lineHeight={12} textAlign="right">
+            {item}
           </Span> );
         })}
       </Div>
