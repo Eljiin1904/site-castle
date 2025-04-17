@@ -77,12 +77,31 @@
     "economy": "Economía",
     "totalBets": "Total de apuestas",
     "totalWagered": "Total apostado",
+    "pnl": "Ganancias y pérdidas",
+    "pnlShort": "GyP",
     "tipsSent": "Propinas enviadas",
     "tipsReceived": "Propinas recibidas",
     "netTips": "Propinas netas",
     "rainRecieved": "Lluvia recibida",
     "boostsReceived": "Impulsos recibidos",
     "totalRewards": "Total de recompensas",
-    "mostPopularGame": "Juego más popular"
+    "mostPopularGame": "Juego más popular",
+    "notData": "No hay datos disponibles",
+    "dateranges": {
+      "all": "Todo",
+      "today": "Hoy",
+      "yesterday": "Ayer",
+      "last7Days": "Últimos 7 días",
+      "thisMonth": "Este mes",
+      "lastMonth": "Mes pasado",
+      "last3Months": "Últimos 3 meses",
+      "last6Months": "Últimos 6 meses",
+      "thisYear": "Año actual",
+      "lastYear": "Año pasado"
+    },
+    "charts": {
+      "wagered": "Total apostado en {{period}} en {{game}}",
+      "pnl": "Ganancias y pérdidas en {{period}} en {{game}}"
+    }
   }
 }

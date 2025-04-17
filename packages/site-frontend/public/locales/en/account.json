@@ -77,12 +77,31 @@
     "economy": "Economy",
     "totalBets": "Total Bets",
     "totalWagered": "Total Wagered",
+    "pnl": "Profit and Loss",
+    "pnlShort": "PnL",
     "tipsSent": "Tips Sent",
     "tipsReceived": "Tips Received",
     "netTips": "Net Tips",
     "rainRecieved": "Rain Received",
     "boostsReceived": "Boosts Received",
     "totalRewards": "Total Rewards",
-    "mostPopularGame": "Most Popular Game"
+    "mostPopularGame": "Most Popular Game",
+    "notData": "No data available",
+    "dateranges": {
+      "all": "All",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "last7Days": "Last 7 Days",
+      "thisMonth": "Current Month",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "last6Months": "Last 6 Months",
+      "thisYear": "Current Year",
+      "lastYear": "Last Year"
+    },
+    "charts": {
+      "wagered": "Total Wagered in the {{period}} for {{game}}",
+      "pnl": "Profit and Loss in the {{period}} for {{game}}"
+    }
   }
 }
