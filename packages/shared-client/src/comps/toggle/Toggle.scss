@@ -5,6 +5,7 @@
   border-radius: 100px;
   height: 32px;
   width: 56px;
+  flex-shrink: 0;
 
   .knob {
     color: var(--brown-5-color);
