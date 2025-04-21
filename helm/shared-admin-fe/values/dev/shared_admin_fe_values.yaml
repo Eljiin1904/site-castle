@@ -16,7 +16,10 @@ serviceAccount:
   annotations: {}
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  # Option 1: Use auto-detection for ConfigMaps/Secrets used by this deployment
+  reloader.stakater.com/auto: "true"
+
 podLabels: {}
 
 podSecurityContext: {}
