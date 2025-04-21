@@ -1,16 +1,10 @@
 import { Fragment, useState } from "react";
 import { Dates } from "@core/services/dates";
-import { Heading } from "@client/comps/heading/Heading";
 import { Dialogs } from "@client/services/dialogs";
 import { usePost } from "@client/hooks/system/usePost";
-import { SvgAt } from "@client/svgs/common/SvgAt";
 import { Link } from "@client/comps/link/Link";
 import { Card } from "@client/comps/cards/Card";
-import { CardSection } from "@client/comps/cards/CardSection";
-import { SvgAsterisk } from "@client/svgs/common/SvgAsterisk";
-import { SvgLock } from "@client/svgs/common/SvgLock";
 import { NoticeCard } from "@client/comps/cards/NoticeCard";
-import { SvgHourglass } from "@client/svgs/common/SvgHourglass";
 import { AuthenticatorDisableModal } from "#app/modals/security/AuthenticatorDisableModal";
 import { AuthenticatorEnableModal } from "#app/modals/security/AuthenticatorEnableModal";
 import { UserPasswordEditModal } from "#app/modals/user/UserPasswordEditModal";
@@ -20,6 +14,7 @@ import { UserEmailEditModal } from "#app/modals/user/UserEmailEditModal";
 import { Users } from "#app/services/users";
 import { UserExclusionStartModal } from "#app/modals/user/UserExclusionStartModal";
 import { UserSlide } from "./UserSlide";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserCard = () => {
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
@@ -27,7 +22,7 @@ export const UserCard = () => {
   const passwordSet = useAppSelector((x) => x.user.passwordSet);
   const suspension = useAppSelector((x) => x.user.suspension);
   const [sent, setSent] = useState(false);
-
+  const { t } = useTranslation(["account"]);
   const isSuspended = Users.isSuspended(suspension);
 
   const handleSendLink = usePost(async () => {
@@ -37,48 +32,44 @@ export const UserCard = () => {
 
   return (
     <Card column>
-      <CardSection
-        position="header"
-        py={16}
-      >
-        <Heading>{"User"}</Heading>
-      </CardSection>
       <UserSlide
-        icon={SvgAt}
-        heading="Email"
-        description="Change your email"
-        buttonLabel="Edit"
+        id={"email"}
+        heading={t("settings.email.title")}
+        description={t("settings.email.description")}
+        buttonLabel={t("common:edit")}
         onButtonClick={() => Dialogs.open("primary", <UserEmailEditModal />)}
+        extraContent={<Fragment>
+          {!emailConfirmed && !sent && (
+            <NoticeCard
+              kind="warning"
+              message={
+                <Fragment>
+                  {t("settings.email.emailNotConfirmed")}
+                  <Link
+                    type="action"
+                    fontWeight="semi-bold"
+                    onClick={handleSendLink}
+                    ml={4}
+                  >
+                    {t("common:confirmNow")}
+                  </Link>
+                </Fragment>
+              }
+            />
+          )}
+          {!emailConfirmed && sent && (
+            <NoticeCard
+              kind="success"
+              message={t("settings.email.linkSent")}
+            />
+          )}
+        </Fragment>}
       />
-      {!emailConfirmed && !sent && (
-        <NoticeCard
-          kind="warning"
-          message={
-            <Fragment>
-              {"Your email is not confirmed."}
-              <Link
-                type="action"
-                fontWeight="semi-bold"
-                onClick={handleSendLink}
-                ml={4}
-              >
-                {"Confirm Now"}
-              </Link>
-            </Fragment>
-          }
-        />
-      )}
-      {!emailConfirmed && sent && (
-        <NoticeCard
-          kind="success"
-          message="Link sent! Please check your email."
-        />
-      )}
       <UserSlide
-        icon={SvgLock}
-        heading="Password"
-        description="Change your password"
-        buttonLabel={passwordSet ? "Edit" : "Set"}
+        id={"passsword"}
+        heading={t("settings.password.title")}
+        description={t("settings.password.description")}
+        buttonLabel={t(`common:${passwordSet ? "edit" : "set"}`)}
         onButtonClick={() =>
           Dialogs.open(
             "primary",
@@ -87,12 +78,12 @@ export const UserCard = () => {
         }
       />
       <UserSlide
-        icon={SvgAsterisk}
-        heading="Authenticator"
-        description="Enable to use 2FA"
-        successMessage={tfaEnabled ? "Enabled" : undefined}
-        buttonKind={tfaEnabled ? "secondary" : "primary"}
-        buttonLabel={tfaEnabled ? "Disable" : "Enable"}
+        id={"authenticator"}
+        heading={t("settings.authenticator.title")}
+        description={t("settings.authenticator.description")}
+        successMessage={tfaEnabled ? t("common:enabled") : undefined}
+        buttonKind={tfaEnabled ? "tertiary-grey" : "primary-yellow"}
+        buttonLabel={t(`common:${tfaEnabled ? "disable" : "enable"}`)}
         onButtonClick={() =>
           Dialogs.open(
             "primary",
@@ -105,18 +96,19 @@ export const UserCard = () => {
         }
       />
       <UserSlide
-        icon={SvgHourglass}
-        heading="Self-Exclusion"
+        id={"selfExclusion"}
+        heading={t("settings.selfExclusion.title")}
         description={
           isSuspended
-            ? `Ends ${Dates.toTimestamp(suspension.endDate!)}`
-            : "Need a break?"
+            ? t("settings.selfExclusion.ends",{value:Dates.toTimestamp(suspension.endDate!)})
+            : t("settings.selfExclusion.description")
         }
-        buttonLabel={isSuspended ? "Enabled" : "Enable"}
+        buttonLabel={t(`common:${isSuspended ? "enabled" : "enable"}`)}
         buttonDisabled={isSuspended}
         onButtonClick={() =>
           Dialogs.open("primary", <UserExclusionStartModal />)
         }
+        borderBottom={false}
       />
     </Card>
   );

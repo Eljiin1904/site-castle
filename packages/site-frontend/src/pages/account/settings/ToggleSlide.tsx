@@ -45,13 +45,13 @@ export const ToggleSlide = ({
     } else {
       await Users.toggleSetting({ id, value });
     }
-    const action = t(`common:${value ? "enabled" : "disabled"}`);
+    const action = t(`common:${value ? "enabled" : "disabled"}`).toLocaleLowerCase();
     Toasts.success(`account:preferences.${id}.success`, 5000, {action: action});
   }, setLoading);
 
   return (
     <CardSection  px={small ? 20 : 24} py={0} position="none">
-      <Div fx py={16} borderBottom={borderBottom} borderColor="brown-4" justify="space-between" center>
+      <Div fx py={16} gap={16} borderBottom={borderBottom} borderColor="brown-4" justify="space-between" center>
       <Div column gap={8} className="toggle-slide">
         <Heading as="h3" fontWeight="regular" textTransform="uppercase">
           {heading}
