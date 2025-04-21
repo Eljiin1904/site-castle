@@ -36,6 +36,7 @@ export const LinkCard = () => {
         provider="google"
         description={t("linkedAccounts.google.description")}
         linked={Strings.isTruthy(googleId)}
+        borderBottom={false}
       />
     </Card>
   );

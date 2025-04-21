@@ -43,7 +43,7 @@ export const UserCard = () => {
         description={t("settings.email.description")}
         buttonLabel={t("common:edit")}
         onButtonClick={() => Dialogs.open("primary", <UserEmailEditModal />)}
-        extraContent={<Fragment>
+        extraContent={!emailConfirmed ? <Fragment>
           {!emailConfirmed && !sent && (
             <NoticeCard
               kind="warning"
@@ -68,7 +68,7 @@ export const UserCard = () => {
               message={t("settings.email.linkSent")}
             />
           )}
-        </Fragment>}
+        </Fragment>: undefined}
       />
       <UserSlide
         id={"passsword"}
