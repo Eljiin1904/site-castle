@@ -7,12 +7,14 @@ import { Div } from "@client/comps/div/Div";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { useQuery } from "@tanstack/react-query";
 import { Users } from "#app/services/users";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const PnLChart = ({dateRange, game}:{
   dateRange: DateRangeType,
   game: TransactionType | undefined,
 }) => {
 
+  const small = useIsMobileLayout();
   const query = useQuery({
     queryKey: ["history", dateRange, game ],
     queryFn: () => Users.getTransactionsByDateRange({dateRange, category:game, type:'pnl'}),
@@ -21,8 +23,7 @@ export const PnLChart = ({dateRange, game}:{
   
   const values = query.data?.values || [];
   const total = query.data?.total || 0;
-
-  return (<Chart strokeColor="sand" label={<PnLChatHeader daterange={dateRange} game={game} total={total} />} values={values} />);
+  return (<Chart small={small} strokeColor="sand" label={<PnLChatHeader daterange={dateRange} game={game} total={total} />} values={values} />);
 };
 
 const PnLChatHeader = ({daterange, game = 'all_games', total}:{
@@ -32,6 +33,7 @@ const PnLChatHeader = ({daterange, game = 'all_games', total}:{
 }) => {
 
   const {t} = useTranslation(["account","games"]);
+  const small = useIsMobileLayout();
   const gameKey = game ? game : 'all_games';
   const gameLabel = t(`games:${gameKey.replaceAll('-', '_')}`);
   const dateRangeKey = daterange ? daterange : 'thisMonth';
@@ -39,7 +41,7 @@ const PnLChatHeader = ({daterange, game = 'all_games', total}:{
   const chartHeader = t("stats.charts.pnl", {period: dateRangeLabel, game: gameLabel});
   
   return (<Div gap={4} center>
-    <Heading as="h3" fontWeight="bold" textTransform="uppercase" color="light-sand">{chartHeader}</Heading>
-    <Tokens color="sand" fontSize={16} family="title" value={total} />
+    <Heading as="h3" fontWeight="bold" size={small ? 12: 16} textTransform="uppercase" color="light-sand">{chartHeader}</Heading>
+    <Tokens color="sand"  fontSize={small ? 12: 16} family="title" value={total} />
   </Div>)
 }
