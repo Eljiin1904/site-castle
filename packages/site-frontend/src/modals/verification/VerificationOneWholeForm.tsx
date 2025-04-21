@@ -26,33 +26,54 @@ export const VerificationOneWholeForm = ({
   const form = useForm({
     schema: Validation.object({
       firstName: Validation.string()
-        .max(32,t("validations.string.max",{value: {label:t("fields:name.first"),max:32}}))
-        .required(t("validations.mixed.required",{value:t("fields:name.first")})),
+        .max(32,{key:"validations.string.max", value: {
+          label: t("fields:name.first"),
+          max: 32,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:name.first")}),
       lastName: Validation.string()
-        .max(32,t("validations.string.max",{value: {label:t("fields:name.last"),max:32}}))
-        .required(t("validations.mixed.required",{value:t("fields:name.last")})),
+        .max(32,{key:"validations.string.max", value: {
+          label: t("fields:name.last"),
+          max: 32,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:name.last")}),
       dob: Validation.dob(t("fields:dob.field")),
       address: Validation.string()
-        .max(256,t("validations.string.max",{value: {label:t("fields:address.address"),max:256}}))
-        .required(t("validations.mixed.required",{value:t("fields:address.address")})),
+       .max(256,{key:"validations.string.max", value: {
+          label: t("fields:address.address"),
+          max: 256,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:address.address")}),
       city: Validation.string()
-        .max(32,t("validations.string.max",{value: {label:t("fields:address.city"),max:32}}))
-        .required(t("validations.mixed.required",{value:t("fields:address.city")})),
+        .max(32,{key:"validations.string.max", value: {
+          label: t("fields:address.city"),
+          max: 32,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:address.city")}),
       state: Validation.string()
-        .max(32,t("validations.string.max",{value: {label:t("fields:address.state"),max:32}}))
-        .required(t("validations.mixed.required",{value:t("fields:address.state")})),
+        .max(32,{key:"validations.string.max", value: {
+          label: t("fields:address.state"),
+          max: 32,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:address.state")}),
       countryIndex: Validation.integer("Country"),
       zipCode: Validation.string()
-        .max(16,t("validations.string.max",{value: {label:t("fields:address.zip"),max:16}}))
-        .required(t("validations.mixed.required",{value:t("fields:address.zip")})),
+        .max(16,{key:"validations.string.max", value: {
+          label: t("fields:address.zip"),
+          max: 16,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:address.zip")}),
         occupation: Validation.string()
-        .max(32,t("validations.string.max",{value: {label:t("fields:occupation.field"),max:32}}))
-        .required(t("validations.mixed.required",{value:t("fields:occupation.field")}))
+        .max(32,{key:"validations.string.max", value: {
+          label: t("fields:occupation.field"),
+          max: 32,
+        }})
+        .required({key:"validations.mixed.required",value: t("fields:occupation.field")})
     }),
     onSubmit: async (values) => {
       await Users.verifyTier1(values);
 
-      Toasts.success("Verification submitted.");
+      Toasts.success("register.verificationSubmitted");
 
       if (!disableClose) {
         Dialogs.close("primary");
@@ -90,7 +111,7 @@ export const VerificationOneWholeForm = ({
         </ModalSection>
       </Div>
       <ModalSection>
-        <ModalLabel>{t("fields:dob.first")}</ModalLabel>
+        <ModalLabel>{t("fields:dob.field")}</ModalLabel>
         <Input
           type="dob"
           error={form.errors.dob?.key ? t(form.errors.dob.key, {value: form.errors.dob.value}) : undefined}
@@ -166,7 +187,7 @@ export const VerificationOneWholeForm = ({
         </ModalSection>
       </Div>
       <ModalSection>
-        <ModalLabel>{t("fields:occupation")}</ModalLabel>
+        <ModalLabel>{t("fields:occupation.field")}</ModalLabel>
         <Input
           type="text"
           placeholder={t("fields:occupation.placeholder")}
@@ -178,7 +199,7 @@ export const VerificationOneWholeForm = ({
       </ModalSection>
       <Div
         fx
-        justify="flex-end"
+        justify="flex-start"
       >
         <Button
           type="submit"
