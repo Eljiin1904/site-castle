@@ -26,7 +26,7 @@ export const AuthenticatorLoginModal = ({
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading={t("login2fa")}
+        heading={t("menu.login2fa")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>

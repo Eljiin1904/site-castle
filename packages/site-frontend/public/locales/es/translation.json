@@ -166,7 +166,7 @@
       }
     },
     "disclaimer": "Al registrarte, aceptas nuestros <0>{{link}}</0> y que tienes más de 18 años.",
-    "success": "Bienvenido, {{username}}!",
+    "success": "Bienvenido, {{value.username}}!",
     "confirm": {
       "title": "Confirmar correo electrónico",
       "description": "Para confirmar tu correo electrónico, haz clic en el button de abajo.",
