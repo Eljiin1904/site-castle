@@ -11,12 +11,14 @@ import { Tokens } from "@client/comps/tokens/Tokens";
  * @param borderColor color of the border of the Y axis, default value is 'brown-4'
  * @returns YAxis component to be used in charts
  */
-export const YAxis = ({min = 0, max = 5, isToken = false, labels, borderColor = 'brown-4'} : {
+export const YAxis = ({min = 0, max = 5, isToken = false, labels, borderColor = 'brown-4', size = 12, small} : {
   min?: number,
   max?: number,
   isToken?: boolean
   labels: number[],
-  borderColor?: Color
+  borderColor?: Color,
+  size?: Unit,
+  small: boolean
 }) => {
 
   return (
@@ -27,12 +29,12 @@ export const YAxis = ({min = 0, max = 5, isToken = false, labels, borderColor = 
       left={0}      
       borderRight
       borderColor={borderColor}
-      pr={12}
+      pr={small ? 8 : 12}
       style={{transform: "translateX(-100%)"}}
     >
       <Div column wrap justifyContent="space-between" flexShrink={1} style={{height: "calc(100% + 12px)"}}>
         {labels?.map(item  => {
-          return (isToken ? <Tokens key={item} value={item} fontSize={12} color="dark-sand" decimals={ item < 10000000 ? 1: 0} /> : <Span key={item} size={12} lineHeight={12} textAlign="right">
+          return (isToken ? <Tokens key={item} value={item} fontSize={size} color="dark-sand" decimals={ item < 10000000 ? 1: 0} /> : <Span key={item} size={size} lineHeight={size} textAlign="right">
             {item}
           </Span> );
         })}

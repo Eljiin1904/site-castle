@@ -9,6 +9,7 @@ export const AreaLabel = ({label, children}: {
     <Div
       position="absolute"
       left={24}
+      style={{width: "calc(100% - 48px)"}}
       top={0}
       py={14}
       zIndex={1}
