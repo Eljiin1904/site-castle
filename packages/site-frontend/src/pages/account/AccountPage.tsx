@@ -143,13 +143,13 @@ const AccountMenu = () => {
   const small = useIsMobileLayout();
   const {t} = useTranslation(['account']);
   const location = window.location.pathname;
-  console.log(location);
+
   const items = [
     { label: t("profile"), to: "/account", icon: SvgUser, end: true },
     { label: t("stats.title"), to: "/account/stats", icon: SvgStats },
     { label: t("transactions.title"), to: "/account/transactions", icon: SvgTransaction },
     { label: t("gameHistory"), to: "/account/game-history", icon: SvgBets },
-    { label: t("verification"), to: "/account/verification", icon: SvgVerification },
+    { label: t("verification.title"), to: "/account/verification", icon: SvgVerification },
     { label: t("settings.title"), to: "/account/settings", icon: SvgSettings }
   ];
 

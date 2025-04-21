@@ -3,6 +3,8 @@ import { Card } from "@client/comps/cards/Card";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LinkSlide } from "./LinkSlide";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { CardSection } from "@client/comps/cards/CardSection";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const LinkCard = () => {
   const steamId = useAppSelector((x) => x.user.steamId);
@@ -12,6 +14,9 @@ export const LinkCard = () => {
   const {t} = useTranslation(["account"]);
   return (
     <Card column>
+      <CardSection position="header">
+        <Heading as="h3" size={24} textTransform="uppercase" fontWeight="regular">{t('linkedAccounts.title')}</Heading>
+      </CardSection>
       <LinkSlide
         provider="steam"
         description={t("linkedAccounts.steam.description")}

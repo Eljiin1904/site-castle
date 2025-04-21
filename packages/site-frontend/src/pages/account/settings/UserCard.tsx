@@ -15,6 +15,8 @@ import { Users } from "#app/services/users";
 import { UserExclusionStartModal } from "#app/modals/user/UserExclusionStartModal";
 import { UserSlide } from "./UserSlide";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { CardSection } from "@client/comps/cards/CardSection";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const UserCard = () => {
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
@@ -32,6 +34,9 @@ export const UserCard = () => {
 
   return (
     <Card column>
+      <CardSection position="header">
+        <Heading as="h3" size={24} textTransform="uppercase" fontWeight="regular">{t('settings.title')}</Heading>
+      </CardSection>
       <UserSlide
         id={"email"}
         heading={t("settings.email.title")}
