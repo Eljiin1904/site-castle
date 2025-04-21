@@ -26,10 +26,10 @@ export const UserEmailConfirmModal = ({
     await Users.sendEmailLink();
   });
 
-  const {t} = useTranslation();
+  const {t} = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
-      confirmToken: Validation.string().required("Code is required."),
+      confirmToken: Validation.string().required("validations.code.required"),
     }),
     initialValues: {
       confirmToken: initToken,

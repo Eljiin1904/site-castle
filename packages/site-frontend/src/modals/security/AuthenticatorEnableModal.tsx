@@ -22,12 +22,14 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { OrderedList } from "@client/comps/list/OrderedList";
 import { Security } from "#app/services/security";
 import { AuthenticatorSettingsModal } from "./AuthenticatorSettingsModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 type SecretData = Awaited<ReturnType<typeof Security.getAuthenticatorSecret>>;
 
 export const AuthenticatorEnableModal = () => {
   const [downloaded, setDownloaded] = useState(false);
   const [data, setData] = useState<SecretData>();
+  const {t} = useTranslation(["validations"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -35,7 +37,7 @@ export const AuthenticatorEnableModal = () => {
     }),
     onSubmit: async (values) => {
       await Security.authenticatorEnable(values);
-      Toasts.success("Authenticator enabled.");
+      Toasts.success(`account:settings.authenticator.enableModal.success`);
       Dialogs.open("primary", <AuthenticatorSettingsModal />);
     },
   });
@@ -48,22 +50,22 @@ export const AuthenticatorEnableModal = () => {
   const downloadBackup = () => {
     const blob = new Blob(
       [
-        "!!! DO NOT SHARE THIS KEY !!!" +
+        t('account:settings.authenticator.keyFile.line1') +
           "\n\n" +
-          "Your backup key is:" +
+          t('account:settings.authenticator.keyFile.line2') +
           "\n\n" +
           data!.recoveryKey +
           "\n\n" +
-          "Keep this in a safe place and use it if you lose access to your authenticator.",
+          t('account:settings.authenticator.keyFile.line3'),
       ],
       {
         type: "text/plain;charset=utf-8",
       },
     );
-    saveAs(blob, `chicken_backup_key.txt`);
+    saveAs(blob, `castle_backup_key.txt`);
     setDownloaded(true);
   };
-
+  
   return (
     <Modal
       className="AuthenticatorEnableModal"
@@ -71,7 +73,7 @@ export const AuthenticatorEnableModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Enable Authenticator"
+        heading={t('account:settings.authenticator.enableModal.header')}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
@@ -87,20 +89,24 @@ export const AuthenticatorEnableModal = () => {
             <OrderedList
               pl={16}
               items={[
-                "Scan the QR code or enter the setup key manually.",
-                "Enter the 6-digit code from the authenticator.",
-                "Save your backup key and use it if you lose access to the authenticator.",
+                t('account:settings.authenticator.enableModal.steps.step1'),
+                t('account:settings.authenticator.enableModal.steps.step2'),
+                t('account:settings.authenticator.enableModal.steps.step3')
               ]}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Authenticator Code"}</ModalLabel>
+            <ModalLabel>{t('fields:auth.field')}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter 6-digit code..."
+              placeholder={t('fields:auth.placeholder')}
               maxLength={6}
               disabled={form.loading}
-              error={form.errors.tfac}
+              error={
+                form.errors.tfac?.key
+                  ? t(form.errors.tfac.key, { value: form.errors.tfac.value })
+                  : undefined
+              }
               value={form.values.tfac}
               onChange={(x) => form.setValue("tfac", x)}
             />
@@ -110,16 +116,16 @@ export const AuthenticatorEnableModal = () => {
             gap={12}
           >
             <Button
-              kind="secondary"
-              label={downloaded ? "Saved!" : "Save Backup Key"}
+              kind="tertiary-grey"
+              label={t(`account:settings.authenticator.enableModal.${downloaded ? "saved" : "action"}`)}
               loading={form.loading}
               fx
               onClick={downloadBackup}
             />
             <Button
               type="submit"
-              kind="primary"
-              label="Enable"
+              kind="primary-yellow"
+              label={t("common:enable")}
               fx
               loading={form.loading}
               disabled={!downloaded}
@@ -160,14 +166,14 @@ const CodeBox = ({ data }: { data: SecretData | undefined }) => {
         hover="highlight"
         onClick={() => {
           navigator.clipboard.writeText(data.secret);
-          Toasts.success("Setup key copied to clipboard.");
+          Toasts.success(`account:settings.authenticator.enableModal.copied`);
         }}
       >
-        <Span color="gray">{data.secret}</Span>
+        <Span color="light-sand">{data.secret}</Span>
         <Vector
           as={SvgCopy}
           fontSize={18}
-          color="light-blue"
+          color="sand"
           ml={8}
         />
       </Div>

@@ -13,20 +13,21 @@ import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Security } from "#app/services/security";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AuthenticatorRecoverModal = (props: {
   userId?: string | undefined;
 }) => {
   const currentUserId = useAppSelector((x) => x.user._id);
   const userId = props.userId || currentUserId;
-
+  const { t } = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
-      backupKey: Validation.string().required("Backup key is required."),
+      backupKey: Validation.string().required("validations.backupKey.required"),
     }),
     onSubmit: async (values) => {
       await Security.authenticatorRecover({ ...values, userId });
-      Toasts.success("Authenticator removed.");
+      Toasts.success(`account:settings.authenticator.recoveryModal.success`);
       Dialogs.close("primary");
     },
   });
@@ -34,38 +35,42 @@ export const AuthenticatorRecoverModal = (props: {
   return (
     <Modal
       className="AuthenticatorRecoverModal"
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Authenticator Recovery"
+        heading={t("account:settings.authenticator.recoveryModal.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <NoticeCard
             kind="info"
-            message={`Your backup key is in a file named "chicken_backup_key.txt"`}
+            message={t("account:settings.authenticator.recoveryModal.description")}
           />
           <ModalSection>
-            <ModalLabel>{"Backup Key"}</ModalLabel>
+            <ModalLabel>{t("fields:auth.backupField")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter backup key..."
+              placeholder={t("fields:auth.backupPlaceholder")}
               disabled={form.loading}
-              error={form.errors.backupKey}
+              error={
+                form.errors.backupKey?.key
+                  ? t(form.errors.backupKey.key, { value: form.errors.backupKey.value })
+                  : undefined
+              }
               value={form.values.backupKey}
               onChange={(x) => form.setValue("backupKey", x)}
             />
           </ModalSection>
           <NoticeCard
             kind="warning"
-            message="This will remove the authenticator from your account."
+            message={t("account:settings.authenticator.recoveryModal.notice")}
           />
           <Button
             type="submit"
-            kind="primary"
-            label="Remove Authenticator"
+            kind="primary-yellow"
+            label={t("account:settings.authenticator.recoveryModal.action")}
             fx
             loading={form.loading}
           />

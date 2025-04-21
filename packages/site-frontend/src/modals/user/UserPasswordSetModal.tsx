@@ -11,15 +11,17 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserPasswordSetModal = () => {
+  const { t } = useTranslation(["validations"]);
   const form = useCaptchaForm({
     schema: Validation.object({
-      newPassword: Validation.password("New password"),
+      newPassword: Validation.password(t("fields:password.newField")),
     }),
     onSubmit: async (values) => {
       await Users.editPassword(values);
-      Toasts.success("Password set.");
+      Toasts.success(`account:settings.email.successSet`);
       Dialogs.close("primary");
     },
   });
@@ -36,22 +38,26 @@ export const UserPasswordSetModal = () => {
       <ModalBody>
         <CaptchaForm form={form}>
           <ModalSection>
-            <ModalLabel>{"New Password"}</ModalLabel>
+            <ModalLabel>{t("fields:password.newField")}</ModalLabel>
             <Input
               type="password"
               id="new-password"
-              placeholder="Enter new password..."
+              placeholder={t("fields:password.newFieldPlaceholder")}
               autoComplete="new-password"
               disabled={form.loading}
-              error={form.errors.newPassword}
+              error={
+                form.errors.newPassword?.key
+                  ? t(form.errors.newPassword.key, { value: form.errors.newPassword.value })
+                  : undefined
+              }
               value={form.values.newPassword}
               onChange={(x) => form.setValue("newPassword", x)}
             />
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Set Password"
+            kind="primary-yellow"
+            label={t("account:settings.password.headerSet")}
             fx
             loading={form.loading}
           />

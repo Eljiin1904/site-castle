@@ -14,10 +14,11 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Input } from "@client/comps/input/Input";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Security } from "#app/services/security";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AuthenticatorSettingsModal = () => {
   const settings = useAppSelector((x) => x.user.settings);
-
+  const {t} = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
       login2fa: Validation.boolean().required(),
@@ -32,7 +33,7 @@ export const AuthenticatorSettingsModal = () => {
     },
     onSubmit: async (values) => {
       await Security.updateSettings(values);
-      Toasts.success("Authenticator settings updated.");
+      Toasts.success(`account:settings.authenticator.settingsModal.success`);
       Dialogs.close("primary");
     },
   });
@@ -44,50 +45,52 @@ export const AuthenticatorSettingsModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Authenticator Settings"
+        heading={t('account:settings.authenticator.settingsModal.header')}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <ModalSection>
             <Paragraph>
-              {
-                "Please review your 2FA settings. These settings can be adjusted any time on the account page."
-              }
+            {t('account:settings.authenticator.settingsModal.description')}
             </Paragraph>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Login"}</ModalLabel>
+            <ModalLabel>{t("menu.login")}</ModalLabel>
             <Checkbox
-              label="Require 2FA to login"
+              label={t("account:preferences.login2fa.description")}
               value={form.values.login2fa}
               onChange={(x) => form.setValue("login2fa", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Withdraw"}</ModalLabel>
+            <ModalLabel>{t("menu.account.withdraw")}</ModalLabel>
             <Checkbox
-              label="Require 2FA to withdraw"
+              label={t("account:preferences.withdraw2fa.description")}
               value={form.values.withdraw2fa}
               onChange={(x) => form.setValue("withdraw2fa", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Bet"}</ModalLabel>
+            <ModalLabel>{t("menu.bet",{count: 1})}</ModalLabel>
             <Checkbox
-              label="Require 2FA on first bet"
+              label={t("account:preferences.bet2fa.description")}
               value={form.values.bet2fa}
               onChange={(x) => form.setValue("bet2fa", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Authenticator Code"}</ModalLabel>
+            <ModalLabel>{t("fields:auth.field")}</ModalLabel>
             <Input
               type="text"
-              placeholder="Enter 6-digit code..."
+              placeholder={t("fields:auth.placeholder")}
               maxLength={6}
               disabled={form.loading}
-              error={form.errors.tfac}
+              error={
+                form.errors.tfac?.key
+                  ? t(form.errors.tfac.key, { value: form.errors.tfac.value })
+                  : undefined
+              }
               value={form.values.tfac}
               onChange={(x) =>
                 form.setValue("tfac", x?.replace(/[^0-9]/gi, ""))
@@ -96,8 +99,8 @@ export const AuthenticatorSettingsModal = () => {
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Update Settings"
+            kind="primary-yellow"
+            label={t("account:settings.authenticator.settingsModal.action")}
             fx
             loading={form.loading}
           />

@@ -8,6 +8,7 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { Dialogs } from "@client/services/dialogs";
 import { AuthenticatorRecoverModal } from "./AuthenticatorRecoverModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AuthenticatorCodeForm = ({
   userId,
@@ -25,11 +26,12 @@ export const AuthenticatorCodeForm = ({
     onSubmit,
   });
 
+  const {t} = useTranslation(["validations"]);
   return (
     <Form form={form}>
       <ModalSection>
         <ModalLabel>
-          {"Authenticator Code"}
+          {t("fields:auth.field")}
           <Link
             type="action"
             flexGrow
@@ -42,15 +44,19 @@ export const AuthenticatorCodeForm = ({
               );
             }}
           >
-            {"Lose Access?"}
+            {t("account:settings.authenticator.disableModal.lostAccess")}
           </Link>
         </ModalLabel>
         <Input
           type="text"
-          placeholder="Enter 6-digit code..."
+          placeholder={t("fields:auth.placeholder")}
           maxLength={6}
           disabled={form.loading}
-          error={form.errors.tfac}
+          error={
+            form.errors.tfac?.key
+              ? t(form.errors.tfac.key, { value: form.errors.tfac.value })
+              : undefined
+          }
           value={form.values.tfac}
           onChange={(x) => form.setValue("tfac", x?.replace(/[^0-9]/gi, ""))}
         />
@@ -58,8 +64,8 @@ export const AuthenticatorCodeForm = ({
       {notice}
       <Button
         type="submit"
-        kind="primary"
-        label="Submit Code"
+        kind="primary-yellow"
+        label= {t("account:settings.authenticator.disableModal.action")}
         fx
         loading={form.loading}
       />
