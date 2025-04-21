@@ -24,7 +24,7 @@ export const UserCard = () => {
   
   const registerDate = useAppSelector((x) => x.user.registerDate);  
 
-  return (<Fragment>
+  return (<Div fx column>
     <Div fx gap={40}>
       <UserAvatar />
       <Div
@@ -41,7 +41,7 @@ export const UserCard = () => {
       </Div>
     </Div>
     <UserCardLevel />
-    </Fragment>
+    </Div>
   );
 };
 
