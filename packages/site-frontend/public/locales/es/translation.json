@@ -184,7 +184,8 @@
         "description": "Gracias por registrarte en SandCasino. ¡Explora nuestros juegos y carreras!",
         "action": "Continuar"
       }
-    }
+    },
+    "verificationSubmitted": "Verificación enviada"
   },
   "signout": {
     "title": "Cerrar sesión",
