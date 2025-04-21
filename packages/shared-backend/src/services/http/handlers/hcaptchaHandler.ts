@@ -24,7 +24,7 @@ export const hcaptchaHandler = Http.createHandler(async (req, res, next) => {
   });
 
   if (!success) {
-    throw new HandledError("errors.invalidCaptcha");
+    throw new HandledError("validations:errors.invalidCaptcha");
   }
 
   next();

@@ -18,7 +18,7 @@ export async function isAlreadyRegistered(email: string, username: string, provi
   } else if (
     await Database.exists("users", { username }, { collation: { locale: "en", strength: 2 } })
   ) {
-    throw new HandledError("errors.username.taken");
+    throw new HandledError("validations:errors.username.taken");
   } else {
     await Site.validateEmail(email);
   }

@@ -12,16 +12,16 @@ export async function validateAuthenticatorCode({
   requireEnabled?: boolean;
 }) {
   if (requireEnabled && !user.tfa.enabled) {
-    throw new HandledError("Authenticator not enabled.");
+    throw new HandledError("validations:errors.auth.notEnabled");
   }
 
   if (!user.tfa.secret) {
-    throw new HandledError("Authenticator not setup.");
+    throw new HandledError("validations:errors.auth.notSet");
   }
 
   const isValid = authenticator.check(tfac, user.tfa.secret);
 
   if (!isValid) {
-    throw new HandledError("Invalid authenticator code.");
+    throw new HandledError("validations:errors.auth.invalid");
   }
 }

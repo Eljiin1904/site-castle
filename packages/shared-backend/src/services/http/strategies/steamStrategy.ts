@@ -33,7 +33,7 @@ async function verify(
 
     if (req.isAuthenticated()) {
       if (await Database.exists("users", { steamId })) {
-        throw new HandledError("errors.steam.taken");
+        throw new HandledError("validations:errors.steam.taken");
       }
 
       await Database.collection("users").updateOne({ _id: req.user._id }, { $set: { steamId } });
@@ -46,7 +46,7 @@ async function verify(
         done(null, user);
       } else {
         if (await Database.exists("users", { steamId })) {
-          throw new HandledError("errors.steam.taken");
+          throw new HandledError("validations:errors.steam.taken");
         }
 
         throw new UnknownUserError(steamId);
