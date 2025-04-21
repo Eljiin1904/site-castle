@@ -15,6 +15,8 @@ import { Users } from "#app/services/users";
 import { UserExclusionStartModal } from "#app/modals/user/UserExclusionStartModal";
 import { UserSlide } from "./UserSlide";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { CardSection } from "@client/comps/cards/CardSection";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const UserCard = () => {
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
@@ -32,13 +34,16 @@ export const UserCard = () => {
 
   return (
     <Card column>
+      <CardSection position="header">
+        <Heading as="h3" size={24} textTransform="uppercase" fontWeight="regular">{t('settings.title')}</Heading>
+      </CardSection>
       <UserSlide
         id={"email"}
         heading={t("settings.email.title")}
         description={t("settings.email.description")}
         buttonLabel={t("common:edit")}
         onButtonClick={() => Dialogs.open("primary", <UserEmailEditModal />)}
-        extraContent={<Fragment>
+        extraContent={!emailConfirmed ? <Fragment>
           {!emailConfirmed && !sent && (
             <NoticeCard
               kind="warning"
@@ -63,7 +68,7 @@ export const UserCard = () => {
               message={t("settings.email.linkSent")}
             />
           )}
-        </Fragment>}
+        </Fragment>: undefined}
       />
       <UserSlide
         id={"passsword"}

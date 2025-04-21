@@ -20,6 +20,7 @@ export const TransactionsTable = ({
   isLoading: boolean;
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
+  // const small = mainLayout === "mobile" || mainLayout === "tablet";
   const {t} = useTranslation(["account","fields"]);
   return (
     <Table
@@ -27,6 +28,7 @@ export const TransactionsTable = ({
       loading={isLoading}
       autoScroll={mainLayout === "mobile"}
       emptyMessage={t("transactions.notFound")}
+      hideHeader={mainLayout === "mobile"}
       onRowProps={(x) => ({
         type: "action",
         onClick: () =>
@@ -49,24 +51,13 @@ export const TransactionsTable = ({
               >
                 {Transactions.getName(x)}
               </Span>
-              <Div gap={3}>
+              <Div gap={3}>                
                 <Span
                   size={12}
+                  color="light-sand"
                 >
-                  {"#"}
-                  {x._id}
-                </Span>
-                <Span
-                  size={12}
-                >
-                  {"-"}
-                </Span>
-                <Span
-                  size={12}
-                  color={Transactions.getStatusColor(x.status)}
-                >
-                  {Strings.kebabToTitle(t(`transactions.status.${x.status}`))}
-                </Span>
+                  {Dates.toTimestamp(x.timestamp)}
+                </Span>                
               </Div>
             </Div>
           ),
@@ -81,16 +72,17 @@ export const TransactionsTable = ({
               column
               align="flex-end"
             >
+              <Span
+                size={12}
+                color={Transactions.getStatusColor(x.status)}
+              >
+                {Strings.kebabToTitle(t(`transactions.status.${x.status}`))}
+              </Span>
               <Tokens
                 value={x.amount}               
                 hideIcon
                 fontSize={12}
               />
-              <Span
-                size={12}
-              >
-                {`(${Intimal.toLocaleString(x.balance + x.amount)})`}
-              </Span>
             </Div>
           ),
         },

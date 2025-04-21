@@ -26,13 +26,13 @@ export const StatsHeader = ({dateRange, setDateRange, chartOption = 'wagered',se
     <Div
       justify={small ? "space-between" : undefined}
       align="center"
-      gap={small ? 20: 24}
+      gap={small ? 16: 24}
+      column={small}
+      pt={small ? 24 : 0}
     >
-      {!small && (
-        <PageTitle
-          heading={t('stats.title')}
-        />
-      )}
+      <PageTitle
+        heading={t('stats.title')}
+      />
       <Dropdown
         type="select"
         fx={small}

@@ -16,19 +16,19 @@ export const StatsWidgets = () => {
 
   const {t} = useTranslation(["account"]);
   const stats = useAppSelector((x) => x.user.stats);
+  const popularGameData = useMostPopularGame();
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = layout === "mobile" || layout === "tablet";
-  const popularGameData = useMostPopularGame();
   if(!stats)
     return null;  
   
   return (<Div
     fx
     column
-    gap={24}
+    gap={small ? 16: 24}
     wrap={small}
   >
-    <Div gap={24} fx>
+    <Div gap={small ? 16: 24} fx column={small}>
     <StatWidget
       title={t(`games:${popularGameData?.game}`)}
       description={t('stats.mostPopularGame')}
@@ -39,7 +39,7 @@ export const StatsWidgets = () => {
       icon={SvgTransaction}
       />
     </Div>
-    <Div gap={24} fx>
+    <Div gap={small ? 16: 24} fx column={small}>
       <StatWidget
         tokens={ (stats.depositAmount ?? 0 )}
         description={t('transactions.type.deposits')}

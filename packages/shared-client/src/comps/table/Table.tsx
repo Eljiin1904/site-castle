@@ -25,6 +25,7 @@ export type TableProps<T extends DataSchema> = StyledLayoutProps & {
   emptyMessage?: string;
   loading?: boolean;
   autoScroll?: boolean;
+  hideHeader?: boolean;
   onRowProps?: (x: T, i: number) => LinkProps;
 };
 
@@ -35,6 +36,7 @@ export function Table<T extends DataSchema>({
   emptyMessage = "No items founds.",
   loading,
   autoScroll,
+  hideHeader,
   onRowProps = () => ({
     type: "action",
     hover: "none",
@@ -59,7 +61,7 @@ export function Table<T extends DataSchema>({
       column
       {...forwardProps}
     >
-      <Div
+      {!hideHeader && <Div
        className="BetHeader"
        height={56}
        align="center"
@@ -91,7 +93,7 @@ export function Table<T extends DataSchema>({
             )}
           </Div>
         ))}
-      </Div>
+      </Div>}
       <Div
         className="table-items"
         column
@@ -122,6 +124,7 @@ export function Table<T extends DataSchema>({
               gap={24}
               hover="none"
               borderTop
+              borderColor="brown-4"
               {...rowProps}
             >
               {columns.map((column, columnIndex) => (

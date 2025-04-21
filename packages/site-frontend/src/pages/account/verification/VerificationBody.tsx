@@ -1,13 +1,16 @@
 import { Numbers } from "@core/services/numbers";
-import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { ProgressBar } from "@client/comps/progress-bar/ProgressBar";
 import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { VerificationOneForm } from "#app/modals/verification/VerificationOneForm";
+import { VerificationHeader } from "./VerificationHeader";
+import { VerificationEmail } from "./VerificationEmail";
+import { VerificationPersonal } from "./VerificationPersonal";
+import { VerificationIdentity } from "./VerificationIdentity";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
-export const VerificationBody = () => {
+export const VerificationBodyOld = () => {
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const kycTierInt = Numbers.floor(kycTier, 0);
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -47,58 +50,33 @@ export const VerificationBody = () => {
         bg="brown-6"
         border
       >
-        {kycTier < 1 && (
-          <Div
-            column
-            gap={16}
-          >
-            <Heading
-              as="h2"
-              size={16}
-            >
-              {"Verify Your Information"}
-            </Heading>
-            <Span>{"We need to verify your personal information."}</Span>
-            <Div
-              borderBottom
-              mb={8}
-            />
-            <VerificationOneForm
-              layout={layout}
-              whole
-            />
-          </Div>
-        )}
-        {kycTierInt > 0 && kycTierInt < tiers && (
-          <Div
-            column
-            gap={16}
-          >
-            <Heading as="h2">{"No Action Required"}</Heading>
-            <Span>{"You are up to date."}</Span>
-          </Div>
-        )}
-        {kycTier === 100 && (
-          <Div
-            column
-            gap={16}
-          >
-            <Heading as="h2">{"Submit Your Identity Documents"}</Heading>
-            <Span>
-              {
-                "We need to verify proof your identity. The verification process will handled securely by our partner."
-              }
-            </Span>
-            <Div>
-              <Button
-                kind="primary"
-                label="Start Verification"
-                disabled
-              />
-            </Div>
-          </Div>
-        )}
+       
       </Div>
+    </Div>
+  );
+};
+
+export const VerificationBody = () => {
+  
+  const kycTier = useAppSelector((x) => x.user.kyc.tier);
+  const kycTierInt = Numbers.floor(kycTier, 0);
+  const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
+  const small = useIsMobileLayout();
+  const currentTier = emailConfirmed ? kycTierInt + 1 : 0;
+
+  return (
+    <Div
+      fx
+      column
+      gap={40}
+      pt={small ? 40: 0}
+    >
+      <VerificationHeader tier={currentTier}/>
+      <Div fx column gap={16}>
+        <VerificationEmail tier={currentTier} />
+        <VerificationPersonal tier={currentTier}/>
+        <VerificationIdentity tier={currentTier}/>     
+      </Div>       
     </Div>
   );
 };

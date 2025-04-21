@@ -137,7 +137,7 @@ export default Http.createApiRoute({
         const monthLastDay = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
         for (let i = 1; i <= monthLastDay; i+=5) {
           const day = i % 5 === 0 ? i : i  - (i % 5);
-          const labelMonth = monthDate.toLocaleDateString("en-US", { month: "long" });
+          const labelMonth = monthDate.toLocaleDateString("en-US", { month: "short" });
           const label = `${labelMonth} ${day === 0 ? 1 : day}`;
           values.push({ label: label, value: 0 });
         }
@@ -145,7 +145,7 @@ export default Http.createApiRoute({
           const date = new Date(transaction.timestamp);
           const monthDay = date.getDate();
           const labelDay = monthDay % 5 === 0 ? monthDay : monthDay  - (monthDay % 5);
-          const labelMonth = date.toLocaleDateString("en-US", { month: "long" });
+          const labelMonth = date.toLocaleDateString("en-US", { month: "short" });
           const label = `${labelMonth} ${labelDay === 0 ? 1 : labelDay}`;
          
           const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
@@ -185,17 +185,18 @@ export default Http.createApiRoute({
       case "thisYear":
       case "lastYear":
         const dateYear = dateRange === "thisYear" ? new Date() : new Date(new Date().getFullYear() - 1, 0, 1);
-        const yearLabel = dateYear.toLocaleDateString("en-US", { year: "2-digit" });
+        const yearLabel = dateRange === "thisYear" ? dateYear.toLocaleDateString("en-US", { year: "2-digit" }): '';
         const currentMonth = dateYear.getMonth();
         for (let i = 0; i < 12; i+=1) {
           const month = i + 1;
           const monthLabel = new Date(0, month - 1).toLocaleDateString("en-US", {month: "short"});
-          values.push({ label: `${monthLabel} ${yearLabel}`, value: 0 });
+          values.push({ label: `${monthLabel} ${yearLabel}`.trim(), value: 0 });
           if(currentMonth === month && dateRange === "thisYear") break;
         }
         transactions.forEach((transaction) => {
           const date = new Date(transaction.timestamp);
-          const label = date.toLocaleDateString("en-US", {month: "short", year: "2-digit"});
+          const label = dateRange === "thisYear" ? date.toLocaleDateString("en-US", {month: "short", year: "2-digit"}):
+          date.toLocaleDateString("en-US", {month: "short"});
           const value = type === 'pnl' ? (transaction.stats?.wagerProfitLoss ?? 0) : transaction.stats?.wagerAmount ?? 0;
           total += value;
           const existing = values.find((v) => v.label === label);

@@ -2,7 +2,6 @@
   "title": "Account",
   "profile": "Profile Information",
   "gameHistory": "Game History",
-  "verification": "Verification",
   "progress": "Account Progress",
   "avatar": {
     "title": "Change Avatar",
@@ -253,6 +252,30 @@
         "success": "Exclusion requested. Please check your email to confirm.",
         "action": "Request Self-Exclusion"
       }
+    }
+  },
+  "verification": {
+    "title": "Verification",
+    "header": "Verify Your Account",
+    "tiers": {
+      "tier1": {
+        "title": "Email",
+        "header": "Verify Your Email",
+        "description": "We need to verify your email address <0>{{email}}</0> to enjoy all the features.",
+        "codeSent":"Email Verification Code Sent",
+        "codeSentDescription":"Verification code was sent to email  address <0>{{email}}</0>. Please enter code received below.",
+        "success":"We have sent a code to your email, please enter it below.",
+        "action": "Send Verification Code"
+      },
+      "tier2": "Personal",
+      "tier3": {
+        "title": "Identity",
+        "header": "Verify Your Information(Sumsub)",
+        "description": "We need to verify your personal information.",
+        "action": "Start KYC Proccess"
+      },
+      "tier4": "Address",
+      "tier5": "Funds"
     }
   }
 }

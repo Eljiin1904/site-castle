@@ -2,7 +2,6 @@
   "title": "Cuenta",
   "profile": "Información del perfil",
   "gameHistory": "Historial de juegos",
-  "verification": "Verificación",
   "progress": "Progreso de la cuenta",
   "avatar": {
     "title": "Cambiar avatar",
@@ -253,6 +252,30 @@
         "success": "Autoexclusión solicitada. Revisa tu correo electrónico para confirmar.",
         "action": "Solicitar autoexclusión"
       }
+    }
+  },
+  "verification": {
+    "title": "Verificación",
+    "header": "Verificación de cuenta",
+    "tiers": {
+      "tier1": {
+        "title": "Correo electrónico",
+        "header": "Verifica tu correo electrónico",
+        "description": "Necesitamos verificar tu correo electrónico <0>{{email}}</0> para disfrutar de todas las funciones.",
+        "codeSent":"Código de verificación de correo electrónico enviado",
+        "codeSentDescription":"El código de verificación fue enviado a la dirección de correo electrónico <0>{{email}}</0>. Por favor ingresa el código recibido a continuación.",
+        "success": "Correo electrónico verificado con éxito.",
+        "action": "Enviar codigo de verificación"
+      },
+      "tier2": "Personal",
+      "tier3": {
+        "title": "Identidad",
+        "header": "Verifica tu información (Sumsub)",
+        "description": "Necesitamos verificar tu información personal.",
+        "action": "Iniciar proceso KYC"
+      },
+      "tier4": "Dirección",
+      "tier5": "Fondos"
     }
   }
 }

@@ -185,7 +185,8 @@
         "description": "Thanks for registering in SandCasino. Explore our games and races!",
         "action": "Continue"
       }
-    }
+    },
+     "verificationSubmitted": "Verification submitted."
   },
   "accountSetup": {
     "title": "Quick Account Setup",

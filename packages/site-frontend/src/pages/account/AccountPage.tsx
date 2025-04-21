@@ -22,6 +22,8 @@ import { SvgVerification } from "@client/svgs/common/SvgVerification";
 import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { SvgStats } from "@client/svgs/common/SvgStats";
 import { StatsBody } from "./stats/StatsBody";
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
 export const AccountPageOld = () => {
   return (
@@ -82,6 +84,7 @@ export const AccountPageOld = () => {
 export const AccountPage = () => {
 
   const {t} = useTranslation(['account']);
+  const layout = useAppSelector((x) => x.style.mainLayout);
   const small = useIsMobileLayout();
 
   return (<Fragment>
@@ -89,36 +92,19 @@ export const AccountPage = () => {
       <SitePage
         className="GamesPage"
         gap={small ? 32: 56}
-        pb={small ? 32: 56}
+        pb={small ? 40: 56}
       >
-      <NotMobileContent />
+      <Conditional value={layout} 
+        mobile={<MobileContent />} 
+        tablet={<NotMobileContent />}
+        laptop={<NotMobileContent />}
+        desktop={<NotMobileContent />}
+       />
       </SitePage>
     </Fragment>
     );
 };
 
-
-// const MobileContent = () => {
-//   const { t } = useTranslation(["games\\dice"]);
-//   return (
-//     <Div
-//       fx
-//       column
-//       gap={16}
-//     >
-//       <DiceHeader />
-//       <DiceView />
-//       <DiceMenu />
-//       <BetBoard
-//         px={20}
-//         mt={40}
-//         mb={40}
-//         title={t("games\\dice:betBoardHeader")}
-//         game="dice"
-//       />
-//     </Div>
-//   );
-// };
 
 const NotMobileContent = () => {
   const { t } = useTranslation(["account"]);
@@ -138,18 +124,29 @@ const NotMobileContent = () => {
   );
 };
 
+const MobileContent = () => {
+
+  return (<Div
+    fx
+    column
+  >
+     <AccountMenu />
+     <AccountView />
+  </Div>);  
+};
+
 const AccountMenu = () => {
 
   const small = useIsMobileLayout();
   const {t} = useTranslation(['account']);
   const location = window.location.pathname;
-  console.log(location);
+
   const items = [
     { label: t("profile"), to: "/account", icon: SvgUser, end: true },
     { label: t("stats.title"), to: "/account/stats", icon: SvgStats },
     { label: t("transactions.title"), to: "/account/transactions", icon: SvgTransaction },
     { label: t("gameHistory"), to: "/account/game-history", icon: SvgBets },
-    { label: t("verification"), to: "/account/verification", icon: SvgVerification },
+    { label: t("verification.title"), to: "/account/verification", icon: SvgVerification },
     { label: t("settings.title"), to: "/account/settings", icon: SvgSettings }
   ];
 

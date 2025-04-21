@@ -2,12 +2,17 @@ import { Card } from "@client/comps/cards/Card";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { ToggleSlide } from "./ToggleSlide";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { CardSection } from "@client/comps/cards/CardSection";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const ToggleCard = () => {
   const tfaEnabled = useAppSelector((x) => x.user.tfa.enabled);
   const { t } = useTranslation(["account"]);
   return (
     <Card column>
+      <CardSection position="header">
+        <Heading as="h3" size={24} textTransform="uppercase" fontWeight="regular">{t('preferences.title')}</Heading>
+      </CardSection>
       <ToggleSlide
         id="login2fa"
         heading={t("preferences.login2fa.title")}

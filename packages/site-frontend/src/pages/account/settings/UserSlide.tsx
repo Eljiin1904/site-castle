@@ -39,7 +39,7 @@ export const UserSlide = ({
 
   return (
     <CardSection  px={small ? 20 : 24} py={0} position="none" column={!!extraContent}> 
-    <Div fx py={16} borderBottom={!extraContent} borderColor="brown-4" justify="space-between" center>
+    <Div fx py={16} borderBottom={borderBottom && !extraContent} borderColor="brown-4" justify="space-between" center>
       <Div column gap={8} className="toggle-slide">
         <Heading as="h3" fontWeight="regular" textTransform="uppercase">
           {heading}
