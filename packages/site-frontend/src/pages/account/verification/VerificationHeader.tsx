@@ -1,3 +1,4 @@
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Div } from "@client/comps/div/Div";
 import { PageTitle } from "@client/comps/page/PageTitle";
 import { Span } from "@client/comps/span/Span";
@@ -41,16 +42,17 @@ const VerificationTierHeader = ({tier, label, currenTier}: {
   currenTier: number
 }) => {
 
+  const small = useIsMobileLayout();
   return (<Div 
-      fx 
+      fx={!small} 
       center 
-      gap={24}
-      height={40}
+      gap={small ? 0: 24}
+      height={small ? 24: 40}
       bg={tier - 1 === currenTier? "brown-4" : "dark-brown"}
-      border
+      border = {!small}
       borderColor="brown-4"
       justifyContent="flex-start"
-      p={8}
+      p={small ? 0: 8}
     >
     <Span
       color={tier - 1 === currenTier ? "dark-brown" : (tier - 1 < currenTier ? "bright-green" : "dark-sand")}
@@ -61,11 +63,11 @@ const VerificationTierHeader = ({tier, label, currenTier}: {
     >
     {tier - 1 < currenTier ? <Vector as={SvgCheck} size={12} color="bright-green"/> : tier}
     </Span>
-    <Span
+    {!small && <Span
       color={tier - 1 === currenTier ? "sand" : undefined}
     >
       {label}
-    </Span>
+    </Span>}
   </Div>)
 };
 

@@ -8,6 +8,7 @@ import { VerificationHeader } from "./VerificationHeader";
 import { VerificationEmail } from "./VerificationEmail";
 import { VerificationPersonal } from "./VerificationPersonal";
 import { VerificationIdentity } from "./VerificationIdentity";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const VerificationBodyOld = () => {
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
@@ -60,7 +61,7 @@ export const VerificationBody = () => {
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const kycTierInt = Numbers.floor(kycTier, 0);
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
-
+  const small = useIsMobileLayout();
   const currentTier = emailConfirmed ? kycTierInt + 1 : 0;
 
   return (
@@ -68,6 +69,7 @@ export const VerificationBody = () => {
       fx
       column
       gap={40}
+      pt={small ? 40: 0}
     >
       <VerificationHeader tier={currentTier}/>
       <Div fx column gap={16}>
