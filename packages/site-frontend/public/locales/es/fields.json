@@ -7,11 +7,22 @@
   },
   "username": "Nombre de usuario",
   "email": "Correo electrónico",
+  "currentEmail": {
+    "field": "Correo electrónico actual",
+    "placeholder": "Ingrese el correo electrónico actual..."
+  },
+  "newEmail": {
+    "field": "Nuevo correo electrónico",
+    "placeholder": "Ingrese el nuevo correo electrónico..."
+  },
   "password": {
     "field": "Contraseña",
     "confirmField": "Confirmar contraseña",
     "newField": "Nueva contraseña",
-    "placeholder": "Ingrese la contraseña..."
+    "newFieldPlaceholder": "Ingrese la nueva contraseña...",
+    "placeholder": "Ingrese la contraseña...",
+    "currentPassword": "Contraseña actual",
+    "currentPasswordPlaceholder": "Ingrese la contraseña actual..."
   },
   "dob": {
     "field": "Fecha de nacimiento",
@@ -77,5 +88,11 @@
   },
   "date": {
     "joined": "Fecha de registro"
+  },
+  "auth": {
+    "field": "Código de autenticador",
+    "placeholder": "Ingrese el código de 6 dígitos...",
+    "backupField": "Clave de respaldo",
+    "backupPlaceholder": "Ingrese la clave de respaldo..."
   }
 }

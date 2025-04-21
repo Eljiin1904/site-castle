@@ -28,7 +28,8 @@
       "field": "Correo electrónico",
       "required": "{{value}} es requerido",
       "invalid": "{{value}} es inválido",
-      "valid": "{{value}} debe estar en un formato válido."
+      "valid": "{{value}} debe estar en un formato válido.",
+      "notEqual": "No puede ser el mismo que el correo electrónico actual."
     },
     "boolean": {
       "isValue": "{{value.label}} debe ser {{value.value}}"
@@ -55,8 +56,8 @@
     },
     "tfac": {
       "field": "Código de autenticación",
-      "required": "{{value}} es requerido.",
-      "min": "{{value.label}} debe ser {{value.min}} digitos."
+      "required": "Código es requerido.",
+      "min": "Código debe ser {{value.min}} digitos."
     },
     "page": {
       "field": "Página",
@@ -93,6 +94,12 @@
     "tip": {
       "recipientRequired": "Usuario es requerido.",
       "notEnoughTokens": "No tienes suficientes tokens"
+    },
+    "code": {
+      "required": "Código es requerido."
+    },
+    "backupKey": {
+      "required": "Clave de respaldo es requerida."
     }
   },
   "errors": {
@@ -158,6 +165,17 @@
     "queries": {
       "transactions": "Algo salió mal, por favor vuelve a cargar tus transacciones.",
       "user": "Algo salió mal, por favor vuelve a cargar tu información de usuario."
+    },
+    "auth": {
+      "invalid": "Codigo de autenticación inválido.",
+      "notEnabled": "La autenticación de dos factores no está habilitada.",
+      "invalidBackupKey": "Clave de respaldo inválida.",
+      "requiredBackupKey": "Clave de respaldo es requerida.",
+      "notSet": "La autenticación de dos factores no está configurada."
+    },
+    "users": {
+      "notFound": "Usuario no encontrado.",
+      "idRequired": "Id de usuario requerido."
     }
   }
 }

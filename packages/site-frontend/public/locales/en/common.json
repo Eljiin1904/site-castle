@@ -30,9 +30,15 @@
   "copyClipboard": "Copy to Clipboard",
   "rules": "Rules",
   "back": "Back",
-  "enabled": "enabled",
-  "disabled": "disabled",
+  "enabled": "Enabled",
+  "enable": "Enable",
+  "disable": "Disable",
+  "disabled": "Disabled",
   "link": "Link",
   "unlink": "Unlink",
-  "connected": "Connected"
+  "connected": "Connected",
+  "edit": "Edit",
+  "set": "Set",
+  "confirmNow": "Confirm now",
+  "code": "Code"
 }

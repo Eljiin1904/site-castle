@@ -30,9 +30,15 @@
   "copyClipboard": "Copiar",
   "rules": "Reglas",
   "back": "Atrás",
-  "enabled": "habilitado",
-  "disabled": "deshabilitado",
+  "enabled": "Habilitado",
+  "enable": "Habilitar",
+  "disable": "Deshabilitar",
+  "disabled": "Deshabilitado",
   "link": "Vincular",
   "unlink": "Desvincular",
-  "connected": "Conectado"
+  "connected": "Conectado",
+  "edit": "Editar",
+  "set": "Establecer",
+  "confirmNow": "Confirmar ahora",
+  "code": "Código"
 }

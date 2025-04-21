@@ -3,7 +3,6 @@
   "profile": "Información del perfil",
   "gameHistory": "Historial de juegos",
   "verification": "Verificación",
-  "settings": "Configuraciones",
   "progress": "Progreso de la cuenta",
   "avatar": {
     "title": "Cambiar avatar",
@@ -110,43 +109,43 @@
     "login2fa": {
       "title": "2FA de inicio de sesión",
       "description": "Requerir 2FA al iniciar sesión.",
-      "success": "2FA de inicio de sesión se ha {{action}} con éxito.",
+      "success": "2FA de inicio de sesión se ha {{value.action}} con éxito.",
       "error": "Error al actualizar 2FA."
     },
     "bet2fa": {
       "title": "2FA de apuestas",
       "description": "Requerir 2FA al apostar en la primera vez.",
-      "success": "2FA de apuestas se ha {{action}} con éxito.",
+      "success": "2FA de apuestas se ha {{value.action}} con éxito.",
       "error": "Error al actualizar 2FA."
     },
     "withdraw2fa": {
       "title": "2FA de retiro",
       "description": "Requerir 2FA al retirar y dar propinas.",
-      "success": "2FA de retiro se ha {{action}} con éxito.",
+      "success": "2FA de retiro se ha {{value.action}} con éxito.",
       "error": "Error al actualizar 2FA."
     },
     "largeBetConfirm": {
       "title": "Confirmar grandes apuestas",
       "description": "Confirmar apuestas superiores al 70% de tu saldo actual.",
-      "success": "La confirmación de grandes apuestas se ha {{action}} con éxito.",
+      "success": "La confirmación de grandes apuestas se ha {{value.action}} con éxito.",
       "error": "Error al actualizar la confirmación de grandes apuestas."
     },
     "unusualBetConfirm": {
       "title": "Confirmar apuestas inusuales",
       "description": "Confirmar apuestas superiores a 10 veces la cantidad de tu apuesta anterior.",
-      "success": "La confirmación de apuestas inusuales se ha {{action}} con éxito.",
+      "success": "La confirmación de apuestas inusuales se ha {{value.action}} con éxito.",
       "error": "Error al actualizar la confirmación de apuestas inusuales."
     },
     "receiveTips": {
       "title": "Recibir propinas",
       "description": "Permitir recibir propinas de otros jugadores.",
-      "success": "Recibir propinas se ha {{action}} con éxito.",
+      "success": "Recibir propinas se ha {{value.action}} con éxito.",
       "error": "Error al actualizar recibir propinas."
     },
     "hiddenMode": {
       "title": "Modo oculto",
       "description": "Ocultar mi información de usuario en feeds públicos.",
-      "success": "El modo oculto se ha {{action}} con éxito.",
+      "success": "El modo oculto se ha {{value.action}} con éxito.",
       "error": "Error al actualizar el modo oculto."
     }
   },
@@ -176,6 +175,84 @@
       "title": "Vincular {{value.name}}",
       "success": "{{value.name}} vinculado con éxito.",
       "heading": "Iniciando sesión en {{name}}"
+    }
+  },
+  "settings" : {
+    "title": "Configuraciones",
+    "email": {
+      "title": "Correo electrónico",
+      "description": "Cambiar tu dirección de correo electrónico.",
+      "emailNotConfirmed": "Tu correo electrónico no está confirmado.",
+      "linkSent": "¡Enlace enviado! Por favor revisa tu correo electrónico.",
+      "success": "El correo electrónico actualizado con éxito."
+    },
+    "password": {
+      "title": "Contraseña",
+      "description": "Cambiar tu contraseña.",
+      "success": "Contraseña actualizada con éxito.",
+      "successSet": "Contraseña establecida con éxito.",
+      "header": "Cambiar contraseña",
+      "headerSet": "Establecer contraseña"
+    },
+    "authenticator": {
+      "title": "Autenticador",
+      "description": "Habilitar 2FA.",
+      "enableModal": {
+        "header": "Habilitar autenticador",
+        "steps": {
+          "step1": "Escanea el código QR o ingresa la clave de configuración manualmente.",
+          "step2": "Ingresa el código de 6 dígitos del autenticador.",
+          "step3": "Guarda tu clave de respaldo y úsala si pierdes acceso al autenticador."
+        },
+        "success": "Autenticador habilitado.",
+        "action": "Guardar clave de respaldo",
+        "saved": "¡Clave de respaldo guardada!",
+        "copied": "¡Clave de respaldo copiada!"
+      },
+      "settingsModal": {
+        "header": "Configuraciones del autenticador",
+        "description": "Por favor revisa tu configuración de 2FA. Estas configuraciones se pueden ajustar en cualquier momento en la página de cuenta.",
+        "success": "Autenticador actualizado con éxito.",
+        "action": "Actualizar configuraciones"
+      },
+      "disableModal": {
+        "header": "Deshabilitar autenticador",
+        "description": "Por favor ingresa el código de 6 dígitos del autenticador.",
+        "success": "Autenticador deshabilitado.",
+        "action": "Enviar código",
+        "lostAccess": "¿Acceso perdido?"
+      },
+      "recoveryModal": {
+        "header": "Recuperación de autenticador",
+        "description": "Su clave de respaldo es un archivo llamado 'castle_backup_key.txt'.",
+        "success": "Autenticador eliminado.",
+        "action": "Eliminar autenticador",
+        "notice": "Esto eliminará el autenticador de tu cuenta."
+      },
+      "keyFile": {
+        "line1": "NO COMPARTAS ESTA CLAVE CON NADIE!!",
+        "line2": "Tu clave de respaldo es:",
+        "line3": "Guarda esta clave en un lugar seguro. La necesitarás si pierdes acceso a tu autenticador."
+      }
+    },
+    "selfExclusion": {
+      "title": "Autoexclusión",
+      "description": "¿Necesitas un descanso?",
+      "ends": "Termina {{value}}",
+      "modal": {
+        "description1": "Si necesitas un descanso, puedes solicitar ser excluido.",
+        "description2": "Mientras estés excluido, no tendrás acceso a:",
+        "list": {
+          "1": "Depositar",
+          "2": "Apostar",
+          "3": "Chatear"
+        },
+        "description3": "Una vez confirmado, estarás excluido durante 24 horas.",
+        "description4": "Te enviaremos un correo electrónico para confirmar el inicio y el final de tu autoexclusión.",
+        "warning":"El soporte no revertirá esto. Debes esperar a que termine tu autoexclusión una vez que comience.",
+        "success": "Autoexclusión solicitada. Revisa tu correo electrónico para confirmar.",
+        "action": "Solicitar autoexclusión"
+      }
     }
   }
 }

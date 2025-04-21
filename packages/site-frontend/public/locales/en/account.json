@@ -3,7 +3,6 @@
   "profile": "Profile Information",
   "gameHistory": "Game History",
   "verification": "Verification",
-  "settings": "Settings",
   "progress": "Account Progress",
   "avatar": {
     "title": "Change Avatar",
@@ -110,43 +109,43 @@
     "login2fa": {
       "title": "Login 2FA",
       "description": "Require 2FA on login.",
-      "success": "Login 2FA has been successfully {{action}}.",
+      "success": "Login 2FA has been successfully {{value.action}}.",
       "error": "Error updating 2FA."
     },
     "bet2fa": {
       "title": "Bet 2FA",
       "description": "Require 2FA on the first bet of a session.",
-      "success": "Bet 2FA has been successfully {{action}}.",
+      "success": "Bet 2FA has been successfully {{value.action}}.",
       "error": "Error updating 2FA."
     },
     "withdraw2fa": {
       "title": "Withdraw 2FA",
       "description": "Require 2FA on withdraw and tipping.",
-      "success": "Withdraw 2FA has been successfully {{action}}.",
+      "success": "Withdraw 2FA has been successfully {{value.action}}.",
       "error": "Error updating 2FA."
     },
     "largeBetConfirm": {
       "title": "Confirm Large Bets",
       "description": "Confirm bets over 70% of your current balance..",
-      "success": "Large bet confirmation has been successfully {{action}}.",
+      "success": "Large bet confirmation has been successfully {{value.action}}.",
       "error": "Error updating large bet confirmation."
     },
     "unusualBetConfirm": {
       "title": "Confirm Unusual Bets",
       "description": "Confirm bets over 10x the amount of your previous bet.",
-      "success": "Unusual bet confirmation has been successfully {{action}}.",
+      "success": "Unusual bet confirmation has been successfully {{value.action}}.",
       "error": "Error updating unusual bet confirmation."
     },
     "receiveTips": {
       "title": "Receive Tips",
       "description": "Allow receiving tips from other players.",
-      "success": "Receive tips has been successfully {{action}}.",
+      "success": "Receive tips has been successfully {{value.action}}.",
       "error": "Error updating receive tips."
     },
     "hiddenMode": {
       "title": "Hidden Mode",
       "description": "Hide my user info in public feeds.",
-      "success": "Hidden mode has been successfully {{action}}.",
+      "success": "Hidden mode has been successfully {{value.action}}.",
       "error": "Error updating hidden mode."
     }
   },
@@ -176,6 +175,84 @@
       "title": "Link {{name}}",
       "success": "{{value.name}} account has been successfully linked.",
       "heading": "Loggin in with {{name}}"
+    }
+  },
+  "settings" : {
+    "title": "Settings",
+    "email": {
+      "title": "Email",
+      "description": "Change your email address.",
+      "emailNotConfirmed": "Your email is not confirmed.",
+      "linkSent": "Link sent! Please check your email.",
+      "success": "Email changed."    
+    },
+    "password": {
+      "title": "Password",
+      "description": "Change your password.",
+      "success": "Password changed.",
+      "successSet": "Password set.",
+      "header": "Change Password",
+      "headerSet": "Set Password"
+    },
+    "authenticator": {
+      "title": "Authenticator",
+      "description": "Enable to use 2FA",
+      "enableModal": {
+        "header": "Enable Authenticator",
+        "steps": {
+          "step1": "Scan the QR code or enter the setup key manually.",
+          "step2": "Enter the 6-digit code from the authenticator.",
+          "step3": "Save your backup key and use it if you lose access to the authenticator."
+        },
+        "success": "Authenticator enabled.",
+        "action": "Save Backup Key",
+        "saved": "Backup key saved!",
+        "copied": "Setup key copied to clipboard!"
+      },
+      "settingsModal": {
+        "header": "Authenticator Settings",
+        "description": "Please review your 2FA settings. These settings can be adjusted any time on the account page.",
+        "success": "Authenticator settings updated.",
+        "action": "Update Settings"
+      },
+      "disableModal": {
+        "header": "Disable Authenticator",
+        "description": "This will remove the authenticator from your account.",
+        "success": "Authenticator disabled.",
+        "action": "Submit Code",
+        "lostAccess": "Lose Access?"
+      },
+      "recoveryModal": {
+        "header": "Authenticator Recovery",
+        "description": "Your backup key is in a file named 'castle_backup_key.txt'.",
+        "success": "Authenticator removed.",
+        "action": "Remove Authenticator",
+        "notice": "This will remove the authenticator from your account."
+      },
+      "keyFile": {
+        "line1": "!!! DO NOT SHARE THIS KEY !!!",
+        "line2": "Your backup key is:",
+        "line3": "Keep this in a safe place and use it if you lose access to your authenticator."
+      }
+    },
+    "selfExclusion": {
+      "title": "Self Exclusion",
+      "description": "Need a break?",
+      "ends": "Ends {{value}}",
+      "modal": {
+        "description1": "If you need a break, you can request to be excluded.",
+        "description2": "While excluded, you will not have access to:",
+        "list": {
+          "1": "Depositing",
+          "2": "Betting",
+          "3": "Chatting"
+        },
+        "description3": "Once confirmed, you will be excluded for 24 hours.",
+        "description4": "We will send an email to confirm the start and the end of your self-exclusion.",
+        "warning":"Support will not reverse this. You must wait for your self-exclusion to end once it starts.",
+        "success": "Exclusion requested. Please check your email to confirm.",
+        "action": "Request Self-Exclusion"
+      }
     }
   }
 }
