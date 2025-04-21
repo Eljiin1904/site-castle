@@ -12,7 +12,7 @@ export const StatsBody = () => {
   
   const [dateRange, setDateRange] = useState<DateRangeType>("thisMonth");
   const [category, setCategory] = useState<TransactionCategory | undefined>();
-  const [selectedChart, setSelectedChart] = useState<string | undefined>('wagered');
+  const [selectedChart, setSelectedChart] = useState<"wagered" | "pnl">('wagered');
 
   return (
     <Div
@@ -20,11 +20,11 @@ export const StatsBody = () => {
       column
       gap={40}
     >
-      <StatsHeader dateRange={dateRange} setDateRange={setDateRange} category={category} setCategory={setCategory}/>
+      <StatsHeader dateRange={dateRange} chartOption={selectedChart} setChartOption={setSelectedChart} setDateRange={setDateRange} category={category} setCategory={setCategory}/>
       <Div fx column gap={16}>
         {selectedChart === 'wagered' && <WageredChart dateRange={dateRange} game={category} />}
         {selectedChart === 'pnl' && <PnLChart dateRange={dateRange} game={category} />}
-        <StatsWidgets setSelectedChart={setSelectedChart} />
+        <StatsWidgets />
       </Div>
       <Div fx column>       
         <StatCardGrid/>

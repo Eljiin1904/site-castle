@@ -9,15 +9,19 @@ import { DateRangeType } from "@core/services/transactions/Transactions";
 import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
 
 
-export const StatsHeader = ({dateRange, setDateRange, category, setCategory}: {
+export const StatsHeader = ({dateRange, setDateRange, chartOption = 'wagered',setChartOption, category, setCategory}: {
   dateRange: DateRangeType;
   setDateRange: (x: DateRangeType) => void;
-  category: TransactionCategory | undefined;
+  chartOption: 'wagered' | 'pnl';
+  setChartOption: (x: 'wagered' | 'pnl') => void;
+  category: TransactionCategory | undefined;  
   setCategory: (x: TransactionCategory | undefined) => void;
 }) => {
   const small = useIsMobileLayout();
   const { t } = useTranslation(["account"]);
   const indexes = Transactions.dateranges.map((x) => t(`stats.dateranges.${x}`));
+  const chartOptions = ['wagered','pnl'];
+
   return (
     <Div
       justify={small ? "space-between" : undefined}
@@ -29,6 +33,17 @@ export const StatsHeader = ({dateRange, setDateRange, category, setCategory}: {
           heading={t('stats.title')}
         />
       )}
+      <Dropdown
+        type="select"
+        fx={small}
+        options={chartOptions.map((x) => t(`stats.${x}`))}
+        value={chartOptions.indexOf(chartOption)}
+        onChange={(x, i) => 
+          setChartOption(
+            chartOptions[i] as 'pnl' | 'wagered',
+          )
+        }
+      />
       <Dropdown
         type="select"
         fx={small}

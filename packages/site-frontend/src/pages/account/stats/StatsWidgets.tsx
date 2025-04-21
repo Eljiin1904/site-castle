@@ -12,9 +12,7 @@ import { useMostPopularGame } from "./useMostPopularGame";
 import { SvgDeposit } from "#app/svgs/notifications/SvgDeposit";
 import { SvgWithdraw } from "#app/svgs/notifications/SvgWithdraw";
 
-export const StatsWidgets = ({setSelectedChart}:{
-  setSelectedChart: (x:string) => void;
-}) => {
+export const StatsWidgets = () => {
 
   const {t} = useTranslation(["account"]);
   const stats = useAppSelector((x) => x.user.stats);
@@ -39,7 +37,6 @@ export const StatsWidgets = ({setSelectedChart}:{
       tokens={stats.wagerAmount}
       description={t('stats.totalWagered')}
       icon={SvgTransaction}
-      onClick={() => setSelectedChart('wagered')}
       />
     </Div>
     <Div gap={24} fx>
@@ -54,27 +51,25 @@ export const StatsWidgets = ({setSelectedChart}:{
         icon={SvgWithdraw}
       />
       <StatWidget
-        tokens={ (stats.wagerProfitLoss ?? 0 )}
+        tokens={ (stats.profitLoss ?? 0 )}
         description={t('stats.pnlShort')}
         icon={SvgBets}
-        onClick={() => setSelectedChart('pnl')}
       />
     </Div>
     
   </Div>)
 };
 
-const StatWidget = ({title, tokens, description,icon, onClick}:{
+const StatWidget = ({title, tokens, description,icon}:{
   title?:string,
   tokens?: number;
   description:string,
-  icon:Svg,
-  onClick?: () => void;
+  icon:Svg
 }) => {
   
     const layout = useAppSelector((x) => x.style.mainLayout);
     const small = layout === "mobile" || layout === "tablet";
-    return (<CardSection cursor={onClick ? "pointer": "auto"} hover={onClick ? "highlight": "none"} onClick={onClick} border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
+    return (<CardSection border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
           <Div column gap={12} grow>
             {tokens !== undefined && <Tokens fontSize={24} value={tokens} justifyContent="flex-start" />}
             {title !== undefined && <Heading  

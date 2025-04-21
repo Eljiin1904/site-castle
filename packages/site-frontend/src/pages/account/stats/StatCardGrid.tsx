@@ -45,7 +45,7 @@ export const StatCardGrid = () => {
               size={16}
               fontWeight="regular"
               textTransform="uppercase">
-                {t("menu.bets")}
+                {t("menu.bet", {count: 2})}
             </Heading>
           </CardSection>
           <StatCardSection
