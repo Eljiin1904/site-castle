@@ -14,21 +14,22 @@ import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Users } from "#app/services/users";
 import { UserEmailConfirmModal } from "./UserEmailConfirmModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserEmailEditModal = () => {
   const currentEmail = useAppSelector((x) => x.user.email);
-
+  const { t } = useTranslation(["validations"]);
   const form = useCaptchaForm({
     schema: Validation.object({
       email: Validation.email().notOneOf(
         [currentEmail],
-        "Cannot be current email.",
+        "validations.email.notEqual",
       ),
       password: Validation.password(),
     }),
     onSubmit: async (values) => {
       await Users.editEmail(values);
-      Toasts.success("Email changed.");
+      Toasts.success(`account:settings.email.success`);
       Dialogs.open("primary", <UserEmailConfirmModal />);
     },
   });
@@ -39,45 +40,53 @@ export const UserEmailEditModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Change Email"
+        heading={t("account:settings.email.description")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <CaptchaForm form={form}>
           <ModalSection>
-            <ModalLabel>{"Current Email"}</ModalLabel>
+            <ModalLabel>{t("fields:currentEmail.field")}</ModalLabel>
             <ModalField>{currentEmail}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"New Email"}</ModalLabel>
+            <ModalLabel>{t("fields:newEmail.field")}</ModalLabel>
             <Input
               type="email"
               id="new-email"
               autoComplete="email"
-              placeholder="Enter new email..."
+              placeholder={t("fields:newEmail.placeholder")}
               disabled={form.loading}
-              error={form.errors.email}
+              error={
+                form.errors.email?.key
+                  ? t(form.errors.email.key, { value: form.errors.email.value })
+                  : undefined
+              }
               value={form.values.email}
               onChange={(x) => form.setValue("email", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Current Password"}</ModalLabel>
+            <ModalLabel>{t("fields:password.currentPassword")}</ModalLabel>
             <Input
               type="password"
               id="current-password"
               autoComplete="current-password"
-              placeholder="Enter current password..."
+              placeholder={t("fields:password.currentPasswordPlaceholder")}
               disabled={form.loading}
-              error={form.errors.password}
+              error={
+                form.errors.password?.key
+                  ? t(form.errors.password.key, { value: form.errors.password.value })
+                  : undefined
+              }
               value={form.values.password}
               onChange={(x) => form.setValue("password", x)}
             />
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Submit"
+            kind="primary-yellow"
+            label={t("common:submit")}
             fx
             loading={form.loading}
           />

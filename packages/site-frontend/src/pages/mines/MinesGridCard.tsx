@@ -164,7 +164,7 @@ const BombInCell = ({revealed}: {revealed?: boolean}) => {
       altImage="/icons/mines-bomb"
       altPadding={padding}
       controls={false}
-      playBackSpeed={1}
+      playBackSpeed={1.5}
       ></Video>);
   
   else

@@ -59,7 +59,7 @@ async function handleAdd(user: UserDocument, referralCode: string) {
   );
 
   if (!affiliate) {
-    throw new HandledError("errors.invalidReferralCode");
+    throw new HandledError("validations:errors.invalidReferralCode");
   }
 
   if (user._id === affiliate._id) {

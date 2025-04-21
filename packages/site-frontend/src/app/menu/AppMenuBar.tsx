@@ -54,7 +54,7 @@ const BarContent = () => {
       />
       <MenuItem
         icon={SvgBets}
-        label={t("menu.bets")}
+        label={t("menu.bet",{count: 2})}
         type="nav"
         to="/bets"
       />

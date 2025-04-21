@@ -20,6 +20,7 @@ import verifyTier1 from "./verifyTier1";
 import verifyTier1Part1 from "./verifyTier1Part1";
 import verifyTier1Part2 from "./verifyTier1Part2";
 import verifyTier1Part3 from "./verifyTier1Part3";
+import getTransactionsByDateRange from "./getTransactionsByDateRange";
 
 const router = Router();
 
@@ -44,5 +45,6 @@ verifyTier1(router);
 verifyTier1Part1(router);
 verifyTier1Part2(router);
 verifyTier1Part3(router);
+getTransactionsByDateRange(router);
 
 export default router;

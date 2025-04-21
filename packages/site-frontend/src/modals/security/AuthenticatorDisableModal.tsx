@@ -6,8 +6,10 @@ import { Toasts } from "@client/services/toasts";
 import { ModalBody } from "@client/comps/modal/ModalBody";
 import { Security } from "#app/services/security";
 import { AuthenticatorCodeForm } from "./AuthenticatorCodeForm";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AuthenticatorDisableModal = () => {
+  const { t } = useTranslation(["account"]);
   return (
     <Modal
       className="AuthenticatorDisableModal"
@@ -15,20 +17,20 @@ export const AuthenticatorDisableModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Disable Authenticator"
+        heading={t("account:settings.authenticator.disableModal.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <AuthenticatorCodeForm
           onSubmit={async (values) => {
             await Security.authenticatorDisable(values);
-            Toasts.success("Authenticator disabled.");
+            Toasts.success(`account:settings.authenticator.disableModal.success`);
             Dialogs.close("primary");
           }}
           notice={
             <NoticeCard
               kind="warning"
-              message="This will remove the authenticator from your account."
+              message={t("account:settings.authenticator.disableModal.description")}
             />
           }
         />

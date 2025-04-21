@@ -7,10 +7,22 @@
   },
   "username": "Username",
   "email": "Email",
+  "currentEmail": {
+    "field": "Current Email",
+    "placeholder": "Enter current email..."
+  },
+  "newEmail": {
+    "field": "New Email",
+    "placeholder": "Enter new email..."
+  },
   "password": {
     "field": "Password",
     "confirmField": "Confirm Password",
-    "newField": "New Password"
+    "newField": "New Password",
+    "newFieldPlaceholder": "Enter new password...",
+    "placeholder": "Enter password...",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password..."
   },
   "dob": {
     "field": "Date of Birth",
@@ -32,7 +44,6 @@
       "december": "December"
     }
   },
-
   "occupation": {
     "field": "Occupation",
     "placeholder": "Enter occupation..."
@@ -77,5 +88,11 @@
   },
   "date": {
     "joined": "Date Joined"
+  },
+  "auth": {
+    "field": "Authenticator Code",
+    "placeholder": "Enter 6-digit code...",
+    "backupField": "Backup Key",
+    "backupPlaceholder": "Enter backup key..."
   }
 }

@@ -22,7 +22,7 @@ export default Http.createApiRoute({
     await Site.validatePassword(user, password);
 
     if (await Database.exists("users", { email }, { collation: { locale: "en", strength: 2 } })) {
-      throw new HandledError("errors.email.taken");
+      throw new HandledError("validations:errors.email.taken");
     }
 
     await Site.validateEmail(email);

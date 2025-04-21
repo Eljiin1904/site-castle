@@ -12,16 +12,15 @@ import { UnorderedList } from "@client/comps/list/UnorderedList";
 import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Toasts } from "@client/services/toasts";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserExclusionStartModal = () => {
+  const { t } = useTranslation(["account"]);
   const form = useForm({
     schema: Validation.object({}),
     onSubmit: async (values) => {
       await Users.requestExclusion();
-      Toasts.success(
-        "Exclusion requested. Please check your email to confirm.",
-        8000,
-      );
+      Toasts.success(`account:settings.selfExclusion.modal.success`, 8000);
       Dialogs.close("primary");
     },
   });
@@ -32,38 +31,38 @@ export const UserExclusionStartModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Self-Exclusion"
+        heading={t("account:settings.selfExclusion.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <ModalSection>
             <Paragraph>
-              {"If you need a break, you can request to be excluded."}
+              {t("account:settings.selfExclusion.modal.description1")}
             </Paragraph>
             <br />
             <Paragraph>
-              {"While excluded, you will not have access to:"}
+              {t("account:settings.selfExclusion.modal.description2")}
             </Paragraph>
-            <UnorderedList items={["Depositing", "Betting", "Chatting"]} />
+            <UnorderedList items={[t("account:settings.selfExclusion.modal.list.1"),
+              t("account:settings.selfExclusion.modal.list.2"),
+              t("account:settings.selfExclusion.modal.list.3")]} />
             <Paragraph>
-              {"Once confirmed, you will be excluded for 24 hours."}
+            {t("account:settings.selfExclusion.modal.description3")}
             </Paragraph>
             <br />
             <Paragraph>
-              {
-                "We will send an email to confirm the start and the end of your self-exclusion."
-              }
+              {t("account:settings.selfExclusion.modal.description4")}
             </Paragraph>
           </ModalSection>
           <NoticeCard
             kind="warning"
-            message="Support will not reverse this. You must wait for your self-exclusion to end once it starts."
+            message={t("account:settings.selfExclusion.modal.warning")}
           />
           <Button
             type="submit"
-            kind="primary"
-            label="Request Self-Exclusion"
+            kind="primary-yellow"
+            label={t("account:settings.selfExclusion.modal.action")}
             fx
             loading={form.loading}
           />

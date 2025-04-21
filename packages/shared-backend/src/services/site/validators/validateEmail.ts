@@ -5,7 +5,7 @@ export async function validateEmail(email: string) {
   const info = await Http.getEmailInfo(email);
 
   if (info.status === "invalid") {
-    throw new HandledError("errors.email.invalid");
+    throw new HandledError("validations:errors.email.invalid");
   }
 
   if (info.status === "disposable") {

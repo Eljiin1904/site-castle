@@ -1,68 +1,52 @@
-import { Span } from "@client/comps/span/Span";
-import { Heading } from "@client/comps/heading/Heading";
 import { Card } from "@client/comps/cards/Card";
-import { CardSection } from "@client/comps/cards/CardSection";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { ToggleSlide } from "./ToggleSlide";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ToggleCard = () => {
   const tfaEnabled = useAppSelector((x) => x.user.tfa.enabled);
-
+  const { t } = useTranslation(["account"]);
   return (
     <Card column>
-      <CardSection
-        position="header"
-        py={16}
-      >
-        <Heading>{"Preferences"}</Heading>
-      </CardSection>
       <ToggleSlide
         id="login2fa"
-        heading="Login 2FA*"
-        description="Require 2FA on login."
+        heading={t("preferences.login2fa.title")}
+        description={t("preferences.login2fa.description")}
         disabled={!tfaEnabled}
       />
       <ToggleSlide
         id="bet2fa"
-        heading="Bet 2FA*"
-        description="Require 2FA on the first bet of a session."
+        heading={t("preferences.bet2fa.title")}
+        description={t("preferences.bet2fa.description")}
         disabled={!tfaEnabled}
       />
       <ToggleSlide
         id="withdraw2fa"
-        heading="Withdraw 2FA*"
-        description="Require 2FA on withdraw and tipping."
+        heading={t("preferences.withdraw2fa.title")}
+        description={t("preferences.withdraw2fa.description")}
         disabled={!tfaEnabled}
       />
       <ToggleSlide
         id="largeBetConfirm"
-        heading="Confirm Large Bets"
-        description="Confirm bets over 70% of your current balance."
+        heading={t("preferences.largeBetConfirm.title")}
+        description={t("preferences.largeBetConfirm.description")}
       />
       <ToggleSlide
         id="unusualBetConfirm"
-        heading="Confirm Unusual Bets"
-        description="Confirm bets over 10x the amount of your previous bet."
+        heading={t("preferences.unusualBetConfirm.title")}
+        description={t("preferences.unusualBetConfirm.description")}
       />
       <ToggleSlide
         id="receiveTips"
-        heading="Receive Tips"
-        description="Allow receiving tips from other players."
+        heading={t("preferences.receiveTips.title")}
+        description={t("preferences.receiveTips.description")}
       />
       <ToggleSlide
         id="hiddenMode"
-        heading="Hidden Mode"
-        description="Hide my user info in public feeds."
+        heading={t("preferences.hiddenMode.title")}
+        description={t("preferences.hiddenMode.description")}
+        borderBottom={false}
       />
-      <CardSection>
-        <Span
-          weight="semi-bold"
-          color="white"
-        >
-          {"*"}
-        </Span>
-        <Span ml={4}>{"Authenticator must be enabled"}</Span>
-      </CardSection>
     </Card>
   );
 };

@@ -1,5 +1,4 @@
 import { Validation } from "@core/services/validation";
-import { Strings } from "@core/services/strings";
 import { UserLinkProvider } from "@core/types/users/UserLinkProvider";
 import { Button } from "@client/comps/button/Button";
 import { Form } from "@client/comps/form/Form";
@@ -16,7 +15,7 @@ import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserUnlinkAccountModal = ({ provider }: { provider: UserLinkProvider }) => {
-  const { t } = useTranslation(["validations"]);
+  const { t } = useTranslation(["validations","account"]);
 
   const form = useForm({
     schema: Validation.object({
@@ -24,7 +23,7 @@ export const UserUnlinkAccountModal = ({ provider }: { provider: UserLinkProvide
     }),
     onSubmit: async (values) => {
       await Users.unlinkAccount({ ...values, provider });
-      Toasts.success(`${Strings.capitalize(provider)} unlinked.`);
+      Toasts.success(`account:linkedAccounts.unlinkModal.success`,5000,{ name: t(`account:linkedAccounts.${provider}.title`) });
       Dialogs.close("primary");
     },
   });
@@ -35,17 +34,17 @@ export const UserUnlinkAccountModal = ({ provider }: { provider: UserLinkProvide
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading={`Unlink ${Strings.capitalize(provider)}`}
+        heading={t(`account:linkedAccounts.unlinkModal.title`,{name: t(`account:linkedAccounts.${provider}.title`)})}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <ModalSection>
-            <ModalLabel>{"Password"}</ModalLabel>
+            <ModalLabel>{t("fields:password.field")}</ModalLabel>
             <Input
               type="password"
               id="current-password"
-              placeholder="Enter password..."
+              placeholder={t("fields:password.placeholder")}
               autoComplete="current-password"
               disabled={form.loading}
               error={
@@ -59,8 +58,8 @@ export const UserUnlinkAccountModal = ({ provider }: { provider: UserLinkProvide
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Unlink"
+            kind="primary-yellow"
+            label={t("common:unlink")}
             fx
             loading={form.loading}
           />

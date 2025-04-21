@@ -14,13 +14,12 @@ export const ModalField: FC<ModalFieldProps> = ({
       className={classNames("ModalField", className)}
       fx
       px={12}
-      py={11}
-      fontSize={14}
-      fontWeight="medium"
-      color="gray"
-      bg="brown-8"
+      py={11}     
+      fontSize={12}
+      color="dark-sand"
+      bg="dark-brown"
       border
-      borderColor="brown-5"
+      borderColor="brown-4"
       {...forwardProps}
     >
       {children}

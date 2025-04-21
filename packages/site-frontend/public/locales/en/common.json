@@ -29,5 +29,16 @@
   "more": "More details",
   "copyClipboard": "Copy to Clipboard",
   "rules": "Rules",
-  "back": "Back"
+  "back": "Back",
+  "enabled": "Enabled",
+  "enable": "Enable",
+  "disable": "Disable",
+  "disabled": "Disabled",
+  "link": "Link",
+  "unlink": "Unlink",
+  "connected": "Connected",
+  "edit": "Edit",
+  "set": "Set",
+  "confirmNow": "Confirm now",
+  "code": "Code"
 }

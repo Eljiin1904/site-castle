@@ -5,83 +5,66 @@ import { Vector } from "@client/comps/vector/Vector";
 import { CardSection } from "@client/comps/cards/CardSection";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
+import { Heading } from "@client/comps/heading/Heading";
 
 export const UserSlide = ({
-  icon,
+  id,
   heading,
   description,
   descriptionColor = "gray",
   successMessage,
-  buttonKind = "primary",
+  buttonKind = "primary-yellow",
   buttonLabel,
   buttonLoading,
   buttonDisabled,
   onButtonClick,
+  borderBottom = true,
+  extraContent = null,
 }: {
-  icon: Svg;
+  id: string;
   heading: string;
   description: string | JSX.Element;
   descriptionColor?: Color;
   successMessage?: string;
-  buttonKind?: "primary" | "secondary";
+  buttonKind?: "primary-yellow" | "tertiary-grey";
   buttonLabel: string;
   buttonLoading?: boolean;
   buttonDisabled?: boolean;
+  borderBottom?: boolean;
   onButtonClick: () => void;
+  extraContent?: JSX.Element | null;
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
   const small = mainLayout === "mobile";
 
   return (
-    <CardSection
-      py={16}
-      gap={small ? 12 : 16}
-    >
-      <Vector
-        as={icon}
-        size={24}
-      />
-      <Div
-        grow
-        column
-        gap={6}
-      >
-        <Span
-          family="title"
-          weight="bold"
-          color="white"
-          size={small ? 14 : 16}
-        >
+    <CardSection  px={small ? 20 : 24} py={0} position="none" column={!!extraContent}> 
+    <Div fx py={16} borderBottom={!extraContent} borderColor="brown-4" justify="space-between" center>
+      <Div column gap={8} className="toggle-slide">
+        <Heading as="h3" fontWeight="regular" textTransform="uppercase">
           {heading}
-        </Span>
-        <Div
-          display="block"
-          fontSize={small ? 12 : 14}
-          color={descriptionColor}
-        >
+        </Heading>
+        <Span className="description-text">
           {description}
+        </Span>
+        {successMessage && (
+          <Div align="center">
+            <Vector
+              as={SvgCheckCircle}
+              size={16}
+              color="bright-green"
+            />
+            {!small && (
+              <Span
+                color="bright-green"
+                ml={8}
+              >
+                {successMessage}
+              </Span>
+            )}
+          </Div>
+        )}
         </Div>
-      </Div>
-      {successMessage && (
-        <Div align="center">
-          <Vector
-            as={SvgCheckCircle}
-            size={16}
-            color="green"
-          />
-          {!small && (
-            <Span
-              weight="semi-bold"
-              color="green"
-              ml={6}
-              mr={8}
-            >
-              {successMessage}
-            </Span>
-          )}
-        </Div>
-      )}
-      <Div align="center">
         <Button
           kind={buttonKind}
           label={buttonLabel}
@@ -89,13 +72,21 @@ export const UserSlide = ({
           loading={buttonLoading}
           disabled={buttonDisabled}
           style={{
-            minWidth: small ? "64px" : "80px",
-            maxWidth: small ? "64px" : "80px",
-            height: small ? "36px" : "40px",
+            minWidth: small ? "64px" : "100px"
           }}
           onClick={onButtonClick}
         />
+    </Div>
+    {extraContent && (
+      <Div
+        className="extra-content"
+        pb={16} 
+        borderBottom
+        borderColor="brown-4"
+      >
+        {extraContent}
       </Div>
+    )}
     </CardSection>
   );
 };

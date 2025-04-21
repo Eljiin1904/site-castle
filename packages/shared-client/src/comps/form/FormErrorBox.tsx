@@ -42,10 +42,10 @@ export const FormErrorBox = ({
         />
         <Span
         color="light-sand"
-        >{t(error)}</Span>
+        >{error}</Span>
       </Div>
       <Button
-        kind="primary"
+        kind="primary-yellow"
         fx
         label={t("common:okay")}
         onClick={onAck}

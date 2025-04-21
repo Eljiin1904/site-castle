@@ -6,30 +6,30 @@
   // border: var(--border);
 
   &.info {    
-    border-left: 4px solid var(--dark-brown-color);
+    border-left: 4px solid var(--light-sand-color);
     .icon {
-      color: var(--dark-brown-color);
+      color: var(--light-sand-color);
     }
   }
 
   &.success {    
-    border-left: 4px solid var(--green-color);
+    border-left: 4px solid var(--bright-green-color);
     .icon {
-      color: var(--green-color);
+      color: var(--bright-green-color);
     }
   }
 
   &.warning {    
-    border-left: 4px solid var(--yellow-color);
+    border-left: 4px solid var(--sand-color);
     .icon {
-      color: var(--yellow-color);
+      color: var(--sand-color);
     }
   }
 
   &.error {    
-    border-left: 4px solid var(--red-color);
+    border-left: 4px solid var(--double-red-color);
     .icon {
-      color: var(--red-color);
+      color: var(--double-red-color);
     }
   }
 }

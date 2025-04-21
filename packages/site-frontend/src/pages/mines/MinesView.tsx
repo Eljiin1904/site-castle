@@ -1,9 +1,11 @@
+import { Fragment } from "react";
 import { Div } from "@client/comps/div/Div";
 import { MinesGrid } from "./MinesGrid";
 import { MinesWinCard } from "./MinesWinCard";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Img } from "@client/comps/img/Img";
 import { MinesHistory } from "./MinesHistory";
+import { MinesHeader } from "./MinesHeader";
 
 export const MinesView = () => {
   
@@ -27,8 +29,11 @@ export const MinesView = () => {
           width="100%"
           aspectRatio={"16 / 9"}
           position="absolute"
-        />   
-        {!small && <MinesHistory />}   
+        />
+        {!small && <Fragment>
+          <MinesHeader />              
+          <MinesHistory />
+        </Fragment>}   
         <MinesGrid />
         <MinesWinCard />
       </Div>

@@ -48,8 +48,8 @@ export function useSendTip() {
     }
 
     await Economy.sendTip({ lookup, tipAmount, tfac });
-
-    Toasts.success(t('chat.tipModal.confirmSuccess',{value: {username: lookup, amount: Intimal.toLocaleString(tipAmount)}}));
+    
+    Toasts.success('chat.tipModal.confirmSuccess',5000,{value: {username: lookup, amount: Intimal.toLocaleString(tipAmount)}});
     Dialogs.close("primary");
   };
 

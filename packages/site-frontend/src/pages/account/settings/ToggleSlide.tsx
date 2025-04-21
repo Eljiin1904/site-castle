@@ -10,6 +10,8 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Users } from "#app/services/users";
 import { waitForAuthenticatorCode } from "#app/modals/security/AuthenticatorCodeModal";
 import { Security } from "#app/services/security";
+import { Heading } from "@client/comps/heading/Heading";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 import './ToggleSlide.scss';
 
 export const ToggleSlide = ({
@@ -17,16 +19,21 @@ export const ToggleSlide = ({
   heading,
   description,
   disabled,
+  borderBottom = true,
 }: {
   id: UserSettingKey;
   heading: string;
   description: string;
   disabled?: boolean;
+  borderBottom?: boolean;
 }) => {
   const settings = useAppSelector((x) => x.user.settings);
   const [loading, setLoading] = useState(false);
   const isOn = settings[id];
   const requires2fa = Users.setting2faKeys.includes(id);
+  const layout = useAppSelector((x) => x.style.mainLayout);
+  const small = layout === "mobile" || layout === "tablet";
+  const {t} = useTranslation(["account"]);
 
   const handleToggle = usePost(async () => {
     const value = !isOn;
@@ -38,17 +45,22 @@ export const ToggleSlide = ({
     } else {
       await Users.toggleSetting({ id, value });
     }
-
-    Toasts.success(`${heading} is now ${value ? "enabled" : "disabled"}.`);
+    const action = t(`common:${value ? "enabled" : "disabled"}`).toLocaleLowerCase();
+    Toasts.success(`account:preferences.${id}.success`, 5000, {action: action});
   }, setLoading);
 
   return (
-    <Div
-      align="center"
-      className="ToggleSlide"
-      gap={16}
-        
-    >
+    <CardSection  px={small ? 20 : 24} py={0} position="none">
+      <Div fx py={16} gap={16} borderBottom={borderBottom} borderColor="brown-4" justify="space-between" center>
+      <Div column gap={8} className="toggle-slide">
+        <Heading as="h3" fontWeight="regular" textTransform="uppercase">
+          {heading}
+        </Heading>
+        {description && <Span
+          className="description-text">
+          {description}
+      </Span>}
+      </Div>
       <Toggle
         value={isOn}
         disabled={loading || disabled}
@@ -56,19 +68,11 @@ export const ToggleSlide = ({
         {...(disabled
           ? {
               "data-tooltip-id": "app-tooltip",
-              "data-tooltip-content": "Authenticator must be enabled",
+              "data-tooltip-content": t("preferences.authenticatorMustBeEnabled"),
             }
           : undefined)}
       />
-      <Div
-        className="label"
-      >
-        {heading}
       </Div>
-      {description && <Span
-          className="description-text">
-          {description}
-      </Span>}
-    </Div>
+    </CardSection>
   );
 };

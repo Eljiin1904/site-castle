@@ -28,7 +28,8 @@
       "field": "Email",
       "required": "{{value}} is required.",
       "invalid": "{{value}} is invalid.",
-      "valid": "{{value}} be in a valid format."
+      "valid": "{{value}} be in a valid format.",
+      "notEqual": "Cannot be the same as current email."
     },
     "boolean": {
       "isValue": "{{value.label}} must be {{value.value}}."
@@ -55,8 +56,8 @@
     },
     "tfac": {
       "field": "Authentication Code",
-      "required": "{{value}} is required.",
-      "min": "{{value.label}} must be {{value.min}} digits."
+      "required": "Code is required.",
+      "min": "Code must be {{value.min}} digits."
     },
     "page": {
       "field": "Page",
@@ -93,6 +94,12 @@
     "tip": {
       "recipientRequired": "Recipient is required.",
       "notEnoughTokens": "You don't have enough tokens"
+    },
+    "code": {
+      "required": "Code is required."
+    },
+    "backupKey": {
+      "required": "Backup key is required."
     }
   },
   "errors": {
@@ -157,6 +164,17 @@
     "queries": {
       "transactions": "Something went wrong, please refetch your transactions.",
       "history": "Something went wrong, please refetch your game history."
+    },
+    "auth": {
+      "invalid": "Invalid authenticator code.",     
+      "notEnabled": "Authenticator not enabled.",
+      "invalidBackupKey": "Invalid backup key.",
+      "requiredBackupKey": "Backup key is required.",
+      "notSet": "Authenticator not setup."
+    },
+    "users": {
+      "notFound": "User not found.",
+      "idRequired": "User id is required."
     }
   }
 }

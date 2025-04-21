@@ -5,6 +5,7 @@
   border-radius: 100px;
   height: 32px;
   width: 56px;
+  flex-shrink: 0;
 
   .knob {
     color: var(--brown-5-color);
@@ -29,7 +30,7 @@
     cursor: not-allowed;
 
     .knob {
-      color: var(--light-sand-color);
+      color: var(--brown-4-color);
     }
   }
 
@@ -37,11 +38,11 @@
     cursor: pointer;
 
     &.active {      
-      background: var(--dark-yellow-color);
+      background: var(--sand-hover-color);
     }
 
     &:not(.active) {
-      background: var(--black-hover-color);      
+      background: var(--dark-brown-hover-color);      
     }
   }
 

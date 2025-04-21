@@ -27,7 +27,7 @@ export default Http.createAuthRoute({
       throw err;
     } else {
       console.error(err);
-      throw new HandledError("errors.invalidCredentials");
+      throw new HandledError("validations:errors.invalidCredentials");
     }
   },
   onSuccess: async (req, res) => {

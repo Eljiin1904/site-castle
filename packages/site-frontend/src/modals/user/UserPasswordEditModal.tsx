@@ -11,16 +11,18 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { CaptchaForm } from "#app/comps/captcha-form/CaptchaForm";
 import { useCaptchaForm } from "#app/comps/captcha-form/useCaptchaForm";
 import { Users } from "#app/services/users";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserPasswordEditModal = () => {
+  const {t} = useTranslation(["validations"]);
   const form = useCaptchaForm({
     schema: Validation.object({
-      currentPassword: Validation.password("Current password"),
-      newPassword: Validation.password("New password"),
+      currentPassword: Validation.password(t("fields:password.currentPassword")),
+      newPassword: Validation.password(t("fields:password.newField")),
     }),
     onSubmit: async (values) => {
       await Users.editPassword(values);
-      Toasts.success("Password changed.");
+      Toasts.success(`account:settings.password.success`);
       Dialogs.close("primary");
     },
   });
@@ -31,41 +33,49 @@ export const UserPasswordEditModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Change Password"
+        heading={t("account:settings.password.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <CaptchaForm form={form}>
           <ModalSection>
-            <ModalLabel>{"Current Password"}</ModalLabel>
+            <ModalLabel>{t("fields:password.currentPassword")}</ModalLabel>
             <Input
               type="password"
               id="current-password"
-              placeholder="Enter current password..."
+              placeholder={t("fields:password.currentPasswordPlaceholder")}
               autoComplete="current-password"
               disabled={form.loading}
-              error={form.errors.currentPassword}
+              error={
+                form.errors.currentPassword?.key
+                  ? t(form.errors.currentPassword.key, { value: form.errors.currentPassword.value })
+                  : undefined
+              }
               value={form.values.currentPassword}
               onChange={(x) => form.setValue("currentPassword", x)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"New Password"}</ModalLabel>
+            <ModalLabel>{t("fields:password.newField")}</ModalLabel>
             <Input
               type="password"
               id="new-password"
-              placeholder="Enter new password..."
+              placeholder={t("fields:password.newFieldPlaceholder")}
               autoComplete="new-password"
               disabled={form.loading}
-              error={form.errors.newPassword}
+              error={
+                form.errors.newPassword?.key
+                  ? t(form.errors.newPassword.key, { value: form.errors.newPassword.value })
+                  : undefined
+              }
               value={form.values.newPassword}
               onChange={(x) => form.setValue("newPassword", x)}
             />
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Change Password"
+            kind="primary-yellow"
+            label={t("account:settings.password.header")}
             fx
             loading={form.loading}
           />

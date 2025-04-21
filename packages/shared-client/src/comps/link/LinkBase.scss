@@ -9,4 +9,11 @@
   &._hover:hover {
     text-decoration: none;
   }
+
+  &.active {
+    
+    .Span, .Vector  {
+      color: var(--sand-color);
+    }
+  }
 }

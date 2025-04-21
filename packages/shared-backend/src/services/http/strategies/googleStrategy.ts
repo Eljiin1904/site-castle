@@ -50,7 +50,7 @@ async function verify(
 
     if (req.isAuthenticated()) {
       if (await Database.exists("users", { googleId })) {
-        throw new HandledError("errors.google.taken");
+        throw new HandledError("validations:errors.google.taken");
       }
 
       await Database.collection("users").updateOne({ _id: req.user._id }, { $set: { googleId } });
@@ -72,7 +72,7 @@ async function verify(
         }
 
         if (await Database.exists("users", { googleId })) {
-          throw new HandledError("errors.google.taken");
+          throw new HandledError("validations:errors.google.taken");
         }
 
         throw new UnknownUserError(googleId, email);

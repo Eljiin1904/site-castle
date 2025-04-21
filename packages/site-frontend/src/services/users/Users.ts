@@ -22,6 +22,7 @@ export * from "./api/verifyTier1";
 export * from "./api/verifyTier1Part1";
 export * from "./api/verifyTier1Part2";
 export * from "./api/verifyTier1Part3";
+export * from "./api/getTransactionsByDateRange";
 
 export * from "./redux/userSlice";
 

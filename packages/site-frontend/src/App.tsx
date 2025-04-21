@@ -2,6 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AppBody } from "@client/app/body/AppBody";
 import { AppDialog } from "@client/app/dialog/AppDialog";
 import { AppTooltip } from "@client/app/tooltip/AppTooltip";
+import { ChartTooltip } from "@client/app/tooltip/ChartTooltip";
 import { AppMain } from "@client/app/main/AppMain";
 import { AppToasts } from "@client/app/toasts/AppToasts";
 import { Div } from "@client/comps/div/Div";
@@ -34,6 +35,7 @@ export const App = () => {
             <AppBody bg="brown-7">
               <AppDialog />
               <AppTooltip />
+              <ChartTooltip />
               <AppAnnouncement />
               <AppEffects />
               <AppBackground />

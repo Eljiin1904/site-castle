@@ -1,3 +1,7 @@
+/**
+ * profitLoss is user for deposits and withdraws
+ * wagerProfitLoss is used for bets
+ */
 export interface UserStats {
   profitLoss?: number;
   depositCount?: number;
@@ -36,15 +40,24 @@ export interface UserStats {
   betCount?: number;
   evAmount?: number;
   wagerAmount?: number;
+  wagerProfitLoss?: number;
   wonAmount?: number;
-  caseBetCount?: number;
-  caseWagerAmount?: number;
+  duelBetCount?: number;
+  duelWagerAmount?: number;
   caseBattleBetCount?: number;
   caseBattleWagerAmount?: number;
-  doubleBetCount?: number;
-  doubleWagerAmount?: number;
+  crashBetCount?: number;
+  crashWagerAmount?: number;
   diceBetCount?: number;
   diceWagerAmount?: number;
   limboBetCount?: number;
   limboWagerAmount?: number;
+  blackjackBetCount?: number;
+  blackjackWagerAmount?: number;
+  minesBetCount?: number;
+  minesWagerAmount?: number;
+  doubleBetCount?: number;
+  doubleWagerAmount?: number;
+  caseBetCount?: number;
+  caseWagerAmount?: number;  
 }

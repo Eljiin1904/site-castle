@@ -10,8 +10,8 @@ export default Http.createApiRoute({
   path: "/recover",
   secure: false,
   body: Validation.object({
-    userId: Validation.string().required("User ID is required."),
-    backupKey: Validation.string().required("Backup key is required."),
+    userId: Validation.string().required("errors.users.idRequired"),
+    backupKey: Validation.string().required("errors.auth.requiredBackupKey"),
   }),
   callback: async (req, res) => {
     const { userId, backupKey } = req.body;
@@ -21,16 +21,16 @@ export default Http.createApiRoute({
     });
 
     if (!user) {
-      throw new HandledError("User not found.");
+      throw new HandledError("validations:errors.users.notFound");
     }
     if (!user.tfa.enabled) {
-      throw new HandledError("Authenticator not enabled.");
+      throw new HandledError("validations:errors.auth.notEnabled");
     }
 
     const isValid = await bcrypt.compare(backupKey, user.tfa.recoveryHash);
 
     if (!isValid) {
-      throw new HandledError("Invalid backup key.");
+      throw new HandledError("validations:errors.auth.invalidBackupKey");
     }
 
     await Database.collection("users").updateOne(
