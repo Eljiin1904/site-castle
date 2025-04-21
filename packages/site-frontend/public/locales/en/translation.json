@@ -167,7 +167,7 @@
       }
     },
     "disclaimer": "By registering, you agree to our <0>{{link}}</0> and that you're 18+ years old.",
-    "success": "Welcome, {{username}}!",
+    "success": "Welcome, {{value.username}}!",
     "confirm": {
       "title": "Confirm Email",
       "description": "To confirm your email, please click the button below.",
