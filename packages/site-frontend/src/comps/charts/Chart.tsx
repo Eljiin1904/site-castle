@@ -3,6 +3,7 @@ import { AreaLabel } from "./AreaLabel";
 import { ChartArea } from "./ChartArea";
 import { YAxis } from "./YAxis";
 import { XAxis } from "./XAxis";
+import './Chart.scss';
 
 export const Chart = ({
   label,
@@ -35,14 +36,19 @@ export const Chart = ({
   if(chartHeight > 0 || max !== 0 ) {
 
     const step = (max - min) / 5;
-    yLabels = [max,  min + (step * 4),  min + (step * 3) , min + (step * 2) ,min + step , min].map((item) => item);
+    if(max === min) 
+      yLabels = [min];
+    else
+      yLabels = [max,  min + (step * 4),  min + (step * 3) , min + (step * 2) ,min + step , min].map((item) => item);
     
     points = [...values.map((item, index) => {
       const x = index * xJumpPercent;
-      const y = (item.value - min) * 100/ chartHeight;
+      const y = yLabels.length === 1 ? 100 : (item.value - min) * 100/ chartHeight;
       return {x, y, label: item.label, value: item.value};
     })];
   }
+
+  console.log("points", points);
   
   return (<Div className="Chart" fx height={height} py={48} pl={small ? 40: 64} pr={small? 24: 48} border borderColor="brown-4">        
       {typeof label === "string" ? <AreaLabel label={label} /> : <AreaLabel >{label} </AreaLabel>}
