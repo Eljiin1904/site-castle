@@ -23,6 +23,7 @@ import { OrderedList } from "@client/comps/list/OrderedList";
 import { Security } from "#app/services/security";
 import { AuthenticatorSettingsModal } from "./AuthenticatorSettingsModal";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 type SecretData = Awaited<ReturnType<typeof Security.getAuthenticatorSecret>>;
 
@@ -69,14 +70,17 @@ export const AuthenticatorEnableModal = () => {
   return (
     <Modal
       className="AuthenticatorEnableModal"
-      width="sm"
+      width="lg"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
         heading={t('account:settings.authenticator.enableModal.header')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
+        <ModalSection borderTop borderColor="brown-4" pt={24}>
+          <Span>{t('account:settings.authenticator.enableModal.description')}</Span>
+        </ModalSection>
         <Form form={form}>
           <Div
             fx
@@ -86,14 +90,24 @@ export const AuthenticatorEnableModal = () => {
             <CodeBox data={data} />
           </Div>
           <ModalSection>
-            <OrderedList
-              pl={16}
-              items={[
-                t('account:settings.authenticator.enableModal.steps.step1'),
-                t('account:settings.authenticator.enableModal.steps.step2'),
-                t('account:settings.authenticator.enableModal.steps.step3')
-              ]}
+            <ModalLabel>{t('account:settings.authenticator.enableModal.secretKey')}</ModalLabel>
+            <Div>
+            <Input
+              type="password"
+              placeholder={t('fields:auth.placeholder')}
+              maxLength={6}              
+              value={data?.secret ?? ''}
+              onChange={() => {}}
             />
+            <Button
+              label={t('common:copy')}
+              kind="tertiary-grey"
+              onClick={() => {
+                navigator.clipboard.writeText(data?.secret ?? '');
+                Toasts.success(`account:settings.authenticator.enableModal.copied`);
+              }}
+            />
+            </Div>
           </ModalSection>
           <ModalSection>
             <ModalLabel>{t('fields:auth.field')}</ModalLabel>
@@ -115,6 +129,7 @@ export const AuthenticatorEnableModal = () => {
             column
             gap={12}
           >
+            <ModalLabel>{t('account:settings.authenticator.enableModal.saveKey')}</ModalLabel>
             <Button
               kind="tertiary-grey"
               label={t(`account:settings.authenticator.enableModal.${downloaded ? "saved" : "action"}`)}
@@ -138,6 +153,8 @@ export const AuthenticatorEnableModal = () => {
 };
 
 const CodeBox = ({ data }: { data: SecretData | undefined }) => {
+  const {t} = useTranslation(["account"]);
+  const small = useIsMobileLayout();
   if (!data) {
     return (
       <Div
@@ -151,8 +168,11 @@ const CodeBox = ({ data }: { data: SecretData | undefined }) => {
   }
   return (
     <Div
-      column
       center
+      border={!small}
+      borderColor="brown-4"
+      justifyContent="space-between"
+      column={small}
     >
       <Div
         p={12}
@@ -162,20 +182,15 @@ const CodeBox = ({ data }: { data: SecretData | undefined }) => {
       </Div>
       <Div
         center
-        mt={8}
+        px={small ? 0: 32}
+        py={small ? 20: 32}
         hover="highlight"
         onClick={() => {
           navigator.clipboard.writeText(data.secret);
           Toasts.success(`account:settings.authenticator.enableModal.copied`);
         }}
       >
-        <Span color="light-sand">{data.secret}</Span>
-        <Vector
-          as={SvgCopy}
-          fontSize={18}
-          color="sand"
-          ml={8}
-        />
+        <Span>{t('account:settings.authenticator.enableModal.scan')}</Span>
       </Div>
     </Div>
   );

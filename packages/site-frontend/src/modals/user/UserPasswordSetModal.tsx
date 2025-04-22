@@ -18,6 +18,7 @@ export const UserPasswordSetModal = () => {
   const form = useCaptchaForm({
     schema: Validation.object({
       newPassword: Validation.password(t("fields:password.newField")),
+      repeatedPassword: Validation.repeatedNewPassword(t("validations.password.confirmField")),
     }),
     onSubmit: async (values) => {
       await Users.editPassword(values);
@@ -28,16 +29,16 @@ export const UserPasswordSetModal = () => {
 
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Set Password"
+        heading={t("account:settings.password.headerSet")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <CaptchaForm form={form}>
-          <ModalSection>
+          <ModalSection borderTop borderColor="brown-4" pt={24}>
             <ModalLabel>{t("fields:password.newField")}</ModalLabel>
             <Input
               type="password"
@@ -52,6 +53,19 @@ export const UserPasswordSetModal = () => {
               }
               value={form.values.newPassword}
               onChange={(x) => form.setValue("newPassword", x)}
+            />
+          </ModalSection>
+          <ModalSection>
+            <ModalLabel>{t("fields:password.repeatNewField")}</ModalLabel>
+            <Input
+              type="password"
+              id="repeatedPassword"
+              placeholder={t("fields:password.repeatNewFieldPlaceholder")}
+              autoComplete="new-password"
+              disabled={form.loading}
+              error={form.errors.repeatedPassword?.key ? t(`${form.errors.repeatedPassword.key}`, {value: form.errors.repeatedPassword.value}) : undefined}
+              value={form.values.repeatedPassword}
+              onChange={(x) => form.setValue("repeatedPassword", x)}
             />
           </ModalSection>
           <Button

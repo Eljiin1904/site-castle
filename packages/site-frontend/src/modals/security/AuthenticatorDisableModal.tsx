@@ -13,14 +13,14 @@ export const AuthenticatorDisableModal = () => {
   return (
     <Modal
       className="AuthenticatorDisableModal"
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
         heading={t("account:settings.authenticator.disableModal.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <AuthenticatorCodeForm
           onSubmit={async (values) => {
             await Security.authenticatorDisable(values);
