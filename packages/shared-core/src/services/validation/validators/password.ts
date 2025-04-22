@@ -38,3 +38,13 @@ export const repeatedPassword = (pword: string = "Repeat Password") => {
     value: pword
   });
 };
+
+export const repeatedNewPassword = (pword: string = "Repeat Password") => {
+  return string().oneOf([ref("newPassword")], {
+    key: 'validations.password.repeated',
+    value: "Password"
+  }).required({
+    key: 'validations.password.required',
+    value: pword
+  });
+};
