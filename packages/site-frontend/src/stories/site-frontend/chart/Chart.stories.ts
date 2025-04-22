@@ -24,7 +24,7 @@ export const EmptyChart: Story = {
   },
 };
 
-export const LinearChart: Story = {
+export const SameValuesChart: Story = {
   args: {
     label: 'Linear Chart',
     small: true,
@@ -33,5 +33,29 @@ export const LinearChart: Story = {
       { label: 'Apr', value: 10000000 },
       { label: 'Jul', value: 10000000 },
       { label: 'Oct', value: 10000000 }
+    ]}
+};
+
+export const LinearChart: Story = {
+  args: {
+    label: 'Linear Chart',
+    small: true,
+    values: [
+      { label: 'Jan', value: 10000000 },
+      { label: 'Apr', value: 20000000 },
+      { label: 'Jul', value: 30000000 },
+      { label: 'Oct', value: 40000000 }
+    ]}
+};
+
+export const NegativeChart: Story = {
+  args: {
+    label: 'Linear Chart',
+    small: true,
+    values: [
+      { label: 'Jan', value: -10000000 },
+      { label: 'Apr', value: -20000000 },
+      { label: 'Jul', value: -30000000 },
+      { label: 'Oct', value: -40000000 }
     ]}
 };

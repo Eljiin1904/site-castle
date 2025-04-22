@@ -45,13 +45,14 @@ const VerificationTierHeader = ({tier, label, currenTier}: {
   const small = useIsMobileLayout();
   return (<Div 
       center 
-      gap={small ? 0: 24}
+      gap={small ? 0: 16}
       height={small ? 24: 40}
       bg={tier - 1 === currenTier? "brown-4" : "dark-brown"}
       border = {!small}
       borderColor="brown-4"
       justifyContent="flex-start"
-      p={small ? 0: 8}
+      pl={small ? 0: 8}
+      px={small ? 0: 16}
     >
     <Span
       color={tier - 1 === currenTier ? "dark-brown" : (tier - 1 < currenTier ? "bright-green" : "dark-sand")}
@@ -60,7 +61,7 @@ const VerificationTierHeader = ({tier, label, currenTier}: {
       borderColor={tier - 1 < currenTier ? "bright-green" : "brown-4"}
       px={8}
     >
-    {tier - 1 < currenTier ? <Vector as={SvgCheck} size={12} color="bright-green"/> : tier}
+    {tier - 1 < currenTier ? <Vector as={SvgCheck} size={small? 10: 12} color="bright-green"/> : tier}
     </Span>
     {!small && <Span
       color={tier - 1 === currenTier ? "sand" : undefined}
