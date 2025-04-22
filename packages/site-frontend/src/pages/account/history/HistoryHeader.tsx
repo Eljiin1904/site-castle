@@ -36,7 +36,7 @@ export const HistoryHeader = ({
       column={small}
       gap={24}
     >
-      <PageTitle
+      <PageTitle width={0}
         heading={t('history.title')}
       />
       <Div center gap={small ? 20: 24} flexShrink justifyContent="space-between">
@@ -44,7 +44,7 @@ export const HistoryHeader = ({
           <Dropdown
             type="select"
             fx={!small}
-            size={small ? "sm" : "md"}
+            size={"sm"}
             options={['all_games', ...Transactions.gameCategories].map((x) => t(`games:${x.replaceAll('-', '_')}`))}
             value={
               category ? Transactions.gameCategories.indexOf(category) + 1 : 0

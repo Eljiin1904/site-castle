@@ -21,7 +21,7 @@ export const VerificationHeader = ({tier}: {
      <PageTitle
         heading={t('verification.header')}
       />
-      <Div fx gap={16} borderBottom borderColor="brown-4" pb={24}>
+      <Div fx gap={16} borderBottom borderColor="brown-4" pb={24} wrap>
         <VerificationTierHeader tier={1} label={t('verification.tiers.tier1.title')} currenTier={tier}/>
         <VerificationHeaderNextToken />
         <VerificationTierHeader tier={2} label={t('verification.tiers.tier2')} currenTier={tier}/>
@@ -44,7 +44,6 @@ const VerificationTierHeader = ({tier, label, currenTier}: {
 
   const small = useIsMobileLayout();
   return (<Div 
-      fx={!small} 
       center 
       gap={small ? 0: 24}
       height={small ? 24: 40}

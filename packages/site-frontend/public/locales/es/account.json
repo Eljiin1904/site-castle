@@ -198,11 +198,10 @@
       "description": "Habilitar 2FA.",
       "enableModal": {
         "header": "Habilitar autenticador",
-        "steps": {
-          "step1": "Escanea el código QR o ingresa la clave de configuración manualmente.",
-          "step2": "Ingresa el código de 6 dígitos del autenticador.",
-          "step3": "Guarda tu clave de respaldo y úsala si pierdes acceso al autenticador."
-        },
+        "description": "Descarga e instala Google Authenticator. Habilita la autenticación de dos factores para proteger tu cuenta de accesos no autorizados.",
+        "scan": "Escanea el código QR con tu Google Authenticator o introduce la clave secreta manualmente",
+        "secretKey": "Clave secreta:",
+        "saveKey": "Guarda la clave de respaldo y no dejes que nadie la vea.",
         "success": "Autenticador habilitado.",
         "action": "Guardar clave de respaldo",
         "saved": "¡Clave de respaldo guardada!",
@@ -250,7 +249,8 @@
         "description4": "Te enviaremos un correo electrónico para confirmar el inicio y el final de tu autoexclusión.",
         "warning":"El soporte no revertirá esto. Debes esperar a que termine tu autoexclusión una vez que comience.",
         "success": "Autoexclusión solicitada. Revisa tu correo electrónico para confirmar.",
-        "action": "Solicitar autoexclusión"
+        "action": "Solicitar autoexclusión",
+        "attention": "Atención!"
       }
     }
   },

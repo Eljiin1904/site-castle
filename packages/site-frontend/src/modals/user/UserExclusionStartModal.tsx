@@ -13,6 +13,7 @@ import { NoticeCard } from "@client/comps/cards/NoticeCard";
 import { Toasts } from "@client/services/toasts";
 import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Span } from "@client/comps/span/Span";
 
 export const UserExclusionStartModal = () => {
   const { t } = useTranslation(["account"]);
@@ -27,16 +28,16 @@ export const UserExclusionStartModal = () => {
 
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
         heading={t("account:settings.selfExclusion.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Form form={form}>
-          <ModalSection>
+          <ModalSection borderTop borderColor="brown-4" pt={24}>
             <Paragraph>
               {t("account:settings.selfExclusion.modal.description1")}
             </Paragraph>
@@ -55,10 +56,12 @@ export const UserExclusionStartModal = () => {
               {t("account:settings.selfExclusion.modal.description4")}
             </Paragraph>
           </ModalSection>
-          <NoticeCard
-            kind="warning"
-            message={t("account:settings.selfExclusion.modal.warning")}
-          />
+          <ModalSection borderTop borderColor="brown-4" pt={24} gap={16}>
+            <Span textTransform="uppercase" color="error-red">{t("account:settings.selfExclusion.modal.attention")}</Span>
+            <Paragraph>
+              {t("account:settings.selfExclusion.modal.warning")}
+            </Paragraph>
+          </ModalSection>
           <Button
             type="submit"
             kind="primary-yellow"

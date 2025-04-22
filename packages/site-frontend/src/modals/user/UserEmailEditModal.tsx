@@ -36,16 +36,16 @@ export const UserEmailEditModal = () => {
 
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
         heading={t("account:settings.email.description")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <CaptchaForm form={form}>
-          <ModalSection>
+          <ModalSection borderTop  borderColor="brown-4" pt={24}>
             <ModalLabel>{t("fields:currentEmail.field")}</ModalLabel>
             <ModalField>{currentEmail}</ModalField>
           </ModalSection>
@@ -86,7 +86,7 @@ export const UserEmailEditModal = () => {
           <Button
             type="submit"
             kind="primary-yellow"
-            label={t("common:submit")}
+            label={t("common:save")}
             fx
             loading={form.loading}
           />

@@ -36,8 +36,9 @@ export const TransactionsHeader = ({
       fx
       column={small}
       gap={24}
+      wrap
     >
-      <PageTitle
+      <PageTitle width={0}
         heading={t('transactions.title')}
       />
       <Div center gap={small ? 20: 24} flexShrink justifyContent="space-between">
@@ -45,7 +46,7 @@ export const TransactionsHeader = ({
           <Dropdown
             type="select"
             fx={!small}
-            size={small ? "sm" : "md"}
+            size={"sm"}
             options={['all', ...Transactions.notGameCategories].map((x) => t(`transactions.type.${x}`))}
             value={
               category ? Transactions.notGameCategories.indexOf(category) + 1 : 0
@@ -68,7 +69,7 @@ export const TransactionsHeader = ({
         <Dropdown
           type="select"
           fx={!small}
-          size={small ? "sm" : "md"}
+          size={"sm"}
           options={indexes}
           value={indexes.indexOf(limit)}
           onChange={(x, i) => setLimit(indexes[i])}

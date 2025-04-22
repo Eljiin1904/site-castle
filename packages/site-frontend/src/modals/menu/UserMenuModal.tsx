@@ -1,15 +1,7 @@
-import { DiceResult } from "@core/types/dice/DiceResult";
-import { Dates } from "@core/services/dates";
-import { Dice } from "@core/services/dice";
-import { Numbers } from "@core/services/numbers";
-import { Strings } from "@core/services/strings";
+
 import { Modal } from "@client/comps/modal/Modal";
-import { ModalBody } from "@client/comps/modal/ModalBody";
 import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { Dialogs } from "@client/services/dialogs";
-import { ModalSection } from "@client/comps/modal/ModalSection";
-import { ModalLabel } from "@client/comps/modal/ModalLabel";
-import { ModalField } from "@client/comps/modal/ModalField";
 import { Div } from "@client/comps/div/Div";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { SvgUser } from "@client/svgs/common/SvgUser";

@@ -197,12 +197,11 @@
       "title": "Authenticator",
       "description": "Enable to use 2FA",
       "enableModal": {
-        "header": "Enable Authenticator",
-        "steps": {
-          "step1": "Scan the QR code or enter the setup key manually.",
-          "step2": "Enter the 6-digit code from the authenticator.",
-          "step3": "Save your backup key and use it if you lose access to the authenticator."
-        },
+        "header": "Security (2FA)",
+        "description": "Download and install Google Authenticator. Enable Two-factor Authentication to protect your account from unauthorized access.",
+        "scan": "Scan QR code with your google Authenticator App or enter the sectret key manually.",
+        "secretKey": "Your secret key:",
+        "saveKey": "Save the backup key and don’t let anyone see it!",
         "success": "Authenticator enabled.",
         "action": "Save Backup Key",
         "saved": "Backup key saved!",
@@ -250,7 +249,8 @@
         "description4": "We will send an email to confirm the start and the end of your self-exclusion.",
         "warning":"Support will not reverse this. You must wait for your self-exclusion to end once it starts.",
         "success": "Exclusion requested. Please check your email to confirm.",
-        "action": "Request Self-Exclusion"
+        "action": "Request Self-Exclusion",
+        "attention": "Attention!"
       }
     }
   },
