@@ -8,6 +8,7 @@ import {
 import { AnyObject, ObjectSchema } from "yup";
 import { Http } from "@server/services/http";
 import { HandledError } from "@server/services/errors";
+import { Users } from "@server/services/users";
 import { uploadHandler } from "../handlers/uploadHandler";
 
 type RouteOptions<B extends AnyObject, Q extends AnyObject> = {
@@ -26,6 +27,7 @@ type RouteOptions<B extends AnyObject, Q extends AnyObject> = {
   body?: ObjectSchema<B>;
   query?: ObjectSchema<Q>;
   middleware?: RequestHandler[];
+  supportAccess?: boolean;
 } & (
   | {
       secure: false;
@@ -53,6 +55,7 @@ export function createApiRoute<B extends AnyObject, Q extends AnyObject>({
   query,
   file,
   middleware,
+  supportAccess,
   callback,
 }: RouteOptions<B, Q>) {
   const handlers: RequestHandler[] = [];
@@ -61,6 +64,17 @@ export function createApiRoute<B extends AnyObject, Q extends AnyObject>({
     // TODO: Remove secure flag, all admin is secure
     if (secure && !req.isAuthenticated()) {
       next(new HandledError("Not authenticated."));
+    } else {
+      next();
+    }
+  });
+
+  handlers.push(async (req, res, next) => {
+    if (
+      !supportAccess &&
+      Users.getPermissions(req.user?.role ?? "user").supportAccess
+    ) {
+      next(new HandledError("Support access not authorized."));
     } else {
       next();
     }

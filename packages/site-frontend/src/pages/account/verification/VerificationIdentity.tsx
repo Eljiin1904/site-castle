@@ -1,9 +1,11 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { VerificationThreeModal } from "#app/modals/verification/VerificationThreeModal";
 import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
 import { Span } from "@client/comps/span/Span";
 import { Vector } from "@client/comps/vector/Vector";
+import { Dialogs } from "@client/services/dialogs";
 import { SvgVerification } from "@client/svgs/common/SvgVerification";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
@@ -29,7 +31,7 @@ export const VerificationIdentity = ({tier}:{
         <Button
           kind={ "primary-yellow"}      
           label={t("verification.tiers.tier3.action")}
-          onClick={() => {}}
+          onClick={() => Dialogs.open("primary", <VerificationThreeModal />)}
         />
   </Div>)
 };

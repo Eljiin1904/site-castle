@@ -19,3 +19,4 @@ export { default as support } from "./support";
 export { default as system } from "./system";
 export { default as users } from "./users";
 export { default as notifications } from "./notifications";
+export { default as verification } from "./verification";

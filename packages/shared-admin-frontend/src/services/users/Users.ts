@@ -15,4 +15,5 @@ export * from "./api/getActions";
 export * from "./api/getTransactions";
 export * from "./api/getUser";
 export * from "./api/getUsers";
+export * from "./api/requestMinKycTier";
 export * from "./api/setTipLimit";
