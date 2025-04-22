@@ -1,5 +1,7 @@
 export { array, object, string, number, boolean, date, mixed, ref } from "yup";
 
+export * from "./constants/kycTiers";
+
 export * from "./utils/getErrors";
 export * from "./utils/setLocale";
 

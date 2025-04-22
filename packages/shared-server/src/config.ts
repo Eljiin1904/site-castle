@@ -46,6 +46,8 @@ export interface ServerConfig extends CoreConfig {
   intercomSecret: string;
   swappedPublicKey: string;
   swappedSecret: string;
+  sumsubAppToken: string;
+  sumsubSecretKey: string;
 }
 
 setEnvironment(process.env.NODE_ENV);

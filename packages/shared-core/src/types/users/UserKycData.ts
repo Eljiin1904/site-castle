@@ -1,3 +1,4 @@
+import { sumsubReviewAnswer } from "#core/services/verification/constants/sumsub";
 import type { Birthday } from "../utility/Birthday";
 
 export interface UserKycData {
@@ -11,4 +12,6 @@ export interface UserKycData {
   country?: { name: string; code: string };
   zipCode?: string;
   occupation?: string;
+  minTier?: number;
+  sumsubReviewAnswer?: (typeof sumsubReviewAnswer)[number];
 }

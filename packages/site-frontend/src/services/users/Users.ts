@@ -9,6 +9,7 @@ export * from "./api/editPassword";
 export * from "./api/extendExclusion";
 export * from "./api/getSupportHash";
 export * from "./api/getBlockedUsers";
+export * from "./api/getSumsubToken";
 export * from "./api/getTransaction";
 export * from "./api/getTransactions";
 export * from "./api/requestExclusion";

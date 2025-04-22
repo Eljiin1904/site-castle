@@ -15,6 +15,7 @@ const kindMap: Record<NotificationKind, boolean> = {
   "skin-withdraw-confirmed": true,
   "skin-withdraw-cancelled": true,
   "skin-withdraw-sent": true,
+  "sumsub-review-result": true,
   "swapped-deposit": true,
   suspension: true,
   "tip-receive": true,
