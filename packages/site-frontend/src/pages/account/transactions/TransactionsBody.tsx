@@ -48,7 +48,7 @@ export const TransactionsBody = () => {
       fx
       column
       gap={small? 24: 40}
-      pt={small ? 40: 0}
+      pt={small ? 24: 0}
     >
       <TransactionsHeader
         category={category}
