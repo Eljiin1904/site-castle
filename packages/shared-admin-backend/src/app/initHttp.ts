@@ -105,6 +105,7 @@ export function initHttp() {
   app.use("/system", Routes.system);
   app.use("/transactions", Routes.transactions);
   app.use("/users", Routes.users);
+  app.use("/verification", Routes.verification);
 
   app.use((req, res) => res.status(404).send());
   app.use(Http.appErrorHandler);

@@ -11,3 +11,4 @@ export { default as site } from "./site";
 export { default as system } from "./system";
 export { default as transactions } from "./transactions";
 export { default as users } from "./users";
+export { default as verification } from "./verification";

@@ -6,4 +6,5 @@ export interface UserPermissions {
   viewHiddenUsers?: boolean;
   maintenanceAccess?: boolean;
   adminAccess?: boolean;
+  supportAccess?: boolean;
 }

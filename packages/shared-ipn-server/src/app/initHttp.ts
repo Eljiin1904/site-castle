@@ -30,6 +30,7 @@ export function initHttp() {
   app.use("/skinify", Routes.skinify);
   app.use("/skinsback", Routes.skinsback);
   app.use("/skindeck", Routes.skindeck);
+  app.use("/sumsub", Routes.sumsub);
   app.use("/swapped", Routes.swapped);
 
   app.use((req, res) => res.status(404).send());
