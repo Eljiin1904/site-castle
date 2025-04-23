@@ -14,6 +14,7 @@ import { socketSlice } from "./services/sockets/redux/socketSlice";
 import { supportSlice } from "./services/support/redux/supportSlice";
 import { userSlice } from "./services/users/redux/userSlice";
 import { minesSlice } from "./services/mines/redux/minesSlice";
+import {accountSlice} from "./services/account/redux/accountSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     style: styleSlice.reducer,
     support: supportSlice.reducer,
     user: userSlice.reducer,
+    account: accountSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
