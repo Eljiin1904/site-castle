@@ -6,21 +6,32 @@ import { PageTitle } from "@client/comps/page/PageTitle";
 import { Transactions } from "@client/services/transactions";
 import { SvgCalendar } from "#app/svgs/common/SvgCalendar";
 import { DateRangeType } from "@core/services/transactions/Transactions";
-import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
+import { Dialogs } from "@client/services/dialogs";
+import { CustomRangeModal } from "#app/modals/transaction/CustomRangeModal";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useDispatch } from "react-redux";
+import { Account } from "#app/services/account";
 
 
-export const StatsHeader = ({dateRange, setDateRange, chartOption = 'wagered',setChartOption, category, setCategory}: {
-  dateRange: DateRangeType;
-  setDateRange: (x: DateRangeType) => void;
-  chartOption: 'wagered' | 'pnl';
-  setChartOption: (x: 'wagered' | 'pnl') => void;
-  category: TransactionCategory | undefined;  
-  setCategory: (x: TransactionCategory | undefined) => void;
-}) => {
-  const small = useIsMobileLayout();
+export const StatsHeader = ({}: {}) => {
+
+  const category = useAppSelector((state) => state.account.userStatsCategory);
+  const dateRange = useAppSelector((state) => state.account.userStatsDateRange);
+  const chartOption = useAppSelector((state) => state.account.userStatsType);
+  const dispatch = useDispatch();
   const { t } = useTranslation(["account"]);
   const indexes = Transactions.dateranges.map((x) => t(`stats.dateranges.${x}`));
+  const small = useIsMobileLayout();
   const chartOptions = ['wagered','pnl'];
+
+  const handleDateRangeChange = (x: string, i: number) => {
+    const selectedDateRange = Transactions.dateranges[i];
+    if (selectedDateRange === 'custom') {
+      Dialogs.open("primary", <CustomRangeModal />);
+    }
+    else
+      dispatch(Account.setUserStatsDateRange(selectedDateRange as DateRangeType));
+  };
 
   return (
     <Div
@@ -44,11 +55,7 @@ export const StatsHeader = ({dateRange, setDateRange, chartOption = 'wagered',se
           size="sm"
           options={chartOptions.map((x) => t(`stats.${x}`))}
           value={chartOptions.indexOf(chartOption)}
-          onChange={(x, i) => 
-            setChartOption(
-              chartOptions[i] as 'pnl' | 'wagered',
-            )
-          }
+          onChange={(x, i) => dispatch(Account.setUserStatsType(chartOptions[i] as 'pnl' | 'wagered'))}
         />
         <Dropdown
           type="select"
@@ -58,12 +65,9 @@ export const StatsHeader = ({dateRange, setDateRange, chartOption = 'wagered',se
           value={
             category ? Transactions.gameCategories.indexOf(category) + 1 : 0
           }
-          onChange={(x, i) =>
-            setCategory(
-              i === 0 ? undefined : Transactions.gameCategories[i - 1],
-            )
-          }
+          onChange={(x, i) => dispatch(Account.setUserStatsCategory(i === 0 ? undefined : Transactions.gameCategories[i - 1]))}
         />
+      
         <Dropdown
           type="select"
           icon={SvgCalendar}
@@ -73,9 +77,7 @@ export const StatsHeader = ({dateRange, setDateRange, chartOption = 'wagered',se
           value={
             dateRange ? Transactions.dateranges.indexOf(dateRange): 0
           }
-          onChange={(x, i) => 
-            setDateRange(Transactions.dateranges[i])
-          }
+          onChange={handleDateRangeChange}
         />
       </Div>
     </Div>

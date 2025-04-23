@@ -1,22 +1,21 @@
 import { Chart } from "#app/comps/charts/Chart";
 import { Heading } from "@client/comps/heading/Heading";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { DateRangeType } from "@core/services/transactions/Transactions";
-import { TransactionType } from "aws-sdk/clients/lakeformation";
 import { Div } from "@client/comps/div/Div";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { useQuery } from "@tanstack/react-query";
 import { Users } from "#app/services/users";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
-export const WageredChart = ({dateRange, game}:{
-  dateRange: DateRangeType,
-  game: TransactionType | undefined,
-}) => {
+export const WageredChart = () => {
 
+  const dateRange = useAppSelector((state) => state.account.userStatsDateRange);
+  const game = useAppSelector((state) => state.account.userStatsCategory);
   const small = useIsMobileLayout();
+  
   const query = useQuery({
-    queryKey: ["history", dateRange, game ],
+    queryKey: ["history", dateRange, game],
     queryFn: () => Users.getTransactionsByDateRange({dateRange, category:game, type:'wagered'}),
     placeholderData: (prev) => prev,
   });
@@ -24,20 +23,20 @@ export const WageredChart = ({dateRange, game}:{
   const values = query.data?.values || [];
   const total = query.data?.total || 0;
   
-  return (<Chart small={small} strokeColor="sand" label={<WageredChatHeader daterange={dateRange} game={game} total={total} />} values={values} />);
+  return (<Chart small={small} label={<WageredChatHeader total={total} />} values={values} />);
 };
 
-const WageredChatHeader = ({daterange, game = 'all_games', total}:{
-  daterange: DateRangeType,
-  game: TransactionType | undefined,
+const WageredChatHeader = ({total}:{
   total: number,
 }) => {
 
+  const dateRange = useAppSelector((state) => state.account.userStatsDateRange);
+  const game = useAppSelector((state) => state.account.userStatsCategory);
   const small = useIsMobileLayout();
   const {t} = useTranslation(["account","games"]);
   const gameKey = game ? game : 'all_games';
   const gameLabel = t(`games:${gameKey.replaceAll('-', '_')}`);
-  const dateRangeKey = daterange ? daterange : 'thisMonth';
+  const dateRangeKey = dateRange ? dateRange : 'thisMonth';
   const dateRangeLabel = t(`stats.dateranges.${dateRangeKey}`);
   const chartHeader = t("stats.charts.wagered", {period: dateRangeLabel, game: gameLabel});
   
