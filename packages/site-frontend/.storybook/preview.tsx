@@ -5,6 +5,7 @@ import "../../shared-client/src/styles/styled.scss";
 import { Style } from "../../shared-client/src/services/style";
 import { connect, Provider as StoreProvider } from "react-redux";
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { ChartTooltip } from "../../shared-client/src/app/tooltip/ChartTooltip";
 // import {store} from "../../site-frontend/src/store";
 
 const appendStyle = () => {
@@ -36,7 +37,9 @@ const appendStyle = () => {
 
   style.innerHTML = index + "\n\n" + classes;
 
-  document.head.appendChild(style);
+  setTimeout(() => {
+    document.head.appendChild(style);
+  }, 100);
 };
 appendStyle();
 
@@ -90,6 +93,9 @@ const appendUnits = () => {
   style.innerHTML = classes;
 
   document.head.appendChild(style);
+  setTimeout(() => {
+    document.head.appendChild(style);
+  }, 100);
 };
 appendUnits();
 
@@ -172,6 +178,7 @@ const preview: Preview = {
 
       return (
         <StoreProvider store={store}>
+          <ChartTooltip />
           <Story />
         </StoreProvider>
       );

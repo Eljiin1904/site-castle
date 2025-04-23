@@ -85,6 +85,7 @@
     "totalRewards": "Total de recompensas",
     "mostPopularGame": "Juego más popular",
     "notData": "No hay datos disponibles",
+    "invalidData": "Datos inválidos",
     "dateranges": {
       "all": "Todo",
       "today": "Hoy",
@@ -95,7 +96,8 @@
       "last3Months": "Últimos 3 meses",
       "last6Months": "Últimos 6 meses",
       "thisYear": "Año actual",
-      "lastYear": "Año pasado"
+      "lastYear": "Año pasado",
+      "custom": "Rango personalizado"
     },
     "charts": {
       "wagered": "Total apostado en {{period}} en {{game}}",

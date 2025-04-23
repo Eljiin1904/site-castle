@@ -18,6 +18,11 @@ export type DateInputProps = StyledLayoutProps & {
   disabled?: boolean;
   error?: string;
   onChange: (x: Date) => void;
+  selectsStart?: boolean;
+  selectsEnd?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+  minDate?: Date;
 };
 
 export const DateInput: FC<DateInputProps> = ({
@@ -54,6 +59,11 @@ export const DateInput: FC<DateInputProps> = ({
         selected={value}
         disabled={disabled}
         onChange={onChange}
+        selectsStart={forwardProps.selectsStart}
+        selectsEnd={forwardProps.selectsEnd}
+        startDate={forwardProps.startDate}
+        endDate={forwardProps.endDate}
+        minDate={forwardProps.minDate}
       />
       {error && (
         <Span

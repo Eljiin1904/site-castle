@@ -1,4 +1,9 @@
 .Chart {
 
-  min-width: 400px;
+  min-width: 420px;
+  overflow: scroll;
+
+  &.small {
+    min-width: 350px;
+  }
 }

@@ -2,8 +2,10 @@ import { Div } from "@client/comps/div/Div";
 import { Dot } from "./Dot";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Fragment } from "react";
 
-export const ChartArea = ({ data, fillColor, strokeColor = 'sand', left} : {
+export const ChartArea = ({ invalidData = false, data, fillColor, strokeColor = 'sand', left} : {
+  invalidData?: boolean,
   data: {x: number, y: number, label: string, value: number}[],
   fillColor?: Color,
   strokeColor?: Color,
@@ -25,15 +27,17 @@ export const ChartArea = ({ data, fillColor, strokeColor = 'sand', left} : {
       center
       style={{width: "calc(100% - 24px)",transform: "scaleY(-1)"}}
     >
-    {data.length === 0 ? <NoDataLabel /> : 
-      <svg key={polylinePoints} width='100%' height='100%' viewBox="0 0 100 100" preserveAspectRatio="none">
-        <PolylineChart initialPoints={startingPoints} endPoints={polylinePoints} fillColor={fillColor} duration={0.3} />
-      </svg>}
-    {data.map((item, index) => {
-          return (
-            <Dot color={strokeColor} key={index} label={item.label} value={item.value}  l={item.x} t={item.y}  />
-          );
-    })}
+    {invalidData ? <InvalidDataLabel /> : <Fragment>
+      {data.length === 0 ? <NoDataLabel /> : 
+        <svg key={polylinePoints} width='100%' height='100%' viewBox="0 0 100 100" preserveAspectRatio="none">
+          <PolylineChart initialPoints={startingPoints} endPoints={polylinePoints} fillColor={fillColor} duration={0.3} />
+        </svg>}
+        {data.map((item, index) => {
+              return (
+                <Dot color={strokeColor} key={index} label={item.label} value={item.value}  l={item.x} t={item.y}  />
+              );
+        })}
+    </Fragment>}
     </Div>
   );
 };
@@ -60,6 +64,16 @@ const NoDataLabel = ({}) => {
   return (
     <Span position="absolute" family="title" fontWeight="regular" textAlign="center" color="light-sand" textTransform="uppercase" style={{width: "calc(100% - 24px)",transform: "scaleY(-1)"}}>
       {t("stats.notData")}
+    </Span>
+  );
+};
+
+const InvalidDataLabel = ({}) => {
+
+  const {t} = useTranslation(["account"]);
+  return (
+    <Span position="absolute" family="title" fontWeight="regular" textAlign="center" color="light-sand" textTransform="uppercase" style={{width: "calc(100% - 24px)",transform: "scaleY(-1)"}}>
+      {t("stats.invalidData")}
     </Span>
   );
 };
