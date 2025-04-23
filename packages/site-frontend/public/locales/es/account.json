@@ -85,6 +85,7 @@
     "totalRewards": "Total de recompensas",
     "mostPopularGame": "Juego más popular",
     "notData": "No hay datos disponibles",
+    "invalidData": "Datos inválidos",
     "dateranges": {
       "all": "Todo",
       "today": "Hoy",
