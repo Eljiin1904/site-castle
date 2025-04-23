@@ -63,10 +63,8 @@ export async function registerUser(
   // });
   // }
   if (referer.kind == "campaign") {
-    console.log("Referer Id " + referer);
     const affiliate = await Database.collection("user-campaigns").findOne({ _id: referer.id });
     if (affiliate) {
-      console.log("Tracking Campaign for " + affiliate);
       await Affiliates.trackCampaign({
         user,
         affiliate,
