@@ -10,13 +10,14 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
 export const PnLChart = () => {
 
-  const dateRange = useAppSelector((state) => state.account.userStatsDateRange);
+  const minDate = useAppSelector((state) => state.account.userStatsMinDate);
+  const maxDate = useAppSelector((state) => state.account.userStatsMaxDate);
   const game = useAppSelector((state) => state.account.userStatsCategory);
   const small = useIsMobileLayout();
 
   const query = useQuery({
-    queryKey: ["history", dateRange, game ],
-    queryFn: () => Users.getTransactionsByDateRange({dateRange, category:game, type:'pnl'}),
+    queryKey: ["history", minDate, maxDate, game ],
+    queryFn: () => Users.getTransactionsByDateRange({minDate, maxDate, category:game, type:'pnl'}),
     placeholderData: (prev) => prev,
   });
   

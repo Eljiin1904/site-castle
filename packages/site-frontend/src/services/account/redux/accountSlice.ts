@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import {subDays} from "date-fns";
 import { DateRangeType } from "@core/services/transactions/Transactions";
 import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
+import { Users } from "@core/services/users";
 
 interface AccountState {
 
@@ -40,7 +41,7 @@ export const accountSlice = createSlice({
           state.userStatsMaxDate = new Date(new Date().setHours(23, 59, 59, 999) - 24 * 60 * 60 * 1000);
           break;
         case "last7Days":
-          state.userStatsMinDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+          state.userStatsMinDate = subDays(new Date(), 6);
           state.userStatsMaxDate = new Date();
           break;
         case "thisMonth":
