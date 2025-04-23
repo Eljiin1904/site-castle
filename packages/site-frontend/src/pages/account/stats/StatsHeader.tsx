@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { Account } from "#app/services/account";
 
 
-export const StatsHeader = ({}: {}) => {
+export const StatsHeader = () => {
 
   const category = useAppSelector((state) => state.account.userStatsCategory);
   const dateRange = useAppSelector((state) => state.account.userStatsDateRange);
