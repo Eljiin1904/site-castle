@@ -58,7 +58,7 @@ const PolylineChart = ({initialPoints, endPoints, fillColor = 'sand', duration =
   );  
 };
 
-const NoDataLabel = ({}) => {
+const NoDataLabel = () => {
 
   const {t} = useTranslation(["account"]);
   return (
@@ -68,7 +68,7 @@ const NoDataLabel = ({}) => {
   );
 };
 
-const InvalidDataLabel = ({}) => {
+const InvalidDataLabel = () => {
 
   const {t} = useTranslation(["account"]);
   return (
