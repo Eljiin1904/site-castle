@@ -16,6 +16,25 @@ export async function getReferer({
       kind: "promotion",
       id: referer,
     };
+  } else if (referralCode.startsWith("c_")) {
+    const referer = referralCode.substring(2);
+    const affiliate = await Database.collection("user-campaigns").findOne({
+      campaignId: referralCode,
+    });
+
+    if (!affiliate) {
+      throw new HandledError("validations:errors.invalidReferralCode");
+    }
+
+    const user = await Database.collection("users").findOne({ _id: affiliate.userId });
+    if (!user) {
+      throw new HandledError("validations:errors.users.notFound");
+    }
+
+    return {
+      kind: "campaign",
+      id: affiliate._id,
+    };
   } else {
     const affiliate = await Database.collection("users").findOne(
       { username: referralCode },

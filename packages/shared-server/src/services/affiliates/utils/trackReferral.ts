@@ -14,44 +14,44 @@ export async function trackReferral({
   const userId = user._id;
   const affiliateId = affiliate.id;
 
-  const referral: UserReferral = {
-    ...affiliate,
-    timestamp: new Date(),
-  };
+  // const referral: UserReferral = {
+  //   ...affiliate,
+  //   timestamp: new Date(),
+  // };
 
-  user.referral = referral;
+  // user.referral = referral;
 
-  await Database.collection("users").updateOne(
-    { _id: userId },
-    { $set: { referral } },
-  );
+  // await Database.collection("users").updateOne(
+  //   { _id: userId },
+  //   { $set: { referral } },
+  // );
 
-  const exists = await Database.exists("affiliate-referrals", {
-    userId,
-    affiliateId,
-  });
+  // const exists = await Database.exists("affiliate-referrals", {
+  //   userId,
+  //   affiliateId,
+  // });
 
-  if (exists) {
-    await Database.collection("affiliate-referrals").updateOne(
-      {
-        userId,
-        affiliateId,
-      },
-      {
-        $unset: { removed: 1, removeDate: 1 },
-      },
-    );
-  } else {
-    await Database.collection("affiliate-referrals").insertOne({
-      _id: Ids.object(),
-      timestamp: new Date(),
-      userId,
-      affiliateId,
-    });
+  // if (exists) {
+  //   await Database.collection("affiliate-referrals").updateOne(
+  //     {
+  //       userId,
+  //       affiliateId,
+  //     },
+  //     {
+  //       $unset: { removed: 1, removeDate: 1 },
+  //     },
+  //   );
+  // } else {
+  //   await Database.collection("affiliate-referrals").insertOne({
+  //     _id: Ids.object(),
+  //     timestamp: new Date(),
+  //     userId,
+  //     affiliateId,
+  //   });
 
-    await Database.collection("users").updateOne(
-      { _id: affiliateId },
-      { $inc: { "affiliate.referralCount": 1 } },
-    );
-  }
+  //   await Database.collection("users").updateOne(
+  //     { _id: affiliateId },
+  //     { $inc: { "affiliate.referralCount": 1 } },
+  //   );
+  // }
 }

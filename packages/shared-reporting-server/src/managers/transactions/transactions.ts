@@ -44,7 +44,8 @@ function watch() {
 function processTransaction(tx: TransactionDocument) {
   System.tryCatch(Transactions.reportTransaction)(tx);
   System.tryCatch(Users.reportTransaction)(tx);
-  System.tryCatch(Affiliates.afterTransaction)(tx);
+  // System.tryCatch(Affiliates.afterTransaction)(tx);
+  System.tryCatch(Affiliates.afterCampaignTransaction)(tx);
   System.tryCatch(Rewards.afterTransaction)(tx);
   System.tryCatch(CustomerIO.afterTransaction)(tx);
 }
