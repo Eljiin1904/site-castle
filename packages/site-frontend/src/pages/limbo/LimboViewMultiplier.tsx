@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCountUp } from "react-countup";
 import { Numbers } from "@core/services/numbers";
 import { Div } from "@client/comps/div/Div";
@@ -6,11 +6,17 @@ import { Span } from "@client/comps/span/Span";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Video } from "@client/comps/video/Video";
 
-
 export const LimboViewMultiplier = () => {
   const ticket = useAppSelector((x) => x.limbo.lastTicket);
   const processing = useAppSelector((x) => x.limbo.processing);
+  const isWin = useAppSelector((x) => x.limbo.lastTicket?.won);
   const isAutoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
+  const animationOptions = {
+    win: "/graphics/animations/rocket_space_fast",
+    lose: "/graphics/animations/rocket_explode",
+    default: "/graphics/animations/rocket_fast",
+  };
+  const [rocketAnimation, setRocketAnimation] = useState(animationOptions["default"]);
 
   const layout = useAppSelector((x) => x.style.mainLayout);
   const sm = layout === "mobile";
@@ -31,6 +37,16 @@ export const LimboViewMultiplier = () => {
   useEffect(() => {
     counter.reset();
     counter.start();
+
+    if (ticket?.won != undefined) {
+      setRocketAnimation(
+        ticket?.won
+          ? animationOptions["win"]
+          : !isWin
+            ? animationOptions["lose"]
+            : animationOptions["default"],
+      );
+    }
   }, [multiplier]);
 
   return (
@@ -44,12 +60,12 @@ export const LimboViewMultiplier = () => {
     >
       <Video
         type="mp4"
-        path={"/graphics/animations/rocket_fast"}
+        path={rocketAnimation}
         skeleton
         width="100%"
         aspectRatio={"16 / 9"}
         position="absolute"
-        loop={processing || isAutoPlaying}
+        loop={false}
         autoplay={processing || isAutoPlaying}
         muted={true}
         controls={false}
