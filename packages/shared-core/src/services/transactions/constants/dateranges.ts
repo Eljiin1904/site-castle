@@ -8,7 +8,8 @@ export const dateranges = [
   "last3Months",
   "last6Months",
   "thisYear",
-  "lastYear"
+  "lastYear",
+  "custom"
 ] as const;
 
 export type DateRangeType = (typeof dateranges)[number];
