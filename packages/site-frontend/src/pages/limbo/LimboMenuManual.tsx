@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Button } from "@client/comps/button/Button";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
@@ -41,10 +41,21 @@ const NotMobileContent = () => {
 };
 
 const ActionButton = () => {
-  const processing = useAppSelector((x) => x.limbo.processing);
   const { overMax } = useProfit();
   const handleBet = useManualBet();
   const { t } = useTranslation();
+  const processing = useAppSelector((x) => x.limbo.processing);
+  const [displayDelay, setDisplayDelay] = useState(false);
+
+  if (processing) {
+    if (!displayDelay) {
+      setDisplayDelay(true);
+
+      setTimeout(() => {
+        setDisplayDelay(false);
+      }, 400);
+    }
+  }
 
   return (
     <Button
@@ -52,7 +63,7 @@ const ActionButton = () => {
       kind="primary-green"
       label={overMax ? t("games\\limbo:exceedMaxBet") : t("games\\limbo:placeBet")}
       loading={processing}
-      disabled={overMax || processing}
+      disabled={overMax || processing || displayDelay}
       onClick={handleBet}
     />
   );
