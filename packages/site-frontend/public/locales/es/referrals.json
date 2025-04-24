@@ -1,0 +1,55 @@
+{
+  "title": "Referidos",
+  "banner": {
+    "title": "Recomendar a un amigo",
+    "subtitle": "Recomienda a un amigo y gana <0>{{percent}}</0> de comisión sobre la ventaja de la casa en todas sus apuestas!"
+  },
+  "yourReferrals": "Tus Referidos",
+  "howItWorks": {
+    "button": "Cómo funciona",
+    "modal": {
+      "title": "Cómo funcionan los referidos?",
+      "description": "Recomienda a un amigo a Sandcasino y gana dinero gratis de todas sus apuestas!",
+      "list": {
+        "item1": {
+          "title": "Paso 1",
+          "description": "¿Tienes un amigo que le encantaría Sandcasino? Ayúdale a registrarse usando tu enlace de referido o tu código, ¡y será contado como tu referido!"
+        },
+        "item2": {
+          "title": "Paso 2",
+          "description": "Ganarás un 10% de comisión sobre la ventaja de la casa en todas las apuestas realizadas por tus referidos, ya sea que ganen o pierdan."
+        },
+        "item3": {
+          "title": "Paso 3",
+          "description": "Tus ganancias por referidos están disponibles para ser reclamadas de inmediato!"
+        }
+      }
+    }
+  },
+  "unclaimed": "Comisión No Reclamada",
+  "totalCommissionEarned": "Comisión Total Ganada",
+  "commissionTier": "Nivel de Comisión",
+  "totalFriendsReferred": "Total de Amigos Referidos",
+  "totalFriedsWagered": "Total de Amigos Apostados",
+  "commissionProgress": "Progreso de Comisión",
+  "inviteAFriend":"Invitar a un Amigo",
+  "performance": {
+    "title": "Rendimiento",
+    "campaignHits": "Campañas",
+    "referrals": "Referidos",
+    "totalDeposits": "Total de Depósitos",
+    "availableCommission": "Comisión Disponible",
+    "totalCommission": "Comisión Total",
+    "uniqueDeposits": "Depósitos Únicos",
+    "commissionRate": "Tasa de Comisión"    
+  },
+  "campaigns": {
+    "title": "Campañas",
+    "createCampaign": "Crear nueva Campaña", 
+    "modalTitle": "Crear Campaña",
+    "campaignName": "Nombre de la Campaña",
+    "campaignCode": "Código de la Campaña",
+    "campaignLink": "Enlace de Referido",
+    "campaignDescription": "Descripción de la Campaña"
+  }
+}
