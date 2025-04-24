@@ -34,10 +34,10 @@ export function useCaptchaForm<T extends AnyObject>({
       let captchaToken = "";
 
       try {
-        setChallenging(true);
-        captchaToken = await new Promise<string>((resolve) => {
-          callback = resolve;
-        });
+        setChallenging(false);
+        // captchaToken = await new Promise<string>((resolve) => {
+        //   callback = resolve;
+        // });
       } finally {
         if (isMounted()) {
           setChallenging(false);

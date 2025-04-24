@@ -13,7 +13,7 @@ export const MinesPage = () => {
   return (
      <GamePage
         className="MinesPage"
-        title="Dice"
+        title="Mines"
       >
       <MinesManager />
       <MinesContent />
