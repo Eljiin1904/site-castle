@@ -23,7 +23,8 @@ const options: InitOptions = {
     "games\\double",
     "games\\mines",
     "games\\limbo",
-    "account"
+    "account",
+    "referrals"
   ],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
