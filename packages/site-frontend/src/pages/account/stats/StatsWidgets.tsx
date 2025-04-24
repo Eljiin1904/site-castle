@@ -11,6 +11,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { useMostPopularGame } from "./useMostPopularGame";
 import { SvgDeposit } from "#app/svgs/notifications/SvgDeposit";
 import { SvgWithdraw } from "#app/svgs/notifications/SvgWithdraw";
+import { StatWidget } from "#app/comps/stats/StatWidget";
 
 export const StatsWidgets = () => {
 
@@ -55,34 +56,6 @@ export const StatsWidgets = () => {
         description={t('stats.pnlShort')}
         icon={SvgBets}
       />
-    </Div>
-    
+    </Div>    
   </Div>)
-};
-
-const StatWidget = ({title, tokens, description,icon}:{
-  title?:string,
-  tokens?: number;
-  description:string,
-  icon:Svg
-}) => {
-  
-    const layout = useAppSelector((x) => x.style.mainLayout);
-    const small = layout === "mobile" || layout === "tablet";
-    return (<CardSection border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
-          <Div column gap={12} grow>
-            {tokens !== undefined && <Tokens fontSize={24} value={tokens} justifyContent="flex-start" />}
-            {title !== undefined && <Heading  
-              as="h3"
-              size={24}
-              fontWeight="regular"
-              textTransform="uppercase">
-               {title}
-            </Heading>}            
-            <Span>{description}</Span>
-          </Div>
-          <Div bg="brown-4" py={16} px={16}>
-            <Vector as={icon} color="sand" size={24} />
-          </Div>
-    </CardSection>);
 };
