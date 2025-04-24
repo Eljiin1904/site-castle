@@ -35,6 +35,7 @@ export const LimboViewMultiplier = () => {
   });
 
   useEffect(() => {
+    setRocketAnimation(animationOptions["default"]);
     counter.reset();
     counter.start();
 
