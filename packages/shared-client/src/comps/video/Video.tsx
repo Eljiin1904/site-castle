@@ -76,19 +76,13 @@ export const Video: FC<VideoProps> = ({
     const video = videoRef.current;
     if (!video) return;
 
-    const onCanPlay = () => {
-      video.play().catch((err) => {
-        console.warn("Autoplay failed:", err.message);
-      });
-    };
-
     video.pause();
-    video.load();
-    video.addEventListener("canplay", onCanPlay);
+    video.currentTime = 0;
 
-    return () => {
-      video.removeEventListener("canplay", onCanPlay);
-    };
+    video.load();
+    video.play().catch((err) => {
+      console.warn("Play blocked or failed:", err.message);
+    });
   }, [videoSource]);
 
   useEffect(() => {
@@ -108,7 +102,7 @@ export const Video: FC<VideoProps> = ({
         resetVideo();
       }
     }
-  }, [videoRef, play, pause, reset, resetPause]);
+  }, [play, pause, reset, resetPause]);
 
   const playVideo = () => {
     if (videoRef.current) {
@@ -117,17 +111,21 @@ export const Video: FC<VideoProps> = ({
       });
     }
   };
+
   const pauseVideo = () => {
     if (videoRef.current) {
       videoRef.current?.pause();
     }
   };
+
   const resetVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+    video.currentTime = 0;
   };
+
   const setPlayBack = () => {
     if (videoRef.current) {
       videoRef.current.playbackRate = playBackSpeed;
@@ -171,6 +169,9 @@ export const Video: FC<VideoProps> = ({
         onError={() => {
           pauseVideo();
           setShowDefault(true);
+        }}
+        onEnded={() => {
+          if (reset) resetVideo();
         }}
       >
         <source

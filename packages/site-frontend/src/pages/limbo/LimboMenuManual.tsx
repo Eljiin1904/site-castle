@@ -53,7 +53,7 @@ const ActionButton = () => {
 
       setTimeout(() => {
         setDisplayDelay(false);
-      }, 400);
+      }, 500);
     }
   }
 
