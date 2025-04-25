@@ -1,10 +1,14 @@
 import type { BasicUser } from "./BasicUser";
 
 export type UserReferer = {
-  kind: "none" | "promotion" | "sponsored" | "user";
+  kind: "none" | "campaign" | "promotion" | "sponsored" | "user";
 } & (
   | {
       kind: "none";
+    }
+  | {
+      kind: "campaign";
+      id: string;
     }
   | {
       kind: "promotion";

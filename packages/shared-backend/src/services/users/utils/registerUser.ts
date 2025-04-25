@@ -10,6 +10,8 @@ import config from "#app/config";
 import { getReferer } from "./getReferer";
 import { loginUser } from "./loginUser";
 import { trackAction } from "./trackAction";
+import { Database } from "@server/services/database";
+import { createCampaign } from "./createCampaign";
 
 export async function registerUser(
   req: UnauthenticatedRequest,
@@ -55,12 +57,18 @@ export async function registerUser(
     passwordHash,
   });
 
-  if ("user" in referer) {
-    await Affiliates.trackReferral({
-      user,
-      affiliate: referer.user,
-    });
+  if (referer.kind == "campaign") {
+    const affiliate = await Database.collection("user-campaigns").findOne({ _id: referer.id });
+    if (affiliate) {
+      await Affiliates.trackCampaign({
+        user,
+        affiliate,
+      });
+    }
   }
+
+  // Create Default Campaign
+  await createCampaign(user._id, username, "Refer A Friend");
 
   await loginUser(req, user);
 

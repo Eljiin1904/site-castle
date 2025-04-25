@@ -4,6 +4,7 @@ import winston from "winston";
 import CloudWatchTransport from "winston-cloudwatch";
 
 const IS_DEV = process.env.NODE_ENV === "devcloud";
+const IS_TEST = process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development";
 
 if (!IS_DEV) {
   AWS.config.update({
@@ -44,22 +45,23 @@ const createLogger = (options: LoggerConfig) => {
             }),
             json(),
           ),
-    transports: IS_DEV
-      ? [
-          new winston.transports.Console({
-            format: combine(colorize(), simple()),
-          }),
-        ]
-      : [
-          new CloudWatchTransport({
-            logGroupName: options.logGroupName,
-            logStreamName: options.logStreamName,
-            awsRegion: process.env.AWS_REGION || "us-east-1",
-            jsonMessage: true,
-            retentionInDays: 30,
-            uploadRate: 30000, // how often logs have to be sent to AWS, default 2000ms
-          }),
-        ],
+    transports:
+      IS_DEV || IS_TEST
+        ? [
+            new winston.transports.Console({
+              format: combine(colorize(), simple()),
+            }),
+          ]
+        : [
+            new CloudWatchTransport({
+              logGroupName: options.logGroupName,
+              logStreamName: options.logStreamName,
+              awsRegion: process.env.AWS_REGION || "us-east-1",
+              jsonMessage: true,
+              retentionInDays: 30,
+              uploadRate: 30000, // how often logs have to be sent to AWS, default 2000ms
+            }),
+          ],
   });
 
   return {

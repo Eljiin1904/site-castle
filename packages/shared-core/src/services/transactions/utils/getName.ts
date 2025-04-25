@@ -7,6 +7,8 @@ export function getName(tx: TransactionDocument): string {
       return "Admin - Credit Tokens";
     case "admin-token-debit":
       return "Admin - Debit Tokens";
+    case "affiliate-campaign-commission-claim":
+      return "Affiliates - Campaign Commission Claim";
     case "affiliate-commission-claim":
       return "Affiliates - Claim Commission";
     case "affiliate-reload-claim":
@@ -38,7 +40,7 @@ export function getName(tx: TransactionDocument): string {
     case "blackjack-bet":
       return "Blackjack - Bet";
     case "blackjack-won":
-      return "Blackjack - Won";  
+      return "Blackjack - Won";
     case "dice-bet":
       return "Dice - Bet";
     case "dice-won":

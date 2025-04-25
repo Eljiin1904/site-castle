@@ -3,6 +3,7 @@ import { TransactionKind } from "#core/types/transactions/TransactionKind";
 const kindMap: Record<TransactionKind, boolean> = {
   "admin-token-credit": true,
   "admin-token-debit": true,
+  "affiliate-campaign-commission-claim": true,
   "affiliate-commission-claim": true,
   "affiliate-reload-claim": true,
   "case-battle-join": true,

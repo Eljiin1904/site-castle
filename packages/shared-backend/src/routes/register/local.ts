@@ -6,6 +6,7 @@ import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { Users } from "#app/services/users";
 import { HandledError } from "@server/services/errors";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 const rateLimiter = Security.createRateLimiter({
   keyPrefix: "local-register",
@@ -26,13 +27,19 @@ export default Http.createApiRoute({
     referralCode: Validation.string(),
   }),
   callback: async (req, res, next) => {
+    const log = getServerLogger({});
     const { username, email, password, referralCode } = req.body;
+    log.debug("adding new user via email (local)");
 
     const existingUserByEmail = await Database.collection("users").findOne(
       { email },
       { collation: { locale: "en", strength: 2 } },
     );
     if (existingUserByEmail) {
+      log.error(
+        "user already linked - email: " + email + " username: " + existingUserByEmail.username,
+      );
+      throw new HandledError();
       throw new UserLinkedElsewhereError(existingUserByEmail._id, email);
     }
 
@@ -56,6 +63,8 @@ export default Http.createApiRoute({
       password,
       referralCode,
     });
+
+    log.info("username added: " + user.username);
 
     res.json({ user });
   },
