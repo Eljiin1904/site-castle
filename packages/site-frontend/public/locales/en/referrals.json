@@ -29,10 +29,15 @@
   "unclaimed": "Unclaimed Commission",
   "totalCommissionEarned": "Total Commission Earned",
   "commissionTier": "Commission Tier",
+  "tier": "Tier {{tier}}",
+  "baseTier": "You have been assigned tier {{baseTier}} as your base, or minimum, tier.",
   "totalFriendsReferred": "Total Friends Referred",
   "totalFriedsWagered": "Total Friends Wagered",
   "commissionProgress": "Commission Progress",
   "inviteAFriend":"Invite a Friend",
+  "referralCode": "Referral Code",
+  "referralLink": "Referral Link",
+  "copiedToClipboard": "Referral link copied to clipboard.",
   "performance": {
     "title": "Performance",
     "campaignHits": "Campaign Hits",
@@ -48,8 +53,20 @@
     "createCampaign": "Create new Campaign", 
     "modalTitle": "Create Campaign",
     "campaignName": "Campaign Name",
-    "campaignCode": "Campaign Id",
+    "campaignNamePlaceholder": "Enter Campaign Name...",
+    "campaignCode": "Campaign ID",
+    "campaignCodePlaceholder": "Enter Campaign ID...",
     "campaignLink": "Referral Link",
-    "campaignDescription": "Campaign Description"
+    "campaignDescription": "Campaign Description",
+    "creationConfirmed": "Campaign created successfully."
+  },
+  "history": {
+    "title": "Referral History",
+    "date": "Registered",
+    "totalDeposits": "Total Deposits",
+    "lastDeposit": "Last Deposit",
+    "wagered": "Wagered",
+    "commission": "Commission",
+    "unclaimedCommision": "Unclaimed Commission"
   }
 }

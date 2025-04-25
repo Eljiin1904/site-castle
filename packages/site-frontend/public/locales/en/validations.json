@@ -175,6 +175,9 @@
     "users": {
       "notFound": "User not found.",
       "idRequired": "User id is required."
+    },
+    "tiers": {
+      "outOfRange": "Tier out of range."
     }
   }
 }

@@ -29,10 +29,15 @@
   "unclaimed": "Comisión No Reclamada",
   "totalCommissionEarned": "Comisión Total Ganada",
   "commissionTier": "Nivel de Comisión",
+  "tier": "Nivel {{tier}}",
+  "baseTier": "Has sido asignado al nivel {{baseTier}} como tu nivel base, o mínimo.",
   "totalFriendsReferred": "Total de Amigos Referidos",
   "totalFriedsWagered": "Total de Amigos Apostados",
   "commissionProgress": "Progreso de Comisión",
   "inviteAFriend":"Invitar a un Amigo",
+  "referralCode": "Código de Referido",
+  "referralLink": "Enlace de Referido",
+  "copiedToClipboard": "Enlace de referido copiado.",
   "performance": {
     "title": "Rendimiento",
     "campaignHits": "Campañas",
@@ -48,8 +53,20 @@
     "createCampaign": "Crear nueva Campaña", 
     "modalTitle": "Crear Campaña",
     "campaignName": "Nombre de la Campaña",
+    "campaignNamePlaceholder": "Ingrese el Nombre de la Campaña...",
     "campaignCode": "Código de la Campaña",
+    "campaignCodePlaceholder": "Ingrese el Código de la Campaña...",
     "campaignLink": "Enlace de Referido",
-    "campaignDescription": "Descripción de la Campaña"
+    "campaignDescription": "Descripción de la Campaña",
+    "creationConfirmed": "Campaña creada con éxito."
+  },
+  "history": {
+    "title": "Historial de Referidos",
+    "date": "Registrado",
+    "totalDeposits": "Total de Depósitos",
+    "lastDeposit": "Último Depósito",
+    "wagered": "Apostado",
+    "commission": "Comisión",
+    "unclaimedCommision": "Comisión No Reclamada"
   }
 }

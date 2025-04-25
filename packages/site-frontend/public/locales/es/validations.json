@@ -176,6 +176,9 @@
     "users": {
       "notFound": "Usuario no encontrado.",
       "idRequired": "Id de usuario requerido."
+    },
+    "tiers": {
+      "outOfRange": "Nivel fuera de rango."
     }
   }
 }
