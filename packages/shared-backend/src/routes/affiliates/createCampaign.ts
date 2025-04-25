@@ -14,14 +14,14 @@ export default Http.createApiRoute({
   secure: true,
   body: Validation.object({
     campaignName: Validation.string().required("Campaign Name is required").min(5).max(64).trim(),
-    campaignId: Validation.string().required("Campaign ID is required").min(5).max(23).trim(),
+    campaignId: Validation.string().required("Campaign ID is required").min(5).max(25).trim(),
   }),
   callback: async (req, res) => {
     const user = req.user;
     const { campaignName, campaignId } = req.body;
 
     await Site.validateToggle("affiliatesEnabled");
-    const dbCampaignId = "c_" + campaignId;
+    const dbCampaignId = campaignId;
     const campaign = await Database.collection("user-campaigns").findOne({
       campaignId: dbCampaignId,
     });

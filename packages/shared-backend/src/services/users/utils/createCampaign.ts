@@ -4,7 +4,7 @@ import { UserCampaigns } from "@core/types/users/UserCampaigns";
 import { Ids } from "@server/services/ids";
 
 export async function createCampaign(userId: string, campaignId: string, campaignName: string) {
-  const dbCampaignId = "c_" + campaignId;
+  const dbCampaignId = campaignId;
 
   const user = await Database.collection("users").findOne({
     _id: userId,

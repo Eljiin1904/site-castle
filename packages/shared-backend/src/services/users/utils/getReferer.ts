@@ -16,8 +16,7 @@ export async function getReferer({
       kind: "promotion",
       id: referer,
     };
-  } else if (referralCode.startsWith("c_")) {
-    const referer = referralCode.substring(2);
+  } else {
     const affiliate = await Database.collection("user-campaigns").findOne({
       campaignId: referralCode,
     });
@@ -35,19 +34,20 @@ export async function getReferer({
       kind: "campaign",
       id: affiliate._id,
     };
-  } else {
-    const affiliate = await Database.collection("users").findOne(
-      { username: referralCode },
-      {
-        collation: { locale: "en", strength: 2 },
-      },
-    );
-    if (!affiliate) {
-      throw new HandledError("validations:errors.invalidReferralCode");
-    }
-    return {
-      kind: affiliate.tags.includes("sponsored") ? "sponsored" : "user",
-      user: Users.getBasicUser(affiliate),
-    };
   }
+  //  else {
+  //   const affiliate = await Database.collection("users").findOne(
+  //     { username: referralCode },
+  //     {
+  //       collation: { locale: "en", strength: 2 },
+  //     },
+  //   );
+  //   if (!affiliate) {
+  //     throw new HandledError("validations:errors.invalidReferralCode");
+  //   }
+  //   return {
+  //     kind: affiliate.tags.includes("sponsored") ? "sponsored" : "user",
+  //     user: Users.getBasicUser(affiliate),
+  //   };
+  // }
 }
