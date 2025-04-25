@@ -8,7 +8,8 @@ import { PageTitle } from "@client/comps/page/PageTitle";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgCopy } from "@client/svgs/common/SvgCopy";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { Toasts } from "@client/services/toasts";
+import { Dialogs } from "@client/services/dialogs";
+import { AffiliateReferAFriendModal } from "#app/modals/affiliate/AffiliateReferAFriendModal";
 import config from "#app/config";
 
 /**
@@ -20,11 +21,6 @@ export const DefaultReferral = () => {
   const username = useAppSelector((x) => x.user.username);
   const {t} = useTranslation(['referrals']);
   const small = useIsMobileLayout();
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(`${config.siteURL}/r/${username}`);
-    Toasts.success(t('copiedToClipboard'));
-  };
 
   return (<Div fx column gap={20}>
     <PageTitle  
@@ -38,7 +34,7 @@ export const DefaultReferral = () => {
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t('referralLink')}</ModalLabel>
-        <ModalField justifyContent="space-between" onClick={handleCopy}>{`${config.siteURL}/r/${username}`}<Vector as={SvgCopy} /></ModalField>
+        <ModalField justifyContent="space-between" onClick={() => Dialogs.open('primary',<AffiliateReferAFriendModal />)}>{`${config.siteURL}/r/${username}`}<Vector as={SvgCopy} /></ModalField>
       </ModalSection>
     </Div>
   </Div>);
