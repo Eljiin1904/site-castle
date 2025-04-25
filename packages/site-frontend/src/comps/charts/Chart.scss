@@ -1,0 +1,9 @@
+.Chart {
+
+  min-width: 420px;
+  overflow: scroll;
+
+  &.small {
+    min-width: 350px;
+  }
+}

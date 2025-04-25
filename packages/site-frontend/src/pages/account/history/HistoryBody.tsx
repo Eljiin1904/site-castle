@@ -9,6 +9,7 @@ import { HistoryTable } from "./HistoryTable";
 import { HistoryHeader } from "./HistoryHeader";
 import { HistoryFooter } from "./HistoryFooter";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const HistoryBody = () => {
   const [category, setCategory] = useState<TransactionCategory | undefined>();
@@ -23,6 +24,7 @@ export const HistoryBody = () => {
     placeholderData: (prev) => prev,
   });
 
+  const small = useIsMobileLayout();
   const transactions = query.data?.transactions || [];
   const total = query.data?.total || 0;
 
@@ -42,7 +44,8 @@ export const HistoryBody = () => {
     <Div
       fx
       column
-      gap={40}
+      gap={small? 24: 40}
+      pt={small ? 24: 0}
     >
       <HistoryHeader
         category={category}

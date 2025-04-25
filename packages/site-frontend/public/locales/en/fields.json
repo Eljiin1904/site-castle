@@ -22,7 +22,9 @@
     "newFieldPlaceholder": "Enter new password...",
     "placeholder": "Enter password...",
     "currentPassword": "Current Password",
-    "currentPasswordPlaceholder": "Enter current password..."
+    "currentPasswordPlaceholder": "Enter current password...",
+    "repeatNewField": "Repeat New Password",
+    "repeatNewFieldPlaceholder": "Enter new password again..."
   },
   "dob": {
     "field": "Date of Birth",

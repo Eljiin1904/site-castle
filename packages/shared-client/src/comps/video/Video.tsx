@@ -63,12 +63,27 @@ export const Video: FC<VideoProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const hide = (loading && skeleton) || showDefault;
-  const src = `${config.staticURL}${path}.${type}`;
+  const [videoSource, setVideoSource] = useState(`${config.staticURL}${path}.${type}`);
 
   useLayoutEffect(() => {
     setLoading(false);
     setShowDefault(false);
+    setVideoSource(`${config.staticURL}${path}.${type}`);
   }, [path]);
+
+  // Handles Dynamic Reset of Video Source
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+    video.currentTime = 0;
+
+    video.load();
+    video.play().catch((err) => {
+      console.warn("Play blocked or failed:", err.message);
+    });
+  }, [videoSource]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -87,7 +102,7 @@ export const Video: FC<VideoProps> = ({
         resetVideo();
       }
     }
-  }, [videoRef, play, pause, reset, resetPause]);
+  }, [play, pause, reset, resetPause]);
 
   const playVideo = () => {
     if (videoRef.current) {
@@ -96,16 +111,21 @@ export const Video: FC<VideoProps> = ({
       });
     }
   };
+
   const pauseVideo = () => {
     if (videoRef.current) {
       videoRef.current?.pause();
     }
   };
+
   const resetVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+    video.currentTime = 0;
   };
+
   const setPlayBack = () => {
     if (videoRef.current) {
       videoRef.current.playbackRate = playBackSpeed;
@@ -119,8 +139,8 @@ export const Video: FC<VideoProps> = ({
       overflow="hidden"
       {...forwardProps}
     >
-      {showDefault &&  altImage && (
-          <Img
+      {showDefault && altImage && (
+        <Img
           className="alt-image"
           type="png"
           path={altImage}
@@ -131,6 +151,7 @@ export const Video: FC<VideoProps> = ({
       )}
       <video
         ref={videoRef}
+        key={videoSource}
         height={height}
         width={width}
         controls={controls}
@@ -144,15 +165,20 @@ export const Video: FC<VideoProps> = ({
         onCanPlay={() => setPlayBack()}
         onLoad={() => {
           setLoading(false);
-        }}        
+        }}
         onError={() => {
           pauseVideo();
           setShowDefault(true);
         }}
+        onEnded={() => {
+          if (reset) resetVideo();
+        }}
       >
-        <source src={src} type={`video/${type}`} />
-      {loading && skeleton && <Placeholder />}
-        
+        <source
+          src={videoSource}
+          type={`video/${type}`}
+        />
+        {loading && skeleton && <Placeholder />}
       </video>
     </Div>
   );

@@ -367,4 +367,26 @@
       background-color: var(--green-active-color);
     }
   }
+
+  &.menu-item {
+
+    background: var(--black-hover-color);
+
+    span {
+      color: var(--light-sand-color);
+    }
+
+    .icon {
+      color: var(--dark-sand-color);
+    }
+  
+    &:hover {
+      background: var(--custom-hover-color);
+    }
+  
+    &:active, &.active {
+  
+      background-color: var(--custom-active-color);
+    }
+  }
 }

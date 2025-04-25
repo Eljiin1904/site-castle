@@ -2,7 +2,8 @@ import { Http } from "@client/services/http";
 import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
 
 export async function getTransactionsByDateRange(data: {
-  dateRange: string | null
+  minDate: Date;
+  maxDate: Date;
   category: TransactionCategory | string | undefined;
   type: "wagered" | "pnl" | undefined;
 }): Promise<{

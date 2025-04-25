@@ -30,12 +30,12 @@ export const StatCardGrid = () => {
     <Div
       fx
       column
-      gap={small ? 16: 24}
+      gap={24}
     >
       <PageTitle heading={t('stats.allStats')} />
       <Div
         fx
-        gap={24}
+        gap={small? 16: 24}
         wrap={small}
       >
         <Card column>

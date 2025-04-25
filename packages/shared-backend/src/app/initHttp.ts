@@ -113,6 +113,7 @@ export function initHttp(app = express()) {
   app.use("/rewards", Routes.rewards);
   app.use("/support", Routes.support);
   app.use("/users", Routes.users);
+  app.use("/verification", Routes.verification);
 
   app.use((req, res) => res.status(404).send());
   app.use(Http.appErrorHandler);

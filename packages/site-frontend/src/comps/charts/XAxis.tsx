@@ -9,11 +9,12 @@ import { Tokens } from "@client/comps/tokens/Tokens";
  * @param borderColor color of the border of the X axis, default value is 'brown-4'
  * @returns YAxis component to be used in charts
  */
-export const XAxis = ({isToken = false, labels = [], borderColor = 'brown-4', left} : {
+export const XAxis = ({isToken = false, labels = [], borderColor = 'brown-4', left, size = 12} : {
   isToken?: boolean
   labels?: string[]
   borderColor?: Color,
-  left: Unit
+  left: Unit,
+  size?: Unit,
 }) => {
   
   return (
@@ -29,7 +30,7 @@ export const XAxis = ({isToken = false, labels = [], borderColor = 'brown-4', le
     >
       <Div fx gap={10} wrap justifyContent="space-between" grow ml={left}>
         {labels?.map(item  => {
-          return (isToken && item.length > 0 ? <Tokens key={item} value={parseFloat(item)} fontSize={12} color="dark-sand" decimals={1} /> : <Span key={item} size={12} lineHeight={12} textAlign="center">
+          return (isToken && item.length > 0 ? <Tokens key={item} value={parseFloat(item)} fontSize={size} color="dark-sand" decimals={1} /> : <Span key={item} size={size} lineHeight={size} textAlign="center">
             {item}
           </Span>);
         })}

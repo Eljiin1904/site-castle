@@ -15,6 +15,7 @@ import { Users } from "#app/services/users";
 import { SitePage } from "#app/comps/site-page/SitePage";
 import { UserHeader } from "./manage/UserHeader";
 import { AccountBody } from "./manage/account/AccountBody";
+import { SumsubBody } from "./manage/sumsub/SumsubBody";
 import { TransactionsBody } from "./manage/transactions/TransactionsBody";
 import { ReferralsBody } from "./manage/referrals/ReferralsBody";
 import { ActionsBody } from "./manage/actions/ActionsBody";
@@ -60,6 +61,7 @@ export const UserManagePage = () => {
             { label: "Transactions", to: `/users/${user._id}/transactions` },
             { label: "Referrals", to: `/users/${user._id}/referrals` },
             { label: "API Keys", to: `/users/${user._id}/api-keys` },
+            { label: "Sumsub", to: `/users/${user._id}/sumsub` },
             { label: "Action Log", to: `/users/${user._id}/actions` },
           ]}
         />
@@ -83,6 +85,10 @@ export const UserManagePage = () => {
           <Route
             path="/actions"
             element={<ActionsBody user={user} />}
+          />
+          <Route
+            path="/sumsub"
+            element={<SumsubBody user={user} />}
           />
           <Route
             path="*"

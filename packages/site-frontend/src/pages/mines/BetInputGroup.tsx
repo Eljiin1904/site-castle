@@ -8,18 +8,27 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Mines } from "#app/services/mines";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Dialogs } from "@client/services/dialogs";
+import { LoginModal } from "#app/modals/login/LoginModal";
 
 export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
+  const authenticated = useAppSelector((x) => x.user.authenticated);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const betAmount = useAppSelector((x) => x.mines.betAmount);
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
 
   const setBetAmount = (x: number | undefined) => {
+    if (!authenticated) {
+      return Dialogs.open("primary", <LoginModal />);
+    }
     dispatch(Mines.setBetAmount(x));
   };
 
   const handleMath = (f: (x: number) => number) => {
+    if (!authenticated) {
+      return Dialogs.open("primary", <LoginModal />);
+    }
     let value = f(betAmount || 0);
 
     value = Math.min(tokenBalance, value);
@@ -28,6 +37,7 @@ export const BetInputGroup = ({ disabled }: { disabled?: boolean }) => {
 
     setBetAmount(value);
   };
+
 
   return (
     <ModalSection>

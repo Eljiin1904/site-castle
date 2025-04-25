@@ -8,6 +8,7 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { PageTitle } from "@client/comps/page/PageTitle";
 import { Span } from "@client/comps/span/Span";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
 export const HistoryHeader = ({
   category,
@@ -24,50 +25,55 @@ export const HistoryHeader = ({
   setLimit: (x: number) => void;
   onRefreshClick: () => void;
 }) => {
-  const small = useIsMobileLayout();
+  const layout = useAppSelector((x) => x.style.mainLayout);
+  const small = layout === "mobile" || layout === "tablet";
   const { t } = useTranslation(["account","games"]);
   const indexes = [10, 20, 25, 50];
   return (
     <Div
-      justify={small ? "space-between" : undefined}
-      align="center"
-      gap={small ? 20: 24}
+      justify={"space-between"}
+      fx
+      column={small}
+      gap={24}
     >
-      {!small && (
-        <PageTitle
-          heading={t('history.title')}
-        />
-      )}
-      <Div gap={12}>
-        <Dropdown
-          type="select"
-          fx={small}
-          options={['all_games', ...Transactions.gameCategories].map((x) => t(`games:${x.replaceAll('-', '_')}`))}
-          value={
-            category ? Transactions.gameCategories.indexOf(category) + 1 : 0
-          }
-          onChange={(x, i) =>
-            setCategory(
-              i === 0 ? undefined : Transactions.gameCategories[i - 1],
-            )
-          }
-        />
-        <Button
-          kind="tertiary-grey"
-          icon={SvgRedo}
-          disabled={isLoading}
-          onClick={onRefreshClick}
-        />
-      </Div>
-      <Span flexShrink>{t("history.perPage")}</Span>
-      <Dropdown
-        type="select"
-        fx={small}
-        size="sm"
-        options={indexes}
-        value={indexes.indexOf(limit)}
-        onChange={(x, i) => setLimit(indexes[i])}
+      <PageTitle width={0}
+        heading={t('history.title')}
       />
+      <Div center gap={small ? 20: 24} flexShrink justifyContent="space-between">
+        <Div gap={12}>
+          <Dropdown
+            type="select"
+            fx={!small}
+            size={"sm"}
+            options={['all_games', ...Transactions.gameCategories].map((x) => t(`games:${x.replaceAll('-', '_')}`))}
+            value={
+              category ? Transactions.gameCategories.indexOf(category) + 1 : 0
+            }
+            onChange={(x, i) =>
+              setCategory(
+                i === 0 ? undefined : Transactions.gameCategories[i - 1],
+              )
+            }
+          />
+          {layout !== "mobile" &&<Button
+            kind="tertiary-grey"
+            icon={SvgRedo}
+            disabled={isLoading}
+            onClick={onRefreshClick}
+          />}
+        </Div>
+        <Div center gap={12}>
+          <Span flexShrink>{t("history.perPage")}</Span>
+          <Dropdown
+            type="select"
+            fx={small}
+            size="sm"
+            options={indexes}
+            value={indexes.indexOf(limit)}
+            onChange={(x, i) => setLimit(indexes[i])}
+          />
+        </Div>
+      </Div>
     </Div>
   );
 };

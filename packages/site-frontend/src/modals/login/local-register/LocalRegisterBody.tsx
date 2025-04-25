@@ -166,7 +166,9 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
         textAlign="center"
         fontSize={12}
       >
-        <Trans
+        {
+          //@ts-ignore
+          <Trans
           i18nKey="register.disclaimer"
           values={{ link: t("footer.terms") }}
           components={[
@@ -180,6 +182,7 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
             </Link>,
           ]}
         />
+        }
       </Div>
       <ModalDivider label="Or" />
       <SSOButtons />

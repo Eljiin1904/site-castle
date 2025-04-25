@@ -21,11 +21,11 @@ export const UserCard = () => {
   const {t} = useTranslation(["account","fields"]);
   const username = useAppSelector((x) => x.user.username);
   const email = useAppSelector((x) => x.user.email);
-  
+  const small = useIsMobileLayout();
   const registerDate = useAppSelector((x) => x.user.registerDate);  
 
-  return (<Fragment>
-    <Div fx gap={40}>
+  return (<Div fx column>
+    <Div fx gap={40} column={small} center>
       <UserAvatar />
       <Div
         column
@@ -41,7 +41,7 @@ export const UserCard = () => {
       </Div>
     </Div>
     <UserCardLevel />
-    </Fragment>
+    </Div>
   );
 };
 
@@ -52,15 +52,15 @@ const UserAvatar = () => {
   const small = useIsMobileLayout();
 
   return (<Div
-  className="UserCard"
+    className="UserCard"
     hover="highlight"
     onClick={() => Dialogs.open("primary", <UserAvatarEditModal />)}
-    style={{width: small ? "68px" : "131px", height: small ? "68px" : "131px"}}
+    style={{width: "131px", height: "131px"}}
   >
     <UserIcon
       avatarIndex={avatarIndex}
       avatarId={avatarId}
-      width={small ? "68px" : "131px"}
+      width={"131px"}
     />
     <Div
       className="EditAvatar"

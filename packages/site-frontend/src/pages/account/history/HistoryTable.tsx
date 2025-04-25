@@ -26,6 +26,7 @@ export const HistoryTable = ({
       loading={isLoading}
       autoScroll={mainLayout === "mobile"}
       emptyMessage={t("history.notFound")}
+      hideHeader={mainLayout === "mobile"}
       onRowProps={(x) => ({
         type: "action",
         onClick: () =>
@@ -50,9 +51,9 @@ export const HistoryTable = ({
               </Span>
               <Span
                 size={12}
+                color="light-sand"
               >
-                {"#"}
-                {"gameId" in x ? x.gameId : x._id}
+                {Dates.toTimestamp(x.timestamp)}
               </Span>
             </Div>
           ),
@@ -75,6 +76,7 @@ export const HistoryTable = ({
               />
               <Span
                 size={12}
+                color="light-sand"
               >
                 {`(${Intimal.toLocaleString(x.balance + x.amount)})`}
               </Span>

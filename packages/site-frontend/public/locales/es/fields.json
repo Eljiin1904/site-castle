@@ -22,7 +22,9 @@
     "newFieldPlaceholder": "Ingrese la nueva contraseña...",
     "placeholder": "Ingrese la contraseña...",
     "currentPassword": "Contraseña actual",
-    "currentPasswordPlaceholder": "Ingrese la contraseña actual..."
+    "currentPasswordPlaceholder": "Ingrese la contraseña actual...",
+     "repeatNewField": "Repetir nueva contraseña",
+    "repeatNewFieldPlaceholder": "Ingrese la nueva contraseña nuevamente..."
   },
   "dob": {
     "field": "Fecha de nacimiento",

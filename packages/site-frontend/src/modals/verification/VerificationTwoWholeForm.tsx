@@ -50,7 +50,7 @@ export const VerificationTwoWholeForm = ({
     onSubmit: async (values) => {
       await Users.verifyTier2(values);
 
-      Toasts.success("Verification submitted.");
+      Toasts.success("register.verificationSubmitted");
 
       if (!disableClose) {
         Dialogs.close("primary");

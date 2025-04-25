@@ -136,6 +136,7 @@ describe("registration testing with email (local)", () => {
     expect(response.status).toBe(200);
 
     // perform post again, but change email
+    console.log("retrying different email with same username");
     postData.email = "allgood@pidwin.com";
     const response2 = await fetch(url, {
       method: "POST",

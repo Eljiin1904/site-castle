@@ -54,6 +54,13 @@ export function getMessage(n: NotificationDocument): string {
     case "skin-withdraw-sent": {
       return `Your skin withdraw trade was sent. Please accept offer ${n.tradeOfferId} to complete your withdraw.`;
     }
+    case "sumsub-review-result": {
+      if (n.verified) {
+        return `Sumsub verification successful.`;
+      } else {
+        return `Sumsub verification unsuccessful. Please contact support.`;
+      }
+    }
     case "swapped-deposit": {
       return `Your Swapped deposit was confirmed. You were credited ${Intimal.toLocaleString(n.tokenAmount)} tokens.`;
     }

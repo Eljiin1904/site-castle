@@ -6,12 +6,13 @@ import { Box } from "../box/Box";
 import { Vector } from "../vector/Vector";
 import { StyledLayoutProps, StyledProps } from "../styled/Styled";
 import "./Button.scss";
+import { Div } from "../div/Div";
 
 export type ButtonProps = StyledLayoutProps & {
   type?: "button" | "submit";
   kind: "primary" | "secondary" | "tertiary" | "custom" | "primary-green" |
    "primary-black" | "secondary-black" | "primary-yellow" | "secondary-yellow" | "tertiary-grey" | "secondary-grey" |
-   "tertiary-black-overlay" | "tertiary-white-overlay";
+   "tertiary-black-overlay" | "tertiary-white-overlay" | "menu-item";
   size?: "xs" | "sm" | "md" | "lg" | "sso" | "xssso" | "icon";
   label?: string;
   labelSize?: Unit;
@@ -31,6 +32,7 @@ export type ButtonProps = StyledLayoutProps & {
   border?: StyledProps["border"];
   borderRadius?: StyledProps["borderRadius"];
   color?: StyledProps["color"];
+  justifyContent?: StyledProps["justifyContent"];
   onClick?: () => void;
 };
 
@@ -67,23 +69,25 @@ export const Button: FC<ButtonProps> = ({
   } else {
     content = (
       <Fragment>
-        {iconLeft && (
-          <Vector
-            className="icon"
-            as={iconLeft}
-            size={iconSize}
-          />
-        )}
-        {label && (
-          <Span
-            className="label"
-            fontSize={labelSize}
-            fontWeight={labelWeight}
-            color={labelColor}
-          >
-            {label}
-          </Span>
-        )}
+        <Div gap={8}>
+          {iconLeft && (
+            <Vector
+              className="icon"
+              as={iconLeft}
+              size={iconSize}
+            />
+          )}
+          {label && (
+            <Span
+              className="label"
+              fontSize={labelSize}
+              fontWeight={labelWeight}
+              color={labelColor}
+            >
+              {label}
+            </Span>
+          )}
+        </Div>
         {iconRight && (
           <Vector
             className="icon"

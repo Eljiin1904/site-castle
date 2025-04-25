@@ -22,6 +22,7 @@ export type NotificationKindData =
   | SkinWithdrawConfirmedData
   | SkinWithdrawCancelledData
   | SkinWithdrawSentData
+  | SumsubReviewResultData
   | SwappedDepositData
   | SuspensionData
   | TipReceiveData
@@ -115,6 +116,11 @@ interface SkinWithdrawCancelledData {
 interface SkinWithdrawSentData {
   kind: "skin-withdraw-sent";
   tradeOfferId: string;
+}
+
+interface SumsubReviewResultData {
+  kind: "sumsub-review-result";
+  verified: boolean;
 }
 
 interface SwappedDepositData {

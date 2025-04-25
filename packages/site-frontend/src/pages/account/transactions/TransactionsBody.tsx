@@ -9,9 +9,11 @@ import { TransactionsHeader } from "./TransactionsHeader";
 import { TransactionsTable } from "./TransactionsTable";
 import { TransactionsFooter } from "./TransactionsFooter";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const TransactionsBody = () => {
 
+  const small = useIsMobileLayout();
   const [category, setCategory] = useState<TransactionCategory | undefined>();
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -45,7 +47,8 @@ export const TransactionsBody = () => {
     <Div
       fx
       column
-      gap={40}
+      gap={small? 24: 40}
+      pt={small ? 24: 0}
     >
       <TransactionsHeader
         category={category}

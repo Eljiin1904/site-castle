@@ -2,7 +2,6 @@
   "title": "Cuenta",
   "profile": "Información del perfil",
   "gameHistory": "Historial de juegos",
-  "verification": "Verificación",
   "progress": "Progreso de la cuenta",
   "avatar": {
     "title": "Cambiar avatar",
@@ -86,6 +85,7 @@
     "totalRewards": "Total de recompensas",
     "mostPopularGame": "Juego más popular",
     "notData": "No hay datos disponibles",
+    "invalidData": "Datos inválidos",
     "dateranges": {
       "all": "Todo",
       "today": "Hoy",
@@ -96,7 +96,8 @@
       "last3Months": "Últimos 3 meses",
       "last6Months": "Últimos 6 meses",
       "thisYear": "Año actual",
-      "lastYear": "Año pasado"
+      "lastYear": "Año pasado",
+      "custom": "Rango personalizado"
     },
     "charts": {
       "wagered": "Total apostado en {{period}} en {{game}}",
@@ -199,11 +200,10 @@
       "description": "Habilitar 2FA.",
       "enableModal": {
         "header": "Habilitar autenticador",
-        "steps": {
-          "step1": "Escanea el código QR o ingresa la clave de configuración manualmente.",
-          "step2": "Ingresa el código de 6 dígitos del autenticador.",
-          "step3": "Guarda tu clave de respaldo y úsala si pierdes acceso al autenticador."
-        },
+        "description": "Descarga e instala Google Authenticator. Habilita la autenticación de dos factores para proteger tu cuenta de accesos no autorizados.",
+        "scan": "Escanea el código QR con tu Google Authenticator o introduce la clave secreta manualmente",
+        "secretKey": "Clave secreta:",
+        "saveKey": "Guarda la clave de respaldo y no dejes que nadie la vea.",
         "success": "Autenticador habilitado.",
         "action": "Guardar clave de respaldo",
         "saved": "¡Clave de respaldo guardada!",
@@ -251,8 +251,33 @@
         "description4": "Te enviaremos un correo electrónico para confirmar el inicio y el final de tu autoexclusión.",
         "warning":"El soporte no revertirá esto. Debes esperar a que termine tu autoexclusión una vez que comience.",
         "success": "Autoexclusión solicitada. Revisa tu correo electrónico para confirmar.",
-        "action": "Solicitar autoexclusión"
+        "action": "Solicitar autoexclusión",
+        "attention": "Atención!"
       }
+    }
+  },
+  "verification": {
+    "title": "Verificación",
+    "header": "Verificación de cuenta",
+    "tiers": {
+      "tier1": {
+        "title": "Correo electrónico",
+        "header": "Verifica tu correo electrónico",
+        "description": "Necesitamos verificar tu correo electrónico <0>{{email}}</0> para disfrutar de todas las funciones.",
+        "codeSent":"Código de verificación de correo electrónico enviado",
+        "codeSentDescription":"El código de verificación fue enviado a la dirección de correo electrónico <0>{{email}}</0>. Por favor ingresa el código recibido a continuación.",
+        "success": "Correo electrónico verificado con éxito.",
+        "action": "Enviar codigo de verificación"
+      },
+      "tier2": "Personal",
+      "tier3": {
+        "title": "Identidad",
+        "header": "Verifica tu información (Sumsub)",
+        "description": "Necesitamos verificar tu información personal.",
+        "action": "Iniciar proceso KYC"
+      },
+      "tier4": "Dirección",
+      "tier5": "Fondos"
     }
   }
 }

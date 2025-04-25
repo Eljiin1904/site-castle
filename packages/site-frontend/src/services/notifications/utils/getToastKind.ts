@@ -33,6 +33,12 @@ export function getToastKind(n: NotificationDocument): ToastInfo["kind"] {
       return "info";
     case "skin-withdraw-sent":
       return "info";
+    case "sumsub-review-result":
+      if (n.verified) {
+        return "success";
+      } else {
+        return "warning";
+      }
     case "swapped-deposit":
       return "success";
     case "token-credit":

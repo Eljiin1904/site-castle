@@ -43,20 +43,23 @@ export const UserEmailConfirmModal = ({
 
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
         heading={t("register.confirm.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Form form={form}>
-          <NoticeCard
-            kind="success"
-            message={t("register.confirm.codeSent")}
-          />
+          <ModalSection borderTop  borderColor="brown-4" pt={24}>
+            <NoticeCard
+              kind="success"
+              message={t("register.confirm.codeSent")}
+            />
+          </ModalSection>
           <ModalSection>
+            
             <ModalLabel>{t("fields:code.field")}</ModalLabel>
             <Input
               type="text"

@@ -42,12 +42,14 @@ export const AuthenticatorRecoverModal = (props: {
         heading={t("account:settings.authenticator.recoveryModal.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Form form={form}>
-          <NoticeCard
-            kind="info"
-            message={t("account:settings.authenticator.recoveryModal.description")}
-          />
+          <ModalSection borderTop borderColor="brown-4" pt={24}>
+            <NoticeCard
+              kind="info"
+              message={t("account:settings.authenticator.recoveryModal.description")}
+            />
+          </ModalSection>
           <ModalSection>
             <ModalLabel>{t("fields:auth.backupField")}</ModalLabel>
             <Input
