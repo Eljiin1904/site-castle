@@ -1,44 +1,63 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { CardSection } from "@client/comps/cards/CardSection";
+import { CardSection, CardSectionProps } from "@client/comps/cards/CardSection";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
+import { Img } from "@client/comps/img/Img";
 import { Span } from "@client/comps/span/Span";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Vector } from "@client/comps/vector/Vector";
 
-export const StatWidget = ({title, tokens, description,icon}:{
+export const StatWidget = ({title, tokens, description,icon,withAction,button, ...forwardProps}: CardSectionProps & {
   title?:string,
   tokens?: number;
   description:string,
-  icon:Svg
+  icon?:Svg,
+  withAction?: boolean,
+  button?: JSX.Element;
 }) => {
   
     const layout = useAppSelector((x) => x.style.mainLayout);
     const small = layout === "mobile" || layout === "tablet";
+    const {border, borderColor,gap, px, py, alignItems, ...props} = forwardProps;
+    const textColor = withAction ? "dark-brown" : "dark-sand";
     return (<CardSection 
-            border 
+            border={border ?? true}
             borderColor="brown-4" 
             position="header" 
             grow 
             fx 
-            gap={16} 
-            px={small ? 20: 16} 
-            alignItems="center" 
+            gap={gap ?? 16}
+            py={py ?? (small ? 20 : 24)}
+            px={px ?? (small ? 20 : 24)}
+            alignItems={alignItems ?? "center"} 
             justifyContent="space-between"
+            bg={withAction ? "sand" : undefined}
+
+            {...props}
             >
+              {withAction && <Img
+                type="png"
+                path="/graphics/dark-sand-gradient"
+                position="absolute"
+                bottom={0}
+                left={0}
+                width="100%" />}
               <Div column gap={12} grow>
-                {tokens !== undefined && <Tokens fontSize={24} value={tokens} justifyContent="flex-start" />}
+                {tokens !== undefined && <Tokens color={textColor} family="title" fontSize={24} value={tokens} justifyContent="flex-start" />}
                 {title !== undefined && <Heading  
                   as="h3"
                   size={24}
                   fontWeight="regular"
-                  textTransform="uppercase">
+                  textTransform="uppercase"
+                  color={textColor}
+                  >
                   {title}
                 </Heading>}            
-                <Span>{description}</Span>
+                <Span color={textColor}>{description}</Span>
               </Div>
-              <Div bg="brown-4" py={16} px={16}>
+              {icon && <Div bg="brown-4" py={16} px={16}>
                 <Vector as={icon} color="sand" size={24} />
-              </Div>
+              </Div>}
+              {button && button} 
     </CardSection>);
 };
