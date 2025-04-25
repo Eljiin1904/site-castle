@@ -65,7 +65,7 @@ export const TransactionsHeader = ({
           />}
         </Div>      
         <Div center gap={12}>
-        <Span flexShrink>{t("transactions.perPage")}</Span>        
+        <Span flexShrink>{t("common:perPage")}</Span>        
         <Dropdown
           type="select"
           fx={!small}

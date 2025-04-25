@@ -14,7 +14,6 @@
     "refetch": "Refetch Transactions",
     "loading": "Loading transactions...",
     "notFound": "No transactions found.",
-    "perPage": "Per Page",
     "headers": {
       "id": "ID",
       "type": "Type",
@@ -52,7 +51,6 @@
     "loading": "Loading game history...",
     "notFound": "No game history found.",
     "refetch": "Refetch Game History",
-    "perPage": "Per Page",
     "headers": {
       "id": "ID",
       "gameId": "Game ID",

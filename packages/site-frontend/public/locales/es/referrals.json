@@ -68,11 +68,15 @@
   },
   "history": {
     "title": "Historial de Referidos",
-    "date": "Registrado",
-    "totalDeposits": "Total de Depósitos",
-    "lastDeposit": "Último Depósito",
-    "wagered": "Apostado",
-    "commission": "Comisión",
-    "unclaimedCommision": "Comisión No Reclamada"
+    "headers": {
+      "user": "Usuario",
+      "date": "Registrado",
+      "totalDeposits": "Total de Depósitos",
+      "lastDeposit": "Último Depósito",
+      "wagered": "Apostado",
+      "commission": "Comisión",
+      "unclaimedCommision": "Comisión No Reclamada"
+    },    
+    "notFound": "No se encontraron referidos."
   }
 }

@@ -68,11 +68,15 @@
   },
   "history": {
     "title": "Referral History",
-    "date": "Registered",
-    "totalDeposits": "Total Deposits",
-    "lastDeposit": "Last Deposit",
-    "wagered": "Wagered",
-    "commission": "Commission",
-    "unclaimedCommision": "Unclaimed Commission"
+    "headers": {
+      "user": "User",
+      "date": "Registered",
+      "totalDeposits": "Total Deposits",
+      "lastDeposit": "Last Deposit",
+      "wagered": "Wagered",
+      "commission": "Commission",
+      "unclaimedCommision": "Unclaimed Commission"
+    },
+    "notFound": "No referrals found."
   }
 }

@@ -14,7 +14,6 @@
     "refetch": "Volver a cargar transacciones",
     "loading": "Cargando transacciones...",
     "notFound": "No se encontraron transacciones.",
-    "perPage": "Por página",
     "headers": {
       "id": "ID",
       "type": "Tipo",
@@ -52,7 +51,6 @@
     "loading": "Cargando historial de juegos...",
     "notFound": "No se encontró historial de juegos.",
     "refetch": "Volver a cargar historial de juegos",
-    "perPage": "Por página",
     "headers": {
       "id": "ID",
       "gameId": "ID del juego",
