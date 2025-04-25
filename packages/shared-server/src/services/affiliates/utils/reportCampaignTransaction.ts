@@ -28,6 +28,7 @@ export async function reportCampaignTransaction(tx: TransactionDocument) {
   if (tx.stats?.rewardAmount) {
     $inc.rewardAmount = tx.stats.rewardAmount;
   }
+
   if (tx.referer.kind == "campaign") {
     await Database.collection("affiliate-reports").updateOne(
       {

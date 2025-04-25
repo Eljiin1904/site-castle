@@ -25,8 +25,7 @@ export default Http.createApiRoute({
       userId: user._id,
       campaignId: campaignId,
     });
-    console.log("Campaign ");
-    console.log(campaign);
+
     if (!campaign) {
       throw new HandledError("Campaign not found.");
     }

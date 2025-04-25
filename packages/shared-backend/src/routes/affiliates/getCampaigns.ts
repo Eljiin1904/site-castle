@@ -32,7 +32,7 @@ export default Http.createApiRoute({
       .find({ userId: user._id })
       .sort({ timestamp: -1 })
       .toArray();
-    console.log("Hellooo ");
+
     res.json({ campaigns: campaigns });
     // return campaigns;
 
@@ -43,7 +43,7 @@ export default Http.createApiRoute({
     //    new Date(0),
     //  ][timeIndex];
 
-    const maxDate = new Date();
+    // const maxDate = new Date();
 
     //  const referrals = await Affiliates.aggregateReports({
     //    affiliateId: user._id,

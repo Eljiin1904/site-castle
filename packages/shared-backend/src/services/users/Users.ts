@@ -5,4 +5,5 @@ export * from "./utils/getReferer";
 export * from "./utils/loginUser";
 export * from "./utils/logoutUser";
 export * from "./utils/registerUser";
+export * from "./utils/createCampaign";
 export * from "./utils/trackAction";
