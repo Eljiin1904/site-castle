@@ -8,6 +8,7 @@ export function getCategory(kind: TransactionKind) {
 const map: Record<TransactionKind, TransactionCategory> = {
   "admin-token-credit": "other",
   "admin-token-debit": "other",
+  "affiliate-campaign-commission-claim": "referrals",
   "affiliate-commission-claim": "referrals",
   "affiliate-reload-claim": "referrals",
   "duel-bet": "duel",

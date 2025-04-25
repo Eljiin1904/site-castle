@@ -67,6 +67,7 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["users"]: config.env,
   ["user-actions"]: config.env,
   ["user-bet-sessions"]: config.env,
+  ["user-campaigns"]: config.env,
   ["user-holds"]: config.env,
   ["user-reports"]: config.env,
   ["user-seed-pairs"]: config.env,

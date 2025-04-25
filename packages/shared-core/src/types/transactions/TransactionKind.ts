@@ -22,6 +22,7 @@ export type TransactionKind = TransactionKindData["kind"];
 export type TransactionKindData =
   | AdminTokenCreditData
   | AdminTokenDebitData
+  | AffiliateCampaignCommissionClaimData
   | AffiliateCommissionClaimData
   | AffiliateReloadClaimData
   | CaseBattleJoinData
@@ -73,6 +74,11 @@ interface AdminTokenCreditData {
 interface AdminTokenDebitData {
   kind: "admin-token-debit";
   adjustment: AdminDebitAdjustment;
+}
+interface AffiliateCampaignCommissionClaimData {
+  campaignId: string;
+  kind: "affiliate-campaign-commission-claim";
+  location: UserLocation;
 }
 
 interface AffiliateCommissionClaimData {

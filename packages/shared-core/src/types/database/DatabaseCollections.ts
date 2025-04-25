@@ -50,6 +50,7 @@ import type { SystemLogDocument } from "../system/SystemLogDocument";
 import type { TokenDocument } from "../security/TokenDocument";
 import type { TransactionReportDocument } from "../transactions/TransactionReport";
 import type { TransactionDocument } from "../transactions/TransactionDocument";
+import type { UserCampaigns } from "../users/UserCampaigns";
 import type { UserDocument } from "../users/UserDocument";
 import type { UserActionDocument } from "../users/UserActionDocument";
 import type { UserBetSessionDocument } from "../users/UserBetSessionDocument";
@@ -123,6 +124,7 @@ export interface DatabaseCollections {
   ["users"]: UserDocument;
   ["user-actions"]: UserActionDocument;
   ["user-bet-sessions"]: UserBetSessionDocument;
+  ["user-campaigns"]: UserCampaigns;
   ["user-holds"]: UserHoldDocument;
   ["user-reports"]: UserReportDocument;
   ["user-seed-pairs"]: UserSeedPairDocument;

@@ -17,18 +17,37 @@ export async function getReferer({
       id: referer,
     };
   } else {
-    const affiliate = await Database.collection("users").findOne(
-      { username: referralCode },
-      {
-        collation: { locale: "en", strength: 2 },
-      },
-    );
+    const affiliate = await Database.collection("user-campaigns").findOne({
+      campaignId: referralCode,
+    });
+
     if (!affiliate) {
       throw new HandledError("validations:errors.invalidReferralCode");
     }
+
+    const user = await Database.collection("users").findOne({ _id: affiliate.userId });
+    if (!user) {
+      throw new HandledError("validations:errors.users.notFound");
+    }
+
     return {
-      kind: affiliate.tags.includes("sponsored") ? "sponsored" : "user",
-      user: Users.getBasicUser(affiliate),
+      kind: "campaign",
+      id: affiliate._id,
     };
   }
+  //  else {
+  //   const affiliate = await Database.collection("users").findOne(
+  //     { username: referralCode },
+  //     {
+  //       collation: { locale: "en", strength: 2 },
+  //     },
+  //   );
+  //   if (!affiliate) {
+  //     throw new HandledError("validations:errors.invalidReferralCode");
+  //   }
+  //   return {
+  //     kind: affiliate.tags.includes("sponsored") ? "sponsored" : "user",
+  //     user: Users.getBasicUser(affiliate),
+  //   };
+  // }
 }

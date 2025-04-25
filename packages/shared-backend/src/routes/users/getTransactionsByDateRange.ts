@@ -216,16 +216,20 @@ export default Http.createApiRoute({
     type: Validation.string().oneOf(["pnl", "wagered"], "invalid_type").required(),
   }),
   callback: async (req, res) => {
+
     const { minDate, maxDate , category, type} = req.body;
+
     const userId = req.user._id;
 
     const filter: Filter<TransactionDocument> = {
       "user.id": userId,
     };
-    filter.tags = { $eq: type === "pnl" ? "game": "bet" };
+
+    filter.tags = { $eq: type === "pnl" ? "game" : "bet" };
     if (category) {
       filter.category = category;
     }
+
     filter.timestamp = {
       $gte: minDate || new Date(0),
       $lte: maxDate || new Date(),
