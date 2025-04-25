@@ -60,6 +60,12 @@
     "campaignDescription": "Descripción de la Campaña",
     "creationConfirmed": "Campaña creada con éxito."
   },
+  "inviteModal": {
+    "title": "Invitar a un Amigo y gane <0>{{percent}}</0>",
+    "description": "Recomienda a un amigo y gana {{percent}} de comisión sobre la ventaja de la casa en todas sus apuestas!",
+    "copyLink": "Copiar Enlace",
+    "linkCopied": "Enlace copiado!"
+  },
   "history": {
     "title": "Historial de Referidos",
     "date": "Registrado",

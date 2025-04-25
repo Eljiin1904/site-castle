@@ -60,6 +60,12 @@
     "campaignDescription": "Campaign Description",
     "creationConfirmed": "Campaign created successfully."
   },
+  "inviteModal": {
+    "title": "Refer a Friend and earn <0>{{percent}}</0>",
+    "description": "Refer a friend and earn {{percent}} commission from the house edge on all of their bets!",
+    "copyLink": "Copy to Keyboard",
+    "linkCopied": "Link copied!"
+  },
   "history": {
     "title": "Referral History",
     "date": "Registered",
