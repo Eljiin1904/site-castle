@@ -12,13 +12,7 @@ let globalSessionCookie: string;
 describe("Test Limbo Game Route", () => {
   beforeAll(async () => {
     const passwordHash = await bcrypt.hash("password123", 8);
-    const user = createTestUser("limboTest", "limboTest@gmail.com", "user", passwordHash);
-
-    await Database.collection("site-settings").insertOne({
-      _id: "limboEnabled",
-      value: true,
-      lastUpdateDate: new Date(),
-    });
+    const user = createTestUser("limboTester", "limboTest@gmail.com", "user", passwordHash, 100000);
 
     await Database.collection("users").insertOne(user);
     const [sessionResponse, sessionCookie] = await handleLogin(
@@ -33,7 +27,7 @@ describe("Test Limbo Game Route", () => {
   });
 
   it("Create Limbo Game", async () => {
-    const user = await Database.collection("users").findOne({ username: "limboTest" });
+    const user = await Database.collection("users").findOne({ username: "limboTester" });
     if (!user) return;
     const range = Limbo.getTargetMinMax();
     let url = BASE_URL + "/limbo/post-ticket";
@@ -81,7 +75,7 @@ describe("Test Limbo Game Route", () => {
   });
 
   it("Create Bad Limbo : Bad Bet Amount", async () => {
-    const user = await Database.collection("users").findOne({ username: "limboTest" });
+    const user = await Database.collection("users").findOne({ username: "limboTester" });
     if (!user) return;
     const range = Limbo.getTargetMinMax();
     let url = BASE_URL + "/limbo/post-ticket";
@@ -104,7 +98,7 @@ describe("Test Limbo Game Route", () => {
   });
 
   it("Create Bad Limbo : Bad Bet Amount", async () => {
-    const user = await Database.collection("users").findOne({ username: "limboTest" });
+    const user = await Database.collection("users").findOne({ username: "limboTester" });
     if (!user) return;
     const range = Limbo.getTargetMinMax();
     let url = BASE_URL + "/limbo/post-ticket";
@@ -127,7 +121,7 @@ describe("Test Limbo Game Route", () => {
   });
 
   it("Create Bad Limbo : Bad Target Value (Below Min)", async () => {
-    const user = await Database.collection("users").findOne({ username: "limboTest" });
+    const user = await Database.collection("users").findOne({ username: "limboTester" });
     if (!user) return;
     const range = Limbo.getTargetMinMax();
     let url = BASE_URL + "/limbo/post-ticket";
@@ -148,7 +142,7 @@ describe("Test Limbo Game Route", () => {
   });
 
   it("Create Bad Limbo : Bad Target Value (Beyond Max)", async () => {
-    const user = await Database.collection("users").findOne({ username: "limboTest" });
+    const user = await Database.collection("users").findOne({ username: "limboTester" });
     if (!user) return;
     const range = Limbo.getTargetMinMax();
     let url = BASE_URL + "/limbo/post-ticket";

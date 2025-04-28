@@ -9,7 +9,7 @@
     "start": "node ./build/index.js",
     "deploy-staging": "npm run build && eb deploy chicken-shared-backend-staging",
     "deploy-production": "npm run build && eb deploy chicken-shared-backend-production",
-    "test": "vitest"
+    "test": "vitest --no-file-parallelism"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.521.0",

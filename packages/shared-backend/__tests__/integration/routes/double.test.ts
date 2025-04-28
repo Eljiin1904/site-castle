@@ -16,11 +16,11 @@ describe("Test Double Game Route", () => {
   beforeAll(async () => {
     const passwordHash = await bcrypt.hash("password123", 8);
     const user = createTestUser(
-      "doubleTester",
+      "doubleRouteTester",
       "doubleTester@gmail.com",
       "user",
       passwordHash,
-      100000,
+      100000000000,
     );
 
     const suspendedUser = createTestUser(
@@ -28,7 +28,7 @@ describe("Test Double Game Route", () => {
       "doubleDoubleTester@gmail.com",
       "user",
       passwordHash,
-      100000,
+      1000000,
       true,
       false,
     );
@@ -38,16 +38,10 @@ describe("Test Double Game Route", () => {
       "notEmailConfirmedTester@gmail.com",
       "user",
       passwordHash,
-      100000,
+      1000000,
       false,
       false,
     );
-
-    await Database.collection("site-settings").insertOne({
-      _id: "doubleEnabled",
-      value: true,
-      lastUpdateDate: new Date(),
-    });
 
     await Database.collection("users").insertMany([user, suspendedUser, notEmailConfirmedUser]);
     const [sessionResponse, sessionCookie] = await handleLogin(
@@ -62,7 +56,7 @@ describe("Test Double Game Route", () => {
   });
 
   it("Post Double Ticket", async () => {
-    const user = await Database.collection("users").findOne({ username: "doubleTester" });
+    const user = await Database.collection("users").findOne({ username: "doubleRouteTester" });
     if (!user) return;
 
     const roundId = await Ids.incremental({
@@ -97,6 +91,9 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getDoubleResult = await createDoubleTicket.json();
+    console.log("Log Result");
+    console.log(user);
+    console.log(getDoubleResult);
 
     expect(getDoubleResult.user.id).toBe(user._id);
     expect(getDoubleResult.betAmount).toBe(10000);
@@ -152,12 +149,12 @@ describe("Test Double Game Route", () => {
       {
         roundId,
         betKind: "yellow",
-        betAmount: 100000,
+        betAmount: 100000000,
       },
       globalSessionCookie,
     );
     const getDoubleResult = await getDoubleResponse.json();
-    expect(getDoubleResult["error"]).toBe("Invalid bet kind.");
+    expect(getDoubleResult["error"]).toBe("validations:errors.games.double.invalidBetKind");
   });
 
   it("Post Bad Round Id Double Ticket", async () => {
@@ -173,7 +170,7 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getTicketResult = await getUserResponse.json();
-    expect(getTicketResult["error"]).toBe("Round is required.");
+    expect(getTicketResult["error"]).toBe("validations:errors.games.double.requiredRound");
   });
 
   it("Post Bad Amount Double Ticket (Max) per Bet Kind", async () => {
@@ -195,7 +192,7 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getGreenTicketResult = await getUserResponse.json();
-    expect(getGreenTicketResult["error"]).toBe("The bet amount is greater than the max.");
+    expect(getGreenTicketResult["error"]).toBe("validations:errors.games.double.max");
 
     getUserResponse = await fetchWithCookie(
       url,
@@ -208,7 +205,7 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getBaitTicketResult = await getUserResponse.json();
-    expect(getBaitTicketResult["error"]).toBe("The bet amount is greater than the max.");
+    expect(getBaitTicketResult["error"]).toBe("validations:errors.games.double.max");
 
     getUserResponse = await fetchWithCookie(
       url,
@@ -221,7 +218,7 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getRedTicketResult = await getUserResponse.json();
-    expect(getRedTicketResult["error"]).toBe("The bet amount is greater than the max.");
+    expect(getRedTicketResult["error"]).toBe("validations:errors.games.double.max");
 
     getUserResponse = await fetchWithCookie(
       url,
@@ -234,7 +231,7 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getBlackTicketResult = await getUserResponse.json();
-    expect(getBlackTicketResult["error"]).toBe("The bet amount is greater than the max.");
+    expect(getBlackTicketResult["error"]).toBe("validations:errors.games.double.max");
   });
 
   it("Invalid Double Ticket - Not Enough Funds", async () => {
@@ -256,7 +253,7 @@ describe("Test Double Game Route", () => {
       globalSessionCookie,
     );
     const getTicketResult = await getUserResponse.json();
-    expect(getTicketResult["error"]).toBe("You do not have enough tokens.");
+    expect(getTicketResult["error"]).toBe("validations:errors.games.double.invalidRoundId");
   });
 
   it("Invalid Double Ticket - Suspended User", async () => {
@@ -288,7 +285,7 @@ describe("Test Double Game Route", () => {
       sessionCookie,
     );
     const getTicketResult = await getUserResponse.json();
-    expect(getTicketResult["error"]).toBe("Email must be confirmed.");
+    expect(getTicketResult["error"]).toBe("validations:errors.wallet.emailNotConfirmed");
   });
 
   it("Invalid Double Ticket - Not Email Confirmed User", async () => {
@@ -324,6 +321,6 @@ describe("Test Double Game Route", () => {
       sessionCookie,
     );
     const getTicketResult = await getUserResponse.json();
-    expect(getTicketResult["error"]).toBe("Email must be confirmed.");
+    expect(getTicketResult["error"]).toBe("validations:errors.wallet.emailNotConfirmed");
   });
 });

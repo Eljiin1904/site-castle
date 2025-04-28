@@ -1,11 +1,9 @@
 import { Validation } from "@core/services/validation";
-import { Affiliates } from "@server/services/affiliates";
 import { HandledError } from "@server/services/errors";
 import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { UserCampaigns } from "@core/types/users/UserCampaigns";
 import { Database } from "@server/services/database";
-import { UserDocument } from "@core/types/users/UserDocument";
 import { Ids } from "@server/services/ids";
 
 export default Http.createApiRoute({
@@ -14,7 +12,7 @@ export default Http.createApiRoute({
   secure: true,
   body: Validation.object({
     campaignName: Validation.string().required("Campaign Name is required").min(5).max(64).trim(),
-    campaignId: Validation.string().required("Campaign ID is required").min(5).max(25).trim(),
+    campaignId: Validation.campaignId(),
   }),
   callback: async (req, res) => {
     const user = req.user;
@@ -44,6 +42,7 @@ export default Http.createApiRoute({
       commissionBalance: 0,
       referralCount: 0,
       referralXp: 0,
+      default: false,
     };
 
     await Database.collection("user-campaigns").insertOne(userCampaign);

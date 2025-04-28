@@ -9,36 +9,13 @@ import { initSockets } from "../src/app/initSockets";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { initSiteGames } from "#app/app/initGames";
+import http from "http";
 
-let mongoContainer: StartedMongoDBContainer;
 let mongoUri: string;
 let client: MongoClient;
+let httpServer: http.Server;
 
 beforeAll(async () => {
-  console.log("Starting MongoDB container");
-
-  // Start MongoDB container with replica set enabled
-  // picked a specific version because the lightweight mongo:latest excludes mongosh
-  mongoContainer = await new MongoDBContainer("mongo:8.0.5")
-    .withStartupTimeout(6000)
-    .withCommand(["--replSet", "rs0"])
-    .start();
-
-  // sleep for 1 second1 to ensure Mongo is started before initiating replica set
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  await mongoContainer.exec('mongosh --quiet --eval "rs.initiate();"');
-  console.log("MongoDB replica set initiated");
-
-  mongoUri = mongoContainer.getConnectionString();
-  console.log("MongoDB URL: " + mongoUri);
-
-  client = new MongoClient(mongoUri + "/?directConnection=true");
-  await client.connect();
-  console.log("MongoDB client connected");
-
-  // Store globally for tests
-  process.env.DB_URI = mongoUri + "?directConnection=true";
-
   const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_BACKEND });
 
   const { port } = config;
@@ -62,21 +39,90 @@ beforeAll(async () => {
 
   logger.info("Initialized database.");
 
-  const httpServer = initHttp();
+  httpServer = initHttp();
 
   logger.info("Initialized http.");
 
   initSockets(httpServer);
 
   logger.info("Initialized sockets.");
+  const enableExist = await Database.collection("site-settings").findOne({
+    _id: "doubleEnabled",
+    value: true,
+  });
+  if (!enableExist) {
+    await Database.collection("site-settings").insertMany([
+      {
+        _id: "doubleEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "diceEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "limboEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "minesEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "doubleXpRate",
+        value: 1,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "affiliatesEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "betHighrollerThreshold",
+        value: 100,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "chatEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+      {
+        _id: "rainEnabled",
+        value: true,
+        lastUpdateDate: new Date(),
+      },
+    ]);
+  }
 
-  httpServer.listen(port, () => logger.info(`Site backend listening on port ${port}.`));
+  new Promise((resolve, reject) => {
+    httpServer.listen(port, () => {
+      logger.info(`Site backend listening on port ${port}.`);
+      resolve(httpServer);
+    });
+  });
+  httpServer.on("error", (err) => {
+    if (err.name === "Error") {
+      console.warn(`Port ${port} already in use. Skipping server start.`);
+    }
+  });
 }, 30_000);
 
 afterAll(async () => {
   console.log("shutting down MongoDB containers");
-  await client.close();
-  await mongoContainer.stop();
+  if (httpServer) {
+    await new Promise<void>((resolve, reject) => {
+      httpServer.close((err: any) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
 });
 
 export { client, mongoUri };

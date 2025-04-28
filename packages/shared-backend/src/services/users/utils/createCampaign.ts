@@ -3,7 +3,12 @@ import { Database } from "@server/services/database";
 import { UserCampaigns } from "@core/types/users/UserCampaigns";
 import { Ids } from "@server/services/ids";
 
-export async function createCampaign(userId: string, campaignId: string, campaignName: string) {
+export async function createCampaign(
+  userId: string,
+  campaignId: string,
+  campaignName: string,
+  defaultCampaign: boolean,
+) {
   const dbCampaignId = campaignId;
 
   const user = await Database.collection("users").findOne({
@@ -35,6 +40,7 @@ export async function createCampaign(userId: string, campaignId: string, campaig
     commissionBalance: 0,
     referralCount: 0,
     referralXp: 0,
+    default: defaultCampaign,
   };
 
   const userCampaignDB = await Database.collection("user-campaigns").insertOne(userCampaign);

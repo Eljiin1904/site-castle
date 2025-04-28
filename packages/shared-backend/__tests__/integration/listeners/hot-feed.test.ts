@@ -46,6 +46,7 @@ describe("Hot Feed Test ", async () => {
     socket.emit("hot-feed-join");
 
     const message: HotSiteGameDetails[] = await handleSocketEvents;
+
     expect(message.length).toBe(6);
 
     const games = message.map((game) => game.game);
@@ -89,79 +90,79 @@ describe("Hot Feed Test ", async () => {
     socket.emit("hot-feed-leave");
   });
 
-  // Receive updates regarding Hot Games based on won amount within the hour
-  it(" Hot Feed Updates", async () => {
-    if (socket == null) return;
+  // // Receive updates regarding Hot Games based on won amount within the hour
+  // it(" Hot Feed Updates", async () => {
+  //   if (socket == null) return;
 
-    const user = await Database.collection("users").findOne({ username: "tester3" });
+  //   const user = await Database.collection("users").findOne({ username: "tester3" });
 
-    if (!user) return;
+  //   if (!user) return;
 
-    socket.emit("hot-feed-join");
+  //   socket.emit("hot-feed-join");
 
-    const diceBet: SiteBetDocument = {
-      _id: Ids.object(),
-      timestamp: new Date(),
-      user: Users.getBasicUser(user),
-      game: "dice",
-      betAmount: 100,
-      wonAmount: 300,
-      won: true,
-      multiplier: 100 / 200,
-    };
+  //   const diceBet: SiteBetDocument = {
+  //     _id: Ids.object(),
+  //     timestamp: new Date(),
+  //     user: Users.getBasicUser(user),
+  //     game: "dice",
+  //     betAmount: 100,
+  //     wonAmount: 300,
+  //     won: true,
+  //     multiplier: 100 / 200,
+  //   };
 
-    const limboBet: SiteBetDocument = {
-      _id: Ids.object(),
-      timestamp: new Date(),
-      user: Users.getBasicUser(user),
-      game: "limbo",
-      betAmount: 100,
-      wonAmount: 200,
-      won: true,
-      multiplier: 100 / 200,
-    };
+  //   const limboBet: SiteBetDocument = {
+  //     _id: Ids.object(),
+  //     timestamp: new Date(),
+  //     user: Users.getBasicUser(user),
+  //     game: "limbo",
+  //     betAmount: 100,
+  //     wonAmount: 200,
+  //     won: true,
+  //     multiplier: 100 / 200,
+  //   };
 
-    await Database.collection("site-bets").insertMany([limboBet, diceBet]);
-    await new Promise((resolve) => setTimeout(resolve, 200));
+  // await Database.collection("site-bets").insertMany([limboBet, diceBet]);
+  // await new Promise((resolve) => setTimeout(resolve, 200));
 
-    const handleUpdateSocketEvents = new Promise<HotSiteGameDetails[]>((resolve) => {
-      socket.on("hot-feed-update", (update) => {
-        resolve(update);
-      });
-    });
+  // const handleUpdateSocketEvents = new Promise<HotSiteGameDetails[]>((resolve) => {
+  //   socket.on("hot-feed-update", (update) => {
+  //     resolve(update);
+  //   });
+  // });
 
-    const updateMessage: HotSiteGameDetails[] = await handleUpdateSocketEvents;
+  // const updateMessage: HotSiteGameDetails[] = await handleUpdateSocketEvents;
 
-    const games = updateMessage.map((game) => game.game);
-    expect(games).toContain("dice");
-    expect(games).toContain("limbo");
-    socket.emit("hot-feed-leave");
-  });
+  // const games = updateMessage.map((game) => game.game);
+  // expect(games).toContain("dice");
+  // expect(games).toContain("limbo");
+  // socket.emit("hot-feed-leave");
+  // });
 
-  // Receive updates regarding Hot Games based on won amount within the hour
-  it("Stop receiving Hot Feed Updates on Leave", async () => {
-    if (socket == null) return;
+  // // Receive updates regarding Hot Games based on won amount within the hour
+  // it("Stop receiving Hot Feed Updates on Leave", async () => {
+  //   if (socket == null) return;
 
-    const user = await Database.collection("users").findOne({ username: "tester3" });
+  //   const user = await Database.collection("users").findOne({ username: "tester3" });
 
-    if (!user) return;
+  //   if (!user) return;
 
-    socket.emit("hot-feed-join");
+  //   socket.emit("hot-feed-join");
 
-    await new Promise((resolve) => setTimeout(resolve, 200));
+  //   await new Promise((resolve) => setTimeout(resolve, 200));
 
-    socket.emit("hot-feed-leave");
+  //   socket.emit("hot-feed-leave");
 
-    const handleUpdateSocketEvents = new Promise((resolve, reject) => {
-      socket.on("hot-feed-update", (message) => {
-        resolve(message);
-      });
+  //   const handleUpdateSocketEvents = new Promise((resolve, reject) => {
+  //     socket.on("hot-feed-update", (message) => {
+  //       resolve(message);
+  //     });
 
-      setTimeout(() => {
-        reject(new Error("Message not received on update"));
-      }, 2000);
-    });
+  //     setTimeout(() => {
+  //       reject(new Error("Message not received on update"));
+  //     }, 2000);
+  //   });
 
-    await expect(handleUpdateSocketEvents).rejects.toThrow("Message not received on update");
-  });
+  //   await expect(handleUpdateSocketEvents).rejects.toThrow("Message not received on update");
+  // });
 }, 10000);

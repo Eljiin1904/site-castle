@@ -12,6 +12,7 @@ import { loginUser } from "./loginUser";
 import { trackAction } from "./trackAction";
 import { Database } from "@server/services/database";
 import { createCampaign } from "./createCampaign";
+import { Ids } from "@server/services/ids";
 
 export async function registerUser(
   req: UnauthenticatedRequest,
@@ -66,9 +67,12 @@ export async function registerUser(
       });
     }
   }
+  const campaignExist = await Database.collection("user-campaigns").findOne({
+    campaignId: username,
+  });
 
   // Create Default Campaign
-  await createCampaign(user._id, username, "Refer A Friend");
+  await createCampaign(user._id, campaignExist ? Ids.long() : username, "Refer A Friend", true);
 
   await loginUser(req, user);
 
