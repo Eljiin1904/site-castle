@@ -20,7 +20,7 @@ export default Http.createApiRoute({
     const { campaignId, timeIndex, sortIndex, limit, page } = req.body;
     const user = req.user;
 
-    const campaign = Database.collection("user-campaigns").findOne({
+    const campaign = await Database.collection("user-campaigns").findOne({
       userId: user._id,
       campaignId: campaignId,
     });
@@ -38,8 +38,9 @@ export default Http.createApiRoute({
 
     const maxDate = new Date();
 
-    const referrals = await Affiliates.aggregateReports({
-      affiliateId: campaignId,
+    const referrals = await Affiliates.aggregateCampaignReports({
+      userId: user._id,
+      affiliateId: campaign._id,
       minDate,
       maxDate,
       sort: {
@@ -55,7 +56,7 @@ export default Http.createApiRoute({
       limit,
       page,
     });
-
+    
     res.json({ referrals });
   },
 });
