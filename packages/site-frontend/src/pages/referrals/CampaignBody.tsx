@@ -54,7 +54,7 @@ export const CampaignBody = ({campaign}: {
     <Div fx gap={16} column mt={open ? (small ? 16: 24): 0}  className={classNames("CampaignBody",{open})}>
        <ModalSection>
         <ModalLabel>{t('campaigns.campaignLink')}</ModalLabel>
-        <ModalField justifyContent="space-between" onClick={() => Dialogs.open('primary',<AffiliateReferAFriendModal commissionRate={campaign.commissionRate * 100} campaignId={campaign.campaignId} />)}>{`${config.siteURL}/r/${campaign.campaignId}`}<Vector as={SvgCopy} /></ModalField>
+        <ModalField color="light-sand" justifyContent="space-between" onClick={() => Dialogs.open('primary',<AffiliateReferAFriendModal commissionRate={campaign.commissionRate * 100} campaignId={campaign.campaignId} />)}>{`${config.siteURL}/r/${campaign.campaignId}`}<Vector as={SvgCopy} /></ModalField>
       </ModalSection>
       <Heading as="h3" mt={small ? 20: 24} textTransform="uppercase">{t('performance.title')}</Heading>
       <WidgetContainer column>

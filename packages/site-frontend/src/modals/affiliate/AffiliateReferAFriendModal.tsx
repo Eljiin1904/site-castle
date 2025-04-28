@@ -68,7 +68,7 @@ export const AffiliateReferAFriendModal = ({campaignId, commissionRate} : {
           </Paragraph>
           </ModalSection>
           <ModalSection gap={16}>
-            {copied ? <Span>{t('inviteModal.linkCopied')}</Span>: <ModalField size="lg">{referralLink}</ModalField>}
+            {copied ? <Span>{t('inviteModal.linkCopied')}</Span>: <ModalField color="light-sand" size="lg">{referralLink}</ModalField>}
             <Button kind="tertiary-grey" size="lg" label={t('inviteModal.copyLink')} onClick={handleCopy}></Button>
           </ModalSection>
       </ModalBody>

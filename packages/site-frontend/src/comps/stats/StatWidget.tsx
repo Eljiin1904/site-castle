@@ -50,15 +50,15 @@ export const StatWidget = ({title, tokens, description,icon,withAction,button,re
                 bottom={0}
                 left={0}
                 width="100%" />}
-              <Div column gap={12} grow>
+              <Div column={!reverse || layout !== 'mobile'} justifyContent="space-between" gap={12} grow>
                 {reverse &&  <Span color={textColor}>{description}</Span>}
-                {tokens !== undefined && <Tokens color={reverse ? 'light-sand':textColor} family="title" fontSize={24} value={tokens} justifyContent="flex-start" />}
+                {tokens !== undefined && <Tokens color={button ? 'dark-brown':'light-sand'} family="title" fontSize={24} value={tokens} justifyContent="flex-start" />}
                 {title !== undefined && <Heading  
                   as="h3"
                   size={24}
                   fontWeight="regular"
                   textTransform="uppercase"
-                  color={reverse ? 'light-sand':textColor}
+                  color={button ? 'dark-brown': 'light-sand'}
                   >
                   {title}
                 </Heading>}            

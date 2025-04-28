@@ -35,11 +35,11 @@ export const DefaultReferral = ({campaign}: {
     <Div fx bg={`black-hover`} gap={small ? 16: 24} p={small ? 20: 24} column={small}>
       <ModalSection>
         <ModalLabel>{t('referralCode')}</ModalLabel>
-        <ModalField>{campaign.campaignId}</ModalField>
+        <ModalField color="light-sand">{campaign.campaignId}</ModalField>
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t('referralLink')}</ModalLabel>
-        <ModalField justifyContent="space-between" onClick={() => Dialogs.open('primary',<AffiliateReferAFriendModal commissionRate={campaign.commissionRate*100} campaignId={campaign.campaignId} />)}>{`${config.siteURL}/r/${campaign.campaignId}`}<Vector as={SvgCopy} /></ModalField>
+        <ModalField  color="light-sand" justifyContent="space-between" onClick={() => Dialogs.open('primary',<AffiliateReferAFriendModal commissionRate={campaign.commissionRate*100} campaignId={campaign.campaignId} />)}>{`${config.siteURL}/r/${campaign.campaignId}`}<Vector as={SvgCopy} /></ModalField>
       </ModalSection>
     </Div>
   </Div>);
