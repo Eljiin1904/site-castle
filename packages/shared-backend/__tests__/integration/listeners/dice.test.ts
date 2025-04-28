@@ -15,14 +15,7 @@ async function createSocket() {
 }
 
 beforeAll(async () => {
-  const user = createTestUser("diceTester1", "diceTester@gmail.com", "user", "password123");
-
-  // Create Setting for Threshold for High Roller Bet
-  await Database.collection("site-settings").insertOne({
-    _id: "betHighrollerThreshold",
-    value: 100,
-    lastUpdateDate: new Date(),
-  });
+  const user = createTestUser("diceTester1", "diceTester@gmail.com", "user", "password123", 100000);
 
   await Database.collection("users").insertOne(user);
   try {

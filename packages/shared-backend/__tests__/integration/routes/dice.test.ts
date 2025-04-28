@@ -12,12 +12,6 @@ describe("Test Dice Game Route", () => {
     const passwordHash = await bcrypt.hash("password123", 8);
     const user = createTestUser("tester2", "test2@gmail.com", "user", passwordHash);
 
-    await Database.collection("site-settings").insertOne({
-      _id: "diceEnabled",
-      value: true,
-      lastUpdateDate: new Date(),
-    });
-
     await Database.collection("users").insertOne(user);
   });
 
@@ -55,6 +49,7 @@ describe("Test Dice Game Route", () => {
 
     const diceTransaction = await Database.collection("transactions").findOne({
       gameId: getTicketResult.ticket._id,
+      kind: "dice-bet",
     });
 
     expect(diceTransaction?.category).toBe("dice");
@@ -87,7 +82,9 @@ describe("Test Dice Game Route", () => {
       sessionCookie,
     );
     const getTicketResult = await getUserResponse.json();
-    expect(getTicketResult["error"]).toBe("targetValue must be greater than or equal to 0");
+    expect(getTicketResult["error"]["key"]).toBe("validations.number.min");
+    expect(getTicketResult["error"]["value"]["label"]).toBe("targetValue");
+    expect(getTicketResult["error"]["value"]["min"]).toBe(0);
   });
 
   it("Post Bad Target Kind Dice Ticket", async () => {
@@ -141,7 +138,10 @@ describe("Test Dice Game Route", () => {
       sessionCookie,
     );
     const getTicketResult = await getUserResponse.json();
-    expect(getTicketResult["error"]).toBe("betAmount must be greater than or equal to 0");
+    // expect(getTicketResult["error"]).toBe("betAmount must be greater than or equal to 0");
+    expect(getTicketResult["error"]["key"]).toBe("validations.number.min");
+    expect(getTicketResult["error"]["value"]["label"]).toBe("betAmount");
+    expect(getTicketResult["error"]["value"]["min"]).toBe(0);
   });
 
   it("Post Bad Target Amount Dice Ticket (Max)", async () => {

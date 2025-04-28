@@ -4,6 +4,7 @@ export * from "./utils/getErrors";
 export * from "./utils/setLocale";
 
 export * from "./validators/avatar";
+export * from "./validators/campaignId";
 export * from "./validators/common-address";
 export * from "./validators/currency";
 export * from "./validators/date";

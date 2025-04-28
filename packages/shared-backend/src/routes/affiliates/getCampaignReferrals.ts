@@ -10,7 +10,7 @@ export default Http.createApiRoute({
   path: "/get-campaign-referrals",
   secure: true,
   body: Validation.object({
-    campaignId: Validation.string().required().min(5).max(64),
+    campaignId: Validation.string().required().min(5).max(25),
     timeIndex: Validation.index("Time index", 3),
     sortIndex: Validation.index("Sort index", 4),
     limit: Validation.limit(),
