@@ -5,6 +5,8 @@ import { PageBanner } from "#app/comps/site-page/PageBanner";
 import { useTranslation , Trans } from "@core/services/internationalization/internationalization";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { ReferralsBody } from "./ReferralsBody";
+import { Affiliates } from "@core/services/affiliates";
+import { useAffiliateTier } from "#app/hooks/affiliates/useAffiliateTier";
 
 /**
  * Referrals Entry Page, contains the Banner and the ReferralsBody components
@@ -27,10 +29,13 @@ export const ReferralsPage = () => {
 
 /**
  * Referral Banner, contains the banner image and the referral text
+ * Referral rate is calculated based on the current tier
  * @returns 
  */
 const ReferralBanner = () => {
 
+  const { tier } = useAffiliateTier();
+  const info = Affiliates.getTierInfo(tier);
   const {t} = useTranslation(['referrals']);
   const small = useIsMobileLayout();
   
@@ -38,7 +43,7 @@ const ReferralBanner = () => {
     {//@ts-ignore
     <Trans
       i18nKey="referrals:banner.subtitle"
-      values={{percent: '10%' }}
+      values={{percent: `${info.rate * 100}%` }}
       components={[
         <Span
           color="light-sand"
