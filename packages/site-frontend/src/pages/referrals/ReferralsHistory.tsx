@@ -25,7 +25,7 @@ export const ReferralsHistory = ({campaigns}: {
   });
 
   const referrals = referralsQ.data?.referrals || [];
-  console.log(referrals);
+  const total = referralsQ.data?.total || 0;
 
   return (<Div fx column gap={40}>
     <HistoryHeader limit={limit} setLimit={setLimit} campaigns={campaigns} campaignId={campaignId} setCampaignId={setCampaignId} />
@@ -36,7 +36,7 @@ export const ReferralsHistory = ({campaigns}: {
         hasNext={referrals.length !== 0 && referrals.length % limit === 0}
         setPage={setPage}
         limit={limit}
-        total={1000}
+        total={total}
         inPage={referrals.length}
       />
     </Div>

@@ -16,7 +16,6 @@ export const HistoryTable = ({
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
   const {t} = useTranslation(["referrals"]);
-  console.log(referrals);
   //const { username, xp, hideInfo } = useHiddenInfo(bet.user);
   return (
     <Table

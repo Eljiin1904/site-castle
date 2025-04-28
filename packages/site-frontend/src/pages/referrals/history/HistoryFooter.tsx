@@ -22,11 +22,11 @@ export const HistoryFooter = ({
   
   const {t} = useTranslation(["referrals"]);
   const layout = useAppSelector((x) => x.style.mainLayout);
-  const small = layout === "mobile" || layout === "tablet";
+  const small = layout === "mobile";
 
   if(total === 0) 
     return null;
-
+ 
   return (<Div fx center>
     {!small && <Span position="absolute" left={0}>
       {(page - 1)*limit + inPage}/{total} {t("title",{count: total})}

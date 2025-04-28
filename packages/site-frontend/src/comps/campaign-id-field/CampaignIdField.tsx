@@ -46,7 +46,6 @@ export const CampaignIdField: FC<UsernameFieldProps> = ({
 
   useEffect(() => {
     if (queryError) {
-      console.log("queryError", Errors.getMessage(queryError));
       setError(Errors.getMessage(queryError));
     } else {
       setError(undefined);
