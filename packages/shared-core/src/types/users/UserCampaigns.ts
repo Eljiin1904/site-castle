@@ -13,4 +13,5 @@ export interface UserCampaigns {
   campaignHits?: number;
   referralXp: number;
   wagerAmount?: number;
+  default: boolean;
 }

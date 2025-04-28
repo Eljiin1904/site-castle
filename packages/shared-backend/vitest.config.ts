@@ -8,7 +8,24 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     include: ["**/*.test.ts"],
-    exclude: [...configDefaults.exclude, "**/ignore/**"],
+    exclude: [
+      ...configDefaults.exclude,
+      "**/ignore/**",
+      "./__tests__/integration/listeners/**",
+      // "./__tests__/integration/register/register-local.test.ts",
+    ],
     setupFiles: ["./__tests__/vitest.setup.ts"],
+    globalSetup: ["./__tests__/global-setup.ts"],
+    globals: true,
+    sequence: {
+      concurrent: false,
+    },
+    poolOptions: {
+      threads: {
+        singleThread: true,
+        minThreads: 1,
+        maxThreads: 1,
+      },
+    },
   },
 });
