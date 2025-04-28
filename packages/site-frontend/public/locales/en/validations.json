@@ -9,7 +9,8 @@
       "max": "{{value.label}} must be less {{value.max}} characters.",
       "email": "{{value}} must be a valid email.",
       "url": "{{value}} must be a valid URL.",
-      "length": "{{value.label}} must be exactly ${value.length} characters."
+      "length": "{{value.label}} must be exactly ${value.length} characters.",
+      "matches": "{{value}} must only contains letters and numbers."
     },
     "number": {
       "min": "{{value.label}} must be greater than or equal to {{value.min}}.",
@@ -100,6 +101,13 @@
     },
     "backupKey": {
       "required": "Backup key is required."
+    },
+    "campaign": {
+      "campaignId": {
+        "available": "Campaign ID is available.",
+        "required": "Campaign ID is required.",
+        "unavailable": "Campaign ID unavailable."
+      }
     }
   },
   "errors": {
@@ -178,6 +186,9 @@
     },
     "tiers": {
       "outOfRange": "Tier out of range."
+    },
+    "campaign": {
+      "exists": "Campaign already exists."
     }
   }
 }

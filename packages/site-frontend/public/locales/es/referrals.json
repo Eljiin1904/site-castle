@@ -50,6 +50,7 @@
   },
   "campaigns": {
     "title": "Campañas",
+    "comission": "Comisión",
     "createCampaign": "Crear nueva Campaña", 
     "modalTitle": "Crear Campaña",
     "campaignName": "Nombre de la Campaña",
