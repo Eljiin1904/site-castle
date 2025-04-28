@@ -7,13 +7,21 @@ import { Span } from "@client/comps/span/Span";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Vector } from "@client/comps/vector/Vector";
 
-export const StatWidget = ({title, tokens, description,icon,withAction,button, ...forwardProps}: CardSectionProps & {
+/**
+ * Stat Widget component, will display title or token value with description, will also display an icon or button if provided
+ * If a button is provided, it will display a graphic image as background and will use different text color
+ * If reverse is true, it will display the description first and the title or token value second
+ * @param param0 
+ * @returns 
+ */
+export const StatWidget = ({title, tokens, description,icon,withAction,button,reverse = false, ...forwardProps}: CardSectionProps & {
   title?:string,
   tokens?: number;
   description:string,
   icon?:Svg,
   withAction?: boolean,
   button?: JSX.Element;
+  reverse?: boolean;
 }) => {
   
     const layout = useAppSelector((x) => x.style.mainLayout);
@@ -43,17 +51,18 @@ export const StatWidget = ({title, tokens, description,icon,withAction,button, .
                 left={0}
                 width="100%" />}
               <Div column gap={12} grow>
-                {tokens !== undefined && <Tokens color={textColor} family="title" fontSize={24} value={tokens} justifyContent="flex-start" />}
+                {reverse &&  <Span color={textColor}>{description}</Span>}
+                {tokens !== undefined && <Tokens color={reverse ? 'light-sand':textColor} family="title" fontSize={24} value={tokens} justifyContent="flex-start" />}
                 {title !== undefined && <Heading  
                   as="h3"
                   size={24}
                   fontWeight="regular"
                   textTransform="uppercase"
-                  color={textColor}
+                  color={reverse ? 'light-sand':textColor}
                   >
                   {title}
                 </Heading>}            
-                <Span color={textColor}>{description}</Span>
+               {!reverse && <Span color={textColor}>{description}</Span>}
               </Div>
               {icon && <Div bg="brown-4" py={16} px={16}>
                 <Vector as={icon} color="sand" size={24} />
