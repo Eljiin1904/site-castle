@@ -20,21 +20,26 @@ import './CampaignBody.scss';
 import { Dialogs } from "@client/services/dialogs";
 import { AffiliateReferAFriendModal } from "#app/modals/affiliate/AffiliateReferAFriendModal";
 
+/**
+ * Display the stats of a campaign. Component works as a toggle
+ * to show or hide the stats of the campaign
+ * @param campaign Campaign to display
+ * @returns A stat component with the stats of the campaign
+ */
 export const CampaignBody = ({campaign}: {
   campaign: UserCampaigns
 }) => {
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const {t} = useTranslation(["referrals"]);
   const small = useIsMobileLayout();
 
   return (<Div fx border borderColor="brown-4" p={small ? 20: 24} column>
-    <Div fx justifyContent="space-between" alignItems="center">
+    <Div fx justifyContent="space-between" alignItems="center" cursor="pointer"  onClick={() => setOpen(!open)}>
       <Heading as="h3" textTransform="uppercase" size={20} color={open? 'sand': undefined}>{campaign.campaignName}</Heading>
-      <Div center gap={24}>
+      <Div center gap={small ? 20: 24}>
         <Span>{t('campaigns.comission')}: <Tokens value={campaign.commissionTotal} color="light-sand"/></Span>
         <Vector
-          onClick={() => setOpen(!open)}
           className="icon fade-content"         
           as={SvgArrowRight}
           size={12}
