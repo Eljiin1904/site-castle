@@ -51,7 +51,7 @@ const ReferralBanner = () => {
           fontSize={small ? 12 : 16} 
           p={2} 
           mx={4}
-        >10%</Span>,
+        >{info.rate * 100}%</Span>,
       ]}
     />
     }
