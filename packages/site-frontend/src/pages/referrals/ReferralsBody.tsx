@@ -33,7 +33,7 @@ export const ReferralsBody = () => {
       <ReferralsStats />
       <DefaultReferral campaign={campaigns.find(x => x.default)} />
       <Campaigns campaigns={campaigns.filter(x => !x.default)} />
-      <ReferralsHistory />
+      <ReferralsHistory campaigns={campaigns} />
     </Div>
   );
 };
