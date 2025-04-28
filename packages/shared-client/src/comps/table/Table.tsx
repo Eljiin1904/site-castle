@@ -85,6 +85,7 @@ export function Table<T extends DataSchema>({
               <Span
                 size={12}
                 textTransform="uppercase"
+                textAlign={x.justify === 'flex-end' ? 'right' : 'left'}
               >
                 {x.heading}
               </Span>
