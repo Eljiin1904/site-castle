@@ -3,7 +3,6 @@ import { Div } from "@client/comps/div/Div";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { PageTitle } from "@client/comps/page/PageTitle";
 import { Span } from "@client/comps/span/Span";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { UserCampaigns } from "@core/types/users/UserCampaigns";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
@@ -20,7 +19,7 @@ export const HistoryHeader = ({
   campaignId: string | undefined;
   setCampaignId: (x: string) => void;
 }) => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
+  
   const small = useIsMobileLayout();
   const { t } = useTranslation(["referrals"]);
   const indexes = [10, 20, 25, 50];
