@@ -56,7 +56,15 @@ export default Http.createApiRoute({
       limit,
       page,
     });
+
+    const total = await Affiliates.countCampaignReports({
+      userId: user._id,
+      affiliateId: campaign._id,
+      minDate,
+      maxDate,
+    });
+
     
-    res.json({ referrals });
+    res.json({ referrals, total });
   },
 });
