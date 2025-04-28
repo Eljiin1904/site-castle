@@ -13,24 +13,24 @@ export const ReferralsHistory = ({campaigns}: {
 }) => {
 
   const [limit, setLimit] = useState(10);
-  const [campaignId, setCampaignId] = useState<string | undefined>(campaigns.find(x => x.default)?.campaignId);
+  const [campaignId, setCampaignId] = useState<string>(campaigns.find(x => x.default)?.campaignId ?? '');
   const [page, setPage] = useState(1);
   const small = useIsMobileLayout();
 
-
   const referralsQ = useQuery({
-    queryKey: ["referrals", limit, page],
+    queryKey: ["campaign", campaignId, limit, page],
     queryFn: () =>
-      Affiliates.getReferrals({sortIndex:1, timeIndex: 1, limit, page }),
+      Affiliates.getCampaignReferrals({ limit, page, campaignId, sortIndex: 1, timeIndex: 2 }),
     placeholderData: (prev) => prev,
   });
 
   const referrals = referralsQ.data?.referrals || [];
+  console.log(referrals);
 
   return (<Div fx column gap={40}>
     <HistoryHeader limit={limit} setLimit={setLimit} campaigns={campaigns} campaignId={campaignId} setCampaignId={setCampaignId} />
     <Div fx gap={small ? 16: 24} column center>
-      <HistoryTable referrals={referrals} isLoading={false} />
+      <HistoryTable referrals={referrals} isLoading={referralsQ.isFetching} />
       <HistoryFooter 
         page={page}
         hasNext={referrals.length !== 0 && referrals.length % limit === 0}

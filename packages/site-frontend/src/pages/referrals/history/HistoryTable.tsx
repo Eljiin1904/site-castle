@@ -24,39 +24,9 @@ export const HistoryTable = ({
       loading={isLoading}
       autoScroll={mainLayout === "mobile"}
       emptyMessage={t("history.notFound")}
-      hideHeader={mainLayout === "mobile"}
       fx
       columns={[
         {
-          hidden: mainLayout !== "mobile",
-          heading: t("history.user"),
-          grow: 3,
-          justify: "flex-start",
-          rowRenderer: (x) => (
-            <Div
-              column
-              gap={2}
-            >
-              
-            </Div>
-          ),
-        },
-        {
-          hidden: mainLayout !== "mobile",
-          heading: t("history.headers.user"),
-          grow: 2,
-          justify: "flex-end",
-          rowRenderer: (x) => (
-            <Div
-              column
-              align="flex-end"
-            >
-              
-            </Div>
-          ),
-        },
-        {
-          hidden: mainLayout === "mobile",
           heading: t("history.headers.user"),
           grow: 2,
           justify: "flex-start",
@@ -67,7 +37,7 @@ export const HistoryTable = ({
           ),
         },
         {
-          hidden: mainLayout === "mobile",
+          hidden: mainLayout === "mobile" || mainLayout === "tablet",
           heading: t("history.headers.date"),
           grow: 2,
           justify: "flex-start",
@@ -82,11 +52,7 @@ export const HistoryTable = ({
           heading: t("history.headers.totalDeposits"),
           grow: 2,
           justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span color="light-sand" size={12}>
-             {-1}
-            </Span>
-          ),
+          rowRenderer: (x) => <Tokens fontSize={12} value={x.depositAmount} />,
         },
         {
           hidden: mainLayout === "mobile" || mainLayout === "tablet",
@@ -95,7 +61,7 @@ export const HistoryTable = ({
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span color="light-sand" size={12}>
-              {x.lastDepositDate && Dates.toTimestamp(x.lastDepositDate)}
+              {x.lastDepositDate ? Dates.toTimestamp(x.lastDepositDate): '-'}
             </Span>
           ),
         },
@@ -107,7 +73,6 @@ export const HistoryTable = ({
           rowRenderer: (x) => <Tokens fontSize={12} value={x.wagerAmount} />,
         },
         {
-          hidden: mainLayout === "mobile",
           heading: t("history.headers.commission"),
           grow: 2,
           justify: "flex-end",
@@ -118,7 +83,6 @@ export const HistoryTable = ({
           ),
         },
         {
-          hidden: mainLayout === "mobile",
           heading: t("history.headers.unclaimedCommision"),
           grow: 2,
           justify: "flex-end",
