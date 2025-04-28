@@ -1,4 +1,3 @@
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Button } from "@client/comps/button/Button";
 import { Heading } from "@client/comps/heading/Heading";
 import { Img } from "@client/comps/img/Img";
@@ -15,14 +14,17 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useTranslation, Trans } from "@core/services/internationalization/internationalization";
 import { ModalField } from "@client/comps/modal/ModalField";
 
-export const AffiliateReferAFriendModal = () => {
+export const AffiliateReferAFriendModal = ({campaignId, commissionRate} : {
+  campaignId: string,
+  commissionRate: number
+}) => {
   
   const {t} = useTranslation(["referrals"]);
-  const small = useIsMobileLayout();
-  const username = useAppSelector((x) => x.user.username);
   const [copied, setCopied] = useState(false);
+  const small = useIsMobileLayout();
+  
 
-  const referralLink = `${config.siteURL}/r/${username}`;
+  const referralLink = `${config.siteURL}/r/${campaignId}`;
   const handleCopy = () => {
    
    navigator.clipboard.writeText(referralLink);
@@ -45,24 +47,24 @@ export const AffiliateReferAFriendModal = () => {
         width="100%"
         skeleton
         objectPositionHorizontal="right"
-        height="188px"
+        height={small ? "270px" : "188px"}
       />
-      <ModalBody textAlign="center" justifyContent="center">
+      <ModalBody textAlign="center" mt={small? 40:0} justifyContent={small ? "flex-start": "center"}>
         <ModalSection gap={small ? 24: 16}>
           <Heading as="h3" size={24} fontWeight="regular" textTransform="uppercase">
             {
               //@ts-ignore
               <Trans
               i18nKey="referrals:inviteModal.title"
-              values={{ percent: '10%' }}
+              values={{ percent: `${commissionRate}%` }}
               components={[
-                <Span size={24} family="title" color="sand" >10%</Span>,
+                <Span size={24} family="title" color="sand" >{commissionRate}%</Span>,
               ]}
             />
             }
           </Heading>
           <Paragraph>
-          {t('inviteModal.description',{percent: '10%'})}
+          {t('inviteModal.description',{percent: `${commissionRate}%`})}
           </Paragraph>
           </ModalSection>
           <ModalSection gap={16}>
