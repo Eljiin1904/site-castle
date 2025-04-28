@@ -18,7 +18,7 @@ export const HistoryHeader = ({
   setLimit: (x: number) => void;
   campaigns: UserCampaigns[];
   campaignId: string | undefined;
-  setCampaignId: (x: string | undefined) => void;
+  setCampaignId: (x: string) => void;
 }) => {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = useIsMobileLayout();
