@@ -27,7 +27,7 @@ export default Http.createApiRoute({
     });
 
     if (campaign) {
-      throw new HandledError("Campaign already exists");
+      throw new HandledError("validations:errors.campaign.exists");
     }
 
     const userCampaign: UserCampaigns = {

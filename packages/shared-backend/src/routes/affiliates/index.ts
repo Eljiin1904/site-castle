@@ -9,6 +9,7 @@ import setPendingReferral from "./setPendingReferral";
 import getCampaigns from "./getCampaigns";
 import createCampaign from "./createCampaign";
 import claimCampaignCommision from "./claimCampaignCommision";
+import checkCampaignId from "./checkCampaignId";
 
 const router = Router();
 
@@ -22,5 +23,6 @@ getStats(router);
 setPendingReferral(router);
 getCampaigns(router);
 createCampaign(router);
+checkCampaignId(router);
 
 export default router;
