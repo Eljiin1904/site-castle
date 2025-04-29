@@ -1,20 +1,16 @@
 import { useState } from "react";
+import { Affiliates } from "#app/services/affiliates";
 import { useQuery } from "@tanstack/react-query";
 import { PageNotice } from "@client/comps/page/PageNotice";
 import { Errors } from "@client/services/errors";
-import { Div } from "@client/comps/div/Div";
-import { Affiliates } from "#app/services/affiliates";
-import { ReferralsHeader } from "./ReferralsHeader";
-import { ReferralsTable } from "./ReferralsTable";
-import { ReferralsFooter } from "./ReferralsFooter";
-import { StatGrid } from "./StatGrid";
 
-export const ReferralsBody = () => {
+export const useReferralsManager = () => {
+
   const limit = 10;
   const [timeIndex, setTimeIndex] = useState(3);
   const [sortIndex, setSortIndex] = useState(0);
   const [page, setPage] = useState(1);
-
+  
   const statsQ = useQuery({
     queryKey: ["referral-stats", timeIndex],
     queryFn: () => Affiliates.getStats({ timeIndex }),
@@ -57,38 +53,5 @@ export const ReferralsBody = () => {
     );
   }
 
-  return (
-    <Div
-      fx
-      column
-      gap={16}
-    >
-      <ReferralsHeader
-        timeIndex={timeIndex}
-        sortIndex={sortIndex}
-        isLoading={statsQ.isLoading || referralsQ.isLoading}
-        setTimeIndex={setTimeIndex}
-        setSortIndex={setSortIndex}
-        onRefreshClick={() => {
-          statsQ.refetch();
-          page === 1 ? referralsQ.refetch() : setPage(1);
-        }}
-      />
-      <StatGrid stats={stats} />
-      <Div
-        fx
-        column
-      >
-        <ReferralsTable
-          referrals={referrals}
-          isLoading={referralsQ.isLoading}
-        />
-        <ReferralsFooter
-          page={page}
-          hasNext={referrals.length !== 0 && referrals.length % limit === 0}
-          setPage={setPage}
-        />
-      </Div>
-    </Div>
-  );
+  return [stats, referrals];
 };

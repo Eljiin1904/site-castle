@@ -7,3 +7,9 @@ export * from "./api/getReferrals";
 export * from "./api/getStats";
 export * from "./api/getReload";
 export * from "./api/setPendingReferral";
+
+
+export * from "./api/createCampaign";
+export * from "./api/getCampaigns";
+export * from "./api/checkCampaignId";
+export * from "./api/getCampaignReferrals";

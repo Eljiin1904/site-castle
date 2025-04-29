@@ -100,6 +100,13 @@
     },
     "backupKey": {
       "required": "Clave de respaldo es requerida."
+    },
+    "campaign": {
+      "campaignId": {
+        "available": "Código de campaña disponible.",
+        "required": "Código de campaña requerido.",
+        "unavailable": "Código de campaña no disponible."
+      }
     }
   },
   "errors": {
@@ -176,6 +183,12 @@
     "users": {
       "notFound": "Usuario no encontrado.",
       "idRequired": "Id de usuario requerido."
+    },
+    "tiers": {
+      "outOfRange": "Nivel fuera de rango."
+    },
+    "campaign": {
+      "exists": "Campaña ya existe."
     }
   }
 }

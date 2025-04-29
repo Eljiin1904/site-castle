@@ -31,6 +31,7 @@ import { BetsPage } from "#app/pages/bets/BetsPage";
 import { GamesRoute } from "#app/pages/games/GamesRouter";
 import { GamesByCategoryPage } from "#app/pages/games/GamesByCategoryPage";
 import { OriginalGamesPage } from "#app/pages/games/OriginalGamesPage";
+import { ReferralsPage } from "#app/pages/referrals/ReferralsPage";
 
 export const AppRouter = () => {
   const { pathname } = useLocation();
@@ -161,6 +162,11 @@ export const AppRouter = () => {
       <Route
         path="/rewards/*"
         element={<RewardsPage />}
+      />
+
+      <Route
+        path="/referrals/*"
+        element={<ReferralsPage />}
       />
 
       <Route

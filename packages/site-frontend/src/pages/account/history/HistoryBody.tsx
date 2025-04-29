@@ -61,7 +61,7 @@ export const HistoryBody = () => {
           isLoading={query.isLoading}
         />
         <HistoryFooter
-        page={page}
+          page={page}
           hasNext={transactions.length !== 0 && transactions.length % limit === 0}
           setPage={setPage}
           limit={limit}

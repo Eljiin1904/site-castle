@@ -1,16 +1,13 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { SvgBets } from "#app/svgs/common/SvgBets";
-import { CardSection } from "@client/comps/cards/CardSection";
 import { Div } from "@client/comps/div/Div";
-import { Heading } from "@client/comps/heading/Heading";
-import { Span } from "@client/comps/span/Span";
-import { Tokens } from "@client/comps/tokens/Tokens";
-import { Vector } from "@client/comps/vector/Vector";
 import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useMostPopularGame } from "./useMostPopularGame";
 import { SvgDeposit } from "#app/svgs/notifications/SvgDeposit";
 import { SvgWithdraw } from "#app/svgs/notifications/SvgWithdraw";
+import { StatWidget } from "#app/comps/stats/StatWidget";
+import { WidgetContainer } from "#app/comps/stats/WidgetContainer";
 
 export const StatsWidgets = () => {
 
@@ -28,18 +25,18 @@ export const StatsWidgets = () => {
     gap={small ? 16: 24}
     wrap={small}
   >
-    <Div gap={small ? 16: 24} fx column={small}>
-    <StatWidget
-      title={t(`games:${popularGameData?.game}`)}
-      description={t('stats.mostPopularGame')}
-      icon={popularGameData.icon ?? SvgBets} />
+    <WidgetContainer column={small}>
       <StatWidget
-      tokens={stats.wagerAmount}
-      description={t('stats.totalWagered')}
-      icon={SvgTransaction}
+        title={t(`games:${popularGameData?.game}`)}
+        description={t('stats.mostPopularGame')}
+        icon={popularGameData.icon ?? SvgBets} />
+      <StatWidget
+        tokens={stats.wagerAmount}
+        description={t('stats.totalWagered')}
+        icon={SvgTransaction}
       />
-    </Div>
-    <Div gap={small ? 16: 24} fx column={small}>
+    </WidgetContainer>
+    <WidgetContainer column={small}>
       <StatWidget
         tokens={ (stats.depositAmount ?? 0 )}
         description={t('transactions.type.deposits')}
@@ -55,34 +52,6 @@ export const StatsWidgets = () => {
         description={t('stats.pnlShort')}
         icon={SvgBets}
       />
-    </Div>
-    
+    </WidgetContainer>    
   </Div>)
-};
-
-const StatWidget = ({title, tokens, description,icon}:{
-  title?:string,
-  tokens?: number;
-  description:string,
-  icon:Svg
-}) => {
-  
-    const layout = useAppSelector((x) => x.style.mainLayout);
-    const small = layout === "mobile" || layout === "tablet";
-    return (<CardSection border borderColor="brown-4" position="header" grow fx gap={16} px={small ? 20: 16} alignItems="center" justifyContent="space-between">
-          <Div column gap={12} grow>
-            {tokens !== undefined && <Tokens fontSize={24} value={tokens} justifyContent="flex-start" />}
-            {title !== undefined && <Heading  
-              as="h3"
-              size={24}
-              fontWeight="regular"
-              textTransform="uppercase">
-               {title}
-            </Heading>}            
-            <Span>{description}</Span>
-          </Div>
-          <Div bg="brown-4" py={16} px={16}>
-            <Vector as={icon} color="sand" size={24} />
-          </Div>
-    </CardSection>);
 };

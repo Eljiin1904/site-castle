@@ -1,0 +1,83 @@
+{
+  "title": "Referrals",
+  "banner": {
+    "title": "Refer a Friend",
+    "subtitle": "Refer a friend and earn <0>{{percent}}</0> commission from the house edge on all of their bets!"
+  },
+  "yourReferrals": "Your Referrals",
+  "howItWorks": {
+    "button": "How it works",
+    "modal": {
+      "title": "How do referrals work?",
+      "description": "Refer a friend to Sandcasino and earn free money from all of their bets!",
+      "list": {
+        "item1": {
+          "title": "Step 1",
+          "description": "Have a friend that would love Sandcasino? Help them sign up using your Referral Link, or your Code, and they will be counted as your referral!"
+        },
+        "item2": {
+          "title": "Step 2",
+          "description": "You will earn 10% commission from the house edge on all bets placed by your referrals whether they win or lose."
+        },
+        "item3": {
+          "title": "Step 3",
+          "description": "Your referral earnings are immediately available to be claimed!"
+        }
+      }
+    }
+  },
+  "unclaimed": "Unclaimed Commission",
+  "totalCommissionEarned": "Total Commission Earned",
+  "commissionTier": "Commission Tier",
+  "tier": "Tier {{tier}}",
+  "baseTier": "You have been assigned tier {{baseTier}} as your base, or minimum, tier.",
+  "totalFriendsReferred": "Total Friends Referred",
+  "totalFriedsWagered": "Total Friends Wagered",
+  "commissionProgress": "Commission Progress",
+  "inviteAFriend":"Invite a Friend",
+  "referralCode": "Referral Code",
+  "referralLink": "Referral Link",
+  "copiedToClipboard": "Referral link copied to clipboard.",
+  "performance": {
+    "title": "Performance",
+    "campaignHits": "Campaign Hits",
+    "referrals": "Referrals",
+    "totalDeposits": "Total Deposits",
+    "availableCommission": "Available Commission",
+    "totalCommission": "Total Commission",
+    "uniqueDeposits": "Unique Deposits",
+    "commissionRate": "Commission Rate"    
+  },
+  "campaigns": {
+    "title": "Campaigns",
+    "comission": "Commission",
+    "createCampaign": "Create new Campaign", 
+    "modalTitle": "Create Campaign",
+    "campaignName": "Campaign Name",
+    "campaignNamePlaceholder": "Enter Campaign Name...",
+    "campaignCode": "Campaign ID",
+    "campaignCodePlaceholder": "Enter Campaign ID...",
+    "campaignLink": "Referral Link",
+    "campaignDescription": "Campaign Description",
+    "creationConfirmed": "Campaign created successfully."
+  },
+  "inviteModal": {
+    "title": "Refer a Friend and earn <0>{{percent}}</0>",
+    "description": "Refer a friend and earn {{percent}} commission from the house edge on all of their bets!",
+    "copyLink": "Copy to Keyboard",
+    "linkCopied": "Link copied!"
+  },
+  "history": {
+    "title": "Referral History",
+    "headers": {
+      "user": "User",
+      "date": "Registered",
+      "totalDeposits": "Total Deposits",
+      "lastDeposit": "Last Deposit",
+      "wagered": "Wagered",
+      "commission": "Commission",
+      "unclaimedCommision": "Unclaimed Commission"
+    },
+    "notFound": "No referrals found."
+  }
+}

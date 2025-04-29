@@ -16,3 +16,4 @@ export * from "./utils/reportTransaction";
 export * from "./utils/trackReferral";
 export * from "./utils/trackCampaign";
 export * from "./utils/untrackReferral";
+export * from "./utils/countCampaignReports";

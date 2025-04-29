@@ -9,15 +9,18 @@ export const PageBanner = ({
   heading,
   description,
   content,
+  height = 136,
+  smallHeight = 80,
 }: {
   image: string;
   heading: string | JSX.Element;
   description?: string;
   content?: JSX.Element;
+  height?: number;
+  smallHeight?: number;
 }) => {
 
   const small = useIsMobileLayout();
-  
 
   return (
     <Div
@@ -27,7 +30,7 @@ export const PageBanner = ({
         type="jpg"
         path={`${image}`}
         width="100%"
-        height={small ? "80px" : "136px"}
+        height={`${small ? smallHeight : height}px`}
         skeleton
       />
       <Div

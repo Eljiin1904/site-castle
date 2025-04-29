@@ -9,7 +9,6 @@ import { TransactionsBody } from "./transactions/TransactionsBody";
 import { VerificationBody } from "./verification/VerificationBody";
 import { PageBanner } from "#app/comps/site-page/PageBanner";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Div } from "@client/comps/div/Div";
 import { Vector } from "@client/comps/vector/Vector";
 import { Span } from "@client/comps/span/Span";
@@ -22,34 +21,30 @@ import { SvgStats } from "@client/svgs/common/SvgStats";
 import { StatsBody } from "./stats/StatsBody";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { CustomDropdown } from "@client/comps/dropdown/CustomDropdown";
-import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Button } from "@client/comps/button/Button";
 import { SvgArrowRight } from "@client/svgs/common/SvgArrowRight";
-import { ModalField } from "@client/comps/modal/ModalField";
 import { Dialogs } from "@client/services/dialogs";
 import { AccountMenuModal } from "#app/modals/menu/AccountMenuModal";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 
 export const AccountPage = () => {
 
   const {t} = useTranslation(['account']);
-  const layout = useAppSelector((x) => x.style.mainLayout);
+  const small = useIsMobileLayout();
 
   return (<Fragment>
       <PageBanner image={`/graphics/account-tile`} heading={t(`title`)} description="" content={<></>}/> 
       <SitePage
         className="GamesPage"
-        gap={layout == 'mobile' ? 32: 56}
-        pb={layout == 'mobile' ? 40: 56}
-        px={layout == 'mobile' ? 0: 32}
-        pt={layout == 'mobile' ? 0: 24}
+        gap={small? 32: 56}
+        pb={small? 40: 56}
+        px={small? 0: 32}
+        pt={small ? 0: 24}
       >
-      <Conditional value={layout} 
-        mobile={<MobileContent />} 
-        tablet={<NotMobileContent />}
-        laptop={<NotMobileContent />}
-        desktop={<NotMobileContent />}
+      <Conditional value={ small ? "true":"false"} 
+        true={<MobileContent />} 
+        false={<NotMobileContent />}
        />
       </SitePage>
     </Fragment>
@@ -58,7 +53,6 @@ export const AccountPage = () => {
 
 
 const NotMobileContent = () => {
-  const { t } = useTranslation(["account"]);
   return (
     <Div
       fx

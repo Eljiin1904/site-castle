@@ -32,14 +32,20 @@ const WageredChatHeader = ({total}:{
 }) => {
 
   const dateRange = useAppSelector((state) => state.account.userStatsDateRange);
+  const startDate = useAppSelector((state) => state.account.userStatsMinDate);
+  const endDate = useAppSelector((state) => state.account.userStatsMaxDate);
   const game = useAppSelector((state) => state.account.userStatsCategory);
   const small = useIsMobileLayout();
-  const {t} = useTranslation(["account","games"]);
+  const {t, i18n} = useTranslation(["account","games"]);
+  
+  
+  const startDateFormatted = startDate?.toLocaleDateString(i18n.language, { year: 'numeric', month: 'short', day: '2-digit' });
+  const endDateFormatted = endDate?.toLocaleDateString(i18n.language, { year: 'numeric', month: 'short', day: '2-digit' });
   const gameKey = game ? game : 'all_games';
   const gameLabel = t(`games:${gameKey.replaceAll('-', '_')}`);
   const dateRangeKey = dateRange ? dateRange : 'thisMonth';
-  const dateRangeLabel = t(`stats.dateranges.${dateRangeKey}`);
-  const chartHeader = t("stats.charts.wagered", {period: dateRangeLabel, game: gameLabel});
+  const dateRangeLabel = dateRange === 'custom' ? `${startDateFormatted} - ${endDateFormatted}`: t(`stats.dateranges.${dateRangeKey}`);
+  const chartHeader = t("stats.charts.wagered", {period: dateRangeLabel, game: gameLabel, count: dateRange === 'custom' || dateRange === 'all' ? 2 : 1});
   
   return (<Div gap={4} center>
     <Heading as="h3" fontWeight="bold" size={small ? 12: 16} textTransform="uppercase" color="light-sand">{chartHeader}</Heading>

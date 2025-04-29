@@ -70,10 +70,10 @@ export const SelectDropdown: FC<SelectDropdownProps> = ({
       button={
         <DropdownButton
           // kind={buttonKind}
-          icon={icon ?? currentInfo.icon}
+          icon={icon ?? currentInfo?.icon}
           tag={tag}
-          label={currentInfo.label}
-          description={currentInfo.description}
+          label={currentInfo?.label}
+          description={currentInfo?.description}
           placeholder={value === undefined}
           open={open}
           collapse={collapse}

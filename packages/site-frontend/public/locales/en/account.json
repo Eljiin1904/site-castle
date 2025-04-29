@@ -14,7 +14,6 @@
     "refetch": "Refetch Transactions",
     "loading": "Loading transactions...",
     "notFound": "No transactions found.",
-    "perPage": "Per Page",
     "headers": {
       "id": "ID",
       "type": "Type",
@@ -52,7 +51,6 @@
     "loading": "Loading game history...",
     "notFound": "No game history found.",
     "refetch": "Refetch Game History",
-    "perPage": "Per Page",
     "headers": {
       "id": "ID",
       "gameId": "Game ID",
@@ -87,7 +85,7 @@
     "notData": "No data available",
     "invalidData": "Invalid data",
     "dateranges": {
-      "all": "All",
+      "all": "All Time",
       "today": "Today",
       "yesterday": "Yesterday",
       "last7Days": "Last 7 Days",
@@ -100,8 +98,10 @@
       "custom": "Custom Range"
     },
     "charts": {
-      "wagered": "Total Wagered in the {{period}} for {{game}}",
-      "pnl": "Profit and Loss in the {{period}} for {{game}}"
+      "wagered_one": "Total Wagered in the {{period}} for {{game}}",
+      "wagered_other": "Total Wagered {{period}} for {{game}}",
+      "pnl_one": "Profit and Loss in the {{period}} for {{game}}",
+      "pnl_other": "Profit and Loss {{period}} for {{game}}"
     }
   },
   "preferences": {

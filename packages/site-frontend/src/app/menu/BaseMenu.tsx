@@ -43,7 +43,7 @@ export const BaseMenu = ({collapsed}: {
   <MenuItem
     icon={SvgReferrals}
     label={t("menu.referrals")}
-    to="/affiliate"
+    to="/referrals"
     showLabel={!collapsed}
     type="nav"
   />
