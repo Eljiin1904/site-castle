@@ -26,7 +26,7 @@ export const SitePage: FC<SitePageProps> = ({
   }, [title]);
 
   let bodyContent;
-
+  console.log("SitePage", { privileged, authenticated });
   if (privileged && !authenticated) {
     bodyContent = (
       <PageNotice

@@ -13,3 +13,5 @@ export * from "./api/createCampaign";
 export * from "./api/getCampaigns";
 export * from "./api/checkCampaignId";
 export * from "./api/getCampaignReferrals";
+
+export * from "./redux/affiliatesSlice";

@@ -11,17 +11,15 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Dialogs } from "@client/services/dialogs";
 import { AffiliateReferAFriendModal } from "#app/modals/affiliate/AffiliateReferAFriendModal";
 import config from "#app/config";
-import { UserCampaigns } from "@core/types/users/UserCampaigns";
 
 /**
  * Display the default campaign code and link for the user. Copy link to clipboard functionality is included.
  * @returns Default Campaign Details component
  */
-export const DefaultReferral = ({campaign}: {
-  campaign?: UserCampaigns
-}) => {
+export const DefaultReferral = () => {
 
-  const username = useAppSelector((x) => x.user.username);
+  const campaigns = useAppSelector((state) => state.affiliates.campaigns);
+  const campaign = campaigns.find((x) => x.default);
   const {t} = useTranslation(['referrals']);
   const small = useIsMobileLayout();
 

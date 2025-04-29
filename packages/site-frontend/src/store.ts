@@ -15,6 +15,7 @@ import { supportSlice } from "./services/support/redux/supportSlice";
 import { userSlice } from "./services/users/redux/userSlice";
 import { minesSlice } from "./services/mines/redux/minesSlice";
 import {accountSlice} from "./services/account/redux/accountSlice";
+import { affiliatesSlice } from "./services/affiliates/Affiliates";
 
 export const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
     support: supportSlice.reducer,
     user: userSlice.reducer,
     account: accountSlice.reducer,
+    affiliates: affiliatesSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

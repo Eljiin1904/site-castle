@@ -60,6 +60,8 @@ export function initSockets(httpServer: HttpServer) {
     logger.info("site socket active");
     Listeners.users(io);
     logger.info("users socket active");
+    Listeners.campaign(io);
+    logger.info("campaign socket active");
   } catch (err) {
     logger.error("error initiating sockets: " + err);
   }

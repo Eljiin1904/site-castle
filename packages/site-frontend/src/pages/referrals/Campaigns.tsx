@@ -8,12 +8,11 @@ import { Dialogs } from "@client/services/dialogs";
 import { SvgPlus } from "@client/svgs/common/SvgPlus";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { CampaignBody } from "./CampaignBody";
-import { UserCampaigns } from "@core/types/users/UserCampaigns";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
-export const Campaigns = ({campaigns}: {
-  campaigns: UserCampaigns[]
-}) => {
+export const Campaigns = () => {
 
+  const campaigns = useAppSelector((state) => state.affiliates.campaigns).filter((x) => !x.default);
   const {t} = useTranslation(['referrals']);
   const small = useIsMobileLayout();
 

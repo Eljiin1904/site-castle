@@ -29,4 +29,6 @@ export interface SiteClientEvents {
   "notifications-join": () => void;
   "notifications-leave": () => void;
   "notifications-delete": () => void;
+  "campaign-join": (userId: string) => void;
+  "campaign-leave": () => void;
 }

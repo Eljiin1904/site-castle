@@ -6,14 +6,12 @@ import { HistoryHeader } from "./history/HistoryHeader";
 import { HistoryFooter } from "./history/HistoryFooter";
 import { useQuery } from "@tanstack/react-query";
 import { Affiliates } from "#app/services/affiliates";
-import { UserCampaigns } from "@core/types/users/UserCampaigns";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
-export const ReferralsHistory = ({campaigns}: {
-  campaigns: UserCampaigns[]
-}) => {
+export const ReferralsHistory = () => {
 
-  const [limit, setLimit] = useState(10);
-  const [campaignId, setCampaignId] = useState<string>(campaigns.find(x => x.default)?.campaignId ?? '');
+  const limit = useAppSelector((state) => state.affiliates.limit);
+  const campaignId = useAppSelector((state) => state.affiliates.selectedCampaignId) ?? '';
   const [page, setPage] = useState(1);
   const small = useIsMobileLayout();
 
@@ -28,7 +26,7 @@ export const ReferralsHistory = ({campaigns}: {
   const total = referralsQ.data?.total || 0;
 
   return (<Div fx column gap={40}>
-    <HistoryHeader limit={limit} setLimit={setLimit} campaigns={campaigns} campaignId={campaignId} setCampaignId={setCampaignId} />
+    <HistoryHeader />
     <Div fx gap={small ? 16: 24} column center>
       <HistoryTable referrals={referrals} isLoading={referralsQ.isFetching} />
       <HistoryFooter 

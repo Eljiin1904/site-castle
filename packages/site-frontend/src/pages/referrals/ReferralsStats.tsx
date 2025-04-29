@@ -23,9 +23,10 @@ import { AffiliateHowItWorksModal } from "#app/modals/affiliate/AffiliateHowItWo
 
 export const ReferralsStats = () => {
   
-  const commissionBalance = useAppSelector((x) => x.user.affiliate.commissionBalance);
-  const commissionTotal = useAppSelector((x) => x.user.affiliate.commissionTotal);
-  const referralCount = useAppSelector((x) => x.user.affiliate.referralCount);
+  const commissionBalance = useAppSelector((x) => x.affiliates.totalComission);
+  const commissionTotal =useAppSelector((x) => x.affiliates.totalComission); 
+  const referralCount = useAppSelector((x) => x.affiliates.referredFriends);
+  const referralWagered = useAppSelector((x) => x.affiliates.totalFriendsWagered);
   const baseTier = useAppSelector((x) => x.user.affiliate.baseTier);
   const { tier, tierProgress, tierGoal } = useAffiliateTier();
   const nextTier = Math.min(tier + 1, Affiliates.tiers.length - 1);
@@ -70,7 +71,7 @@ export const ReferralsStats = () => {
               icon={SvgTotalReferrals}
             />
             <StatWidget
-            tokens={0}
+            tokens={referralWagered}
             description={t('totalFriedsWagered')}
             icon={SvgDoubleBaitIcon}
             />

@@ -7,6 +7,7 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { ReferralsBody } from "./ReferralsBody";
 import { Affiliates } from "@core/services/affiliates";
 import { useAffiliateTier } from "#app/hooks/affiliates/useAffiliateTier";
+import { ReferralsManager } from "./ReferralsManager";
 
 /**
  * Referrals Entry Page, contains the Banner and the ReferralsBody components
@@ -16,11 +17,13 @@ export const ReferralsPage = () => {
 
   const {t} = useTranslation(['referrals']);
   return (<Fragment>
-    <ReferralBanner />
     <SitePage
       className="AffiliatePage"
       title={t('title')}
+      privileged
     >
+      <ReferralBanner />
+      <ReferralsManager />
       <ReferralsBody />
     </SitePage>
     </Fragment>
@@ -39,7 +42,7 @@ const ReferralBanner = () => {
   const {t} = useTranslation(['referrals']);
   const small = useIsMobileLayout();
   
-  return (<PageBanner image={`/graphics/referral-tile`} height={184} smallHeight={120} heading={t(`banner.title`)} description="" content={<Span color="dark-brown" width={400}>
+  return (<PageBanner image={`/graphics/referral-tile`} height={184} smallHeight={120} heading={t(`banner.title`)} description="" content={<Span color="dark-brown" width={small? 280: 400}>
     {//@ts-ignore
     <Trans
       i18nKey="referrals:banner.subtitle"
