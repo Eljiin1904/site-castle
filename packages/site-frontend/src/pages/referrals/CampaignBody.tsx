@@ -19,6 +19,8 @@ import config from "#app/config";
 import './CampaignBody.scss';
 import { Dialogs } from "@client/services/dialogs";
 import { AffiliateReferAFriendModal } from "#app/modals/affiliate/AffiliateReferAFriendModal";
+import { useQuery } from "@tanstack/react-query";
+import { Affiliates } from "#app/services/affiliates";
 
 /**
  * Display the stats of a campaign. Component works as a toggle
@@ -34,11 +36,21 @@ export const CampaignBody = ({campaign}: {
   const {t} = useTranslation(["referrals"]);
   const small = useIsMobileLayout();
 
+  const statsQ = useQuery({
+    queryKey: ["stats", campaign._id],
+    queryFn: () =>
+      Affiliates.getCampaignStats({_id : campaign._id, timeIndex: 2 }),
+    placeholderData: (prev) => prev,
+  });
+
+  const stats = statsQ.data?.stats;
+  if(!stats) return null;
+
   return (<Div fx border borderColor="brown-4" p={small ? 20: 24} column>
     <Div fx justifyContent="space-between" alignItems="center" cursor="pointer"  onClick={() => setOpen(!open)}>
       <Heading as="h3" textTransform="uppercase" size={20} color={open? 'sand': undefined}>{campaign.campaignName}</Heading>
       <Div center gap={small ? 20: 24}>
-        <Span>{t('campaigns.comission')}: <Tokens value={campaign.commissionTotal} color="light-sand"/></Span>
+        <Span>{t('campaigns.comission')}: <Tokens value={stats.commissionAmount} color="light-sand"/></Span>
         <Vector
           className="icon fade-content"         
           as={SvgArrowRight}
@@ -60,13 +72,13 @@ export const CampaignBody = ({campaign}: {
       <WidgetContainer column>
         <WidgetContainer>
           <StatWidget reverse description={t('performance.campaignHits')} title={campaign.campaignHits?.toString() ?? "0"} />
-          <StatWidget reverse description={t('performance.referrals')} title={campaign.referralCount?.toString() ?? "0"} />
-          <StatWidget reverse description={t('performance.totalDeposits')} tokens={campaign.totalDeposit ?? 0} />
-          <StatWidget reverse description={t('performance.availableCommission')} tokens={campaign.commissionBalance ?? 0} />
+          <StatWidget reverse description={t('performance.referrals')} title={`${stats.referralCount}`} />
+          <StatWidget reverse description={t('performance.totalDeposits')} tokens={stats.depositAmount} />
+          <StatWidget reverse description={t('performance.availableCommission')} tokens={stats.commissionBalance} />
         </WidgetContainer>
         <WidgetContainer style={{maxWidth: small ? '100%': 'calc((100% - 8px) * 3 / 4)'}}>
-          <StatWidget reverse description={t('performance.totalCommission')} tokens={campaign.commissionTotal ?? 0} />
-          <StatWidget reverse description={t('performance.uniqueDeposits')} tokens={campaign.totalDeposit ?? 0} />
+          <StatWidget reverse description={t('performance.totalCommission')} tokens={stats.commissionAmount} />
+          <StatWidget reverse description={t('performance.uniqueDeposits')} title={`${stats.depositorCount}`} />
           <StatWidget reverse description={t('performance.commissionRate')} title={`${campaign.commissionRate  * 100} %`} />
         </WidgetContainer>
       </WidgetContainer>
