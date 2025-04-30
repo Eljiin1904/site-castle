@@ -117,6 +117,9 @@ function createPipeline({
               commissionAmount: {
                 $sum: "$commissionAmount",
               },
+              commissionBalance: {
+                $sum: "$commissionBalance",
+              },
               wagerAmount: {
                 $sum: "$wagerAmount",
               },
@@ -156,6 +159,7 @@ function createPipeline({
         lastBetDate: "$user.meta.lastBetDate",
         referralXp: "$reports.xp",
         commissionAmount: "$reports.commissionAmount",
+        commissionBalance: "$reports.commissionBalance",
         wagerAmount: "$reports.wagerAmount",
         depositAmount: "$reports.depositAmount",
         rewardsAmount: "$reports.rewardsAmount",

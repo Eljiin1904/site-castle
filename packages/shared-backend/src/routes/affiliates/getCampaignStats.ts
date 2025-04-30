@@ -23,7 +23,7 @@ export default Http.createApiRoute({
     });
 
     if (!campaign) {
-      throw new HandledError("validations:error.campaign.notFound");
+      throw new HandledError("validations:errors.campaign.notFound");
     }
 
     const minDate = [

@@ -30,12 +30,11 @@ export async function aggregateCampaignReports({
   const collection = Database.collection("affiliate-referrals");
   const cursor = collection.aggregate<AffiliateReportWithMeta>(pipeline);
   const reports = await cursor.toArray();
-
+ 
   return reports;
 }
 
 function createPipeline({
-  userId,
   affiliateId,
   minDate,
   maxDate,
@@ -54,7 +53,6 @@ function createPipeline({
   const pipeline = [
     {
       $match: {
-        // userId,
         affiliateId,
       },
     },
@@ -123,6 +121,9 @@ function createPipeline({
               commissionAmount: {
                 $sum: "$commissionAmount",
               },
+              commissionBalance: {
+                $sum: "$commissionBalance",
+              },
               wagerAmount: {
                 $sum: "$wagerAmount",
               },
@@ -162,6 +163,7 @@ function createPipeline({
         lastBetDate: "$user.meta.lastBetDate",
         referralXp: "$reports.xp",
         commissionAmount: "$reports.commissionAmount",
+        commissionBalance: "$reports.commissionBalance",
         wagerAmount: "$reports.wagerAmount",
         depositAmount: "$reports.depositAmount",
         rewardsAmount: "$reports.rewardsAmount",
