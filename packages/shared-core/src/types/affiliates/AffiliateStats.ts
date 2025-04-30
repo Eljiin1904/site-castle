@@ -6,6 +6,7 @@ export interface AffiliateStats {
   ftdCount: number;
   referralXp: number;
   commissionAmount: number;
+  commissionBalance: number;
   depositAmount: number;
   wagerAmount: number;
   rewardAmount: number;

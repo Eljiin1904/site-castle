@@ -10,6 +10,7 @@ export interface AffiliateReportDocument extends AffiliateReport {
 export interface AffiliateReport {
   xp?: number;
   commissionAmount?: number;
+  commissionBalance?: number;
   wagerAmount?: number;
   depositAmount?: number;
   rewardAmount?: number;
