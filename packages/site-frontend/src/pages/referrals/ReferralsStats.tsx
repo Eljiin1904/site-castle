@@ -17,13 +17,13 @@ import { SvgQuestionCircle } from "@client/svgs/common/SvgQuestionCircle";
 import { Affiliates } from "@core/services/affiliates";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Dialogs } from "@client/services/dialogs";
-import { AffiliateReloadModal } from "#app/modals/affiliate/AffiliateReloadModal";
 import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
 import { AffiliateHowItWorksModal } from "#app/modals/affiliate/AffiliateHowItWorksModal";
+import { AffiliateClaimModal } from "#app/modals/affiliate/AffiliateClaimModal";
 
 export const ReferralsStats = () => {
   
-  const commissionBalance = useAppSelector((x) => x.affiliates.totalComission);
+  const commissionBalance = useAppSelector((x) => x.affiliates.unclaimedCommission);
   const commissionTotal =useAppSelector((x) => x.affiliates.totalComission); 
   const referralCount = useAppSelector((x) => x.affiliates.referredFriends);
   const referralWagered = useAppSelector((x) => x.affiliates.totalFriendsWagered);
@@ -56,7 +56,7 @@ export const ReferralsStats = () => {
               tokens={commissionBalance}
               description={t('unclaimed')}
               withAction
-              button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateReloadModal/>)}></Button>}
+              button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateClaimModal/>)}></Button>}
             />
             <StatWidget
             tokens={commissionTotal}
