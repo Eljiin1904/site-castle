@@ -9,24 +9,25 @@ import { Span } from "@client/comps/span/Span";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
 import { UserUnblockModal } from "./UserUnblockModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserManageBlockModal = () => {
+  const {t} = useTranslation();
   const query = useQuery({
     queryKey: ["blocked-users"],
     queryFn: () => Users.getBlockedUsers(),
     placeholderData: (prev) => prev,
   });
-  const queryClient = useQueryClient();
-
+  const queryClient = useQueryClient();  
   const users = query.data?.users || [];
-
+  
   return (
     <Modal
       width="sm"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Blocked Users"
+        heading= {t("chat.blockedUsers")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <Div
@@ -38,11 +39,8 @@ export const UserManageBlockModal = () => {
             center
             p={16}
           >
-            <Span
-              size={14}
-              color="dark-gray"
-            >
-              {"No users blocked."}
+            <Span>
+              {t("chat.notUserBlocked")}
             </Span>
           </Div>
         )}
@@ -80,6 +78,7 @@ const UserCard = ({
   user: BasicUser;
   onUnblockClick: () => void;
 }) => {
+  const {t} = useTranslation();
   return (
     <Div
       fx
@@ -100,8 +99,8 @@ const UserCard = ({
       <Button
         type="button"
         size="sm"
-        kind="primary"
-        label="Unblock"
+        kind="primary-yellow"
+        label={t("chat.unblock")}
         onClick={onUnblockClick}
       />
     </Div>

@@ -190,7 +190,10 @@
     "campaign": {
       "exists": "Campaign already exists.",
       "notFound": "Campaign not found.",
-      "lowBalance": "Your balance is too low."
+      "lowBalance": "Your balance is too low.",
+      "required": "Claim Commission is required.",
+      "amount": "Claim Amount is required.",
+      "campaignId": "Campaign ID is required."
     }
   }
 }

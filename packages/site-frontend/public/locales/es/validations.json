@@ -190,7 +190,10 @@
     "campaign": {
       "exists": "Campaña ya existe.",
       "notFound": "Campaña no encontrada.",
-      "lowBalance": "No tienes suficiente saldo para reclamar comisión."
+      "lowBalance": "No tienes suficiente saldo para reclamar comisión.",
+      "required": "Comisión requerida.",
+      "amount": "Cantidad requerida.",
+      "campaignId": "Id de campaña requerida."
     }
   }
 }

@@ -219,6 +219,8 @@
     "highRollerRequirements": "Alcanza el nivel {{level}} para chatear.",
     "generalRequirements": "Debes depositar al menos {{amount}} tokens para chatear.",
     "muted": "Estás silenciado: {{reason}}",
+    "blockedUsers": "Usuarios bloqueados",
+    "notUserBlocked": "No hay usuarios bloqueados.",
     "tipModal": {
       "title": "Enviar Propina a Usuario",
       "submit": "Enviar propina",
