@@ -188,7 +188,9 @@
       "outOfRange": "Nivel fuera de rango."
     },
     "campaign": {
-      "exists": "Campaña ya existe."
+      "exists": "Campaña ya existe.",
+      "notFound": "Campaña no encontrada.",
+      "lowBalance": "No tienes suficiente saldo para reclamar comisión."
     }
   }
 }

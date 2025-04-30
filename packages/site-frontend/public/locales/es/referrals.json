@@ -79,5 +79,10 @@
       "unclaimedCommision": "Comisión No Reclamada"
     },    
     "notFound": "No se encontraron referidos."
+  },
+  "claimModal": {
+   "title": "Reclamar Comisión",
+    "heading": "Reclamados!",
+    "description": "Has reclamado <0>{{amount}}</0> por tus referidos! Las ganancias fueron colocadas en tu billetera!"
   }
 }

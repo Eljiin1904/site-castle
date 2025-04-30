@@ -79,5 +79,10 @@
       "unclaimedCommision": "Unclaimed Commission"
     },
     "notFound": "No referrals found."
+  },
+  "claimModal": {
+    "title": "Claim Amount",
+    "heading": "Claimed!",
+    "description": "You have claimed <0>{{amount}}</0> for your referrals! Earnings were placed in your wallet!"
   }
 }

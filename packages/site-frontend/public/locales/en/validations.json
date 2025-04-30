@@ -188,7 +188,9 @@
       "outOfRange": "Tier out of range."
     },
     "campaign": {
-      "exists": "Campaign already exists."
+      "exists": "Campaign already exists.",
+      "notFound": "Campaign not found.",
+      "lowBalance": "Your balance is too low."
     }
   }
 }
