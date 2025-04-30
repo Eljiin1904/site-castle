@@ -17,6 +17,7 @@ export async function reportCampaignTransaction(tx: TransactionDocument) {
 
   if ("bet" in tx) {
     $inc.commissionAmount = tx.bet.commissionAmount;
+    $inc.commissionBalance = tx.bet.commissionAmount;
     $inc.xp = tx.bet.xp;
     $inc.wagerAmount = tx.value;
   }

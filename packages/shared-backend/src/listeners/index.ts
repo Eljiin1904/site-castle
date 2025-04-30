@@ -13,3 +13,4 @@ export { default as mines } from "./mines";
 export { default as notifications } from "./notifications";
 export { default as site } from "./site";
 export { default as users } from "./users";
+export { default as campaign } from "./campaign";

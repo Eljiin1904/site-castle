@@ -22,6 +22,7 @@ import { HotSiteGameDetails } from "../site/HotSiteGame";
 import { DoubleJackpotDetails } from "../double/DoubleJackpotDetails";
 import type { MinesInitialState } from "../mines/MinesInitialState";
 import type { MinesEventDocument } from "../mines/MinesEventDocument";
+import { UserCampaigns } from "../users/UserCampaigns";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -64,4 +65,7 @@ export interface SiteServerEvents {
   "site-settings-update": (key: SiteSettingId, value: SiteSettingValue) => void;
   "site-time": (time: number) => void;
   "user-update": (update: UserUpdate) => void;
+  "campaign-init": (x: UserCampaigns[]) => void;
+  "campaign-insert": (campaign: UserCampaigns) => void;
+  "campaign-update": (update: StreamUpdate) => void;
 }

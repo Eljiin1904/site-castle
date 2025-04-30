@@ -26,7 +26,7 @@ export default Http.createApiRoute({
     });
 
     if (!campaign) {
-      throw new HandledError("Campaign does not exists");
+      throw new HandledError("validations:errors.campaign.notFound");
     }
 
     const minDate = [
@@ -46,6 +46,7 @@ export default Http.createApiRoute({
       sort: {
         ...[
           { commissionAmount: -1 },
+          { commissionBalance: -1 },
           { depositAmount: -1 },
           { wagerAmount: -1 },
           { lastDepositDate: -1 },
@@ -63,7 +64,6 @@ export default Http.createApiRoute({
       minDate,
       maxDate,
     });
-
     
     res.json({ referrals, total });
   },

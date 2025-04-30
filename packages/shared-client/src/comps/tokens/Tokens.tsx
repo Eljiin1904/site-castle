@@ -13,6 +13,7 @@ export type TokensProps = StyledLayoutProps & {
   color?: Color;
   vectorColor?: Color;
   fontSize?: Unit;
+  lineHeight?: Unit;
   hideIcon?: boolean;
   decimals?: number;
   integer?: boolean;
@@ -29,6 +30,7 @@ export const Tokens: FC<TokensProps> = ({
   color,
   vectorColor = "dark-sand",
   fontSize = 14,
+  lineHeight = 20,
   decimals = 2,
   integer,
   family = "text",
@@ -68,6 +70,7 @@ export const Tokens: FC<TokensProps> = ({
         size={fontSize}
         color={color}
         fontWeight={weight}
+        lineHeight={lineHeight}
       >
         {accent === "negative" && value > 0 && "-"}
         {/* {accent === "positive" && "+"} */}
@@ -78,6 +81,7 @@ export const Tokens: FC<TokensProps> = ({
         forwardRef={valueRef}
         size={fontSize}
         color={color}
+        lineHeight={lineHeight}
       >
         {Intimal.toLocaleString(value, integer ? 0 : decimals)}
       </Span>

@@ -48,6 +48,7 @@ export default Http.createRoute({
       wagerAmount: Intimal.toDecimal(x.wagerAmount || 0, 2),
       depositAmount: Intimal.toDecimal(x.depositAmount || 0, 2),
       commissionAmount: Intimal.toDecimal(x.commissionAmount || 0, 2),
+      commissionBalance: Intimal.toDecimal(x.commissionBalance || 0, 2),
       acquireTime: x.referDate.getTime(),
     }));
 

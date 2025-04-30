@@ -9,6 +9,7 @@ export interface UserCampaigns {
   totalDeposit?: number;
   referralCount?: number;
   commissionBalance?: number;
+  uniqueDepositors?: number;
   commissionTotal: number;
   campaignHits?: number;
   referralXp: number;

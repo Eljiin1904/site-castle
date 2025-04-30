@@ -3,23 +3,17 @@ import { Div } from "@client/comps/div/Div";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { PageTitle } from "@client/comps/page/PageTitle";
 import { Span } from "@client/comps/span/Span";
-import { UserCampaigns } from "@core/types/users/UserCampaigns";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useDispatch } from "react-redux";
+import { Affiliates } from "#app/services/affiliates";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
 
-export const HistoryHeader = ({
-  limit,
-  setLimit,
-  campaigns = [],
-  campaignId,
-  setCampaignId
-}: {
-  limit: number;
-  setLimit: (x: number) => void;
-  campaigns: UserCampaigns[];
-  campaignId: string | undefined;
-  setCampaignId: (x: string) => void;
-}) => {
+export const HistoryHeader = () => {
   
+  const campaigns = useAppSelector((state) => state.affiliates.campaigns);
+  const campaignId = useAppSelector((state) => state.affiliates.selectedCampaignId) ?? '';
+  const limit = useAppSelector((state) => state.affiliates.limit);
+  const dispatch = useDispatch();
   const small = useIsMobileLayout();
   const { t } = useTranslation(["referrals"]);
   const indexes = [10, 20, 25, 50];
@@ -44,7 +38,7 @@ export const HistoryHeader = ({
             value={
               campaignId ? campaigns.findIndex((x) => x.campaignId === campaignId) : -1
             }
-            onChange={(x, i) =>setCampaignId( campaigns[i].campaignId)}
+            onChange={(x, i) => dispatch(Affiliates.setSelectedCampaignId(campaigns[i].campaignId))}
           />  
         </Div>
         <Div center gap={12}>
@@ -55,7 +49,7 @@ export const HistoryHeader = ({
             size="sm"
             options={indexes}
             value={indexes.indexOf(limit)}
-            onChange={(x, i) => setLimit(indexes[i])}
+            onChange={(x, i) => dispatch(Affiliates.setLimit(indexes[i]))}
           />
         </Div>
       </Div>

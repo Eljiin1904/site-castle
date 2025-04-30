@@ -1,5 +1,4 @@
 import { Dates } from "@core/services/dates";
-import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { Table } from "@client/comps/table/Table";
 import { Tokens } from "@client/comps/tokens/Tokens";
@@ -16,7 +15,7 @@ export const HistoryTable = ({
 }) => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
   const {t} = useTranslation(["referrals"]);
-  //const { username, xp, hideInfo } = useHiddenInfo(bet.user);
+
   return (
     <Table
       data={referrals}
@@ -85,7 +84,7 @@ export const HistoryTable = ({
           heading: t("history.headers.unclaimedCommision"),
           grow: 2,
           justify: "flex-end",
-          rowRenderer: (x) => <Tokens fontSize={12} value={x.commissionAmount} />,
+          rowRenderer: (x) => <Tokens fontSize={12} value={x.commissionBalance} />,
         },
       ]}
     />

@@ -17,15 +17,16 @@ import { SvgQuestionCircle } from "@client/svgs/common/SvgQuestionCircle";
 import { Affiliates } from "@core/services/affiliates";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Dialogs } from "@client/services/dialogs";
-import { AffiliateReloadModal } from "#app/modals/affiliate/AffiliateReloadModal";
 import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
 import { AffiliateHowItWorksModal } from "#app/modals/affiliate/AffiliateHowItWorksModal";
+import { AffiliateClaimModal } from "#app/modals/affiliate/AffiliateClaimModal";
 
 export const ReferralsStats = () => {
   
-  const commissionBalance = useAppSelector((x) => x.user.affiliate.commissionBalance);
-  const commissionTotal = useAppSelector((x) => x.user.affiliate.commissionTotal);
-  const referralCount = useAppSelector((x) => x.user.affiliate.referralCount);
+  const commissionBalance = useAppSelector((x) => x.affiliates.unclaimedCommission);
+  const commissionTotal =useAppSelector((x) => x.affiliates.totalComission); 
+  const referralCount = useAppSelector((x) => x.affiliates.referredFriends);
+  const referralWagered = useAppSelector((x) => x.affiliates.totalFriendsWagered);
   const baseTier = useAppSelector((x) => x.user.affiliate.baseTier);
   const { tier, tierProgress, tierGoal } = useAffiliateTier();
   const nextTier = Math.min(tier + 1, Affiliates.tiers.length - 1);
@@ -55,7 +56,7 @@ export const ReferralsStats = () => {
               tokens={commissionBalance}
               description={t('unclaimed')}
               withAction
-              button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateReloadModal/>)}></Button>}
+              button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateClaimModal/>)}></Button>}
             />
             <StatWidget
             tokens={commissionTotal}
@@ -70,7 +71,7 @@ export const ReferralsStats = () => {
               icon={SvgTotalReferrals}
             />
             <StatWidget
-            tokens={0}
+            tokens={referralWagered}
             description={t('totalFriedsWagered')}
             icon={SvgDoubleBaitIcon}
             />

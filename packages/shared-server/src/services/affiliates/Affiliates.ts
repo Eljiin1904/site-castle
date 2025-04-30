@@ -8,7 +8,7 @@ export * from "./utils/aggregateStats";
 export * from "./utils/aggregateCampaignStats";
 export * from "./utils/claimReload";
 export * from "./utils/creditCommission";
-export * from "./utils/debitCampaignCommission";
+export * from "./utils/debitCampaignsCommission";
 export * from "./utils/debitCommission";
 export * from "./utils/finalizeReferral";
 export * from "./utils/reportCampaignTransaction";

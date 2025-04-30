@@ -32,6 +32,7 @@ function getDefaultReport(): AffiliateStats {
     ftdCount: 0,
     referralXp: 0,
     commissionAmount: 0,
+    commissionBalance: 0,
     wagerAmount: 0,
     depositAmount: 0,
     rewardAmount: 0,
@@ -184,11 +185,25 @@ function createPipeline({
               commissionAmount: {
                 $sum: "$commissionAmount",
               },
+              commissionBalance: {
+                $sum: "$commissionBalance",
+              },
               wagerAmount: {
                 $sum: "$wagerAmount",
               },
               depositAmount: {
                 $sum: "$depositAmount",
+              },
+              uniqueDepositors: {
+                $sum: {
+                  $cond: {
+                    if: {
+                      $gt: ["$depositAmount", 0],
+                    },
+                    then: 1,
+                    else: 0,
+                  },
+                },
               },
               rewardAmount: {
                 $sum: "$rewardAmount",
@@ -216,8 +231,10 @@ function createPipeline({
         ftdCount: 1,
         referralXp: "$reports.xp",
         commissionAmount: "$reports.commissionAmount",
+        commissionBalance: "$reports.commissionBalance",
         wagerAmount: "$reports.wagerAmount",
         depositAmount: "$reports.depositAmount",
+        uniqueDepositors: "$reports.uniqueDepositors",
         rewardAmount: "$reports.rewardAmount",
       },
     },
