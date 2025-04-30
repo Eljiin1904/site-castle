@@ -225,6 +225,8 @@
     "highRollerRequirements": "Reach level {{level}} to chat.",
     "generalRequirements": "You must deposit at least {{amount}} tokens to chat.",
     "muted": "Muted: {{reason}}",
+    "blockedUsers": "Blocked Users",
+    "notUserBlocked": "No users blocked.",
     "tipModal": {
       "title": "Tip User",
       "submit": "Send Tip",
