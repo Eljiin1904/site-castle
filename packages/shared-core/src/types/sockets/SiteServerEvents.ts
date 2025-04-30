@@ -67,4 +67,5 @@ export interface SiteServerEvents {
   "user-update": (update: UserUpdate) => void;
   "campaign-init": (x: UserCampaigns[]) => void;
   "campaign-insert": (campaign: UserCampaigns) => void;
+  "campaign-update": (update: StreamUpdate) => void;
 }
