@@ -7,7 +7,6 @@ import { ModalBody } from "@client/comps/modal/ModalBody";
 import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { ModalLoading } from "@client/comps/modal/ModalLoading";
 import { Paragraph } from "@client/comps/paragraph/Paragraph";
-import { Span } from "@client/comps/span/Span";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Vector } from "@client/comps/vector/Vector";
 import { Dialogs } from "@client/services/dialogs";
@@ -16,10 +15,13 @@ import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
 import { Trans, useTranslation } from "@core/services/internationalization/internationalization";
 import { useQuery } from "@tanstack/react-query";
 
-export const AffiliateClaimModal = () => {
+export const AffiliateClaimModal = ({claim}: {
+  claim: {campaignId: string, amount: number}[]
+}) => {
+  
   const query = useQuery({
     queryKey: ["claim"],
-    queryFn: () => Affiliates.claimCommission(),
+    queryFn: () => Affiliates.claimCommission({claim}),
     placeholderData: (prev) => prev,
   });
 
@@ -73,7 +75,7 @@ const ClaimedBody = ({ amount }: { amount: number }) => {
           size={small ? 20 : 24}
           fontWeight="regular"
           textTransform="uppercase">
-            {t('claimModal.header')}
+            {t('claimModal.heading')}
         </Heading>
       </Div>
       <Paragraph textAlign="center">

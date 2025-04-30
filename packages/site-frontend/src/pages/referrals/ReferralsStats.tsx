@@ -27,6 +27,7 @@ export const ReferralsStats = () => {
   const commissionTotal =useAppSelector((x) => x.affiliates.totalComission); 
   const referralCount = useAppSelector((x) => x.affiliates.referredFriends);
   const referralWagered = useAppSelector((x) => x.affiliates.totalFriendsWagered);
+  const campaigns = useAppSelector((x) => x.affiliates.campaigns);
   const baseTier = useAppSelector((x) => x.user.affiliate.baseTier);
   const { tier, tierProgress, tierGoal } = useAffiliateTier();
   const nextTier = Math.min(tier + 1, Affiliates.tiers.length - 1);
@@ -34,6 +35,8 @@ export const ReferralsStats = () => {
   const nextInfo = Affiliates.getTierInfo(nextTier);  
   const {t} = useTranslation(['referrals']);
   const small = useIsMobileLayout();
+
+  const claimable:{campaignId: string, amount: number}[] = campaigns?.map((x) => {return {campaignId: x.campaignId, amount: x.commissionBalance ?? 0}})
   
   return (<Div
       fx
@@ -46,7 +49,7 @@ export const ReferralsStats = () => {
           heading={t('yourReferrals')}
           mt={small ? 0 : 16}
         />
-        <Button label={t('howItWorks.button')} kind="tertiary-grey" onClick={() => Dialogs.open('primary',<AffiliateHowItWorksModal />)} iconLeft={SvgQuestionCircle} />
+        <Button label={t('howItWorks.button')} kind="tertiary-grey" onClick={() => Dialogs.open('primary',<AffiliateHowItWorksModal/>)} iconLeft={SvgQuestionCircle} />
       </Div>
 
       <WidgetContainer column={small}>
@@ -56,7 +59,7 @@ export const ReferralsStats = () => {
               tokens={commissionBalance}
               description={t('unclaimed')}
               withAction
-              button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateClaimModal/>)}></Button>}
+              button={<Button kind="primary-black" label="Claim" size="lg"  onClick={() => Dialogs.open("primary", <AffiliateClaimModal  claim={claimable}/>)}></Button>}
             />
             <StatWidget
             tokens={commissionTotal}

@@ -37,7 +37,7 @@ export const CampaignBody = ({campaign}: {
   const small = useIsMobileLayout();
 
   const statsQ = useQuery({
-    queryKey: ["stats", campaign._id],
+    queryKey: ["stats", campaign._id, campaign.referralCount, campaign.commissionBalance],
     queryFn: () =>
       Affiliates.getCampaignStats({_id : campaign._id, timeIndex: 3 }),
     placeholderData: (prev) => prev,

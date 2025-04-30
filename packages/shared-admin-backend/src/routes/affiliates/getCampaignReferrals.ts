@@ -7,7 +7,7 @@ import { HandledError } from "@server/services/errors";
 
 export default Http.createApiRoute({
   type: "post",
-  path: "/get-campaign-referrals",
+  path: "/get-admin-campaign-referrals",
   secure: true,
   body: Validation.object({
     affiliateId: Validation.string().required(),

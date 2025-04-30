@@ -4,6 +4,7 @@ import { HandledError } from "@server/services/errors";
 import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { Database } from "@server/services/database";
+import { Validation } from "@core/services/validation";
 
 export default Http.createApiRoute({
   type: "post",
@@ -11,7 +12,17 @@ export default Http.createApiRoute({
   restricted: true,
   secure: true,
   transaction: true,
+  body: Validation.object({
+    claim: Validation.array(
+      Validation.object({
+        campaignId: Validation.string().required("validations:errors.campaign.campaignId"),
+        amount: Validation.number().required("validations:errors.campaign.amount"),
+      })
+    ).required("validations:errors.campaign.required"),
+  }),
   callback: async (req, res) => {
+    
+    const { claim } = req.body;
     const user = req.user;
     
     await Site.validateToggle("affiliatesEnabled");
@@ -23,8 +34,8 @@ export default Http.createApiRoute({
       throw new HandledError("validations:errors.campaign.notFound");
     }
 
-    const amount = campaigns.reduce((acc, campaign) => {
-      return acc + (campaign.commissionBalance || 0);
+    const amount = claim.reduce((acc, campaign) => {
+      return acc + (campaign.amount || 0);
     }, 0);
     
     if (amount < Intimal.fromDecimal(0.01)) {
@@ -32,8 +43,7 @@ export default Http.createApiRoute({
     }
 
     const location = await Http.getLocation(req.trueIP);
-
-    await Affiliates.debitCampaignsCommission({ user, amount, location });
+    await Affiliates.debitCampaignsCommission({ user, claim, location });
 
     res.json({ amount: amount });
   },
