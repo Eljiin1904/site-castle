@@ -11,12 +11,13 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 export const ReferralsHistory = () => {
 
   const limit = useAppSelector((state) => state.affiliates.limit);
+  const campaigns = useAppSelector((state) => state.affiliates.campaigns);
   const campaignId = useAppSelector((state) => state.affiliates.selectedCampaignId) ?? '';
   const [page, setPage] = useState(1);
   const small = useIsMobileLayout();
 
   const referralsQ = useQuery({
-    queryKey: ["campaign", campaignId, limit, page],
+    queryKey: ["campaign", campaignId,campaigns, limit, page],
     queryFn: () =>
       Affiliates.getCampaignReferrals({ limit, page, campaignId, sortIndex: 1, timeIndex: 2 }),
     placeholderData: (prev) => prev,
