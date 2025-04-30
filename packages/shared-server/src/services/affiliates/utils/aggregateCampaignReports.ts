@@ -30,7 +30,7 @@ export async function aggregateCampaignReports({
   const collection = Database.collection("affiliate-referrals");
   const cursor = collection.aggregate<AffiliateReportWithMeta>(pipeline);
   const reports = await cursor.toArray();
- 
+  
   return reports;
 }
 
@@ -75,6 +75,7 @@ function createPipeline({
               avatarId: 1,
               avatarIndex: 1,
               meta: 1,
+              settings: 1,
             },
           },
         ],
@@ -155,6 +156,7 @@ function createPipeline({
           xp: "$user.xp",
           avatarId: "$user.avatarId",
           avatarIndex: "$user.avatarIndex",
+          hidden: "$user.settings.hiddenMode",
         },
         referDate: "$timestamp",
         activeDate: "$user.meta.activeDate",
