@@ -19,7 +19,7 @@ export const ReferralsHistory = () => {
   const referralsQ = useQuery({
     queryKey: ["campaign", campaignId,campaigns, limit, page],
     queryFn: () =>
-      Affiliates.getCampaignReferrals({ limit, page, campaignId, sortIndex: 1, timeIndex: 2 }),
+      Affiliates.getCampaignReferrals({ limit, page, campaignId, sortIndex: 0, timeIndex: 3 }),
     placeholderData: (prev) => prev,
   });
 
