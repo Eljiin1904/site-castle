@@ -23,16 +23,9 @@ export const ReferralsManager = () => {
   useSocketListener("campaign-insert", (campaign) => {
     dispatch(Affiliates.insertCampaign(campaign));    
   });
-
-  // const campaignsQ = useQuery({
-  //    queryKey: ["campaigns"],
-  //    queryFn: () =>
-  //      Affiliates.getCampaigns({ limit: 100, page:1 }),
-  //    placeholderData: (prev) => prev,
-  // });
- 
-  // const campaigns = campaignsQ.data?.campaigns || [];
-  // dispatch(Affiliates.setCampaigns(campaigns));
+  useSocketListener("campaign-update", (document) => {
+    dispatch(Affiliates.updateCampaign(document));    
+  });
 
   return null;
 };
