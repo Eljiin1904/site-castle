@@ -104,11 +104,11 @@ function createPipeline({
                     $eq: ["$affiliateId", affiliateId],
                   },
                 },
-                // {
-                //   $expr: {
-                //     $eq: ["$userId", "$$userId"],
-                //   },
-                // },
+                {
+                  $expr: {
+                    $eq: ["$userId", "$$userId"],
+                  },
+                },
               ],
               timeframe: { $gte: minDate, $lt: maxDate },
             },
