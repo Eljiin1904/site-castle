@@ -39,7 +39,7 @@ export const CampaignBody = ({campaign}: {
   const statsQ = useQuery({
     queryKey: ["stats", campaign._id],
     queryFn: () =>
-      Affiliates.getCampaignStats({_id : campaign._id, timeIndex: 2 }),
+      Affiliates.getCampaignStats({_id : campaign._id, timeIndex: 3 }),
     placeholderData: (prev) => prev,
   });
 
