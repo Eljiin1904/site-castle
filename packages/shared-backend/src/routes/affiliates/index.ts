@@ -1,5 +1,4 @@
 import { Router } from "express";
-import claimCommission from "./claimCommission";
 import claimReload from "./claimReload";
 import getDashboard from "./getDashboard";
 import getReferrals from "./getReferrals";
@@ -11,10 +10,10 @@ import createCampaign from "./createCampaign";
 import claimCampaignCommision from "./claimCampaignCommision";
 import checkCampaignId from "./checkCampaignId";
 import getCampaignReferrals from "./getCampaignReferrals";
+import getCampaignStats from "./getCampaignStats";
 
 const router = Router();
 
-claimCommission(router);
 claimCampaignCommision(router);
 claimReload(router);
 getDashboard(router);
@@ -26,5 +25,6 @@ getCampaigns(router);
 createCampaign(router);
 checkCampaignId(router);
 getCampaignReferrals(router);
+getCampaignStats(router);
 
 export default router;
