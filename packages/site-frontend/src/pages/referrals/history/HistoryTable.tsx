@@ -85,7 +85,7 @@ export const HistoryTable = ({
           heading: t("history.headers.unclaimedCommision"),
           grow: 2,
           justify: "flex-end",
-          rowRenderer: (x) => <Tokens fontSize={12} value={x.commissionAmount} />,
+          rowRenderer: (x) => <Tokens fontSize={12} value={x.commissionBalance} />,
         },
       ]}
     />
