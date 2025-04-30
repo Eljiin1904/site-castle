@@ -28,7 +28,7 @@ export const HistoryHeader = () => {
         heading={t('history.title')}
       />
       <Div gap={small ? 20: 24} flexShrink justifyContent="flex-end">
-        <Div center gap={12}>
+        {campaigns.length > 0 && <Div center gap={12}>
           <Span flexShrink>{t("campaigns.title")}</Span>
           <Dropdown
             type="select"
@@ -40,7 +40,7 @@ export const HistoryHeader = () => {
             }
             onChange={(x, i) => dispatch(Affiliates.setSelectedCampaignId(campaigns[i].campaignId))}
           />  
-        </Div>
+        </Div>}
         <Div center gap={12}>
           <Span flexShrink>{t("common:perPage")}</Span>
           <Dropdown
