@@ -17,6 +17,7 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { ProgressBar } from "@client/comps/progress-bar/ProgressBar";
 import { Affiliates } from "#app/services/affiliates";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AffiliateReloadModal = () => {
   const query = useQuery({
@@ -52,10 +53,11 @@ export const AffiliateReloadModal = () => {
 const ReloadsBody = ({ reload }: { reload: AffiliateReloadDocument }) => {
   const [isLoading, setIsLoading] = useState(false);
   const isAvailable = isPast(reload.resetDate);
-
+  const {t} = useTranslation(['referrals']);
+  
   const handleClaimReload = usePost(async () => {
     await Affiliates.claimReload({ reloadId: reload._id });
-    Toasts.success("Reload claimed.");
+    Toasts.success("claimModal.claimed");
     Dialogs.close("primary");
   }, setIsLoading);
 
@@ -64,10 +66,10 @@ const ReloadsBody = ({ reload }: { reload: AffiliateReloadDocument }) => {
 
   if (reload.claimsAvailable <= 0) {
     color = "gray";
-    feedback = "All Reloads Claimed";
+    feedback = t('reloadModal.allClaimed');
   } else if (isAvailable) {
     color = "green";
-    feedback = "Available Now";
+    feedback = t('reloadModal.available');
   } else {
     color = "light-orange";
     feedback = Dates.toTimestamp(reload.resetDate, {
@@ -79,28 +81,23 @@ const ReloadsBody = ({ reload }: { reload: AffiliateReloadDocument }) => {
   return (
     <Fragment>
       <ModalSection>
-        <ModalLabel>{`${reload.claimsAvailable} Reloads Remaining`}</ModalLabel>
-        <ProgressBar
-          progress={reload.claimsAvailable / reload.claimsStart}
-          height={8}
-          fillColor="gold"
-          mt={4}
-        />
+        <ModalLabel>{t('claimModal.title',{value:reload.claimsAvailable})}</ModalLabel>
+        <ProgressBar height={8}  progress={reload.claimsAvailable / reload.claimsStart} />
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Next Reload Available"}</ModalLabel>
+        <ModalLabel>{t('claimModal.nextAvailable')}</ModalLabel>
         <ModalField color={color}>{feedback}</ModalField>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Amount"}</ModalLabel>
+        <ModalLabel>{t('claimModal.amount')}</ModalLabel>
         <ModalField>
           <Tokens value={reload.tokenAmount} />
         </ModalField>
       </ModalSection>
       <Button
         fx
-        kind="primary"
-        label={"Claim Reload"}
+        kind="primary-yellow"
+        label={t('claimModal.claimButton')}
         disabled={reload.claimsAvailable <= 0 || !isAvailable || isLoading}
         onClick={handleClaimReload}
       />
