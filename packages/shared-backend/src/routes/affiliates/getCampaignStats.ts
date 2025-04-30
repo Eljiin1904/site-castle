@@ -10,20 +10,20 @@ export default Http.createApiRoute({
   path: "/get-campaign-stats",
   secure: true,
   body: Validation.object({
-    campaignId: Validation.string().required().min(5).max(64),
+    _id: Validation.string().required().min(5).max(64),
     timeIndex: Validation.index("Time index", 3),
   }),
   callback: async (req, res) => {
-    const { campaignId, timeIndex } = req.body;
+    const { _id, timeIndex } = req.body;
     const user = req.user;
 
     const campaign = Database.collection("user-campaigns").findOne({
       userId: user._id,
-      campaignId: campaignId,
+      _id: _id,
     });
 
     if (!campaign) {
-      throw new HandledError("Campaign does not exists");
+      throw new HandledError("validations:error.campaign.notFound");
     }
 
     const minDate = [
@@ -36,7 +36,7 @@ export default Http.createApiRoute({
     const maxDate = new Date();
 
     const stats = await Affiliates.aggregateCampaignStats({
-      affiliateId: campaignId,
+      affiliateId: _id,
       minDate,
       maxDate,
     });
