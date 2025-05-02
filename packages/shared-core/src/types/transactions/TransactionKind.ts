@@ -179,6 +179,7 @@ interface DuelWonData {
 interface CrashBetData {
   kind: "crash-bet";
   bet: TransactionBetData;
+  roundId: string;
   gameId: string;
 }
 
