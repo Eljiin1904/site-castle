@@ -44,6 +44,7 @@ async function main() {
   await insertDefault("casesEnabled", true);
   await insertDefault("caseBattlesEnabled", true);
   await insertDefault("doubleEnabled", true);
+  await insertDefault("crashEnabled", true);
   await insertDefault("diceEnabled", true);
   await insertDefault("limboEnabled", true);
   await insertDefault("minesEnabled", true);

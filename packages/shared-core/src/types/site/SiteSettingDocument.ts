@@ -67,6 +67,7 @@ interface FeatureToggles {
   caseBattlesEnabled: boolean;
   diceEnabled: boolean;
   doubleEnabled: boolean;
+  crashEnabled: boolean;
   limboEnabled: boolean;
   minesEnabled: boolean;
 }
