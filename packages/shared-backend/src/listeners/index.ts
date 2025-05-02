@@ -6,6 +6,7 @@ export { default as chat } from "./chat";
 export { default as chestDrops } from "./chest-drops";
 export { default as dice } from "./dice";
 export { default as double } from "./double";
+export { default as crash } from "./crash";
 export { default as holiday } from "./holiday";
 export { default as hotFeed } from "./hot-feed";
 export { default as limbo } from "./limbo";

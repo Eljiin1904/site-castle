@@ -23,6 +23,9 @@ import { DoubleJackpotDetails } from "../double/DoubleJackpotDetails";
 import type { MinesInitialState } from "../mines/MinesInitialState";
 import type { MinesEventDocument } from "../mines/MinesEventDocument";
 import { UserCampaigns } from "../users/UserCampaigns";
+import { CrashInitialState } from "../crash/CrashInitialState";
+import { CrashRoundDocument } from "../crash/CrashRoundDocument";
+import { CrashTicketDocument } from "../crash/CrashTicketDocument";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -44,6 +47,10 @@ export interface SiteServerEvents {
   "double-round-insert": (round: DoubleRoundDocument) => void;
   "double-round-update": (update: StreamUpdate) => void;
   "double-bet-insert": (bet: DoubleTicketDocument) => void;
+  "crash-init": (x: CrashInitialState) => void;
+  "crash-round-insert": (round: CrashRoundDocument) => void;
+  "crash-round-update": (update: StreamUpdate) => void;
+  "crash-bet-insert": (bet: CrashTicketDocument) => void;
   "holiday-init": (x: HolidayInitialState) => void;
   "holiday-race-update": (update: StreamUpdate) => void;
   "hot-feed-init": (x: HotSiteGameDetails[]) => void;
