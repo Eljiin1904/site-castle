@@ -20,6 +20,7 @@ export type ChatMessageKindData =
   | DoubleWinData
   | DiceWinData
   | LimboWonData
+  | CrashWinData
   | MinesWinData
   | RainTipData
   | RainPayoutData;
@@ -92,6 +93,13 @@ interface LimboWonData {
 
 interface MinesWinData {
   kind: "mines-win";
+  user: BasicUser;
+  multiplier: number;
+  wonAmount: number;
+}
+
+interface CrashWinData {
+  kind: "crash-win";
   user: BasicUser;
   multiplier: number;
   wonAmount: number;
