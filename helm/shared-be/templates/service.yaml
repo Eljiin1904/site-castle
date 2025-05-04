@@ -11,9 +11,5 @@ spec:
       port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
-    # - name: https
-    #   port: 443
-    #   targetPort: 8443  
-    #   protocol: TCP
   selector:
     app: castle-backend
