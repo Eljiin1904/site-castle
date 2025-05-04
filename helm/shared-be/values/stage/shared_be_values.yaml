@@ -11,10 +11,7 @@ image:
     repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-backend"
     pullPolicy: Always
     tag: "latest"
-  # envoy:
-  #   repository: envoyproxy/envoy
-  #   pullPolicy: Always
-  #   tag: "v1.29-latest"   
+
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
