@@ -89,3 +89,18 @@ jobs:
           argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
           argocd app set shared-game-server --helm-set image.app.tag=${{ needs.build-and-push-shared-game-server.outputs.image_tag }}
           argocd app sync shared-game-server --async
+
+  update-argocd-stage:
+    needs: build-and-push-shared-game-server
+    environment: stage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+      - name: Update ArgoCD Application for DEV
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER_STAGE }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
+          argocd app set shared-game-server --helm-set image.app.tag=${{ needs.build-and-push-shared-game-server.outputs.image_tag }}
+          argocd app sync shared-game-server --async
