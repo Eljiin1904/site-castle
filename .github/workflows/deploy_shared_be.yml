@@ -87,6 +87,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: stage
     steps:
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
       - name: Update ArgoCD Application for STAGE
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER_STAGE }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
