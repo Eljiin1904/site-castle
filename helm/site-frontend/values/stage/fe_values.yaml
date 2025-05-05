@@ -1,5 +1,7 @@
 replicaCount: 1
 
+environment: "staging"
+
 image:
   app:
     repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend"
@@ -71,3 +73,4 @@ namespace: shared-admin-backend
 # Explicit labels to ensure consistency
 labels:
   app: castle-frontend
+
