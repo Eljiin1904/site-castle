@@ -61,7 +61,7 @@ ingress:
   enabled: false
 
 secrets:
-  app: "stage-shared-backend"
+  app: "shared-backend"
   
 service:
   type: ClusterIP
