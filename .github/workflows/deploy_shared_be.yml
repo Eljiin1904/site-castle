@@ -93,9 +93,9 @@ jobs:
           chmod +x /usr/local/bin/argocd
       - name: Update ArgoCD Application for STAGE
         run: |
-          argocd login ${{ secrets.ARGOCD_SERVER_STAGE }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+          argocd login ${{ secrets.ARGOCD_SERVER_STAGE }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
           argocd app set backend --helm-set image.app.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
-          argocd app sync backend
+          argocd app sync backend --async
 
   # wait-for-prod-approval:
   #   needs: update-argocd-stage
