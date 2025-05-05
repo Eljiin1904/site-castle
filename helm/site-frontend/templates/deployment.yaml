@@ -39,7 +39,7 @@ spec:
           env:
             - name: PORT
               value: "{{ .Values.app.port }}"
-            - name: environment
+            - name: env
               value: "{{ .Values.environment }}"
           {{- if .Values.livenessProbe }}
           livenessProbe:
