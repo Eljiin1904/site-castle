@@ -94,7 +94,7 @@ jobs:
       - name: Update ArgoCD Application for STAGE
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER_STAGE }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          argocd app set backend --helm-set image.app.tag=$IMAGE_TAG
+          argocd app set backend --helm-set image.app.tag=${{ needs.build-and-push-shared-backend.outputs.image_tag }}
           argocd app sync backend
 
   # wait-for-prod-approval:
