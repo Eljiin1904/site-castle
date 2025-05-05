@@ -84,7 +84,7 @@ jobs:
           argocd app sync castle-admin-fe --async
 
   update-argocd-stage:
-    needs: update-argocd-dev
+    needs: build-and-push-shared-admin-frontend
     environment: stage
     runs-on: ubuntu-latest
     steps:

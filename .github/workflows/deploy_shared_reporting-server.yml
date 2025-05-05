@@ -84,7 +84,7 @@ jobs:
           argocd app sync shared-reporting-server --async
 
   update-argocd-stage:
-    needs: update-argocd-dev
+    needs: build-and-push-shared-reporting-server
     environment: stage
     runs-on: ubuntu-latest
     steps:
