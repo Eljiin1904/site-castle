@@ -1,6 +1,6 @@
 replicaCount: 1
 
-environment: "development"
+environment: "devcloud"
 image:
   app:
     repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-affiliate-api"
