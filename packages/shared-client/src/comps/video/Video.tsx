@@ -7,6 +7,7 @@ import { StyledLayoutProps, StyledProps } from "../styled/Styled";
 import { Img } from "../img/Img";
 import "./Video.scss";
 
+type PlayBackRate = 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5 | 5.5 | 6 | 6.5 | 7 | 7.5 | 8;
 export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   type: "mp4" | "mov";
   path: string;
@@ -26,7 +27,7 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   pause?: boolean;
   reset?: boolean;
   resetPause?: boolean;
-  playBackSpeed: 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4;
+  playBackSpeed: PlayBackRate;
   altImage?: string;
   altPadding?: number;
   scale?: number;
