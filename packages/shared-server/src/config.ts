@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import coreConfig, { CoreConfig, setEnvironment } from "@core/config";
+import { SystemEnvironment } from "@core/types/system/SystemEnvironment";
 
 const filePath = fileURLToPath(import.meta.url);
 const directory = path.dirname(filePath);
@@ -50,7 +51,13 @@ export interface ServerConfig extends CoreConfig {
   sumsubSecretKey: string;
 }
 
-setEnvironment(process.env.NODE_ENV);
+const env = process.env.env || "development";
+if (["development", "devcloud", "staging", "production"].includes(env)) {
+  setEnvironment(env as SystemEnvironment);
+} else {
+  console.warn(`Invalid environment: ${env}, defaulting to development`);
+  setEnvironment("development");
+}
 
 const config = coreConfig as ServerConfig;
 

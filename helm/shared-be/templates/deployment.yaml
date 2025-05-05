@@ -39,8 +39,12 @@ spec:
           env:
             - name: PORT
               value: "{{ .Values.app.port }}"
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+            - name: APP_ENV
+              value: {{ .Values.environment }}
             - name: env
-              value: "{{ .Values.environment }}"
+              value: {{ .Values.environment }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

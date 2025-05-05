@@ -37,10 +37,12 @@ spec:
             - name: http
               containerPort: {{ .Values.app.port }}
           env:
-            - name: environment
-              value: "{{ .Values.environment }}"
             - name: PORT
               value: "{{ .Values.app.port }}"
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+            - name: APP_ENV
+              value: {{ .Values.environment }}
           {{- if .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
