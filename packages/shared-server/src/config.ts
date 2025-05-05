@@ -51,7 +51,7 @@ export interface ServerConfig extends CoreConfig {
   sumsubSecretKey: string;
 }
 
-const env = process.env.env || "development";
+const env = process.env.env || process.env.NODE_ENV || "development";
 if (["development", "devcloud", "staging", "production"].includes(env)) {
   setEnvironment(env as SystemEnvironment);
 } else {
