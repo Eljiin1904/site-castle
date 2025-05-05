@@ -127,3 +127,5 @@ tolerations: []
 affinity: {}
 
 namespace: shared-backend
+
+environment: "production"

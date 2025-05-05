@@ -37,6 +37,8 @@ spec:
             - name: http
               containerPort: {{ .Values.app.port }}
           env:
+            - name: environment
+              value: "{{ .Values.environment }}"
             - name: PORT
               value: "{{ .Values.app.port }}"
           {{- if .Values.livenessProbe }}

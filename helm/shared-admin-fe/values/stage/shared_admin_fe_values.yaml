@@ -132,3 +132,5 @@ tolerations: []
 affinity: {}
 
 namespace: shared-admin-backend
+
+environment: "staging"
