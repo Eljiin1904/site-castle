@@ -1,6 +1,7 @@
 replicaCount: 1
 
-environment: "development"
+environment: "devcloud"
+
 
 image:
   app:
