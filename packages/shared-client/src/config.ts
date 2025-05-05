@@ -5,7 +5,7 @@ export interface FrontendConfig extends CoreConfig {
   apiURL: string;
 }
 
-const env = process.env.env || "development";
+const env = process.env.env || process.env.APP_ENV || "development";
 if (["development", "devcloud", "staging", "production"].includes(env)) {
   setEnvironment(env as SystemEnvironment);
 } else {
