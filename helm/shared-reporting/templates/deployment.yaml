@@ -35,10 +35,10 @@ spec:
                 name: {{ .Values.secrets.app }}
           ports:
             - name: http
-              containerPort: {{ .Values.app.port }}
+              containerPort: {{ .Values.service.port }}
           env:
             - name: PORT
-              value: "{{ .Values.app.port }}"
+              value: "{{ .Values.service.port }}"
             - name: NODE_ENV
               value: {{ .Values.environment }}
             - name: APP_ENV
