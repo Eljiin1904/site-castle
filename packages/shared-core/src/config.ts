@@ -50,10 +50,10 @@ export function setEnvironment(env: SystemEnvironment) {
     config.adminURL = `https://admin.staging.${domain}`;
     config.adminAPI = `https://aapi.staging.${domain}`;
   } else if (env === "production") {
-    config.siteURL = `https://${domain}`;
-    config.siteAPI = `https://api.${domain}`;
-    config.adminURL = `https://admin.${domain}`;
-    config.adminAPI = `https://aapi.${domain}`;
+    config.siteURL = `https://dev.${domain}`;
+    config.siteAPI = `https://api.dev.${domain}`;
+    config.adminURL = `https://admin.dev.${domain}`;
+    config.adminAPI = `https://aapi.dev.${domain}`;
   }
 }
 
