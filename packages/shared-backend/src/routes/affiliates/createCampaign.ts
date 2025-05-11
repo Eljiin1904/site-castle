@@ -5,7 +5,10 @@ import { Site } from "#app/services/site";
 import { UserCampaigns } from "@core/types/users/UserCampaigns";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 
+const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_BACKEND });
 export default Http.createApiRoute({
   type: "post",
   path: "/create-campaign",
@@ -19,6 +22,24 @@ export default Http.createApiRoute({
     const { campaignName, campaignId } = req.body;
 
     await Site.validateToggle("affiliatesEnabled");
+
+    try {
+      const profaneWords = await Site.validateProfanity({ text: campaignName });
+
+      if (profaneWords.length > 0) {
+        logger.warn(`Profane words detected: ${profaneWords}`);
+        const profaneWordsString = profaneWords.join(", ");
+        throw new HandledError(
+          `Unable to create Campaign due to profanity found: ${profaneWordsString} `,
+        );
+      }
+    } catch (err: any) {
+      logger.error(`Unable to create Campaign due to the following error ${err}`);
+      if (err.toString().includes("Unable to create Campaign due to profanity found"))
+        throw new HandledError(err);
+      throw new HandledError("Unable to Create a Campaign at this time");
+    }
+
     const dbCampaignId = campaignId;
     const campaign = await Database.collection("user-campaigns").findOne({
       campaignId: dbCampaignId,

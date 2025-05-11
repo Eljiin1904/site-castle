@@ -7,6 +7,7 @@ import { Site } from "#app/services/site";
 import { Users } from "#app/services/users";
 import { HandledError } from "@server/services/errors";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 
 const rateLimiter = Security.createRateLimiter({
   keyPrefix: "local-register",
@@ -15,6 +16,7 @@ const rateLimiter = Security.createRateLimiter({
   errorMessage: "errors.rateLimit",
 });
 
+const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_BACKEND });
 export default Http.createApiRoute({
   type: "post",
   path: "/local",
@@ -27,16 +29,33 @@ export default Http.createApiRoute({
     referralCode: Validation.string(),
   }),
   callback: async (req, res, next) => {
-    const log = getServerLogger({});
     const { username, email, password, referralCode } = req.body;
-    log.debug("adding new user via email (local)");
+    logger.debug("adding new user via email (local)");
+
+    try {
+      const profaneWords = await Site.validateProfanity({ text: username });
+
+      if (profaneWords.length > 0) {
+        logger.warn(`Profane words detected: ${profaneWords}`);
+        const profaneWordsString = profaneWords.join(", ");
+        throw new HandledError(
+          `Unable to register user due to profanity found: ${profaneWordsString} `,
+        );
+      }
+    } catch (err: any) {
+      logger.error(`Unable to register User due to the following error ${err}`);
+
+      if (err.toString().includes("Unable to register user due to profanity found"))
+        throw new HandledError(err);
+      throw new HandledError("Unable to register user at this time");
+    }
 
     const existingUserByEmail = await Database.collection("users").findOne(
       { email },
       { collation: { locale: "en", strength: 2 } },
     );
     if (existingUserByEmail) {
-      log.error(
+      logger.error(
         "user already linked - email: " + email + " username: " + existingUserByEmail.username,
       );
       throw new HandledError();
@@ -63,8 +82,6 @@ export default Http.createApiRoute({
       password,
       referralCode,
     });
-
-    log.info("username added: " + user.username);
 
     res.json({ user });
   },
