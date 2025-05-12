@@ -22,6 +22,7 @@ async function main() {
   await insertDefault("casesXpRate", 1.0);
   await insertDefault("caseBattlesXpRate", 1.0);
   await insertDefault("doubleXpRate", 1.0);
+  await insertDefault("crashXpRate", 0.6);
   await insertDefault("diceXpRate", 0.6);
   await insertDefault("limboXpRate", 0.6);
   await insertDefault("minesXpRate", 1.5);
