@@ -1,0 +1,26 @@
+{
+  "placeBet": "Apostar",
+  "betPlaced": "Apostado",
+  "cashout": "Retirar",
+  "betBoardHeader": "Apuestas Juego Crash",
+  "bet_zero": "{{count}} Apuesta",
+  "bet_one": "{{count}} Apuesta",
+  "bet_other": "{{count}} Apuestas",
+  "exceedMaxBet": "Excede Máxima Ganancia",
+  "startAutoPlay": "Iniciar Auto Juego",
+  "profitOnWin": "Ganancia en victoria",
+  "stopAutoPlay": "Detener Juego Automático",
+  "autoPlayStopped": "Juego Automático Detenido",
+  "confirmBet": {
+    "title": "Confirmar Apuesta",
+    "message": "Apostar {{value.amount}}?"
+  },
+  "rules": {
+    "title": "Reglas de Crash",
+    "rule1":"El multiplicador mínimo es 1.0105x.",
+    "rule2":"El multiplicador máximo es 9600x.",
+    "rule3": "La ganancia máxima es de {{max}} tokens.",
+    "rule4": "RTP es {{percent}}%.",
+    "rule5": "1.00 tokens apostados = {{exp}} XP."
+  }
+}
