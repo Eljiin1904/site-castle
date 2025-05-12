@@ -1,6 +1,7 @@
 import { TransactionCategory } from "@core/types/transactions/TransactionCategory";
 import { Chests } from "@core/services/chests";
 import { Double } from "@core/services/double";
+import { Crash } from "@core/services/crash";
 import { Limbo } from "@core/services/limbo";
 import { Dice } from "@core/services/dice";
 import { Mines } from "@core/services/mines";
@@ -13,6 +14,8 @@ export function getEdgeRate(category: TransactionCategory) {
       return Chests.edgeRate;
     case "double":
       return Double.edgeRate;
+    case "crash":
+      return Crash.edgeRate;  
     case "dice":
       return Dice.edgeRate;
     case "limbo":
