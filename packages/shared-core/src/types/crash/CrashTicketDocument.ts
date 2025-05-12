@@ -10,14 +10,10 @@ export interface CrashTicketDocument {
   betAmount: number;
   processed?: boolean;
   processedDate?: Date;
-  currentEvent?: string;
-  currentEventDate?: Date;
+  won?: boolean;
+  wonAmount?: number;
+  cashoutTriggered?: boolean;
+  cashoutTriggeredDate?: Date;
+  latency?: number;
+  gameStartTime?: number;
 }
-// Add security and bot detection fields
-// fields like:
-// - ip
-// - userAgent
-// - country
-// - device
-// - os
-// - browser
