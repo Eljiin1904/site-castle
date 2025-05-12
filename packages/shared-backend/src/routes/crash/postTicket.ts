@@ -24,7 +24,6 @@ export default Http.createApiRoute({
     const { roundId, betAmount } = req.body;
     const user = req.user;
 
-
     await Site.validateToggle("crashEnabled");
     await Site.validateConfirmed(user);
     await Site.validateSuspension(user);
