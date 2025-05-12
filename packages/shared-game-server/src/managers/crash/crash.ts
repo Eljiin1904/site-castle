@@ -12,12 +12,13 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 
+const MAX_VALUE_MULTIPLIER = 150;
+
 export default () => System.tryCatch(main)();
 
 async function main() {
   const logger = getServerLogger({});
   logger.info("initializing crash game");
-  console.log("initializing crash game");
   const existing = await Database.collection("crash-rounds").findOne({
     status: { $ne: "completed" },
   });
@@ -47,21 +48,21 @@ async function createRound() {
 
   const serverSeed = Ids.secret();
   const serverSeedHash = Random.hashServerSeed(serverSeed);
+  const gameCreatedDate = new Date();
 
-   const round: CrashRoundDocument = {
+  const round: CrashRoundDocument = {
     _id: roundId,
-    timestamp: new Date(),
+    timestamp: gameCreatedDate,
     serverSeed,
     serverSeedHash,
     status: "waiting",
-    statusDate: new Date(),
-    events: [],
+    statusDate: gameCreatedDate,
+    elapsedTime: 0,
+    multiplier: 0
   };
 
   await Database.collection("crash-rounds").insertOne(round);
-
   await Utility.wait(7000);
-
   await setupRound(round);
 }
 
@@ -87,7 +88,6 @@ async function setupRound(round: CrashRoundDocument) {
   round.eosBlockNum = eosBlockNum;
 
   await Utility.wait(3000);
-
   await startRound(round);
 }
 
@@ -98,11 +98,12 @@ async function startRound(round: CrashRoundDocument) {
 
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
-  const multiplierCrash = Random.getMultiplier({
+  const multiplierCrash =
+  Random.getMultiplier({
     serverSeed: round.serverSeed,
     clientSeed: eosBlockId,
     nonce: round._id,
-    maxValue: 15,
+    maxValue: MAX_VALUE_MULTIPLIER,
   });
 
   const statusDate = new Date();
@@ -113,16 +114,38 @@ async function startRound(round: CrashRoundDocument) {
       $set: {
         status: "simulating",
         statusDate,
-        multiplierCrash,
-        eosBlockId,
+        startDate: statusDate
       },
     },
   );
+ 
+  const roundTime = Math.log(multiplierCrash/1.0024)/Math.log(1.0718)*1000;
+  console.log("roundTime for current Round ", multiplierCrash);
+  
+  const intervalId = setInterval(() => {
+  
+    const currentTime = new Date();
+    const timer = currentTime.getTime() - statusDate.getTime();
+    const currentMultiplier = 1.0024 * Math.pow(1.0718, timer / 1000);
+    if(currentMultiplier >= multiplierCrash) {
+      clearInterval(intervalId);
+      return;
+    }
+    Database.collection("crash-rounds").updateOne(
+      { _id: round._id },
+      {
+        $set: {
+          multiplier:currentMultiplier,
+          elapsedTime: timer,
+          statusDate: currentTime,
+        },
+      },
+    );
+  }, 100);
 
-  const roundTime = 1.0024 * Math.pow(1.0718, multiplierCrash);
-  console.log("roundTime", roundTime, multiplierCrash);
   await Utility.wait(roundTime);
-
+  clearInterval(intervalId);
+  
   await completeRound({
     ...round,
     status: "simulating",
@@ -138,25 +161,25 @@ async function completeRound(round: CrashRoundDocument) {
   }
 
   const statusDate = new Date();
-
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
       $set: {
         status: "completed",
         statusDate,
+        completedDate: statusDate,
+        multiplierCrash: round.multiplierCrash
       },
     },
   );
-
+  await Utility.wait(1000);
   System.tryCatch(processTickets)({
     ...round,
     status: "completed",
     statusDate,
   });
-  
-  await Utility.wait(5000);
 
+  await Utility.wait(5000);
   await createRound();
 }
 
@@ -165,7 +188,7 @@ async function processTickets(round: CrashRoundDocument) {
     return;
   }
 
-  const cursor = Database.collection("double-tickets").find({
+  const cursor = Database.collection("crash-tickets").find({
     roundId: round._id,
     processed: { $exists: false },
   });
@@ -184,7 +207,7 @@ async function processTicket({
 }) {
   const multiplierCrash = round.multiplierCrash;
   const betMultiplier = ticket.multiplierCrashed ?? 0;
-  const won = betMultiplier >= multiplierCrash;
+  const won = ticket.cashoutTriggered ? betMultiplier > 1 && betMultiplier <= multiplierCrash : false;
   
   const wonAmount = won ? Math.round(ticket.betAmount * betMultiplier) : 0;
 
