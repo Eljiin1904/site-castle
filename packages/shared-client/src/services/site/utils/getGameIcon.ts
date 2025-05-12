@@ -20,5 +20,7 @@ export function getGameIcon(game: SiteGame): Svg {
       return SvgMultiplier;
     case "mines":
       return SvgBomb;
+    case "crash":
+      return SvgBomb;
   }
 }
