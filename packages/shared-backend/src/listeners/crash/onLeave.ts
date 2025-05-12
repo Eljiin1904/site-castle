@@ -6,5 +6,6 @@ export default Sockets.createListener({
   secure: false,
   callback: async (io, socket) => {
     socket.leave("crash");
+    socket.leave(`crash_${socket.data.userId}`);
   },
 });

@@ -12,12 +12,11 @@ export default Sockets.createListener({
   secure: false,
   callback: async (io, socket) => {
     logger.info("creating crash listener");
-    console.log("creating crash listener");
     socket.join("crash");
-
+    socket.join(`crash_${socket.data.userId}`);
+    
     try {
       logger.info("attaching to database round and ticket streams");
-      console.log("attaching to database round and ticket streams");
       await roundStream.waitForInit();
       await ticketStream.waitForInit();
       logger.info("database round and ticket streams attached");
@@ -26,15 +25,19 @@ export default Sockets.createListener({
     }
 
     const activeRound = roundStream.log[0];
+    const userId = socket.data.userId;
 
+    if(!userId)
+      return;
+    
     socket.emit("crash-init", {
       round: {
         ...activeRound,
         serverSeed: "",
+        serverSeedHash: "",
       },
       history: roundStream.log.slice(1).map((x) => {
         logger.debug("crash round completed");
-        console.log("crash round completed");
         const round = x as CrashRoundDocument & { status: "completed" };
         return round.multiplierCrash;
       }),
