@@ -2,7 +2,7 @@ FROM node:23-alpine AS build
 ENV NODE_ENV=devcloud
 
 # Define BUILD_ENV as an argument that can be passed during docker build
-ARG BUILD_ENV=development # Or use 'devcloud' as default if that's more appropriate here
+ARG BUILD_ENV=development 
 # Set VITE_BUILD_ENV environment variable from the BUILD_ENV build argument
 ENV VITE_BUILD_ENV=$BUILD_ENV
 
