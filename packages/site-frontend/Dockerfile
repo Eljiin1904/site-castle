@@ -16,7 +16,7 @@ COPY ./tsconfig.base.json ./
 COPY scripts /pidwin/scripts 
 COPY packages/shared-core /pidwin/packages/shared-core
 COPY packages/shared-client /pidwin/packages/shared-client
-COPY packages/site-frontend /pidwin/packages/site-frontend 
+COPY packages/site-frontend/ /pidwin/packages/site-frontend/
 RUN npm run build-site-frontend
 
 # Stage 2: Production image using NGINX to serve the built static assets
