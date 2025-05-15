@@ -105,12 +105,9 @@ jobs:
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
       - name: Build Docker image using cache
-        env:
-          # Make sure APP_BUILD_ENV is defined in your GitHub Environment settings
-          # e.g., for 'dev' GitHub Environment, set APP_BUILD_ENV = devcloud
-          ACTUAL_BUILD_ENV: ${{ vars.APP_BUILD_ENV }}
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+<<<<<<< HEAD
 <<<<<<< HEAD
           echo "Building site-frontend with generic BUILD_ENV=production for Vite optimizations."
           docker build \
@@ -120,6 +117,11 @@ jobs:
           docker build \
             --build-arg BUILD_ENV=$ACTUAL_BUILD_ENV \
 >>>>>>> 3e18454 (vite fix)
+=======
+          echo "Building site-frontend with generic BUILD_ENV=production for Vite optimizations."
+          docker build \
+            --build-arg BUILD_ENV=production \
+>>>>>>> 7b87b16 (vite fix)
             --cache-from ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest \
             -t pidwin/castle-frontend \
             -f ./packages/site-frontend/Dockerfile .
