@@ -45,6 +45,8 @@ spec:
               value: {{ .Values.environment }}
             - name: env
               value: {{ .Values.environment }}
+            - name: BUILD_ENV
+              value: {{ .Values.environment }}
           {{- if .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
