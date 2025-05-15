@@ -42,4 +42,6 @@ if (config.env === "development" || config.env === "devcloud") {
     "BJWirlm9gty64bCzIjWOSHhZPCLAmUyaroN9kf6H1ptm50qUwpOZZQIqqnPCNctAoNASvJFeaH6C740P2Y0x8J0";
 }
 
+console.log("[Site Frontend Config] Final initialized config:", JSON.parse(JSON.stringify(config)));
+
 export default config as Readonly<SiteFrontendConfig>;
