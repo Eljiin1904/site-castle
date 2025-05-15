@@ -52,10 +52,15 @@ jobs:
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
       - name: Build and tag Docker image
+        env:
+          # Make sure APP_BUILD_ENV is defined in your GitHub Environment settings
+          # e.g., for 'dev' GitHub Environment, set APP_BUILD_ENV = devcloud
+          ACTUAL_BUILD_ENV: ${{ vars.APP_BUILD_ENV }}
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          echo "Using BUILD_ENV for shared-admin-frontend: $ACTUAL_BUILD_ENV"
           # Build the Docker image from the frontend Dockerfile
-          docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
+          docker build --build-arg BUILD_ENV=$ACTUAL_BUILD_ENV -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
           # Tag the image with the generated version tag
           docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:$IMAGE_TAG
           # Optionally, tag it as 'latest' for fallback purposes
