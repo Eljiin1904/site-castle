@@ -62,6 +62,7 @@ import { SiteGameDisplayDocument } from "../site/SiteGameDisplayDocument";
 import { SiteJackPotDocument } from "../site/SiteJackpotDocument";
 import { MinesGameDocument } from "../mines/MinesGameDocument";
 import { MinesEventDocument } from "../mines/MinesEventDocument";
+import { CrashRecordDocument } from "../crash/CrashRecord";
 
 export interface DatabaseCollections {
   ["admin-log"]: AdminLogDocument;
@@ -79,6 +80,7 @@ export interface DatabaseCollections {
   ["chest-games"]: ChestGameDocument;
   ["chest-reports"]: ChestReportDocument;
   ["chests"]: ChestDocument;
+  ["crash-records"]: CrashRecordDocument;
   ["crypto-quotes"]: CryptoQuoteDocument;
   ["crypto-rates"]: CryptoRateDocument;
   ["crypto-sweeps"]: CryptoSweepDocument;
