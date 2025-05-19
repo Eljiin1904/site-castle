@@ -1,0 +1,110 @@
+@use "sass:color";
+@use "./BlackjackButton.scss";
+
+// ChipPlacements height is dynamic
+// could calculate it here but hardcoding even though I shouldn't
+$shelfHeight: 110px;
+$shelfAnimTime: 0.5s;
+
+$bg: color.adjust(BlackjackButton.$bg, $lightness: -7%);
+$darkBg: color.adjust(BlackjackButton.$darkBg, $lightness: -15%);
+
+
+.BlackjackMobileShelf {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	// left: 50%;
+	// transform: translateX(-50%);
+
+
+	.shelf-button-wrap {
+		display: flex;
+		justify-content: center;
+	}
+	.shelf-button {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: $bg;
+		padding: 25px 10px 13px;
+		border-radius: 1000% 1000% 0 0;
+		transform: translateY(9px);
+
+		// border-top: solid 4px #0008;
+		// border-left: solid 4px #0008;
+		box-shadow: inset 3px 10px 5px -5px rgba(0, 0, 0, 1);
+
+		cursor: pointer;
+
+		img {
+			position: absolute;
+			top: 10px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 12px;
+			height: 12px;
+		}
+		span {
+			color: #fff;
+			font-size: 0.6rem;
+			font-weight: 100;
+			letter-spacing: 0.05rem;
+			text-transform: uppercase;
+		}
+	}
+	.shelf {
+		background-color: $bg;
+		height: $shelfHeight;
+		// border-top: solid 4px #0008;
+		box-shadow: inset 0px 10px 5px -5px rgba(0, 0, 0, 1);
+	}
+}
+
+
+// dark
+.BlackjackPage .dark .BlackjackMobileShelf {
+	.shelf-button {
+		background-color: $darkBg;
+	}
+	.shelf {
+		background-color: $darkBg;
+	}
+}
+
+
+
+
+// pre-transition
+.BlackjackMobileShelf {
+	transition: transform $shelfAnimTime, opacity 0.5s;
+}
+
+.BlackjackPage .game-not-started .BlackjackMobileShelf {
+	opacity: 0;
+}
+
+// close shelf
+.BlackjackPage .shelf-closed .BlackjackMobileShelf {
+	transform: translateY($shelfHeight);
+
+}
+.BlackjackPage .shelf-open .BlackjackMobileShelf {
+	img {
+		transform: rotate(180deg) translateX(50%);
+	}
+}
+
+// no centralized vars file
+.BlackjackMobileShelf {
+	display: none;
+}
+// @media (max-width: 1024px) {
+
+.AppMain.tablet, .AppMain.mobile {
+	.BlackjackMobileShelf {
+		display: block;
+	}
+}

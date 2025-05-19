@@ -1,0 +1,127 @@
+
+.BlackjackChip {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+
+	picture, img {
+		width: 100%;
+		height: 100%;
+	}
+	img {
+		object-fit: contain;
+		object-position: 50% 50%;
+	}
+	.text {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -55%);
+
+		font-family: var(--title-family);
+		font-size: 1.3rem;
+		// letter-spacing: -0.05rem;
+		font-weight: 900;
+		text-shadow: 0 0 2px #fff;
+	}
+
+	&.chip-0-1 div.text {
+		color: #4F4F4F;
+	}
+	&.chip-1 div.text {
+		color: #0073A8;
+	}
+	&.chip-5 div.text {
+		color: #295518;
+	}
+	&.chip-25 div.text {
+		color: #95591C;
+	}
+	&.chip-100 div.text {
+		color: #802F2F;
+	}
+	&.chip-1000 div.text {
+		color: #333882;
+	}
+
+	&.char-len-1 div.text {
+		font-size: 1.2rem;
+	}
+	&.char-len-2 div.text {
+		font-size: 1.2rem;
+	}
+	&.char-len-3 div.text {
+		font-size: 1.10rem;
+	}
+	&.char-len-4 div.text {
+		font-size: 1.20rem;
+	}
+	&.char-len-5 div.text {
+		font-size: 1.00rem;
+	}
+	&.char-len-6 div.text {
+		font-size: 1.00rem;
+	}
+	&.char-len-7 div.text {
+		font-size: 1.00rem;
+	}
+}
+
+.BlackjackPlacement {
+	&:nth-of-type(2), &:nth-of-type(3), &:nth-of-type(4), &:nth-of-type(5) {
+
+		.BlackjackChip  {
+			&.char-len-1 div.text {
+				font-size: 1.2rem;
+			}
+			&.char-len-2 div.text {
+				font-size: 1.1rem;
+			}
+			&.char-len-3 div.text {
+				font-size: 1.00rem;
+			}
+			&.char-len-4 div.text {
+				font-size: 0.90rem;
+			}
+			&.char-len-5 div.text {
+				font-size: 0.90rem;
+			}
+			&.char-len-6 div.text {
+				font-size: 0.80rem;
+			}
+			&.char-len-7 div.text {
+				font-size: 0.80rem;
+			}
+		}
+	}
+}
+
+.AppMain.mobile {
+	.BlackjackChipOptions {
+
+		.BlackjackChip  {
+			&.char-len-1 div.text {
+				font-size: 1.2rem;
+			}
+			&.char-len-2 div.text {
+				font-size: 1.1rem;
+			}
+			&.char-len-3 div.text {
+				font-size: 1.0rem;
+			}
+			&.char-len-4 div.text {
+				font-size: 0.9rem;
+			}
+			&.char-len-5 div.text {
+				font-size: 0.9rem;
+			}
+			&.char-len-6 div.text {
+				font-size: 0.8rem;
+			}
+			&.char-len-7 div.text {
+				font-size: 0.8rem;
+			}
+		}
+	}
+}

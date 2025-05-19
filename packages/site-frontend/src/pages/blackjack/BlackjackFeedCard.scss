@@ -1,0 +1,151 @@
+.BlackjackPage {
+  .AppMain.mobile & {
+    --slide-width: calc((100% / 3) - (2px * 2 / 3));
+  }
+  .AppMain.tablet & {
+    --slide-width: calc((100% / 5) - (2px * 4 / 5));
+  }
+  .AppMain.laptop & {
+    --slide-width: calc((100% / 8) - (2px * 7 / 8));
+  }
+  .AppMain.desktop & {
+    --slide-width: calc((100% / 8) - (2px * 7 / 8));
+  }
+}
+
+.BlackjackPage .BlackjackFeedCardPlaceholder {
+  min-width: var(--slide-width);
+  height: 100%;
+}
+
+.BlackjackPage .BlackjackFeedCard {
+  left: calc(var(--slide-width) * -1);
+  width: var(--slide-width);
+  height: 100%;
+  transition: left ease 250ms;
+  background-color: var(--gray-6-color);
+
+  &:nth-child(1) {
+    left: 0;
+    &.inserted {
+      animation: BlackjackFeedCard-first 250ms ease;
+    }
+  }
+  &:nth-child(2) {
+    left: calc(var(--slide-width) * 1 + 2px * 1);
+  }
+  &:nth-child(3) {
+    left: calc(var(--slide-width) * 2 + 2px * 2);
+  }
+  &:nth-child(4) {
+    left: calc(var(--slide-width) * 3 + 2px * 3);
+  }
+  &:nth-child(5) {
+    left: calc(var(--slide-width) * 4 + 2px * 4);
+  }
+  &:nth-child(6) {
+    left: calc(var(--slide-width) * 5 + 2px * 5);
+  }
+  &:nth-child(7) {
+    left: calc(var(--slide-width) * 6 + 2px * 6);
+  }
+  &:nth-child(8) {
+    left: calc(var(--slide-width) * 7 + 2px * 7);
+  }
+  &:nth-child(9) {
+    left: calc(var(--slide-width) * 8 + 2px * 8);
+  }
+  &:nth-child(10) {
+    left: calc(var(--slide-width) * 9 + 2px * 9);
+  }
+
+  &.lost {
+    border-color: rgb(140, 151, 182);
+    background-image: linear-gradient(to bottom, rgb(140, 151, 182, 0.05), rgb(140, 151, 182, 0.1));
+  }
+  &.won {
+    border-color: rgb(0, 161, 67);
+    background-image: linear-gradient(to bottom, rgb(0, 161, 67, 0.05), rgb(0, 161, 67, 0.1));
+  }
+
+  .BlackjackFeedCard__img {
+    width: 100%;
+    height: 70px;
+    object-fit: contain;
+    object-position: 50% 50%;
+  }
+
+  .sep {
+    flex: 0 0 auto;
+    width: 100%;
+    background: linear-gradient(90deg, #fff0 0%, #fff3 50%, #fff0 100%);
+    height: 1px;
+    margin: 5px 0;
+  }
+
+  .Footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    .sidebet {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .main-bet {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      // width: 100%;
+      gap: 10px;
+    }
+    .hand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top {
+      font-size: 0.9rem;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .vs {
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .label {
+      font-size: 0.6rem;
+      color: #fffa;
+    }
+  }
+  &.won {
+    .Footer {
+      .sidebet {
+        color: #fffa;
+        // text-shadow: 0 0 3px #D4FFE5;
+
+      }
+    }
+  }
+  &.lost {
+    .Footer {
+      .sidebet {
+        color: #fff5;
+      }
+    }
+  }
+}
+
+@keyframes BlackjackFeedCard-first {
+  0% {
+    left: calc(var(--slide-width) * -1 - 2px * 1);
+  }
+  100% {
+    left: 0;
+  }
+}

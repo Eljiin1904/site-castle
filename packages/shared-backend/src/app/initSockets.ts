@@ -54,6 +54,8 @@ export function initSockets(httpServer: HttpServer) {
     logger.info("limbo socket active");
     Listeners.mines(io);
     logger.info("mines socket active");
+    Listeners.blackjack(io);
+    logger.info("blackjack socket active");
     Listeners.notifications(io);
     logger.info("notifications socket active");
     Listeners.site(io);

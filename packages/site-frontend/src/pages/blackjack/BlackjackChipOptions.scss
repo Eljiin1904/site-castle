@@ -1,0 +1,16 @@
+.BlackjackChipOptions {
+	display: flex;
+	// gap: 10px;
+	background-color: rgba(#000, 0.3);
+	padding: 10px;
+	border-radius: 100px;
+
+	// skipping width 100% on parent
+	width: 95%;
+	max-width: 420px;
+
+	.BlackjackChip .text {
+		font-size: 1.1rem;
+	}
+}
+

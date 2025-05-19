@@ -1,0 +1,66 @@
+@use "./BlackjackMobileShelf.scss";
+
+$gap: 7px;
+
+$moveDelay: 0.25s; // copy paste from Placement
+$moveTime: 0.5s;
+
+$desktopWidth: 400px;
+
+.BlackjackChipPlacements {
+	position: absolute;
+	// gap: $gap;
+	width: 400px;
+	// background: red;
+
+	.ChipPlacements_inner {
+		display: flex;
+		align-items: flex-end;
+	}
+}
+
+
+// pre-transition
+.BlackjackChipPlacements {
+	bottom: 380px;
+	left: 50%;
+	transform: translateX(-50%);
+
+	transition: bottom $moveTime, left $moveTime, transform $moveTime, width $moveTime;
+}
+
+// transition
+.BlackjackPage .game-started .BlackjackChipPlacements {
+	left: 3%;
+	bottom: 10%;
+	transform: translateX(0);
+	transition-delay: $moveDelay;
+	user-select: none;
+	width: 350px;
+}
+
+
+.AppMain.tablet, .AppMain.mobile {
+	$width: 300px;
+
+	.BlackjackPage .game-started .BlackjackChipPlacements {
+		width: $width;
+		left: 50%;
+
+		// skipping padBottom on .ChipPlacements, doing this instead
+		bottom: 40px; // info is absolute
+		transform: translateX(-50%);
+
+		.ChipPlacements_inner {
+			transition: transform BlackjackMobileShelf.$shelfAnimTime;
+		}
+	}
+
+	.BlackjackPage .game-started.shelf-closed .BlackjackChipPlacements {
+		.ChipPlacements_inner {
+			opacity: 0;
+			transition: transform BlackjackMobileShelf.$shelfAnimTime, opacity 1s;
+			transform: translateY(BlackjackMobileShelf.$shelfHeight);
+		}
+	}
+}

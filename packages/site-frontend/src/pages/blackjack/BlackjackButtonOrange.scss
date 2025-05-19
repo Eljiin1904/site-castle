@@ -1,0 +1,35 @@
+@use "sass:color";
+$orange1: #FEC84B;
+$orange2: #FDB022;
+$secondary: color.adjust(#2C303F, $lightness: -15%);
+
+.BlackjackPage div.BlackjackButtonOrange {
+	border: 1px solid #FDB022;
+	background: linear-gradient(0deg, $orange1 0%, $orange2 100%);
+	color: #000;
+	// font: 600 0.9rem Arial, sans-serif;
+	font-weight: 600;
+	font-size: 0.9rem;
+	width: 180px;
+	padding: 8px 0;
+	text-align: center;
+	box-sizing: border-box;
+	color: #000;
+
+	cursor: pointer;
+	transition: box-shadow 1s;
+	&:hover {
+		box-shadow: 0px 0px 20px $orange2;
+	}
+
+	&.secondary {
+		border-color: #fff4;
+		background: linear-gradient(0deg, $secondary 0%, $secondary 100%);
+		// border-color: $secondary;
+		color: #fff;
+	}
+	&.disabled {
+		opacity: 0.5;
+		cursor: default;
+	}
+}

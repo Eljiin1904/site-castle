@@ -69,6 +69,11 @@ interface FeatureToggles {
   doubleEnabled: boolean;
   limboEnabled: boolean;
   minesEnabled: boolean;
+  blackjackEnabled: boolean;
+  blackjackLuckyLadiesEnabled: boolean;
+  blackjackBlackjack15xEnabled: boolean;
+  blackjackPerfectPairsEnabled: boolean;
+  blackjack213Enabled: boolean;
 }
 
 interface ThresholdSettings {

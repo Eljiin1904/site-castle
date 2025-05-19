@@ -1,0 +1,17 @@
+
+.BlackjackChipButtons {
+	align-content: center;
+	align-items: center;
+	height: 100px;
+
+	// already has padding on parent
+	// maps to Actions.scss
+	// padding: 0 10%;
+}
+
+.BlackjackChipButtons, .BlackjackChipButtons .ChipButtons_row {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}

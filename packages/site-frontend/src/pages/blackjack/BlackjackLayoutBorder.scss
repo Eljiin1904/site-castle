@@ -1,0 +1,59 @@
+
+$color: #7D7100;
+$darkColor: #383D51;
+$pad: 20px;
+
+.BlackjackLayoutBorder {
+	position: absolute;
+	top: 0; left: 0; width: 100%; height: 100%;
+	padding: $pad;
+	box-sizing: border-box;
+
+	.inner-border, .box {
+		border-color: $color;
+	}
+
+	.inner-border {
+		position: absolute;
+		top: $pad; left: $pad; right: $pad; bottom: $pad;
+		border: solid $color 1px;
+		box-sizing: border-box;
+	}
+
+	.box {
+		position: absolute;
+		width: $pad * 2;
+		height: $pad * 2;
+		border: solid $color 1px;
+	}
+	.top-left-box {
+		top: 0;
+		left: 0;
+		border-top: 0 none;
+		border-left: 0 none;
+	}
+	.top-right-box {
+		top: 0;
+		right: 0;
+		border-top: 0 none;
+		border-right: 0 none;
+	}
+	.bottom-left-box {
+		bottom: 0;
+		left: 0;
+		border-bottom: 0 none;
+		border-left: 0 none;
+	}
+	.bottom-right-box {
+		bottom: 0;
+		right: 0;
+		border-bottom: 0 none;
+		border-right: 0 none;
+	}
+}
+
+.BlackjackPage .dark .BlackjackLayoutBorder {
+	.inner-border, .box {
+		border-color: $darkColor;
+	}
+}

@@ -1,0 +1,29 @@
+
+$bottomPad: 80px;
+
+.BlackjackView {
+	position: relative;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+
+	.View_inner {
+		position: relative;
+	}
+
+	span {
+		color: #fff;
+	}
+
+	&:focus {
+		outline: none !important;
+	}
+}
+
+
+
+.AppMain.tablet, .AppMain.mobile {
+	.View_inner {
+		// connected to GameOverlay.scss
+		padding-bottom: $bottomPad;
+	}
+}

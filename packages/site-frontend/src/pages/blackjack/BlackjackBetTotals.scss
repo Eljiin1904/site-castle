@@ -1,0 +1,112 @@
+
+
+.BlackjackBetTotals {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	justify-content: center;
+}
+
+.MainBetTotals {
+	text-wrap: nowrap;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	justify-content: center;
+
+	.Item {
+		display: flex;
+		font-weight: 500;
+		font-size: 0.9rem;
+		letter-spacing: 0.02rem;
+
+		.label {
+			width: 90px;
+		}
+		.value {
+			color: #fff8;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+
+		}
+		svg {
+			// color: #FFEA94;
+			width: 13px;
+			height: 13px;
+		}
+		.text {
+
+		}
+	}
+
+	.sep {
+		display: none;
+		// flex: 0 0 auto;
+	}
+}
+
+
+// @media (max-width: 1024px) {
+.AppMain.tablet, .AppMain.mobile {
+	.BlackjackBetTotals {
+		display: block;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+
+	.game-not-started .MainBetTotals {
+		opacity: 0;
+	}
+	.shelf-open .MainBetTotals {
+		opacity: 0;
+	}
+
+	.MainBetTotals {
+		position: absolute;
+		// display: none;
+		left: 50%;
+		bottom: 50px;
+		transform: translateX(-50%);
+		flex-direction: row;
+		opacity: 1;
+		border-top: solid 1px #fff3;
+		padding: 10px 20px 0;
+
+		transition: 0.5s;
+
+		.sep {
+			display: block;
+			height: 50px; // hardcoding sorry
+			width: 1px;
+			background-color: #fff3;
+		}
+
+		.Item {
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+			font-size: 0.9rem;
+
+			// overriding Chicken presets
+			.label, .value .text {
+				color: #fff;
+			}
+
+			.label {
+				text-align: center;
+			}
+
+			.value {
+
+			}
+		}
+	}
+}

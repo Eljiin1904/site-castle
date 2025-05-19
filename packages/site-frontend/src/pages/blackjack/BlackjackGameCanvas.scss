@@ -1,0 +1,33 @@
+// $minWidth: 580px;
+$minWidth: 500px;
+$maxWidth: 700px;
+
+.BlackjackGameCanvas {
+	overflow: hidden;
+	// position: relative;
+
+	#blackjack-game {
+		position: relative;
+
+		left: 50%;
+		transform: translateX(-50%);
+		aspect-ratio: 1;
+
+		min-width: $minWidth;
+		max-width: $maxWidth;
+
+		// crop canvas
+		overflow: hidden;
+	}
+
+
+	canvas {
+		// border: solid rgba(#fff, 0.2) 1px;
+		position: absolute;
+		top: 0;
+		height: 100%;
+
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
