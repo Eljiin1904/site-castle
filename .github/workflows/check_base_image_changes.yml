@@ -24,8 +24,6 @@ on:
         required: false
       ARGOCD_PASSWORD:
         required: false
-      GITHUB_TOKEN:
-        required: false
 
 jobs:
   check-base-image-changes:

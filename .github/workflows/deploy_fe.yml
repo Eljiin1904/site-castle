@@ -25,7 +25,7 @@ jobs:
       - name: Check if base image is building
         id: check-status
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           # Check if the base image check workflow indicated a build is happening
           if [[ "${{ needs.check-base-image.outputs.base_image_building }}" == "true" ]]; then
@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Wait for base image build to complete
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           echo "Waiting for base image build to complete..."
           # Loop until no more base image builds are in progress
