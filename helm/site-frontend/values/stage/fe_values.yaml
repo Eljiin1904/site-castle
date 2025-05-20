@@ -8,6 +8,14 @@ image:
     pullPolicy: Always
     tag: "latest"
 
+runtimeConfig:
+  appEnvName: "staging"
+  siteUrl: "https://staging.brickrax.com"
+  siteApi: "https://api.staging.brickrax.com"
+  adminUrl: "https://admin.staging.brickrax.com"
+  adminApi: "https://aapi.staging.brickrax.com"
+  staticUrl: "https://font.brickrax.com"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
