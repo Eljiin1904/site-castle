@@ -1,0 +1,103 @@
+name: Check Base Image Changes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      PIDWIN_READ_ONLY_PAT:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+
+jobs:
+  check-base-image-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      base_image_changed: ${{ steps.check-changes.outputs.base_image_changed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          submodules: 'true'
+          token: ${{ secrets.PIDWIN_READ_ONLY_PAT }}
+      
+      - name: Check for changes in base image components
+        id: check-changes
+        run: |
+          # Get changed files
+          if [[ "${{ github.event_name }}" == "push" || "${{ github.event_name }}" == "pull_request" ]]; then
+            if [[ "${{ github.event_name }}" == "push" ]]; then
+              CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+            elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+            fi
+
+            # Define base image components to check
+            BASE_IMAGE_PATTERNS=(
+              "packages/shared-core/"
+              "packages/shared-client/"
+              "packages/shared-server/"
+              "packages/shared-backend/shared-core/"
+              "packages/shared-backend/shared-client/"
+              "packages/shared-backend/shared-server/"
+              "package.json"
+              "package-lock.json"
+              "scripts/init.js"
+              "Dockerfile"
+              ".github/workflows/build_base_image.yml"
+              "tsconfig.base.json"
+              "tsconfig.json"
+              ".eslintrc.js"
+            )
+
+            # Check if any of the base image components have changed
+            BASE_IMAGE_CHANGED=false
+            
+            # Check if any changes are in service directories
+            SERVICE_CHANGE=false
+            
+            for FILE in $CHANGED_FILES; do
+              # Check if the change is in a service directory
+              if [[ $FILE == packages/* && ! ($FILE == packages/shared-core/* || $FILE == packages/shared-client/* || $FILE == packages/shared-server/* || $FILE == packages/shared-backend/shared-core/* || $FILE == packages/shared-backend/shared-client/* || $FILE == packages/shared-backend/shared-server/*) ]]; then
+                SERVICE_CHANGE=true
+              fi
+              
+              # Check if the change affects base image components
+              for PATTERN in "${BASE_IMAGE_PATTERNS[@]}"; do
+                if [[ $FILE == $PATTERN* ]]; then
+                  BASE_IMAGE_CHANGED=true
+                  echo "Base image component changed: $FILE"
+                  break
+                fi
+              done
+            done
+            
+            # Set output based on the check
+            if [[ "$BASE_IMAGE_CHANGED" == "true" ]]; then
+              echo "base_image_changed=true" >> $GITHUB_OUTPUT
+              echo "Base image components have changed. Base image build will be triggered."
+            else
+              echo "base_image_changed=false" >> $GITHUB_OUTPUT
+              echo "No base image components have changed. Skipping base image build."
+            fi
+          else
+            # For workflow_dispatch or workflow_call events, don't trigger base image build by default
+            # This is to avoid rebuilding base image when service-specific workflows call this workflow
+            echo "base_image_changed=false" >> $GITHUB_OUTPUT
+            echo "Workflow was called by another workflow or triggered manually. Not triggering base image build by default."
+          fi
+
+  trigger-base-image-build:
+    needs: check-base-image-changes
+    if: needs.check-base-image-changes.outputs.base_image_changed == 'true'
+    uses: ./.github/workflows/build_base_image.yml
+    secrets: inherit 

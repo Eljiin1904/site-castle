@@ -2,14 +2,22 @@ name: Castle Base Image CI
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main 
     paths:
-      - "packages/shared-backend/shared-core/**"
-      - "packages/shared-backend/shared-client/**"
-      - "packages/shared-backend/shared-server/**"
+      - "packages/shared-core/**"
+      - "packages/shared-client/**"
+      - "packages/shared-server/**"
+      - "package.json"
+      - "package-lock.json"
+      - "scripts/init.js"
+      - "Dockerfile"
       - ".github/workflows/build_base_image.yml"
+      - "tsconfig.base.json"
+      - "tsconfig.json"
+      - ".eslintrc.js"
 
 jobs:
   build-and-push-base-image:
