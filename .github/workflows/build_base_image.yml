@@ -18,6 +18,8 @@ on:
         required: false
       ARGOCD_PASSWORD:
         required: false
+      GITHUB_TOKEN:
+        required: false
   push:
     branches:
       - main 

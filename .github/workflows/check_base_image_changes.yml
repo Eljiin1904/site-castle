@@ -24,12 +24,15 @@ on:
         required: false
       ARGOCD_PASSWORD:
         required: false
+      GITHUB_TOKEN:
+        required: false
 
 jobs:
   check-base-image-changes:
     runs-on: ubuntu-latest
     outputs:
       base_image_changed: ${{ steps.check-changes.outputs.base_image_changed }}
+      base_image_building: ${{ steps.check-changes.outputs.base_image_building }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -92,15 +95,20 @@ jobs:
             # Set output based on the check
             if [[ "$BASE_IMAGE_CHANGED" == "true" ]]; then
               echo "base_image_changed=true" >> $GITHUB_OUTPUT
+              echo "base_image_building=true" >> $GITHUB_OUTPUT
               echo "Base image components have changed. Base image build will be triggered."
             else
               echo "base_image_changed=false" >> $GITHUB_OUTPUT
+              echo "base_image_building=false" >> $GITHUB_OUTPUT
               echo "No base image components have changed. Skipping base image build."
             fi
           else
-            # For workflow_dispatch or workflow_call events, don't trigger base image build by default
-            # This is to avoid rebuilding base image when service-specific workflows call this workflow
+            # For workflow_dispatch or workflow_call events, check if there's a concurrent base image build
+            # Check recent workflow runs for the build_base_image workflow
             echo "base_image_changed=false" >> $GITHUB_OUTPUT
+            # Set this based on if the workflow is currently triggered from elsewhere
+            # This will be used by service workflows to determine whether to wait
+            echo "base_image_building=false" >> $GITHUB_OUTPUT
             echo "Workflow was called by another workflow or triggered manually. Not triggering base image build by default."
           fi
 
