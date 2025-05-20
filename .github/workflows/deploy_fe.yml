@@ -107,21 +107,9 @@ jobs:
       - name: Build Docker image using cache
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
-<<<<<<< HEAD
-<<<<<<< HEAD
           echo "Building site-frontend with generic BUILD_ENV=production for Vite optimizations."
           docker build \
             --build-arg BUILD_ENV=production \
-=======
-          echo "Using BUILD_ENV for site-frontend: $ACTUAL_BUILD_ENV"
-          docker build \
-            --build-arg BUILD_ENV=$ACTUAL_BUILD_ENV \
->>>>>>> 3e18454 (vite fix)
-=======
-          echo "Building site-frontend with generic BUILD_ENV=production for Vite optimizations."
-          docker build \
-            --build-arg BUILD_ENV=production \
->>>>>>> 7b87b16 (vite fix)
             --cache-from ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-frontend:latest \
             -t pidwin/castle-frontend \
             -f ./packages/site-frontend/Dockerfile .
