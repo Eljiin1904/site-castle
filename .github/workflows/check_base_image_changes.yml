@@ -16,6 +16,14 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      ARGOCD_SERVER:
+        required: false
+      ARGOCD_SERVER_STAGE:
+        required: false
+      ARGOCD_USERNAME:
+        required: false
+      ARGOCD_PASSWORD:
+        required: false
 
 jobs:
   check-base-image-changes:

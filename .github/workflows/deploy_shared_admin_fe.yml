@@ -11,7 +11,13 @@ on:
       - ".github/workflows/deploy_shared_admin_fe.yml"
 
 jobs:
+  check-base-image:
+    uses: ./.github/workflows/check_base_image_changes.yml
+    secrets: inherit
+
   build-and-push-shared-admin-frontend:
+    needs: check-base-image
+    if: ${{ !failure() }}
     runs-on: ubuntu-latest
     environment: dev
     outputs:
@@ -70,6 +76,7 @@ jobs:
 
   update-argocd-dev:
     needs: build-and-push-shared-admin-frontend
+    if: ${{ !failure() }}
     environment: dev
     runs-on: ubuntu-latest
     steps:
@@ -85,6 +92,7 @@ jobs:
 
   update-argocd-stage:
     needs: build-and-push-shared-admin-frontend
+    if: ${{ !failure() }}
     environment: stage
     runs-on: ubuntu-latest
     steps:
