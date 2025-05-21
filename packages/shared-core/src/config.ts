@@ -47,10 +47,10 @@ export function setEnvironment(env: SystemEnvironment) {
     config.adminURL = `https://admin.dev.${domain}`;
     config.adminAPI = `https://aapi.dev.${domain}`;
   } else if (env === "staging") {
-    config.siteURL = `https://staging.${domain}`;
-    config.siteAPI = `https://api.staging.${domain}`;
-    config.adminURL = `https://admin.staging.${domain}`;
-    config.adminAPI = `https://aapi.staging.${domain}`;
+    config.siteURL = `https://stage.${domain}`;
+    config.siteAPI = `https://api.stage.${domain}`;
+    config.adminURL = `https://admin.stage.${domain}`;
+    config.adminAPI = `https://aapi.stage.${domain}`;
   } else if (env === "production") {
     config.siteURL = `https://${domain}`;
     config.siteAPI = `https://api.${domain}`;
