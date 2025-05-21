@@ -54,7 +54,10 @@ if (window.runtimeConfig) {
 import frontendConfig from "@client/config";
 // Force update apiURL in shared-client config
 (frontendConfig as any).apiURL = coreConfig.siteAPI;
-console.log(`[Runtime Config] Ensuring apiURL is set to siteAPI: ${coreConfig.siteAPI}`);
+console.log(`[Runtime Config] Ensuring apiURL is set to siteAPI:`, {
+  siteAPI: coreConfig.siteAPI,
+  apiURL: (frontendConfig as any).apiURL
+});
 
 // Now import our app config which extends the frontend config
 import "./config";
