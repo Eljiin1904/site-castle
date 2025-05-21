@@ -10,10 +10,10 @@ image:
 
 runtimeConfig:
   appEnvName: "staging"
-  siteUrl: "https://staging.brickrax.com"
-  siteApi: "https://api.staging.brickrax.com"
-  adminUrl: "https://admin.staging.brickrax.com"
-  adminApi: "https://aapi.staging.brickrax.com"
+  siteUrl: "https://stage.brickrax.com"
+  siteApi: "https://api.stage.brickrax.com"
+  adminUrl: "https://admin.stage.brickrax.com"
+  adminApi: "https://aapi.stage.brickrax.com"
   staticUrl: "https://font.brickrax.com"
 
 imagePullSecrets: []
