@@ -68,6 +68,13 @@ config.awsRegion = process.env.AWS_REGION;
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
+    // Skip secrets loading for staging environment only
+    // This avoids permission issues when dev credentials try to access staging secrets
+    if (config.env === 'staging') {
+      console.log("Skipping AWS Secrets Manager for staging environment. Using environment variables only.");
+      return;
+    }
+
     console.log("fetching secrets");
 
     let env = config.env as string;
