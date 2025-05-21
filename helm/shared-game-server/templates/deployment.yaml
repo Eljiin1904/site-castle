@@ -41,6 +41,8 @@ spec:
               value: "{{ .Values.app.port }}"
             - name: NODE_ENV
               value: {{ .Values.environment }}
+            - name: env
+              value: {{ .Values.environment }}
             - name: APP_ENV
               value: {{ .Values.environment }}
           {{- if .Values.livenessProbe }}
