@@ -1,8 +1,5 @@
 import "./BlackjackGameOverActions.scss";
-import {
-  usePayoutAmount,
-  usePlayer,
-} from "../../services/blackjack/redux/selectors";
+import { usePayoutAmount, usePlayer } from "../../services/blackjack/redux/selectors";
 import { Vector } from "#client/comps/vector/Vector";
 import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
 import { Intimal } from "#core/services/intimal";
@@ -11,10 +8,10 @@ import { BlackjackButton } from "./BlackjackButton";
 import { useCallback } from "react";
 import { clearGame } from "#app/services/blackjack/redux/blackjackSlice";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "#client/hooks/localization/useTranslation";
 
 export default function BlackjackGameOverActions() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const player = usePlayer();
   const { mainPayout, totalPayout, statusTitle } = player;
   // could probably safely remove undefined here
@@ -32,7 +29,8 @@ export default function BlackjackGameOverActions() {
       <div className="top">
         {statusTitle && (
           <div className="status-title">
-            {t.all(statusTitle.toLowerCase().replace(" ", "_"))}
+            {/* {t.all(statusTitle.toLowerCase().replace(" ", "_"))} */}
+            {statusTitle.toLowerCase().replace(" ", "_")}
           </div>
         )}
 
@@ -51,7 +49,8 @@ export default function BlackjackGameOverActions() {
       {/* {!hasPayout && <div className="payout">{lostText}</div>} */}
 
       <BlackjackButton
-        text={t.gameplay("play_again")}
+        // text={t.gameplay("play_again")}
+        text={"Play Again"}
         onClick={onClearGame}
         long
       />

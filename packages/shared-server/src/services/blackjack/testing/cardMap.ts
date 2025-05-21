@@ -1,4 +1,4 @@
-import { CardData } from "#core/types/blackjack/CardData";
+import { CardData } from "@core/types/blackjack/CardData";
 
 export const cardMap = new Map<
   string,

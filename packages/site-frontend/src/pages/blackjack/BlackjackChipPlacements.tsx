@@ -1,9 +1,9 @@
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "#client/hooks/localization/useTranslation";
 import "./BlackjackChipPlacements.scss";
 import { BlackjackPlacement } from "./BlackjackPlacement";
 
 export const BlackjackChipPlacements = ({}: {}) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   let i = 0;
 
   return (
@@ -12,18 +12,18 @@ export const BlackjackChipPlacements = ({}: {}) => {
         <BlackjackPlacement
           index={i++}
           betType="main-bet"
-          title={t.gameplay("main_bet")}
+          title={"Main Bet"}
           size="large"
         />
         <BlackjackPlacement
           index={i++}
           betType="blackjack-15x"
-          title={t.gameplay("blackjack_15x")}
+          title={"Blackjack 15x"}
         />
         <BlackjackPlacement
           index={i++}
           betType="lucky-ladies"
-          title={t.gameplay("lucky_ladies")}
+          title={"Lucky Ladies"}
         />
         <BlackjackPlacement
           index={i++}
@@ -33,7 +33,8 @@ export const BlackjackChipPlacements = ({}: {}) => {
         <BlackjackPlacement
           index={i++}
           betType="perfect-pairs"
-          title={t.gameplay("perfect_pairs")}
+          // title={t.gameplay("perfect_pairs")}
+          title={"Perfect Pairs"}
         />
       </div>
     </div>

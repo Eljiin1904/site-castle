@@ -1,5 +1,5 @@
 import { BlackjackClientPlayerData } from "#core/types/blackjack/BlackjackApiResponse";
-import { BlackjackBetAmounts } from "#core/types/blackjack/BlackjackBetAmounts";
+import { BlackjackBetAmounts } from "@core/types/blackjack/BlackjackBetAmounts";
 import { CanvasPositionOpts } from "../helpers/Canvas";
 import EventEmitter from "../helpers/EventEmitter";
 import ClientCardHolder from "./abstract/ClientCardHolder";

@@ -1,7 +1,7 @@
-import { Validation } from "#core/services/validation";
+import { Validation } from "@core/services/validation";
 import { Http } from "#app/services/http";
 import config from "#app/config";
-import { mockCardAbbrev } from "#server/services/blackjack/Blackjack";
+import { mockCardAbbrev } from "@server/services/blackjack/Blackjack";
 
 export default Http.createApiRoute({
   type: "post",
@@ -11,9 +11,7 @@ export default Http.createApiRoute({
   transaction: false,
   bet: false,
   body: Validation.object({
-    cardAbbrevAr: Validation.array()
-      .of(Validation.string().required())
-      .required(),
+    cardAbbrevAr: Validation.array().of(Validation.string().required()).required(),
   }),
   callback: async (req, res, next) => {
     if (!["development", "staging"].includes(config.env))

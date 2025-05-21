@@ -1,5 +1,5 @@
-import { actions } from "#core/services/blackjack/Blackjack";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
+import { actions } from "@core/services/blackjack/Blackjack";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 
 export function validateActionParams({
   gameId,

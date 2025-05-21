@@ -3,6 +3,7 @@ import type {
   DbCardHolderData,
 } from "#core/types/blackjack/BlackjackGameDocument";
 import { CardData, Suit } from "#core/types/blackjack/CardData";
+import { DbHandData } from "../../../types/blackjack/BlackjackGameDocument";
 
 export function getFairnessResult(game: BlackjackGameDocument, serverSeed: string) {
   const { seeds } = game;
@@ -24,7 +25,7 @@ export function getFairnessResult(game: BlackjackGameDocument, serverSeed: strin
 
 function getHolderAbbrev(holder: DbCardHolderData) {
   return holder.hands
-    .map((hand) => {
+    .map((hand: DbHandData) => {
       return hand.cards.map(getAbbrev).join(",");
     })
     .join("|");

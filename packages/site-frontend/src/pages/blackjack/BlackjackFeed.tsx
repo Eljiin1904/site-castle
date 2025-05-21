@@ -4,10 +4,10 @@ import { SvgLive } from "#client/svgs/common/SvgLive";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./BlackjackFeed.scss";
 import { BlackjackFeedCard } from "./BlackjackFeedCard";
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "#client/hooks/localization/useTranslation";
 
 export const BlackjackFeed = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const layout = useAppSelector((x) => x.style.mainLayout);
   const feed = useAppSelector((x) => x.blackjack.feed);
 
@@ -21,7 +21,7 @@ export const BlackjackFeed = () => {
     >
       <PageTitle
         icon={SvgLive}
-        heading={t.ui("live_games")}
+        heading={"Live Games"}
       />
       <Div
         className="card-grid"

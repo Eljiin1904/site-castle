@@ -1,7 +1,7 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Blackjack } from "#app/services/blackjack";
 import { useBetAmount, useTryDisplayBetAmount } from "#app/services/blackjack/redux/selectors";
-import { BlackjackBetType } from "#core/types/blackjack/BlackjackBetAmounts";
+import { BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
 import { useEffect, useState } from "react";
 
 export function useDisplayBetAmount(type: BlackjackBetType) {

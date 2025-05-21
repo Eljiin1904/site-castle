@@ -15,39 +15,41 @@ import "./BetBoard.scss";
 
 export type BetBoardProps = DivProps & {
   title: string;
-  game?: SiteGame | 'all';
+  game?: SiteGame | "all";
 };
 
-export const BetBoard = ({title, game = 'all',  ...forwardProps}: BetBoardProps) => {
-  
+export const BetBoard = ({ title, game = "all", ...forwardProps }: BetBoardProps) => {
   const [scope, setScope] = useState<SiteBetScope>("all");
   const bets = useAppSelector((x) => x.site.bets);
-  
-  let filteredBets:BetData[] = [];
+
+  let filteredBets: BetData[] = [];
   switch (game) {
-    case 'dice':
+    case "blackjack":
+      filteredBets = bets?.blackjack || [];
+      break;
+    case "dice":
       filteredBets = bets?.dice || [];
       break;
-    case 'mines':
+    case "mines":
       filteredBets = bets?.mines || [];
       break;
-    case 'double':
+    case "double":
       filteredBets = bets?.double || [];
       break;
-    case 'limbo':
+    case "limbo":
       filteredBets = bets?.limbo || [];
       break;
-    case 'cases':
+    case "cases":
       filteredBets = bets?.cases || [];
       break;
-    case 'case-battles':
+    case "case-battles":
       filteredBets = [];
       break;
     default:
       filteredBets = bets?.all || [];
       break;
   }
-  
+
   return (
     <Div
       className="BetBoard"
@@ -62,23 +64,28 @@ export const BetBoard = ({title, game = 'all',  ...forwardProps}: BetBoardProps)
         scope={scope}
         setScope={setScope}
       />
-     {filteredBets ? <>
-      <Div fx column>
-        <BetHeader game={game} />
-        {filteredBets.map((x) => (
-            <BetRow
-            key={`${scope}-${x._id}`}
-            bet={x}
-            inserted={x.inserted}
-            animate
-            game={game}
-          />
-        ))}
-      </Div>
-      {filteredBets.length > 9 && <HistoryOverlay />}
-    </>: [...Array(Site.betLogSize)].map((x, i) => (
-          <BetCardPlaceholder key={i} />
-        ))}
+      {filteredBets ? (
+        <>
+          <Div
+            fx
+            column
+          >
+            <BetHeader game={game} />
+            {filteredBets.map((x) => (
+              <BetRow
+                key={`${scope}-${x._id}`}
+                bet={x}
+                inserted={x.inserted}
+                animate
+                game={game}
+              />
+            ))}
+          </Div>
+          {filteredBets.length > 9 && <HistoryOverlay />}
+        </>
+      ) : (
+        [...Array(Site.betLogSize)].map((x, i) => <BetCardPlaceholder key={i} />)
+      )}
     </Div>
   );
 };

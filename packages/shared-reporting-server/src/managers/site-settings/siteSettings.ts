@@ -47,6 +47,11 @@ async function main() {
   await insertDefault("diceEnabled", true);
   await insertDefault("limboEnabled", true);
   await insertDefault("minesEnabled", true);
+  await insertDefault("blackjackEnabled", true);
+  await insertDefault("blackjackLuckyLadiesEnabled", false);
+  await insertDefault("blackjackBlackjack15xEnabled", false);
+  await insertDefault("blackjackPerfectPairsEnabled", false);
+  await insertDefault("blackjack213Enabled", false);
 
   await insertDefault("activityThreshold", 0.01);
   await insertDefault("betHighrollerThreshold", 100);

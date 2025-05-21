@@ -9,6 +9,7 @@ import { getEdgeRate } from "../helpers/getEdgeRate";
 import { getXpRate } from "../helpers/getXpRate";
 import { getCommission } from "../helpers/getCommission";
 import { createTransaction } from "./createTransaction";
+import { edgeRate } from "../../../../../shared-core/src/services/blackjack/Blackjack";
 
 type BetKind = Extract<TransactionKindData, { bet: TransactionBetData }>["kind"];
 type BetData = UnionSafeOmit<TransactionKindData, "bet">;
@@ -17,16 +18,19 @@ export async function createBet({
   user,
   location,
   betAmount,
+  edgeRate = undefined,
   ...data
 }: {
   user: UserDocument;
   location: UserLocation;
   kind: BetKind;
   betAmount: number;
+  edgeRate?: number;
 } & BetData) {
   const { rainTaxRate, gemRate } = await Site.settings.cache();
   const category = Transactions.getCategory(data.kind);
-  const edge = getEdgeRate(category);
+  // If edge Rate provided, use it else check for it
+  const edge = edgeRate ? edgeRate : getEdgeRate(category);
   const ev = Math.round(betAmount * edge);
 
   const rainAmount = Math.round(ev * rainTaxRate);

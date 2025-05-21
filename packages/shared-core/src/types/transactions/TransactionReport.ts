@@ -142,7 +142,6 @@ interface EconomyStats {
 }
 
 interface GameStats {
-  
   duelBetCount: number;
   duelWagerTokens: number;
   duelWinTokens: number;
@@ -162,22 +161,49 @@ interface GameStats {
   diceWagerTokens: number;
   diceWinTokens: number;
   diceEv: number;
-  
+
   limboBetCount: number;
   limboWagerTokens: number;
   limboWinTokens: number;
   limboEv: number;
 
-  blackjackBetCount: number;
-  blackjackWagerTokens: number;
-  blackjackWinTokens: number;
-  blackjackEv: number;
-
   minesBetCount: number;
   minesWagerTokens: number;
   minesWinTokens: number;
   minesEv: number;
-  
+
+  blackjackBetCount: number;
+
+  blackjackInsuranceBetCount: number;
+  blackjackLuckyLadiesBetCount: number;
+  blackjackBlackjack15xBetCount: number;
+  blackjackPerfectPairsBetCount: number;
+  blackjack213BetCount: number;
+
+  blackjackWagerTokens: number;
+
+  blackjackInsuranceWagerTokens: number;
+  blackjackLuckyLadiesWagerTokens: number;
+  blackjackBlackjack15xWagerTokens: number;
+  blackjackPerfectPairsWagerTokens: number;
+  blackjack213WagerTokens: number;
+
+  blackjackWinTokens: number;
+
+  blackjackInsuranceWinTokens: number;
+  blackjackLuckyLadiesWinTokens: number;
+  blackjackBlackjack15xWinTokens: number;
+  blackjackPerfectPairsWinTokens: number;
+  blackjack213WinTokens: number;
+
+  blackjackEv: number;
+
+  blackjackInsuranceEv: number;
+  blackjackLuckyLadiesEv: number;
+  blackjackBlackjack15xEv: number;
+  blackjackPerfectPairsEv: number;
+  blackjack213Ev: number;
+
   doubleBetCount: number;
   doubleWagerTokens: number;
   doubleWinTokens: number;

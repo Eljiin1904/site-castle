@@ -1,7 +1,7 @@
 export { validateActionParams } from "./validate/validateActionParams";
 export { validateBetAmounts } from "./validate/validateBetAmounts";
 
-export * from "#core/services/blackjack/Blackjack";
+export * from "@core/services/blackjack/Blackjack";
 
 // queries
 export { saveGame } from "./utils/saveGame";

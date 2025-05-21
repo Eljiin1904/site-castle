@@ -1,4 +1,4 @@
-export * from "#core/services/blackjack/Blackjack";
+export * from "@core/services/blackjack/Blackjack";
 
 export { default as World } from "./canvas/World";
 export * from "./redux/blackjackSlice";

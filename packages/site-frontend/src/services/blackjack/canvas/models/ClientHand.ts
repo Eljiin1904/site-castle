@@ -9,7 +9,7 @@ import {
   BlackjackClientCardData,
   BlackjackClientPlayerHandData,
 } from "#core/types/blackjack/BlackjackApiResponse";
-import { getCombinedValues } from "#core/services/blackjack/Blackjack";
+import { getCombinedValues } from "@core/services/blackjack/Blackjack";
 
 type Opts = {
   owner: Owner;

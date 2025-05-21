@@ -1,6 +1,6 @@
 import { DrawCardError } from "./Errors/DrawCardError";
 import { Card } from "./Card";
-import { getCards } from "#core/services/blackjack/Blackjack";
+import { getCards } from "@core/services/blackjack/Blackjack";
 import { cardMap } from "../testing/cardMap";
 
 export type DeckUtil = {

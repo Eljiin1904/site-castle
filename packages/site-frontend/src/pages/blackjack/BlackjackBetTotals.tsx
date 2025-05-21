@@ -6,7 +6,7 @@ import { Intimal } from "#core/services/intimal";
 import { BlackjackSidebetTotals } from "./BlackjackSidebetTotals";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useDisplayBetAmounts } from "./useDisplayBetAmounts";
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "#client/hooks/localization/useTranslation";
 
 export const BlackjackBetTotals = ({}: {}) => {
   return (
@@ -18,7 +18,7 @@ export const BlackjackBetTotals = ({}: {}) => {
 };
 
 function MainBetTotals() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const betAmounts = useDisplayBetAmounts();
 
   const mainBet = betAmounts["main-bet"];
@@ -31,17 +31,17 @@ function MainBetTotals() {
   return (
     <div className="MainBetTotals">
       <Item
-        label={t.gameplay("side_bets")}
+        label={"Side Bets"}
         value={sideBets}
       />
       <div className="sep" />
       <Item
-        label={t.gameplay("main_bet")}
+        label={"Main Bet"}
         value={mainBet}
       />
       <div className="sep" />
       <Item
-        label={t.gameplay("total_bet")}
+        label={"Total Bet"}
         value={total}
       />
     </div>

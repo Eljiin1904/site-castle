@@ -1,6 +1,6 @@
-import { getTotalBetAmount } from "#core/services/blackjack/Blackjack";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
-import { BlackjackActionHistory } from "#core/types/blackjack/BlackjackGameDocument";
+import { getTotalBetAmount } from "@core/services/blackjack/Blackjack";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
+import { BlackjackActionHistory } from "@core/types/blackjack/BlackjackGameDocument";
 import { Dealer } from "./Dealer";
 import { Deck } from "./Deck";
 import { GameError } from "./Errors/GameError";

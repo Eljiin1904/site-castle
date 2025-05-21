@@ -6,12 +6,14 @@ import type { BasicUser } from "../users/BasicUser";
 import type { DoubleBetKind } from "../double/DoubleBetKind";
 import type { LootItem } from "../items/BasicItem";
 import type { ChatMessageReply } from "./ChatMessageReply";
+import type { BlackjackBetTypeInsurance } from "../blackjack/BlackjackBetAmounts";
 
 export type ChatMessageKind = ChatMessageKindData["kind"];
 
 export type ChatMessageKindData =
   | TextData
   | AventData
+  | BlackjackWinData
   | CaseBattleLinkData
   | CaseBattleWinData
   | CaseWinData
@@ -34,6 +36,13 @@ interface AventData {
   kind: "advent-bonus";
   user: BasicUser;
   item: LootItem;
+}
+
+interface BlackjackWinData {
+  kind: "blackjack-win";
+  user: BasicUser;
+  betKind: BlackjackBetTypeInsurance;
+  wonAmount: number;
 }
 
 interface CaseBattleLinkData {

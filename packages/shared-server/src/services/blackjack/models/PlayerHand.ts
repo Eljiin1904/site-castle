@@ -1,6 +1,6 @@
-import { getHandPayout } from "#core/services/blackjack/Blackjack";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
-import { BlackjackBetAmounts } from "#core/types/blackjack/BlackjackBetAmounts";
+import { getHandPayout } from "@core/services/blackjack/Blackjack";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
+import { BlackjackBetAmounts } from "@core/types/blackjack/BlackjackBetAmounts";
 import { Dealer } from "./Dealer"; // high level reference, risking circ reference
 import { Hand } from "./Hand";
 

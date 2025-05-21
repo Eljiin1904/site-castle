@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ChipValue } from "../constants/chipValues";
-import { entries, keys } from "#core/services/utility/Utility";
-import { getInitBetAmounts, maxBet } from "#core/services/blackjack/Blackjack";
+import { entries, keys } from "@core/services/utility/Utility";
+import { getInitBetAmounts, maxBet } from "@core/services/blackjack/Blackjack";
 import { World } from "../Blackjack";
 import {
   BlackjackApiResponse,
   BlackjackClientGameData,
   BlackjackNextAction,
 } from "#core/types/blackjack/BlackjackApiResponse";
-import { BlackjackBetAmounts, BlackjackBetType } from "#core/types/blackjack/BlackjackBetAmounts";
+import { BlackjackBetAmounts, BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
 import { setBetAmountForExistingGame } from "./helpers/setBetAmountForExistingGame";
 import { BlackjackFeedMasked } from "#core/types/blackjack/BlackjackEventDocument";
 

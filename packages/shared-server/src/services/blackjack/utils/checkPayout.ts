@@ -1,4 +1,4 @@
-import { UserDocument } from "#core/types/users/UserDocument";
+import { UserDocument } from "@core/types/users/UserDocument";
 import { Ids } from "#server/services/ids";
 import { Database } from "#server/services/database";
 import { Game } from "../models/Game";

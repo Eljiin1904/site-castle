@@ -1,5 +1,3 @@
-// import { getInitBetAmounts } from "#core/services/blackjack/Blackjack";
-
 import { getInitBetAmounts } from "#core/services/blackjack/Blackjack";
 
 export type BlackjackBetAmounts = ReturnType<typeof getInitBetAmounts>;

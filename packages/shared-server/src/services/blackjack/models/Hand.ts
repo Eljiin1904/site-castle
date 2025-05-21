@@ -1,6 +1,6 @@
-import { getCombinedValues } from "#core/services/blackjack/Blackjack";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
-import { BlackjackHandStatus } from "#core/types/blackjack/BlackjackHandStatus";
+import { getCombinedValues } from "@core/services/blackjack/Blackjack";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
+import { BlackjackHandStatus } from "@core/types/blackjack/BlackjackHandStatus";
 import { Card } from "./Card";
 import { DrawCard } from "./Deck";
 import { CustomError } from "./Errors/CustomError";

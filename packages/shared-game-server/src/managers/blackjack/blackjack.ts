@@ -1,17 +1,17 @@
-import { getInsuranceBetAmount } from "#core/services/blackjack/utils/getInsuranceBetAmount";
-import { Intimal } from "#core/services/intimal";
-import { Utility } from "#core/services/utility";
-import { BlackjackEventDocument } from "#core/types/blackjack/BlackjackEventDocument";
-import { BlackjackTicketDocument } from "#core/types/blackjack/BlackjackTicketDocument";
-import { BlackjackSidebetWonData } from "#core/types/transactions/TransactionKind";
-import { UserDocument } from "#core/types/users/UserDocument";
-import { Chat } from "#server/services/chat";
-import { Database } from "#server/services/database";
-import { Ids } from "#server/services/ids";
-import { Site } from "#server/services/site";
-import { System } from "#server/services/system";
-import { Transactions } from "#server/services/transactions";
-import { Users } from "#server/services/users";
+import { getInsuranceBetAmount } from "@core/services/blackjack/utils/getInsuranceBetAmount";
+import { Intimal } from "@core/services/intimal";
+import { Utility } from "@core/services/utility";
+import { BlackjackEventDocument } from "@core/types/blackjack/BlackjackEventDocument";
+import { BlackjackTicketDocument } from "@core/types/blackjack/BlackjackTicketDocument";
+import { BlackjackSidebetWonData } from "@core/types/transactions/TransactionKind";
+import { UserDocument } from "@core/types/users/UserDocument";
+import { Chat } from "@server/services/chat";
+import { Database } from "@server/services/database";
+import { Ids } from "@server/services/ids";
+import { Site } from "@server/services/site";
+import { System } from "@server/services/system";
+import { Transactions } from "@server/services/transactions";
+import { Users } from "@server/services/users";
 
 export default () => System.tryCatch(main)();
 

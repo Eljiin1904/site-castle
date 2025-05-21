@@ -1,17 +1,17 @@
 import {
   BlackjackBetAmounts,
   BlackjackBetTypeInsurance,
-} from "#core/types/blackjack/BlackjackBetAmounts";
-import { InsuranceStatus } from "#core/types/blackjack/InsuranceStatus";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
+} from "@core/types/blackjack/BlackjackBetAmounts";
+import { InsuranceStatus } from "@core/types/blackjack/InsuranceStatus";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import { CardHolder } from "./CardHolder";
 import { Dealer } from "./Dealer";
 import { PlayerError } from "./Errors/PlayerError";
 import { PlayerHand } from "./PlayerHand";
 import { updateSidebetPayouts } from "../side-bets/updateSidebetPayouts";
-import { entries } from "#core/services/utility/Utility";
-import { SidebetPayout, SidebetPayoutData } from "#core/types/blackjack/BlackjackApiResponse";
-import { getInitBetAmounts, getInsuranceBetAmount } from "#core/services/blackjack/Blackjack";
+import { entries } from "@core/services/utility/Utility";
+import { SidebetPayout, SidebetPayoutData } from "@core/types/blackjack/BlackjackApiResponse";
+import { getInitBetAmounts, getInsuranceBetAmount } from "@core/services/blackjack/Blackjack";
 
 type SuperArgAr = ConstructorParameters<typeof CardHolder>;
 
@@ -283,7 +283,7 @@ export class Player extends CardHolder {
         "main-bet": betAmounts["main-bet"],
       };
     } else {
-      this.sidebetPayouts.forEach((payout) => {
+      this.sidebetPayouts.forEach((payout: SidebetPayout) => {
         if (payout.type !== "insurance") betAmounts[payout.type] = this.betAmounts[payout.type];
       });
     }

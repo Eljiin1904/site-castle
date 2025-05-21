@@ -2,6 +2,8 @@ import { BlackjackLayoutBorder } from "./BlackjackLayoutBorder";
 import { BlackjackPicture } from "./BlackjackPicture";
 import { imagePaths, svgPaths } from "./utils/images";
 import "./BlackjackLayout.scss";
+import { SiteLogo } from "#app/comps/site-logo/SiteLogo";
+import { Img } from "@client/comps/img/Img";
 
 export const BlackjackLayout = () => {
   return (
@@ -19,14 +21,23 @@ export const BlackjackLayout = () => {
 
       {/* <SvgBlackjackBgGreen className="bg-green" /> */}
       {/* <SvgBlackjackBgDark className="bg-dark" /> */}
+      <Img
+        type="png"
+        path={"/graphics/games/blackjack_board"}
+        skeleton
+        width="100%"
+        aspectRatio={"16 / 9"}
+        position="absolute"
+      />
 
-      <BlackjackLayoutBorder />
+      {/* <BlackjackLayoutBorder /> */}
 
-      <BlackjackPicture
+      {/* <BlackjackPicture
         className="logo-image"
         src={imagePaths.logo}
-        alt="Chicken Logo"
-      />
+        alt="Castle Logo"
+      /> */}
+      {/* <SiteLogo /> */}
       {/* <Img
         path={"/games/blackjack/background/chicken-logo"}
         type="png"

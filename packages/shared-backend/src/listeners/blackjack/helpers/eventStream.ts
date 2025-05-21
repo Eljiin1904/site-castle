@@ -1,4 +1,4 @@
-import { Database } from "#server/services/database";
+import { Database } from "@server/services/database";
 
 export const eventStream = Database.createStream({
   collection: "blackjack-events",

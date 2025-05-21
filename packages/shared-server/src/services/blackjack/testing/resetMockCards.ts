@@ -1,4 +1,4 @@
-import { CardData, CardValue } from "#core/types/blackjack/CardData";
+import { CardData, CardValue } from "@core/types/blackjack/CardData";
 import { cardMap } from "./cardMap";
 
 export function mockCards(userId: string, cardValues: CardData[], resetAtEnd = false) {

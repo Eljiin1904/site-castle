@@ -1,4 +1,4 @@
-import { keys } from "#core/services/utility/Utility";
+import { keys } from "@core/services/utility/Utility";
 
 export function tweenValObj<T extends Partial<Record<string, number>>>(
   startObj: T,

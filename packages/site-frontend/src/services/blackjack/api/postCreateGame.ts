@@ -1,6 +1,6 @@
 import { Http } from "@client/services/http";
 import { BlackjackApiResponse } from "#core/types/blackjack/BlackjackApiResponse";
-import { BlackjackBetAmounts } from "#core/types/blackjack/BlackjackBetAmounts";
+import { BlackjackBetAmounts } from "@core/types/blackjack/BlackjackBetAmounts";
 
 export default async function ({
   betAmounts,

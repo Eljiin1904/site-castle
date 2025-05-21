@@ -11,7 +11,7 @@ import { Gtm } from "#app/services/gtm";
 import postCreateGame from "../api/postCreateGame";
 import { setGame, setProcessing } from "../Blackjack";
 import { getTotalBetAmount } from "#core/services/blackjack/utils/getTotalBetAmount";
-import { useKycTierRequirement } from "#app/hooks/kyc/useKycTierRequirement";
+// import { useKycTierRequirement } from "#app/hooks/kyc/useKycTierRequirement";
 
 export function useCreateGame() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -22,9 +22,9 @@ export function useCreateGame() {
   // blackjack specific
   const betAmounts = useAppSelector((x) => x.blackjack.betting.betAmounts);
 
-  const { tierRequirementMet, kycFlow } = useKycTierRequirement({
-    requiredTier: Validation.kycTiers.personalInfo,
-  });
+  // const { tierRequirementMet, kycFlow } = useKycTierRequirement({
+  //   requiredTier: Validation.kycTiers.personalInfo,
+  // });
 
   const handleBet = usePost(
     async (isMounted) => {
@@ -32,10 +32,10 @@ export function useCreateGame() {
         return Dialogs.open("primary", <LoginModal />);
       }
 
-      if (!tierRequirementMet) {
-        kycFlow();
-        return;
-      }
+      // if (!tierRequirementMet) {
+      //   kycFlow();
+      //   return;
+      // }
 
       const totalBetAmount = getTotalBetAmount(betAmounts);
 

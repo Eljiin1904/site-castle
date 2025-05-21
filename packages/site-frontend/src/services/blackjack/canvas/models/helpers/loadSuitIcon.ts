@@ -1,4 +1,4 @@
-import { Suit } from "#core/types/blackjack/CardData";
+import { Suit } from "@core/types/blackjack/CardData";
 import { loadImage } from "../../utils/loadImage";
 
 // haven't figured out how to use image from remote with canvas.toDataUrl

@@ -1,6 +1,6 @@
 import config from "#app/config";
 import { BlackjackClientCardData } from "#core/types/blackjack/BlackjackApiResponse";
-import { CardData } from "#core/types/blackjack/CardData";
+import { CardData } from "@core/types/blackjack/CardData";
 import { isWebPSupported } from "./detectWebP";
 
 const ext = isWebPSupported ? "webp" : "jpg";

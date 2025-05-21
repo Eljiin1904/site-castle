@@ -1,6 +1,6 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { getTotalBetAmount } from "#core/services/blackjack/utils/getTotalBetAmount";
-import { BlackjackBetType } from "#core/types/blackjack/BlackjackBetAmounts";
+import { getTotalBetAmount } from "@core/services/blackjack/utils/getTotalBetAmount";
+import { BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
 
 export function useGame() {
   return useAppSelector((state) => state.blackjack.game);

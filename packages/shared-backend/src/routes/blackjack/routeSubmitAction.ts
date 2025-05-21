@@ -1,8 +1,8 @@
-import { Validation } from "#core/services/validation";
+import { Validation } from "@core/services/validation";
 import { Http } from "#app/services/http";
-import { Transactions } from "#server/services/transactions";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
-import { findGameById } from "#server/services/blackjack/utils/findGameById";
+import { Transactions } from "@server/services/transactions";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
+import { findGameById } from "@server/services/blackjack/utils/findGameById";
 import {
   checkPayout,
   CustomError,
@@ -10,10 +10,10 @@ import {
   getInsuranceBetAmount,
   saveGame,
   validateActionParams,
-} from "#server/services/blackjack/Blackjack";
-import { getRandomCardIndex } from "#server/services/blackjack/utils/getRandomCardIndex";
+} from "@server/services/blackjack/Blackjack";
+import { getRandomCardIndex } from "@server/services/blackjack/utils/getRandomCardIndex";
 import { Site } from "#app/services/site";
-import { Blackjack } from "#server/services/blackjack";
+import { Blackjack } from "@server/services/blackjack";
 import { validateEnoughTokens } from "./validate/validateEnoughTokens";
 
 // attempted to add sidebet validation into yup, couldn't figure it out, haven't given up
@@ -57,19 +57,15 @@ export default Http.createApiRoute({
     const location = await Http.getLocation(req.ip);
 
     try {
-      if (syncIndex === undefined)
-        throw new Error("syncIndex is required to perform action");
+      if (syncIndex === undefined) throw new Error("syncIndex is required to perform action");
 
       const gameData = await findGameById({ gameId });
       if (!gameData) throw new Error("Game not found by id " + gameId);
 
       if (gameData.completed) {
-        throw new CustomError(
-          "Blackjack submit action: game already completed",
-          {
-            data: { gameId, userId: user._id },
-          },
-        );
+        throw new CustomError("Blackjack submit action: game already completed", {
+          data: { gameId, userId: user._id },
+        });
       }
 
       // 2x validate user owns game, just in case

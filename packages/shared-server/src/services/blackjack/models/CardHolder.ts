@@ -1,5 +1,5 @@
 import { DrawCard } from "./Deck";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import { Card } from "./Card";
 import { Hand, HandArg } from "./Hand";
 import { CustomError } from "./Errors/CustomError";

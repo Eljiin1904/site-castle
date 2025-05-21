@@ -8,10 +8,10 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { LoginModal } from "#app/modals/login/LoginModal";
 import { Gtm } from "#app/services/gtm";
 import { setGame, setProcessing } from "../Blackjack";
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import postAction from "../api/postAction";
 import { useBet2fa } from "#app/hooks/security/useBet2fa";
-import { useKycTierRequirement } from "#app/hooks/kyc/useKycTierRequirement";
+// import { useKycTierRequirement } from "#app/hooks/kyc/useKycTierRequirement";
 
 export function useSubmitAction() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -39,10 +39,10 @@ export function useSubmitAction() {
         return Dialogs.open("primary", <LoginModal />);
       }
 
-      if (!tierRequirementMet) {
-        kycFlow();
-        return;
-      }
+      // if (!tierRequirementMet) {
+      //   kycFlow();
+      //   return;
+      // }
 
       const hasBet = ["split", "double"].includes(action);
 

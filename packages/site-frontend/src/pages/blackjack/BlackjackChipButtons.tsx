@@ -7,16 +7,16 @@ import {
   undoBet,
 } from "../../services/blackjack/redux/blackjackSlice";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { entries, values } from "#core/services/utility/Utility";
+import { entries, values } from "@core/services/utility/Utility";
 import { BlackjackButton } from "./BlackjackButton";
 import { store } from "#app/store";
 import { getWarnBetItems } from "./helpers/getWarnBetItems";
 import { useSoundPlayer } from "#client/hooks/sounds/useSoundPlayer";
 import { getRandomChipSound } from "./utils/blackjackSounds";
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "#client/hooks/localization/useTranslation";
 
 export const BlackjackChipButtons = ({}: {}) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const dispatch = useDispatch();
   const playSound = useSoundPlayer("blackjack");
 
@@ -54,14 +54,16 @@ export const BlackjackChipButtons = ({}: {}) => {
     <div className="BlackjackChipButtons">
       <div className="ChipButtons_row">
         <BlackjackButton
-          text={t.gameplay("clear")}
+          // text={t.gameplay("clear")}
+          text={"Clear"}
           icon="clear"
           onClick={onClear}
           enabled={hasBets}
         />
 
         <BlackjackButton
-          text={t.gameplay("undo")}
+          // text={t.gameplay("undo")}
+          text={"Undo"}
           icon="undo"
           onClick={onUndo}
           enabled={history.length > 0}
@@ -70,14 +72,16 @@ export const BlackjackChipButtons = ({}: {}) => {
 
       <div className="ChipButtons_row">
         <BlackjackButton
-          text={t.gameplay("repeat")}
+          // text={t.gameplay("repeat")}
+          text={"Repeat"}
           icon="repeat"
           onClick={onRepeat}
           enabled={history.length > 0}
         />
 
         <BlackjackButton
-          text={t.gameplay("double")}
+          // text={t.gameplay("double")}
+          text={"Double"}
           icon="double2"
           onClick={onDouble}
           enabled={hasBets}

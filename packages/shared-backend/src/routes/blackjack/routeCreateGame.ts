@@ -1,8 +1,8 @@
-import { Validation } from "#core/services/validation";
+import { Validation } from "@core/services/validation";
 import { Http } from "#app/services/http";
-import { Ids } from "#server/services/ids";
-import { Transactions } from "#server/services/transactions";
-import { BlackjackBetAmounts } from "#core/types/blackjack/BlackjackBetAmounts";
+import { Ids } from "@server/services/ids";
+import { Transactions } from "@server/services/transactions";
+import { BlackjackBetAmounts } from "@core/types/blackjack/BlackjackBetAmounts";
 import {
   checkPayout,
   CustomError,
@@ -10,12 +10,12 @@ import {
   Game,
   insertGame,
   validateBetAmounts,
-} from "#server/services/blackjack/Blackjack";
-import { getRandomCardIndex } from "#server/services/blackjack/utils/getRandomCardIndex";
+} from "@server/services/blackjack/Blackjack";
+import { getRandomCardIndex } from "@server/services/blackjack/utils/getRandomCardIndex";
 import { Site } from "#app/services/site";
-import { Blackjack } from "#server/services/blackjack";
-import { entries } from "#core/services/utility/Utility";
-import { Random } from "#server/services/random";
+import { Blackjack } from "@server/services/blackjack";
+import { entries } from "@core/services/utility/Utility";
+import { Random } from "@server/services/random";
 
 export default Http.createApiRoute({
   type: "post",

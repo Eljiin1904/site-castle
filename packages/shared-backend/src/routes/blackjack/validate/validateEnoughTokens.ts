@@ -1,5 +1,5 @@
-import { BlackjackAction } from "#core/types/blackjack/BlackjackAction";
-import { getInsuranceBetAmount } from "#server/services/blackjack/Blackjack";
+import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
+import { getInsuranceBetAmount } from "@server/services/blackjack/Blackjack";
 
 export function validateEnoughTokens({
   betAmount,

@@ -1,6 +1,6 @@
 import { WritableDraft } from "immer";
 import { BjHistoryItem, BjState } from "../blackjackSlice";
-import { maxBet } from "#core/services/blackjack/Blackjack";
+import { maxBet } from "@core/services/blackjack/Blackjack";
 import { getTotalBetAmount } from "#core/services/blackjack/utils/getTotalBetAmount";
 import { store } from "#app/store";
 

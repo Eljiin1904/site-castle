@@ -1,6 +1,6 @@
-import { Validation } from "#core/services/validation";
+import { Validation } from "@core/services/validation";
 import { Http } from "#app/services/http";
-import { CustomError, findPendingGame, Game } from "#server/services/blackjack/Blackjack";
+import { CustomError, findPendingGame, Game } from "@server/services/blackjack/Blackjack";
 import { Site } from "#app/services/site";
 
 export default Http.createApiRoute({

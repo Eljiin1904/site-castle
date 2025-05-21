@@ -3,21 +3,21 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { FairnessSeedModal } from "#app/modals/fairness/FairnessSeedModal";
 import { Blackjack } from "#app/services/blackjack";
-import { Button } from "#client/comps/button/Button";
-import { Conditional } from "#client/comps/conditional/Conditional";
-import { Div } from "#client/comps/div/Div";
-import { Dropdown } from "#client/comps/dropdown/Dropdown";
-import { PageTitle } from "#client/comps/page/PageTitle";
-import { Dialogs } from "#client/services/dialogs";
-import { SvgBlackjack } from "#client/svgs/common/SvgBlackjack";
-import { SvgCheckCircle } from "#client/svgs/common/SvgCheckCircle";
-import { SvgCog } from "#client/svgs/common/SvgCog";
+import { Button } from "@client/comps/button/Button";
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { Div } from "@client/comps/div/Div";
+import { Dropdown } from "@client/comps/dropdown/Dropdown";
+import { PageTitle } from "@client/comps/page/PageTitle";
+import { Dialogs } from "@client/services/dialogs";
+import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
+import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
+import { SvgCog } from "@client/svgs/common/SvgCog";
 import { SvgInfoCircle } from "#client/svgs/common/SvgInfoCircle";
 import { useCallback } from "react";
 import { BlackjackInfoModal } from "./modals/BlackjackInfoModal";
 import { BlackjackDebugModal } from "./modals/BlackjackDebugModal";
 import config from "#app/config";
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "@client/hooks/localization/useTranslation";
 
 export const BlackjackHeader = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
@@ -41,11 +41,11 @@ export const BlackjackHeader = () => {
 };
 
 const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   return (
     <Div fx>
       <PageTitle
-        heading={t.games("blackjack")}
+        heading={"Blackjack"}
         icon={SvgBlackjack}
       />
       <Div gap={8}>
@@ -61,17 +61,14 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
           options={[
             {
               type: "action",
-              label: t.gameplay("fairness"),
+              label: "Fairness",
               iconLeft: SvgCheckCircle,
               onClick: () =>
-                Dialogs.open(
-                  "primary",
-                  <FairnessSeedModal historyTo="/fairness/blackjack" />,
-                ),
+                Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/blackjack" />),
             },
             {
               type: "action",
-              label: t.gameplay("rules"),
+              label: "Rules",
               iconLeft: SvgInfoCircle,
               onClick: () => Dialogs.open("primary", <BlackjackInfoModal />),
             },
@@ -89,11 +86,12 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
 };
 
 const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   return (
     <Div fx>
       <PageTitle
-        heading={t.games("blackjack")}
+        // heading={t.games("blackjack")}
+        heading={"Blackjack"}
         icon={SvgBlackjack}
       />
       <Div
@@ -113,18 +111,17 @@ const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
         <Button
           kind="secondary"
           // icon={SvgInfoCircle}
-          label={t.gameplay("theme")}
+          // label={t.gameplay("theme")}
+          label={"Theme"}
           onClick={toggleTheme}
         />
         <Button
           kind="secondary"
           icon={SvgCheckCircle}
-          label={t.gameplay("fairness")}
+          // label={t.gameplay("fairness")}
+          label={"Fairness"}
           onClick={() =>
-            Dialogs.open(
-              "primary",
-              <FairnessSeedModal historyTo="/fairness/blackjack" />,
-            )
+            Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/blackjack" />)
           }
         />
         <Button

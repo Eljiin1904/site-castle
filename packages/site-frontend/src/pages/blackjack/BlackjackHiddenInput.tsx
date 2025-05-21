@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
-import { maxBet } from "#core/services/blackjack/Blackjack";
+import { maxBet } from "@core/services/blackjack/Blackjack";
 import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
 import { Vector } from "#client/comps/vector/Vector";
 import "./BlackjackHiddenInput.scss";

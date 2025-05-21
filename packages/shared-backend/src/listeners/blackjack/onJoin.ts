@@ -1,8 +1,8 @@
-import { Database } from "#server/services/database";
+import { Database } from "@server/services/database";
 import { Sockets } from "#app/services/sockets";
 import { feedManager } from "./helpers/feedManager";
 import { Users } from "#app/services/users";
-import { maskHiddenUser } from "#server/services/blackjack/Blackjack";
+import { maskHiddenUser } from "@server/services/blackjack/Blackjack";
 
 export default Sockets.createListener({
   action: "event",

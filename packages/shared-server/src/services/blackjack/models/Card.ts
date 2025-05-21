@@ -1,5 +1,5 @@
-import { getCardValues } from "#core/services/blackjack/Blackjack";
-import { CardData } from "#core/types/blackjack/CardData";
+import { getCardValues } from "@core/services/blackjack/Blackjack";
+import { CardData } from "@core/types/blackjack/CardData";
 
 type Opts = {
   isGameCompleted: () => boolean;

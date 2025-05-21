@@ -1,18 +1,12 @@
 import "./BlackjackPlacement.scss";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { BlackjackBetType } from "#core/types/blackjack/BlackjackBetAmounts";
-import {
-  BlackjackHiddenInput,
-  HiddenInputAlign,
-} from "#app/pages/blackjack/BlackjackHiddenInput";
+import { BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
+import { BlackjackHiddenInput, HiddenInputAlign } from "#app/pages/blackjack/BlackjackHiddenInput";
 import { getChipValsFromAmount } from "./utils/getChipValsFromAmount";
 import classNames from "classnames";
 import { Intimal } from "#core/services/intimal";
-import {
-  addBetTypeAmounts,
-  setBetTypeAmount,
-} from "#app/services/blackjack/redux/blackjackSlice";
+import { addBetTypeAmounts, setBetTypeAmount } from "#app/services/blackjack/redux/blackjackSlice";
 import { BlackjackPlacementChip } from "./BlackjackPlacementChip";
 import { useDisplayBetAmount } from "./useDisplayBetAmount";
 import { Toasts } from "#client/services/toasts";
@@ -40,16 +34,10 @@ export const BlackjackPlacement = ({
   const total = useDisplayBetAmount(betType);
   const authenticated = useAppSelector((x) => x.user.authenticated);
 
-  const blackjack15x = useAppSelector(
-    (x) => x.site.settings.blackjackBlackjack15xEnabled,
-  );
+  const blackjack15x = useAppSelector((x) => x.site.settings.blackjackBlackjack15xEnabled);
   const _213 = useAppSelector((x) => x.site.settings.blackjack213Enabled);
-  const perfectPairs = useAppSelector(
-    (x) => x.site.settings.blackjackPerfectPairsEnabled,
-  );
-  const luckyLadies = useAppSelector(
-    (x) => x.site.settings.blackjackLuckyLadiesEnabled,
-  );
+  const perfectPairs = useAppSelector((x) => x.site.settings.blackjackPerfectPairsEnabled);
+  const luckyLadies = useAppSelector((x) => x.site.settings.blackjackLuckyLadiesEnabled);
 
   const onSelect = useCallback(() => {
     if (!blackjack15x && betType === "blackjack-15x") {
@@ -96,8 +84,7 @@ export const BlackjackPlacement = ({
   if (index == 3) inputAlign = "right";
   if (index == 4) inputAlign = "right";
 
-  const transparent =
-    ["blackjack-15x", "perfect-pairs"].includes(betType) && stack.length > 20;
+  const transparent = ["blackjack-15x", "perfect-pairs"].includes(betType) && stack.length > 20;
 
   const className = classNames(
     "BlackjackPlacement",
@@ -126,9 +113,7 @@ export const BlackjackPlacement = ({
             <BlackjackPlacementChip
               key={`${val}-${i}`} // unique keys will get animated in
               value={val}
-              displayVal={
-                i === stack.length - 1 ? Intimal.toDecimal(total) : null
-              }
+              displayVal={i === stack.length - 1 ? Intimal.toDecimal(total) : null}
             />
           ))}
         </div>
@@ -166,11 +151,7 @@ function Info({
   onChange?: (val: number) => void;
   hidden?: boolean;
 }) {
-  const className = [
-    "BlackjackInfo",
-    align,
-    hidden ? "hidden" : "visible",
-  ].join(" ");
+  const className = ["BlackjackInfo", align, hidden ? "hidden" : "visible"].join(" ");
 
   return (
     <div className={className}>

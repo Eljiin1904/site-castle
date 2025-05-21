@@ -4,10 +4,10 @@ import { useProcessing } from "#app/services/blackjack/redux/selectors";
 import { BlackjackButtonOrange } from "./BlackjackButtonOrange";
 import { BlackjackChipButtons } from "./BlackjackChipButtons";
 import { BlackjackChipOptions } from "./BlackjackChipOptions";
-import { useTranslation } from "#client/hooks/localization/useTranslation";
+// import { useTranslation } from "@client/hooks/localization/useTranslation";
 
 export const BlackjackChipActions = ({}: {}) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const createGame = useCreateGame();
   const processing = useProcessing();
 
@@ -16,7 +16,7 @@ export const BlackjackChipActions = ({}: {}) => {
       <BlackjackChipButtons />
       <BlackjackChipOptions />
       <BlackjackButtonOrange
-        text={t.gameplay("play")}
+        text={"Play"}
         onClick={createGame}
         disabled={processing}
       />

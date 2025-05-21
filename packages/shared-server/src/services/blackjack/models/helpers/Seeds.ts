@@ -1,4 +1,4 @@
-import { BlackjackSeedData } from "#core/types/blackjack/BlackjackGameDocument";
+import { BlackjackSeedData } from "@core/types/blackjack/BlackjackGameDocument";
 
 type InitArg = Omit<BlackjackSeedData, "step">;
 export type SeedsArg = InitArg | BlackjackSeedData;

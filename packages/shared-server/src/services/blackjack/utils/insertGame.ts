@@ -1,4 +1,4 @@
-import { BlackjackGameDocument } from "#core/types/blackjack/BlackjackGameDocument";
+import { BlackjackGameDocument } from "@core/types/blackjack/BlackjackGameDocument";
 import { Database } from "#server/services/database";
 
 export async function insertGame({ game }: { game: BlackjackGameDocument }) {
