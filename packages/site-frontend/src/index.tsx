@@ -1,10 +1,8 @@
-import "./config";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import coreConfig, { setEnvironment, setRuntimeOverrides } from "@core/config";
 import { SystemEnvironment } from "@core/types/system/SystemEnvironment";
 import "@client/styles/defaults.scss";
-import { App } from "./App";
 import "@client/styles/styled.scss";
 
 // --- BEGIN RUNTIME CONFIG INITIALIZATION ---
@@ -38,8 +36,6 @@ if (window.runtimeConfig) {
   };
   setRuntimeOverrides(urlOverrides);
 
-  // The local site-frontend/src/config.ts will then pick these up as it aliases coreConfig.
-  // And it sets its own config.apiURL = coreConfig.siteAPI;
   console.log("[Runtime Config] Core config after runtime init and overrides:", JSON.parse(JSON.stringify(coreConfig)));
 
 } else {
@@ -51,6 +47,18 @@ if (window.runtimeConfig) {
   // For now, it will use coreConfig's initial default.
 }
 // --- END RUNTIME CONFIG INITIALIZATION ---
+
+// Now we need to make sure the frontend config gets the updated values from core config
+// This is a critical fix to ensure WebSockets work correctly!
+// Import the config module after runtime configuration is applied
+import frontendConfig from "@client/config";
+// Force update apiURL in shared-client config
+(frontendConfig as any).apiURL = coreConfig.siteAPI;
+console.log(`[Runtime Config] Ensuring apiURL is set to siteAPI: ${coreConfig.siteAPI}`);
+
+// Now import our app config which extends the frontend config
+import "./config";
+import { App } from "./App";
 
 const container = document.getElementById("root");
 const root = createRoot(container as HTMLDivElement);
