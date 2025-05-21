@@ -14,10 +14,26 @@ export interface SiteFrontendConfig extends FrontendConfig {
   tenorAPIKey: string;
 }
 
+// Debug the incoming frontendConfig
+console.log("[SITE CONFIG] Initial frontendConfig:", {
+  siteAPI: frontendConfig.siteAPI,
+  apiURL: (frontendConfig as any).apiURL,
+  env: frontendConfig.env
+});
+
 const config = frontendConfig as SiteFrontendConfig;
 
+// CRITICAL FIX: Always force apiURL to match siteAPI
 config.system = "site-frontend";
 config.apiURL = config.siteAPI;
+
+// Debug after setting apiURL
+console.log("[SITE CONFIG] After setting apiURL:", {
+  siteAPI: config.siteAPI,
+  apiURL: config.apiURL,
+  env: config.env
+});
+
 config.version = "9.0.0";
 config.twitterHandle = "@chickendotgg";
 config.twitterURL = "https://x.com/chickendotgg";
@@ -40,6 +56,13 @@ if (config.env === "development" || config.env === "devcloud") {
   config.hcaptchaSiteKey = "cb71e513-51c1-458d-b122-1e0b81d571aa";
   config.pushPublicKey =
     "BJWirlm9gty64bCzIjWOSHhZPCLAmUyaroN9kf6H1ptm50qUwpOZZQIqqnPCNctAoNASvJFeaH6C740P2Y0x8J0";
+}
+
+// Final check to ensure apiURL is still correct
+if (config.apiURL !== config.siteAPI) {
+  console.error("[SITE CONFIG] CRITICAL ERROR: apiURL does not match siteAPI after configuration!");
+  // Force it one more time to be absolutely sure
+  (config as any).apiURL = config.siteAPI;
 }
 
 console.log("[Site Frontend Config] Final initialized config:", JSON.parse(JSON.stringify(config)));
