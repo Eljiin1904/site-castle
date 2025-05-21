@@ -28,7 +28,7 @@ export function initHttp() {
           "http://127.0.0.1:3001",
           "http://localhost:3001",
         ],
-        staging: [`https://admin.staging.${domain}`],
+        staging: [`https://admin.stage.${domain}`],
         production: [`https://admin.${domain}`],
       }[env],
       credentials: true,
