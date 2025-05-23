@@ -71,7 +71,7 @@ export const minesSlice = createSlice({
         inserted: true,
       });
 
-      if (feed.length > 10) {
+      if (feed.length > Mines.feedLogSize) {
         feed.pop();
       }
 
