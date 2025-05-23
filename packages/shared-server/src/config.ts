@@ -73,7 +73,7 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
 
     console.log("fetching secrets");
     let env = config.env as string;
-    if (config.env === "devcloud" || config.env === "staging") {
+    if (config.env === "devcloud") {
       console.log("The corrent environment is being used is : ", config.env);
       env = "development";
     }
