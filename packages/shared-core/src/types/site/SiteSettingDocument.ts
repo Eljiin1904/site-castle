@@ -43,6 +43,13 @@ interface XpSettings {
   diceXpRate: number;
   limboXpRate: number;
   minesXpRate: number;
+  blackjackXpRate: number;
+
+  blackjackInsuranceXpRate: number;
+  blackjackLuckyLadiesXpRate: number;
+  blackjackBlackjack15xXpRate: number;
+  blackjackPerfectPairsXpRate: number;
+  blackjack213XpRate: number;
 }
 
 interface RainSettings {

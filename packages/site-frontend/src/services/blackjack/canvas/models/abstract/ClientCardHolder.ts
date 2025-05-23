@@ -7,7 +7,7 @@ import {
   BlackjackClientCardHolderData,
   BlackjackClientHandData,
   BlackjackClientPlayerHandData,
-} from "#core/types/blackjack/BlackjackApiResponse";
+} from "@core/types/blackjack/BlackjackApiResponse";
 import { Point } from "../../vectors/Point";
 
 type Opts = {

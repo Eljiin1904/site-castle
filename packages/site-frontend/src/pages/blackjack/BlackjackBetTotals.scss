@@ -16,6 +16,8 @@
 	flex-direction: column;
 	gap: 13px;
 	justify-content: center;
+	background-color:   rgba(#1D1A19B2, 0.5);
+	padding: 20px;
 
 	.Item {
 		display: flex;
@@ -27,7 +29,7 @@
 			width: 90px;
 		}
 		.value {
-			color: #fff8;
+			// color: #fff8;
 			display: flex;
 			align-items: center;
 			gap: 5px;
@@ -46,6 +48,8 @@
 	.sep {
 		display: none;
 		// flex: 0 0 auto;
+		border-top: 3rem solid ;
+		color: "#7C7870"
 	}
 }
 
@@ -97,7 +101,7 @@
 
 			// overriding Chicken presets
 			.label, .value .text {
-				color: #fff;
+				// color: #fff;
 			}
 
 			.label {

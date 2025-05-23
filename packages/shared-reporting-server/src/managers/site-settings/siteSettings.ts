@@ -25,6 +25,12 @@ async function main() {
   await insertDefault("diceXpRate", 0.6);
   await insertDefault("limboXpRate", 0.6);
   await insertDefault("minesXpRate", 1.5);
+  await insertDefault("blackjackXpRate", 1);
+  await insertDefault("blackjackInsuranceXpRate", 1);
+  await insertDefault("blackjackLuckyLadiesXpRate", 1);
+  await insertDefault("blackjackBlackjack15xXpRate", 1);
+  await insertDefault("blackjackPerfectPairsXpRate", 1);
+  await insertDefault("blackjack213XpRate", 1);
 
   await insertDefault("rainTaxRate", 0.01);
   await insertDefault("rainBaseAmount", 10.0);
@@ -48,10 +54,10 @@ async function main() {
   await insertDefault("limboEnabled", true);
   await insertDefault("minesEnabled", true);
   await insertDefault("blackjackEnabled", true);
-  await insertDefault("blackjackLuckyLadiesEnabled", false);
-  await insertDefault("blackjackBlackjack15xEnabled", false);
-  await insertDefault("blackjackPerfectPairsEnabled", false);
-  await insertDefault("blackjack213Enabled", false);
+  await insertDefault("blackjackLuckyLadiesEnabled", true);
+  await insertDefault("blackjackBlackjack15xEnabled", true);
+  await insertDefault("blackjackPerfectPairsEnabled", true);
+  await insertDefault("blackjack213Enabled", true);
 
   await insertDefault("activityThreshold", 0.01);
   await insertDefault("betHighrollerThreshold", 100);

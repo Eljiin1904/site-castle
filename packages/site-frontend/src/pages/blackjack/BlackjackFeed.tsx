@@ -1,6 +1,6 @@
-import { Div } from "#client/comps/div/Div";
-import { PageTitle } from "#client/comps/page/PageTitle";
-import { SvgLive } from "#client/svgs/common/SvgLive";
+import { Div } from "@client/comps/div/Div";
+import { PageTitle } from "@client/comps/page/PageTitle";
+import { SvgLive } from "@client/svgs/common/SvgLive";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./BlackjackFeed.scss";
 import { BlackjackFeedCard } from "./BlackjackFeedCard";

@@ -1,14 +1,14 @@
 import config from "#app/config";
-import { BlackjackClientCardData } from "#core/types/blackjack/BlackjackApiResponse";
+import { BlackjackClientCardData } from "@core/types/blackjack/BlackjackApiResponse";
 import { CardData } from "@core/types/blackjack/CardData";
 import { isWebPSupported } from "./detectWebP";
 
 const ext = isWebPSupported ? "webp" : "jpg";
-const path = `${config.staticURL}/games/blackjack/cards`;
-const pathV2 = `${config.staticURL}/games/blackjack/cards/v2`;
+const path = `${config.staticURL}/graphics/games/blackjack/cards`;
+const pathV2 = `${config.staticURL}/graphics/games/blackjack/cards/v2`;
 // placeholder cards
 // export const old_backImagePath = `${path}/back.${ext}`;
-export const backImagePath = `${path}/card-back.svg`;
+export const backImagePath = `${path}/back_card.png`;
 export const deckImagePath = `${path}/deck.svg`;
 
 const format: { [k in CardData["value"]]?: string } = {

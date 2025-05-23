@@ -3,7 +3,7 @@ import {
   useGame,
   useInsurancePending,
 } from "#app/services/blackjack/redux/selectors";
-import { Conditional } from "#client/comps/conditional/Conditional";
+import { Conditional } from "@client/comps/conditional/Conditional";
 import BlackjackGameOverActions from "./BlackjackGameOverActions";
 import { BlackjackInsuranceActions } from "./BlackjackInsuranceActions";
 import BlackjackPlayActions from "./BlackjackPlayActions";

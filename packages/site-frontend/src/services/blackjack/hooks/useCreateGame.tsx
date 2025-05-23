@@ -1,7 +1,7 @@
-import { Intimal } from "#core/services/intimal";
-import { usePost } from "#client/hooks/system/usePost";
-import { Dialogs } from "#client/services/dialogs";
-import { Validation } from "#core/services/validation";
+import { Intimal } from "@core/services/intimal";
+import { usePost } from "@client/hooks/system/usePost";
+import { Dialogs } from "@client/services/dialogs";
+// import { Validation } from "#core/services/validation";
 import { useBet2fa } from "#app/hooks/security/useBet2fa";
 import { useBetConfirmation } from "#app/hooks/security/useBetConfirmation";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
@@ -10,7 +10,7 @@ import { LoginModal } from "#app/modals/login/LoginModal";
 import { Gtm } from "#app/services/gtm";
 import postCreateGame from "../api/postCreateGame";
 import { setGame, setProcessing } from "../Blackjack";
-import { getTotalBetAmount } from "#core/services/blackjack/utils/getTotalBetAmount";
+import { getTotalBetAmount } from "@core/services/blackjack/utils/getTotalBetAmount";
 // import { useKycTierRequirement } from "#app/hooks/kyc/useKycTierRequirement";
 
 export function useCreateGame() {

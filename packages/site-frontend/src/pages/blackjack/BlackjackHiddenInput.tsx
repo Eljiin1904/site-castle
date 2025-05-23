@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
 import { maxBet } from "@core/services/blackjack/Blackjack";
-import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
-import { Vector } from "#client/comps/vector/Vector";
+import { Vector } from "@client/comps/vector/Vector";
+import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
+
 import "./BlackjackHiddenInput.scss";
 
 export type HiddenInputAlign = "left" | "center" | "right";
@@ -57,7 +58,7 @@ export const BlackjackHiddenInput = ({
       <div className="currency-overlay">
         <Vector
           className="icon"
-          as={SvgSiteToken}
+          as={SvgDollarSign}
           size={14}
         />
         <div className="hidden-text">{textValue}</div>

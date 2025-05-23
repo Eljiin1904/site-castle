@@ -1,8 +1,8 @@
 import "./BlackjackGameOverActions.scss";
 import { usePayoutAmount, usePlayer } from "../../services/blackjack/redux/selectors";
-import { Vector } from "#client/comps/vector/Vector";
-import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
-import { Intimal } from "#core/services/intimal";
+import { Vector } from "@client/comps/vector/Vector";
+import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
+import { Intimal } from "@core/services/intimal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BlackjackButton } from "./BlackjackButton";
 import { useCallback } from "react";
@@ -39,7 +39,7 @@ export default function BlackjackGameOverActions() {
             <span>+</span>
             <Vector
               className="icon"
-              as={SvgSiteToken}
+              as={SvgDollarSign}
               size={14}
             />
             <span>{Intimal.toDecimal(totalPayout)}</span>

@@ -14,7 +14,7 @@ import {
   SPLIT_CARD_MOVE_TIME,
 } from "../config";
 import { loadImage } from "../utils/loadImage";
-import { BlackjackClientCardData } from "#core/types/blackjack/BlackjackApiResponse";
+import { BlackjackClientCardData } from "@core/types/blackjack/BlackjackApiResponse";
 import EventEmitter from "../helpers/EventEmitter";
 import createFrontImage from "./helpers/createFrontImage";
 
@@ -205,6 +205,7 @@ export default class ClientCard {
           frontP,
       ClientCard.loadBackImage(),
     ]);
+
     this.frontImage = frontImage;
   }
 

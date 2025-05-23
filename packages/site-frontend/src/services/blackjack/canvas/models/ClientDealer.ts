@@ -1,4 +1,4 @@
-import { BlackjackClientCardHolderData } from "#core/types/blackjack/BlackjackApiResponse";
+import { BlackjackClientCardHolderData } from "@core/types/blackjack/BlackjackApiResponse";
 import { CanvasPositionOpts } from "../helpers/Canvas";
 import EventEmitter from "../helpers/EventEmitter";
 import ClientCardHolder from "./abstract/ClientCardHolder";

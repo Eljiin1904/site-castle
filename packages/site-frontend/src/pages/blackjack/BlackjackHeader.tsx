@@ -12,11 +12,12 @@ import { Dialogs } from "@client/services/dialogs";
 import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
 import { SvgCheckCircle } from "@client/svgs/common/SvgCheckCircle";
 import { SvgCog } from "@client/svgs/common/SvgCog";
-import { SvgInfoCircle } from "#client/svgs/common/SvgInfoCircle";
-import { useCallback } from "react";
+import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
+import { Fragment, useCallback } from "react";
 import { BlackjackInfoModal } from "./modals/BlackjackInfoModal";
 import { BlackjackDebugModal } from "./modals/BlackjackDebugModal";
 import config from "#app/config";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 // import { useTranslation } from "@client/hooks/localization/useTranslation";
 
 export const BlackjackHeader = () => {
@@ -44,17 +45,17 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
   // const { t } = useTranslation();
   return (
     <Div fx>
-      <PageTitle
+      {/* <PageTitle
         heading={"Blackjack"}
         icon={SvgBlackjack}
-      />
+      /> */}
       <Div gap={8}>
         <VolumeDropdown prefix="blackjack" />
         <Dropdown
           type="menu"
           button={
             <Button
-              kind="secondary"
+              kind="tertiary-black-overlay"
               icon={SvgCog}
             />
           }
@@ -86,14 +87,14 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
 };
 
 const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Div fx>
-      <PageTitle
+      {/* <PageTitle
         // heading={t.games("blackjack")}
         heading={"Blackjack"}
         icon={SvgBlackjack}
-      />
+      /> */}
       <Div
         fx
         align="flex-start"
@@ -108,7 +109,7 @@ const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
             onClick={() => Dialogs.open("primary", <BlackjackDebugModal />)}
           />
         )}
-        <Button
+        {/* <Button
           kind="secondary"
           // icon={SvgInfoCircle}
           // label={t.gameplay("theme")}
@@ -128,7 +129,22 @@ const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
           kind="secondary"
           icon={SvgInfoCircle}
           onClick={() => Dialogs.open("primary", <BlackjackInfoModal />)}
-        />
+        /> */}
+        <Fragment>
+          <Button
+            kind="tertiary-black-overlay"
+            icon={SvgCheckCircle}
+            label={t("menu.fairness")}
+            onClick={() =>
+              Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/blackjack" />)
+            }
+          />
+          <Button
+            kind="tertiary-black-overlay"
+            icon={SvgInfoCircle}
+            onClick={() => Dialogs.open("primary", <BlackjackInfoModal />)}
+          />
+        </Fragment>
         <VolumeDropdown prefix="blackjack" />
       </Div>
     </Div>

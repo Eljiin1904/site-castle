@@ -1,5 +1,5 @@
-import { usePost } from "#client/hooks/system/usePost";
-import { Dialogs } from "#client/services/dialogs";
+import { usePost } from "@client/hooks/system/usePost";
+import { Dialogs } from "@client/services/dialogs";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { LoginModal } from "#app/modals/login/LoginModal";

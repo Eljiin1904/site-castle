@@ -1,7 +1,7 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Dialogs } from "#client/services/dialogs";
-import { kycTiers } from "#core/services/validation/Validation";
-import { ModalKind } from "#client/services/dialogs/Dialogs";
+import { Dialogs } from "@client/services/dialogs";
+import { kycTiers } from "@core/services/validation/Validation";
+import { ModalKind } from "@client/services/dialogs/Dialogs";
 import { Validation } from "@core/services/validation";
 import { tierOneVerification, tierTwoVerification, tierThreeVerification } from "./tiers/tiers";
 

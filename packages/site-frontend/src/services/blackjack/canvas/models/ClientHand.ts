@@ -8,7 +8,7 @@ import EventEmitter from "../helpers/EventEmitter";
 import {
   BlackjackClientCardData,
   BlackjackClientPlayerHandData,
-} from "#core/types/blackjack/BlackjackApiResponse";
+} from "@core/types/blackjack/BlackjackApiResponse";
 import { getCombinedValues } from "@core/services/blackjack/Blackjack";
 
 type Opts = {

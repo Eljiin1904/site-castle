@@ -29,6 +29,7 @@ export async function createBet({
 } & BetData) {
   const { rainTaxRate, gemRate } = await Site.settings.cache();
   const category = Transactions.getCategory(data.kind);
+
   // If edge Rate provided, use it else check for it
   const edge = edgeRate ? edgeRate : getEdgeRate(category);
   const ev = Math.round(betAmount * edge);
@@ -40,7 +41,13 @@ export async function createBet({
     value: Math.round(ev * 0.5),
   });
 
-  const xpRate = await getXpRate(category);
+  // const xpRate = await getXpRate(category);
+  const xpRate = await getXpRate({
+    category: category,
+    data: data as TransactionKindData,
+    edgeRate: edge,
+  });
+
   const xp = Math.round(betAmount * xpRate);
 
   const gems = Math.round(xp / gemRate);

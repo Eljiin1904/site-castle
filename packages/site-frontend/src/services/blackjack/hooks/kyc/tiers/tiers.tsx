@@ -1,5 +1,5 @@
-import { Dialogs } from "#client/services/dialogs";
-import { ModalKind } from "#client/services/dialogs/Dialogs";
+import { Dialogs } from "@client/services/dialogs";
+import { ModalKind } from "@client/services/dialogs/Dialogs";
 import { UserEmailConfirmModal } from "#app/modals/user/UserEmailConfirmModal";
 import { VerificationTwoModal } from "#app/modals/verification/VerificationTwoModal";
 import { VerificationThreeModal } from "#app/modals/verification/VerificationThreeModal";

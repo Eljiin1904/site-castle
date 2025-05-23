@@ -65,6 +65,48 @@ export const XpCard = ({
         inputType="decimal"
         onEdit={onEdit}
       />
+      <FieldSection
+        settings={settings}
+        id="blackjackXpRate"
+        label="Blackjack"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackInsuranceXpRate"
+        label="Insurance"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackLuckyLadiesXpRate"
+        label="Lucky Ladies"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackBlackjack15xXpRate"
+        label="Blackjack 15x"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackPerfectPairsXpRate"
+        label="Perfect Pairs"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjack213XpRate"
+        label="21+3"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
     </FieldCard>
   );
 };

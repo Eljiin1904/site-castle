@@ -1,4 +1,4 @@
-import { BlackjackClientCardData } from "#core/types/blackjack/BlackjackApiResponse";
+import { BlackjackClientCardData } from "@core/types/blackjack/BlackjackApiResponse";
 import { getSuitImage } from "./suitSvgs";
 import { CARD_DIMS } from "../../config";
 import loadSuitIcon from "./loadSuitIcon";

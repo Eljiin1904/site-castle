@@ -2,8 +2,8 @@ import { Point } from "../../vectors/Point";
 import { RenderArg } from "../../helpers/Canvas";
 import EventEmitter from "../../helpers/EventEmitter";
 import { CARD_DIMS } from "../../config";
-import { BlackjackHandInfo } from "#core/types/blackjack/BlackjackApiResponse";
-import { BlackjackHandPayout } from "#core/types/blackjack/BlackjackHandPayout";
+import { BlackjackHandInfo } from "@core/types/blackjack/BlackjackApiResponse";
+import { BlackjackHandPayout } from "@core/types/blackjack/BlackjackHandPayout";
 
 export type Owner = "player" | "dealer";
 type Opts = {

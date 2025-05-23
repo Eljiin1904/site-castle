@@ -1,6 +1,8 @@
 import "./BlackjackGameCanvas.scss";
 import { useWorld } from "../../services/blackjack/redux/selectors";
 import { useEffect } from "react";
+import { BlackjackHeader } from "./BlackjackHeader";
+import { Div } from "@client/comps/div/Div";
 
 export const BlackjackGameCanvas = ({}: {}) => {
   const world = useWorld();
@@ -15,6 +17,16 @@ export const BlackjackGameCanvas = ({}: {}) => {
 
   return (
     <div className="BlackjackGameCanvas">
+      <Div
+        mt={20}
+        pr={20}
+        width={"full"}
+        align={"flex-end"}
+        justify="flex-end"
+        zIndex={10}
+      >
+        <BlackjackHeader />
+      </Div>
       <div id="blackjack-game" />
     </div>
   );

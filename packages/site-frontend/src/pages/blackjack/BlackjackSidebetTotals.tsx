@@ -1,8 +1,9 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useGame } from "#app/services/blackjack/redux/selectors";
 import { Vector } from "#client/comps/vector/Vector";
-import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
 import { Intimal } from "#core/services/intimal";
+import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
+
 import "./BlackjackSidebetTotals.scss";
 
 export const BlackjackSidebetTotals = ({}: {}) => {
@@ -34,7 +35,7 @@ export const BlackjackSidebetTotals = ({}: {}) => {
                 <span>+</span>
                 <Vector
                   className="icon"
-                  as={SvgSiteToken}
+                  as={SvgDollarSign}
                   size={14}
                 />
                 <span>{Intimal.toDecimal(payout.amount)}</span>

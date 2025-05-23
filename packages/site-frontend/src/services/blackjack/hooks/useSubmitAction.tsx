@@ -1,7 +1,7 @@
-import { Intimal } from "#core/services/intimal";
-import { Validation } from "#core/services/validation";
-import { usePost } from "#client/hooks/system/usePost";
-import { Dialogs } from "#client/services/dialogs";
+import { Intimal } from "@core/services/intimal";
+import { Validation } from "@core/services/validation";
+import { usePost } from "@client/hooks/system/usePost";
+import { Dialogs } from "@client/services/dialogs";
 import { useBetConfirmation } from "#app/hooks/security/useBetConfirmation";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
@@ -11,6 +11,7 @@ import { setGame, setProcessing } from "../Blackjack";
 import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import postAction from "../api/postAction";
 import { useBet2fa } from "#app/hooks/security/useBet2fa";
+import { useKycTierRequirement } from "./kyc/useKycTierRequirement";
 // import { useKycTierRequirement } from "#app/hooks/kyc/useKycTierRequirement";
 
 export function useSubmitAction() {

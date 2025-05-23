@@ -2,11 +2,12 @@ import "./BlackjackInsuranceActions.scss";
 import { useCallback } from "react";
 import { useMainBet } from "../../services/blackjack/redux/selectors";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Intimal } from "#core/services/intimal";
+import { Intimal } from "@core/services/intimal";
 import { getInsuranceBetAmount } from "#app/services/blackjack/Blackjack";
 import { useSubmitAction } from "#app/services/blackjack/hooks/useSubmitAction";
-import { Vector } from "#client/comps/vector/Vector";
-import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
+import { Vector } from "@client/comps/vector/Vector";
+import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
+
 import { BlackjackButton } from "./BlackjackButton";
 
 export const BlackjackInsuranceActions = ({}: {}) => {
@@ -32,12 +33,10 @@ export const BlackjackInsuranceActions = ({}: {}) => {
         <div className="amount">
           <Vector
             className="icon"
-            as={SvgSiteToken}
+            as={SvgDollarSign}
             size={14}
           />
-          <div className="gold">
-            {Intimal.toDecimal(getInsuranceBetAmount(mainBet))}
-          </div>
+          <div className="gold">{Intimal.toDecimal(getInsuranceBetAmount(mainBet))}</div>
         </div>
         <div className="desc">?</div>
       </div>

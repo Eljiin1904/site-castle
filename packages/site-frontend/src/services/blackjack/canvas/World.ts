@@ -4,7 +4,7 @@ import Canvas from "./helpers/Canvas";
 import EventEmitter from "./helpers/EventEmitter";
 import { Owner } from "./models/helpers/HandInfo";
 import ClientDeck from "./models/ClientDeck";
-import { BlackjackClientGameData } from "#core/types/blackjack/BlackjackApiResponse";
+import { BlackjackClientGameData } from "@core/types/blackjack/BlackjackApiResponse";
 
 type Arg = {
   game: BlackjackClientGameData;

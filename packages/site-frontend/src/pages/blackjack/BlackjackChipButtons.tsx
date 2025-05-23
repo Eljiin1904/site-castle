@@ -11,7 +11,7 @@ import { entries, values } from "@core/services/utility/Utility";
 import { BlackjackButton } from "./BlackjackButton";
 import { store } from "#app/store";
 import { getWarnBetItems } from "./helpers/getWarnBetItems";
-import { useSoundPlayer } from "#client/hooks/sounds/useSoundPlayer";
+import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
 import { getRandomChipSound } from "./utils/blackjackSounds";
 // import { useTranslation } from "#client/hooks/localization/useTranslation";
 

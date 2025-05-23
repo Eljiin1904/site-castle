@@ -16,8 +16,9 @@ export const BlackjackPage = () => {
       title={"Blackjack"}
     >
       <BlackjackManager />
-      <BlackjackHeader />
+      {/* <BlackjackHeader /> */}
       <BlackjackView />
+
       {/* <BlackjackFe
       ed /> */}
       <BetBoard

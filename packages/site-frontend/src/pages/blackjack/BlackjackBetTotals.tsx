@@ -1,12 +1,16 @@
 import "./BlackjackBetTotals.scss";
-import { entries } from "#client/services/utility/Utility";
-import { Vector } from "#client/comps/vector/Vector";
-import { SvgSiteToken } from "#client/svgs/site/SvgSiteToken";
-import { Intimal } from "#core/services/intimal";
+import { entries } from "@client/services/utility/Utility";
+import { Vector } from "@client/comps/vector/Vector";
+import { Intimal } from "@core/services/intimal";
 import { BlackjackSidebetTotals } from "./BlackjackSidebetTotals";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useDisplayBetAmounts } from "./useDisplayBetAmounts";
+import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
+import { Span } from "@client/comps/span/Span";
+import { Divider } from "@client/comps/divider/Divider";
+
 // import { useTranslation } from "#client/hooks/localization/useTranslation";
+import { Div } from "@client/comps/div/Div";
 
 export const BlackjackBetTotals = ({}: {}) => {
   return (
@@ -29,37 +33,65 @@ function MainBetTotals() {
   const total = mainBet + sideBets;
 
   return (
-    <div className="MainBetTotals">
+    <Span
+      className="MainBetTotals"
+      fx
+      gap={16}
+      width={200}
+      bg={"tertiary-black-overlay"}
+      align={"center"}
+    >
       <Item
         label={"Side Bets"}
         value={sideBets}
       />
-      <div className="sep" />
+      <Divider
+        as={"div"}
+        borderColor={"brown-6"}
+      />
       <Item
         label={"Main Bet"}
         value={mainBet}
       />
-      <div className="sep" />
+
+      <Divider
+        as={"div"}
+        borderColor={"brown-6"}
+      />
       <Item
         label={"Total Bet"}
         value={total}
       />
-    </div>
+    </Span>
   );
 }
 
 function Item({ label, value }: { label: string; value: number }) {
   return (
-    <div className="Item">
-      <div className="label">{label}</div>
+    <Div
+      className="Item"
+      justifyContent="space-between"
+    >
+      <Span
+        className="label"
+        color={"dark-sand"}
+      >
+        {label}
+      </Span>
       <div className="value">
         <Vector
           className="icon"
-          as={SvgSiteToken}
+          as={SvgDollarSign}
           size={14}
+          color={"light-sand"}
         />
-        <div className="text">{Intimal.toDecimal(value)}</div>
+        <Span
+          className="text"
+          color={"light-sand"}
+        >
+          {Intimal.toDecimal(value)}
+        </Span>
       </div>
-    </div>
+    </Div>
   );
 }

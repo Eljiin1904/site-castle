@@ -1,7 +1,7 @@
 import "./BlackjackButton.scss";
 import { useCallback, useState } from "react";
 import classNames from "classnames";
-import { Vector } from "#client/comps/vector/Vector";
+import { Vector } from "@client/comps/vector/Vector";
 import { getBlackjackButtonIcon } from "./utils/getBlackjackButtonIcon";
 
 export const BlackjackButton = ({

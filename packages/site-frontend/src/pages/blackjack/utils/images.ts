@@ -1,7 +1,7 @@
 import config from "#app/config";
 import { isWebPSupported } from "#app/services/blackjack/canvas/utils/detectWebP";
 import { backImagePath } from "#app/services/blackjack/canvas/utils/getCardImagePath";
-import { values } from "#client/services/utility/Utility";
+import { values } from "@client/services/utility/Utility";
 import { convertPathToWebp } from "./convertPathToWebp";
 import { chipImages } from "./getChipImage";
 
