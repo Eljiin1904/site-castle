@@ -16,10 +16,13 @@ export const AppManager = ({ children }: { children: any }) => {
   const maintenance = useAppSelector((x) => x.site.settings.maintenance);
 
   const expectedVersion = useAppSelector((x) => x.site.settings.version);
-  const {ready} = useTranslation();
+  const { ready } = useTranslation();
 
   const isValidVersion =
-    config.version === expectedVersion || config.env === "development" || config.env === "devcloud";
+    config.version === expectedVersion ||
+    config.env === "development" ||
+    config.env === "devcloud" ||
+    config.env === "staging";
 
   const userInitialized = useAppSelector((x) => x.user.initialized);
   const role = useAppSelector((x) => x.user.role);
