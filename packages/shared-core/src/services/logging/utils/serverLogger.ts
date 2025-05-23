@@ -53,6 +53,7 @@ const createLogger = (options: LoggerConfig) => {
           format: combine(colorize(), simple()),
         }),
       ],
+
     // : [
     //     new CloudWatchTransport({
     //       logGroupName: options.logGroupName,
