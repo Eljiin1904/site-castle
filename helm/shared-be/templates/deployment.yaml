@@ -27,17 +27,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: envoy
-          image: "{{ .Values.envoy.image }}"
-          ports:
-            - name: https
-              containerPort: {{ .Values.envoy.port }}
-          volumeMounts:
-            - name: envoy-config
-              mountPath: /etc/envoy
-            - name: tls-certs
-              mountPath: /etc/certs
-              readOnly: true
         - name: castle-backend
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
           imagePullPolicy: {{ .Values.image.app.pullPolicy }}
@@ -50,6 +39,12 @@ spec:
           env:
             - name: PORT
               value: "{{ .Values.app.port }}"
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+            - name: APP_ENV
+              value: {{ .Values.environment }}
+            - name: env
+              value: {{ .Values.environment }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

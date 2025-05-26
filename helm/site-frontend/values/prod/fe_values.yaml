@@ -1,10 +1,20 @@
 replicaCount: 1
 
+environment: "production"
+
 image:
   app:
     repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend"
     pullPolicy: Always
     tag: "latest"
+
+runtimeConfig:
+  appEnvName: "production"
+  siteUrl: "https://brickrax.com"
+  siteApi: "https://api.brickrax.com"
+  adminUrl: "https://admin.brickrax.com"
+  adminApi: "https://aapi.brickrax.com"
+  staticUrl: "https://font.brickrax.com"
 
 imagePullSecrets: []
 nameOverride: ""

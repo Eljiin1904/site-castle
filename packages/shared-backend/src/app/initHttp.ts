@@ -21,8 +21,8 @@ export function initHttp(app = express()) {
     cors({
       origin: {
         development: ["http://127.0.0.1:3000", "http://localhost:3000"],
-        devcloud: [`https://dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
-        staging: [`https://staging.${domain}`],
+        devcloud: [`https://dev.${domain}`, `https://api.dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
+        staging: [`https://stage.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
       }[env],
       credentials: true,

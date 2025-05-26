@@ -5,10 +5,12 @@
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
+environment: "staging"  
+
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   app:
-    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/shared-game-server"
+    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-game-server"
     pullPolicy: Always
     tag: "latest"
   # envoy:
@@ -64,7 +66,7 @@ ingress:
   enabled: false
 
 secrets:
-  app: "stage-shared-game-server"
+  app: shared-game-server
   
 service:
   type: ClusterIP

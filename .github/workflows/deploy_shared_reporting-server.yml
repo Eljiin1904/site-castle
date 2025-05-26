@@ -11,7 +11,63 @@ on:
       - ".github/workflows/deploy_shared_reporting-server.yml"
 
 jobs:
+  check-base-image:
+    uses: ./.github/workflows/check_base_image_changes.yml
+    secrets: inherit
+
+  # Add a job to check for concurrent base image builds
+  check-base-image-status:
+    needs: check-base-image
+    runs-on: ubuntu-latest
+    outputs:
+      should_wait: ${{ steps.check-status.outputs.should_wait }}
+    steps:
+      - name: Check if base image is building
+        id: check-status
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          # Check if the base image check workflow indicated a build is happening
+          if [[ "${{ needs.check-base-image.outputs.base_image_building }}" == "true" ]]; then
+            echo "Base image is being built. Setting should_wait to true."
+            echo "should_wait=true" >> $GITHUB_OUTPUT
+          else
+            # Check if there's a concurrent build_base_image workflow already running
+            CONCURRENT_BASE_IMAGE_BUILD=$(gh api /repos/${{ github.repository }}/actions/runs?status=in_progress&event=push | jq '.workflow_runs[] | select(.name=="Castle Base Image CI") | .id' | wc -l | xargs)
+            if [[ "$CONCURRENT_BASE_IMAGE_BUILD" -gt 0 ]]; then
+              echo "Concurrent base image build detected. Setting should_wait to true."
+              echo "should_wait=true" >> $GITHUB_OUTPUT
+            else
+              echo "No base image build in progress. Setting should_wait to false."
+              echo "should_wait=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  # Wait for base image build if needed
+  wait-for-base-image:
+    needs: check-base-image-status
+    if: needs.check-base-image-status.outputs.should_wait == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for base image build to complete
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          echo "Waiting for base image build to complete..."
+          # Loop until no more base image builds are in progress
+          while true; do
+            RUNNING_BASE_BUILDS=$(gh api /repos/${{ github.repository }}/actions/runs?status=in_progress&event=push | jq '.workflow_runs[] | select(.name=="Castle Base Image CI") | .id' | wc -l | xargs)
+            if [[ "$RUNNING_BASE_BUILDS" -eq 0 ]]; then
+              echo "Base image build completed. Proceeding with reporting server build."
+              break
+            fi
+            echo "Base image build still in progress. Waiting 30 seconds..."
+            sleep 30
+          done
+
   build-and-push-shared-reporting-server:
+    needs: [check-base-image-status, wait-for-base-image]
+    if: always() && (needs.check-base-image-status.outputs.should_wait != 'true' || needs.wait-for-base-image.result == 'success' || needs.wait-for-base-image.result == 'skipped')
     runs-on: ubuntu-latest
     environment: dev
     outputs:
@@ -70,6 +126,7 @@ jobs:
 
   update-argocd-dev:
     needs: build-and-push-shared-reporting-server
+    if: ${{ !failure() }}
     environment: dev
     runs-on: ubuntu-latest
     steps:
@@ -82,3 +139,19 @@ jobs:
           argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
           argocd app set shared-reporting-server --helm-set image.app.tag=${{ needs.build-and-push-shared-reporting-server.outputs.image_tag }}
           argocd app sync shared-reporting-server --async
+
+  update-argocd-stage:
+    needs: build-and-push-shared-reporting-server
+    if: ${{ !failure() }}
+    environment: stage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+      - name: Update ArgoCD Application for STAGE
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER_STAGE }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
+          argocd app set reporting-server --helm-set image.app.tag=${{ needs.build-and-push-shared-reporting-server.outputs.image_tag }}
+          argocd app sync reporting-server --async

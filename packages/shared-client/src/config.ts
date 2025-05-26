@@ -1,10 +1,9 @@
-import coreConfig, { CoreConfig, setEnvironment } from "@core/config";
+import coreConfig, { CoreConfig } from "@core/config";
+import { SystemEnvironment } from "@core/types/system/SystemEnvironment";
 
 export interface FrontendConfig extends CoreConfig {
   apiURL: string;
 }
-
-setEnvironment(process.env.APP_ENV);
 
 const config = coreConfig as FrontendConfig;
 

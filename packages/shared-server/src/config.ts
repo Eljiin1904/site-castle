@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import coreConfig, { CoreConfig, setEnvironment } from "@core/config";
+import { SystemEnvironment } from "@core/types/system/SystemEnvironment";
 
 const filePath = fileURLToPath(import.meta.url);
 const directory = path.dirname(filePath);
@@ -50,7 +51,13 @@ export interface ServerConfig extends CoreConfig {
   sumsubSecretKey: string;
 }
 
-setEnvironment(process.env.NODE_ENV);
+const env = process.env.env || process.env.NODE_ENV || "development";
+if (["development", "devcloud", "staging", "production"].includes(env)) {
+  setEnvironment(env as SystemEnvironment);
+} else {
+  console.warn(`Invalid environment: ${env}, defaulting to development`);
+  setEnvironment("development");
+}
 
 const config = coreConfig as ServerConfig;
 
@@ -61,10 +68,13 @@ config.awsRegion = process.env.AWS_REGION;
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
-    console.log("fetching secrets");
+    // Skip secrets loading for staging environment only
+    // This avoids permission issues when dev credentials try to access staging secrets
 
+    console.log("fetching secrets");
     let env = config.env as string;
     if (config.env === "devcloud") {
+      console.log("The corrent environment is being used is : ", config.env);
       env = "development";
     }
 

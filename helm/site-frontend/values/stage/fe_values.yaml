@@ -1,10 +1,20 @@
 replicaCount: 1
 
+environment: "staging"
+
 image:
   app:
     repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend"
     pullPolicy: Always
     tag: "latest"
+
+runtimeConfig:
+  appEnvName: "staging"
+  siteUrl: "https://stage.brickrax.com"
+  siteApi: "https://api.stage.brickrax.com"
+  adminUrl: "https://admin.stage.brickrax.com"
+  adminApi: "https://aapi.stage.brickrax.com"
+  staticUrl: "https://font.brickrax.com"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -71,3 +81,4 @@ namespace: shared-admin-backend
 # Explicit labels to ensure consistency
 labels:
   app: castle-frontend
+

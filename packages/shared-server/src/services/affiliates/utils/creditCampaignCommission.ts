@@ -7,6 +7,18 @@ export async function creditCampaignCommission(tx: TransactionDocument) {
   }
 
   if (tx.referer.kind != "campaign") return;
+
+  await Database.collection("users").updateOne(
+    { _id: tx.affiliate.id },
+    {
+      $inc: {
+        "affiliate.referralXp": tx.bet.xp,
+        "affiliate.commissionBalance": tx.bet.commissionAmount,
+        "affiliate.commissionTotal": tx.bet.commissionAmount,
+      },
+    },
+  );
+
   await Database.collection("user-campaigns").updateOne(
     { _id: tx.referer.id },
     {

@@ -23,6 +23,7 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["chest-reports"]: config.env,
   ["chests"]: config.env,
   ["crypto-quotes"]: config.env,
+  ["crash-records"]: config.env,
   ["crypto-rates"]: config.env,
   ["crypto-sweeps"]: config.env,
   ["crypto-wallets"]: config.env,

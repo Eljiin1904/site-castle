@@ -12,8 +12,8 @@ export const LimboViewMultiplier = () => {
   const isWin = useAppSelector((x) => x.limbo.lastTicket?.won);
   const isAutoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
   const animationOptions = {
-    win: "/graphics/animations/rocket_space_fast",
-    lose: "/graphics/animations/rocket_explode",
+    win: "/graphics/animations/rocket_launch_still",
+    lose: "/graphics/animations/rocket_expl_firec",
     default: "/graphics/animations/rocket_fast",
   };
   const [rocketAnimation, setRocketAnimation] = useState(animationOptions["default"]);
@@ -70,7 +70,7 @@ export const LimboViewMultiplier = () => {
         autoplay={processing || isAutoPlaying}
         muted={true}
         controls={false}
-        playBackSpeed={4}
+        playBackSpeed={8}
         reset={!processing}
         play={(processing != undefined && processing) || isAutoPlaying}
       />

@@ -82,6 +82,7 @@ export interface DatabaseCollections {
   ["chest-games"]: ChestGameDocument;
   ["chest-reports"]: ChestReportDocument;
   ["chests"]: ChestDocument;
+  ["crash-records"]: CrashRecordDocument;
   ["crypto-quotes"]: CryptoQuoteDocument;
   ["crypto-rates"]: CryptoRateDocument;
   ["crypto-sweeps"]: CryptoSweepDocument;

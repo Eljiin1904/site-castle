@@ -2,14 +2,37 @@ name: Castle Base Image CI
 
 on:
   workflow_dispatch:
+  workflow_call:
+    secrets:
+      PIDWIN_READ_ONLY_PAT:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      ARGOCD_SERVER:
+        required: false
+      ARGOCD_SERVER_STAGE:
+        required: false
+      ARGOCD_USERNAME:
+        required: false
+      ARGOCD_PASSWORD:
+        required: false
   push:
     branches:
       - main 
     paths:
-      - "packages/shared-backend/shared-core/**"
-      - "packages/shared-backend/shared-client/**"
-      - "packages/shared-backend/shared-server/**"
+      - "packages/shared-core/**"
+      - "packages/shared-client/**"
+      - "packages/shared-server/**"
+      - "package.json"
+      - "package-lock.json"
+      - "scripts/init.js"
+      - "Dockerfile"
       - ".github/workflows/build_base_image.yml"
+      - "tsconfig.base.json"
+      - "tsconfig.json"
+      - ".eslintrc.js"
 
 jobs:
   build-and-push-base-image:
