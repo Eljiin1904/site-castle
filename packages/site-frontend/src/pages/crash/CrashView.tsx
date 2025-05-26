@@ -1,16 +1,13 @@
 import { Div } from "@client/comps/div/Div";
-// import { DiceViewSlider } from "./DiceViewSlider";
-// import { DiceViewFooter } from "./DiceViewFooter";
-// import { DiceHistory } from "./DiceHistory";
-// import { DiceViewResult } from "./DiceViewResult";
-// import { AutoStatusView } from "./AutoStatusView";
-import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { CrashViewSlider } from "./CrashViewSlider";
-// import { DiceHeader } from "./DiceHeader";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { CrashHistory } from "./CrashHistory";
+import { CrashHeader } from "./CrashHeader";
 
 export const CrashView = () => {
-  const small = useIsMobileLayout();
-
+  const layout = useAppSelector((x) => x.style.mainLayout);  
+  const height = layout === "mobile" ? "500px" : (layout === "tablet" ? "550px" : "650px");
+  
   return (
     <Div
       fx
@@ -20,17 +17,14 @@ export const CrashView = () => {
       bg="brown-8"
       overflow="hidden"
       style={{
-        height: small ? "350px" : "660px",
+        height:height,       
       }}
     >
       <Div fx position="relative" grow>
-        {/* <DiceHeader /> */}
-        {/* {!small && <DiceHistory />} */}
-        {/* <DiceViewResult /> */}
+        <CrashHeader />
+        <CrashHistory />
         <CrashViewSlider />
       </Div>
-      {/* <DiceViewFooter /> */}
-      {/* <AutoStatusView /> */}
     </Div>
   );
 };

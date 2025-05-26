@@ -12,20 +12,24 @@ import { VerificationModal } from "#app/modals/verification/VerificationModal";
 import { Gtm } from "#app/services/gtm";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Crash } from "#app/services/crash";
+import { useInterval } from "usehooks-ts";
 
 export function useManualBet() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
-  const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
-  const betAmount = useAppSelector((x) => x.crash.betAmount);
-  const round = useAppSelector((x) => x.crash.round);  
-  const multiplierKey = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === x.user.id)?.latestCrashEventId);
-
+  const tokenBalance = useAppSelector((x) => x.user.tokenBalance);  
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const confirmBet = useBetConfirmation();
   const bet2fa = useBet2fa();
   const playSound = useSoundPlayer("crash");
   const dispatch = useAppDispatch();
+  const userId  = useAppSelector((x) => x.user._id);
+  const roundTicket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === userId));
+  const targetMultiplier = useAppSelector((x) => x.crash.targetMultiplier);
+  const betNextRound = useAppSelector((x) => x.crash.betNextRound);
+  const betAmount = useAppSelector((x) => x.crash.betAmount);
+  const round = useAppSelector((x) => x.crash.round);
+  
   const {t} = useTranslation();
 
   const handleBet = usePost(
@@ -48,6 +52,11 @@ export function useManualBet() {
         throw new Error("validations:errors.games.notEnoughTokens");
       }
 
+      if(round.status === "completed" || round.status === "simulating") {
+        dispatch(Crash.setBetNextRound(true));
+        return;
+      }
+
       await confirmBet({
         betAmount,
         onConfirmProps: () => ({
@@ -58,23 +67,22 @@ export function useManualBet() {
 
       const betToken = await bet2fa();
 
-       await Crash.postTicket({
-          roundId: round._id,
-          betAmount,
-          betToken,
-        });
+      await Crash.postTicket({
+        roundId: round._id,
+        betAmount,
+        betToken,
+        targetMultiplier,
+      });
+
+      if (!isMounted()) {
+        return;
+      }
   
-        if (!isMounted()) {
-          return;
-        }
-  
-        Gtm.trackBet({
-          game: "crash",
-          tokenAmount: betAmount,
-        });
-      },
-      (x) => dispatch(Crash.setProcessing(x)),
-  );
+      Gtm.trackBet({
+        game: "crash",
+        tokenAmount: betAmount,
+      });
+  });
 
   const handleCashout = usePost(
     
@@ -95,7 +103,6 @@ export function useManualBet() {
       if (betAmount > tokenBalance) {
         throw new Error("validations:errors.games.notEnoughTokens");
       }
-      const betToken = await bet2fa();
 
       if (!isMounted()) {
         return;
@@ -106,9 +113,29 @@ export function useManualBet() {
       await Crash.cashoutTicket({
         roundId: round._id,
         betAmount,
-        multiplierKey,
       });
   });
 
-  return {handleBet,handleCashout};
+  const handleNextBet = usePost(
+      
+    async (isMounted) => {
+      if (isMounted() && round.status === "waiting" && betNextRound) {
+        handleBet();
+        dispatch(Crash.setBetNextRound(false));
+      }      
+  });
+
+  const allowTicketCashout = () => {
+
+    if(!authenticated || !round || !roundTicket) return false;
+    if(round.status !== "simulating") return false;
+    if(roundTicket.cashoutTriggered || roundTicket.processed) return false;
+    return true;
+  }; 
+  
+  const allowCashout = allowTicketCashout();
+
+  useInterval(handleNextBet, betNextRound ? 500 : null);
+ 
+  return {handleBet,handleCashout, allowCashout};
 }

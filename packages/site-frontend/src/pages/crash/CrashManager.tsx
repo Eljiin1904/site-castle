@@ -4,10 +4,11 @@ import { usePresence } from "#app/hooks/sockets/usePresence";
 import { useSocketListener } from "#app/hooks/sockets/useSocketListener";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Crash } from "#app/services/crash";
+import { addCrashEvent } from "#app/services/crash/Crash";
 
 /**
  * CrashManager component will subscribe to the crash game events
- * and dispatch the appropriate actions to the store
+ * and dispatch the appropriate actions to the redux slice
  * @returns 
  */
 export const CrashManager = () => {
@@ -21,6 +22,12 @@ export const CrashManager = () => {
 
   useSocketListener("crash-init", (init) => {
     
+    const newChartLine = Crash.createCrashEvent(true);
+    dispatch(addCrashEvent(newChartLine));
+    for(let i = 0; i < 9; i++) {
+      const newChartLine = Crash.createCrashEvent(false);
+      dispatch(addCrashEvent(newChartLine));
+    }
     dispatch(Crash.initPlayer(init));
   });
   

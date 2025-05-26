@@ -1,89 +1,107 @@
 import { Fragment } from "react";
 import { Button } from "@client/comps/button/Button";
-import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BetInputGroup } from "./BetInputGroup";
 import { useManualBet } from "./useManualBet";
 import { ProfitSection } from "./ProfitSection";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { CashoutInputGroup } from "./CashoutInputGroup";
+import { Div } from "@client/comps/div/Div";
+import { useProfit } from "./useProfit";
+import { useProcessingTicket } from "./useProcessingTicket";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Crash } from "#app/services/crash";
+import { Conditional } from "@client/comps/conditional/Conditional";
 
 export const CrashMenuManual = () => {
+  
   const layout = useAppSelector((x) => x.style.mainLayout);
 
-  return (
-    <Conditional
-      value={layout}
-      mobile={<MobileContent />}
-      tablet={<NotMobileContent />}
-      laptop={<NotMobileContent />}
-      desktop={<NotMobileContent />}
+  return (<Div fx column gap={16}>
+    <Conditional value={layout}
+      mobile={<CrashMenuManualMobile />}
+      tablet={<CrashMenuManualMobile />}
+      desktop={<CrashMenuManualDesktop />}
+      laptop={<CrashMenuManualDesktop />}
     />
-  );
+  </Div>);
 };
 
-const MobileContent = () => {
-  return (
-    <Fragment>
-      <ActionButton />
-      <BaseFields />
-    </Fragment>
-  );
-};
-
-const NotMobileContent = () => {
-  return (
-    <Fragment>
-      <BaseFields />
-      <ActionButton />
-      <CashoutButton />
-    </Fragment>
-  );
-};
-
-const ActionButton = () => {
-  const processing = useAppSelector((x) => x.crash.processing);
-  const roundStatus = useAppSelector((x) => x.crash.round.status);
-  const {handleBet} = useManualBet();
-  const {t} = useTranslation(["games\\crash"]);
-  return (
-    <Button
-      fx
-      kind="primary-green"
-      label={ t("placeBet")}
-      loading={processing}
-      disabled={processing || roundStatus !== 'waiting'}
-      onClick={handleBet}
-    />
-  );
-};
-
-const CashoutButton = () => {
-  const processing = useAppSelector((x) => x.crash.processing);
-  const roundTiket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === x.user.id));
-  const roundStatus = useAppSelector((x) => x.crash.round.status);
-  const {handleCashout} = useManualBet();
-  const {t} = useTranslation(["games\\crash"]);
-
-  if(!roundTiket) return null;
-  return (
-    <Button
-      fx
-      kind="primary-green"
-      label={ t("cashout")}
-      loading={processing}
-      disabled={roundTiket.processed || roundTiket.cashoutTriggered || roundStatus !== 'simulating'}
-      onClick={handleCashout}
-    />
-  );
-};
+const CrashMenuManualMobile = () => {
+  return (<Fragment>
+    <ActionButton />
+    <BaseFields />    
+  </Fragment>);
+}
+const CrashMenuManualDesktop = () => {
+  return (<Fragment>
+    <BaseFields />
+    <ActionButton />
+  </Fragment>);
+}
 
 const BaseFields = () => {
-  const processing = useAppSelector((x) => x.crash.processing);
-  const roundStatus = useAppSelector((x) => x.crash.round.status);
+  const isProcessing = useProcessingTicket();
+  const betNextRound = useAppSelector((x) => x.crash.betNextRound);
+  
   return (
     <Fragment>
-      <BetInputGroup disabled={processing || roundStatus !== 'waiting'} />
+      <BetInputGroup disabled={isProcessing || betNextRound} />
+      <CashoutInputGroup disabled={isProcessing || betNextRound} />
       <ProfitSection />
     </Fragment>
   );
+};
+/**
+ * The action button for the crash game, it will show different button based on the game status
+ * The posible status are:
+ * - waiting: the game is waiting for the next round ( allow to bet in current round)
+ * - pending: the game is starting (not allow to bet)
+ * - simulating: the game is running ( will allow to bet next round)
+ * - completed: the game is completed ( will allow to bet next round)
+ * Action is disabled when:
+ * - the profit is exceeding the max bet
+ * - the game is pending
+ * - there is already a bet in the current round
+ * @returns 
+ */
+const ActionButton = () => {
+  
+  const roundStatus = useAppSelector((x) => x.crash.round.status);
+  const betNextRound = useAppSelector((x) => x.crash.betNextRound);
+  const {handleBet, handleCashout, allowCashout} = useManualBet();
+  const isProcessing = useProcessingTicket();
+  const dispatch = useAppDispatch();
+  const {t} = useTranslation(["games\\crash"]);
+  const { overMax } = useProfit();
+  
+  let label = roundStatus === "pending" ? t('starting') : overMax ? t('exceedMaxBet') :  t("placeBet");
+ 
+  const allowNextRound = roundStatus === "simulating" || roundStatus === "completed";
+  const isDisabled = overMax || roundStatus === 'pending' || isProcessing;
+
+  if(betNextRound)
+    return (<Button
+      fx
+      kind="primary-green"
+      label={t("cancelBet")}
+      onClick={() => dispatch(Crash.setBetNextRound(false))}
+    />);
+  if(allowCashout)
+    return (<Button
+      fx
+      kind="primary-green"
+      label={t("cashout")}
+      onClick={handleCashout}
+    />);
+  else  
+    return (<Button
+      fx
+      kind="primary-green"
+      label={label}
+      disabled={isDisabled}
+      onClick={handleBet}
+    >
+    {allowNextRound && <Div fontWeight="regular" fontSize={16} lineHeight={24} color="dark-brown">({t('nextRound')})</Div>}
+    </Button>);
 };

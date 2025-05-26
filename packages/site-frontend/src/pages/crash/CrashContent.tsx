@@ -6,6 +6,7 @@ import { BetBoard } from "#app/comps/bet-board/BetBoard";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { CrashMenu } from "./CrashMenu";
 import { CrashView } from "./CrashView";
+import { Fragment } from "react/jsx-runtime";
 
 export const CrashContent = () => {
   const initialized = useAppSelector((x) => x.crash.initialized);
@@ -18,7 +19,7 @@ export const CrashContent = () => {
       <Conditional
         value={layout}
         mobile={<MobileContent />}
-        tablet={<NotMobileContent />}
+        tablet={<MobileContent />}
         laptop={<NotMobileContent />}
         desktop={<NotMobileContent />}
       />
@@ -49,24 +50,19 @@ const MobileContent = () => {
 
 const NotMobileContent = () => {
   const { t } = useTranslation(["games\\crash"]);
-  return (
+  return (<Fragment>
     <Div
       fx
-      column
+      gap={24}
     >
-      <Div
-        fx
-        gap={24}
-      >
-        <CrashMenu />
-        <CrashView />
-      </Div>
-      <BetBoard
-        mt={56}
-        mb={56}
-        title={t("betBoardHeader")}
-        game="crash"
-      />
+      <CrashMenu />
+      <CrashView />
     </Div>
-  );
+    <BetBoard
+      mt={56}
+      mb={56}
+      title={t("betBoardHeader")}
+      game="crash"
+    />
+  </Fragment>);
 };
