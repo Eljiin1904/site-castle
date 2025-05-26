@@ -11,20 +11,20 @@ import { Crash } from "@core/services/crash";
 export const CrashSimulator = () => {
   
   const lobby = useAppSelector((x) => x.crash.lobby);
-  const elapsedTime = useAppSelector((x) => x.crash.round.elapsedTime);
+  //const elapsedTime = useAppSelector((x) => x.crash.round.elapsedTime);
   const serverMultiplier = useAppSelector((x) => x.crash.round.multiplier);
-  const [multiplier, setMultiplier] = useState(serverMultiplier);
-  const [timer, setTimer] = useState(elapsedTime);
+  // const [multiplier, setMultiplier] = useState(serverMultiplier);
+  // const [timer, setTimer] = useState(elapsedTime);
+ 
+  // useInterval(() => {
+  //   if (timer > 0) {
+  //     const currentMultiplier = Crash.getMultiplierForTime(timer);
+  //     setMultiplier(currentMultiplier);
+  //   }
+  //   setTimer(elapsedTime + 100);
+  // }, 50);
 
-  useInterval(() => {
-    if (timer > 0) {
-      const currentMultiplier = Crash.getMultiplierForTime(timer);
-      setMultiplier(currentMultiplier);
-    }
-    setTimer(elapsedTime + 100);
-  }, 100);
-
-  if(multiplier === 0 || lobby)
+  if(lobby)
     return null;
 
   return (
@@ -45,7 +45,7 @@ export const CrashSimulator = () => {
           lineHeight={40}
           color="bright-green"
         >
-          {multiplier.toFixed(2)}X
+          {serverMultiplier.toFixed(2)}X
         </Span>
         <NetGain />
       </Div>
