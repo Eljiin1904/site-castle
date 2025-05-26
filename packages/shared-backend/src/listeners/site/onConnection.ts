@@ -17,7 +17,7 @@ export default Sockets.createListener({
     socket.emit("site-meta-init", meta);
 
     const userId = socket.data.userId;
-    
+
     setInterval(() => {
       const start = Date.now();      
       socket.emit("pong", () => {
@@ -27,7 +27,7 @@ export default Sockets.createListener({
           latency: (now - start) / 2,
           timestamp: new Date(),
         }
-        Users.recordLatency(userId, latency);
+        Users.recordLatency(userId, latency, socket.id);
       });
     }, 5000);
   },
