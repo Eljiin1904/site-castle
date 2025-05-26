@@ -12,8 +12,8 @@ export const CrashSimulator = () => {
   
   const lobby = useAppSelector((x) => x.crash.lobby);
   const elapsedTime = useAppSelector((x) => x.crash.round.elapsedTime);
-  const serverMultiplier = useAppSelector((x) => x.crash.round.multiplier);
-  const [multiplier, setMultiplier] = useState(serverMultiplier);
+  //const serverMultiplier = useAppSelector((x) => x.crash.round.multiplier);
+  const [multiplier, setMultiplier] = useState(1);
   const [timer, setTimer] = useState(elapsedTime);
 
   useInterval(() => {
@@ -22,7 +22,7 @@ export const CrashSimulator = () => {
       setMultiplier(currentMultiplier);
     }
     setTimer(elapsedTime + 100);
-  }, 100);
+  }, 50);
 
   if(multiplier === 0 || lobby)
     return null;
