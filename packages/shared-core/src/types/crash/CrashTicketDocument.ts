@@ -16,4 +16,6 @@ export interface CrashTicketDocument {
   cashoutTriggeredDate?: Date;
   latency?: number;
   gameStartTime?: number;
+  targetMultiplier?: number;
+  autoCashedTriggered?: boolean;
 }

@@ -20,4 +20,5 @@ export type CrashRoundDocument = {
   eosCommitDate?: Date;
   processed?: boolean;
   processedDate?: Date;
+  won?: boolean;
 } & CrashRoundsStatusData;
