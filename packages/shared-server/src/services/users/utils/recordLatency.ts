@@ -12,22 +12,34 @@ const MAX_RECORDINGS = 120;
  */
 export async function recordLatency(
   userId: string,
-  latency: UserLatencyRecording
+  latency: UserLatencyRecording,
+  socketId?: string, // Optional socket ID if needed for additional logic
 ): Promise<UserLatencyDocument | null> {
   try {
-    const userLatency = await Database.collection("user-latency").findOne({ userId });
+    
+    if (!userId && !socketId) {
+      throw new Error("Invalid parameters for recordLatency");
+    }
+    let userIdToUse = userId;
+    const authenticated = !!userId; // Assuming userId is provided when authenticated
+    if (!userIdToUse) {
+      userIdToUse = socketId ?? "anonymous";
+    }
+    
+    const userLatency =  await Database.collection("user-latency").findOne({ userId:userIdToUse, authenticated: false });
     const recordingDate = new Date();
 
     // If no user latency document exists, create one
     if (!userLatency) {
       const newUserLatency: UserLatencyDocument = {
-        userId,
+        userId: userIdToUse,
         lastUpdated: recordingDate,
         latencyLastMin: latency.latency,
         latencyLast5Min: latency.latency,
         latencyLast10Min: latency.latency,
         timestamp: recordingDate,
         recordings: [latency],
+        authenticated, // Store the socket ID if provided
       };
 
       await Database.collection("user-latency").insertOne(newUserLatency);
@@ -63,7 +75,7 @@ export async function recordLatency(
     };
 
     await Database.collection("user-latency").updateOne(
-      { userId },
+      { userId: userIdToUse, authenticated },
       { $set: updatedUserLatency }
     );
 

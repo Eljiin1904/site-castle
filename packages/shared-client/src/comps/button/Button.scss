@@ -1,9 +1,13 @@
 
 .Button {
 
-  flex-shrink: 0;
+ 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  &.flex-shrink-0 {
+    flex-shrink: 0;
   }
 
   &.primary {

@@ -27,8 +27,8 @@ export default Sockets.createListener({
     const activeRound = roundStream.log[0];
     const userId = socket.data.userId;
 
-    if(!userId)
-      return;
+    // if(!userId)
+    //   return;
     
     socket.emit("crash-init", {
       round: {

@@ -22,6 +22,7 @@ export const CrashManager = () => {
 
   useSocketListener("crash-init", (init) => {
     
+    console.log('crash init', init);
     const newChartLine = Crash.createCrashEvent(true);
     dispatch(addCrashEvent(newChartLine));
     for(let i = 0; i < 9; i++) {

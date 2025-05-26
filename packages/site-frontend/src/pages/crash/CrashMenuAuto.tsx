@@ -113,6 +113,7 @@ const ActionButton = ({handleAutoStart} : {
         label={overMax ? t("exceedMaxBet") : t("startAutoPlay")}
         disabled={overMax || isProcessing}
         onClick={handleAutoStart}
+        className="flex-shrink-0"
       />
     );
   }
