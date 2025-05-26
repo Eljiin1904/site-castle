@@ -1,6 +1,5 @@
 import { Validation } from "@core/services/validation";
 import { Database } from "@server/services/database";
-// import { Double } from "@server/services/double";
 import { HandledError } from "@server/services/errors";
 import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
