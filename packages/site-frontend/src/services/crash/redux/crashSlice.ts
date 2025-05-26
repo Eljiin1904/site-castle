@@ -7,17 +7,34 @@ import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 import { CrashRoundStatus } from "@core/types/crash/CrashRoundStatus";
 import { CrashInitialState } from "@core/types/crash/CrashInitialState";
 import { CrashMode } from "@core/types/crash/CrashMode";
+import { CrashEventProps } from "#app/types/crash/CrashEventProps";
+import { CrashControlMode } from "@core/types/crash/CrashControlMode";
+import { Crash } from "..";
+
+type PostAction = "reset" | "increase";
 
 interface CrashState {
   initialized?: boolean;
   round: CrashRoundDocument;
-  history: number[];
+  history: {multiplier: number, won: boolean}[];
   tickets: CrashTicketDocument[];
   betAmount: number | undefined;
   targetMultiplier?: number;
   lobby?: CrashRoundStatus;
   processing?: boolean;
   mode: CrashMode;
+  autoMode: CrashControlMode;
+  crashEvents: CrashEventProps[];
+  autoPlaying?: boolean;
+  betNextRound?: boolean;
+  gameCount?: number;
+  winAction: PostAction;
+  winIncreaseBy?: number;
+  lossAction: PostAction;
+  lossIncreaseBy?: number;
+  profitLimit?: number;
+  lossLimit?: number;
+  autoPnl: number;
 }
 
 const initialState: CrashState = {
@@ -25,8 +42,15 @@ const initialState: CrashState = {
   history: [],
   tickets: [],
   betAmount: Utility.getLocalInt("crash-bet-amount", 0),
-  targetMultiplier: 1,
-  mode: "manual"
+  targetMultiplier: Utility.getLocalFloat("crash-target-multiplier", 1),
+  mode: "manual",
+  autoMode: "controls",
+  crashEvents: [],
+  autoPlaying: false,
+  betNextRound: false,
+  winAction: "reset",
+  lossAction: "reset",
+  autoPnl: 0,
 };
 
 export const crashSlice = createSlice({
@@ -43,6 +67,7 @@ export const crashSlice = createSlice({
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
       state.tickets = [];
+      state.crashEvents = [];
       state.lobby = undefined;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
@@ -59,13 +84,55 @@ export const crashSlice = createSlice({
       if (state.round.status === "completed") {
         const history = state.history.slice();
 
-        history.unshift(state.round.multiplierCrash);
+        history.unshift({multiplier: state.round.multiplierCrash, won: state.round.won ?? false});
 
         if (history.length > 100) {
           history.pop();
         }
 
         state.history = history;
+        const pixelsDown = Crash.chart.offset;
+        const crashLenght = Crash.getMultiplierPosition(state.round.multiplier) + pixelsDown;
+
+        const crashEvent: CrashEventProps = {
+          crashColor: "double-red",
+          crashLength: crashLenght,
+          startedCrashLength: crashLenght,
+          crashPosition: -pixelsDown,
+          startedLine: true,
+          completedLine: true,
+        };
+        
+        if (state.crashEvents) {
+          const updatedCrashEvents = state.crashEvents.filter(x => !x.completedLine);
+          updatedCrashEvents.push(crashEvent);
+          state.crashEvents = updatedCrashEvents;
+        }
+      }
+      if(state.round.status === "simulating") {
+        
+        const multiplierEvent: CrashEventProps = {
+          crashColor: "bright-green",
+          crashLength: Crash.getMultiplierPosition(state.round.multiplier),
+          startedCrashLength: 0,
+          crashPosition: 0,
+          startedLine: true,
+          simulatingLine: true,
+        };
+        if (state.crashEvents) {
+          const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
+            
+            event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
+            return event;
+          });
+          
+          updatedCrashEvents.push(multiplierEvent);
+          state.crashEvents = updatedCrashEvents;
+        }
+
+        if(state.crashEvents.length === 0) {
+          state.crashEvents = [multiplierEvent];
+        }
       }
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
@@ -101,8 +168,53 @@ export const crashSlice = createSlice({
     setProcessing: reducer<boolean>((state, { payload }) => {
       state.processing = payload;
     }),
+    addCrashEvent: reducer<CrashEventProps>((state, { payload }) => {
+      if (state.crashEvents) {
+        const crashEvents = state.crashEvents.slice();
+        crashEvents.push(payload);
+        if (crashEvents.length > 10) {
+          crashEvents.shift();
+        }
+        state.crashEvents = crashEvents;
+      } else {
+        state.crashEvents = [payload];
+      }
+    }),
     setMode: reducer<CrashMode>((state, { payload }) => {
       state.mode = payload;
+    }),
+    setAutoMode: reducer<CrashControlMode>((state, { payload }) => {
+      state.autoMode = payload;
+    }),
+    setGameCount: reducer<number | undefined>((state, { payload }) => {
+      state.gameCount = payload;
+    }),
+    setWinAction: reducer<PostAction>((state, { payload }) => {
+      state.winAction = payload;
+    }),
+    setWinIncreaseBy: reducer<number | undefined>((state, { payload }) => {
+      state.winIncreaseBy = payload;
+    }),
+    setLossAction: reducer<PostAction>((state, { payload }) => {
+      state.lossAction = payload;
+    }),
+    setLossIncreaseBy: reducer<number | undefined>((state, { payload }) => {
+      state.lossIncreaseBy = payload;
+    }),
+    setProfitLimit: reducer<number | undefined>((state, { payload }) => {
+      state.profitLimit = payload;
+    }),
+    setLossLimit: reducer<number | undefined>((state, { payload }) => {
+      state.lossLimit = payload;
+    }),
+    setAutoPlaying: reducer<boolean>((state, { payload }) => {
+      state.autoPlaying = payload;
+    }),
+    setBetNextRound: reducer<boolean>((state, { payload }) => {
+      state.betNextRound = payload;
+    }),
+    setAutoPnl: reducer<number>((state, { payload }) => {
+      state.autoPnl = payload;
     }),
     resetPlayer: () => initialState,
   }),
@@ -115,8 +227,20 @@ export const {
   updateBets,
   updateBet,
   setProcessing,
+  addCrashEvent,
   setBetAmount,
   seTargetMultiplier,
+  setGameCount,
+  setWinAction,
+  setWinIncreaseBy,
+  setLossAction,
+  setLossIncreaseBy,
+  setProfitLimit,
+  setLossLimit,
+  setAutoPlaying,
+  setAutoPnl,
   resetPlayer,
-  setMode
+  setMode,
+  setAutoMode,
+  setBetNextRound
 } = crashSlice.actions;

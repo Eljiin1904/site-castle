@@ -5,6 +5,7 @@ export function postTicket(data: {
   roundId: string;
   betAmount: number;
   betToken?: string;
+  targetMultiplier?: number;
 }): Promise<{
   results: CrashTicketDocument;
 }> {
