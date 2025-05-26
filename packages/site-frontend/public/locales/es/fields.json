@@ -76,7 +76,9 @@
     "rollUnder": "Roll Under",
     "rollTargetPlaceholder": "Ingrese el objetivo...",
     "winChance": "Probabilidad de ganar",
-    "winChancePlaceholder": "Ingrese la probabilidad de ganar..."
+    "winChancePlaceholder": "Ingrese la probabilidad de ganar...",
+    "cashoutAt": "Retirar a",
+    "cashoutAtPlaceholder": "Ingrese el multiplicador..."
   },
   "code": {
     "field": "Código",

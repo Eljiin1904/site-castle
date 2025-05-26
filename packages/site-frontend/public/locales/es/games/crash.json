@@ -2,6 +2,7 @@
   "placeBet": "Apostar",
   "betPlaced": "Apostado",
   "cashout": "Retirar",
+  "cancelBet": "Cancelar Apuesta",
   "betBoardHeader": "Apuestas Juego Crash",
   "bet_zero": "{{count}} Apuesta",
   "bet_one": "{{count}} Apuesta",
@@ -15,9 +16,14 @@
     "title": "Confirmar Apuesta",
     "message": "Apostar {{value.amount}}?"
   },
+  "starting": "Iniciando en...",
+  "nextRound": "Próximo Juego",
+  "rugged": "Rugged",
+  "tookProfit": "Retiró Ganancia",
+  "netGain": "Ganancia Neta",
   "rules": {
     "title": "Reglas de Crash",
-    "rule1":"El multiplicador mínimo es 1.0105x.",
+    "rule1":"El multiplicador mínimo es 1x.",
     "rule2":"El multiplicador máximo es 9600x.",
     "rule3": "La ganancia máxima es de {{max}} tokens.",
     "rule4": "RTP es {{percent}}%.",

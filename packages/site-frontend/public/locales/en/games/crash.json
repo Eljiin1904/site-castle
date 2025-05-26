@@ -1,7 +1,8 @@
 {
   "placeBet": "Place Bet",
   "betPlaced": "Bet Placed",
-  "cashout": "Cash Out",
+  "cashout": "Take Profit",
+  "cancelBet": "Cancel Bet",
   "betBoardHeader": "Crash Game Bets",
   "ready": "Ready?",
   "bet_zero": "{{count}} Bet",
@@ -16,9 +17,14 @@
     "title": "Confirm Bet",
     "message": "Bet {{value.amount}}?"
   },
+  "starting": "Starting in...",
+  "nextRound": "Next Game",
+  "rugged": "Rugged",
+  "tookProfit": "Took Profit",
+  "netGain": "Net Gain",
   "rules": {
-    "title": "Cash Rules",
-    "rule1":"Min multiplier is 1.0105x.",
+    "title": "Crash Rules",
+    "rule1":"Min multiplier is 1x.",
     "rule2":"Max multiplier is 9600x.",
     "rule3": "Max profit is {{max}} tokens.",
     "rule4": "RTP is {{percent}}%.",
