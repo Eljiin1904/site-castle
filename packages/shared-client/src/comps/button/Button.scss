@@ -1,6 +1,7 @@
 
 .Button {
 
+  flex-shrink: 0;
   &:disabled {
     cursor: not-allowed;
   }
