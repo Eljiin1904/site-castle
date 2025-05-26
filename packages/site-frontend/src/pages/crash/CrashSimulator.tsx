@@ -45,7 +45,7 @@ export const CrashSimulator = () => {
           lineHeight={40}
           color="bright-green"
         >
-          {serverMultiplier.toFixed(2)}X
+          {serverMultiplier}X
         </Span>
         <NetGain />
       </Div>
