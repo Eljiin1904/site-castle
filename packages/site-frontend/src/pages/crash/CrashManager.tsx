@@ -13,7 +13,7 @@ import { addCrashEvent } from "#app/services/crash/Crash";
  */
 export const CrashManager = () => {
   const dispatch = useAppDispatch();
-  useSoundPreloader("spin-land", "spin-tick");
+  //useSoundPreloader("spin-land", "spin-tick");
 
   usePresence({
     joinKey: "crash-join",
