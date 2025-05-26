@@ -30,7 +30,7 @@ export const CrashedSimulator = () => {
           lineHeight={40}
           color={won ? "bright-green" : "double-red"}
         >
-        {roundMultiplier?.toFixed(2)}X
+        {roundMultiplier}X
         </Span>
         {won ? <Div gap={8}>
           <Span
