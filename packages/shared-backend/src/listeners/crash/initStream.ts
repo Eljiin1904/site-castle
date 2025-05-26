@@ -32,9 +32,9 @@ export default Sockets.createListener({
         const sockets = await broadcaster.fetchSockets();
         
         for (const socket of sockets) {
-          const userId = socket.data.userId;
-          if (!userId) continue;
-          
+          let userId = socket.data.userId;
+          if (!userId) 
+            userId = socket.id;
           let waitForEmit = 0;            
           const roundStatus = update.updatedFields.status;
           const isSmulation = roundStatus === "simulating" ||
