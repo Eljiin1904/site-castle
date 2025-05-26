@@ -125,6 +125,7 @@ async function startRound(round: CrashRoundDocument) {
     const currentTime = new Date();
     const timer = currentTime.getTime() - statusDate.getTime();
     const currentMultiplier = Crash.getMultiplierForTime(timer);
+  
     if(currentMultiplier >= multiplierCrash) {
       clearInterval(intervalId);
       return;
