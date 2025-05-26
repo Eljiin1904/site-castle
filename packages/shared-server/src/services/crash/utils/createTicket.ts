@@ -12,12 +12,14 @@ export async function createTicket({
   location,
   round,
   betAmount,
+  targetMultiplier,
 }: {
   user: UserDocument;
   location: UserLocation;
   round: CrashRoundDocument;
   betAmount: number;
-}) {
+  targetMultiplier?: number;
+}): Promise<CrashTicketDocument> {
   const ticketId = await Ids.incremental({
     key: "crashTicketId",
     baseValue: 1000000,
@@ -30,6 +32,7 @@ export async function createTicket({
     roundId: round._id,
     user: Users.getBasicUser(user),
     betAmount,
+    targetMultiplier: targetMultiplier || 1,
   };
 
   await Database.collection("crash-tickets").insertOne(ticket);

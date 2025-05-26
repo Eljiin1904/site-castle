@@ -17,11 +17,13 @@ export default Http.createApiRoute({
   body: Validation.object({
     roundId: Validation.string().required("validations:errors.games.double.requiredRound"),
     betAmount: Validation.currency("Bet amount"),
+    betToken: Validation.string().optional(),
+    targetMultiplier: Validation.number().optional(),
   }),
   callback: async (req, res) => {
     const logger = getServerLogger({});
     logger.debug("creating Crash ticket");
-    const { roundId, betAmount } = req.body;
+    const { roundId, betAmount, targetMultiplier } = req.body;
     const user = req.user;
 
     await Site.validateToggle("crashEnabled");
@@ -55,7 +57,8 @@ export default Http.createApiRoute({
       user,
       location,
       round,
-      betAmount
+      betAmount,
+      targetMultiplier
     });
 
     res.json(ticket);

@@ -5,8 +5,9 @@ import { ticketStream } from "./helpers/ticketStream";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 const logger = getServerLogger({});
 import { Crash } from "@server/services/crash";
+import { Crash as CrashCore } from "@core/services/crash";
+const GAME_DELAY = CrashCore.roundTimes.delay;
 
-const GAME_DELAY = 1000;
 export default Sockets.createListener({
   action: "init",
   callback: async (io) => {
@@ -70,11 +71,25 @@ export default Sockets.createListener({
       "update",
       System.tryCatch(async (update, ticket) => {
         logger.debug("Crash update ticket stream");       
-        if(update.updatedFields?.latestCrashEventId) {
+        if(update.updatedFields?.autoCashedTriggerd) {
 
           if(!ticket) return; 
-          const broadcaster = io.sockets.in(`crash_${ticket.user.id}`);
-          broadcaster.emit("crash-bet-update", update);
+          const broadcaster = io.sockets.in(`crash`);
+          const sockets = await broadcaster.fetchSockets();
+          for (const socket of sockets) {
+            const userId = socket.data.userId;
+            if (!userId) continue;
+
+            let waitForEmit = 0;
+            waitForEmit = GAME_DELAY - (await Crash.calculateUserWaitTime(userId, update.updatedFields.cashoutTriggeredDate as Date));
+
+            if(waitForEmit > 0)
+              setTimeout(() => {
+                socket.emit("crash-bet-update", update);
+              }, waitForEmit);
+            else
+              socket.emit("crash-bet-update", update);
+          }         
           return;
         }
         else {

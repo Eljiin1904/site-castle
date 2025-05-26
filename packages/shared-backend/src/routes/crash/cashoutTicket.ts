@@ -5,6 +5,7 @@ import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
+import { Crash } from "@core/services/crash";
 
 /**
  * Cashes out a Crash ticket. Check if the ticket is valid and if the multiplier key is correct for the
@@ -32,8 +33,7 @@ export default Http.createApiRoute({
   bet: true,
   body: Validation.object({
     roundId: Validation.string().required("validations:errors.games.crash.requiredRound"),
-    betAmount: Validation.currency("Bet amount"),
-    //multiplierKey: Validation.string().required("validations:errors.games.crash.requiredMultiplierKey"),
+    betAmount: Validation.currency("Bet amount")
   }),
   callback: async (req, res) => {
     
@@ -69,6 +69,7 @@ export default Http.createApiRoute({
 
     //Check if round is in a valid state. If the round is in simulation mode is valid. If round 
     //is completed, check that is inside the 1s delay window.
+  
     if (round.status !== "simulating" && round.status !== "completed")
       throw new HandledError("validations:errors.games.crash.invalidRoundStatus");
 
@@ -78,8 +79,8 @@ export default Http.createApiRoute({
 
     //Calculate the time since the round started from the server perspective and get the multiplier for cashout
     //Substract 1 second to the current time to account for the 1 second delay in the client.
-    const currentTimerForRound = Date.now() - round.startDate.getTime() - 1000;
-    const ticketMultiplierCashout = 1.0024 * Math.pow(1.0718, currentTimerForRound / 1000);
+    const currentTimerForRound = Date.now() - round.startDate.getTime() - Crash.roundTimes.delay;
+    const ticketMultiplierCashout = Crash.getMultiplierForTime(currentTimerForRound);
     const truncatedMultiplier = Math.trunc(ticketMultiplierCashout * 100) / 100;
 
     //If the round is completed, mutiplierCashout should be less than the round multiplier and
@@ -92,7 +93,7 @@ export default Http.createApiRoute({
       }
 
       const endedTime = (round.completedDate ?? round.statusDate).getTime();
-      if(Date.now() - endedTime > 1000) {
+      if(Date.now() - endedTime > Crash.roundTimes.delay) {
         invalidateTicket(ticket);
         throw new HandledError("validations:errors.games.crash.invalidEndTime");
       }

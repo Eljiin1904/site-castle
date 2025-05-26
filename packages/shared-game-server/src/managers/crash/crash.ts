@@ -11,8 +11,7 @@ import { Users } from "@server/services/users";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
-
-const MAX_VALUE_MULTIPLIER = 150;
+import { Crash } from "@core/services/crash";
 
 export default () => System.tryCatch(main)();
 
@@ -62,7 +61,7 @@ async function createRound() {
   };
 
   await Database.collection("crash-rounds").insertOne(round);
-  await Utility.wait(7000);
+  await Utility.wait(Crash.roundTimes.waiting);
   await setupRound(round);
 }
 
@@ -87,7 +86,7 @@ async function setupRound(round: CrashRoundDocument) {
   round.statusDate = statusDate;
   round.eosBlockNum = eosBlockNum;
 
-  await Utility.wait(3000);
+  await Utility.wait(Crash.roundTimes.pending);
   await startRound(round);
 }
 
@@ -98,12 +97,12 @@ async function startRound(round: CrashRoundDocument) {
 
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
-  const multiplierCrash =
+  let multiplierCrash = 
   Random.getMultiplier({
     serverSeed: round.serverSeed,
     clientSeed: eosBlockId,
     nonce: round._id,
-    maxValue: MAX_VALUE_MULTIPLIER,
+    maxValue: Crash.maxValue,
   });
 
   const statusDate = new Date();
@@ -119,14 +118,13 @@ async function startRound(round: CrashRoundDocument) {
     },
   );
  
-  const roundTime = Math.log(multiplierCrash/1.0024)/Math.log(1.0718)*1000;
-  console.log("roundTime for current Round ", multiplierCrash);
+  const roundTime = Crash.getTimeForMultiplier(multiplierCrash);
   
   const intervalId = setInterval(() => {
   
     const currentTime = new Date();
     const timer = currentTime.getTime() - statusDate.getTime();
-    const currentMultiplier = 1.0024 * Math.pow(1.0718, timer / 1000);
+    const currentMultiplier = Crash.getMultiplierForTime(timer);
     if(currentMultiplier >= multiplierCrash) {
       clearInterval(intervalId);
       return;
@@ -140,6 +138,23 @@ async function startRound(round: CrashRoundDocument) {
           statusDate: currentTime,
         },
       },
+    );
+    
+    Database.collection("crash-tickets").updateMany(
+      { roundId: round._id, 
+        processed: {$exists: false},
+        multiplierCrashed: { $exists: false },
+        cashoutTriggered: { $exists: false },   
+        targetMultiplier: { $gt: 1, $lte: currentMultiplier },
+      },
+      [{
+        $set: {
+          cashoutTriggered: true,
+          cashoutTriggeredDate: currentTime,
+          multiplierCrashed: "$targetMultiplier",
+          autoCashedTriggerd: true,
+        },
+      }]
     );
   }, 100);
 
@@ -161,6 +176,20 @@ async function completeRound(round: CrashRoundDocument) {
   }
 
   const statusDate = new Date();
+ 
+  await Utility.wait(Crash.roundTimes.delay);
+  await System.tryCatch(processTickets)({
+    ...round,
+    status: "completed",
+    statusDate,
+  });
+
+  const totalWins = await Database.collection("crash-tickets").countDocuments({
+    roundId: round._id,
+    processed: true,
+    won: true,
+  });
+  
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
@@ -168,18 +197,12 @@ async function completeRound(round: CrashRoundDocument) {
         status: "completed",
         statusDate,
         completedDate: statusDate,
-        multiplierCrash: round.multiplierCrash
+        multiplierCrash: round.multiplierCrash,
+        won: totalWins > 0,
       },
     },
   );
-  await Utility.wait(1000);
-  System.tryCatch(processTickets)({
-    ...round,
-    status: "completed",
-    statusDate,
-  });
-
-  await Utility.wait(5000);
+  await Utility.wait(Crash.roundTimes.completed);
   await createRound();
 }
 
@@ -194,7 +217,7 @@ async function processTickets(round: CrashRoundDocument) {
   });
 
   for await (const ticket of cursor) {
-    await System.tryCatch(processTicket)({ round, ticket });
+     await System.tryCatch(processTicket)({ round, ticket });
   }
 }
 
@@ -206,10 +229,24 @@ async function processTicket({
   ticket: CrashTicketDocument;
 }) {
   const multiplierCrash = round.multiplierCrash;
-  const betMultiplier = ticket.multiplierCrashed ?? 0;
-  const won = ticket.cashoutTriggered ? betMultiplier > 1 && betMultiplier <= multiplierCrash : false;
+  const betMultiplier =  ticket.multiplierCrashed ?? 0;
+  let won = ticket.cashoutTriggered ? betMultiplier > 1 && betMultiplier <= multiplierCrash : false;
   
-  const wonAmount = won ? Math.round(ticket.betAmount * betMultiplier) : 0;
+  let wonAmount = won ? Math.round(ticket.betAmount * betMultiplier) : 0;
+  let autoCashedTriggered = false;
+  let cashoutTriggered = ticket.cashoutTriggered;
+  if(!won) {
+
+    const targetMultiplier = ticket.targetMultiplier ?? 1;
+
+    if(targetMultiplier > 1 && targetMultiplier <= multiplierCrash) {
+
+      won = true;
+      wonAmount = Math.round(ticket.betAmount * targetMultiplier);
+      autoCashedTriggered = true; 
+      cashoutTriggered = true;
+    }
+  }
 
   await Database.collection("crash-tickets").updateOne(
     {
@@ -221,6 +258,8 @@ async function processTicket({
         wonAmount,
         processed: true,
         processDate: new Date(),
+        autoCashedTriggered,
+        cashoutTriggered
       },
     },
   );

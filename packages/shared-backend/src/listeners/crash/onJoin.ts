@@ -39,7 +39,7 @@ export default Sockets.createListener({
       history: roundStream.log.slice(1).map((x) => {
         logger.debug("crash round completed");
         const round = x as CrashRoundDocument & { status: "completed" };
-        return round.multiplierCrash;
+        return {multiplier: round.multiplierCrash, won: round.won ?? false};
       }),
       tickets: ticketStream.log.filter((x) => x.roundId === activeRound._id)
     });
