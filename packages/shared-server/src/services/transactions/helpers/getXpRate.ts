@@ -11,6 +11,8 @@ export async function getXpRate(category: TransactionCategory) {
       return settings.caseBattlesXpRate;
     case "double":
       return settings.doubleXpRate;
+    case "crash":
+      return settings.crashXpRate;  
     case "dice":
       return settings.diceXpRate;
     case "limbo":

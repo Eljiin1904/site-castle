@@ -1,0 +1,20 @@
+.CrashChartContainer {
+
+  padding: 25px 75px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: calc(50% - 2px);
+  left: 50.45%;
+  width: 415px;
+  height: 306px;
+  min-height: 280px;
+  min-width: 370px;
+  overflow: hidden;
+  opacity: 0.8;
+  z-index: 0;
+
+  .AppBody.mobile & {
+    min-height: 200px;
+    min-width: auto;
+  }
+}

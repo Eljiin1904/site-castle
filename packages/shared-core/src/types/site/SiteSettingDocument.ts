@@ -40,6 +40,7 @@ interface XpSettings {
   casesXpRate: number;
   caseBattlesXpRate: number;
   doubleXpRate: number;
+  crashXpRate: number;
   diceXpRate: number;
   limboXpRate: number;
   minesXpRate: number;
@@ -67,6 +68,7 @@ interface FeatureToggles {
   caseBattlesEnabled: boolean;
   diceEnabled: boolean;
   doubleEnabled: boolean;
+  crashEnabled: boolean;
   limboEnabled: boolean;
   minesEnabled: boolean;
 }

@@ -50,3 +50,7 @@ client.onAny((event, ...args) => {
     }
   }
 });
+
+client.on("pong", (callback) => {
+  callback();
+});

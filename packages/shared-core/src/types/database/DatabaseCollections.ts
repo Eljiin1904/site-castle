@@ -63,6 +63,9 @@ import { SiteJackPotDocument } from "../site/SiteJackpotDocument";
 import { MinesGameDocument } from "../mines/MinesGameDocument";
 import { MinesEventDocument } from "../mines/MinesEventDocument";
 import { CrashRecordDocument } from "../crash/CrashRecord";
+import { CrashRoundDocument } from "../crash/CrashRoundDocument";
+import { CrashTicketDocument } from "../crash/CrashTicketDocument";
+import { UserLatencyDocument } from "../users/UserLatencyDocument";
 
 export interface DatabaseCollections {
   ["admin-log"]: AdminLogDocument;
@@ -131,4 +134,7 @@ export interface DatabaseCollections {
   ["user-reports"]: UserReportDocument;
   ["user-seed-pairs"]: UserSeedPairDocument;
   ["user-sessions"]: UserSessionDocument;
+  ["user-latency"]: UserLatencyDocument;
+  ["crash-rounds"]: CrashRoundDocument;
+  ["crash-tickets"]: CrashTicketDocument;
 }

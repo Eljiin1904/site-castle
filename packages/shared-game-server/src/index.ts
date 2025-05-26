@@ -24,6 +24,7 @@ async function main() {
   Managers.mines();
   Managers.races();
   Managers.raffles();
+  Managers.crash();
 
   console.log("Initialized managers.");
 

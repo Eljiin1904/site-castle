@@ -179,16 +179,18 @@ interface DuelWonData {
 interface CrashBetData {
   kind: "crash-bet";
   bet: TransactionBetData;
+  roundId: string;
   gameId: string;
 }
 
 interface CrashWonData {
   kind: "crash-won";
+  roundId: string;
   gameId: string;
   multiplier: number;
-  targetValue: number;
-  targetKind: DiceTargetKind;
+  roundMultiplier: number;
 }
+
 interface BlackjackBetData {
   kind: "blackjack-bet";
   bet: TransactionBetData;

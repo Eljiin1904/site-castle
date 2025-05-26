@@ -16,6 +16,7 @@ import { userSlice } from "./services/users/redux/userSlice";
 import { minesSlice } from "./services/mines/redux/minesSlice";
 import {accountSlice} from "./services/account/redux/accountSlice";
 import { affiliatesSlice } from "./services/affiliates/Affiliates";
+import { crashSlice } from "./services/crash/Crash";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     battlePlayer: battlePlayerSlice.reducer,
     chat: chatSlice.reducer,
     double: doubleSlice.reducer,
+    crash: crashSlice.reducer,
     dice: diceSlice.reducer,
     holiday: holidaySlice.reducer,
     limbo: limboSlice.reducer,

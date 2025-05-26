@@ -44,6 +44,7 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
     message.kind === "advent-bonus" ||
     message.kind === "case-game-win" ||
     message.kind === "double-win" ||
+    message.kind === "crash-win" ||
     message.kind === "dice-win" ||
     message.kind === "gem-case-win" ||
     message.kind === "holiday-case-win" ||

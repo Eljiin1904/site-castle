@@ -7,3 +7,4 @@ export { default as limbo } from "./limbo/limbo";
 export { default as mines } from "./mines/mines";
 export { default as races } from "./races/races";
 export { default as raffles } from "./raffles/raffles";
+export {default as crash } from "./crash/crash";

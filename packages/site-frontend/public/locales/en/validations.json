@@ -159,6 +159,17 @@
         "invalidRoundStatus": "Invalid round status.",
         "invalidCombination": "Invalid bet combination.",
         "maxBetAmount": "The max bet amount is {{value}}."       
+      },
+      "crash": {
+        "requiredRound": "Round is required.",
+        "invalidRoundId": "Invalid round id.",
+        "invalidCombination": "Invalid bet combination.",
+        "invalidRoundStatus": "Invalid round status.",
+        "invalidRoundStartDate": "Invalid round start date.",
+        "invalidMultiplier": "Invalid multiplier.",
+        "invalidEndTime": "Invalid end time.",
+        "ticketAlreadyProcessed": "Ticket already processed.",
+        "maxBetAmount": "The max bet amount is {{value}}." 
       }
     },
     "wallet": {

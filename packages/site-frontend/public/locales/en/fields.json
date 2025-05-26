@@ -76,7 +76,9 @@
     "rollUnder": "Roll Under",
     "rollTargetPlaceholder": "Enter target...",
     "winChance": "Win Chance",
-    "winChancePlaceholder": "Enter win chance..."
+    "winChancePlaceholder": "Enter win chance...",
+    "cashoutAt": "Cashout At",
+    "cashoutAtPlaceholder": "Enter multiplier..."
   },
   "code": {
     "field": "Code",

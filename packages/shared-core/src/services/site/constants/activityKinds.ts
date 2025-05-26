@@ -9,6 +9,7 @@ const kindMap: Record<SiteActivityKind, boolean> = {
   "dice-win": true,
   "limbo-win": true,
   "mines-win": true,
+  "crash-win": true,
   "reward-boost": true,
   "reward-gem-case-drop": true,
   "reward-holiday-case-drop": true,

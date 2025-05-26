@@ -1,0 +1,33 @@
+{
+  "placeBet": "Place Bet",
+  "betPlaced": "Bet Placed",
+  "cashout": "Take Profit",
+  "cancelBet": "Cancel Bet",
+  "betBoardHeader": "Crash Game Bets",
+  "ready": "Ready?",
+  "bet_zero": "{{count}} Bet",
+  "bet_one": "{{count}} Bet",
+  "bet_other": "{{count}} Bets",
+  "exceedMaxBet": "Exceeds Max Profit",
+  "startAutoPlay": "Start Auto Play",
+  "profitOnWin": "Profit on Win",
+  "stopAutoPlay": "Stop Auto Play",
+  "autoPlayStopped": "Auto Play Stopped",
+  "confirmBet": {
+    "title": "Confirm Bet",
+    "message": "Bet {{value.amount}}?"
+  },
+  "starting": "Starting in...",
+  "nextRound": "Next Game",
+  "rugged": "Rugged",
+  "tookProfit": "Took Profit",
+  "netGain": "Net Gain",
+  "rules": {
+    "title": "Crash Rules",
+    "rule1":"Min multiplier is 1x.",
+    "rule2":"Max multiplier is 9600x.",
+    "rule3": "Max profit is {{max}} tokens.",
+    "rule4": "RTP is {{percent}}%.",
+    "rule5": "1.00 tokens wagered = {{exp}} XP."
+  }
+}

@@ -23,6 +23,8 @@ const options: InitOptions = {
     "games\\double",
     "games\\mines",
     "games\\limbo",
+    "games\\dice",
+    "games\\crash",
     "account",
     "referrals"
   ],

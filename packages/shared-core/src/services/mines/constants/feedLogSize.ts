@@ -1,1 +1,1 @@
-export const feedLogSize = 10;
+export const feedLogSize = 20;
