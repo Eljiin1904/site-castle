@@ -34,7 +34,7 @@ export const CrashedSimulator = () => {
           style={{width: `${roundMultiplier < 10 ? `120` : (roundMultiplier < 100 ? `140`: `165`)}px`}}
           textAlign="left"
           >
-          {roundMultiplier.toFixed(2)}
+          {roundMultiplier}
         </Span>
         <Span
           family="title"
