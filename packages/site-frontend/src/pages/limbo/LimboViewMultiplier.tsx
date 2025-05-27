@@ -13,7 +13,7 @@ export const LimboViewMultiplier = () => {
   const isAutoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
   const animationOptions = {
     win: "/graphics/animations/rocket_launch_still",
-    lose: "/graphics/animations/rocket_expl_firec",
+    lose: "/graphics/animations/rocket_expl_fire",
     default: "/graphics/animations/rocket_fast",
   };
   const [rocketAnimation, setRocketAnimation] = useState(animationOptions["default"]);
