@@ -12,9 +12,9 @@ export const CrashSimulator = () => {
   
   const lobby = useAppSelector((x) => x.crash.lobby);
   // const elapsedTime = useAppSelector((x) => x.crash.round.elapsedTime);
-  const serverMultiplier = useAppSelector((x) => x.crash.round.multiplier);
+  //const serverMultiplier = useAppSelector((x) => x.crash.round.multiplier);
 
-  const roundStartedTime = useAppSelector((x) => x.crash.roundStartedTimestamp) ?? 0;
+  const roundStartedTime = useAppSelector((x) => x.crash.roundElapsedTime) ?? 0;
   const elapsedTime = roundStartedTime ? Date.now() - roundStartedTime : 0;
  
   // const [multiplier, setMultiplier] = useState(serverMultiplier);
@@ -37,8 +37,8 @@ export const CrashSimulator = () => {
 const Multiplier = ({startedTime}: {startedTime: number}) => {
 
   const [multiplier, setMultiplier] = useState(1);
-  const [timer, setTimer] = useState(Date.now() - startedTime);
-  console.log(startedTime);
+  const [timer, setTimer] = useState(startedTime);
+  
   useInterval(() => {
     if (timer > 0) {
       const currentMultiplier = Crash.getMultiplierForTime(timer);
