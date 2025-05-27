@@ -14,31 +14,34 @@ console.log("SOCKET CONFIG DEBUG:", {
 
 // DIRECT APPROACH: Get the API URL directly from window.runtimeConfig if available
 // This bypasses any potential issues with the config object
-let socketUrl = "";
-if (window.runtimeConfig && window.runtimeConfig.siteAPI) {
-  // Use siteAPI directly from window.runtimeConfig
-  socketUrl = window.runtimeConfig.siteAPI;
-  console.log(`[Socket] Using API URL directly from window.runtimeConfig: ${socketUrl}`);
-} else {
-  // Fallback to config.siteAPI
-  socketUrl = config.siteAPI || "";
-  console.log(`[Socket] Using API URL from config object: ${socketUrl}`);
-}
+let socketUrl = config.apiURL;
+if(config.env !== 'development') {
 
-// Ensure URL has protocol
-if (!socketUrl.startsWith('http://') && !socketUrl.startsWith('https://')) {
-  socketUrl = `https://${socketUrl}`;
+  if (window.runtimeConfig && window.runtimeConfig.siteAPI) {
+    // Use siteAPI directly from window.runtimeConfig
+    socketUrl = window.runtimeConfig.siteAPI;
+    console.log(`[Socket] Using API URL directly from window.runtimeConfig: ${socketUrl}`);
+  } else {
+    // Fallback to config.siteAPI
+    socketUrl = config.siteAPI || "";
+    console.log(`[Socket] Using API URL from config object: ${socketUrl}`);
+  }
+  
+  // Ensure URL has protocol
+  if (!socketUrl.startsWith('http://') && !socketUrl.startsWith('https://')) {
+    socketUrl = `https://${socketUrl}`;
+  }
+  
+  console.log(`[Socket] FINAL Connection URL: ${socketUrl}`);
 }
-
-console.log(`[Socket] FINAL Connection URL: ${socketUrl}`);
 
 // Create the Socket.io client with explicit URL
 export const client: Socket<SiteServerEvents, SiteClientEvents> = io(
   socketUrl,
   {
     transports: ["websocket"],
-    autoConnect: true, // Explicitly enable auto-connect
-    forceNew: true,    // Force a new connection
+    // autoConnect: config.env !== 'development', // Explicitly enable auto-connect
+    // forceNew: config.env !== 'development',    // Force a new connection
   },
 );
 
