@@ -177,7 +177,7 @@ async function completeRound(round: CrashRoundDocument) {
 
   const statusDate = new Date();
  
-  await Utility.wait(Crash.roundTimes.delay);
+  //await Utility.wait(Crash.roundTimes.delay);
   await System.tryCatch(processTickets)({
     ...round,
     status: "completed",

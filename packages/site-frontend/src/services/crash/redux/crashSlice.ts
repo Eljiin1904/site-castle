@@ -10,6 +10,7 @@ import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
 import { Crash } from "..";
+import { Crash as CrashCore } from "@core/services/crash";
 
 type PostAction = "reset" | "increase";
 
@@ -76,54 +77,98 @@ export const crashSlice = createSlice({
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;
-
       state.lobby = undefined;
+      
+      if(update.updatedFields.status) {
 
-      Database.updateDocument({
-        document: state.round,
-        updatedFields: update.updatedFields,
-        removedFields: update.removedFields,
-      });
+        const updatedStatus = update.updatedFields.status as CrashRoundStatus;
+        state.round.status = updatedStatus;
 
-      if (state.round.status === "completed") {
-        const history = state.history.slice();
-        state.roundElapsedTime = 0;
-        history.unshift({multiplier: state.round.multiplierCrash, won: state.round.won ?? false});
+        if( updatedStatus === "completed") {
+          // state.round.statusDate = update.updatedFields.statusDate as Date;
+          const crashedMultiplier = update.updatedFields.multiplierCrash as number;
+          const won = update.updatedFields.won as boolean;
 
-        if (history.length > 100) {
-          history.pop();
+          //Add multiplier to History
+          const history = state.history.slice();
+          state.roundElapsedTime = 0;
+          history.unshift({multiplier: crashedMultiplier, won: won});
+          if (history.length > 100) {
+            history.pop();
+          }
+          state.history = history;
+
+          const pixelsDown = Crash.chart.offset;
+          const crashLength = Crash.getMultiplierPosition(crashedMultiplier) + pixelsDown;
+
+          const crashEvent: CrashEventProps = {
+            crashColor: "double-red",
+            crashLength: crashLength,
+            startedCrashLength: crashLength,
+            crashPosition: -pixelsDown,
+            startedLine: true,
+            completedLine: true,
+          };
+          
+          if (state.crashEvents) {
+            const updatedCrashEvents = state.crashEvents.filter(x => !x.completedLine);
+            updatedCrashEvents.push(crashEvent);
+            state.crashEvents = updatedCrashEvents;
+          }
         }
 
-        state.history = history;
-        const pixelsDown = Crash.chart.offset;
-        const crashLenght = Crash.getMultiplierPosition(state.round.multiplier) + pixelsDown;
+        if( updatedStatus === "simulating") {
+         
+          state.roundElapsedTime = 0;
+          state.round.startDate = new Date();
+          const multiplier = 1.00;
+          const multiplierEvent: CrashEventProps = {
+            crashColor: "bright-green",
+            crashLength: Crash.getMultiplierPosition(multiplier),
+            startedCrashLength: 0,
+            crashPosition: 0,
+            startedLine: true,
+            simulatingLine: true,
+          };
+          
+          if (state.crashEvents) {
+            const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
+              
+              event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
+              return event;
+            });
+            
+            updatedCrashEvents.push(multiplierEvent);
+            state.crashEvents = updatedCrashEvents;
+          }
 
-        const crashEvent: CrashEventProps = {
-          crashColor: "double-red",
-          crashLength: crashLenght,
-          startedCrashLength: crashLenght,
-          crashPosition: -pixelsDown,
-          startedLine: true,
-          completedLine: true,
-        };
-        
-        if (state.crashEvents) {
-          const updatedCrashEvents = state.crashEvents.filter(x => !x.completedLine);
-          updatedCrashEvents.push(crashEvent);
-          state.crashEvents = updatedCrashEvents;
+          if(state.crashEvents.length === 0) {
+            state.crashEvents = [multiplierEvent];
+          }
         }
       }
-      if(state.round.status === "simulating") {
+
+      if(update.updatedFields.multiplier){
+
+        if(state.round.status === "completed") 
+          return;
         
-        state.roundElapsedTime = payload.updatedFields.elapsedTime as number;
+        const multiplier = update.updatedFields.multiplier as number;
+        const elapsedTime = update.updatedFields.elapsedTime as number;
+        const linePosition = Crash.getMultiplierPosition(multiplier);
+        
+        state.roundElapsedTime = elapsedTime;
+        state.round.multiplier = multiplier;
+
         const multiplierEvent: CrashEventProps = {
           crashColor: "bright-green",
-          crashLength: Crash.getMultiplierPosition(state.round.multiplier),
+          crashLength: linePosition,
           startedCrashLength: 0,
           crashPosition: 0,
           startedLine: true,
           simulatingLine: true,
         };
+
         if (state.crashEvents) {
           const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
             
@@ -139,6 +184,12 @@ export const crashSlice = createSlice({
           state.crashEvents = [multiplierEvent];
         }
       }
+
+      Database.updateDocument({
+        document: state.round,
+        updatedFields: update.updatedFields,
+        removedFields: update.removedFields,
+      });
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
       state.tickets.push(payload);
