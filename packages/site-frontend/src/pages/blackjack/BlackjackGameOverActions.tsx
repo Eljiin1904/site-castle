@@ -30,10 +30,10 @@ export default function BlackjackGameOverActions() {
         {statusTitle && (
           <div className="status-title">
             {/* {t.all(statusTitle.toLowerCase().replace(" ", "_"))} */}
-            {statusTitle.toLowerCase().replace(" ", "_")}
+            {/* {statusTitle.toLowerCase().replace(" ", "_")} */}
           </div>
         )}
-
+        {/* 
         {!!totalPayout && (
           <div className="payout">
             <span>+</span>
@@ -44,16 +44,16 @@ export default function BlackjackGameOverActions() {
             />
             <span>{Intimal.toDecimal(totalPayout)}</span>
           </div>
-        )}
+        )} */}
       </div>
       {/* {!hasPayout && <div className="payout">{lostText}</div>} */}
 
-      <BlackjackButton
+      {/* <BlackjackButton
         // text={t.gameplay("play_again")}
         text={"Play Again"}
         onClick={onClearGame}
         long
-      />
+      /> */}
     </div>
   );
 }

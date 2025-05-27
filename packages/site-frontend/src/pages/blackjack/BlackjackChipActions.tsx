@@ -13,13 +13,13 @@ export const BlackjackChipActions = ({}: {}) => {
 
   return (
     <div className="BlackjackChipActions">
-      <BlackjackChipButtons />
+      {/* <BlackjackChipButtons /> */}
       <BlackjackChipOptions />
-      <BlackjackButtonOrange
+      {/* <BlackjackButtonOrange
         text={"Play"}
         onClick={createGame}
         disabled={processing}
-      />
+      /> */}
     </div>
   );
 };

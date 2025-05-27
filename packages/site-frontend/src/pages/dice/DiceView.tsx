@@ -22,7 +22,11 @@ export const DiceView = () => {
         height: small ? "350px" : "660px",
       }}
     >
-      <Div fx position="relative" grow>
+      <Div
+        fx
+        position="relative"
+        grow
+      >
         <DiceHeader />
         {!small && <DiceHistory />}
         <DiceViewResult />

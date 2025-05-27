@@ -7,6 +7,7 @@ import { Conditional } from "@client/comps/conditional/Conditional";
 import BlackjackGameOverActions from "./BlackjackGameOverActions";
 import { BlackjackInsuranceActions } from "./BlackjackInsuranceActions";
 import BlackjackPlayActions from "./BlackjackPlayActions";
+import { Div } from "@client/comps/div/Div";
 
 type Action = "game-play" | "game-complete" | "insurance-pending";
 
@@ -18,13 +19,18 @@ export const BlackjackGameActions = () => {
   if (insurancePending) action = "insurance-pending";
 
   return (
-    <div className="BlackjackGameActions">
+    <Div
+      width={"full"}
+      justify="center"
+      align="center"
+      className="BlackjackGameActions"
+    >
       <Conditional
         value={action}
         game-play={<BlackjackPlayActions />}
         game-complete={<BlackjackGameOverActions />}
         insurance-pending={<BlackjackInsuranceActions />}
       />
-    </div>
+    </Div>
   );
 };

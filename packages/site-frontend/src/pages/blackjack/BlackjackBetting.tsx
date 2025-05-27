@@ -7,6 +7,7 @@ import { BlackjackChipActions } from "./BlackjackChipActions";
 import { BlackjackChipPlacements } from "./BlackjackChipPlacements";
 import { BlackjackMobileShelf } from "./BlackjackMobileShelf";
 import { BlackjackBetTotals } from "./BlackjackBetTotals";
+import { BlackjackFooter } from "./BlackjackFooter";
 
 export const BlackjackBetting = ({}: {}) => {
   const getExistingResponded = useAppSelector((state) => state.blackjack.getExistingResponded);
@@ -36,9 +37,10 @@ export const BlackjackBetting = ({}: {}) => {
 
   return (
     <div className={className}>
-      <BlackjackBetTotals />
-      <BlackjackMobileShelf toggleShelf={toggleShelf} />
-      <BlackjackChipPlacements />
+      {/* <BlackjackBetTotals /> */}
+      {/* <BlackjackFooter /> */}
+      {/* <BlackjackMobileShelf toggleShelf={toggleShelf} /> */}
+      {/* <BlackjackChipPlacements /> */}
       <BlackjackChipActions />
     </div>
   );

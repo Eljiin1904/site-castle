@@ -21,13 +21,13 @@ export const BlackjackPage = () => {
 
       {/* <BlackjackFe
       ed /> */}
-      <BetBoard
+      {/* <BetBoard
         px={20}
         mt={40}
         mb={40}
         title={t("games\\blackjack:betBoardHeader")}
         game="blackjack"
-      />
+      /> */}
     </SitePage>
   );
 };

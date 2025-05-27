@@ -18,6 +18,7 @@ import { BlackjackInfoModal } from "./modals/BlackjackInfoModal";
 import { BlackjackDebugModal } from "./modals/BlackjackDebugModal";
 import config from "#app/config";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { BlackjackBetTotals } from "./BlackjackBetTotals";
 // import { useTranslation } from "@client/hooks/localization/useTranslation";
 
 export const BlackjackHeader = () => {
@@ -29,7 +30,7 @@ export const BlackjackHeader = () => {
   }, [dispatch]);
 
   return (
-    <Div>
+    <Div width={"full"}>
       <Conditional
         value={mainLayout}
         mobile={<MobileHeader toggleTheme={toggleTheme} />}
@@ -44,11 +45,18 @@ export const BlackjackHeader = () => {
 const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
   // const { t } = useTranslation();
   return (
-    <Div fx>
-      {/* <PageTitle
-        heading={"Blackjack"}
-        icon={SvgBlackjack}
-      /> */}
+    <Div
+      fx
+      // width={"full"}
+      justify="space-between"
+    >
+      <Div
+        ml={20}
+        width={140}
+      >
+        <BlackjackBetTotals />
+      </Div>
+
       <Div gap={8}>
         <VolumeDropdown prefix="blackjack" />
         <Dropdown
@@ -89,12 +97,15 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
 const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
   const { t } = useTranslation();
   return (
-    <Div fx>
-      {/* <PageTitle
-        // heading={t.games("blackjack")}
-        heading={"Blackjack"}
-        icon={SvgBlackjack}
-      /> */}
+    <Div
+      fx
+      width={"full"}
+      justify="space-between"
+    >
+      <Div ml={20}>
+        <BlackjackBetTotals />
+      </Div>
+
       <Div
         fx
         align="flex-start"

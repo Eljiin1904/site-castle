@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import classNames from "classnames";
 import { Vector } from "@client/comps/vector/Vector";
 import { getBlackjackButtonIcon } from "./utils/getBlackjackButtonIcon";
+import { Div } from "@client/comps/div/Div";
 
 export const BlackjackButton = ({
   text,
@@ -41,16 +42,41 @@ export const BlackjackButton = ({
     long,
     secondary,
   });
+  function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   return (
-    <div
-      className={className}
-      onClick={_onClick}
+    <Div
+      border={true}
+      px={80}
+      py={8}
+      grow
+      align="center"
+      justify="center"
+      borderColor="brown-4"
     >
-      <div className="button-inner">
-        {iconObj && <Vector {...iconObj} />}
-        <div className="text">{text}</div>
+      <div
+        className={className}
+        onClick={_onClick}
+      >
+        <Div
+          // border={true}
+          // px={80}
+          // py={4}
+          gap={10}
+        >
+          {/* <div className="button-inner"> */}
+          {iconObj && <Vector {...iconObj} />}
+          <Div
+            className="text"
+            color="light-sand"
+          >
+            {capitalizeFirstLetter(text)}
+          </Div>
+          {/* </div> */}
+        </Div>
       </div>
-    </div>
+    </Div>
   );
 };
