@@ -97,13 +97,13 @@ async function startRound(round: CrashRoundDocument) {
 
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
-  let multiplierCrash = 
-  Random.getMultiplier({
-    serverSeed: round.serverSeed,
-    clientSeed: eosBlockId,
-    nonce: round._id,
-    maxValue: Crash.maxValue,
-  });
+  let multiplierCrash = 3.28;
+  // Random.getMultiplier({
+  //   serverSeed: round.serverSeed,
+  //   clientSeed: eosBlockId,
+  //   nonce: round._id,
+  //   maxValue: Crash.maxValue,
+  // });
 
   const statusDate = new Date();
 
