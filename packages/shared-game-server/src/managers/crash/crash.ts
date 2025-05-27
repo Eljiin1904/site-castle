@@ -97,7 +97,7 @@ async function startRound(round: CrashRoundDocument) {
 
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
-  let multiplierCrash = 1000;
+  let multiplierCrash = 
   Random.getMultiplier({
     serverSeed: round.serverSeed,
     clientSeed: eosBlockId,
@@ -125,7 +125,6 @@ async function startRound(round: CrashRoundDocument) {
     const currentTime = new Date();
     const timer = currentTime.getTime() - statusDate.getTime();
     const currentMultiplier = Crash.getMultiplierForTime(timer);
-  
     if(currentMultiplier >= multiplierCrash) {
       clearInterval(intervalId);
       return;
