@@ -97,7 +97,7 @@ async function startRound(round: CrashRoundDocument) {
 
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
-  let multiplierCrash = 
+  let multiplierCrash = 1000;
   Random.getMultiplier({
     serverSeed: round.serverSeed,
     clientSeed: eosBlockId,

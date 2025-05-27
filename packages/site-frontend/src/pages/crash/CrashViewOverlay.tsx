@@ -53,7 +53,7 @@ const CrashCountdown = () => {
     setTimer(getRemainder());
     const newChartLine = Crash.createCrashEvent(crashEvents.length === 0);
     dispatch(addCrashEvent(newChartLine));
-  }, 500);
+  }, 250);
 
   return (
     <Div
@@ -93,7 +93,7 @@ const CrashPending = () => {
   useInterval(() => {
     const newChartLine = Crash.createCrashEvent(false);
     dispatch(addCrashEvent(newChartLine));
-  }, 500);
+  }, 250);
 
   return null;
 };

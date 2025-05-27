@@ -52,16 +52,31 @@ const Multiplier = ({startedTime}: {startedTime: number}) => {
     fy
     gap={12}
   >
-    <Div column gap={16}>
-      <Span
-        family="title"
-        weight="regular"
-        size={48}
-        lineHeight={40}
-        color="bright-green"
-      >
-        {multiplier}X
-      </Span>
+    <Div column gap={16} alignItems="flex-end">
+      <Div gap={4} justifyContent="flex-end" width={160}>
+        <Span
+          family="title"
+          weight="regular"
+          size={48}
+          lineHeight={40}
+          color="bright-green"
+          pr={40}
+          style={{width: `${multiplier < 10 ? `120` : (multiplier < 100 ? `140`: `165`)}px`}}
+          textAlign="left"
+          >
+          {multiplier}
+        </Span>
+        <Span
+          family="title"
+          weight="regular"
+          size={48}
+          lineHeight={40}
+          color="bright-green"
+          position="absolute"
+          >
+          X
+        </Span>
+      </Div>
       <NetGain />
     </Div>
   </Div>)
@@ -87,7 +102,7 @@ const NetGain = () => {
   if(amount === 0)
     return null;
 
-  return (<Div gap={8}>
+  return (<Div gap={4}>
     <Span
       family="title"
       weight="regular"
@@ -96,6 +111,20 @@ const NetGain = () => {
       color="light-sand"
       textTransform="uppercase"
     > {t('netGain')} </Span>
-    <Tokens value={amount} />
+    <Tokens value={amount} family="title" fontSize={16}/>
     </Div>);    
 };
+
+const SpanMultiplier = ({text, width}: {text: number | string, width?: Unit | undefined}) => {
+
+  return (<Span
+    family="title"
+    weight="regular"
+    size={48}
+    lineHeight={40}
+    color="bright-green"
+    pr={40}
+    >
+    {text}
+  </Span>)
+}
