@@ -131,10 +131,13 @@ export function useAutoBet() {
       }
       return;
     }
+    
     if(round.status !== "waiting")
       return;
     
-   
+    if(processing)
+      return;
+    
     if (betAmount > tokenBalance) {
       return false;
     }
@@ -152,8 +155,9 @@ export function useAutoBet() {
         betToken,
         roundId: round._id
       });
-
       ticket = res.results;
+      dispatch(Crash.setProcessing(true));
+      
     } catch (err) {
       dispatch(Crash.setAutoPlaying(false));
       Toasts.info("games\\crash:autoPlayStopped");
@@ -168,7 +172,6 @@ export function useAutoBet() {
       game: "crash",
       tokenAmount: betAmount,
     });
-    dispatch(Crash.setProcessing(true));
     
   });
 
