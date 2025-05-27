@@ -35,6 +35,7 @@ interface CrashState {
   profitLimit?: number;
   lossLimit?: number;
   autoPnl: number;
+  roundElapsedTime?: number;
 }
 
 const initialState: CrashState = {
@@ -51,6 +52,7 @@ const initialState: CrashState = {
   winAction: "reset",
   lossAction: "reset",
   autoPnl: 0,
+  roundElapsedTime: 0,
 };
 
 export const crashSlice = createSlice({
@@ -63,12 +65,14 @@ export const crashSlice = createSlice({
       state.tickets = payload.tickets.filter((x) => x.roundId === state.round._id);
       state.lobby = payload.round.status;
       state.initialized = true;
+      state.roundElapsedTime = payload.round.elapsedTime;
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
       state.tickets = [];
       state.crashEvents = [];
       state.lobby = undefined;
+      state.roundElapsedTime = 0;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;
@@ -83,7 +87,7 @@ export const crashSlice = createSlice({
 
       if (state.round.status === "completed") {
         const history = state.history.slice();
-
+        state.roundElapsedTime = 0;
         history.unshift({multiplier: state.round.multiplierCrash, won: state.round.won ?? false});
 
         if (history.length > 100) {
@@ -111,6 +115,7 @@ export const crashSlice = createSlice({
       }
       if(state.round.status === "simulating") {
         
+        state.roundElapsedTime = payload.updatedFields.elapsedTime as number;
         const multiplierEvent: CrashEventProps = {
           crashColor: "bright-green",
           crashLength: Crash.getMultiplierPosition(state.round.multiplier),

@@ -6,6 +6,7 @@ import './CrashSimulator.scss';
 
 export const CrashedSimulator = () => {
   const roundMultiplier = useAppSelector((x) => x.crash.round.multiplierCrash);
+  const roundMultiplierBeforeCrash = useAppSelector((x) => x.crash.round.multiplier);
   const userId = useAppSelector((x) => x.user._id);
   const roundTicket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === userId));
   const {t} = useTranslation(["games\\crash"]);
@@ -30,7 +31,7 @@ export const CrashedSimulator = () => {
           lineHeight={40}
           color={won ? "bright-green" : "double-red"}
         >
-        {roundMultiplier}X
+        {roundMultiplierBeforeCrash}X - {roundMultiplier}X
         </Span>
         {won ? <Div gap={8}>
           <Span
