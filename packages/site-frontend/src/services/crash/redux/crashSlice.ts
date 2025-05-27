@@ -35,6 +35,7 @@ interface CrashState {
   profitLimit?: number;
   lossLimit?: number;
   autoPnl: number;
+  roundStartedTimestamp?: number;
 }
 
 const initialState: CrashState = {
@@ -51,6 +52,7 @@ const initialState: CrashState = {
   winAction: "reset",
   lossAction: "reset",
   autoPnl: 0,
+  roundStartedTimestamp: undefined,
 };
 
 export const crashSlice = createSlice({
@@ -62,6 +64,7 @@ export const crashSlice = createSlice({
       state.history = payload.history;
       state.tickets = payload.tickets.filter((x) => x.roundId === state.round._id);
       state.lobby = payload.round.status;
+      state.roundStartedTimestamp = Date.now() - payload.round.elapsedTime;
       state.initialized = true;
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
@@ -69,6 +72,7 @@ export const crashSlice = createSlice({
       state.tickets = [];
       state.crashEvents = [];
       state.lobby = undefined;
+      state.roundStartedTimestamp = Date.now() - payload.elapsedTime;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;
@@ -83,7 +87,7 @@ export const crashSlice = createSlice({
 
       if (state.round.status === "completed") {
         const history = state.history.slice();
-
+        state.roundStartedTimestamp = undefined;
         history.unshift({multiplier: state.round.multiplierCrash, won: state.round.won ?? false});
 
         if (history.length > 100) {
