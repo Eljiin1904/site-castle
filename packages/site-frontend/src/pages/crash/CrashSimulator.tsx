@@ -42,7 +42,7 @@ const Multiplier = ({startedTime}: {startedTime: number}) => {
     gap={12}
   >
     <Div column gap={16} alignItems="flex-end">
-      <Div gap={4} justifyContent="flex-end" width={160}>
+      <Div gap={4} justifyContent="flex-end" style={{width: `165px`}}>
         <Span
           family="title"
           weight="regular"

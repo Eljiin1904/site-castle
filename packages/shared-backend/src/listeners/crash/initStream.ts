@@ -42,12 +42,12 @@ export default Sockets.createListener({
 
           if(isSmulation) {
 
-            waitForEmit = GAME_DELAY - (await Crash.calculateUserWaitTime(userId, update.updatedFields.statusDate as Date));
+            waitForEmit = GAME_DELAY ;//- (await Crash.calculateUserWaitTime(userId, update.updatedFields.statusDate as Date));
           }
           else if(roundStatus === "completed") {
-            waitForEmit =  GAME_DELAY -  await Crash.calculateUserWaitTime(userId, update.updatedFields.completedDate as Date);
+            waitForEmit =  GAME_DELAY - 100;//0;//GAME_DELAY - 400 ;//- await Crash.calculateUserWaitTime(userId, update.updatedFields.completedDate as Date);
           }
-        
+          
           if(waitForEmit > 0)
             setTimeout(() => {
               socket.emit("crash-round-update", update);
