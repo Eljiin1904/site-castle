@@ -67,7 +67,7 @@ export function useManualBet() {
 
       const betToken = await bet2fa();
 
-      await Crash.postTicket({
+      Crash.postTicket({
         roundId: round._id,
         betAmount,
         betToken,
