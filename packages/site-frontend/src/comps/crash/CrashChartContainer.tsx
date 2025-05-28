@@ -32,12 +32,11 @@ export const CrashChartContainer = () => {
 
   useInterval(() => {
     if(round.status == 'simulating') {
-      if (timer > 0 ) {
-        const newMultiplier = CoreCrash.getMultiplierForTime(timer);
-        console.log("Calc Multiplier:", newMultiplier, "Current Multiplier:", currentMultiplier);      
-        setMultiplier(Math.min(newMultiplier, currentMultiplier));
-      }
-      setTimer(currentVal => currentVal + 10);
+      
+      const newMultiplier = CoreCrash.getMultiplierForTime(timer);
+      console.log('newMultiplier', newMultiplier, 'currentMultiplier', currentMultiplier);
+      setMultiplier(Math.min(newMultiplier, currentMultiplier));
+      setTimer(currentVal => currentVal + 100);
     }
     else if(round.status == 'completed'){
       
@@ -48,14 +47,12 @@ export const CrashChartContainer = () => {
       setMultiplier(1.00);
       setTimer(0);
     }
-  }, 10);
+  }, 100);
 
   useEffect(() => {
-    if (roundStartedTime > 0) {
-      setTimer(Date.now() - roundStartedTime);
-      const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
-      setMultiplier(Math.min(initialMultiplier, currentMultiplier));
-    }
+    setTimer(Date.now() - roundStartedTime);
+    const initialMultiplier =CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
+    setMultiplier(Math.min(initialMultiplier, currentMultiplier));
   }, [round._id]);
 
   const linePosition = Crash.getMultiplierPosition(multiplier);
@@ -76,7 +73,7 @@ export const CrashChartContainer = () => {
         waiting={<CrashCountdown time={time} events={crashEvents} />}
         pending={<CrashCountdown time={time} events={crashEvents}/>}
         simulating={<CrashMultiplier multiplier={multiplier} />}
-        completed={<CrashedSimulator multiplier={round.multiplierCrash ?? multiplier} />}
+        completed={<CrashedSimulator />}
       />
     </Div>
   );

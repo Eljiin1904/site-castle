@@ -48,7 +48,6 @@ export function useAutoBet() {
 
   const handleBet = usePost(async (isMounted) => {      
     
-  
     if (!autoPlaying) {
       return;
     }
@@ -145,19 +144,18 @@ export function useAutoBet() {
     if(roundTicket)
       return;
 
-    let ticket;
+    
    
     try {
+      dispatch(Crash.setProcessing(true));
       const betToken = await bet2fa();
-      const res = await Crash.postTicket({
+      Crash.postTicket({
         betAmount,
         targetMultiplier,
         betToken,
         roundId: round._id
       });
-      ticket = res.results;
-      dispatch(Crash.setProcessing(true));
-      
+
     } catch (err) {
       dispatch(Crash.setAutoPlaying(false));
       Toasts.info("games\\crash:autoPlayStopped");

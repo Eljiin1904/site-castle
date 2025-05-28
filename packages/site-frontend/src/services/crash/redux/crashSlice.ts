@@ -69,7 +69,7 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.roundElapsedTime = payload.round.elapsedTime;
-      state.roundStartingTime = Date.now() - payload.round.elapsedTime + DELAY + 200; // Adjust for the initial delay
+      state.roundStartingTime = Date.now() - payload.round.elapsedTime + DELAY; // Adjust for the initial delay
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
@@ -108,13 +108,18 @@ export const crashSlice = createSlice({
 
           state.round.status = updatedStatus;
           state.roundElapsedTime = 0;
-          state.roundStartingTime = Date.now() + 200;
+          state.roundStartingTime = Date.now();
         }
         else 
         {
           state.round.status = updatedStatus;
           state.roundStartingTime = 0;
         }
+        Database.updateDocument({
+          document: state.round,
+          updatedFields: update.updatedFields,
+          removedFields: update.removedFields,
+       });
       }
 
       if(update.updatedFields.multiplier){
@@ -125,12 +130,6 @@ export const crashSlice = createSlice({
         state.roundElapsedTime = update.updatedFields.elapsedTime as number;
         state.round.multiplier = update.updatedFields.multiplier as number;
       }
-
-      Database.updateDocument({
-        document: state.round,
-        updatedFields: update.updatedFields,
-        removedFields: update.removedFields,
-      });
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
       state.tickets.push(payload);
