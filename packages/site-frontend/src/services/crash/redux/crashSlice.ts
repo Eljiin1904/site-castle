@@ -10,9 +10,10 @@ import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
 import { Crash } from "..";
+import { Crash as CoreCrash } from "@core/services/crash";
 
 type PostAction = "reset" | "increase";
-
+const DELAY = CoreCrash.roundTimes.delay;
 interface CrashState {
   initialized?: boolean;
   round: CrashRoundDocument;
@@ -68,7 +69,7 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.roundElapsedTime = payload.round.elapsedTime;
-      state.roundStartingTime = Date.now() - payload.round.elapsedTime + 1000; // Adjust for the initial delay
+      state.roundStartingTime = Date.now() - payload.round.elapsedTime + DELAY; // Adjust for the initial delay
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
