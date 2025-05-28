@@ -34,7 +34,7 @@ export const CrashChartContainer = () => {
     if(round.status == 'simulating') {
       
       const newMultiplier = CoreCrash.getMultiplierForTime(timer);
-      console.log('newMultiplier', newMultiplier, 'currentMultiplier', currentMultiplier);
+      //console.log('newMultiplier', newMultiplier, 'currentMultiplier', currentMultiplier);
       setMultiplier(Math.min(newMultiplier, currentMultiplier));
       setTimer(currentVal => currentVal + 100);
     }
@@ -51,7 +51,7 @@ export const CrashChartContainer = () => {
 
   useEffect(() => {
     setTimer(Date.now() - roundStartedTime);
-    const initialMultiplier =CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
+    const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
     setMultiplier(Math.min(initialMultiplier, currentMultiplier));
   }, [round._id]);
 
