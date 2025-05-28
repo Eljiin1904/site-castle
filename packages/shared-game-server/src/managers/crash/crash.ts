@@ -118,7 +118,6 @@ async function startRound(round: CrashRoundDocument) {
   );
  
   const roundTime = Crash.getTimeForMultiplier(multiplierCrash);
-  
   const intervalId = setInterval(() => {
   
     const currentTime = new Date();

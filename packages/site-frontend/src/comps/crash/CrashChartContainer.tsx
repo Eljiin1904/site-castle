@@ -16,20 +16,16 @@ export const CrashChartContainer = () => {
   const roundTicket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === userId));
   const crashEvents = useAppSelector((x) => x.crash.crashEvents);
   const round = useAppSelector((x) => x.crash.round);
-  //const currentMultiplier =  useAppSelector((x) => x.crash.round.multiplier);
   const status = useAppSelector((x) => x.crash.round.status);
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
-  //const multiplierLinePosition = Crash.getMultiplierPosition(currentMultiplier);
-  const roundStartedTime = useAppSelector((x) => x.crash.roundElapsedTime) ?? 0;
+  const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
   
-
-   const [multiplier, setMultiplier] = useState(0);
-   const [timer, setTimer] = useState(roundStartedTime);
+  const [multiplier, setMultiplier] = useState(1.00);
+  const [timer, setTimer] = useState(Date.now() - roundStartedTime);
     
     useInterval(() => {
      if(round.status == 'simulating') {
-
         if (timer > 0 ) {
           const currentMultiplier = CoreCrash.getMultiplierForTime(timer);
           setMultiplier(currentMultiplier);
@@ -37,15 +33,16 @@ export const CrashChartContainer = () => {
         setTimer(currentVal => currentVal + 100);
      }
      else if(round.status !== 'completed'){
-      setMultiplier(0);
+      
+      setMultiplier(round.multiplierCrash ?? 1.00);
       setTimer(0);
      }
     }, 100);
 
     useEffect(() => {
       if (roundStartedTime > 0) {
-        setTimer(roundStartedTime);
-        const initialMultiplier = CoreCrash.getMultiplierForTime(roundStartedTime);
+        setTimer(Date.now() - roundStartedTime);
+        const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
         setMultiplier(initialMultiplier);
       }
     }, [roundStartedTime]);

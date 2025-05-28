@@ -18,7 +18,6 @@ import { Crash as CoreCrash } from "@core/services/crash";
 
 export const CrashViewOverlay = () => {
   const round = useAppSelector((x) => x.crash.round);
-
   return (
     <Div
       position="absolute"
