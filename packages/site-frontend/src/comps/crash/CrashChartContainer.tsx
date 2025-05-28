@@ -16,7 +16,6 @@ export const CrashChartContainer = () => {
   const roundTicket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === userId));
   const crashEvents = useAppSelector((x) => x.crash.crashEvents);
   const round = useAppSelector((x) => x.crash.round);
-  const status = useAppSelector((x) => x.crash.round.status);
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
   const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
@@ -48,13 +47,16 @@ export const CrashChartContainer = () => {
       }
     }, [roundStartedTime]);
 
- 
+  const linePosition = Crash.getMultiplierPosition(multiplier);
+  const chartOffset = Crash.chart.offset;
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
       <CrashYAxis multiplier={multiplier} />
       {crashEvents.map((value, index) => <CrashEvent key={index} startedLine={value.startedLine} crashColor={value.crashColor} crashPosition={value.crashPosition} startedCrashLength={value.crashLength} crashLength={value.crashLength} />)}
-      <CrashMultiplierLine position={ Crash.getMultiplierPosition(multiplier)} status={cashout? 'simulating' : status} />
-      {cashout && <CrashMultiplierLine status={status} position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
+      <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />
+      {round.status === 'completed' && <CrashEvent startedLine={true} crashColor={"double-red"} crashPosition={-chartOffset} startedCrashLength={linePosition + chartOffset} crashLength={linePosition + chartOffset} />}
+      <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
+      {cashout && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
       <CashoutEvents />
     </Div>
   );
