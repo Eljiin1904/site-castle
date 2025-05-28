@@ -5,13 +5,17 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Numbers } from "@core/services/numbers";
 import './CrashSimulator.scss';
 
-export const CrashedSimulator = ({multiplier}: {multiplier: number}) => {
+export const CrashedSimulator = () => {
   const userId = useAppSelector((x) => x.user._id);
   const roundTicket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === userId));
   const {t} = useTranslation(["games\\crash"]);
   const won = roundTicket?.won ?? false;
   const cashoutMultiplier = roundTicket?.multiplierCrashed ?? 1;
+  const round = useAppSelector((x) => x.crash.round);
 
+  if(!round?.multiplierCrash)
+    return null;
+  
   return (<Div
       className="CrashSimulator"
       zIndex={10}
@@ -25,7 +29,7 @@ export const CrashedSimulator = ({multiplier}: {multiplier: number}) => {
             fontWeight="bold"
             textAlign="right"
             >
-            {Numbers.floor(multiplier, 2).toFixed(2)}
+            {Numbers.floor(round.multiplierCrash, 2).toFixed(2)}
           </Span>
           <Span
             family="title"
