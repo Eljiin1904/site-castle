@@ -47,7 +47,8 @@ export default Http.createApiRoute({
     });
 
     if (existing) {
-      throw new HandledError("validations:errors.games.crash.invalidCombination");
+      return;
+      throw new HandledError("validations:errors.games.crash.ticketExists");
     }
 
     const location = await Http.getLocation(req.trueIP);

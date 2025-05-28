@@ -34,6 +34,7 @@ export const CrashChartContainer = () => {
     if(round.status == 'simulating') {
       if (timer > 0 ) {
         const newMultiplier = CoreCrash.getMultiplierForTime(timer);
+        console.log("Calc Multiplier:", newMultiplier, "Current Multiplier:", currentMultiplier);      
         setMultiplier(Math.min(newMultiplier, currentMultiplier));
       }
       setTimer(currentVal => currentVal + 10);
@@ -60,7 +61,7 @@ export const CrashChartContainer = () => {
   const linePosition = Crash.getMultiplierPosition(multiplier);
   const chartOffset = Crash.chart.offset;
   const time = CoreCrash.roundTimes.waiting - Site.timeSince(round.startDate ?? new Date());
-  
+ 
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
       <CrashYAxis multiplier={multiplier} />

@@ -164,6 +164,7 @@
         "requiredRound": "Round is required.",
         "invalidRoundId": "Invalid round id.",
         "invalidCombination": "Invalid bet combination.",
+        "ticketExists": "Ticket already exists.",
         "invalidRoundStatus": "Invalid round status.",
         "invalidRoundStartDate": "Invalid round start date.",
         "invalidMultiplier": "Invalid multiplier.",
