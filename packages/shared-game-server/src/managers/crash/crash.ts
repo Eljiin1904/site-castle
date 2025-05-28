@@ -97,7 +97,7 @@ async function startRound(round: CrashRoundDocument) {
 
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
-  let multiplierCrash = Random.getMultiplier({
+  let multiplierCrash =  Random.getMultiplier({
     serverSeed: round.serverSeed,
     clientSeed: eosBlockId,
     nonce: round._id,
@@ -175,7 +175,7 @@ async function completeRound(round: CrashRoundDocument) {
 
   const statusDate = new Date();
  
-  //await Utility.wait(Crash.roundTimes.delay);
+  await Utility.wait(Crash.roundTimes.delay);
   await System.tryCatch(processTickets)({
     ...round,
     status: "completed",
