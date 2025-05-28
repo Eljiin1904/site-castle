@@ -81,7 +81,7 @@ export default Sockets.createListener({
             if (!userId) continue;
 
             let waitForEmit = 0;
-            waitForEmit = GAME_DELAY - (await Crash.calculateUserWaitTime(userId, update.updatedFields.cashoutTriggeredDate as Date));
+            waitForEmit = GAME_DELAY ;//- (await Crash.calculateUserWaitTime(userId, update.updatedFields.cashoutTriggeredDate as Date));
 
             if(waitForEmit > 0)
               setTimeout(() => {

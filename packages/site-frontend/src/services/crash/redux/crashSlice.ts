@@ -10,10 +10,10 @@ import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
 import { Crash } from "..";
-import { Crash as CrashCore } from "@core/services/crash";
+import { Crash as CoreCrash } from "@core/services/crash";
 
 type PostAction = "reset" | "increase";
-
+const DELAY = CoreCrash.roundTimes.delay;
 interface CrashState {
   initialized?: boolean;
   round: CrashRoundDocument;
@@ -37,6 +37,7 @@ interface CrashState {
   lossLimit?: number;
   autoPnl: number;
   roundElapsedTime?: number;
+  roundStartingTime?: number;
 }
 
 const initialState: CrashState = {
@@ -54,6 +55,7 @@ const initialState: CrashState = {
   lossAction: "reset",
   autoPnl: 0,
   roundElapsedTime: 0,
+  roundStartingTime: 0,
 };
 
 export const crashSlice = createSlice({
@@ -67,6 +69,7 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.roundElapsedTime = payload.round.elapsedTime;
+      state.roundStartingTime = Date.now() - payload.round.elapsedTime + DELAY; // Adjust for the initial delay
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
@@ -74,6 +77,7 @@ export const crashSlice = createSlice({
       state.crashEvents = [];
       state.lobby = undefined;
       state.roundElapsedTime = 0;
+      state.roundStartingTime = 0;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;
@@ -82,13 +86,12 @@ export const crashSlice = createSlice({
       if(update.updatedFields.status) {
 
         const updatedStatus = update.updatedFields.status as CrashRoundStatus;
-        state.round.status = updatedStatus;
-
         if( updatedStatus === "completed") {
           // state.round.statusDate = update.updatedFields.statusDate as Date;
+          state.round.status = updatedStatus;
           const crashedMultiplier = update.updatedFields.multiplierCrash as number;
           const won = update.updatedFields.won as boolean;
-
+    
           //Add multiplier to History
           const history = state.history.slice();
           state.roundElapsedTime = 0;
@@ -119,8 +122,12 @@ export const crashSlice = createSlice({
 
         if( updatedStatus === "simulating") {
          
+          if(state.round.status === "completed") 
+            return;
+
+          state.round.status = updatedStatus;
           state.roundElapsedTime = 0;
-          state.round.startDate = new Date();
+          state.roundStartingTime = Date.now();
           const multiplier = 1.00;
           const multiplierEvent: CrashEventProps = {
             crashColor: "bright-green",
@@ -146,17 +153,21 @@ export const crashSlice = createSlice({
             state.crashEvents = [multiplierEvent];
           }
         }
+        else 
+        {
+          state.round.status = updatedStatus;
+          state.roundStartingTime = 0;
+        }
       }
 
       if(update.updatedFields.multiplier){
 
-        if(state.round.status === "completed") 
+        if(state.round.status != "simulating") 
           return;
         
         const multiplier = update.updatedFields.multiplier as number;
         const elapsedTime = update.updatedFields.elapsedTime as number;
         const linePosition = Crash.getMultiplierPosition(multiplier);
-        
         state.roundElapsedTime = elapsedTime;
         state.round.multiplier = multiplier;
 

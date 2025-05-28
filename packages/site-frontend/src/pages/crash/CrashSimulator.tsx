@@ -11,9 +11,10 @@ import { Crash } from "@core/services/crash";
 export const CrashSimulator = () => {
   
   const lobby = useAppSelector((x) => x.crash.lobby);
-  const roundStartedTime = useAppSelector((x) => x.crash.roundElapsedTime) ?? 0;
+  const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
+  const roundStatus = useAppSelector((x) => x.crash.round.status);
 
-  if(lobby)
+  if(lobby || roundStatus !== 'simulating' || roundStartedTime <= 0)
     return null;
 
   return (<MemoizedMultiplier startedTime={roundStartedTime} />);
@@ -22,7 +23,7 @@ export const CrashSimulator = () => {
 const Multiplier = ({startedTime}: {startedTime: number}) => {
 
   const [multiplier, setMultiplier] = useState(1.00);
-  const [timer, setTimer] = useState(startedTime);
+  const [timer, setTimer] = useState(Date.now() - startedTime);
   
   useInterval(() => {
     if (timer > 0) {
