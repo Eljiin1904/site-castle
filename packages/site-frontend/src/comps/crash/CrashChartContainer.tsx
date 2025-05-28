@@ -35,7 +35,7 @@ export const CrashChartContainer = () => {
       
       const newMultiplier = CoreCrash.getMultiplierForTime(timer);
       //console.log('newMultiplier', newMultiplier, 'currentMultiplier', currentMultiplier);
-      setMultiplier(Math.min(newMultiplier, currentMultiplier));
+      setMultiplier(newMultiplier);
       setTimer(currentVal => currentVal + 100);
     }
     else if(round.status == 'completed'){
