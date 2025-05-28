@@ -68,7 +68,7 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.roundElapsedTime = payload.round.elapsedTime;
-      state.roundStartingTime = Date.now() - payload.round.elapsedTime;
+      state.roundStartingTime = Date.now() - payload.round.elapsedTime + 1000; // Adjust for the initial delay
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
@@ -76,6 +76,7 @@ export const crashSlice = createSlice({
       state.crashEvents = [];
       state.lobby = undefined;
       state.roundElapsedTime = 0;
+      state.roundStartingTime = 0;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;
