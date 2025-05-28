@@ -45,7 +45,7 @@ export default Sockets.createListener({
             waitForEmit = GAME_DELAY - latencyDelay;
           }
           else if(roundStatus === "completed") {
-            waitForEmit =  GAME_DELAY - latencyDelay;
+            waitForEmit =  GAME_DELAY - latencyDelay - 100;
           }
           
           if(waitForEmit > 0)

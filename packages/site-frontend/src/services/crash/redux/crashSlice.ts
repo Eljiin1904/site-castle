@@ -101,38 +101,38 @@ export const crashSlice = createSlice({
           }
           state.history = history;
 
-          const pixelsDown = Crash.chart.offset;
-          const crashLength = Crash.getMultiplierPosition(crashedMultiplier);
+          // const pixelsDown = Crash.chart.offset;
+          // const crashLength = Crash.getMultiplierPosition(crashedMultiplier);
 
-          const crashEvent: CrashEventProps = {
-            crashColor: "double-red",
-            crashLength: crashLength + pixelsDown,
-            startedCrashLength: crashLength + pixelsDown,
-            crashPosition: -pixelsDown,
-            startedLine: true,
-            completedLine: true,
-          };
+          // const crashEvent: CrashEventProps = {
+          //   crashColor: "double-red",
+          //   crashLength: crashLength + pixelsDown,
+          //   startedCrashLength: crashLength + pixelsDown,
+          //   crashPosition: -pixelsDown,
+          //   startedLine: true,
+          //   completedLine: true,
+          // };
 
-          const multiplierEvent: CrashEventProps = {
-            crashColor: "bright-green",
-            crashLength: crashLength,
-            startedCrashLength: 0,
-            crashPosition: 0,
-            startedLine: true,
-            simulatingLine: true,
-          };
+          // const multiplierEvent: CrashEventProps = {
+          //   crashColor: "bright-green",
+          //   crashLength: crashLength,
+          //   startedCrashLength: 0,
+          //   crashPosition: 0,
+          //   startedLine: true,
+          //   simulatingLine: true,
+          // };
           
-          if (state.crashEvents) {
-            let updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
+          // if (state.crashEvents) {
+          //   let updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
               
-              event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
-              return event;
-            });
-            updatedCrashEvents.push(multiplierEvent);
-            updatedCrashEvents = updatedCrashEvents.filter(x => !x.completedLine);
-            updatedCrashEvents.push(crashEvent);
-            state.crashEvents = updatedCrashEvents;
-          }
+          //     event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
+          //     return event;
+          //   });
+          //   updatedCrashEvents.push(multiplierEvent);
+          //   updatedCrashEvents = updatedCrashEvents.filter(x => !x.completedLine);
+          //   updatedCrashEvents.push(crashEvent);
+          //   state.crashEvents = updatedCrashEvents;
+          // }
         }
 
         if( updatedStatus === "simulating") {
@@ -143,30 +143,30 @@ export const crashSlice = createSlice({
           state.round.status = updatedStatus;
           state.roundElapsedTime = 0;
           state.roundStartingTime = Date.now();
-          const multiplier = 1.00;
-          const multiplierEvent: CrashEventProps = {
-            crashColor: "bright-green",
-            crashLength: Crash.getMultiplierPosition(multiplier),
-            startedCrashLength: 0,
-            crashPosition: 0,
-            startedLine: true,
-            simulatingLine: true,
-          };
+          // const multiplier = 1.00;
+          // const multiplierEvent: CrashEventProps = {
+          //   crashColor: "bright-green",
+          //   crashLength: Crash.getMultiplierPosition(multiplier),
+          //   startedCrashLength: 0,
+          //   crashPosition: 0,
+          //   startedLine: true,
+          //   simulatingLine: true,
+          // };
           
-          if (state.crashEvents) {
-            const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
+          // if (state.crashEvents) {
+          //   const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
               
-              event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
-              return event;
-            });
+          //     event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
+          //     return event;
+          //   });
             
-            updatedCrashEvents.push(multiplierEvent);
-            state.crashEvents = updatedCrashEvents;
-          }
+          //   updatedCrashEvents.push(multiplierEvent);
+          //   state.crashEvents = updatedCrashEvents;
+          // }
 
-          if(state.crashEvents.length === 0) {
-            state.crashEvents = [multiplierEvent];
-          }
+          // if(state.crashEvents.length === 0) {
+          //   state.crashEvents = [multiplierEvent];
+          // }
         }
         else 
         {
@@ -182,33 +182,33 @@ export const crashSlice = createSlice({
         
         const multiplier = update.updatedFields.multiplier as number;
         const elapsedTime = update.updatedFields.elapsedTime as number;
-        const linePosition = Crash.getMultiplierPosition(multiplier);
+        //const linePosition = Crash.getMultiplierPosition(multiplier);
         state.roundElapsedTime = elapsedTime;
         state.round.multiplier = multiplier;
 
-        const multiplierEvent: CrashEventProps = {
-          crashColor: "bright-green",
-          crashLength: linePosition,
-          startedCrashLength: 0,
-          crashPosition: 0,
-          startedLine: true,
-          simulatingLine: true,
-        };
+        // const multiplierEvent: CrashEventProps = {
+        //   crashColor: "bright-green",
+        //   crashLength: linePosition,
+        //   startedCrashLength: 0,
+        //   crashPosition: 0,
+        //   startedLine: true,
+        //   simulatingLine: true,
+        // };
 
-        if (state.crashEvents) {
-          const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
+        // if (state.crashEvents) {
+        //   const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
             
-            event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
-            return event;
-          });
+        //     event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
+        //     return event;
+        //   });
           
-          updatedCrashEvents.push(multiplierEvent);
-          state.crashEvents = updatedCrashEvents;
-        }
+        //   updatedCrashEvents.push(multiplierEvent);
+        //   state.crashEvents = updatedCrashEvents;
+        // }
 
-        if(state.crashEvents.length === 0) {
-          state.crashEvents = [multiplierEvent];
-        }
+        // if(state.crashEvents.length === 0) {
+        //   state.crashEvents = [multiplierEvent];
+        // }
       }
 
       Database.updateDocument({
