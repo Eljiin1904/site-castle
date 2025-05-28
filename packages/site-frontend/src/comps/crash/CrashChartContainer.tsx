@@ -20,9 +20,10 @@ export const CrashChartContainer = () => {
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
   const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
+  const currentMultiplier = useAppSelector((x) => x.crash.round.multiplier) ?? 1.00;
   
-  const [multiplier, setMultiplier] = useState(1.00);
-  const [timer, setTimer] = useState(Date.now() - roundStartedTime);
+  const [multiplier, setMultiplier] = useState(currentMultiplier);
+  const [timer, setTimer] =  useState(CoreCrash.getTimeForMultiplier(currentMultiplier));
     
     useInterval(() => {
      if(round.status == 'simulating') {
