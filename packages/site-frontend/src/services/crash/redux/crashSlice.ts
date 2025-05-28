@@ -68,6 +68,7 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.roundElapsedTime = payload.round.elapsedTime;
+      state.roundStartingTime = Date.now() - payload.round.elapsedTime;
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
