@@ -6,9 +6,14 @@ import { CrashMultiplierLine } from "./CrashMultiplierLine";
 import { CashoutEvents } from "./CashoutEvents";
 import { Crash } from "#app/services/crash";
 import { Crash as CoreCrash } from "@core/services/crash";
-import './CrashChartContainer.scss';
 import { useInterval } from "usehooks-ts";
 import { useEffect, useState } from "react";
+import { Conditional } from "@client/comps/conditional/Conditional";
+import { CrashCountdown } from "./CrashCountdown";
+import { Site } from "#app/services/site";
+import { CrashMultiplier } from "./CrashMultiplier";
+import { CrashedSimulator } from "./CrashedSimulator";
+import './CrashChartContainer.scss';
 
 export const CrashChartContainer = () => {
   
@@ -19,36 +24,43 @@ export const CrashChartContainer = () => {
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
   const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
-  const currentMultiplier = useAppSelector((x) => x.crash.round.multiplier) ?? 1.00;
+  const currentMultiplier = Math.max(1, useAppSelector((x) => x.crash.round.multiplier));
   
   const [multiplier, setMultiplier] = useState(currentMultiplier);
-  const [timer, setTimer] =  useState(CoreCrash.getTimeForMultiplier(currentMultiplier));
-    
-    useInterval(() => {
-     if(round.status == 'simulating') {
-        if (timer > 0 ) {
-          const currentMultiplier = CoreCrash.getMultiplierForTime(timer);
-          setMultiplier(currentMultiplier);
-        }
-        setTimer(currentVal => currentVal + 100);
-     }
-     else if(round.status !== 'completed'){
-      
-      setMultiplier(round.multiplierCrash ?? 1.00);
-      setTimer(0);
-     }
-    }, 100);
+  const [timer, setTimer] = useState(Date.now() - roundStartedTime);
 
-    useEffect(() => {
-      if (roundStartedTime > 0) {
-        setTimer(Date.now() - roundStartedTime);
-        const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
-        setMultiplier(initialMultiplier);
+
+  useInterval(() => {
+    if(round.status == 'simulating') {
+      if (timer > 0 ) {
+        const newMultiplier = CoreCrash.getMultiplierForTime(timer);
+        setMultiplier(Math.min(newMultiplier, currentMultiplier));
       }
-    }, [roundStartedTime]);
+      setTimer(currentVal => currentVal + 10);
+    }
+    else if(round.status == 'completed'){
+      
+      setMultiplier(round.multiplierCrash ?? multiplier);
+      setTimer(0);
+    }
+    else if(round.status == 'waiting' || round.status == 'pending') {
+      setMultiplier(1.00);
+      setTimer(0);
+    }
+  }, 10);
+
+  useEffect(() => {
+    if (roundStartedTime > 0) {
+      setTimer(Date.now() - roundStartedTime);
+      const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
+      setMultiplier(Math.min(initialMultiplier, currentMultiplier));
+    }
+  }, [round._id]);
 
   const linePosition = Crash.getMultiplierPosition(multiplier);
   const chartOffset = Crash.chart.offset;
+  const time = CoreCrash.roundTimes.waiting - Site.timeSince(round.startDate ?? new Date());
+  
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
       <CrashYAxis multiplier={multiplier} />
@@ -58,6 +70,13 @@ export const CrashChartContainer = () => {
       <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
       {cashout && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
       <CashoutEvents />
+      <Conditional
+        value={round.status}
+        waiting={<CrashCountdown time={time} events={crashEvents} />}
+        pending={<CrashCountdown time={time} events={crashEvents}/>}
+        simulating={<CrashMultiplier multiplier={multiplier} />}
+        completed={<CrashedSimulator multiplier={round.multiplierCrash ?? multiplier} />}
+      />
     </Div>
   );
 }

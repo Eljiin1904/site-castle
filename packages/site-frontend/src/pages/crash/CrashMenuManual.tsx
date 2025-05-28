@@ -79,14 +79,7 @@ const ActionButton = () => {
  
   const allowNextRound = roundStatus === "simulating" || roundStatus === "completed";
   const isDisabled = overMax || roundStatus === 'pending' || isProcessing;
-
-  if(betNextRound)
-    return (<Button
-      fx
-      kind="primary-green"
-      label={t("cancelBet")}
-      onClick={() => dispatch(Crash.setBetNextRound(false))}
-    />);
+  
   if(allowCashout)
     return (<Button
       fx
@@ -94,6 +87,13 @@ const ActionButton = () => {
       label={t("cashout")}
       onClick={handleCashout}
     />);
+  else if(betNextRound)
+    return (<Button
+      fx
+      kind="tertiary-grey"
+      label={t("cancelBet")}
+      onClick={() => dispatch(Crash.setBetNextRound(false))}
+    />);  
   else  
     return (<Button
       fx

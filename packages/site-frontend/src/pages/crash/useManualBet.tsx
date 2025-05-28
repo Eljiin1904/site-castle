@@ -119,7 +119,7 @@ export function useManualBet() {
   const handleNextBet = usePost(
       
     async (isMounted) => {
-      if (isMounted() && round.status === "waiting" && betNextRound) {
+      if (isMounted() && (round.status === "waiting" || round.status === "pending") && betNextRound) {
         handleBet();
         dispatch(Crash.setBetNextRound(false));
       }      

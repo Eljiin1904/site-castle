@@ -37,7 +37,7 @@ export default Http.createApiRoute({
     if (!round) {
       throw new HandledError("validations:errors.games.crash.invalidRoundId");
     }
-    if (round.status !== "waiting") {
+    if (round.status !== "waiting" && round.status !== "pending") {
       throw new HandledError("validations:errors.games.crash.invalidRoundStatus");
     }
 

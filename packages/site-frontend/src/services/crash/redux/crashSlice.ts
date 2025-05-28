@@ -9,11 +9,11 @@ import { CrashInitialState } from "@core/types/crash/CrashInitialState";
 import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
-import { Crash } from "..";
-import { Crash as CoreCrash } from "@core/services/crash";
+import { Crash } from "@core/services/crash";
 
 type PostAction = "reset" | "increase";
-const DELAY = CoreCrash.roundTimes.delay;
+const DELAY = Crash.roundTimes.delay;
+
 interface CrashState {
   initialized?: boolean;
   round: CrashRoundDocument;
@@ -100,41 +100,7 @@ export const crashSlice = createSlice({
             history.pop();
           }
           state.history = history;
-
-          // const pixelsDown = Crash.chart.offset;
-          // const crashLength = Crash.getMultiplierPosition(crashedMultiplier);
-
-          // const crashEvent: CrashEventProps = {
-          //   crashColor: "double-red",
-          //   crashLength: crashLength + pixelsDown,
-          //   startedCrashLength: crashLength + pixelsDown,
-          //   crashPosition: -pixelsDown,
-          //   startedLine: true,
-          //   completedLine: true,
-          // };
-
-          // const multiplierEvent: CrashEventProps = {
-          //   crashColor: "bright-green",
-          //   crashLength: crashLength,
-          //   startedCrashLength: 0,
-          //   crashPosition: 0,
-          //   startedLine: true,
-          //   simulatingLine: true,
-          // };
-          
-          // if (state.crashEvents) {
-          //   let updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
-              
-          //     event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
-          //     return event;
-          //   });
-          //   updatedCrashEvents.push(multiplierEvent);
-          //   updatedCrashEvents = updatedCrashEvents.filter(x => !x.completedLine);
-          //   updatedCrashEvents.push(crashEvent);
-          //   state.crashEvents = updatedCrashEvents;
-          // }
         }
-
         if( updatedStatus === "simulating") {
          
           if(state.round.status === "completed") 
@@ -143,30 +109,6 @@ export const crashSlice = createSlice({
           state.round.status = updatedStatus;
           state.roundElapsedTime = 0;
           state.roundStartingTime = Date.now();
-          // const multiplier = 1.00;
-          // const multiplierEvent: CrashEventProps = {
-          //   crashColor: "bright-green",
-          //   crashLength: Crash.getMultiplierPosition(multiplier),
-          //   startedCrashLength: 0,
-          //   crashPosition: 0,
-          //   startedLine: true,
-          //   simulatingLine: true,
-          // };
-          
-          // if (state.crashEvents) {
-          //   const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
-              
-          //     event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
-          //     return event;
-          //   });
-            
-          //   updatedCrashEvents.push(multiplierEvent);
-          //   state.crashEvents = updatedCrashEvents;
-          // }
-
-          // if(state.crashEvents.length === 0) {
-          //   state.crashEvents = [multiplierEvent];
-          // }
         }
         else 
         {
@@ -180,35 +122,8 @@ export const crashSlice = createSlice({
         if(state.round.status != "simulating") 
           return;
         
-        const multiplier = update.updatedFields.multiplier as number;
-        const elapsedTime = update.updatedFields.elapsedTime as number;
-        //const linePosition = Crash.getMultiplierPosition(multiplier);
-        state.roundElapsedTime = elapsedTime;
-        state.round.multiplier = multiplier;
-
-        // const multiplierEvent: CrashEventProps = {
-        //   crashColor: "bright-green",
-        //   crashLength: linePosition,
-        //   startedCrashLength: 0,
-        //   crashPosition: 0,
-        //   startedLine: true,
-        //   simulatingLine: true,
-        // };
-
-        // if (state.crashEvents) {
-        //   const updatedCrashEvents = state.crashEvents.filter(x => !x.simulatingLine).map(event => {
-            
-        //     event.crashLength = Math.max(0, event.startedCrashLength - state.round.multiplier);
-        //     return event;
-        //   });
-          
-        //   updatedCrashEvents.push(multiplierEvent);
-        //   state.crashEvents = updatedCrashEvents;
-        // }
-
-        // if(state.crashEvents.length === 0) {
-        //   state.crashEvents = [multiplierEvent];
-        // }
+        state.roundElapsedTime = update.updatedFields.elapsedTime as number;
+        state.round.multiplier = update.updatedFields.multiplier as number;
       }
 
       Database.updateDocument({
