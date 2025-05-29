@@ -69,7 +69,7 @@ const ActionButton = () => {
   
   const roundStatus = useAppSelector((x) => x.crash.round.status);
   const betNextRound = useAppSelector((x) => x.crash.betNextRound);
-  const {handleBet, handleCashout, allowCashout} = useManualBet();
+  const {handleBet, handleCashout, handleCancelBet, allowCashout} = useManualBet();
   const isProcessing = useProcessingTicket();
   const dispatch = useAppDispatch();
   const {t} = useTranslation(["games\\crash"]);
@@ -92,7 +92,7 @@ const ActionButton = () => {
       fx
       kind="tertiary-grey"
       label={t("cancelBet")}
-      onClick={() => dispatch(Crash.setBetNextRound(false))}
+      onClick={handleCancelBet}
     />);  
   else  
     return (<Button

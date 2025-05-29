@@ -79,4 +79,5 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["user-latency"]: config.env,
   ["crash-tickets"]: config.env,
   ["crash-rounds"]: config.env,
+  ["crash-next-tickets"]: config.env,
 };

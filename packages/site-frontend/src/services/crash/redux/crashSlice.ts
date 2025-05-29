@@ -78,6 +78,7 @@ export const crashSlice = createSlice({
       state.lobby = undefined;
       state.roundElapsedTime = 0;
       state.roundStartingTime = 0;
+      state.betNextRound = false;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;
@@ -122,14 +123,19 @@ export const crashSlice = createSlice({
        });
       }
 
-      if(update.updatedFields.multiplier){
+      if(update.updatedFields.elapsedTime){
 
         if(state.round.status != "simulating") 
           return;
         
         state.roundElapsedTime = update.updatedFields.elapsedTime as number;
-        state.round.multiplier = update.updatedFields.multiplier as number;
+        //state.round.multiplier = update.updatedFields.multiplier as number;
       }
+      Database.updateDocument({
+        document: state.round,
+        updatedFields: update.updatedFields,
+        removedFields: update.removedFields,
+      });
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
       state.tickets.push(payload);

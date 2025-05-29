@@ -61,6 +61,7 @@ async function createRound() {
   };
 
   await Database.collection("crash-rounds").insertOne(round);
+  await addNextRoundTickets(round);
   await Utility.wait(Crash.roundTimes.waiting);
   await setupRound(round);
 }
@@ -131,9 +132,9 @@ async function startRound(round: CrashRoundDocument) {
       { _id: round._id },
       {
         $set: {
-          multiplier:currentMultiplier,
+          //multiplier:currentMultiplier,
           elapsedTime: timer,
-          statusDate: currentTime,
+         // statusDate: currentTime,
         },
       },
     );
@@ -308,4 +309,43 @@ async function processTicket({
       });
     }
   }
+}
+
+async function addNextRoundTickets(round: CrashRoundDocument) {
+
+    //Add next round tickets to current round
+    const nextRoundTickets = await Database.collection("crash-next-tickets").find({
+      "user.id": { $exists: true }
+    }).toArray();
+
+    if (nextRoundTickets.length === 0) 
+      return;
+
+    for(const ticket of nextRoundTickets) {
+
+      const ticketId = await Ids.incremental({
+        key: "crashTicketId",
+        baseValue: 1000000,
+        batchSize: 1,
+      });
+
+      const newTicket: CrashTicketDocument = {
+        ...ticket,
+        _id: ticketId,
+        roundId: round._id
+      };
+
+      await Database.collection("crash-tickets").insertOne(newTicket);
+    }
+
+    // Remove next round tickets
+    await Database.collection("crash-next-tickets").deleteMany({
+      "user.id": { $exists: true }
+    });
+    
+    // Update next round tickets transactions with roundId
+    await Database.collection("transactions").updateMany(
+      { roundId: Crash.nextRoundId, kind: "crash-bet" },
+      { $set: { roundId: round._id } }
+    );
 }

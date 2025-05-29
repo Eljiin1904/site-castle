@@ -24,23 +24,23 @@ export const CrashChartContainer = () => {
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
   const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
-  const currentMultiplier = Math.max(1, useAppSelector((x) => x.crash.round.multiplier));
-  
-  const [multiplier, setMultiplier] = useState(currentMultiplier);
+  const elapsedtime = useAppSelector((x) => x.crash.round.elapsedTime) ?? 0;
+  const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
+  const [multiplier, setMultiplier] = useState(serverMultiplier);
   const [timer, setTimer] = useState(Date.now() - roundStartedTime);
-
-
+  
   useInterval(() => {
     if(round.status == 'simulating') {
       
-      const newMultiplier = CoreCrash.getMultiplierForTime(timer);
-      //console.log('newMultiplier', newMultiplier, 'currentMultiplier', currentMultiplier);
+      const newMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
+      
+      //console.log('newMultiplier', newMultiplier,'serverMultiplier', serverMultiplier, 'elapsedTime', elapsedtime, 'timer', timer);
       setMultiplier(newMultiplier);
       setTimer(currentVal => currentVal + 100);
     }
     else if(round.status == 'completed'){
       
-      setMultiplier(round.multiplierCrash ?? multiplier);
+      setMultiplier(round.multiplierCrash ?? serverMultiplier);
       setTimer(0);
     }
     else if(round.status == 'waiting' || round.status == 'pending') {
@@ -52,7 +52,7 @@ export const CrashChartContainer = () => {
   useEffect(() => {
     setTimer(Date.now() - roundStartedTime);
     const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
-    setMultiplier(Math.min(initialMultiplier, currentMultiplier));
+    setMultiplier(Math.min(initialMultiplier, serverMultiplier));
   }, [round._id]);
 
   const linePosition = Crash.getMultiplierPosition(multiplier);

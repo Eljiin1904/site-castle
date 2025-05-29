@@ -6,6 +6,7 @@ export function postTicket(data: {
   betAmount: number;
   betToken?: string;
   targetMultiplier?: number;
+  nextRound?: boolean;
 }): Promise<{
   results: CrashTicketDocument;
 }> {

@@ -5,8 +5,8 @@ import { ticketStream } from "./helpers/ticketStream";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 const logger = getServerLogger({});
 import { Crash } from "@server/services/crash";
-import { Crash as CrashCore } from "@core/services/crash";
-const GAME_DELAY = CrashCore.roundTimes.delay;
+import { Crash as CoreCrash } from "@core/services/crash";
+const GAME_DELAY = CoreCrash.roundTimes.delay;
 
 export default Sockets.createListener({
   action: "init",
@@ -37,17 +37,17 @@ export default Sockets.createListener({
             userId = socket.id;
           let waitForEmit = 0;            
           const roundStatus = update.updatedFields.status;
-          const isSmulation = roundStatus === "simulating" ||
-          (update.updatedFields.multiplier as number > 0 && !update.updatedFields.multiplierCrash);
-          const latencyDelay = (await Crash.calculateUserWaitTime(userId, update.updatedFields.statusDate as Date));
+          const elapsedTime = update.updatedFields.elapsedTime as number || 0;
+          const isSmulation = elapsedTime > 0 || roundStatus === "simulating";
+          const latencyDelay = await Crash.calculateUserWaitTime(userId);
           if(isSmulation) {
 
             waitForEmit = GAME_DELAY - latencyDelay;
           }
-          else if(roundStatus === "completed") {
-            waitForEmit =  GAME_DELAY - latencyDelay;
-          }
-          
+          // else if(roundStatus === "completed") {
+          //   waitForEmit =  GAME_DELAY - 2*latencyDelay;
+          // }
+
           if(waitForEmit > 0)
             setTimeout(() => {
               socket.emit("crash-round-update", update);
@@ -63,7 +63,8 @@ export default Sockets.createListener({
       System.tryCatch(async (document) => {
         logger.debug("Crash insert ticket stream");        
         const broadcaster = io.sockets.in("crash");
-        broadcaster.emit("crash-bet-insert", document);
+        if(document.roundId !== CoreCrash.nextRoundId)
+          broadcaster.emit("crash-bet-insert", document);
       }),
     );
 
@@ -81,7 +82,7 @@ export default Sockets.createListener({
             if (!userId) continue;
 
             let waitForEmit = 0;
-            waitForEmit = GAME_DELAY - (await Crash.calculateUserWaitTime(userId, update.updatedFields.cashoutTriggeredDate as Date));
+            waitForEmit = GAME_DELAY - (await Crash.calculateUserWaitTime(userId));
 
             if(waitForEmit > 0)
               setTimeout(() => {
