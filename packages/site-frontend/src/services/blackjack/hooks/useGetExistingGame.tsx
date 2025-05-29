@@ -8,7 +8,6 @@ import requestExistingGame from "../api/requestExistingGame";
 
 export function useGetExistingGame() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
-  // const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const dispatch = useAppDispatch();
 
   const handleGetExisting = usePost(
