@@ -52,7 +52,7 @@ export default Http.createApiRoute({
 
     await Site.validateToggle("blackjackEnabled");
     await Site.validateSuspension(user);
-    await Site.validateKycTier(user, Validation.kycTiers.email);
+    // await Site.validateKycTier(user, Validation.kycTiers.email);
 
     const location = await Http.getLocation(req.ip);
 
