@@ -37,10 +37,6 @@ export function getName(tx: TransactionDocument): string {
       return "Crash - Bet";
     case "crash-won":
       return "Crash - Won";
-    case "blackjack-bet":
-      return "Blackjack - Bet";
-    case "blackjack-won":
-      return "Blackjack - Won";
     case "dice-bet":
       return "Dice - Bet";
     case "dice-won":
@@ -59,6 +55,10 @@ export function getName(tx: TransactionDocument): string {
       return "Mines - Create Game";
     case "mines-won":
       return "Mines - Won";
+    case "blackjack-bet":
+      return "Blackjack - Bet";
+    case "blackjack-won":
+      return "Blackjack - Won";
     case "promotion-card-redeem":
       return "Promotions - Redeem Card";
     case "promotion-code-redeem":
@@ -93,5 +93,7 @@ export function getName(tx: TransactionDocument): string {
       return "Vault - Deposit";
     case "vault-withdraw":
       return "Vault - Withdraw";
+    default:
+      return "Unknown Transaction";
   }
 }

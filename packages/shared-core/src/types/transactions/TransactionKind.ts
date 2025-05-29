@@ -16,6 +16,8 @@ import type { UserLocation } from "../users/UserLocation";
 import type { MarketItem } from "../market/MarketItem";
 import type { MarketInventoryItem } from "../market/MarketInventoryDocument";
 import type { TransactionBetData } from "./TransactionBetData";
+import { BlackjackBetTypeInsurance } from "../blackjack/BlackjackBetAmounts";
+import { SidebetPayout } from "../blackjack/BlackjackApiResponse";
 
 export type TransactionKind = TransactionKindData["kind"];
 
@@ -42,12 +44,14 @@ export type TransactionKindData =
   | LimboWonData
   | MinesBetData
   | MinesWonData
+  | BlackjackBetData
+  | BlackjackSidebetBetData
+  | BlackjackWonData
+  | BlackjackSidebetWonData
   | DuelBetData
   | DuelWonData
   | CrashBetData
   | CrashWonData
-  | BlackjackBetData
-  | BlackjackWonData
   | PromotionCardRedeemData
   | PromotionCodeRedeemData
   | RainPayoutData
@@ -191,20 +195,6 @@ interface CrashWonData {
   roundMultiplier: number;
 }
 
-interface BlackjackBetData {
-  kind: "blackjack-bet";
-  bet: TransactionBetData;
-  gameId: string;
-}
-interface BlackjackWonData {
-  kind: "blackjack-won";
-  gameId: string;
-  multiplier: number;
-  targetValue: number;
-  targetKind: DiceTargetKind;
-}
-/**End review */
-
 interface DiceBetData {
   kind: "dice-bet";
   bet: TransactionBetData;
@@ -266,6 +256,35 @@ interface MinesWonData {
   mineCount: number;
   revealCount: number;
   multiplier: number;
+}
+interface BlackjackBetData {
+  kind: "blackjack-bet" | "blackjack-split" | "blackjack-double";
+  bet: TransactionBetData;
+  gameId: string;
+}
+interface BlackjackSidebetBetData {
+  kind: "blackjack-sidebet-bet";
+  subKind: BlackjackBetTypeInsurance;
+  bet: TransactionBetData;
+  gameId: string;
+}
+
+interface BlackjackWonData {
+  kind: "blackjack-won";
+  gameId: string;
+  // targetValue: number;
+  // multiplier: number;
+  // mainSubPayout: number;
+  // splitPayout: number;
+  // doublePayout: number;
+}
+// todo switch to transaction param type and not use this type
+export interface BlackjackSidebetWonData {
+  kind: "blackjack-sidebet-won";
+  subKind: SidebetPayout["type"];
+  gameId: string;
+  title: string;
+  multiplier: SidebetPayout["multiplier"];
 }
 
 interface PromotionCardRedeemData {

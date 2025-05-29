@@ -12,6 +12,7 @@ export { default as games } from "./games";
 export { default as limbo } from "./limbo";
 export { default as market } from "./market";
 export { default as mines } from "./mines";
+export { default as blackjack } from "./blackjack";
 export { default as economy } from "./economy";
 export { default as fairness } from "./fairness";
 export { default as register } from "./register";

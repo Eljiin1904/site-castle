@@ -11,6 +11,7 @@ export type DropdownItemProps = LinkProps & {
   iconLeft?: Svg;
   iconRight?: Svg;
   label: string;
+  textColor?: Color;
   description?: string;
   active?: boolean;
   size?: DropdownButtonProps["size"];
@@ -21,9 +22,10 @@ export const DropdownItem: FC<DropdownItemProps> = ({
   iconLeft,
   iconRight,
   label,
+  textColor,
   description,
   active,
-  size="md",
+  size = "md",
   ...forwardProps
 }) => {
   return (
@@ -31,7 +33,7 @@ export const DropdownItem: FC<DropdownItemProps> = ({
       className={classNames("DropdownItem", className, size, { active })}
       hover="none"
       {...forwardProps}
-      color={active ? "sand" : "dark-sand"}
+      color={textColor || active ? "sand" : "dark-sand"}
     >
       {iconLeft && (
         <Vector

@@ -9,6 +9,8 @@ import { CaseBattlesBody } from "./case-battles/CaseBattlesBody";
 import { DoubleBody } from "./double/DoubleBody";
 import { DiceBody } from "./dice/DiceBody";
 import { LimboBody } from "./limbo/LimboBody";
+import { BlackjackFairnessBody } from "./blackjack/BlackjackFairnessBody";
+import { MinesBody } from "./mines/MinesBody";
 
 export const FairnessPage = () => {
   return (
@@ -28,6 +30,8 @@ export const FairnessPage = () => {
           { label: "Double", to: "/fairness/double" },
           { label: "Dice", to: "/fairness/dice" },
           { label: "Limbo", to: "/fairness/limbo" },
+          { label: "Mines", to: "/fairness/mines" },
+          { label: "Blackjack", to: "/fairness/blackjack" },
         ]}
       />
       <Routes>
@@ -66,6 +70,14 @@ export const FairnessPage = () => {
         <Route
           path="/limbo"
           element={<LimboBody />}
+        />
+        <Route
+          path="/mines"
+          element={<MinesBody />}
+        />
+        <Route
+          path="/blackjack"
+          element={<BlackjackFairnessBody />}
         />
         <Route
           path="*"

@@ -198,17 +198,49 @@ function createPipeline({
         limboWagerAmount: {
           $sum: "$limboWagerAmount",
         },
-        blackjackBetCount: {
-          $sum: "$blackjackBetCount",
-        },
-        blackjackWagerAmount: {
-          $sum: "$blackjackWagerAmount",
-        },
+
         minesBetCount: {
           $sum: "$minesBetCount",
         },
         minesWagerAmount: {
           $sum: "$minesWagerAmount",
+        },
+        // === blackjack ===
+        blackjackBetCount: {
+          $sum: "$blackjackBetCount",
+        },
+        blackjackInsuranceBetCount: {
+          $sum: "$blackjackInsuranceBetCount",
+        },
+        blackjackLuckyLadiesBetCount: {
+          $sum: "$blackjackLuckyLadiesBetCount",
+        },
+        blackjackBlackjack15xBetCount: {
+          $sum: "$blackjackBlackjack15xBetCount",
+        },
+        blackjackPerfectPairsBetCount: {
+          $sum: "$blackjackPerfectPairsBetCount",
+        },
+        blackjack213BetCount: {
+          $sum: "$blackjack213BetCount",
+        },
+        blackjackWagerAmount: {
+          $sum: "$blackjackWagerAmount",
+        },
+        blackjackInsuranceWagerAmount: {
+          $sum: "$blackjackInsuranceWagerAmount",
+        },
+        blackjackLuckyLadiesWagerAmount: {
+          $sum: "$blackjackLuckyLadiesWagerAmount",
+        },
+        blackjackBlackjack15xWagerAmount: {
+          $sum: "$blackjackBlackjack15xWagerAmount",
+        },
+        blackjackPerfectPairsWagerAmount: {
+          $sum: "$blackjackPerfectPairsWagerAmount",
+        },
+        blackjack213WagerAmount: {
+          $sum: "$blackjack213WagerAmount",
         },
         doubleBetCount: {
           $sum: "$doubleBetCount",
@@ -221,7 +253,7 @@ function createPipeline({
         },
         caseWagerAmount: {
           $sum: "$caseWagerAmount",
-        }
+        },
       },
     },
     {
@@ -284,10 +316,22 @@ function getDefaultReport(): UserReport {
     diceWagerAmount: 0,
     limboBetCount: 0,
     limboWagerAmount: 0,
-    blackjackBetCount: 0,
-    blackjackWagerAmount: 0,
     minesBetCount: 0,
     minesWagerAmount: 0,
+    // === blackjack
+    blackjackBetCount: 0,
+    blackjackInsuranceBetCount: 0,
+    blackjackLuckyLadiesBetCount: 0,
+    blackjackBlackjack15xBetCount: 0,
+    blackjackPerfectPairsBetCount: 0,
+    blackjack213BetCount: 0,
+    blackjackWagerAmount: 0,
+    blackjackInsuranceWagerAmount: 0,
+    blackjackLuckyLadiesWagerAmount: 0,
+    blackjackBlackjack15xWagerAmount: 0,
+    blackjackPerfectPairsWagerAmount: 0,
+    blackjack213WagerAmount: 0,
+    // === blackjack
     doubleBetCount: 0,
     doubleWagerAmount: 0,
     caseBetCount: 0,

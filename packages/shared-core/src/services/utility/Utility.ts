@@ -4,6 +4,7 @@ export * from "./constants/months";
 export * from "./constants/supportedCountries";
 
 export * from "./utils/entries";
+export * from "./utils/values";
 export * from "./utils/getBirthDate";
 export * from "./utils/keys";
 export * from "./utils/wait";

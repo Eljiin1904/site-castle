@@ -28,6 +28,8 @@ export interface SiteClientEvents {
   "limbo-leave": () => void;
   "mines-join": (userId: string) => void;
   "mines-leave": () => void;
+  "blackjack-join": (userId: string) => void;
+  "blackjack-leave": () => void;
   "notifications-join": () => void;
   "notifications-leave": () => void;
   "notifications-delete": () => void;

@@ -16,6 +16,8 @@ export type SiteActivityKindData =
   | CrashWonData
   | LimboWonData
   | MinesWonData
+  | BlackjackWonData
+  | BlackjackSidebetWonData
   | RewardBoostData;
 
 interface AdventItemData {
@@ -61,6 +63,16 @@ interface LimboWonData {
 
 interface MinesWonData {
   kind: "mines-win";
+}
+
+interface BlackjackWonData {
+  kind: "blackjack-win";
+  subKind?: string;
+}
+
+interface BlackjackSidebetWonData {
+  kind: "blackjack-sidebet-win";
+  subKind: string;
 }
 
 interface RewardBoostData {

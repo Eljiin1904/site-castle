@@ -17,6 +17,7 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
     );
   } else if (
     message.kind === "advent-bonus" ||
+    message.kind === "blackjack-win" ||
     message.kind === "case-game-win" ||
     message.kind === "case-battle-win" ||
     message.kind === "double-win" ||
@@ -37,13 +38,8 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
         width="32px"
       />
     );
-  } else if (
-    message.kind === "double-streak" ||
-    message.kind === "rain-payout"
-  ) {
-    return (
-      <CastleChatLogo />
-    );
+  } else if (message.kind === "double-streak" || message.kind === "rain-payout") {
+    return <CastleChatLogo />;
   } else {
     return (
       // <Img
@@ -56,22 +52,21 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
   }
 };
 
-
 const CastleChatLogo = () => {
-
-  return (<Div
-    width={32}
-    height={32}
-    bg="sand"
-    borderRadius={`full`}
-    flexCenter
-    flexShrink
-  >
-    <Vector
-      as={SvgOriginalGames}
-      size={16}
-      color="dark-brown"
+  return (
+    <Div
+      width={32}
+      height={32}
+      bg="sand"
+      borderRadius={`full`}
+      flexCenter
+      flexShrink
+    >
+      <Vector
+        as={SvgOriginalGames}
+        size={16}
+        color="dark-brown"
       />
-  </Div>);
+    </Div>
+  );
 };
-

@@ -107,6 +107,48 @@ export const TogglesCard = ({
         inputType="toggle"
         onEdit={onEdit}
       />
+      <FieldSection
+        settings={settings}
+        id="minesEnabled"
+        label="Mines"
+        inputType="toggle"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackEnabled"
+        label="Blackjack"
+        inputType="toggle"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackLuckyLadiesEnabled"
+        label="Lucky Ladies"
+        inputType="toggle"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackPerfectPairsEnabled"
+        label="Perfect Pairs"
+        inputType="toggle"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackBlackjack15xEnabled"
+        label="Blackjack 15x"
+        inputType="toggle"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjack213Enabled"
+        label="21+3"
+        inputType="toggle"
+        onEdit={onEdit}
+      />
     </FieldCard>
   );
 };
