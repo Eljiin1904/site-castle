@@ -9,7 +9,9 @@ const pathV2 = `${config.staticURL}/graphics/games/blackjack/cards/v2`;
 // placeholder cards
 // export const old_backImagePath = `${path}/back.${ext}`;
 export const backImagePath = `${path}/back_card.png`;
-export const deckImagePath = `${path}/deck.svg`;
+export const deckImagePath = `${path}/back_card.png`;
+
+// export const deckImagePath = `${path}/back_card.svg`;
 
 const format: { [k in CardData["value"]]?: string } = {
   A: "ace",

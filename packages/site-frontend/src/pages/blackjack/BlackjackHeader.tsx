@@ -84,7 +84,6 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
             {
               type: "action",
               label: "Theme",
-              // iconLeft: SvgInfoCircle,
               onClick: toggleTheme,
             },
           ]}
@@ -115,32 +114,11 @@ const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
         {["development", "staging"].includes(config.env) && (
           <Button
             kind="secondary"
-            // icon={SvgInfoCircle}
             label="Debug"
             onClick={() => Dialogs.open("primary", <BlackjackDebugModal />)}
           />
         )}
-        {/* <Button
-          kind="secondary"
-          // icon={SvgInfoCircle}
-          // label={t.gameplay("theme")}
-          label={"Theme"}
-          onClick={toggleTheme}
-        />
-        <Button
-          kind="secondary"
-          icon={SvgCheckCircle}
-          // label={t.gameplay("fairness")}
-          label={"Fairness"}
-          onClick={() =>
-            Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/blackjack" />)
-          }
-        />
-        <Button
-          kind="secondary"
-          icon={SvgInfoCircle}
-          onClick={() => Dialogs.open("primary", <BlackjackInfoModal />)}
-        /> */}
+
         <Fragment>
           <Button
             kind="tertiary-black-overlay"

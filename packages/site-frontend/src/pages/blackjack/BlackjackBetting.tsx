@@ -3,11 +3,6 @@ import "./BlackjackBetting.scss";
 import { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
 import { useGame, useWorld } from "#app/services/blackjack/redux/selectors";
-import { BlackjackChipActions } from "./BlackjackChipActions";
-import { BlackjackChipPlacements } from "./BlackjackChipPlacements";
-import { BlackjackMobileShelf } from "./BlackjackMobileShelf";
-import { BlackjackBetTotals } from "./BlackjackBetTotals";
-import { BlackjackFooter } from "./BlackjackFooter";
 
 export const BlackjackBetting = ({}: {}) => {
   const getExistingResponded = useAppSelector((state) => state.blackjack.getExistingResponded);
@@ -35,13 +30,5 @@ export const BlackjackBetting = ({}: {}) => {
     shelfOpen ? "shelf-open" : "shelf-closed",
   );
 
-  return (
-    <div className={className}>
-      {/* <BlackjackBetTotals /> */}
-      {/* <BlackjackFooter /> */}
-      {/* <BlackjackMobileShelf toggleShelf={toggleShelf} /> */}
-      {/* <BlackjackChipPlacements /> */}
-      <BlackjackChipActions />
-    </div>
-  );
+  return <div className={className}></div>;
 };

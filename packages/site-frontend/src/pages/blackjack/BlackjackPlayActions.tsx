@@ -34,27 +34,32 @@ export default function BlackjackPlayActions() {
       px={sm ? 20 : 24}
       py={sm ? 16 : 24}
       gap={sm ? 8 : 12}
-      bg="brown-6"
+      bg="black-overlay"
     >
-      <div className="BlackjackPlayActions">
+      <Div
+        flexFlow={sm ? "column" : "row"}
+        gap={10}
+      >
         {actionsAr.map((actions, i) => (
-          <div
+          <Div
             key={i}
-            className="PlayActions_row"
+            gap={10}
           >
             {actions.map((action) => (
-              <BlackjackButton
-                key={action}
-                text={action}
-                icon={action}
-                enabled={hasAction(action) && !processing}
-                onClick={() => submitAction({ action })}
-                className={action}
-              />
+              <Div width={sm ? 128 : 160}>
+                <BlackjackButton
+                  key={action}
+                  text={action}
+                  icon={action}
+                  enabled={hasAction(action) && !processing}
+                  onClick={() => submitAction({ action })}
+                  className={action}
+                />
+              </Div>
             ))}
-          </div>
+          </Div>
         ))}
-      </div>
+      </Div>
     </Div>
   );
 }

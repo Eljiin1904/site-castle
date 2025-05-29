@@ -76,7 +76,7 @@ $delayAnim: 2s;
 	}
 }
 
-$bgColor: #202330; //var(--gray-6-color);
+// $bgColor: #202330; //var(--gray-6-color);
 
 @keyframes sidebet-mobile-slide-in-out {
 	0% {
@@ -122,22 +122,22 @@ $bgColor: #202330; //var(--gray-6-color);
 		}
 		td {
 			display: block;
-			background: $bgColor;
-			padding: 10px 5px;
+			// background: $bgColor;
+			// padding: 10px 5px;
 			// not sure what's going on here
 			// some preset css somewhere is adding 1px to the height
-			height: 38px;
+			// height: 38px;
 
-			&:first-of-type {
-				padding-left: 15px;
-				border-top-left-radius: 3px;
-				border-bottom-left-radius: 3px;
-			}
-			&:last-of-type {
-				padding-right: 15px;
-				border-top-right-radius: 3px;
-				border-bottom-right-radius: 3px;
-			}
+			// &:first-of-type {
+			// 	padding-left: 15px;
+			// 	border-top-left-radius: 3px;
+			// 	border-bottom-left-radius: 3px;
+			// }
+			// &:last-of-type {
+			// 	padding-right: 15px;
+			// 	border-top-right-radius: 3px;
+			// 	border-bottom-right-radius: 3px;
+			// }
 		}
 
 		svg {

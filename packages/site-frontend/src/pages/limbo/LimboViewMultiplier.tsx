@@ -7,23 +7,26 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Video } from "@client/comps/video/Video";
 
 export const LimboViewMultiplier = () => {
-  const ticket = useAppSelector((x) => x.limbo.lastTicket);
-  const processing = useAppSelector((x) => x.limbo.processing);
-  const isWin = useAppSelector((x) => x.limbo.lastTicket?.won);
-  const isAutoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
-  const animationOptions = {
-    win: "/graphics/animations/rocket_launch_still",
-    lose: "/graphics/animations/rocket_expl_firec",
-    default: "/graphics/animations/rocket_fast",
-  };
-  const [rocketAnimation, setRocketAnimation] = useState(animationOptions["default"]);
-
-  const layout = useAppSelector((x) => x.style.mainLayout);
+  const ticket = useAppSelector((state) => state.limbo.lastTicket);
+  const processing = useAppSelector((state) => state.limbo.processing);
+  const isWin = ticket?.won;
+  const isAutoPlaying = useAppSelector((state) => state.limbo.autoPlaying);
+  const layout = useAppSelector((state) => state.style.mainLayout);
   const sm = layout === "mobile";
-  const valueRef = useRef<HTMLElement>(null);
 
-  const multiplier = ticket ? ticket.rollMultiplier : 1;
-  const color = ticket ? (ticket.won ? "bright-green" : "double-red") : "light-sand";
+  const multiplier = ticket?.rollMultiplier ?? 1;
+  const color = ticket ? (isWin ? "bright-green" : "double-red") : "light-sand";
+
+  const animationMap = {
+    win: "/graphics/animations/rocket_launch",
+    lose: "/graphics/animations/fire_expl_fire",
+    default: "/graphics/animations/rocket_launch",
+  };
+
+  const [animationPath, setAnimationPath] = useState(animationMap.default);
+  const [triggerKey, setTriggerKey] = useState(Date.now());
+
+  const valueRef = useRef<HTMLElement>(null);
 
   const counter = useCountUp({
     ref: valueRef,
@@ -35,20 +38,19 @@ export const LimboViewMultiplier = () => {
   });
 
   useEffect(() => {
-    setRocketAnimation(animationOptions["default"]);
     counter.reset();
     counter.start();
+    setTriggerKey(Date.now()); // Used to Rerender
 
-    if (ticket?.won != undefined) {
-      setRocketAnimation(
-        ticket?.won
-          ? animationOptions["win"]
-          : !isWin
-            ? animationOptions["lose"]
-            : animationOptions["default"],
-      );
+    if (ticket?.won !== undefined) {
+      setAnimationPath(isWin ? animationMap.win : animationMap.lose);
+    } else {
+      setAnimationPath(animationMap.default);
     }
   }, [multiplier]);
+
+  const shouldPlayVideo = Boolean(processing || isAutoPlaying);
+  const shouldResetVideo = !processing;
 
   return (
     <Div
@@ -60,20 +62,22 @@ export const LimboViewMultiplier = () => {
       px={sm ? 16 : 40}
     >
       <Video
+        triggerKey={triggerKey} // Used to Rerender when same animation multiple times
         type="mp4"
-        path={rocketAnimation}
+        path={animationPath}
         skeleton
         width="100%"
-        aspectRatio={"16 / 9"}
+        aspectRatio="16 / 9"
         position="absolute"
         loop={false}
-        autoplay={processing || isAutoPlaying}
-        muted={true}
+        autoplay={false}
+        muted
         controls={false}
-        playBackSpeed={8}
-        reset={!processing}
-        play={(processing != undefined && processing) || isAutoPlaying}
+        playBackSpeed={1}
+        reset={false}
+        play={shouldPlayVideo}
       />
+
       <Div mt={32}>
         <Span
           forwardRef={valueRef}

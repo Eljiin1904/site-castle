@@ -1,14 +1,14 @@
 import classNames from "classnames";
-import { Div } from "#client/comps/div/Div";
-import { Placeholder } from "#client/comps/placeholder/Placeholder";
-import { Span } from "#client/comps/span/Span";
-import { Tokens } from "#client/comps/tokens/Tokens";
-import { UserBadge } from "#client/comps/user/UserBadge";
+import { Div } from "@client/comps/div/Div";
+import { Placeholder } from "@client/comps/placeholder/Placeholder";
+import { Span } from "@client/comps/span/Span";
+import { Tokens } from "@client/comps/tokens/Tokens";
+import { UserBadge } from "@client/comps/user/UserBadge";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./BlackjackFeedCard.scss";
 import config from "#app/config";
-import { friendlyBetType } from "#core/services/blackjack/constants/initBetAmounts";
-import { BlackjackFeedMasked } from "#core/types/blackjack/BlackjackEventDocument";
+import { friendlyBetType } from "@core/services/blackjack/constants/initBetAmounts";
+import { BlackjackFeedMasked } from "@core/types/blackjack/BlackjackEventDocument";
 
 export const BlackjackFeedCardPlaceholder = () => {
   return <Placeholder className="BlackjackFeedCardPlaceholder" />;

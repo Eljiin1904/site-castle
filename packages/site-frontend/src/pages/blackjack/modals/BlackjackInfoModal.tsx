@@ -1,10 +1,10 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { Div } from "#client/comps/div/Div";
-import { UnorderedList } from "#client/comps/list/UnorderedList";
-import { Modal } from "#client/comps/modal/Modal";
-import { ModalBody } from "#client/comps/modal/ModalBody";
-import { ModalHeader } from "#client/comps/modal/ModalHeader";
-import { Dialogs } from "#client/services/dialogs";
+import { Div } from "@client/comps/div/Div";
+import { UnorderedList } from "@client/comps/list/UnorderedList";
+import { Modal } from "@client/comps/modal/Modal";
+import { ModalBody } from "@client/comps/modal/ModalBody";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
+import { Dialogs } from "@client/services/dialogs";
 
 export const BlackjackInfoModal = () => {
   const xpRate = useAppSelector((x) => x.site.settings.blackjackXpRate);

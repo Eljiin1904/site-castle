@@ -9,6 +9,7 @@ import { Vector } from "@client/comps/vector/Vector";
 import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
 
 import { BlackjackButton } from "./BlackjackButton";
+import { Div } from "@client/comps/div/Div";
 
 export const BlackjackInsuranceActions = ({}: {}) => {
   const mainBet = useMainBet();
@@ -27,20 +28,26 @@ export const BlackjackInsuranceActions = ({}: {}) => {
   if (!cardsDealt) return null;
 
   return (
-    <div className="BlackjackInsuranceActions">
-      <div className="title">
-        <div className="desc">Buy insurance for</div>
-        <div className="amount">
+    <Div
+      bg="black-overlay"
+      py={16}
+      px={16}
+      width={"full"}
+      className="BlackjackInsuranceActions"
+    >
+      <Div className="title">
+        <Div className="desc">Buy insurance for</Div>
+        <Div className="amount">
           <Vector
             className="icon"
             as={SvgDollarSign}
             size={14}
           />
-          <div className="gold">{Intimal.toDecimal(getInsuranceBetAmount(mainBet))}</div>
-        </div>
-        <div className="desc">?</div>
-      </div>
-      <div className="buttons">
+          <Div className="gold">{Intimal.toDecimal(getInsuranceBetAmount(mainBet))}</Div>
+        </Div>
+        <Div className="desc">?</Div>
+      </Div>
+      <Div className="buttons">
         <BlackjackButton
           text="Yes"
           enabled={!processing}
@@ -52,7 +59,7 @@ export const BlackjackInsuranceActions = ({}: {}) => {
           onClick={() => onBuyInsurance(false)}
           secondary
         />
-      </div>
-    </div>
+      </Div>
+    </Div>
   );
 };

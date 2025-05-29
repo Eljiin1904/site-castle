@@ -1,24 +1,12 @@
 import "./BlackjackView.scss";
 import { useEffect } from "react";
-import {
-  useCompleted,
-  useInit,
-  useInsurancePending,
-} from "../../services/blackjack/redux/selectors";
+import { useInit } from "../../services/blackjack/redux/selectors";
 import { triggerCheckExisting } from "../../services/blackjack/redux/blackjackSlice";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { BlackjackBetting } from "./BlackjackBetting";
 import { BlackjackGameCanvas } from "./BlackjackGameCanvas";
-import { BlackjackGameControls } from "./BlackjackGameControls";
 import { BlackjackLayout } from "./BlackjackLayout";
 import classNames from "classnames";
 import { useGetExistingGame } from "#app/services/blackjack/hooks/useGetExistingGame";
-import { BlackjackFooter } from "./BlackjackFooter";
-import BlackjackPlayActions from "./BlackjackPlayActions";
-import { Conditional } from "@client/comps/conditional/Conditional";
-import BlackjackGameOverActions from "./BlackjackGameOverActions";
-import { BlackjackInsuranceActions } from "./BlackjackInsuranceActions";
-import { Div } from "@client/comps/div/Div";
 
 export const BlackjackView = ({}: {}) => {
   const { checkExisting, loading } = useInit();
@@ -38,44 +26,14 @@ export const BlackjackView = ({}: {}) => {
   if (loading) return null;
 
   const className = classNames("BlackjackView", darkTheme ? "dark" : "");
-  // type Action = "game-play" | "game-complete" | "insurance-pending";
-
-  // const completed = useCompleted();
-  // const insurancePending = useInsurancePending();
-
-  // let action: Action = completed ? "game-complete" : "game-play";
-  // if (insurancePending) action = "insurance-pending";
 
   return (
     <div className={className}>
       <div className="View_inner">
         <BlackjackLayout />
-        <BlackjackGameCanvas />
-        {/* <BlackjackGameControls /> */}
-      </div>
-      {/* <BlackjackPlayActions /> */}
 
-      {/* <Conditional
-        value={action}
-        game-play={<BlackjackPlayActions />}
-        game-complete={<BlackjackGameOverActions />}
-        insurance-pending={<BlackjackInsuranceActions />}
-      /> */}
-      {/* <Div
-        fx
-        grow
-      > */}
-      <BlackjackFooter />
-      {/* <Div
-        fx
-        grow
-        mb={200}
-        width={"full"}
-      > */}
-      <BlackjackGameControls />
-      {/* </Div> */}
-      <BlackjackBetting />
-      {/* </Div> */}
+        <BlackjackGameCanvas />
+      </div>
     </div>
   );
 };

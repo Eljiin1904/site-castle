@@ -42,6 +42,7 @@ export const BlackjackButton = ({
     long,
     secondary,
   });
+
   function capitalizeFirstLetter(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -49,7 +50,7 @@ export const BlackjackButton = ({
   return (
     <Div
       border={true}
-      px={80}
+      px={20}
       py={8}
       grow
       align="center"
@@ -60,13 +61,7 @@ export const BlackjackButton = ({
         className={className}
         onClick={_onClick}
       >
-        <Div
-          // border={true}
-          // px={80}
-          // py={4}
-          gap={10}
-        >
-          {/* <div className="button-inner"> */}
+        <Div gap={10}>
           {iconObj && <Vector {...iconObj} />}
           <Div
             className="text"
@@ -74,7 +69,6 @@ export const BlackjackButton = ({
           >
             {capitalizeFirstLetter(text)}
           </Div>
-          {/* </div> */}
         </Div>
       </div>
     </Div>

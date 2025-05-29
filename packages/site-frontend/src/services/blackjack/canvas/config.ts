@@ -1,12 +1,12 @@
 // === card sizes
 const cardScale = 1.5;
 export const CARD_DIMS = {
-  width: 65 * cardScale,
-  height: 90 * cardScale,
+  width: 95 * cardScale,
+  height: 120 * cardScale,
 };
 export const DECK_DIMS = {
-  width: 65 * cardScale,
-  height: 99 * cardScale,
+  width: 125 * cardScale,
+  height: 159 * cardScale,
 };
 
 // === starting locations

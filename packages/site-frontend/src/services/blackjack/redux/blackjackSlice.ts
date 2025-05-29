@@ -7,10 +7,10 @@ import {
   BlackjackApiResponse,
   BlackjackClientGameData,
   BlackjackNextAction,
-} from "#core/types/blackjack/BlackjackApiResponse";
+} from "@core/types/blackjack/BlackjackApiResponse";
 import { BlackjackBetAmounts, BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
 import { setBetAmountForExistingGame } from "./helpers/setBetAmountForExistingGame";
-import { BlackjackFeedMasked } from "#core/types/blackjack/BlackjackEventDocument";
+import { BlackjackFeedMasked } from "@core/types/blackjack/BlackjackEventDocument";
 
 type HistoryItem = {
   amount: number;

@@ -138,6 +138,12 @@ export const siteSlice = createSlice({
         "mines",
         payload,
       );
+
+      const blackjackBets = replaceBet(
+        state.bets?.blackjack ? state.bets.blackjack.slice() : [],
+        "blackjack",
+        payload,
+      );
       const caseBattleBets: BetData[] = []; //replaceBet(state.bets?.["case-battles"] ? state.bets["case-battles"].slice() : [], "case-battles", payload);
 
       allBets.unshift({
@@ -156,6 +162,7 @@ export const siteSlice = createSlice({
         double: doubleBets,
         limbo: limboBets,
         mines: minesBets,
+        blackjack: blackjackBets,
       };
       state.bets = bets;
     }),

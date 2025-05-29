@@ -1,8 +1,8 @@
 import { friendlyBetType, maxBet } from "#app/services/blackjack/Blackjack";
 import { store } from "#app/store";
-import { Toasts } from "#client/services/toasts";
-import { getTotalBetAmount } from "#core/services/blackjack/utils/getTotalBetAmount";
-import { Intimal } from "#core/services/intimal";
+import { Toasts } from "@client/services/toasts";
+import { getTotalBetAmount } from "@core/services/blackjack/utils/getTotalBetAmount";
+import { Intimal } from "@core/services/intimal";
 import { BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
 
 export function setWarnBetTotal({

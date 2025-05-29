@@ -5,9 +5,11 @@ import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
 import { Intimal } from "@core/services/intimal";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BlackjackButton } from "./BlackjackButton";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { clearGame } from "#app/services/blackjack/redux/blackjackSlice";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Div } from "@client/comps/div/Div";
+import { Span } from "@client/comps/span/Span";
 // import { useTranslation } from "#client/hooks/localization/useTranslation";
 
 export default function BlackjackGameOverActions() {
@@ -21,39 +23,55 @@ export default function BlackjackGameOverActions() {
   const onClearGame = useCallback(() => {
     dispatch(clearGame({ resetBetting: false }));
   }, [dispatch, clearGame]);
-
+  useEffect(() => {
+    setTimeout(() => {
+      onClearGame();
+    }, 2000);
+  }, []);
   if (!cardsDealt) return null;
 
   return (
-    <div className="BlackjackGameOverActions">
-      <div className="top">
+    <Div
+      className="BlackjackGameOverActions"
+      bg="black-overlay"
+      width={400}
+      py={10}
+    >
+      <Div
+        className="top"
+        color="dark-sand"
+      >
         {statusTitle && (
           <div className="status-title">
             {/* {t.all(statusTitle.toLowerCase().replace(" ", "_"))} */}
-            {/* {statusTitle.toLowerCase().replace(" ", "_")} */}
+            {statusTitle}
           </div>
         )}
-        {/* 
+
         {!!totalPayout && (
-          <div className="payout">
-            <span>+</span>
+          <Div
+            className="payout"
+            color="sand"
+          >
+            <Span>+</Span>
             <Vector
               className="icon"
               as={SvgDollarSign}
               size={14}
             />
-            <span>{Intimal.toDecimal(totalPayout)}</span>
-          </div>
-        )} */}
-      </div>
+            <Span color="sand">{Intimal.toDecimal(totalPayout)}</Span>
+          </Div>
+        )}
+      </Div>
       {/* {!hasPayout && <div className="payout">{lostText}</div>} */}
 
       {/* <BlackjackButton
         // text={t.gameplay("play_again")}
+        icon="repeat"
         text={"Play Again"}
         onClick={onClearGame}
         long
       /> */}
-    </div>
+    </Div>
   );
 }

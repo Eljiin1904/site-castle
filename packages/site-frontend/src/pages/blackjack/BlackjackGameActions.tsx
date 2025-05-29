@@ -17,7 +17,6 @@ export const BlackjackGameActions = () => {
 
   let action: Action = completed ? "game-complete" : "game-play";
   if (insurancePending) action = "insurance-pending";
-
   return (
     <Div
       width={"full"}

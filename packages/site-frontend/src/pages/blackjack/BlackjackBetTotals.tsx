@@ -22,16 +22,20 @@ export const BlackjackBetTotals = () => {
     <Div
       className="BlackjackBetTotals"
       zIndex={10}
+      gap={10}
     >
-      <MainBetTotals />
-      <BlackjackSidebetTotals />
+      <Div>
+        <MainBetTotals />
+      </Div>
+      <Div>
+        <BlackjackSidebetTotals />
+      </Div>
     </Div>
   );
 };
 
 function MainBetTotals() {
   const collapse = useIsMobileLayout();
-  const [sortIndex, setSortIndex] = useState(0);
   const mainLayout = useLibrarySelector((x) => x.style.mainLayout);
 
   // const { t } = useTranslation();
@@ -87,9 +91,9 @@ function MainBetTotals() {
             size="md"
             // placeholder={`Total Bet: ${total}`}
             options={[
-              { label: `Total Bet: $${total}` },
-              { label: `Side Bet: $${sideBets}` },
-              { label: `Main Bet: $${mainBet}` },
+              { label: `Total Bet: $${Intimal.toDecimal(total, 6)}` },
+              { label: `Side Bet: $${Intimal.toDecimal(sideBets, 6)}` },
+              { label: `Main Bet: $${Intimal.toDecimal(mainBet, 6)}` },
             ]}
             value={0}
             collapse={collapse}

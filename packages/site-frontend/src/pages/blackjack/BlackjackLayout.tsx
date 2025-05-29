@@ -19,8 +19,8 @@ export const BlackjackLayout = () => {
         className="bg-dark"
       />
 
-      {/* <SvgBlackjackBgGreen className="bg-green" /> */}
-      {/* <SvgBlackjackBgDark className="bg-dark" /> */}
+      {/* <SvgBlackjackBgGreen className="bg-green" />  */}
+      {/* <SvgBlackjackBgDark className="bg-dark" />  */}
       <Img
         type="png"
         path={"/graphics/games/blackjack_board"}
@@ -31,24 +31,6 @@ export const BlackjackLayout = () => {
       />
 
       {/* <BlackjackLayoutBorder /> */}
-
-      {/* <BlackjackPicture
-        className="logo-image"
-        src={imagePaths.logo}
-        alt="Castle Logo"
-      /> */}
-      {/* <SiteLogo /> */}
-      {/* <Img
-        path={"/games/blackjack/background/chicken-logo"}
-        type="png"
-        width="591"
-        height="115"
-      /> */}
-      {/* <Vector
-        as={SvgBlackjackChickenLogo}
-        width={1000}
-        height={1000}
-      /> */}
     </div>
   );
 };

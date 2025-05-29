@@ -7,13 +7,11 @@ import { Div } from "@client/comps/div/Div";
 export const BlackjackGameControls = () => {
   const game = useGame();
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
   if (!authenticated || !game) return null;
 
   return (
     <Div
       fx
-      // width={"full"}
       grow
       align="center"
       justify="center"

@@ -30,4 +30,15 @@ $maxWidth: 700px;
 		left: 50%;
 		transform: translateX(-50%);
 	}
+
+
+
+}
+.control {
+	position: absolute; 
+	left: 0; 
+	right: 0; 
+	top: 40%;
+	margin-inline: auto; 
+	width: fit-content;
 }
