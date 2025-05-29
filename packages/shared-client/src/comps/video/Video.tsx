@@ -33,6 +33,7 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   altImage?: string;
   altPadding?: number;
   scale?: number;
+  resetEnd?: boolean;
 };
 
 export const Video: FC<VideoProps> = ({
@@ -57,6 +58,7 @@ export const Video: FC<VideoProps> = ({
   pause = false,
   reset = false,
   resetPause = false,
+  resetEnd = false,
   playBackSpeed = 1,
   altImage,
   altPadding = 0,
@@ -168,7 +170,7 @@ export const Video: FC<VideoProps> = ({
           videoRef.current?.pause();
           setShowFallback(true);
         }}
-        onEnded={handleEnded}
+        onEnded={resetEnd ? handleEnded : () => {}}
       >
         <source
           src={videoSource}
