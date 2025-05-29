@@ -8,3 +8,4 @@ export * from "./utils/createUser";
 export * from "./utils/getStatsFromTransaction";
 export * from "./utils/incrementReport";
 export * from "./utils/reportTransaction";
+export * from "./utils/recordLatency";

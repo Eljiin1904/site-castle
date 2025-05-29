@@ -68,10 +68,13 @@ config.awsRegion = process.env.AWS_REGION;
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
-    console.log("fetching secrets");
+    // Skip secrets loading for staging environment only
+    // This avoids permission issues when dev credentials try to access staging secrets
 
+    console.log("fetching secrets");
     let env = config.env as string;
     if (config.env === "devcloud") {
+      console.log("The corrent environment is being used is : ", config.env);
       env = "development";
     }
 

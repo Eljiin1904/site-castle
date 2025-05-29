@@ -76,4 +76,7 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["user-reports"]: config.env,
   ["user-seed-pairs"]: config.env,
   ["user-sessions"]: config.env,
+  ["user-latency"]: config.env,
+  ["crash-tickets"]: config.env,
+  ["crash-rounds"]: config.env,
 };

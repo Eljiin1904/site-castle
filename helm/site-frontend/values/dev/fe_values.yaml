@@ -1,12 +1,21 @@
 replicaCount: 1
 
-environment: "development"
+environment: "devcloud"
 
 image:
   app:
     repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-frontend"
     pullPolicy: Always
     tag: "latest"
+
+# New section for runtime configuration values
+runtimeConfig:
+  appEnvName: "devcloud"
+  siteUrl: "https://dev.brickrax.com"
+  siteApi: "https://api.dev.brickrax.com"
+  adminUrl: "https://admin.dev.brickrax.com"
+  adminApi: "https://aapi.dev.brickrax.com"
+  staticUrl: "https://font.brickrax.com" # As defined in coreConfig
 
 imagePullSecrets: []
 nameOverride: ""

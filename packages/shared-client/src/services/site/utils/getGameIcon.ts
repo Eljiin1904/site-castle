@@ -6,6 +6,8 @@ import { SvgBomb } from "#client/svgs/common/SvgBomb";
 import { SvgMultiplier } from "#client/svgs/common/SvgMultiplier";
 import { SvgSlide } from "#client/svgs/common/SvgSlide";
 import { SvgBlackjack } from "#client/svgs/common/SvgBlackjack";
+import { SvgCrash } from "#client/svgs/common/SvgCrash";
+
 
 export function getGameIcon(game: SiteGame): Svg {
   switch (game) {
@@ -23,5 +25,7 @@ export function getGameIcon(game: SiteGame): Svg {
       return SvgBomb;
     case "blackjack":
       return SvgBlackjack;
+    case "crash":
+      return SvgCrash;
   }
 }

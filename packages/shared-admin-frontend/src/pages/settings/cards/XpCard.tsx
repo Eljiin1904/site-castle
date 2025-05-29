@@ -46,6 +46,13 @@ export const XpCard = ({
       />
       <FieldSection
         settings={settings}
+        id="crashXpRate"
+        label="Crash"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
         id="diceXpRate"
         label="Dice"
         inputType="decimal"

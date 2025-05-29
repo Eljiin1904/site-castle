@@ -159,6 +159,18 @@
         "invalidRoundStatus": "Estado de ronda inválido.",
         "invalidCombination": "Combinación de apuesta inválida.",
         "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."       
+      },
+      "crash": {
+        "requiredRound": "Ronda requerida.",
+        "invalidRoundId": "Id de ronda inválido.",
+        "invalidCombination": "Combinación de apuesta inválida.",
+        "ticketExists": "El ticket ya existe.",
+        "invalidRoundStatus": "Estado de ronda inválido.",
+        "invalidRoundStartDate": "Fecha de inicio de ronda inválida.",
+        "invalidMultiplier": "Multiplicador inválido.",
+        "invalidEndTime": "Hora de finalización inválida.",
+        "ticketAlreadyProcessed": "Ticket ya procesado.",
+        "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."
       }
     },
     "wallet": {

@@ -16,6 +16,8 @@ export interface SiteClientEvents {
   "chest-drops-leave": (chestId: string) => void;
   "double-join": () => void;
   "double-leave": () => void;
+  "crash-join": () => void;
+  "crash-leave": () => void;
   "dice-join": (userId: string) => void;
   "dice-leave": () => void;
   "holiday-join": () => void;

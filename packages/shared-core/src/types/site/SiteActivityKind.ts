@@ -13,6 +13,7 @@ export type SiteActivityKindData =
   | DiceWonData
   | DoubleJackpotWonData
   | DoubleWonData
+  | CrashWonData
   | LimboWonData
   | MinesWonData
   | BlackjackWonData
@@ -78,4 +79,9 @@ interface RewardBoostData {
   kind: "reward-boost";
   timeframe: RewardBoostTimeframe;
   amount: number;
+}
+
+interface CrashWonData {
+  kind: "crash-win";
+  multiplier: number;
 }

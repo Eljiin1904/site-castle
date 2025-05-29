@@ -24,6 +24,9 @@ import type { MinesInitialState } from "../mines/MinesInitialState";
 import type { MinesEventDocument } from "../mines/MinesEventDocument";
 import { UserCampaigns } from "../users/UserCampaigns";
 import { BlackjackFeedMasked } from "../blackjack/BlackjackEventDocument";
+import { CrashInitialState } from "../crash/CrashInitialState";
+import { CrashRoundDocument } from "../crash/CrashRoundDocument";
+import { CrashTicketDocument } from "../crash/CrashTicketDocument";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -45,6 +48,11 @@ export interface SiteServerEvents {
   "double-round-insert": (round: DoubleRoundDocument) => void;
   "double-round-update": (update: StreamUpdate) => void;
   "double-bet-insert": (bet: DoubleTicketDocument) => void;
+  "crash-init": (x: CrashInitialState) => void;
+  "crash-round-insert": (round: CrashRoundDocument) => void;
+  "crash-round-update": (update: StreamUpdate) => void;
+  "crash-bet-insert": (bet: CrashTicketDocument) => void;
+  "crash-bet-update": (bet: StreamUpdate) => void;
   "holiday-init": (x: HolidayInitialState) => void;
   "holiday-race-update": (update: StreamUpdate) => void;
   "hot-feed-init": (x: HotSiteGameDetails[]) => void;
@@ -71,4 +79,5 @@ export interface SiteServerEvents {
   "campaign-init": (x: UserCampaigns[]) => void;
   "campaign-insert": (campaign: UserCampaigns) => void;
   "campaign-update": (update: StreamUpdate) => void;
+  "pong": (callback: () => void) => void;
 }

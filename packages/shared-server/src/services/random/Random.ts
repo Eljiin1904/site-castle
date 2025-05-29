@@ -8,3 +8,4 @@ export * from "./utils/getUserPair";
 export * from "./utils/hashServerSeed";
 export * from "./utils/nextUserNonce";
 export * from "./utils/rotateUserPair";
+export * from "./utils/getMultipier";

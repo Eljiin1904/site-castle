@@ -21,6 +21,7 @@ export const MessageImage = ({ message }: { message: ChatMessageDocument }) => {
     message.kind === "case-game-win" ||
     message.kind === "case-battle-win" ||
     message.kind === "double-win" ||
+    message.kind === "crash-win" ||
     message.kind === "dice-win" ||
     message.kind === "holiday-case-win" ||
     message.kind === "level-case-win" ||

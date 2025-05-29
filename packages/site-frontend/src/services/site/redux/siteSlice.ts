@@ -59,6 +59,7 @@ type BetBoardData = {
   double: BetData[];
   limbo: BetData[];
   mines: BetData[];
+  crash: BetData[];
 };
 
 const initialState: SiteState = {
@@ -145,6 +146,7 @@ export const siteSlice = createSlice({
         payload,
       );
       const caseBattleBets: BetData[] = []; //replaceBet(state.bets?.["case-battles"] ? state.bets["case-battles"].slice() : [], "case-battles", payload);
+      const crashBets = replaceBet(state.bets?.crash ? state.bets.crash.slice() : [], "crash", payload);
 
       allBets.unshift({
         ...payload,
@@ -163,7 +165,8 @@ export const siteSlice = createSlice({
         limbo: limboBets,
         mines: minesBets,
         blackjack: blackjackBets,
-      };
+        crash: crashBets };
+
       state.bets = bets;
     }),
     initGames: reducer<GameDocument[] | []>((state, { payload }) => {

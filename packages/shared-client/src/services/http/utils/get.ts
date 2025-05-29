@@ -9,6 +9,7 @@ export async function get<T = any>(
   requestConfig?: AxiosRequestConfig,
 ): Promise<T> {
   requestConfig = getRequestConfig(requestConfig);
+  console.log(`[HTTP GET] Requesting: ${config.apiURL}${url}`);
   try {
     const result = await axios.get<T>(`${config.apiURL}${url}`, requestConfig);
     Dates.parseDates(result.data);

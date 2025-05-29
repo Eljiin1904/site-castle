@@ -10,6 +10,7 @@ export async function post<T = any>(
   requestConfig?: AxiosRequestConfig,
 ): Promise<T> {
   requestConfig = getRequestConfig(requestConfig);
+  console.log(`[HTTP POST] Requesting: ${config.apiURL}${url}`, "Payload:", data);
   try {
     const result = await axios.post<T>(`${config.apiURL}${url}`, data, requestConfig);
     Dates.parseDates(result.data);

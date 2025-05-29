@@ -16,7 +16,7 @@ serviceAccount:
   create: true
   automount: true
   annotations: {}
-  name: ""
+  name: "shared-reporting-server"
 
 podAnnotations: {}
 podLabels: {}
@@ -34,9 +34,6 @@ ingress:
 
 secrets:
   app: "shared-reporting-server"
-
-app:
-  port: 3000
 
 resources: {}
 

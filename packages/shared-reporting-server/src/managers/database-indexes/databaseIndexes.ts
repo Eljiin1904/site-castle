@@ -319,6 +319,7 @@ async function main() {
   await Database.collection("users").createIndex({ discordId: 1 });
 
   await Database.collection("user-actions").createIndex({ "user.id": 1 });
+  
 
   await Database.collection("user-bet-sessions").createIndex(
     { expires: -1 },
@@ -341,5 +342,9 @@ async function main() {
 
   await Database.collection("user-seed-pairs").createIndex({
     userId: 1,
+  });
+
+  await Database.collection("user-latency").createIndex({
+    userId: 1
   });
 }

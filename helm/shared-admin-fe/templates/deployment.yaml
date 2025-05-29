@@ -40,6 +40,8 @@ spec:
               value: {{ .Values.environment }}
             - name: APP_ENV
               value: {{ .Values.environment }}
+            - name: BUILD_ENV
+              value: {{ .Values.environment }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

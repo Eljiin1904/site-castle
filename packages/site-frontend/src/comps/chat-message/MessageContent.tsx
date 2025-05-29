@@ -11,6 +11,7 @@ import { DoubleStreakContent } from "./content/DoubleStreakContent";
 import { DiceWinContent } from "./content/DiceWinContent";
 import { LimboWinContent } from "./content/LimboWinContent";
 import { AdventContent } from "./content/AdventContent";
+import { CrashWinContent } from "./content/CrashWinContent";
 
 export const MessageContent = ({ message }: { message: ChatMessageDocument }) => {
   if (message.kind === "text") {
@@ -55,6 +56,13 @@ export const MessageContent = ({ message }: { message: ChatMessageDocument }) =>
   } else if (message.kind === "dice-win") {
     return (
       <DiceWinContent
+        multiplier={message.multiplier}
+        wonAmount={message.wonAmount}
+      />
+    );
+  } else if (message.kind === "crash-win") {
+    return (
+      <CrashWinContent
         multiplier={message.multiplier}
         wonAmount={message.wonAmount}
       />

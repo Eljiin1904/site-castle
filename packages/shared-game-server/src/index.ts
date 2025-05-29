@@ -25,6 +25,7 @@ async function main() {
   Managers.blackjack();
   Managers.races();
   Managers.raffles();
+  Managers.crash();
 
   console.log("Initialized managers.");
 

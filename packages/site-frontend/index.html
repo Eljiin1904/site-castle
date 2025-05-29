@@ -18,14 +18,21 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@" />
     <meta name="twitter:site" content="@" />
+   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+   
     <link href="https://font.brickrax.com/fonts/terminal-grotesque/terminal-grotesque?family=Terminal+Grotesque" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
+    
+    <!-- Load runtime config first and synchronously to ensure it's available before app code -->
+    <script src="/runtime-config.js"></script>
+
   </head>
   <body id="index">
     <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
+    <!-- Use defer to ensure runtime-config.js is loaded first -->
+    <script type="module" src="/src/index.tsx" defer></script>
   </body>
 </html>

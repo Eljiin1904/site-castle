@@ -7,6 +7,15 @@ export function getLocalInt(key: string, defaultValue?: number) {
   }
 }
 
+export function getLocalFloat(key: string, defaultValue?: number) {
+  const raw = localStorage.getItem(key);
+  if (raw) {
+    return Number.parseFloat(raw);
+  } else {
+    return defaultValue;
+  }
+}
+
 export function getLocalBool(key: string, defaultValue?: boolean) {
   const raw = localStorage.getItem(key);
   if (raw) {
