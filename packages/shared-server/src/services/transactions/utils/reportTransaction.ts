@@ -213,7 +213,6 @@ function getGameUpdates({
   $inc: ReportRecord;
   $max: ReportRecord;
 }) {
-
   if (tx.user.tags.includes("cheeky")) {
     return;
   }
@@ -231,8 +230,9 @@ function getGameUpdates({
     tx.kind === "limbo-won" ||
     tx.kind === "crash-won" ||
     tx.kind === "duel-won" ||
-    tx.kind === "blackjack-won" ||
     tx.kind === "mines-won" ||
+    tx.kind === "blackjack-won" ||
+    tx.kind === "blackjack-sidebet-won" ||
     tx.kind === "reward-gem-case-item" ||
     tx.kind === "reward-holiday-case-item" ||
     tx.kind === "reward-level-case-item"
@@ -272,37 +272,77 @@ function getGameUpdates({
     $inc.limboWinTokens = tx.value;
   }
   //New Games
-  else if(tx.kind === "duel-bet") {
+  else if (tx.kind === "duel-bet") {
     $inc.duelBetCount = 1;
     $inc.duelWagerTokens = tx.value;
     $inc.duelEv = tx.bet.ev;
-  }
-  else if (tx.kind === "duel-won") {
+  } else if (tx.kind === "duel-won") {
     $inc.duelWinTokens = tx.value;
-  }
-  else if (tx.kind === "crash-bet") {
+  } else if (tx.kind === "crash-bet") {
     $inc.crashBetCount = 1;
     $inc.crashWagerTokens = tx.value;
     $inc.crashEv = tx.bet.ev;
-  }
-  else if (tx.kind === "crash-won") {
+  } else if (tx.kind === "crash-won") {
     $inc.crashWinTokens = tx.value;
-  }
+  } else if (tx.kind === "mines-bet") {
+    $inc.minesBetCount = 1;
+    $inc.minesWagerTokens = tx.value;
+    $inc.minesEv = tx.bet.ev;
+  } else if (tx.kind === "mines-won") {
+    $inc.minesWinTokens = tx.value;
+  } // === blackjack-bet
   else if (tx.kind === "blackjack-bet") {
     $inc.blackjackBetCount = 1;
     $inc.blackjackWagerTokens = tx.value;
     $inc.blackjackEv = tx.bet.ev;
-  }
-  else if (tx.kind === "blackjack-won") {
+  } else if (tx.kind === "blackjack-double") {
+    // treating this as if the amount is being added to
+    // the main bet not as new bet, so no $inc count
+    $inc.blackjackWagerTokens = tx.value;
+    $inc.blackjackEv = tx.bet.ev;
+  } else if (tx.kind === "blackjack-split") {
+    // adding to main bet amount and ev
+    $inc.blackjackWagerTokens = tx.value;
+    $inc.blackjackEv = tx.bet.ev;
+  } else if (tx.kind === "blackjack-sidebet-bet" && tx.subKind === "insurance") {
+    $inc.blackjackInsuranceBetCount = 1;
+    $inc.blackjackInsuranceWagerTokens = tx.value;
+    $inc.blackjackInsuranceEv = tx.bet.ev;
+  } else if (tx.kind === "blackjack-sidebet-bet" && tx.subKind === "lucky-ladies") {
+    $inc.blackjackLuckyLadiesBetCount = 1;
+    $inc.blackjackLuckyLadiesWagerTokens = tx.value;
+    $inc.blackjackLuckyLadiesEv = tx.bet.ev;
+  } else if (tx.kind === "blackjack-sidebet-bet" && tx.subKind === "blackjack-15x") {
+    $inc.blackjackBlackjack15xBetCount = 1;
+    $inc.blackjackBlackjack15xWagerTokens = tx.value;
+    $inc.blackjackBlackjack15xEv = tx.bet.ev;
+  } else if (tx.kind === "blackjack-sidebet-bet" && tx.subKind === "perfect-pairs") {
+    $inc.blackjackPerfectPairsBetCount = 1;
+    $inc.blackjackPerfectPairsWagerTokens = tx.value;
+    $inc.blackjackPerfectPairsEv = tx.bet.ev;
+  } else if (tx.kind === "blackjack-sidebet-bet" && tx.subKind === "21+3") {
+    $inc.blackjack213BetCount = 1;
+    $inc.blackjack213WagerTokens = tx.value;
+    $inc.blackjack213Ev = tx.bet.ev;
+
+    // === blackjack win
+  } else if (tx.kind === "blackjack-won") {
     $inc.blackjackWinTokens = tx.value;
-  }
-  else if (tx.kind === "mines-bet") {
-    $inc.minesBetCount = 1;
-    $inc.minesWagerTokens = tx.value;
-    $inc.minesEv = tx.bet.ev;
-  }
-  else if (tx.kind === "mines-won") {
-    $inc.minesWinTokens = tx.value;
+
+    // TODO make sure old data is removed
+    // $inc.blackjackWinTokens = tx.mainSubPayout;
+    // $inc.blackjackDoubleWinTokens = tx.doublePayout;
+    // $inc.blackjackSplitWinTokens = tx.splitPayout;
+  } else if (tx.kind === "blackjack-sidebet-won" && tx.subKind === "insurance") {
+    $inc.blackjackInsuranceWinTokens = tx.value;
+  } else if (tx.kind === "blackjack-sidebet-won" && tx.subKind === "lucky-ladies") {
+    $inc.blackjackLuckyLadiesWinTokens = tx.value;
+  } else if (tx.kind === "blackjack-sidebet-won" && tx.subKind === "blackjack-15x") {
+    $inc.blackjackBlackjack15xWinTokens = tx.value;
+  } else if (tx.kind === "blackjack-sidebet-won" && tx.subKind === "perfect-pairs") {
+    $inc.blackjackPerfectPairsWinTokens = tx.value;
+  } else if (tx.kind === "blackjack-sidebet-won" && tx.subKind === "21+3") {
+    $inc.blackjack213WinTokens = tx.value;
   }
 }
 

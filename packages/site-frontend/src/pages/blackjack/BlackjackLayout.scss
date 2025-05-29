@@ -1,0 +1,58 @@
+
+.BlackjackLayout {
+	position: absolute;
+	top: 0; left: 0; width: 100%; height: 100%;
+	user-select: none;
+	pointer-events: none;
+
+	.bg-green, .bg-dark {
+		display: block;
+		position: absolute;
+		top: 0; left: 0; width: 100%; height: 100%;
+		margin: 0;
+		padding: 0;
+
+		// no idea where overflow's coming from, cropping instead
+		overflow: hidden;
+
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+
+		&, img {
+			object-position: 50% 50%;
+			object-fit: cover;
+		}
+	}
+
+	.logo-image {
+		position: absolute;
+		top: 7%;
+		left: 50%;
+		transform: translateX(-50%);
+		opacity: 0.15;
+		width: 80%;
+		max-width: 550px;
+
+		img {
+			width: 100%;
+		}
+	}
+}
+
+.AppMain.mobile {
+	.logo-image {
+		top: 10%;
+	}
+}
+
+.BlackjackView {
+	.bg-green { display: block; }
+	.bg-dark { display: none; }
+}
+.BlackjackView.dark {
+	.bg-green { display: none; }
+	.bg-dark { display: block; }
+}

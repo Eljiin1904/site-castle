@@ -52,8 +52,9 @@ export type BetData = SiteBetDocument & {
 
 type BetBoardData = {
   all: BetData[];
-  'case-battles': BetData[];
-  cases: BetData[];  
+  blackjack: BetData[];
+  "case-battles": BetData[];
+  cases: BetData[];
   dice: BetData[];
   double: BetData[];
   limbo: BetData[];
@@ -116,16 +117,37 @@ export const siteSlice = createSlice({
       state.bets = payload;
     }),
     updateBets: reducer<SiteBetDocument>((state, { payload }) => {
-      
       const allBets = state.bets?.all ? state.bets.all.slice() : [];
-      const doubleBets = replaceBet(state.bets?.double ? state.bets.double.slice() : [], "double", payload);
+      const doubleBets = replaceBet(
+        state.bets?.double ? state.bets.double.slice() : [],
+        "double",
+        payload,
+      );
       const diceBets = replaceBet(state.bets?.dice ? state.bets.dice.slice() : [], "dice", payload);
-      const limboBets = replaceBet(state.bets?.limbo ? state.bets.limbo.slice() : [], "limbo", payload);
-      const caseBets = replaceBet(state.bets?.cases ? state.bets.cases.slice() : [], "cases", payload);
-      const minesBets = replaceBet(state.bets?.mines ? state.bets.mines.slice() : [], "mines", payload);
+      const limboBets = replaceBet(
+        state.bets?.limbo ? state.bets.limbo.slice() : [],
+        "limbo",
+        payload,
+      );
+      const caseBets = replaceBet(
+        state.bets?.cases ? state.bets.cases.slice() : [],
+        "cases",
+        payload,
+      );
+      const minesBets = replaceBet(
+        state.bets?.mines ? state.bets.mines.slice() : [],
+        "mines",
+        payload,
+      );
+
+      const blackjackBets = replaceBet(
+        state.bets?.blackjack ? state.bets.blackjack.slice() : [],
+        "blackjack",
+        payload,
+      );
+      const caseBattleBets: BetData[] = []; //replaceBet(state.bets?.["case-battles"] ? state.bets["case-battles"].slice() : [], "case-battles", payload);
       const crashBets = replaceBet(state.bets?.crash ? state.bets.crash.slice() : [], "crash", payload);
-      const caseBattleBets:BetData[] = [];//replaceBet(state.bets?.["case-battles"] ? state.bets["case-battles"].slice() : [], "case-battles", payload);
-      
+
       allBets.unshift({
         ...payload,
         inserted: true,
@@ -134,7 +156,17 @@ export const siteSlice = createSlice({
         allBets.pop();
       }
 
-      const bets = { all: allBets, 'case-battles': caseBattleBets, cases: caseBets, dice: diceBets, double: doubleBets, limbo: limboBets, mines: minesBets, crash: crashBets };
+      const bets = {
+        all: allBets,
+        "case-battles": caseBattleBets,
+        cases: caseBets,
+        dice: diceBets,
+        double: doubleBets,
+        limbo: limboBets,
+        mines: minesBets,
+        blackjack: blackjackBets,
+        crash: crashBets };
+
       state.bets = bets;
     }),
     initGames: reducer<GameDocument[] | []>((state, { payload }) => {
@@ -151,7 +183,7 @@ export const siteSlice = createSlice({
     }),
     updateHotGames: reducer<HotSiteGameDetails[] | undefined>((state, { payload }) => {
       state.hotGames = payload;
-    })
+    }),
   }),
 });
 
@@ -171,12 +203,11 @@ export const {
   setSearch,
   setFilter,
   setSort,
-  updateHotGames
+  updateHotGames,
 } = siteSlice.actions;
 
-const replaceBet = (bets: BetData[], game: SiteGame ,  bet: SiteBetDocument) => {
- 
-  if(game === bet.game) {
+const replaceBet = (bets: BetData[], game: SiteGame, bet: SiteBetDocument) => {
+  if (game === bet.game) {
     bets.unshift({
       ...bet,
       inserted: true,
@@ -187,4 +218,4 @@ const replaceBet = (bets: BetData[], game: SiteGame ,  bet: SiteBetDocument) => 
   }
 
   return bets;
-}
+};

@@ -44,6 +44,13 @@ interface XpSettings {
   diceXpRate: number;
   limboXpRate: number;
   minesXpRate: number;
+  blackjackXpRate: number;
+
+  blackjackInsuranceXpRate: number;
+  blackjackLuckyLadiesXpRate: number;
+  blackjackBlackjack15xXpRate: number;
+  blackjackPerfectPairsXpRate: number;
+  blackjack213XpRate: number;
 }
 
 interface RainSettings {
@@ -71,6 +78,11 @@ interface FeatureToggles {
   crashEnabled: boolean;
   limboEnabled: boolean;
   minesEnabled: boolean;
+  blackjackEnabled: boolean;
+  blackjackLuckyLadiesEnabled: boolean;
+  blackjackBlackjack15xEnabled: boolean;
+  blackjackPerfectPairsEnabled: boolean;
+  blackjack213Enabled: boolean;
 }
 
 interface ThresholdSettings {

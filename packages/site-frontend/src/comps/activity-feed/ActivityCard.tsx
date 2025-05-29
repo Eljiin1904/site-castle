@@ -18,6 +18,7 @@ import { SvgSlide } from "@client/svgs/common/SvgSlide";
 import { ItemBox } from "@client/comps/item/ItemBox";
 import { SvgDice } from "@client/svgs/common/SvgDice";
 import { SvgStar } from "@client/svgs/common/SvgStar";
+import { SvgBlackjack } from "@client/svgs/common/SvgBlackjack";
 import { SvgMultiplier } from "@client/svgs/common/SvgMultiplier";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useHiddenInfo } from "#app/hooks/users/useHiddenInfo";
@@ -79,6 +80,21 @@ export const ActivityCard = ({
     label = "Limbo";
     link = "/limbo";
     icon = SvgMultiplier;
+  } else if (kind === "mines-win") {
+    image = "/icons/mines-gem-group";
+    label = t.games("mines");
+    link = "/mines";
+    icon = SvgBomb;
+  } else if (kind === "blackjack-win") {
+    image = "/games/blackjack/activity-feed/cards-icon";
+    label = t.games("blackjack");
+    link = "/blackjack";
+    icon = SvgBlackjack;
+  } else if (kind === "blackjack-sidebet-win") {
+    image = "/games/blackjack/activity-feed/cards-icon";
+    label = t.games("blackjack");
+    link = "/blackjack";
+    icon = SvgBlackjack;
   } else if (kind === "reward-boost") {
     image = "/icons/reward-boost";
     label = "Reward Boosts";

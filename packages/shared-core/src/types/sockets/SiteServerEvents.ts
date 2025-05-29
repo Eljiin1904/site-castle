@@ -23,6 +23,7 @@ import { DoubleJackpotDetails } from "../double/DoubleJackpotDetails";
 import type { MinesInitialState } from "../mines/MinesInitialState";
 import type { MinesEventDocument } from "../mines/MinesEventDocument";
 import { UserCampaigns } from "../users/UserCampaigns";
+import { BlackjackFeedMasked } from "../blackjack/BlackjackEventDocument";
 import { CrashInitialState } from "../crash/CrashInitialState";
 import { CrashRoundDocument } from "../crash/CrashRoundDocument";
 import { CrashTicketDocument } from "../crash/CrashTicketDocument";
@@ -61,6 +62,8 @@ export interface SiteServerEvents {
   "limbo-insert": (bet: LimboTicketDocument) => void;
   "mines-init": (x: MinesInitialState) => void;
   "mines-insert": (x: MinesEventDocument) => void;
+  "blackjack-init": (x: { feed: BlackjackFeedMasked[] }) => void;
+  "blackjack-insert": (x: BlackjackFeedMasked) => void;
   "notifications-init": (notifications: NotificationDocument[]) => void;
   "notifications-insert": (notification: NotificationDocument) => void;
   "notifications-update": (update: StreamUpdate) => void;

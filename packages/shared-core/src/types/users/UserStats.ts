@@ -52,12 +52,23 @@ export interface UserStats {
   diceWagerAmount?: number;
   limboBetCount?: number;
   limboWagerAmount?: number;
-  blackjackBetCount?: number;
-  blackjackWagerAmount?: number;
   minesBetCount?: number;
   minesWagerAmount?: number;
   doubleBetCount?: number;
   doubleWagerAmount?: number;
   caseBetCount?: number;
-  caseWagerAmount?: number;  
+  caseWagerAmount?: number;
+  // === blackjack
+  blackjackBetCount?: number;
+  blackjackInsuranceBetCount?: number;
+  blackjackLuckyLadiesBetCount?: number;
+  blackjackBlackjack15xBetCount?: number;
+  blackjackPerfectPairsBetCount?: number;
+  blackjack213BetCount?: number;
+  blackjackWagerAmount?: number;
+  blackjackInsuranceWagerAmount?: number;
+  blackjackLuckyLadiesWagerAmount?: number;
+  blackjackBlackjack15xWagerAmount?: number;
+  blackjackPerfectPairsWagerAmount?: number;
+  blackjack213WagerAmount?: number;
 }

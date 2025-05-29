@@ -14,9 +14,11 @@ import { socketSlice } from "./services/sockets/redux/socketSlice";
 import { supportSlice } from "./services/support/redux/supportSlice";
 import { userSlice } from "./services/users/redux/userSlice";
 import { minesSlice } from "./services/mines/redux/minesSlice";
-import {accountSlice} from "./services/account/redux/accountSlice";
+import { accountSlice } from "./services/account/redux/accountSlice";
 import { affiliatesSlice } from "./services/affiliates/Affiliates";
+import { blackjackSlice } from "./services/blackjack/redux/blackjackSlice";
 import { crashSlice } from "./services/crash/Crash";
+
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +32,7 @@ export const store = configureStore({
     holiday: holidaySlice.reducer,
     limbo: limboSlice.reducer,
     mines: minesSlice.reducer,
+    blackjack: blackjackSlice.reducer,
     notifications: notificationsSlice.reducer,
     site: siteSlice.reducer,
     socket: socketSlice.reducer,

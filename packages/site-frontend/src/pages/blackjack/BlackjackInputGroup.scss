@@ -1,0 +1,12 @@
+
+.input-1 { order: 1; }
+.input-2 { order: 2; }
+.input-3 { order: 3; }
+.input-4 { order: 4; }
+
+/* On small screens, move the 3rd input to the top */
+@media (max-width: 992px) {
+  .input-2 {
+    order: 0;
+  }
+}

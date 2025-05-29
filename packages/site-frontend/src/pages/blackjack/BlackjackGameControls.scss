@@ -1,0 +1,30 @@
+@use "./BlackjackView.scss";
+
+.BlackjackGameControls {
+
+	// position: absolute;
+	// top: 0; left: 0; 
+	width: 100%; 
+	// height: 100%;
+	// max-width: 100%;
+
+	// display: flex;
+	// flex-direction: row;
+	// justify-content: center;
+	// align-items: center;
+
+	// maps to ChipButtons.scss
+	// padding: 0 6%;
+
+	// display: flex;
+	// flex-direction: column;
+	// justify-content: center;
+}
+
+.AppMain.tablet, .AppMain.mobile {
+	.BlackjackGameControls {
+		// padding-bottom: BlackjackView.$bottomPad;
+		box-sizing: border-box;
+	}
+
+}

@@ -11,6 +11,7 @@ export { default as holiday } from "./holiday";
 export { default as hotFeed } from "./hot-feed";
 export { default as limbo } from "./limbo";
 export { default as mines } from "./mines";
+export { default as blackjack } from "./blackjack";
 export { default as notifications } from "./notifications";
 export { default as site } from "./site";
 export { default as users } from "./users";

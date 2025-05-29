@@ -1,0 +1,117 @@
+@use "sass:color";
+
+$bg: #004A24;
+$borderColor: #B6E065;
+
+$darkBg: #313E56;
+$darkBorderColor: #778184;
+
+$secondaryBg: #4A4A4A;
+$secondaryBorderColor: color.adjust(#E6E6E6, $lightness: -10%);
+
+.BlackjackPage {
+	.BlackjackButton, .BlackjackButton .button-inner  {
+		border-radius: 3px;
+	}
+}
+
+.BlackjackPage .BlackjackButton {
+	// override preset from Div
+	// &._display-flex {
+	// 	display: block;
+	// }
+	// flex: 0 0 auto;
+	// border: 1px solid $borderColor;
+	// background-color: $bg;
+	// box-shadow: 3px 6px 8px 0px rgba(0, 0, 0, 0.40);
+	// width: 120px;
+
+	// &.long {
+	// 	width: 180px;
+	// }
+
+	// .button-inner {
+	// 	display: flex;
+	// 	gap: 5px;
+	// 	justify-content: center;
+	// 	align-items: center;
+	// 	background: linear-gradient(159deg, rgba(#000, 0) 13.76%, rgba(#000, 0.4) 50.82%);
+	// 	box-sizing: border-box;
+	// 	padding: 8px 0;
+	// 	color: #fff;
+	// 	box-shadow: 0px 0px 8px 0px rgba(255, 255, 255, 0.30) inset;
+	// }
+
+	cursor: pointer;
+	transition: background-color 1.0s, transform 1.0s, box-shadow 1.0s;
+	// .button-inner {
+	// 	transition: box-shadow 0.5s;
+	// }
+
+	// &.enabled:hover {
+	// 	background-color: color.adjust($bg, $lightness: 10%);
+
+	// 	.button-inner {
+	// 		box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.50) inset;
+	// 	}
+	// }
+	// &.enabled.clicked {
+	// 	background-color: color.adjust($bg, $lightness: 15%);
+	// 	transform: translateY(4px);
+	// 	box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1.00);
+	// 	transition: none;
+	// }
+	&.disabled {
+		opacity: 0.4;
+		// transform: scale(0.9);
+		// transform-origin: 50% 50%;
+		cursor: default;
+	}
+
+
+	// img, svg {
+	// 	display: block;
+	// 	height: 18px;
+
+	// }
+	// .text {
+	// 	// font: 0.9rem Verdana, sans-serif;
+	// 	font-size: 0.9rem;
+	// 	line-height: 0.9rem;
+	// 	// line-height: 0.9rem;
+	// 	text-transform: capitalize;
+	// 	color: #fff;
+	// }
+
+	// &:nth-of-type(4) {
+	// 	.text {
+	// 		line-height: 0.8rem;
+	// 	}
+	// }
+
+}
+
+// .BlackjackPage .BlackjackButton.secondary {
+// 	border-color: $secondaryBorderColor;
+// 	background-color: $secondaryBg;
+
+// 	&.enabled:hover {
+// 		background-color: color.adjust($secondaryBg, $lightness: 5%);
+// 	}
+// 	&.enabled.clicked {
+// 		background-color: color.adjust($secondaryBg, $lightness: 15%);
+// 	}
+
+// }
+
+// .BlackjackPage .dark .BlackjackButton {
+// 	border-color: $darkBorderColor;
+// 	background-color: $darkBg;
+
+// 	&.enabled:hover {
+// 		background-color: color.adjust($darkBg, $lightness: 5%);
+// 	}
+// 	&.enabled.clicked {
+// 		background-color: color.adjust($darkBg, $lightness: 15%);
+// 	}
+// }

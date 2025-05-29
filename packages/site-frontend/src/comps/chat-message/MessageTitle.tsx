@@ -13,7 +13,10 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
     const role = "role" in user ? Users.getRoleInfo(user.role) : undefined;
 
     return (
-      <Div align="center" gap={8}>
+      <Div
+        align="center"
+        gap={8}
+      >
         <Span
           size={12}
           fontWeight="medium"
@@ -42,6 +45,7 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
     );
   } else if (
     message.kind === "advent-bonus" ||
+    message.kind === "blackjack-win" ||
     message.kind === "case-game-win" ||
     message.kind === "double-win" ||
     message.kind === "crash-win" ||
@@ -85,12 +89,12 @@ export const MessageTitle = ({ message }: { message: ChatMessageDocument }) => {
         )}
       </Div>
     );
-  } else if (
-    message.kind === "double-streak" ||
-    message.kind === "rain-payout"
-  ) {
+  } else if (message.kind === "double-streak" || message.kind === "rain-payout") {
     return (
-      <Div align="center" gap={8}>
+      <Div
+        align="center"
+        gap={8}
+      >
         <Span
           size={12}
           color="sand"

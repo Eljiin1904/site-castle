@@ -1,0 +1,42 @@
+$orange1: #FEC84B;
+
+.BlackjackInsuranceActions {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+
+	.title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 8px;
+		color: #fff;
+		font: 300 1.1rem Arial, sans-serif;
+		white-space: pre;
+
+		div {
+			color: #fff;
+		}
+
+		svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.gold {
+			color: $orange1;
+		}
+		.amount {
+			display: flex;
+			gap: 5px;
+			align-items: center;
+		}
+	}
+
+	.buttons {
+		display: flex;
+		gap: 10px;
+		justify-content: center;
+	}
+
+}
