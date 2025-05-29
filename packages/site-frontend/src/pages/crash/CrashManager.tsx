@@ -36,6 +36,7 @@ export const CrashManager = () => {
   });
 
   useSocketListener("crash-round-update", (round) => {
+    console.log("Crash round update received", round.updatedFields.elapsedTime);
     dispatch(Crash.updateRound(round));
   });
 
