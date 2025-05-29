@@ -369,5 +369,5 @@ const updateRound = async (round:CrashRoundDocument, crashedMultiplier: number) 
     },
   );
 
-  setTimeout(updateRound, 50);
+  setTimeout(updateRound, 200);
 }
