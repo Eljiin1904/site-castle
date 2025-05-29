@@ -82,10 +82,10 @@ const StateIcon = ({
 }) => {
   const small = useIsMobileLayout();
   const gridSize = useAppSelector((x) => x.mines.gridSize);
- 
-  const padding = Math.min((small ? 8: 16) * 4 / gridSize, 16);
-  const widthAndHeight = Math.min(Math.max(40, 40 * gridSize / 6), 70);
- 
+
+  const padding = Math.min(((small ? 8 : 16) * 4) / gridSize, 16);
+  const widthAndHeight = Math.min(Math.max(40, (40 * gridSize) / 6), 70);
+
   if (animating) {
     return (
       <Vector
@@ -97,9 +97,9 @@ const StateIcon = ({
       />
     );
   } else if (mined) {
-    return (<BombInCell revealed={revealed} />);
+    return <BombInCell revealed={revealed} />;
   } else if (visible) {
-    return (<GemInCell revealed={revealed} />);
+    return <GemInCell revealed={revealed} />;
   } else {
     return (
       <Vector
@@ -113,69 +113,69 @@ const StateIcon = ({
   }
 };
 
-const GemInCell = ({revealed}: {revealed?: boolean}) => {
-
+const GemInCell = ({ revealed }: { revealed?: boolean }) => {
   const small = useIsMobileLayout();
   const gridSize = useAppSelector((x) => x.mines.gridSize);
- 
-  const padding = Math.min((small ? 8: 16) * 4 / gridSize, 16);
 
-  if(revealed)
-    return (<Video 
-      type="mp4" 
-      path="/videos/gem" 
-      autoplay={true}
-      muted={true}
-      width="100%" 
-      alt="Gem video"
-      altImage="/icons/mines-gem"
-      altPadding={padding}
-      controls={false}
-      playBackSpeed={1}
-      ></Video>);
-  
+  const padding = Math.min(((small ? 8 : 16) * 4) / gridSize, 16);
+
+  if (revealed)
+    return (
+      <Video
+        type="mp4"
+        path="/videos/gem"
+        autoplay={false}
+        reset={false}
+        muted={true}
+        width="100%"
+        alt="Gem video"
+        altImage="/icons/mines-gem"
+        altPadding={padding}
+        controls={false}
+        playBackSpeed={1}
+      ></Video>
+    );
   else
-  return (
-    <Img
-      className="icon"
-      type="png"
-      path={revealed ? "/icons/mines-gem" : "/icons/mines-gem-ns"}
-      width="100%"
-      style={{ padding: `${padding}px` }}
-    />
-  );
-
+    return (
+      <Img
+        className="icon"
+        type="png"
+        path={revealed ? "/icons/mines-gem" : "/icons/mines-gem-ns"}
+        width="100%"
+        style={{ padding: `${padding}px` }}
+      />
+    );
 };
 
-const BombInCell = ({revealed}: {revealed?: boolean}) => {
-
+const BombInCell = ({ revealed }: { revealed?: boolean }) => {
   const small = useIsMobileLayout();
-  const gridSize = useAppSelector((x) => x.mines.gridSize); 
-  const padding = Math.min((small ? 8: 16) * 4 / gridSize, 16);
-  
-  if(revealed)
-    return (<Video 
-      type="mp4" 
-      path="/videos/bomb" 
-      autoplay={true}
-      muted={true}
-      width="100%" 
-      alt="Gem video"
-      altImage="/icons/mines-bomb"
-      altPadding={padding}
-      controls={false}
-      playBackSpeed={1.5}
-      ></Video>);
-  
-  else
-  return (
-    <Img
-      className="icon"
-      type="png"
-      path={revealed ? "/icons/mines-bomb" : "/icons/mines-bomb-ns"}
-      width="100%"
-      style={{ padding: `${padding}px` }}
-    />
-  );
+  const gridSize = useAppSelector((x) => x.mines.gridSize);
+  const padding = Math.min(((small ? 8 : 16) * 4) / gridSize, 16);
 
+  if (revealed)
+    return (
+      <Video
+        type="mp4"
+        path="/videos/bomb"
+        autoplay={false}
+        reset={false}
+        muted={true}
+        width="100%"
+        alt="Gem video"
+        altImage="/icons/mines-bomb"
+        altPadding={padding}
+        controls={false}
+        playBackSpeed={1.5}
+      ></Video>
+    );
+  else
+    return (
+      <Img
+        className="icon"
+        type="png"
+        path={revealed ? "/icons/mines-bomb" : "/icons/mines-bomb-ns"}
+        width="100%"
+        style={{ padding: `${padding}px` }}
+      />
+    );
 };
