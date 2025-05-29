@@ -78,6 +78,7 @@ export const crashSlice = createSlice({
       state.lobby = undefined;
       state.roundElapsedTime = 0;
       state.roundStartingTime = 0;
+      state.betNextRound = false;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
       const update = payload;

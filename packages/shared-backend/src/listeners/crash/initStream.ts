@@ -5,8 +5,8 @@ import { ticketStream } from "./helpers/ticketStream";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 const logger = getServerLogger({});
 import { Crash } from "@server/services/crash";
-import { Crash as CrashCore } from "@core/services/crash";
-const GAME_DELAY = CrashCore.roundTimes.delay;
+import { Crash as CoreCrash } from "@core/services/crash";
+const GAME_DELAY = CoreCrash.roundTimes.delay;
 
 export default Sockets.createListener({
   action: "init",
@@ -45,7 +45,7 @@ export default Sockets.createListener({
             waitForEmit = GAME_DELAY - latencyDelay;
           }
           else if(roundStatus === "completed") {
-            waitForEmit =  GAME_DELAY - latencyDelay;
+            waitForEmit =  GAME_DELAY - 2*latencyDelay;
           }
           
           if(waitForEmit > 0)
@@ -63,7 +63,8 @@ export default Sockets.createListener({
       System.tryCatch(async (document) => {
         logger.debug("Crash insert ticket stream");        
         const broadcaster = io.sockets.in("crash");
-        broadcaster.emit("crash-bet-insert", document);
+        if(document.roundId !== CoreCrash.nextRoundId)
+          broadcaster.emit("crash-bet-insert", document);
       }),
     );
 

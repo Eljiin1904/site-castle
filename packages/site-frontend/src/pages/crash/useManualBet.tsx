@@ -12,7 +12,6 @@ import { VerificationModal } from "#app/modals/verification/VerificationModal";
 import { Gtm } from "#app/services/gtm";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Crash } from "#app/services/crash";
-import { useInterval } from "usehooks-ts";
 
 export function useManualBet() {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -26,7 +25,6 @@ export function useManualBet() {
   const userId  = useAppSelector((x) => x.user._id);
   const roundTicket = useAppSelector((x) => x.crash.tickets.find((x) => x.user.id === userId));
   const targetMultiplier = useAppSelector((x) => x.crash.targetMultiplier);
-  const betNextRound = useAppSelector((x) => x.crash.betNextRound);
   const betAmount = useAppSelector((x) => x.crash.betAmount);
   const round = useAppSelector((x) => x.crash.round);
   
@@ -52,9 +50,10 @@ export function useManualBet() {
         throw new Error("validations:errors.games.notEnoughTokens");
       }
 
+      let nextRound = false;
       if(round.status === "completed" || round.status === "simulating") {
         dispatch(Crash.setBetNextRound(true));
-        return;
+        nextRound = true;
       }
 
       await confirmBet({
@@ -72,6 +71,7 @@ export function useManualBet() {
         betAmount,
         betToken,
         targetMultiplier,
+        nextRound,
       });
 
       if (!isMounted()) {
@@ -116,13 +116,24 @@ export function useManualBet() {
       });
   });
 
-  const handleNextBet = usePost(
-      
+  const handleCancelBet = usePost(
     async (isMounted) => {
-      if (isMounted() && (round.status === "waiting" || round.status === "pending") && betNextRound) {
-        handleBet();
-        dispatch(Crash.setBetNextRound(false));
-      }      
+      playSound("click");
+      if (!authenticated) {
+        return Dialogs.open("primary", <LoginModal />);
+      }
+      if (!emailConfirmed) {
+        return Dialogs.open("primary", <UserEmailConfirmModal />);
+      }
+      if (kycTier < 1) {
+        return Dialogs.open("primary", <VerificationModal />);
+      }
+      if (!isMounted()) {
+        return;
+      }
+      
+      await Crash.cancelTicket();
+      dispatch(Crash.setBetNextRound(false));
   });
 
   const allowTicketCashout = () => {
@@ -131,11 +142,9 @@ export function useManualBet() {
     if(round.status !== "simulating") return false;
     if(roundTicket.cashoutTriggered || roundTicket.processed) return false;
     return true;
-  }; 
+  };
   
   const allowCashout = allowTicketCashout();
-
-  useInterval(handleNextBet, betNextRound ? 500 : null);
  
-  return {handleBet,handleCashout, allowCashout};
+  return {handleBet,handleCashout, allowCashout, handleCancelBet};
 }

@@ -137,4 +137,5 @@ export interface DatabaseCollections {
   ["user-latency"]: UserLatencyDocument;
   ["crash-rounds"]: CrashRoundDocument;
   ["crash-tickets"]: CrashTicketDocument;
+  ["crash-next-tickets"]: CrashTicketDocument; // For next round tickets, if applicable
 }

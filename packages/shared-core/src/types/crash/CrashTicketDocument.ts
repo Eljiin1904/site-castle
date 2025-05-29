@@ -1,4 +1,5 @@
 import type { BasicUser } from "../users/BasicUser";
+import { UserLocation } from "../users/UserLocation";
 
 export interface CrashTicketDocument {
   _id: string;
@@ -18,4 +19,5 @@ export interface CrashTicketDocument {
   gameStartTime?: number;
   targetMultiplier?: number;
   autoCashedTriggered?: boolean;
+  location?: UserLocation; // Added for next round tickets
 }
