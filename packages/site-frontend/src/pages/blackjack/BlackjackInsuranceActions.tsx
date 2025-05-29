@@ -7,7 +7,6 @@ import { getInsuranceBetAmount } from "#app/services/blackjack/Blackjack";
 import { useSubmitAction } from "#app/services/blackjack/hooks/useSubmitAction";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
-
 import { BlackjackButton } from "./BlackjackButton";
 import { Div } from "@client/comps/div/Div";
 

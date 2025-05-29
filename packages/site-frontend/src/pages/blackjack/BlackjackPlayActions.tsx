@@ -1,4 +1,3 @@
-import "./BlackjackPlayActions.scss";
 import { useAllowedActions, useProcessing } from "../../services/blackjack/redux/selectors";
 import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import { useSubmitAction } from "#app/services/blackjack/hooks/useSubmitAction";

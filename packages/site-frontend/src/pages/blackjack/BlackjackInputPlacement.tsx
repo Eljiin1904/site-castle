@@ -1,24 +1,12 @@
-import "./BlackjackPlacement.scss";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BlackjackBetType } from "@core/types/blackjack/BlackjackBetAmounts";
-import { BlackjackHiddenInput, HiddenInputAlign } from "#app/pages/blackjack/BlackjackHiddenInput";
-import { getChipValsFromAmount } from "./utils/getChipValsFromAmount";
-import classNames from "classnames";
 import { Intimal } from "@core/services/intimal";
-import {
-  addBetTypeAmounts,
-  setBetTypeAmount,
-  setSelectedValue,
-} from "#app/services/blackjack/redux/blackjackSlice";
-import { BlackjackPlacementChip } from "./BlackjackPlacementChip";
+import { addBetTypeAmounts, setBetTypeAmount } from "#app/services/blackjack/redux/blackjackSlice";
 import { useDisplayBetAmount } from "./useDisplayBetAmount";
 import { Toasts } from "@client/services/toasts";
-import { store } from "#app/store";
 import { setWarnBetTotal } from "./helpers/setWarnBetTotal";
 import { getWarnBetItems } from "./helpers/getWarnBetItems";
-import { getRandomChipSound } from "./utils/blackjackSounds";
-import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalSection } from "@client/comps/modal/ModalSection";
@@ -26,7 +14,6 @@ import { Input } from "@client/comps/input/Input";
 import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
 import { useProcessing } from "#app/services/blackjack/Blackjack";
 import { Div } from "@client/comps/div/Div";
-// import { useDisplayBetAmount } from "./useDisplayBetAmount";
 
 export const BlackjackInputPlacement = ({
   index,

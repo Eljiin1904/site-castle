@@ -7,6 +7,7 @@ import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
 import "./BlackjackSidebetTotals.scss";
 import { Div } from "@client/comps/div/Div";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { Span } from "@client/comps/span/Span";
 
 export const BlackjackSidebetTotals = ({}: {}) => {
   const game = useGame();
@@ -38,13 +39,11 @@ export const BlackjackSidebetTotals = ({}: {}) => {
               key={payout.title}
               fontSize={sm ? 8 : 16}
             >
-              {/* <td className="sidebet-type">{friendlyBetType(payout.type)}:</td> */}
               <td className="sidebet-title">
                 {payout.title} ({payout.multiplier}x)
               </td>
-              {/* <td className="sidebet-mult">{payout.multiplier}x</td> */}
               <td className="sidebet-amount">
-                <span>+</span>
+                <Span>+</Span>
                 <Vector
                   className="icon"
                   as={SvgDollarSign}
@@ -53,7 +52,6 @@ export const BlackjackSidebetTotals = ({}: {}) => {
                 <span>{Intimal.toDecimal(payout.amount)}</span>
               </td>
             </Div>
-            // </tr>
           ))}
         </tbody>
       </table>

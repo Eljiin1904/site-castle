@@ -11,20 +11,7 @@ export const BlackjackSoundManager = memo(() => {
   const world = Blackjack.useWorld();
   const authenticated = useAppSelector((x) => x.user.authenticated);
 
-  useSoundPreloader(
-    "blackjackv2-win",
-    "blackjack-tie",
-    ...chipSounds,
-    ...dealSounds,
-    // currently unused:
-    // "blackjackv2-card-flip",
-    // "blackjackv2-lose",
-    // "blackjack-win",
-    // "blackjack-card-deal",
-    // "blackjack-lose",
-    // "blackjack-slide-bet-win", // typoed filename whoops
-    // "blackjack-card-flip",
-  );
+  useSoundPreloader("blackjackv2-win", "blackjack-tie", ...chipSounds, ...dealSounds);
 
   useEffect(() => {
     if (!authenticated || !game) return;

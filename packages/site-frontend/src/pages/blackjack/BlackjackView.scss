@@ -18,12 +18,3 @@ $bottomPad: 80px;
 		outline: none !important;
 	}
 }
-
-
-
-.AppMain.tablet, .AppMain.mobile {
-	.View_inner {
-		// connected to GameOverlay.scss
-		// padding-bottom: $bottomPad;
-	}
-}

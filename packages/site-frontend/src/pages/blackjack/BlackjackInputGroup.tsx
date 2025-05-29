@@ -1,7 +1,7 @@
 // import { useTranslation } from "#client/hooks/localization/useTranslation";
 import "./BlackjackInputGroup.scss";
 import { Div } from "@client/comps/div/Div";
-import "./BlackjackChipPlacements.scss";
+// import "./BlackjackChipPlacements.scss";
 import { BlackjackInputPlacement } from "./BlackjackInputPlacement";
 import { Button } from "@client/comps/button/Button";
 import { useCreateGame } from "#app/services/blackjack/hooks/useCreateGame";

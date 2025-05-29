@@ -15,8 +15,6 @@ export const BlackjackView = ({}: {}) => {
   const getExistingGame = useGetExistingGame();
 
   // all this to avoid double mount from dev mode
-  // TODO: move to socket & refactor
-  // TODO or do anything else with this
   useEffect(() => {
     if (authenticated && !checkExisting) triggerCheckExisting();
     else if (authenticated && checkExisting && !loading) getExistingGame();
@@ -37,15 +35,3 @@ export const BlackjackView = ({}: {}) => {
     </div>
   );
 };
-
-// TODO: replace with unusable betting page
-// function Loading() {
-//   return (
-//     <div
-//       className="Loading"
-//       style={{ position: "absolute", top: "50%", left: "50%" }}
-//     >
-//       {/* Loading... */}
-//     </div>
-//   );
-// }

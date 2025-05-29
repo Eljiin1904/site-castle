@@ -11,21 +11,13 @@ export const BlackjackPicture = ({ src, alt, className = "" }: PictureProps) => 
   const webpPath = convertPathToWebp(src);
   return (
     <div className={className}>
-      {/* <source
-        type="image/webp"
-        srcSet={webpPath}
-      /> */}
-      {/* <img
-        src={src}
-        alt={alt}
-      /> */}
       <Img
         type="png"
         path={src}
         skeleton
         width="100%"
-        // aspectRatio={"16 / 9"}
-        // position="absolute"
+        aspectRatio={"16 / 9"}
+        position="absolute"
       />
     </div>
   );
