@@ -7,7 +7,7 @@ import { BlackjackBetTotals } from "./BlackjackBetTotals";
 import { BlackjackFooter } from "./BlackjackFooter";
 import { BlackjackGameControls } from "./BlackjackGameControls";
 
-export const BlackjackGameCanvas = ({}: {}) => {
+export const BlackjackGameCanvas = () => {
   const world = useWorld();
 
   // skipping authenticated prop here because world can draw regardless

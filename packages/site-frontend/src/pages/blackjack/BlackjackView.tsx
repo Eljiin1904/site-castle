@@ -8,7 +8,7 @@ import { BlackjackLayout } from "./BlackjackLayout";
 import classNames from "classnames";
 import { useGetExistingGame } from "#app/services/blackjack/hooks/useGetExistingGame";
 
-export const BlackjackView = ({}: {}) => {
+export const BlackjackView = () => {
   const { checkExisting, loading } = useInit();
   const darkTheme = useAppSelector((x) => x.blackjack.darkTheme);
   const authenticated = useAppSelector((x) => x.user.authenticated);

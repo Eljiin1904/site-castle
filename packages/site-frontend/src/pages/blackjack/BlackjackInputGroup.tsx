@@ -9,7 +9,7 @@ import { useProcessing } from "#app/services/blackjack/redux/selectors";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BetInputGroup } from "./BetInputGroup";
 
-export const BlackjackInputGroup = ({}: {}) => {
+export const BlackjackInputGroup = () => {
   // const { t } = useTranslation();
   const layout = useAppSelector((x) => x.style.mainLayout);
 

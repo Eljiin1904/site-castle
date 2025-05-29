@@ -10,7 +10,7 @@ import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
 import { BlackjackButton } from "./BlackjackButton";
 import { Div } from "@client/comps/div/Div";
 
-export const BlackjackInsuranceActions = ({}: {}) => {
+export const BlackjackInsuranceActions = () => {
   const mainBet = useMainBet();
   const processing = useAppSelector((state) => state.blackjack.processing);
   const submitAction = useSubmitAction();

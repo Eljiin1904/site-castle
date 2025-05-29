@@ -9,7 +9,7 @@ import { Div } from "@client/comps/div/Div";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Span } from "@client/comps/span/Span";
 
-export const BlackjackSidebetTotals = ({}: {}) => {
+export const BlackjackSidebetTotals = () => {
   const game = useGame();
   const userId = useAppSelector((state) => state.user._id);
   const sm = useIsMobileLayout();
