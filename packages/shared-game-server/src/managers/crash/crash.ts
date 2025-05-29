@@ -128,16 +128,16 @@ async function startRound(round: CrashRoundDocument) {
       clearInterval(intervalId);
       return;
     }
-    // Database.collection("crash-rounds").updateOne(
-    //   { _id: round._id },
-    //   {
-    //     $set: {
-    //       multiplier:currentMultiplier,
-    //       elapsedTime: timer,
-    //       statusDate: currentTime,
-    //     },
-    //   },
-    // );
+    Database.collection("crash-rounds").updateOne(
+      { _id: round._id },
+      {
+        $set: {
+          //multiplier:currentMultiplier,
+          elapsedTime: timer,
+         // statusDate: currentTime,
+        },
+      },
+    );
     
     Database.collection("crash-tickets").updateMany(
       { roundId: round._id, 

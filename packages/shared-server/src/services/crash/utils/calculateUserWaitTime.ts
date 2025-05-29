@@ -8,10 +8,8 @@ import { getUserLatency } from "./getUserLatency";
  * @param roundEventDate Event date (startDate or completedDate)
  * @returns Wait time in milliseconds
  */
-export async function calculateUserWaitTime(userId: string, roundEventDate: Date): Promise<number> {
+export async function calculateUserWaitTime(userId: string): Promise<number> {
  
   const latencyForRound = await getUserLatency(userId);
-
-  const difference = Date.now() - roundEventDate.getTime();
-  return Math.max(latencyForRound + difference, 0);
+  return Math.max(latencyForRound, 0);
 }
