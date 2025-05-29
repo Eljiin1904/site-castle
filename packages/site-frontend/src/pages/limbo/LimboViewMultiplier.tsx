@@ -43,10 +43,11 @@ export const LimboViewMultiplier = () => {
 
     if (ticket?.won !== undefined) {
       setAnimationPath(isWin ? animationMap.win : animationMap.lose);
-    } else {
-      setAnimationPath(animationMap.default);
+      setTriggerKey(Date.now()); // Used to Rerender
     }
-    setTriggerKey(Date.now()); // Used to Rerender
+    // else {
+    //   setAnimationPath(animationMap.default);
+    // }
   }, [ticket]);
 
   const shouldPlayVideo = Boolean(processing || isAutoPlaying);
