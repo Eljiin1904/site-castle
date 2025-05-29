@@ -119,7 +119,7 @@ async function startRound(round: CrashRoundDocument) {
   );
  
   const roundTime = Crash.getTimeForMultiplier(multiplierCrash);
-  const intervalId = setInterval(() => {
+  const intervalId = setInterval(async () => {
   
     const currentTime = new Date();
     const timer = currentTime.getTime() - statusDate.getTime();
@@ -128,7 +128,7 @@ async function startRound(round: CrashRoundDocument) {
       clearInterval(intervalId);
       return;
     }
-    Database.collection("crash-rounds").updateOne(
+    await Database.collection("crash-rounds").updateOne(
       { _id: round._id },
       {
         $set: {
