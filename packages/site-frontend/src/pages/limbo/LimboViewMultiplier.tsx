@@ -47,7 +47,7 @@ export const LimboViewMultiplier = () => {
       setAnimationPath(animationMap.default);
     }
     setTriggerKey(Date.now()); // Used to Rerender
-  }, [multiplier]);
+  }, [ticket]);
 
   const shouldPlayVideo = Boolean(processing || isAutoPlaying);
   const shouldResetVideo = !processing;
