@@ -35,25 +35,25 @@ export default Sockets.createListener({
           let userId = socket.data.userId;
           if (!userId) 
             userId = socket.id;
-          let waitForEmit = 0;            
-          const roundStatus = update.updatedFields.status;
-          const elapsedTime = update.updatedFields.elapsedTime as number || 0;
-          const isSmulation = elapsedTime > 0 || roundStatus === "simulating";
-          const latencyDelay = await Crash.calculateUserWaitTime(userId);
-          if(isSmulation) {
+          // let waitForEmit = 0;            
+          // const roundStatus = update.updatedFields.status;
+          // const elapsedTime = update.updatedFields.elapsedTime as number || 0;
+          // const isSmulation = elapsedTime > 0 || roundStatus === "simulating";
+          // const latencyDelay = await Crash.calculateUserWaitTime(userId);
+          // if(isSmulation) {
 
-            waitForEmit = GAME_DELAY - latencyDelay;
-          }
+          //   waitForEmit = GAME_DELAY - latencyDelay;
+          // }
           // else if(roundStatus === "completed") {
           //   waitForEmit =  GAME_DELAY - 2*latencyDelay;
           // }
 
-          if(waitForEmit > 0)
-            setTimeout(() => {
-              socket.emit("crash-round-update", update);
-            }, waitForEmit);
-          else
-            socket.emit("crash-round-update", update);
+          // if(waitForEmit > 0)
+          //   setTimeout(() => {
+          //     socket.emit("crash-round-update", update);
+          //   }, waitForEmit);
+          // else
+          socket.emit("crash-round-update", update);
         }
       }),
     );
