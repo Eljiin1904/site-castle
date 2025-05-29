@@ -76,6 +76,7 @@ export const LimboViewMultiplier = () => {
         controls={false}
         playBackSpeed={1}
         reset={false}
+        resetEnd={true}
         play={shouldPlayVideo}
       />
 
