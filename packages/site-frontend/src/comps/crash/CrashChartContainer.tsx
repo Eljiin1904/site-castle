@@ -32,10 +32,10 @@ export const CrashChartContainer = () => {
   useInterval(() => {
     if(round.status == 'simulating') {
       
-      const newMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
+      const newMultiplier = CoreCrash.getMultiplierForTime(timer);
       
-      //console.log('newMultiplier', newMultiplier,'serverMultiplier', serverMultiplier, 'elapsedTime', elapsedtime, 'timer', timer);
-      setMultiplier(newMultiplier);
+      console.log('newMultiplier', newMultiplier,'serverMultiplier', serverMultiplier, 'elapsedTime', elapsedtime, 'timer', timer);
+      setMultiplier(Math.min(newMultiplier, serverMultiplier));
       setTimer(currentVal => currentVal + 100);
     }
     else if(round.status == 'completed'){
