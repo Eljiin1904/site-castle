@@ -11,9 +11,10 @@ import { setGame, setProcessing } from "../Blackjack";
 import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import postAction from "../api/postAction";
 import { useBet2fa } from "#app/hooks/security/useBet2fa";
-import { useKycTierRequirement } from "./kyc/useKycTierRequirement";
+import { VerificationModal } from "#app/modals/verification/VerificationModal";
 
 export function useSubmitAction() {
+  const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const confirmBet = useBetConfirmation();
@@ -22,10 +23,6 @@ export function useSubmitAction() {
   // === blackjack specific
   const game = useAppSelector((x) => x.blackjack.game);
   const mainBet = useAppSelector((x) => x.blackjack.betting.betAmounts["main-bet"]);
-
-  const { tierRequirementMet, kycFlow } = useKycTierRequirement({
-    requiredTier: Validation.kycTiers.personalInfo,
-  });
 
   const handleBet = usePost(
     async (
@@ -39,9 +36,8 @@ export function useSubmitAction() {
         return Dialogs.open("primary", <LoginModal />);
       }
 
-      if (!tierRequirementMet) {
-        kycFlow();
-        return;
+      if (kycTier < 1) {
+        return Dialogs.open("primary", <VerificationModal />);
       }
 
       const hasBet = ["split", "double"].includes(action);

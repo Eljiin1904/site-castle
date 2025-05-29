@@ -40,13 +40,13 @@ export const LimboViewMultiplier = () => {
   useEffect(() => {
     counter.reset();
     counter.start();
-    setTriggerKey(Date.now()); // Used to Rerender
 
     if (ticket?.won !== undefined) {
       setAnimationPath(isWin ? animationMap.win : animationMap.lose);
     } else {
       setAnimationPath(animationMap.default);
     }
+    setTriggerKey(Date.now()); // Used to Rerender
   }, [multiplier]);
 
   const shouldPlayVideo = Boolean(processing || isAutoPlaying);
