@@ -128,9 +128,14 @@ export const crashSlice = createSlice({
         if(state.round.status != "simulating") 
           return;
         
-        state.roundElapsedTime = update.updatedFields.elapsedTime as number;
-        //state.round.multiplier = update.updatedFields.multiplier as number;
+        const newElapsedTimeValue = update.updatedFields.elapsedTime as number;
+        if(newElapsedTimeValue > state.round.elapsedTime) {
+          state.roundElapsedTime = newElapsedTimeValue;
+          state.round.elapsedTime = newElapsedTimeValue;
+        }      
+        else return;
       }
+
       Database.updateDocument({
         document: state.round,
         updatedFields: update.updatedFields,
