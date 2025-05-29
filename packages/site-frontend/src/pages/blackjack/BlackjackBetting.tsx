@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
 import { useGame, useWorld } from "#app/services/blackjack/redux/selectors";
 
-export const BlackjackBetting = ({}: {}) => {
+export const BlackjackBetting = () => {
   const getExistingResponded = useAppSelector((state) => state.blackjack.getExistingResponded);
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const game = useGame();
