@@ -48,11 +48,11 @@ export default Sockets.createListener({
           //   waitForEmit =  GAME_DELAY - 2*latencyDelay;
           // }
 
-          if(waitForEmit > 0)
-            setTimeout(() => {
-              socket.emit("crash-round-update", update);
-            }, waitForEmit);
-          else
+          // if(waitForEmit > 0)
+          //   setTimeout(() => {
+          //     socket.emit("crash-round-update", update);
+          //   }, waitForEmit);
+          // else
             socket.emit("crash-round-update", update);
         }
       }),
