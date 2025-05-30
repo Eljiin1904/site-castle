@@ -1,5 +1,4 @@
 import { useUnmount } from "usehooks-ts";
-import { useSoundPreloader } from "@client/hooks/sounds/useSoundPreloader";
 import { usePresence } from "#app/hooks/sockets/usePresence";
 import { useSocketListener } from "#app/hooks/sockets/useSocketListener";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
@@ -22,11 +21,12 @@ export const CrashManager = () => {
 
   useSocketListener("crash-init", (init) => {
     
-    const newChartLine = Crash.createCrashEvent(true);
-    dispatch(addCrashEvent(newChartLine));
+    let prevEvent = Crash.createCrashEvent(true);
+    dispatch(addCrashEvent(prevEvent));
     for(let i = 0; i < 9; i++) {
-      const newChartLine = Crash.createCrashEvent(false);
+      const newChartLine = Crash.createCrashEvent(false, prevEvent);
       dispatch(addCrashEvent(newChartLine));
+      prevEvent = newChartLine;
     }
     dispatch(Crash.initPlayer(init));
   });

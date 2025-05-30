@@ -18,7 +18,7 @@ export const CrashCountdown = ({events, time}:{events: CrashEventProps[] ,time:n
   useInterval(() => {
    if(timer > 0) {
     setTimer(currentVal => currentVal - 500);
-    const newChartLine = Crash.createCrashEvent(events.length === 0);
+    const newChartLine = Crash.createCrashEvent(events.length == 0, events[events.length - 1]);
     dispatch(addCrashEvent(newChartLine));
    }
   }, 500);
