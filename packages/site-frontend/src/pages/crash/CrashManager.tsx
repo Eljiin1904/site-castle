@@ -48,6 +48,15 @@ export const CrashManager = () => {
     dispatch(Crash.updateBet(bet));
   });
 
+  useSocketListener("crash-bet-update", (bet) => {
+    dispatch(Crash.updateBet(bet));
+  });
+
+  useSocketListener("crash-active-round", (round) => {
+    // dispatch(Crash.setActiveRound(round));
+    console.log("Crash active round received", round);
+  });
+
   useUnmount(() => {
     dispatch(Crash.resetPlayer());
   });
