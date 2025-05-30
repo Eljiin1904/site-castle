@@ -5,6 +5,5 @@ export interface CrashMultiplierDocument {
   multiplier: number;
   serverSeed: string;
   serverSeedHash: string;
-  won?: boolean;
   roundTime: number;
 }

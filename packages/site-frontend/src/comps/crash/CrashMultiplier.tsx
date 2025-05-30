@@ -35,21 +35,20 @@ export const CrashMultiplier = ({multiplier}:{multiplier: number}) => {
           X
         </Span>
     </Div>
-    <NetGain />
+    <NetGain multiplier={multiplier}/>
   </Div>);
 };
 
-const NetGain = () => {
+const NetGain = ({multiplier}: {multiplier:number}) => {
 
   const userId = useAppSelector((x) => x.user._id);
-  const currentMultiplier = useAppSelector((x) => x.crash.round.multiplier);
   const ticket = useAppSelector((x) => x.crash.tickets.find(x => x.user.id === userId));
   const {t} = useTranslation(["games\\crash"]);
   
   if(!ticket)
     return null;
 
-  const multiplyBy = ticket.cashoutTriggered ? ticket.multiplierCrashed : currentMultiplier;
+  const multiplyBy = ticket.cashoutTriggered ? ticket.multiplierCrashed : multiplier;
   const amount =  Crash.getProfit({betAmount: ticket.betAmount ?? 1, multiplier: multiplyBy ?? 0});
 
   if(amount === 0)

@@ -6,11 +6,7 @@ import type {
 export type CrashRoundDocument = {
   _id: string;
   timestamp: Date;
-  serverSeed: string;
-  serverSeedHash: string;
-  multiplier: number;
-  elapsedTime: number;
-  multiplierCrash?: number;  
+  multiplier?: number;  
   status: CrashRoundStatus;
   statusDate: Date; 
   startDate?: Date;

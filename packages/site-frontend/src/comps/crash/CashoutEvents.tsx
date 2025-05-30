@@ -7,11 +7,16 @@ import { Fragment } from "react/jsx-runtime";
 import { Crash } from "#app/services/crash";
 import { Crash as CoreCrash } from "@core/services/crash";
 
-export const CashoutEvents = () => {
+export const CashoutEvents = ({multiplier}: {multiplier: number}) => {
 
   const userId = useAppSelector((x) => x.user._id);
-  const tickets = useAppSelector((x) => x.crash.tickets)?.filter((x) => x.user.id !== userId && x.cashoutTriggered);
-  const multiplier = useAppSelector((x) => x.crash.round.multiplier);
+  const tickets = useAppSelector((x) => x.crash.tickets)?.filter((x) => 
+    x.user.id !== userId &&
+    x.cashoutTriggered &&
+    x.multiplierCrashed &&
+    x.multiplierCrashed <= multiplier
+  );
+  
   return (
     <Fragment>
       {tickets.map((ticket) => <CashoutTicket ticket={ticket} key={ticket._id} multiplier={multiplier} />)}

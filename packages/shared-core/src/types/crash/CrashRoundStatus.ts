@@ -18,7 +18,7 @@ interface PendingData {
 
 interface SimulatingData {
   status: "simulating";
-  multiplierCrash: number;
+  multiplier: number;
   eosBlockNum: number;
   eosBlockId: string;
   eosCommitDate: Date;
@@ -26,7 +26,7 @@ interface SimulatingData {
 
 interface CompletedData {
   status: "completed";
-  multiplierCrash: number;
+  multiplier: number;
   eosBlockNum: number;
   eosBlockId: string;
   eosCommitDate: Date;

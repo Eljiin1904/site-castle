@@ -53,7 +53,6 @@ export const CrashManager = () => {
 
   useSocketListener("crash-active-round", (round) => {
     dispatch(Crash.updateMultiplier(round));
-    console.log("Crash active round received", round);
   });
 
   useUnmount(() => {
