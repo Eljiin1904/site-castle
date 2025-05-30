@@ -55,7 +55,7 @@ export const CrashChartContainer = () => {
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
       <CrashYAxis multiplier={multiplier} />
       {crashEvents.map((value, index) => <CrashEvent key={index} startedLine={value.startedLine} crashColor={value.crashColor} crashPosition={value.crashPosition} startedCrashLength={value.crashLength} crashLength={value.crashLength} />)}
-      <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />
+      {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />}
       {round.status === 'completed' && <CrashEvent startedLine={true} crashColor={"double-red"} crashPosition={-chartOffset} startedCrashLength={linePosition + chartOffset} crashLength={linePosition + chartOffset} />}
       <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
       {cashout && cashoutMultiplier <= multiplier && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
