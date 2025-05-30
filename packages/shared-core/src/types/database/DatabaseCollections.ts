@@ -69,6 +69,7 @@ import { BlackjackGameDocument } from "../blackjack/BlackjackGameDocument";
 import { CrashRoundDocument } from "../crash/CrashRoundDocument";
 import { CrashTicketDocument } from "../crash/CrashTicketDocument";
 import { UserLatencyDocument } from "../users/UserLatencyDocument";
+import { CrashMultiplierDocument } from "../crash/CrashMultiplierDocument";
 
 export interface DatabaseCollections {
   ["admin-log"]: AdminLogDocument;
@@ -143,5 +144,6 @@ export interface DatabaseCollections {
   ["user-latency"]: UserLatencyDocument;
   ["crash-rounds"]: CrashRoundDocument;
   ["crash-tickets"]: CrashTicketDocument;
+  ["crash-multipliers"]: CrashMultiplierDocument; // For crash multipliers, if applicable
   ["crash-next-tickets"]: CrashTicketDocument; // For next round tickets, if applicable
 }

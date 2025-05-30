@@ -6,6 +6,7 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 const logger = getServerLogger({});
 import { Crash } from "@server/services/crash";
 import { Crash as CoreCrash } from "@core/services/crash";
+import { multiplierStream } from "./helpers/multiplierStream";
 const GAME_DELAY = CoreCrash.roundTimes.delay;
 
 export default Sockets.createListener({
@@ -99,5 +100,29 @@ export default Sockets.createListener({
         }
       }),
     );
+
+    multiplierStream.on(
+      "insert",
+      System.tryCatch(async (document) => {
+        logger.debug("Crash insert multiplier stream");
+        if (!document.multiplier) {
+          return;
+        }
+        const broadcaster = io.sockets.in("crash");
+        console.log("Crash multiplier stream insert", document);
+        const multiplierTime = CoreCrash.getTimeForMultiplier(document.multiplier);
+        console.log("Crash multiplier stream insert time", multiplierTime);
+        let elapsedTime = 0;
+        const intervalId = setInterval(() => {
+          if (elapsedTime >= multiplierTime) {
+            clearInterval(intervalId);
+            broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime, completed:true});
+            return;
+          }
+          broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime});
+          elapsedTime += 300;
+        }, 300);
+      }
+    ));
   },
 });

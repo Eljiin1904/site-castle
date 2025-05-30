@@ -12,6 +12,7 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 import { Crash } from "@core/services/crash";
+import { CrashMultiplierDocument } from "@core/types/crash/CrashMultiplierDocument";
 
 export default () => System.tryCatch(main)();
 
@@ -105,6 +106,12 @@ async function startRound(round: CrashRoundDocument) {
     maxValue: Crash.maxValue,
   });
 
+  const multiplierId = await Ids.incremental({
+    key: "crashMultiplierId",
+    baseValue: 1000000,
+    batchSize: 1,
+  });
+
   const statusDate = new Date();
 
   await Database.collection("crash-rounds").updateOne(
@@ -117,50 +124,60 @@ async function startRound(round: CrashRoundDocument) {
       },
     },
   );
+
+  const roundMultiplier: CrashMultiplierDocument = {
+    _id: multiplierId,
+    roundId: round._id,
+    multiplier: multiplierCrash,
+    timestamp: statusDate,
+    serverSeed: round.serverSeed,
+    serverSeedHash: round.serverSeedHash,
+  };
+
+  await Database.collection("crash-multipliers").insertOne(roundMultiplier);
  
   const roundTime = Crash.getTimeForMultiplier(multiplierCrash);  
-  updateRound(round, multiplierCrash);
+  // const intervalId = LiveMultiplierInterval(round, multiplierCrash, statusDate.getTime());
+  const intervalId = setInterval(async () => {
   
-  // const intervalId = setInterval(async () => {
-  
-  //   const currentTime = new Date();
-  //   const timer = currentTime.getTime() - statusDate.getTime();
-  //   const currentMultiplier = Crash.getMultiplierForTime(timer);
-  //   if(currentMultiplier >= multiplierCrash) {
-  //     clearInterval(intervalId);
-  //     return;
-  //   }
-  //   await Database.collection("crash-rounds").updateOne(
-  //     { _id: round._id },
-  //     {
-  //       $set: {
-  //         //multiplier:currentMultiplier,
-  //         elapsedTime: timer,
-  //        // statusDate: currentTime,
-  //       },
-  //     },
-  //   );
+    const currentTime = new Date();
+    const timer = currentTime.getTime() - statusDate.getTime();
+    const currentMultiplier = Crash.getMultiplierForTime(timer);
+    if(currentMultiplier >= multiplierCrash) {
+      clearInterval(intervalId);
+      return;
+    }
+    await Database.collection("crash-rounds").updateOne(
+      { _id: round._id },
+      {
+        $set: {
+          //multiplier:currentMultiplier,
+          elapsedTime: timer,
+         // statusDate: currentTime,
+        },
+      },
+    );
     
-  //   Database.collection("crash-tickets").updateMany(
-  //     { roundId: round._id, 
-  //       processed: {$exists: false},
-  //       multiplierCrashed: { $exists: false },
-  //       cashoutTriggered: { $exists: false },   
-  //       targetMultiplier: { $gt: 1, $lte: currentMultiplier },
-  //     },
-  //     [{
-  //       $set: {
-  //         cashoutTriggered: true,
-  //         cashoutTriggeredDate: currentTime,
-  //         multiplierCrashed: "$targetMultiplier",
-  //         autoCashedTriggerd: true,
-  //       },
-  //     }]
-  //   );
-  // }, 100);
+    Database.collection("crash-tickets").updateMany(
+      { roundId: round._id, 
+        processed: {$exists: false},
+        multiplierCrashed: { $exists: false },
+        cashoutTriggered: { $exists: false },   
+        targetMultiplier: { $gt: 1, $lte: currentMultiplier },
+      },
+      [{
+        $set: {
+          cashoutTriggered: true,
+          cashoutTriggeredDate: currentTime,
+          multiplierCrashed: "$targetMultiplier",
+          autoCashedTriggerd: true,
+        },
+      }]
+    );
+  }, 100);
 
   await Utility.wait(roundTime);
-  //clearInterval(intervalId);
+  clearInterval(intervalId);
   
   await completeRound({
     ...round,
@@ -352,22 +369,45 @@ async function addNextRoundTickets(round: CrashRoundDocument) {
     );
 }
 
-const updateRound = async (round:CrashRoundDocument, crashedMultiplier: number) => {
+const LiveMultiplierInterval = (round:CrashRoundDocument, crashedMultiplier: number, startingTime: number) => {
 
-  const currentTime = new Date();
-  const timer = currentTime.getTime() - round.statusDate.getTime();
-  const currentMultiplier = Crash.getMultiplierForTime(timer);
-  if( currentMultiplier >= crashedMultiplier)
-    return; 
-
-  await Database.collection("crash-rounds").updateOne(
-    { _id: round._id },
-    {
-      $set: {
-        elapsedTime: timer,
+  const intervalId = setInterval(async () => {
+  
+    const currentTime = new Date();
+    const timer = currentTime.getTime() - startingTime;
+    const currentMultiplier = Crash.getMultiplierForTime(timer);
+    if(currentMultiplier >= crashedMultiplier) {
+      clearInterval(intervalId);
+      return;
+    }
+    await Database.collection("crash-rounds").updateOne(
+      { _id: round._id },
+      {
+        $set: {
+          //multiplier:currentMultiplier,
+          elapsedTime: timer,
+         // statusDate: currentTime,
+        },
       },
-    },
-  );
+    );
+    
+    Database.collection("crash-tickets").updateMany(
+      { roundId: round._id, 
+        processed: {$exists: false},
+        multiplierCrashed: { $exists: false },
+        cashoutTriggered: { $exists: false },   
+        targetMultiplier: { $gt: 1, $lte: currentMultiplier },
+      },
+      [{
+        $set: {
+          cashoutTriggered: true,
+          cashoutTriggeredDate: currentTime,
+          multiplierCrashed: "$targetMultiplier",
+          autoCashedTriggerd: true,
+        },
+      }]
+    );
+  }, 100);
 
-  setTimeout(updateRound, 200);
+  return intervalId;
 }

@@ -52,6 +52,7 @@ export interface SiteServerEvents {
   "crash-round-insert": (round: CrashRoundDocument) => void;
   "crash-round-update": (update: StreamUpdate) => void;
   "crash-bet-insert": (bet: CrashTicketDocument) => void;
+  "crash-active-round": (round: {roundId: string, elapsedTime: number, completed?:boolean}) => void;
   "crash-bet-update": (bet: StreamUpdate) => void;
   "holiday-init": (x: HolidayInitialState) => void;
   "holiday-race-update": (update: StreamUpdate) => void;
