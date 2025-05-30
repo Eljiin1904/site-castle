@@ -109,9 +109,7 @@ export default Sockets.createListener({
           return;
         }
         const broadcaster = io.sockets.in("crash");
-        console.log("Crash multiplier stream insert", document);
         const multiplierTime = CoreCrash.getTimeForMultiplier(document.multiplier);
-        console.log("Crash multiplier stream insert time", multiplierTime);
         let elapsedTime = 0;
         const intervalId = setInterval(() => {
           if (elapsedTime >= multiplierTime) {
@@ -120,8 +118,8 @@ export default Sockets.createListener({
             return;
           }
           broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime});
-          elapsedTime += 300;
-        }, 300);
+          elapsedTime += 150;
+        }, 150);
       }
     ));
   },
