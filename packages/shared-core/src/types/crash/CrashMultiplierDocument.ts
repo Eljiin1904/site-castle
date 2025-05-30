@@ -6,4 +6,5 @@ export interface CrashMultiplierDocument {
   serverSeed: string;
   serverSeedHash: string;
   won?: boolean;
+  roundTime: number;
 }

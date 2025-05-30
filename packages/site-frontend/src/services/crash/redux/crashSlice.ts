@@ -36,8 +36,6 @@ interface CrashState {
   profitLimit?: number;
   lossLimit?: number;
   autoPnl: number;
-  roundElapsedTime?: number;
-  roundStartingTime?: number;
 }
 
 const initialState: CrashState = {
@@ -54,8 +52,6 @@ const initialState: CrashState = {
   winAction: "reset",
   lossAction: "reset",
   autoPnl: 0,
-  roundElapsedTime: 0,
-  roundStartingTime: 0,
 };
 
 export const crashSlice = createSlice({
@@ -68,16 +64,14 @@ export const crashSlice = createSlice({
       state.tickets = payload.tickets.filter((x) => x.roundId === state.round._id);
       state.lobby = payload.round.status;
       state.initialized = true;
-      state.roundElapsedTime = payload.round.elapsedTime;
-      state.roundStartingTime = Date.now() - payload.round.elapsedTime + DELAY; // Adjust for the initial delay
+      //state.round.elapsedTime = 0;
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
+      state.round.elapsedTime = 0;
       state.tickets = [];
       state.crashEvents = [];
       state.lobby = undefined;
-      state.roundElapsedTime = 0;
-      state.roundStartingTime = 0;
       state.betNextRound = false;
     }),
     updateRound: reducer<StreamUpdate>((state, { payload }) => {
@@ -88,14 +82,12 @@ export const crashSlice = createSlice({
 
         const updatedStatus = update.updatedFields.status as CrashRoundStatus;
         if( updatedStatus === "completed") {
-          // state.round.statusDate = update.updatedFields.statusDate as Date;
           state.round.status = updatedStatus;
           const crashedMultiplier = update.updatedFields.multiplierCrash as number;
           const won = update.updatedFields.won as boolean;
     
           //Add multiplier to History
           const history = state.history.slice();
-          state.roundElapsedTime = 0;
           history.unshift({multiplier: crashedMultiplier, won: won});
           if (history.length > 100) {
             history.pop();
@@ -106,34 +98,18 @@ export const crashSlice = createSlice({
          
           if(state.round.status === "completed") 
             return;
-
           state.round.status = updatedStatus;
-          state.roundElapsedTime = 0;
-          state.roundStartingTime = Date.now();
         }
         else 
         {
           state.round.status = updatedStatus;
-          state.roundStartingTime = 0;
         }
+        
         Database.updateDocument({
           document: state.round,
           updatedFields: update.updatedFields,
           removedFields: update.removedFields,
        });
-      }
-
-      if(update.updatedFields.elapsedTime){
-
-        if(state.round.status != "simulating") 
-          return;
-        
-        const newElapsedTimeValue = update.updatedFields.elapsedTime as number;
-        if(newElapsedTimeValue > state.round.elapsedTime) {
-          state.roundElapsedTime = newElapsedTimeValue;
-          state.round.elapsedTime = newElapsedTimeValue;
-        }      
-        else return;
       }
 
       Database.updateDocument({
@@ -149,15 +125,11 @@ export const crashSlice = createSlice({
 
       if(completed) {
         state.round.status = "completed";
-        state.roundElapsedTime = 0;
-        state.roundStartingTime = 0;
         state.round.elapsedTime = elapsedTime;
       }
       else {
         state.round.status = "simulating";
-        state.roundElapsedTime = elapsedTime;
         state.round.elapsedTime = elapsedTime;
-        //state.roundStartingTime = Date.now() - elapsedTime + DELAY; // Adjust for the initial delay
       }
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
