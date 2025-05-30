@@ -9,14 +9,13 @@ import { CrashInitialState } from "@core/types/crash/CrashInitialState";
 import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
-import { Crash } from "@core/services/crash";
 
 type PostAction = "reset" | "increase";
-const DELAY = Crash.roundTimes.delay;
 
 interface CrashState {
   initialized?: boolean;
   round: CrashRoundDocument;
+  elapsedTime?: number;
   history: {multiplier: number, won: boolean}[];
   tickets: CrashTicketDocument[];
   betAmount: number | undefined;
@@ -40,6 +39,7 @@ interface CrashState {
 
 const initialState: CrashState = {
   round: {} as CrashRoundDocument,
+  elapsedTime: 0,
   history: [],
   tickets: [],
   betAmount: Utility.getLocalInt("crash-bet-amount", 0),
@@ -64,11 +64,11 @@ export const crashSlice = createSlice({
       state.tickets = payload.tickets.filter((x) => x.roundId === state.round._id);
       state.lobby = payload.round.status;
       state.initialized = true;
-      //state.round.elapsedTime = 0;
+      state.elapsedTime = payload.elapsedTime ?? 0;
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
-      state.round.elapsedTime = 0;
+      state.elapsedTime = 0;
       state.tickets = [];
       state.crashEvents = [];
       state.lobby = undefined;
@@ -81,30 +81,22 @@ export const crashSlice = createSlice({
       if(update.updatedFields.status) {
 
         const updatedStatus = update.updatedFields.status as CrashRoundStatus;
+        state.round.status = updatedStatus;
+          
         if( updatedStatus === "completed") {
-          state.round.status = updatedStatus;
-          const crashedMultiplier = update.updatedFields.multiplierCrash as number;
+          const multiplier = update.updatedFields.multiplier as number;
           const won = update.updatedFields.won as boolean;
     
           //Add multiplier to History
           const history = state.history.slice();
-          history.unshift({multiplier: crashedMultiplier, won: won});
+          history.unshift({multiplier, won});
           if (history.length > 100) {
             history.pop();
           }
           state.history = history;
+          state.round.multiplier = multiplier;
         }
-        if( updatedStatus === "simulating") {
-         
-          if(state.round.status === "completed") 
-            return;
-          state.round.status = updatedStatus;
-        }
-        else 
-        {
-          state.round.status = updatedStatus;
-        }
-        
+
         Database.updateDocument({
           document: state.round,
           updatedFields: update.updatedFields,
@@ -125,11 +117,11 @@ export const crashSlice = createSlice({
 
       if(completed) {
         state.round.status = "completed";
-        state.round.elapsedTime = elapsedTime;
+        state.elapsedTime = elapsedTime;
       }
       else {
         state.round.status = "simulating";
-        state.round.elapsedTime = elapsedTime;
+        state.elapsedTime = elapsedTime;
       }
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {

@@ -13,7 +13,7 @@ export const CrashedSimulator = () => {
   const cashoutMultiplier = roundTicket?.multiplierCrashed ?? 1;
   const round = useAppSelector((x) => x.crash.round);
 
-  if(!round?.multiplierCrash)
+  if(!round?.multiplier)
     return null;
   
   return (<Div
@@ -29,7 +29,7 @@ export const CrashedSimulator = () => {
             fontWeight="bold"
             textAlign="right"
             >
-            {Numbers.floor(round.multiplierCrash, 2).toFixed(2)}
+            {Numbers.floor(round.multiplier, 2).toFixed(2)}
           </Span>
           <Span
             family="title"

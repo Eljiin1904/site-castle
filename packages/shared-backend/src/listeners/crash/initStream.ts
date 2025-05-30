@@ -3,11 +3,10 @@ import { Sockets } from "#app/services/sockets";
 import { roundStream } from "./helpers/roundStream";
 import { ticketStream } from "./helpers/ticketStream";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
-const logger = getServerLogger({});
-import { Crash } from "@server/services/crash";
 import { Crash as CoreCrash } from "@core/services/crash";
 import { multiplierStream } from "./helpers/multiplierStream";
 const GAME_DELAY = CoreCrash.roundTimes.delay;
+const logger = getServerLogger({});
 
 export default Sockets.createListener({
   action: "init",
@@ -15,12 +14,10 @@ export default Sockets.createListener({
     roundStream.on(
       "insert",
       System.tryCatch(async (document) => {
-      // logger.debug("Crash insert round stream");
-       const broadcaster = io.sockets.in("crash");
+        logger.debug("Crash insert round stream");
+        const broadcaster = io.sockets.in("crash");
         broadcaster.emit("crash-round-insert", {
           ...document,
-          serverSeed: "",
-          serverSeedHash: "",
         });
       }),
     );
@@ -31,30 +28,11 @@ export default Sockets.createListener({
         logger.debug("Crash update round stream");    
         const broadcaster = io.sockets.in("crash");
         const sockets = await broadcaster.fetchSockets();
-        
+        //Add Latency
         for (const socket of sockets) {
-          let userId = socket.data.userId;
-          if (!userId) 
-            userId = socket.id;
-          // let waitForEmit = 0;            
-          // const roundStatus = update.updatedFields.status;
-          // const elapsedTime = update.updatedFields.elapsedTime as number || 0;
-          // const isSmulation = elapsedTime > 0 || roundStatus === "simulating";
-          // const latencyDelay = await Crash.calculateUserWaitTime(userId);
-          // if(isSmulation) {
-
-          //   waitForEmit = GAME_DELAY - latencyDelay;
-          // }
-          // else if(roundStatus === "completed") {
-          //   waitForEmit =  GAME_DELAY - 2*latencyDelay;
-          // }
-
-          // if(waitForEmit > 0)
-          //   setTimeout(() => {
-          //     socket.emit("crash-round-update", update);
-          //   }, waitForEmit);
-          // else
-          socket.emit("crash-round-update", update);
+          setTimeout(() => {
+            socket.emit("crash-round-update", update);
+          },GAME_DELAY);
         }
       }),
     );
@@ -73,31 +51,8 @@ export default Sockets.createListener({
       "update",
       System.tryCatch(async (update, ticket) => {
         logger.debug("Crash update ticket stream");       
-        if(update.updatedFields?.autoCashedTriggerd) {
-
-          if(!ticket) return; 
-          const broadcaster = io.sockets.in(`crash`);
-          const sockets = await broadcaster.fetchSockets();
-          for (const socket of sockets) {
-            const userId = socket.data.userId;
-            if (!userId) continue;
-
-            let waitForEmit = 0;
-            waitForEmit = GAME_DELAY - (await Crash.calculateUserWaitTime(userId));
-
-            if(waitForEmit > 0)
-              setTimeout(() => {
-                socket.emit("crash-bet-update", update);
-              }, waitForEmit);
-            else
-              socket.emit("crash-bet-update", update);
-          }         
-          return;
-        }
-        else {
-          const broadcaster = io.sockets.in("crash");  
-          broadcaster.emit("crash-bet-update", update);
-        }
+        const broadcaster = io.sockets.in(`crash`);
+        broadcaster.emit("crash-bet-update", update);
       }),
     );
 
@@ -109,17 +64,48 @@ export default Sockets.createListener({
           return;
         }
         const broadcaster = io.sockets.in("crash");
-        const multiplierTime = CoreCrash.getTimeForMultiplier(document.multiplier);
-        let elapsedTime = 0;
-        const intervalId = setInterval(() => {
-          if (elapsedTime >= multiplierTime) {
-            clearInterval(intervalId);
-            broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime, completed:true});
-            return;
-          }
-          broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime});
-          elapsedTime += 150;
-        }, 150);
+        const multiplierTime = document.roundTime;
+        // const sockets = await broadcaster.fetchSockets();
+        // for (const socket of sockets) {
+          
+        //   let userId = socket.data.userId;
+        //   // socket.emit("crash-round-update", update);
+        // }
+        
+          // if (!userId) 
+          //   userId = socket.id;
+          // let waitForEmit = 0;            
+          // const roundStatus = update.updatedFields.status;
+          // const elapsedTime = update.updatedFields.elapsedTime as number || 0;
+          // const isSmulation = elapsedTime > 0 || roundStatus === "simulating";
+          // const latencyDelay = await Crash.calculateUserWaitTime(userId);
+          // if(isSmulation) {
+
+          //   waitForEmit = GAME_DELAY - latencyDelay;
+          // }
+          // else if(roundStatus === "completed") {
+          //   waitForEmit =  GAME_DELAY - 2*latencyDelay;
+          // }
+
+          // if(waitForEmit > 0)
+          //   setTimeout(() => {
+          //     socket.emit("crash-round-update", update);
+          //   }, waitForEmit);
+          // else
+        
+        //Add Latency
+        setTimeout(() => {
+          let elapsedTime = 0;
+          const intervalId = setInterval(() => {
+            if (elapsedTime >= multiplierTime) {
+              clearInterval(intervalId);
+              broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime, completed:true});
+              return;
+            }
+            broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime});
+            elapsedTime += 150;
+          }, 150);
+        },GAME_DELAY);
       }
     ));
   },

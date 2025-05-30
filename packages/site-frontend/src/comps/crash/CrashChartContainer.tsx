@@ -23,9 +23,8 @@ export const CrashChartContainer = () => {
   const round = useAppSelector((x) => x.crash.round);
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
-  const elapsedtime = useAppSelector((x) => x.crash.round.elapsedTime) ?? 0;
+  const elapsedtime = useAppSelector((x) => x.crash.elapsedTime) ?? 0;
   const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
-  
   const [multiplier, setMultiplier] = useState(serverMultiplier);
   const [timer, setTimer] = useState(elapsedtime);
   
@@ -34,26 +33,19 @@ export const CrashChartContainer = () => {
       
       const newMultiplier = CoreCrash.getMultiplierForTime(timer);
       
-      console.log('newMultiplier', newMultiplier,'serverMultiplier', serverMultiplier, 'elapsedTime', elapsedtime, 'client timer', timer);
       setMultiplier(Math.min(newMultiplier, serverMultiplier));
-      setTimer(currentVal => currentVal + 100);
+      setTimer(currentVal => currentVal + 10);
     }
     else if(round.status == 'completed'){
       
-      setMultiplier(round.multiplierCrash ?? serverMultiplier);
+      setMultiplier(round.multiplier ?? serverMultiplier);
       setTimer(0);
     }
     else if(round.status == 'waiting' || round.status == 'pending') {
       setMultiplier(1.00);
       setTimer(0);
     }
-  }, 100);
-
-  // useEffect(() => {
-  //   setTimer(Date.now() - roundStartedTime);
-  //   const initialMultiplier = CoreCrash.getMultiplierForTime(Date.now() - roundStartedTime);
-  //   setMultiplier(Math.min(initialMultiplier, serverMultiplier));
-  // }, [round._id]);
+  }, 10);
 
   const linePosition = Crash.getMultiplierPosition(multiplier);
   const chartOffset = Crash.chart.offset;
@@ -66,8 +58,8 @@ export const CrashChartContainer = () => {
       <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />
       {round.status === 'completed' && <CrashEvent startedLine={true} crashColor={"double-red"} crashPosition={-chartOffset} startedCrashLength={linePosition + chartOffset} crashLength={linePosition + chartOffset} />}
       <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
-      {cashout && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
-      <CashoutEvents />
+      {cashout && cashoutMultiplier <= multiplier && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
+      <CashoutEvents multiplier={multiplier}/>
       <Conditional
         value={round.status}
         waiting={<CrashCountdown time={time} events={crashEvents} />}

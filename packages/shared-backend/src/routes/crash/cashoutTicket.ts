@@ -54,8 +54,11 @@ export default Http.createApiRoute({
     const round = await Database.collection("crash-rounds").findOne({
       _id: roundId,
     });
+    const roundMultiplier = await Database.collection("crash-multipliers").findOne({
+      roundId: round?._id,
+    });
     //Check if the round exists
-    if (!round) 
+    if (!round || !roundMultiplier) 
       throw new HandledError("validations:errors.games.crash.invalidRoundId");
 
     const ticket = await Database.collection("crash-tickets").findOne({
@@ -79,7 +82,7 @@ export default Http.createApiRoute({
 
     //Calculate the time since the round started from the server perspective and get the multiplier for cashout
     //Substract 1 second to the current time to account for the 1 second delay in the client.
-    const currentTimerForRound = Date.now() - round.startDate.getTime() - Crash.roundTimes.delay;
+    const currentTimerForRound = Date.now() - roundMultiplier.timestamp.getTime() - (Crash.roundTimes.delay + 300);
     const ticketMultiplierCashout = Crash.getMultiplierForTime(currentTimerForRound);
     const truncatedMultiplier = Math.trunc(ticketMultiplierCashout * 100) / 100;
 
@@ -87,7 +90,7 @@ export default Http.createApiRoute({
     // the time since the round ended should be less than 1 second
     if(round.status === "completed") {
 
-      if(ticketMultiplierCashout > round.multiplierCrash) {
+      if(ticketMultiplierCashout > round.multiplier) {
         invalidateTicket(ticket);
         throw new HandledError("validations:errors.games.crash.invalidMultiplier");
       }
