@@ -23,10 +23,8 @@ export const CrashChartContainer = () => {
   const round = useAppSelector((x) => x.crash.round);
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
-  //const roundElapsedTime = useAppSelector((x) => x.crash.roundElapsedTime) ?? 0;
   const elapsedtime = useAppSelector((x) => x.crash.round.elapsedTime) ?? 0;
   const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
-  // const multiplier = CoreCrash.getMultiplierForTime(elapsedtime);
   
   const [multiplier, setMultiplier] = useState(serverMultiplier);
   const [timer, setTimer] = useState(elapsedtime);

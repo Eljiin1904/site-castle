@@ -113,7 +113,7 @@ async function startRound(round: CrashRoundDocument) {
   });
 
   const statusDate = new Date();
-
+  const roundTime = Crash.getTimeForMultiplier(multiplierCrash);
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
@@ -132,51 +132,40 @@ async function startRound(round: CrashRoundDocument) {
     timestamp: statusDate,
     serverSeed: round.serverSeed,
     serverSeedHash: round.serverSeedHash,
+    roundTime
   };
-
   await Database.collection("crash-multipliers").insertOne(roundMultiplier);
  
-  const roundTime = Crash.getTimeForMultiplier(multiplierCrash);  
-  // const intervalId = setInterval(async () => {
+  const intervalId = setInterval(async () => {
   
-  //   const currentTime = new Date();
-  //   const timer = currentTime.getTime() - statusDate.getTime();
-  //   const currentMultiplier = Crash.getMultiplierForTime(timer);
-  //   if(currentMultiplier >= multiplierCrash) {
-  //     clearInterval(intervalId);
-  //     return;
-  //   }
-  //   await Database.collection("crash-rounds").updateOne(
-  //     { _id: round._id },
-  //     {
-  //       $set: {
-  //         //multiplier:currentMultiplier,
-  //         elapsedTime: timer,
-  //        // statusDate: currentTime,
-  //       },
-  //     },
-  //   );
-    
-  //   Database.collection("crash-tickets").updateMany(
-  //     { roundId: round._id, 
-  //       processed: {$exists: false},
-  //       multiplierCrashed: { $exists: false },
-  //       cashoutTriggered: { $exists: false },   
-  //       targetMultiplier: { $gt: 1, $lte: currentMultiplier },
-  //     },
-  //     [{
-  //       $set: {
-  //         cashoutTriggered: true,
-  //         cashoutTriggeredDate: currentTime,
-  //         multiplierCrashed: "$targetMultiplier",
-  //         autoCashedTriggerd: true,
-  //       },
-  //     }]
-  //   );
-  // }, 100);
-
+    const currentTime = new Date();
+    const timer = currentTime.getTime() - statusDate.getTime();
+    const currentMultiplier = Crash.getMultiplierForTime(timer);
+    if(currentMultiplier >= multiplierCrash) {
+      clearInterval(intervalId);
+      return;
+    }
+  
+    Database.collection("crash-tickets").updateMany(
+      { roundId: round._id, 
+        processed: {$exists: false},
+        multiplierCrashed: { $exists: false },
+        cashoutTriggered: { $exists: false },   
+        targetMultiplier: { $gt: 1, $lte: currentMultiplier },
+      },
+      [{
+        $set: {
+          cashoutTriggered: true,
+          cashoutTriggeredDate: currentTime,
+          multiplierCrashed: "$targetMultiplier",
+          autoCashedTriggerd: true,
+        },
+      }]
+    );
+  }, 100);
+  
   await Utility.wait(roundTime);
-  // clearInterval(intervalId);
+  clearInterval(intervalId);
   
   await completeRound({
     ...round,
@@ -366,47 +355,4 @@ async function addNextRoundTickets(round: CrashRoundDocument) {
       { roundId: Crash.nextRoundId, kind: "crash-bet" },
       { $set: { roundId: round._id } }
     );
-}
-
-const LiveMultiplierInterval = (round:CrashRoundDocument, crashedMultiplier: number, startingTime: number) => {
-
-  const intervalId = setInterval(async () => {
-  
-    const currentTime = new Date();
-    const timer = currentTime.getTime() - startingTime;
-    const currentMultiplier = Crash.getMultiplierForTime(timer);
-    if(currentMultiplier >= crashedMultiplier) {
-      clearInterval(intervalId);
-      return;
-    }
-    await Database.collection("crash-rounds").updateOne(
-      { _id: round._id },
-      {
-        $set: {
-          //multiplier:currentMultiplier,
-          elapsedTime: timer,
-         // statusDate: currentTime,
-        },
-      },
-    );
-    
-    Database.collection("crash-tickets").updateMany(
-      { roundId: round._id, 
-        processed: {$exists: false},
-        multiplierCrashed: { $exists: false },
-        cashoutTriggered: { $exists: false },   
-        targetMultiplier: { $gt: 1, $lte: currentMultiplier },
-      },
-      [{
-        $set: {
-          cashoutTriggered: true,
-          cashoutTriggeredDate: currentTime,
-          multiplierCrashed: "$targetMultiplier",
-          autoCashedTriggerd: true,
-        },
-      }]
-    );
-  }, 100);
-
-  return intervalId;
 }
