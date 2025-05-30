@@ -23,32 +23,33 @@ export const CrashChartContainer = () => {
   const round = useAppSelector((x) => x.crash.round);
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
-  const roundStartedTime = useAppSelector((x) => x.crash.roundStartingTime) ?? 0;
+  //const roundElapsedTime = useAppSelector((x) => x.crash.roundElapsedTime) ?? 0;
   const elapsedtime = useAppSelector((x) => x.crash.round.elapsedTime) ?? 0;
-  const multiplier = CoreCrash.getMultiplierForTime(elapsedtime);
+  const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
+  // const multiplier = CoreCrash.getMultiplierForTime(elapsedtime);
   
-  //const [multiplier, setMultiplier] = useState(serverMultiplier);
-  //const [timer, setTimer] = useState(Date.now() - roundStartedTime);
+  const [multiplier, setMultiplier] = useState(serverMultiplier);
+  const [timer, setTimer] = useState(elapsedtime);
   
-  // useInterval(() => {
-  //   if(round.status == 'simulating') {
+  useInterval(() => {
+    if(round.status == 'simulating' && elapsedtime > 0) {
       
-  //     const newMultiplier = CoreCrash.getMultiplierForTime(timer);
+      const newMultiplier = CoreCrash.getMultiplierForTime(timer);
       
-  //     console.log('newMultiplier', newMultiplier,'serverMultiplier', serverMultiplier, 'elapsedTime', elapsedtime, 'timer', timer);
-  //     setMultiplier(Math.min(newMultiplier, serverMultiplier));
-  //     setTimer(currentVal => currentVal + 100);
-  //   }
-  //   else if(round.status == 'completed'){
+      console.log('newMultiplier', newMultiplier,'serverMultiplier', serverMultiplier, 'elapsedTime', elapsedtime, 'client timer', timer);
+      setMultiplier(Math.min(newMultiplier, serverMultiplier));
+      setTimer(currentVal => currentVal + 100);
+    }
+    else if(round.status == 'completed'){
       
-  //     setMultiplier(round.multiplierCrash ?? serverMultiplier);
-  //     setTimer(0);
-  //   }
-  //   else if(round.status == 'waiting' || round.status == 'pending') {
-  //     setMultiplier(1.00);
-  //     setTimer(0);
-  //   }
-  // }, 100);
+      setMultiplier(round.multiplierCrash ?? serverMultiplier);
+      setTimer(0);
+    }
+    else if(round.status == 'waiting' || round.status == 'pending') {
+      setMultiplier(1.00);
+      setTimer(0);
+    }
+  }, 100);
 
   // useEffect(() => {
   //   setTimer(Date.now() - roundStartedTime);

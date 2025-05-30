@@ -142,6 +142,24 @@ export const crashSlice = createSlice({
         removedFields: update.removedFields,
       });
     }),
+    updateMultiplier: reducer<{roundId: string, elapsedTime: number, completed?:boolean}>((state, { payload }) => {
+
+      const elapsedTime = payload.elapsedTime;
+      const completed = payload.completed;
+
+      if(completed) {
+        state.round.status = "completed";
+        state.roundElapsedTime = 0;
+        state.roundStartingTime = 0;
+        state.round.elapsedTime = elapsedTime;
+      }
+      else {
+        state.round.status = "simulating";
+        state.roundElapsedTime = elapsedTime;
+        state.round.elapsedTime = elapsedTime;
+        //state.roundStartingTime = Date.now() - elapsedTime + DELAY; // Adjust for the initial delay
+      }
+    }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
       state.tickets.push(payload);
     }),
@@ -233,6 +251,7 @@ export const {
   updateRound,
   updateBets,
   updateBet,
+  updateMultiplier,
   setProcessing,
   addCrashEvent,
   setBetAmount,
