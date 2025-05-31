@@ -7,7 +7,7 @@ import { StyledLayoutProps, StyledProps } from "../styled/Styled";
 import "./Img.scss";
 
 export type ImgProps = Omit<StyledLayoutProps, "width" | "height"> & {
-  type: "png" | "jpg" | "external" | "local";
+  type: "png" | "jpg" | "external" | "local" | "gif";
   path: string;
   width: string;
   height?: string;
@@ -40,7 +40,7 @@ export const Img: FC<ImgProps> = ({
   const imageRef = useRef<HTMLImageElement>(null);
 
   const hide = (loading && skeleton) || showDefault;
-  const isStatic = type === "png" || type === "jpg";
+  const isStatic = type === "png" || type === "jpg" || type === "gif";
   const src = isStatic ? `${config.staticURL}${path}.${type}` : path;
   const notFoundPath = `${config.staticURL}/graphics/not-found.jpg`;
 
