@@ -9,6 +9,7 @@ import { CrashInitialState } from "@core/types/crash/CrashInitialState";
 import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
+import { CrashMultiplierInGameDetails } from "@core/types/crash/CrashMultiplierInGameDetails";
 
 type PostAction = "reset" | "increase";
 
@@ -110,14 +111,16 @@ export const crashSlice = createSlice({
         removedFields: update.removedFields,
       });
     }),
-    updateMultiplier: reducer<{roundId: string, elapsedTime: number, completed?:boolean}>((state, { payload }) => {
+    updateMultiplier: reducer<CrashMultiplierInGameDetails>((state, { payload }) => {
 
       const elapsedTime = payload.elapsedTime;
       const completed = payload.completed;
+      const multiplier = payload.multiplier;
 
       if(completed) {
         state.round.status = "completed";
         state.elapsedTime = elapsedTime;
+        state.round.multiplier = multiplier;
       }
       else {
         state.round.status = "simulating";
