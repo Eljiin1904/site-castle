@@ -7,7 +7,7 @@ import { CashoutEvents } from "./CashoutEvents";
 import { Crash } from "#app/services/crash";
 import { Crash as CoreCrash } from "@core/services/crash";
 import { useInterval } from "usehooks-ts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { CrashCountdown } from "./CrashCountdown";
 import { Site } from "#app/services/site";
@@ -56,7 +56,7 @@ export const CrashChartContainer = () => {
       <CrashYAxis multiplier={multiplier} />
       {crashEvents.map((value, index) => <CrashEvent key={index} startedLine={value.startedLine} crashColor={value.crashColor} crashPosition={value.crashPosition} startedCrashLength={value.crashLength} crashLength={value.crashLength} />)}
       {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />}
-      {round.status === 'completed' && <CrashEvent startedLine={true} crashColor={"double-red"} crashPosition={-chartOffset} startedCrashLength={linePosition + chartOffset} crashLength={linePosition + chartOffset} />}
+      {round.status === 'completed' && <CrashEvent animated startedLine={true} crashColor={"double-red"} crashPosition={-chartOffset} startedCrashLength={linePosition + chartOffset} crashLength={linePosition + chartOffset} />}
       <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
       {cashout && cashoutMultiplier <= multiplier && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
       <CashoutEvents multiplier={multiplier}/>

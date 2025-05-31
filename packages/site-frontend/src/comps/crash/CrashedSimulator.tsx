@@ -4,6 +4,8 @@ import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Numbers } from "@core/services/numbers";
 import './CrashSimulator.scss';
+import { Fragment, useEffect, useState } from "react";
+import { Img } from "@client/comps/img/Img";
 
 export const CrashedSimulator = () => {
   const userId = useAppSelector((x) => x.user._id);
@@ -12,11 +14,26 @@ export const CrashedSimulator = () => {
   const won = roundTicket?.won ?? false;
   const cashoutMultiplier = roundTicket?.multiplierCrashed ?? 1;
   const round = useAppSelector((x) => x.crash.round);
+  const [animation, setAnimation] = useState(true);
 
-  if(!round?.multiplier)
-    return null;
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setAnimation(false);
+    }
+    , 40);
+  }, []);
   
-  return (<Div
+  if(animation)
+    return (<Div fx fy bg="white" position="absolute" left={0} top={0} zIndex={12} style={{opacity:1}} />);
+  
+  if(!round.multiplier)
+    return null;
+
+  return (<Fragment>
+    {!won && <Img type="gif" right={20} bottom={0} style={{transform: "scaleX(-1)"}} position="absolute" path="/graphics/games/crash/crashed" width={"150px"} />}
+    <Div
       className="CrashSimulator"
       zIndex={10}
       column
@@ -53,7 +70,8 @@ export const CrashedSimulator = () => {
         textAlign="left"
       > {t('rugged')}
       </Span>}
-    </Div>);
+    </Div>
+    </Fragment>);
 };
 
 const TookProfit = ({multiplier}: {multiplier:string}) => {

@@ -99,7 +99,7 @@ export default Sockets.createListener({
           const intervalId = setInterval(() => {
             if (elapsedTime >= multiplierTime) {
               clearInterval(intervalId);
-              broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime, completed:true});
+              broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime, completed:true, multiplier: document.multiplier});
               return;
             }
             broadcaster.emit("crash-active-round", {roundId: document.roundId, elapsedTime: elapsedTime});
