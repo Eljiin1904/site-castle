@@ -82,7 +82,7 @@ export default Http.createApiRoute({
 
     //Calculate the time since the round started from the server perspective and get the multiplier for cashout
     //Substract 1 second to the current time to account for the 1 second delay in the client.
-    const currentTimerForRound = Date.now() - roundMultiplier.timestamp.getTime() - (Crash.roundTimes.delay + 300);
+    const currentTimerForRound = Date.now() - roundMultiplier.timestamp.getTime() - (Crash.roundTimes.delay + 150);
     const ticketMultiplierCashout = Crash.getMultiplierForTime(currentTimerForRound);
     const truncatedMultiplier = Math.trunc(ticketMultiplierCashout * 100) / 100;
 
@@ -96,7 +96,7 @@ export default Http.createApiRoute({
       }
 
       const endedTime = (round.completedDate ?? round.statusDate).getTime();
-      if(Date.now() - endedTime > Crash.roundTimes.delay) {
+      if(Date.now() - endedTime > Crash.roundTimes.delay + 150) {
         invalidateTicket(ticket);
         throw new HandledError("validations:errors.games.crash.invalidEndTime");
       }
