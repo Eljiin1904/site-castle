@@ -94,7 +94,8 @@ async function startRound(round: CrashRoundDocument) {
   const serverSeed = Ids.secret();
   const serverSeedHash = Random.hashServerSeed(serverSeed);
 
-  let multiplier = Random.getMultiplier({
+  let multiplier = 15;
+  Random.getMultiplier({
     serverSeed: serverSeed,
     clientSeed: eosBlockId,
     nonce: round._id,
