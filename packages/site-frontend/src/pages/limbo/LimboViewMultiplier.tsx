@@ -40,14 +40,11 @@ export const LimboViewMultiplier = () => {
   useEffect(() => {
     counter.reset();
     counter.start();
-
+    // TODO make sure previous ticket not current ticket
     if (ticket?.won !== undefined) {
       setAnimationPath(isWin ? animationMap.win : animationMap.lose);
       setTriggerKey(Date.now()); // Used to Rerender
     }
-    // else {
-    //   setAnimationPath(animationMap.default);
-    // }
   }, [ticket]);
 
   const shouldPlayVideo = Boolean(processing || isAutoPlaying);

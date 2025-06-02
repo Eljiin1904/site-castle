@@ -116,12 +116,13 @@ beforeAll(async () => {
 afterAll(async () => {
   console.log("shutting down MongoDB containers");
   if (httpServer) {
-    await new Promise<void>((resolve, reject) => {
-      httpServer.close((err: any) => {
-        if (err) reject(err);
-        else resolve();
-      });
-    });
+    await httpServer.close();
+    //   await new Promise<void>((resolve, reject) => {
+    //     httpServer.close((err: any) => {
+    //       if (err) reject(err);
+    //       else resolve();
+    //     });
+    //   });
   }
 });
 
