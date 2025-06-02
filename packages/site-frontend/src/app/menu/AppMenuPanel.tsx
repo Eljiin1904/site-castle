@@ -42,12 +42,14 @@ const PanelContent = () => {
       <Div
         borderRight
         borderColor="brown-4"
+        fy
       >
         <Nav
           className="menu-list"
           column
-          justify="flex-start"
-          overflow="hidden"
+          display="inline"
+          // justify="flex-start"
+          overflow="auto"
           fx
         >
           <BaseMenu collapsed={collapsed} />
