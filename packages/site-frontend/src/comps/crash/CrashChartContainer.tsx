@@ -14,6 +14,7 @@ import { Site } from "#app/services/site";
 import { CrashMultiplier } from "./CrashMultiplier";
 import { CrashedSimulator } from "./CrashedSimulator";
 import './CrashChartContainer.scss';
+import { PumpitMemoized } from "./Pumpit";
 
 export const CrashChartContainer = () => {
   
@@ -53,6 +54,7 @@ export const CrashChartContainer = () => {
  
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
+      {multiplier > 10 && round.status === 'simulating' && <PumpitMemoized roundId={round._id} />}    
       <CrashYAxis multiplier={multiplier} />
       {crashEvents.map((value, index) => <CrashEvent key={index} startedLine={value.startedLine} crashColor={value.crashColor} crashPosition={value.crashPosition} startedCrashLength={value.crashLength} crashLength={value.crashLength} />)}
       {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />}
