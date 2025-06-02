@@ -26,7 +26,7 @@ export async function recordLatency(
       userIdToUse = socketId ?? "anonymous";
     }
     
-    const userLatency =  await Database.collection("user-latency").findOne({ userId:userIdToUse, authenticated: false });
+    const userLatency =  await Database.collection("user-latency").findOne({ userId:userIdToUse});
     const recordingDate = new Date();
 
     // If no user latency document exists, create one
@@ -72,10 +72,11 @@ export async function recordLatency(
       latencyLast5Min: medianLast5Minutes,
       latencyLast10Min: medianLast10Minutes,
       recordings,
+      authenticated
     };
 
     await Database.collection("user-latency").updateOne(
-      { userId: userIdToUse, authenticated },
+      { userId: userIdToUse },
       { $set: updatedUserLatency }
     );
 
