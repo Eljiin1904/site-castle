@@ -108,7 +108,14 @@ export const UserMenuDesktop = () => {
           type="nav"
           iconLeft={SvgTransaction}
           label={t("menu.account.transactions")}
-          to="/transactions"
+          to="/account/transactions"
+          onClick={() => setOpen(false)}
+        />
+         <DropdownItem
+          type="nav"
+          iconLeft={SvgBets}
+          label={t("account:gameHistory")}
+          to="/account/game-history"
           onClick={() => setOpen(false)}
         />
         <DropdownItem
@@ -117,14 +124,7 @@ export const UserMenuDesktop = () => {
           label={t("menu.account.avatar")}
           to="/avatar"
           onClick={() => setOpen(false)}
-        />
-        <DropdownItem
-          type="nav"
-          iconLeft={SvgBets}
-          label={t("menu.account.bets")}
-          to="/bets"
-          onClick={() => setOpen(false)}
-        />
+        />       
         <DropdownItem
           type="action"
           iconLeft={SvgLogout}
