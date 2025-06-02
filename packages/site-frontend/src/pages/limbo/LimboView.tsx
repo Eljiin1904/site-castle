@@ -21,7 +21,11 @@ export const LimboView = () => {
         height: small ? "350px" : "660px",
       }}
     >
-      <Div fx position="relative" grow>
+      <Div
+        fx
+        position="relative"
+        grow
+      >
         <LimboHeader />
         {!small && <LimboHistory />}
         <LimboViewMultiplier />
@@ -30,4 +34,4 @@ export const LimboView = () => {
       <AutoStatusView />
     </Div>
   );
-}
+};

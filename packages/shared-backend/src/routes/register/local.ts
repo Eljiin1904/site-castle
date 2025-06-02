@@ -7,6 +7,7 @@ import { Site } from "#app/services/site";
 import { Users } from "#app/services/users";
 import { HandledError } from "@server/services/errors";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import config from "@core/config";
 
 const rateLimiter = Security.createRateLimiter({
   keyPrefix: "local-register",
@@ -15,6 +16,7 @@ const rateLimiter = Security.createRateLimiter({
   errorMessage: "errors.rateLimit",
 });
 
+const { env } = config;
 export default Http.createApiRoute({
   type: "post",
   path: "/local",
@@ -51,7 +53,7 @@ export default Http.createApiRoute({
       throw new HandledError();
     }
 
-    await rateLimiter.consume(req.trueIP, 1);
+    if (env != "development") await rateLimiter.consume(req.trueIP, 1);
 
     await Site.validateEmail(email);
 

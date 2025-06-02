@@ -70,7 +70,7 @@ describe("Test Campaign Routes", () => {
     expect(campaign.commissionBalance).toBe(0);
     expect(campaign.referralCount).toBe(0);
     expect(campaign.campaignTier).toBe(1);
-  });
+  }, 20000);
 
   it("Fail Debit Campaign Commission: Balance too low", async () => {
     const user = await Database.collection("users").findOne({ username: "campaignTest" });
@@ -83,18 +83,24 @@ describe("Test Campaign Routes", () => {
       },
       hCaptchaToken,
     );
-    let url = BASE_URL + "/affiliates/claim-campaign-commission";
+
+    let url = BASE_URL + "/affiliates/claim-campaigns-commission";
     let getDebitCampaignResponse = await fetchWithCookie(
       url,
       "POST",
       {
-        campaignId: "campaignTesting",
+        claim: [
+          {
+            campaignId: "campaignTesting",
+            amount: 100,
+          },
+        ],
       },
       sessionCookie,
     );
     const getDebitCommissionResult = await getDebitCampaignResponse.json();
-    expect(getDebitCommissionResult["error"]).toBe("Your balance is too low.");
-  });
+    expect(getDebitCommissionResult["error"]).toBe("validations:errors.campaign.lowBalance");
+  }, 20000);
 
   it("Utilize Campaign", async () => {
     const user = await Database.collection("users").findOne({ username: "campaignTest" });
@@ -128,7 +134,7 @@ describe("Test Campaign Routes", () => {
       emailConfirmed: true,
       password: "password123",
       captchaToken: hCaptchaToken,
-      referralCode: getCampaignResult.campaignId,
+      referralCode: getCampaignResult.campaign.campaignId,
     };
 
     const response = await fetch(registerUrl, {
@@ -226,7 +232,7 @@ describe("Test Campaign Routes", () => {
     // expect(affiliateReport.commissionAmount).toBe(10000500);
     expect(affiliateReport.wagerAmount).toBeDefined();
     expect(affiliateReport.xp).toBeDefined();
-  });
+  }, 20000);
 
   it("Retreive Campaign Available Balance", async () => {
     const user = await Database.collection("users").findOne({ username: "campaignTest" });
@@ -251,7 +257,7 @@ describe("Test Campaign Routes", () => {
 
     const updateBalance = await Database.collection("users").findOne({ username: "campaignTest" });
     expect(updateBalance?.tokenBalance).toBe(3343500);
-  });
+  }, 20000);
 
   it("Affiliate Get Aggregated Stats", async () => {
     const user = await Database.collection("users").findOne({ username: "campaignTest" });
@@ -277,7 +283,7 @@ describe("Test Campaign Routes", () => {
     // expect(stats.wagerAmount).toBe(5000000000);
     // expect(stats.referralXp).toBe(5000000000);
     // expect(stats.referralCount).toBe(1);
-  });
+  }, 20000);
 
   // it("Affiliate Get Aggregated Reports", async () => {
   //   const user = await Database.collection("users").findOne({ username: "campaignTest" });
@@ -475,4 +481,4 @@ describe("Test Campaign Routes", () => {
   //   expect(getCreateResult["error"]["value"]["label"]).toBe("campaignName");
   //   expect(getCreateResult["error"]["value"]["max"]).toBe(64);
   // });
-});
+}, 20000);

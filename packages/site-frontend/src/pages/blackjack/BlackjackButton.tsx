@@ -56,10 +56,11 @@ export const BlackjackButton = ({
       align="center"
       justify="center"
       borderColor="brown-4"
+      onClick={_onClick}
     >
       <div
         className={className}
-        onClick={_onClick}
+        // onClick={_onClick}
       >
         <Div gap={10}>
           {iconObj && <Vector {...iconObj} />}
