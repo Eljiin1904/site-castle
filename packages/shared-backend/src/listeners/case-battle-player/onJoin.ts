@@ -7,6 +7,8 @@ export default Sockets.createListener({
   key: "case-battle-player-join",
   secure: false,
   callback: async (io, socket, battleId) => {
+    const userId = socket.data.userId as string | undefined;
+
     socket.join(`case-battle-player_${battleId}`);
 
     const battle = await Database.collection("case-battles").findOne({
@@ -18,7 +20,25 @@ export default Sockets.createListener({
     }
 
     if (battle.status !== "completed") {
-      battle.serverSeed = "";
+      battle.serverSeed = ""; // Hide from front-end
+    }
+
+    const socketIsBattleHost = userId === battle.players?.[0]?.id;
+
+    if (userId && !battle.viewers.includes(userId) && !socketIsBattleHost) {
+      battle.viewers.push(userId);
+
+      await Database.collection("case-battles").updateOne(
+        { _id: battleId },
+        { $set: { viewers: battle.viewers } },
+      );
+    }
+
+    const isPrivateOrFriendsOnly =
+      battle.modifiers.includes("private") || battle.modifiers.includes("friends-only");
+
+    if (isPrivateOrFriendsOnly && !socketIsBattleHost) {
+      battle.joinKey = ""; // Hide from front-end
     }
 
     socket.emit("case-battle-player-init", battle);

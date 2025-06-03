@@ -12,7 +12,7 @@ export default Http.createApiRoute({
     battleId: Validation.string().required("Battle ID is required."),
     seat: Validation.number().min(1).max(3).required("Seat is required."),
   }),
-  callback: async (req, res) => {
+  callback: async (req, res, next) => {
     const { battleId, seat } = req.body;
     const user = req.user;
 

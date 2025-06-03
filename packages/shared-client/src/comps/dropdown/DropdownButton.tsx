@@ -11,9 +11,10 @@ import "./DropdownButton.scss";
 export type DropdownButtonProps = {
   className?: string;
   kind?: "dark" | "secondary";
-  size?: "sm" | "md" | "lg" ;
+  size?: "sm" | "md" | "lg";
   icon?: Svg;
-  tag?: string,
+  tag?: string;
+  color?: Color;
   label: string;
   description?: string;
   placeholder?: boolean;
@@ -27,6 +28,7 @@ export const DropdownButton: FC<DropdownButtonProps> = ({
   className,
   kind = "dark",
   size = "md",
+  color,
   icon,
   tag,
   label,
@@ -69,7 +71,12 @@ export const DropdownButton: FC<DropdownButtonProps> = ({
           align="flex-start"
           gap={3}
         >
-          <Span className="label">{label}</Span>
+          <Span
+            className="label"
+            color={color || "white"}
+          >
+            {label}
+          </Span>
           {description && <Span size={12}>{description}</Span>}
         </Div>
       )}

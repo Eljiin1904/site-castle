@@ -1,0 +1,20 @@
+
+$bottomPad: 80px;
+
+.BlackjackView {
+	position: relative;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+
+	.View_inner {
+		position: relative;
+	}
+
+	span {
+		color: #fff;
+	}
+
+	&:focus {
+		outline: none !important;
+	}
+}

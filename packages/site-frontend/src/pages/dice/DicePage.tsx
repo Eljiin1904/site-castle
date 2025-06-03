@@ -9,12 +9,11 @@ import { DiceContent } from "./DiceContent";
  * @returns
  */
 export const DicePage = () => {
-  
   return (
-     <GamePage
-        className="DicePage"
-        title="Dice"
-      >
+    <GamePage
+      className="DicePage"
+      title="Dice"
+    >
       <DiceManager />
       <DiceContent />
     </GamePage>

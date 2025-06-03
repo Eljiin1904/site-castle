@@ -22,8 +22,10 @@ async function main() {
   Managers.dice();
   Managers.limbo();
   Managers.mines();
+  Managers.blackjack();
   Managers.races();
   Managers.raffles();
+  Managers.crash();
 
   console.log("Initialized managers.");
 

@@ -46,6 +46,8 @@ export function initSockets(httpServer: HttpServer) {
     logger.info("dice socket active");
     Listeners.double(io);
     logger.info("double socket active");
+    Listeners.crash(io);
+    logger.info("crash socket active");
     Listeners.holiday(io);
     logger.info("holiday socket active");
     Listeners.hotFeed(io);
@@ -54,6 +56,8 @@ export function initSockets(httpServer: HttpServer) {
     logger.info("limbo socket active");
     Listeners.mines(io);
     logger.info("mines socket active");
+    Listeners.blackjack(io);
+    logger.info("blackjack socket active");
     Listeners.notifications(io);
     logger.info("notifications socket active");
     Listeners.site(io);

@@ -8,7 +8,9 @@ import { Img } from "../img/Img";
 import "./Video.scss";
 
 type PlayBackRate = 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5 | 5.5 | 6 | 6.5 | 7 | 7.5 | 8;
+
 export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
+  triggerKey?: any;
   type: "mp4" | "mov";
   path: string;
   width: string;
@@ -31,9 +33,11 @@ export type VideoProps = Omit<StyledLayoutProps, "width" | "height"> & {
   altImage?: string;
   altPadding?: number;
   scale?: number;
+  resetEnd?: boolean;
 };
 
 export const Video: FC<VideoProps> = ({
+  triggerKey,
   className,
   type,
   path,
@@ -54,93 +58,90 @@ export const Video: FC<VideoProps> = ({
   pause = false,
   reset = false,
   resetPause = false,
+  resetEnd = false,
   playBackSpeed = 1,
   altImage,
   altPadding = 0,
   ...forwardProps
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [showDefault, setShowDefault] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  const hide = (loading && skeleton) || showDefault;
+  const [loading, setLoading] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
   const [videoSource, setVideoSource] = useState(`${config.staticURL}${path}.${type}`);
+
+  const shouldHide = (loading && skeleton) || showFallback;
 
   useLayoutEffect(() => {
     setLoading(false);
-    setShowDefault(false);
+    setShowFallback(false);
     setVideoSource(`${config.staticURL}${path}.${type}`);
-  }, [path]);
+  }, [path, triggerKey]);
 
-  // Handles Dynamic Reset of Video Source
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     video.pause();
     video.currentTime = 0;
-
     video.load();
     video.play().catch((err) => {
-      console.warn("Play blocked or failed:", err.message);
+      console.warn("Playback failed:", err.message);
     });
-  }, [videoSource]);
+  }, [videoSource, triggerKey]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (play) {
-        resetVideo();
-        playVideo();
-      }
-      if (pause) {
-        pauseVideo();
-      }
-      if (resetPause) {
-        resetVideo();
-        pauseVideo();
-      }
-      if (reset) {
-        resetVideo();
-      }
+    if (!videoRef.current) return;
+
+    if (play) {
+      resetAndPlay();
+    }
+
+    if (pause) {
+      videoRef.current.pause();
+    }
+
+    if (reset) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+
+    if (resetPause) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
     }
   }, [play, pause, reset, resetPause]);
 
-  const playVideo = () => {
-    if (videoRef.current) {
-      videoRef.current?.play().catch((error) => {
-        console.log(`Error attempting to play: ${error}`);
-      });
-    }
-  };
-
-  const pauseVideo = () => {
-    if (videoRef.current) {
-      videoRef.current?.pause();
-    }
-  };
-
-  const resetVideo = () => {
+  const resetAndPlay = () => {
     const video = videoRef.current;
     if (!video) return;
 
     video.pause();
     video.currentTime = 0;
+    video.play().catch((error) => {
+      console.error("Error playing video:", error);
+    });
   };
 
-  const setPlayBack = () => {
+  const setPlaybackSpeed = () => {
     if (videoRef.current) {
       videoRef.current.playbackRate = playBackSpeed;
     }
   };
 
+  const handleEnded = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
     <Div
-      className={classNames("Video", className, { hide })}
+      className={classNames("Video", className, { hide: shouldHide })}
       style={{ ...style, width, height, aspectRatio }}
       overflow="hidden"
       {...forwardProps}
     >
-      {showDefault && altImage && (
+      {showFallback && altImage && (
         <Img
           className="alt-image"
           type="png"
@@ -150,30 +151,26 @@ export const Video: FC<VideoProps> = ({
           style={{ padding: `${altPadding}px` }}
         />
       )}
+
       <video
         ref={videoRef}
-        key={videoSource}
-        height={height}
+        key={triggerKey || path} // ensure re-mount on trigger change
         width={width}
+        height={height}
         controls={controls}
         autoPlay={autoplay}
-        muted={muted} // Muted has to be true for autoplay to work
+        muted={muted}
         loop={loop}
         style={{
-          objectFit: `${objectFit}`,
+          objectFit,
           objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}`,
         }}
-        onCanPlay={() => setPlayBack()}
-        onLoad={() => {
-          setLoading(false);
-        }}
+        onCanPlay={setPlaybackSpeed}
         onError={() => {
-          pauseVideo();
-          setShowDefault(true);
+          videoRef.current?.pause();
+          setShowFallback(true);
         }}
-        onEnded={() => {
-          if (reset) resetVideo();
-        }}
+        onEnded={resetEnd ? handleEnded : () => {}}
       >
         <source
           src={videoSource}

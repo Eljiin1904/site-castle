@@ -77,7 +77,7 @@ export type StyledProps<T extends ElementType = StyledElement> =
     pointerEvents?: "auto" | "none" | "all";
     fontSize?: Unit;
     lineHeight?: Unit;
-    fontFamily?: "text" | "title";
+    fontFamily?: "text" | "title" | "number";
     fontWeight?: "thin"| "light" | "regular" | "medium" | "semi-bold" | "bold";
     fontStyle?: "normal" | "italic" | "oblique";
     textDecoration?: "overline" | "line-through" | "underline";

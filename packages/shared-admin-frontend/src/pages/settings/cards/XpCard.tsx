@@ -46,6 +46,13 @@ export const XpCard = ({
       />
       <FieldSection
         settings={settings}
+        id="crashXpRate"
+        label="Crash"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
         id="diceXpRate"
         label="Dice"
         inputType="decimal"
@@ -62,6 +69,48 @@ export const XpCard = ({
         settings={settings}
         id="minesXpRate"
         label="Mines"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackXpRate"
+        label="Blackjack"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackInsuranceXpRate"
+        label="Insurance"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackLuckyLadiesXpRate"
+        label="Lucky Ladies"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackBlackjack15xXpRate"
+        label="Blackjack 15x"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjackPerfectPairsXpRate"
+        label="Perfect Pairs"
+        inputType="decimal"
+        onEdit={onEdit}
+      />
+      <FieldSection
+        settings={settings}
+        id="blackjack213XpRate"
+        label="21+3"
         inputType="decimal"
         onEdit={onEdit}
       />

@@ -8,6 +8,7 @@ import { Users } from "#app/services/users";
 import { HandledError } from "@server/services/errors";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
+import config from "@core/config";
 
 const rateLimiter = Security.createRateLimiter({
   keyPrefix: "local-register",
@@ -17,6 +18,8 @@ const rateLimiter = Security.createRateLimiter({
 });
 
 const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_BACKEND });
+const { env } = config;
+
 export default Http.createApiRoute({
   type: "post",
   path: "/local",
@@ -70,7 +73,7 @@ export default Http.createApiRoute({
       throw new HandledError();
     }
 
-    await rateLimiter.consume(req.trueIP, 1);
+    if (env != "development") await rateLimiter.consume(req.trueIP, 1);
 
     await Site.validateEmail(email);
 

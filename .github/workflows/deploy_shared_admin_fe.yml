@@ -11,7 +11,13 @@ on:
       - ".github/workflows/deploy_shared_admin_fe.yml"
 
 jobs:
+  check-base-image:
+    uses: ./.github/workflows/check_base_image_changes.yml
+    secrets: inherit
+
   build-and-push-shared-admin-frontend:
+    needs: check-base-image
+    if: ${{ !failure() }}
     runs-on: ubuntu-latest
     environment: dev
     outputs:
@@ -46,10 +52,15 @@ jobs:
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
       - name: Build and tag Docker image
+        env:
+          # Make sure APP_BUILD_ENV is defined in your GitHub Environment settings
+          # e.g., for 'dev' GitHub Environment, set APP_BUILD_ENV = devcloud
+          ACTUAL_BUILD_ENV: ${{ vars.APP_BUILD_ENV }}
         run: |
           IMAGE_TAG="${{ steps.set-image-tag.outputs.image_tag }}"
+          echo "Using BUILD_ENV for shared-admin-frontend: $ACTUAL_BUILD_ENV"
           # Build the Docker image from the frontend Dockerfile
-          docker build -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
+          docker build --build-arg BUILD_ENV=$ACTUAL_BUILD_ENV -t pidwin/castle-admin-frontend -f ./packages/shared-admin-frontend/Dockerfile .
           # Tag the image with the generated version tag
           docker tag pidwin/castle-admin-frontend:latest ${{ steps.login-ecr.outputs.registry }}/pidwin/castle-admin-frontend:$IMAGE_TAG
           # Optionally, tag it as 'latest' for fallback purposes
@@ -70,6 +81,7 @@ jobs:
 
   update-argocd-dev:
     needs: build-and-push-shared-admin-frontend
+    if: ${{ !failure() }}
     environment: dev
     runs-on: ubuntu-latest
     steps:
@@ -85,6 +97,7 @@ jobs:
 
   update-argocd-stage:
     needs: build-and-push-shared-admin-frontend
+    if: ${{ !failure() }}
     environment: stage
     runs-on: ubuntu-latest
     steps:

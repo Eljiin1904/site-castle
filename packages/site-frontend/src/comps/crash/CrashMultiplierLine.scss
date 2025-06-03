@@ -1,0 +1,55 @@
+.CrashMultiplierLine {
+  
+  border-color: var(--dark-sand-color);
+  border-width: 2px;
+  opacity: 0.8;
+
+  .Vector {
+
+    margin-top: -4px;
+    right: -2px;
+  }
+
+  .Span {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: -10px;
+    margin-left: 50px;
+  }
+
+  &.waiting, &.pending {
+    border-top: 2px solid var(--dark-sand-color);
+    .Vector {
+
+      color: var(--dark-sand-color);
+    }
+
+  }
+
+  &.simulating {
+    border-top: 2px solid var(--bright-green-color);
+    .Vector {
+
+      color: var(--bright-green-color);
+    }
+  }
+  &.completed, &.completed {
+    border-top:  2px solid var(--double-red-color);
+
+    .Vector {
+
+      color: var(--double-red-color);
+    }
+  }
+
+  &.crashed {
+    
+    border-top: 1px dashed var(--bright-green-color);
+
+    .Vector {
+
+      color: var(--bright-green-color);
+    }
+  }
+}

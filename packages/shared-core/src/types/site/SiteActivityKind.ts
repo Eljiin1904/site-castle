@@ -13,8 +13,11 @@ export type SiteActivityKindData =
   | DiceWonData
   | DoubleJackpotWonData
   | DoubleWonData
+  | CrashWonData
   | LimboWonData
   | MinesWonData
+  | BlackjackWonData
+  | BlackjackSidebetWonData
   | RewardBoostData;
 
 interface AdventItemData {
@@ -32,6 +35,7 @@ interface CaseBattleDropData {
 interface CaseDropData {
   kind:
     | "case-drop"
+    | "reward-daily-case-drop"
     | "reward-gem-case-drop"
     | "reward-holiday-case-drop"
     | "reward-level-case-drop";
@@ -62,8 +66,23 @@ interface MinesWonData {
   kind: "mines-win";
 }
 
+interface BlackjackWonData {
+  kind: "blackjack-win";
+  subKind?: string;
+}
+
+interface BlackjackSidebetWonData {
+  kind: "blackjack-sidebet-win";
+  subKind: string;
+}
+
 interface RewardBoostData {
   kind: "reward-boost";
   timeframe: RewardBoostTimeframe;
   amount: number;
+}
+
+interface CrashWonData {
+  kind: "crash-win";
+  multiplier: number;
 }

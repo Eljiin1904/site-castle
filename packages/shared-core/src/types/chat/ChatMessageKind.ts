@@ -6,12 +6,14 @@ import type { BasicUser } from "../users/BasicUser";
 import type { DoubleBetKind } from "../double/DoubleBetKind";
 import type { LootItem } from "../items/BasicItem";
 import type { ChatMessageReply } from "./ChatMessageReply";
+import type { BlackjackBetTypeInsurance } from "../blackjack/BlackjackBetAmounts";
 
 export type ChatMessageKind = ChatMessageKindData["kind"];
 
 export type ChatMessageKindData =
   | TextData
   | AventData
+  | BlackjackWinData
   | CaseBattleLinkData
   | CaseBattleWinData
   | CaseWinData
@@ -20,6 +22,7 @@ export type ChatMessageKindData =
   | DoubleWinData
   | DiceWinData
   | LimboWonData
+  | CrashWinData
   | MinesWinData
   | RainTipData
   | RainPayoutData;
@@ -36,6 +39,13 @@ interface AventData {
   item: LootItem;
 }
 
+interface BlackjackWinData {
+  kind: "blackjack-win";
+  user: BasicUser;
+  betKind: BlackjackBetTypeInsurance;
+  wonAmount: number;
+}
+
 interface CaseBattleLinkData {
   kind: "case-battle-link";
   battle: BasicCaseBattle;
@@ -50,7 +60,7 @@ interface CaseBattleWinData {
 }
 
 interface CaseWinData {
-  kind: "case-game-win" | "level-case-win" | "gem-case-win" | "holiday-case-win";
+  kind: "case-game-win" | "level-case-win" | "gem-case-win" | "holiday-case-win" | "daily-case-win";
   user: BasicUser;
   chest: BasicChest;
   item: ChestItem;
@@ -92,6 +102,13 @@ interface LimboWonData {
 
 interface MinesWinData {
   kind: "mines-win";
+  user: BasicUser;
+  multiplier: number;
+  wonAmount: number;
+}
+
+interface CrashWinData {
+  kind: "crash-win";
   user: BasicUser;
   multiplier: number;
   wonAmount: number;

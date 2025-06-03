@@ -11,16 +11,20 @@ import { DoubleStreakContent } from "./content/DoubleStreakContent";
 import { DiceWinContent } from "./content/DiceWinContent";
 import { LimboWinContent } from "./content/LimboWinContent";
 import { AdventContent } from "./content/AdventContent";
+import { CrashWinContent } from "./content/CrashWinContent";
 
-export const MessageContent = ({
-  message,
-}: {
-  message: ChatMessageDocument;
-}) => {
+export const MessageContent = ({ message }: { message: ChatMessageDocument }) => {
   if (message.kind === "text") {
     return <TextContent text={message.text} />;
   } else if (message.kind === "advent-bonus") {
     return <AdventContent item={message.item} />;
+  } else if (message.kind === "blackjack-win") {
+    return (
+      <BlackjackWinContent
+        betKind={message.betKind}
+        wonAmount={message.wonAmount}
+      />
+    );
   } else if (message.kind === "case-battle-link") {
     return <CaseBattleLinkContent battle={message.battle} />;
   } else if (message.kind === "case-game-win") {
@@ -52,6 +56,13 @@ export const MessageContent = ({
   } else if (message.kind === "dice-win") {
     return (
       <DiceWinContent
+        multiplier={message.multiplier}
+        wonAmount={message.wonAmount}
+      />
+    );
+  } else if (message.kind === "crash-win") {
+    return (
+      <CrashWinContent
         multiplier={message.multiplier}
         wonAmount={message.wonAmount}
       />

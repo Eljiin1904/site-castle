@@ -21,8 +21,8 @@ export function initHttp(app = express()) {
     cors({
       origin: {
         development: ["http://127.0.0.1:3000", "http://localhost:3000"],
-        devcloud: [`https://dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
-        staging: [`https://staging.${domain}`],
+        devcloud: [`https://dev.${domain}`, `https://api.dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
+        staging: [`https://stage.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
       }[env],
       credentials: true,
@@ -102,12 +102,14 @@ export function initHttp(app = express()) {
   app.use("/cryptos", Routes.cryptos);
   app.use("/dice", Routes.dice);
   app.use("/double", Routes.double);
+  app.use("/crash", Routes.crash);
   app.use("/economy", Routes.economy);
   app.use("/fairness", Routes.fairness);
   app.use("/games", Routes.games);
   app.use("/limbo", Routes.limbo);
   app.use("/market", Routes.market);
   app.use("/mines", Routes.mines);
+  app.use("/blackjack", Routes.blackjack);
   app.use("/notifications", Routes.notifications);
   app.use("/register", Routes.register);
   app.use("/rewards", Routes.rewards);

@@ -27,14 +27,15 @@ export default Http.createApiRoute({
     modifiers: Validation.array()
       .of(Validation.string().oneOf(CaseBattles.modifiers, "Invalid modifiers.").required())
       .required("Modifiers are required."),
+    autoSort: Validation.boolean(),
   }),
-  callback: async (req, res) => {
-    const { mode, chests: chestInfo, modifiers } = req.body;
+  callback: async (req, res, next) => {
+    const { mode, chests: chestInfo, modifiers, autoSort } = req.body;
     const user = req.user;
 
     await Site.validateToggle("caseBattlesEnabled");
-    await Site.validateConfirmed(user);
     await Site.validateSuspension(user);
+    await Site.validateKycTier(user, Validation.kycTiers.personalInfo);
 
     const totalRounds = chestInfo.reduce((acc, x) => (acc += x.count), 0);
 
@@ -50,6 +51,10 @@ export default Http.createApiRoute({
     }
     if (modifiers.some((x, i) => !CaseBattles.getModifierInfo(x).modes.includes(mode))) {
       throw new HandledError("Unsupported modifiers.");
+    }
+
+    if (!CaseBattles.modifiersAreCompatible(modifiers)) {
+      throw new HandledError("Incompatible modifiers.");
     }
 
     modifiers.sort((a, b) => CaseBattles.modifiers.indexOf(a) - CaseBattles.modifiers.indexOf(b));
@@ -117,6 +122,7 @@ export default Http.createApiRoute({
       mode,
       chests,
       modifiers,
+      autoSort,
     });
 
     res.json({ battleId });

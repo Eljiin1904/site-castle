@@ -7,7 +7,8 @@ export default defineConfig({
     environment: "node",
     globals: true,
     testTimeout: 10000,
-    include: ["src/**/*.test.ts", "src/**/*.test.js"],
+    // include: ["src/**/*.test.ts", ],
+    exclude: ["./__tests__", "./node_modules", "build"],
     setupFiles: ["./testSetup.ts"],
     sequence: {
       shuffle: false,

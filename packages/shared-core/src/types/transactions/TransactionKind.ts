@@ -16,6 +16,8 @@ import type { UserLocation } from "../users/UserLocation";
 import type { MarketItem } from "../market/MarketItem";
 import type { MarketInventoryItem } from "../market/MarketInventoryDocument";
 import type { TransactionBetData } from "./TransactionBetData";
+import { BlackjackBetTypeInsurance } from "../blackjack/BlackjackBetAmounts";
+import { SidebetPayout } from "../blackjack/BlackjackApiResponse";
 
 export type TransactionKind = TransactionKindData["kind"];
 
@@ -42,12 +44,14 @@ export type TransactionKindData =
   | LimboWonData
   | MinesBetData
   | MinesWonData
+  | BlackjackBetData
+  | BlackjackSidebetBetData
+  | BlackjackWonData
+  | BlackjackSidebetWonData
   | DuelBetData
   | DuelWonData
   | CrashBetData
   | CrashWonData
-  | BlackjackBetData
-  | BlackjackWonData
   | PromotionCardRedeemData
   | PromotionCodeRedeemData
   | RainPayoutData
@@ -55,6 +59,8 @@ export type TransactionKindData =
   | RewardAdventItemData
   | RewardBoostData
   | RewardClaimData
+  | RewardFaucetData
+  | RewardDailyCaseWonData
   | RewardGemCaseWonData
   | RewardHolidayCaseWonData
   | RewardLevelCaseWonData
@@ -179,29 +185,17 @@ interface DuelWonData {
 interface CrashBetData {
   kind: "crash-bet";
   bet: TransactionBetData;
+  roundId: string;
   gameId: string;
 }
 
 interface CrashWonData {
   kind: "crash-won";
+  roundId: string;
   gameId: string;
   multiplier: number;
-  targetValue: number;
-  targetKind: DiceTargetKind;
+  roundMultiplier: number;
 }
-interface BlackjackBetData {
-  kind: "blackjack-bet";
-  bet: TransactionBetData;
-  gameId: string;
-}
-interface BlackjackWonData {
-  kind: "blackjack-won";
-  gameId: string;
-  multiplier: number;
-  targetValue: number;
-  targetKind: DiceTargetKind;
-}
-/**End review */
 
 interface DiceBetData {
   kind: "dice-bet";
@@ -265,6 +259,35 @@ interface MinesWonData {
   revealCount: number;
   multiplier: number;
 }
+interface BlackjackBetData {
+  kind: "blackjack-bet" | "blackjack-split" | "blackjack-double";
+  bet: TransactionBetData;
+  gameId: string;
+}
+interface BlackjackSidebetBetData {
+  kind: "blackjack-sidebet-bet";
+  subKind: BlackjackBetTypeInsurance;
+  bet: TransactionBetData;
+  gameId: string;
+}
+
+interface BlackjackWonData {
+  kind: "blackjack-won";
+  gameId: string;
+  // targetValue: number;
+  // multiplier: number;
+  // mainSubPayout: number;
+  // splitPayout: number;
+  // doublePayout: number;
+}
+// todo switch to transaction param type and not use this type
+export interface BlackjackSidebetWonData {
+  kind: "blackjack-sidebet-won";
+  subKind: SidebetPayout["type"];
+  gameId: string;
+  title: string;
+  multiplier: SidebetPayout["multiplier"];
+}
 
 interface PromotionCardRedeemData {
   kind: "promotion-card-redeem";
@@ -322,6 +345,13 @@ interface RewardGemCaseWonData {
   item: ChestItem;
 }
 
+interface RewardDailyCaseWonData {
+  kind: "reward-daily-case-item";
+  gameId: string;
+  chest: BasicChest;
+  item: ChestItem;
+}
+
 interface RewardLevelCaseWonData {
   kind: "reward-level-case-item";
   gameId: string;
@@ -334,6 +364,10 @@ interface RewardHolidayCaseWonData {
   gameId: string;
   chest: BasicChest;
   item: ChestItem;
+}
+
+interface RewardFaucetData {
+  kind: "reward-faucet";
 }
 
 interface RewardTokenPackData {

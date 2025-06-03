@@ -35,17 +35,51 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
         stats.limboBetCount = 1;
         stats.limboWagerAmount = tx.value;
         break;
-      }  
+      }
       case "blackjack": {
-        stats.blackjackBetCount = 1;
-        stats.blackjackWagerAmount = tx.value;
+        switch (kind) {
+          case "blackjack-bet":
+            stats.blackjackBetCount = 1;
+            stats.blackjackWagerAmount = tx.value;
+            break;
+
+          case "blackjack-double":
+          case "blackjack-split":
+            stats.blackjackWagerAmount = tx.value;
+            break;
+
+          case "blackjack-sidebet-bet":
+            switch (tx.subKind) {
+              case "insurance":
+                stats.blackjackInsuranceBetCount = 1;
+                stats.blackjackInsuranceWagerAmount = tx.value;
+                break;
+              case "lucky-ladies":
+                stats.blackjackLuckyLadiesBetCount = 1;
+                stats.blackjackLuckyLadiesWagerAmount = tx.value;
+                break;
+              case "blackjack-15x":
+                stats.blackjackBlackjack15xBetCount = 1;
+                stats.blackjackBlackjack15xWagerAmount = tx.value;
+                break;
+              case "perfect-pairs":
+                stats.blackjackPerfectPairsBetCount = 1;
+                stats.blackjackPerfectPairsWagerAmount = tx.value;
+                break;
+              case "21+3":
+                stats.blackjack213BetCount = 1;
+                stats.blackjack213WagerAmount = tx.value;
+                break;
+            }
+            break;
+        }
         break;
       }
       case "mines": {
         stats.minesBetCount = 1;
         stats.minesWagerAmount = tx.value;
         break;
-      }    
+      }
       case "double": {
         stats.doubleBetCount = 1;
         stats.doubleWagerAmount = tx.value;
@@ -55,7 +89,7 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
         stats.caseBetCount = 1;
         stats.caseWagerAmount = tx.value;
         break;
-      }      
+      }
     }
   } else if (
     [
@@ -67,7 +101,7 @@ export function getStatsFromTransaction(tx: TransactionDocument) {
       "dice-won",
       "limbo-won",
       "blackjack-won",
-      "mines-won"
+      "mines-won",
     ].includes(kind)
   ) {
     stats.wonAmount = tx.value;

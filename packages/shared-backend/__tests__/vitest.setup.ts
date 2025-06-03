@@ -46,59 +46,36 @@ beforeAll(async () => {
   initSockets(httpServer);
 
   logger.info("Initialized sockets.");
-  const enableExist = await Database.collection("site-settings").findOne({
-    _id: "doubleEnabled",
-    value: true,
-  });
-  if (!enableExist) {
-    await Database.collection("site-settings").insertMany([
-      {
-        _id: "doubleEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "diceEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "limboEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "minesEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "doubleXpRate",
-        value: 1,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "affiliatesEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "betHighrollerThreshold",
-        value: 100,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "chatEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-      {
-        _id: "rainEnabled",
-        value: true,
-        lastUpdateDate: new Date(),
-      },
-    ]);
-  }
+
+  const settings = [
+    { _id: "doubleEnabled", value: true },
+    { _id: "diceEnabled", value: true },
+    { _id: "limboEnabled", value: true },
+    { _id: "minesEnabled", value: true },
+    { _id: "doubleXpRate", value: 1 },
+    { _id: "affiliatesEnabled", value: true },
+    { _id: "betHighrollerThreshold", value: 100 },
+    { _id: "chatEnabled", value: true },
+    { _id: "rainEnabled", value: true },
+    { _id: "blackjackEnabled", value: true },
+  ];
+
+  const now = new Date();
+
+  await Promise.all(
+    settings.map((setting) =>
+      Database.collection("site-settings").updateOne(
+        { _id: setting._id as any },
+        {
+          $set: {
+            value: setting.value,
+            lastUpdateDate: now,
+          },
+        },
+        { upsert: true },
+      ),
+    ),
+  );
 
   new Promise((resolve, reject) => {
     httpServer.listen(port, () => {
@@ -116,12 +93,13 @@ beforeAll(async () => {
 afterAll(async () => {
   console.log("shutting down MongoDB containers");
   if (httpServer) {
-    await new Promise<void>((resolve, reject) => {
-      httpServer.close((err: any) => {
-        if (err) reject(err);
-        else resolve();
-      });
-    });
+    await httpServer.close();
+    //   await new Promise<void>((resolve, reject) => {
+    //     httpServer.close((err: any) => {
+    //       if (err) reject(err);
+    //       else resolve();
+    //     });
+    //   });
   }
 });
 

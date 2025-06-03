@@ -23,6 +23,11 @@ import { DoubleJackpotDetails } from "../double/DoubleJackpotDetails";
 import type { MinesInitialState } from "../mines/MinesInitialState";
 import type { MinesEventDocument } from "../mines/MinesEventDocument";
 import { UserCampaigns } from "../users/UserCampaigns";
+import { BlackjackFeedMasked } from "../blackjack/BlackjackEventDocument";
+import { CrashInitialState } from "../crash/CrashInitialState";
+import { CrashRoundDocument } from "../crash/CrashRoundDocument";
+import { CrashTicketDocument } from "../crash/CrashTicketDocument";
+import { CrashMultiplierInGameDetails } from "../crash/CrashMultiplierInGameDetails";
 
 export interface SiteServerEvents {
   "activity-feed-init": (x: SiteActivityDocument[]) => void;
@@ -44,6 +49,12 @@ export interface SiteServerEvents {
   "double-round-insert": (round: DoubleRoundDocument) => void;
   "double-round-update": (update: StreamUpdate) => void;
   "double-bet-insert": (bet: DoubleTicketDocument) => void;
+  "crash-init": (x: CrashInitialState) => void;
+  "crash-round-insert": (round: CrashRoundDocument) => void;
+  "crash-round-update": (update: StreamUpdate) => void;
+  "crash-bet-insert": (bet: CrashTicketDocument) => void;
+  "crash-active-round": (round: CrashMultiplierInGameDetails) => void;
+  "crash-bet-update": (bet: StreamUpdate) => void;
   "holiday-init": (x: HolidayInitialState) => void;
   "holiday-race-update": (update: StreamUpdate) => void;
   "hot-feed-init": (x: HotSiteGameDetails[]) => void;
@@ -53,6 +64,8 @@ export interface SiteServerEvents {
   "limbo-insert": (bet: LimboTicketDocument) => void;
   "mines-init": (x: MinesInitialState) => void;
   "mines-insert": (x: MinesEventDocument) => void;
+  "blackjack-init": (x: { feed: BlackjackFeedMasked[] }) => void;
+  "blackjack-insert": (x: BlackjackFeedMasked) => void;
   "notifications-init": (notifications: NotificationDocument[]) => void;
   "notifications-insert": (notification: NotificationDocument) => void;
   "notifications-update": (update: StreamUpdate) => void;
@@ -68,4 +81,5 @@ export interface SiteServerEvents {
   "campaign-init": (x: UserCampaigns[]) => void;
   "campaign-insert": (campaign: UserCampaigns) => void;
   "campaign-update": (update: StreamUpdate) => void;
+  "pong": (callback: () => void) => void;
 }

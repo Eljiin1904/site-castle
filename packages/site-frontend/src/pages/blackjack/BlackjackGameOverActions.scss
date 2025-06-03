@@ -1,0 +1,40 @@
+
+
+.BlackjackGameOverActions {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	gap: 10px;
+
+	.top {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+	}
+	.status-title {
+		color: #fff;
+	}
+
+	.payout {
+		display: flex;
+		align-items: center;
+		padding: 2px 0;
+		gap: 3px;
+
+		color: #fff;
+		white-space: nowrap;
+		font: 300 1.1rem;
+		text-align: center;
+
+		svg {
+			width: 14px;
+			height: 14px;
+		}
+		span {
+			display: block;
+			// for arial
+		}
+	}
+}

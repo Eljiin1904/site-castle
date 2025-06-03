@@ -9,7 +9,7 @@ import { SvgMoney } from "#client/svgs/common/SvgMoney";
 
 export type TokensProps = StyledLayoutProps & {
   value: number;
-  accent?: "positive" | "negative";
+  accent?: "positive" | "negative" | "neutral";
   color?: Color;
   vectorColor?: Color;
   fontSize?: Unit;
@@ -44,6 +44,8 @@ export const Tokens: FC<TokensProps> = ({
       color = "green";
     } else if (accent === "negative") {
       color = "light-red";
+    } else if (accent === "neutral") {
+      color = "white";
     } else {
       color = "light-sand";
     }
@@ -60,7 +62,7 @@ export const Tokens: FC<TokensProps> = ({
         <Vector
           className="icon"
           as={SvgMoney}
-          size={3*fontSize/4}
+          size={(3 * fontSize) / 4}
           mr={2}
           color={color}
         />

@@ -16,6 +16,8 @@ export interface SiteClientEvents {
   "chest-drops-leave": (chestId: string) => void;
   "double-join": () => void;
   "double-leave": () => void;
+  "crash-join": () => void;
+  "crash-leave": () => void;
   "dice-join": (userId: string) => void;
   "dice-leave": () => void;
   "holiday-join": () => void;
@@ -26,6 +28,8 @@ export interface SiteClientEvents {
   "limbo-leave": () => void;
   "mines-join": (userId: string) => void;
   "mines-leave": () => void;
+  "blackjack-join": (userId: string) => void;
+  "blackjack-leave": () => void;
   "notifications-join": () => void;
   "notifications-leave": () => void;
   "notifications-delete": () => void;

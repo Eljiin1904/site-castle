@@ -62,6 +62,14 @@ import { SiteGameDisplayDocument } from "../site/SiteGameDisplayDocument";
 import { SiteJackPotDocument } from "../site/SiteJackpotDocument";
 import { MinesGameDocument } from "../mines/MinesGameDocument";
 import { MinesEventDocument } from "../mines/MinesEventDocument";
+import { CrashRecordDocument } from "../crash/CrashRecord";
+import type { BlackjackTicketDocument } from "../blackjack/BlackjackTicketDocument";
+import { BlackjackEventDocument } from "../blackjack/BlackjackEventDocument";
+import { BlackjackGameDocument } from "../blackjack/BlackjackGameDocument";
+import { CrashRoundDocument } from "../crash/CrashRoundDocument";
+import { CrashTicketDocument } from "../crash/CrashTicketDocument";
+import { UserLatencyDocument } from "../users/UserLatencyDocument";
+import { CrashMultiplierDocument } from "../crash/CrashMultiplierDocument";
 
 export interface DatabaseCollections {
   ["admin-log"]: AdminLogDocument;
@@ -79,6 +87,7 @@ export interface DatabaseCollections {
   ["chest-games"]: ChestGameDocument;
   ["chest-reports"]: ChestReportDocument;
   ["chests"]: ChestDocument;
+  ["crash-records"]: CrashRecordDocument;
   ["crypto-quotes"]: CryptoQuoteDocument;
   ["crypto-rates"]: CryptoRateDocument;
   ["crypto-sweeps"]: CryptoSweepDocument;
@@ -98,6 +107,9 @@ export interface DatabaseCollections {
   ["market-items"]: MarketItemDocument;
   ["mines-events"]: MinesEventDocument;
   ["mines-games"]: MinesGameDocument;
+  ["blackjack-games"]: BlackjackGameDocument;
+  ["blackjack-tickets"]: BlackjackTicketDocument;
+  ["blackjack-events"]: BlackjackEventDocument;
   ["notifications"]: NotificationDocument;
   ["promotion-codes"]: PromotionCodeDocument;
   ["promotion-tickets"]: PromotionTicketDocument;
@@ -129,4 +141,9 @@ export interface DatabaseCollections {
   ["user-reports"]: UserReportDocument;
   ["user-seed-pairs"]: UserSeedPairDocument;
   ["user-sessions"]: UserSessionDocument;
+  ["user-latency"]: UserLatencyDocument;
+  ["crash-rounds"]: CrashRoundDocument;
+  ["crash-tickets"]: CrashTicketDocument;
+  ["crash-multipliers"]: CrashMultiplierDocument; // For crash multipliers, if applicable
+  ["crash-next-tickets"]: CrashTicketDocument; // For next round tickets, if applicable
 }

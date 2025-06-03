@@ -10,11 +10,7 @@ export type PageTitleProps = StyledLayoutProps & {
   heading: string;
 };
 
-export const PageTitle: FC<PageTitleProps> = ({
-  icon,
-  heading,
-  ...forwardProps
-}) => {
+export const PageTitle: FC<PageTitleProps> = ({ icon, heading, ...forwardProps }) => {
   const mainLayout = useLibrarySelector((x) => x.style.mainLayout);
   const small = mainLayout === "mobile";
 

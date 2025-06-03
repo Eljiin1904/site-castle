@@ -15,7 +15,8 @@ export type SiteSettingObject = GeneralSettings &
   RainSettings &
   FeatureToggles &
   ThresholdSettings &
-  MarketProviderToggles;
+  MarketProviderToggles &
+  ChestSettings;
 
 interface GeneralSettings {
   version: string;
@@ -40,9 +41,17 @@ interface XpSettings {
   casesXpRate: number;
   caseBattlesXpRate: number;
   doubleXpRate: number;
+  crashXpRate: number;
   diceXpRate: number;
   limboXpRate: number;
   minesXpRate: number;
+  blackjackXpRate: number;
+
+  blackjackInsuranceXpRate: number;
+  blackjackLuckyLadiesXpRate: number;
+  blackjackBlackjack15xXpRate: number;
+  blackjackPerfectPairsXpRate: number;
+  blackjack213XpRate: number;
 }
 
 interface RainSettings {
@@ -67,8 +76,14 @@ interface FeatureToggles {
   caseBattlesEnabled: boolean;
   diceEnabled: boolean;
   doubleEnabled: boolean;
+  crashEnabled: boolean;
   limboEnabled: boolean;
   minesEnabled: boolean;
+  blackjackEnabled: boolean;
+  blackjackLuckyLadiesEnabled: boolean;
+  blackjackBlackjack15xEnabled: boolean;
+  blackjackPerfectPairsEnabled: boolean;
+  blackjack213Enabled: boolean;
 }
 
 interface ThresholdSettings {
@@ -84,4 +99,9 @@ interface MarketProviderToggles {
   skinifyEnabled: boolean;
   skinsbackEnabled: boolean;
   skindeckEnabled: boolean;
+}
+
+interface ChestSettings {
+  minAnnounceAmount: number;
+  minAnnounceMultiplier: number;
 }
