@@ -24,16 +24,15 @@ animated}: CrashEventProps & {animated?: boolean}) => {
     else {
 
       setEventPosition(lineHeight - Crash.chart.offset);
-      setInitialHeight(0)
+      setInitialHeight(0);
       const intervalId = setInterval(() => {
-
-        if(position <= -Crash.chart.offset) {
+        if(eventPosition <= 25) {
           clearInterval(intervalId);
           return;
         }
         setEventPosition(currentPosition => currentPosition - 2);
         setInitialHeight(currentHeight => currentHeight + 2);
-      }, 2);
+      }, 5);
     }
   }, [position, lineHeight, animated]);
   
