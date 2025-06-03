@@ -45,6 +45,8 @@ const map: Record<TransactionKind, TransactionCategory> = {
   "reward-advent-item": "rewards",
   "reward-boost": "rewards",
   "reward-claim": "rewards",
+  "reward-faucet": "rewards",
+  "reward-daily-case-item": "rewards",
   "reward-gem-case-item": "rewards",
   "reward-holiday-case-item": "rewards",
   "reward-level-case-item": "rewards",

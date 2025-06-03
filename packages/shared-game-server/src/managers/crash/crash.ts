@@ -90,7 +90,7 @@ async function startRound(round: CrashRoundDocument) {
     return;
   }
 
-  const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
+  const { eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
   const serverSeed = Ids.secret();
   const serverSeedHash = Random.hashServerSeed(serverSeed);
 
@@ -117,31 +117,30 @@ async function startRound(round: CrashRoundDocument) {
     timestamp: statusDate,
     serverSeed: serverSeed,
     serverSeedHash: serverSeedHash,
-    roundTime
+    roundTime,
   };
-  
+
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
       $set: {
         status: "simulating",
         statusDate,
-        startDate: statusDate
+        startDate: statusDate,
       },
     },
   );
   await Database.collection("crash-multipliers").insertOne(roundMultiplier);
- 
+
   const intervalId = setInterval(async () => {
-  
     const currentTime = new Date();
     const timer = currentTime.getTime() - statusDate.getTime() - Crash.roundTimes.delay;
     const currentMultiplier = Crash.getMultiplierForTime(timer);
-    if(currentMultiplier >= multiplier) {
+    if (currentMultiplier >= multiplier) {
       clearInterval(intervalId);
       return;
     }
-  
+
     triggerAutoCashTickets(round._id, currentMultiplier);
   }, 150);
 
@@ -163,7 +162,7 @@ async function completeRound(round: CrashRoundDocument) {
   }
 
   const statusDate = new Date();
- 
+
   await Utility.wait(Crash.roundTimes.delay);
   await triggerAutoCashTickets(round._id, round.multiplier);
 
@@ -178,7 +177,7 @@ async function completeRound(round: CrashRoundDocument) {
     processed: true,
     won: true,
   });
-  
+
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
@@ -191,7 +190,7 @@ async function completeRound(round: CrashRoundDocument) {
       },
     },
   );
-  
+
   await Utility.wait(Crash.roundTimes.completed);
   await createRound();
 }
@@ -207,20 +206,20 @@ async function processTickets(round: CrashRoundDocument) {
   });
 
   for await (const ticket of cursor) {
-     await System.tryCatch(processTicket)({ round, ticket });
+    await System.tryCatch(processTicket)({ round, ticket });
   }
 }
 async function processTicket({
   round,
   ticket,
 }: {
-  round: CrashRoundDocument ;
+  round: CrashRoundDocument;
   ticket: CrashTicketDocument;
 }) {
   const multiplier = round.multiplier ?? 1;
-  const betMultiplier =  ticket.multiplierCrashed ?? 0;
+  const betMultiplier = ticket.multiplierCrashed ?? 0;
   let won = ticket.cashoutTriggered ? betMultiplier > 1 && betMultiplier <= multiplier : false;
-  
+
   let wonAmount = won ? Math.round(ticket.betAmount * betMultiplier) : 0;
   await Database.collection("crash-tickets").updateOne(
     {
@@ -231,7 +230,7 @@ async function processTicket({
         won,
         wonAmount,
         processed: true,
-        processDate: new Date()
+        processDate: new Date(),
       },
     },
   );
@@ -241,7 +240,7 @@ async function processTicket({
     user: ticket.user,
     betAmount: ticket.betAmount,
     won,
-    wonAmount
+    wonAmount,
   });
 
   if (won) {
@@ -284,59 +283,61 @@ async function processTicket({
   }
 }
 async function addNextRoundTickets(round: CrashRoundDocument) {
+  //Add next round tickets to current round
+  const nextRoundTickets = await Database.collection("crash-next-tickets")
+    .find({
+      "user.id": { $exists: true },
+    })
+    .toArray();
 
-    //Add next round tickets to current round
-    const nextRoundTickets = await Database.collection("crash-next-tickets").find({
-      "user.id": { $exists: true }
-    }).toArray();
+  if (nextRoundTickets.length === 0) return;
 
-    if (nextRoundTickets.length === 0) 
-      return;
-
-    for(const ticket of nextRoundTickets) {
-
-      const ticketId = await Ids.incremental({
-        key: "crashTicketId",
-        baseValue: 1000000,
-        batchSize: 1,
-      });
-
-      const newTicket: CrashTicketDocument = {
-        ...ticket,
-        _id: ticketId,
-        roundId: round._id
-      };
-
-      await Database.collection("crash-tickets").insertOne(newTicket);
-    }
-
-    // Remove next round tickets
-    await Database.collection("crash-next-tickets").deleteMany({
-      "user.id": { $exists: true }
+  for (const ticket of nextRoundTickets) {
+    const ticketId = await Ids.incremental({
+      key: "crashTicketId",
+      baseValue: 1000000,
+      batchSize: 1,
     });
-    
-    // Update next round tickets transactions with roundId
-    await Database.collection("transactions").updateMany(
-      { roundId: Crash.nextRoundId, kind: "crash-bet" },
-      { $set: { roundId: round._id } }
-    );
+
+    const newTicket: CrashTicketDocument = {
+      ...ticket,
+      _id: ticketId,
+      roundId: round._id,
+    };
+
+    await Database.collection("crash-tickets").insertOne(newTicket);
+  }
+
+  // Remove next round tickets
+  await Database.collection("crash-next-tickets").deleteMany({
+    "user.id": { $exists: true },
+  });
+
+  // Update next round tickets transactions with roundId
+  await Database.collection("transactions").updateMany(
+    { roundId: Crash.nextRoundId, kind: "crash-bet" },
+    { $set: { roundId: round._id } },
+  );
 }
 async function triggerAutoCashTickets(roundId: string, multiplier?: number) {
-  
-  if( !multiplier || multiplier <= 1) 
-    return;
-  await Database.collection("crash-tickets").updateMany({
-    roundId: roundId,
-    processed: { $exists: false },
-    multiplierCrashed: { $exists: false },
-    cashoutTriggered: { $exists: false },
-    targetMultiplier: { $gt: 1, $lte: multiplier},
-  },[{
-    $set: {
-      cashoutTriggered: true,
-      cashoutTriggeredDate: new Date(),
-      multiplierCrashed: "$targetMultiplier",
-      autoCashedTriggerd: true,
-    }
-  }]);
+  if (!multiplier || multiplier <= 1) return;
+  await Database.collection("crash-tickets").updateMany(
+    {
+      roundId: roundId,
+      processed: { $exists: false },
+      multiplierCrashed: { $exists: false },
+      cashoutTriggered: { $exists: false },
+      targetMultiplier: { $gt: 1, $lte: multiplier },
+    },
+    [
+      {
+        $set: {
+          cashoutTriggered: true,
+          cashoutTriggeredDate: new Date(),
+          multiplierCrashed: "$targetMultiplier",
+          autoCashedTriggerd: true,
+        },
+      },
+    ],
+  );
 }

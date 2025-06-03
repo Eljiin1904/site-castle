@@ -60,7 +60,7 @@ interface CaseBattleWinData {
 }
 
 interface CaseWinData {
-  kind: "case-game-win" | "level-case-win" | "gem-case-win" | "holiday-case-win";
+  kind: "case-game-win" | "level-case-win" | "gem-case-win" | "holiday-case-win" | "daily-case-win";
   user: BasicUser;
   chest: BasicChest;
   item: ChestItem;

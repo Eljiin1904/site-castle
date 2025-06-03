@@ -190,96 +190,96 @@ export async function buildTestItems(options: ChestItemOptions[]) {
   return items;
 }
 
-export const createTestChestItem = ({
-  symbol,
-  slug,
-  subType,
-  edition,
-  wear,
-  baseName,
-  styleName,
-  dropRate,
-  announce,
-  jackpot,
-  special,
-  lootValue,
-  lootCount,
-}: ChestItem): ChestItem => {
-  let itemId = Ids.long();
-  return {
-    id: itemId,
-    symbol,
-    slug,
-    subType,
-    edition,
-    wear,
-    baseName,
-    styleName,
-    dropRate,
-    announce,
-    jackpot,
-    special,
-    lootValue,
-    lootCount,
-  };
-};
+// export const createTestChestItem = ({
+//   symbol,
+//   slug,
+//   subType,
+//   edition,
+//   wear,
+//   baseName,
+//   styleName,
+//   dropRate,
+//   announce,
+//   jackpot,
+//   special,
+//   lootValue,
+//   lootCount,
+// }: ChestItem): ChestItem => {
+//   let itemId = Ids.long();
+//   return {
+//     id: itemId,
+//     symbol,
+//     slug,
+//     subType,
+//     edition,
+//     wear,
+//     baseName,
+//     styleName,
+//     dropRate,
+//     announce,
+//     jackpot,
+//     special,
+//     lootValue,
+//     lootCount,
+//   };
+// };
 
-export const createTestChest = ({
-  _id,
-  kind,
-  slug,
-  imageId,
-  displayName,
-  items,
-  openCost,
-  createDate,
-  editDate,
-  disabled,
-}: ChestDocument): ChestDocument => {
-  let chestId = Ids.long();
-  return {
-    _id,
-    kind,
-    slug,
-    imageId,
-    displayName,
-    items,
-    openCost,
-    createDate,
-    editDate,
-    disabled,
-  };
-};
+// export const createTestChest = ({
+//   _id,
+//   kind,
+//   slug,
+//   imageId,
+//   displayName,
+//   items,
+//   openCost,
+//   createDate,
+//   editDate,
+//   disabled,
+// }: ChestDocument): ChestDocument => {
+//   let chestId = Ids.long();
+//   return {
+//     _id,
+//     kind,
+//     slug,
+//     imageId,
+//     displayName,
+//     items,
+//     openCost,
+//     createDate,
+//     editDate,
+//     disabled,
+//   };
+// };
 
-export const createTestChestGame = async (user: UserDocument, chest: ChestDocument) => {
-  const { serverSeed, clientSeed, nonce } = await Random.nextUserNonce(user?._id);
-  const rollValue = Random.getRoll({
-    serverSeed,
-    clientSeed,
-    nonce,
-    maxValue: 1000000,
-  });
-  const roll = Chests.createRoll({ chest, specialEnabled: false, value: rollValue });
-  const loot = chest.items[roll.lootIndex];
+// export const createTestChestGame = async (user: UserDocument, chest: ChestDocument) => {
+//   const { serverSeed, clientSeed, nonce } = await Random.nextUserNonce(user?._id);
+//   const rollValue = Random.getRoll({
+//     serverSeed,
+//     clientSeed,
+//     nonce,
+//     maxValue: 1000000,
+//   });
+//   const roll = Chests.createRoll({ chest, specialEnabled: false, value: rollValue });
+//   const loot = chest.items[roll.lootIndex];
 
-  let gameId;
-  if (!gameId) {
-    gameId = await getGameId();
-  }
+//   let gameId;
+//   if (!gameId) {
+//     gameId = await getGameId();
+//   }
 
-  const game: ChestGameDocument = {
-    _id: gameId,
-    timestamp: new Date(),
-    user: Users.getBasicUser(user),
-    chest: Chests.getBasicChest(chest),
-    roll,
-    loot,
-    speed: "turbo",
-    clientSeed,
-    serverSeed,
-    serverSeedHashed: Random.hashServerSeed(serverSeed),
-    nonce,
-  };
+//   const game: ChestGameDocument = {
+//     _id: gameId,
+//     timestamp: new Date(),
+//     user: Users.getBasicUser(user),
+//     chest: Chests.getBasicChest(chest),
+//     roll,
+//     loot,
+//     speed: "turbo",
+//     clientSeed,
+//     serverSeed,
+//     serverSeedHashed: Random.hashServerSeed(serverSeed),
+//     nonce,
+//   };
 
-  return game;
-};
+//   return game;
+// };

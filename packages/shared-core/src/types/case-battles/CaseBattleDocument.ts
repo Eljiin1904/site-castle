@@ -18,7 +18,10 @@ export type CaseBattleDocument = {
   roundIndex: number;
   statusDate: Date;
   ready?: boolean;
+  joinKey?: string;
   eosBlockNum?: number;
   eosBlockId?: string;
   totalWon?: number;
+  autoSort?: boolean;
+  viewers: (string | null)[];
 } & CaseBattleStatusData;

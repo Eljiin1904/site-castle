@@ -1,20 +1,40 @@
 import { Numbers } from "#core/services/numbers";
 import { ChestDocument } from "#core/types/chests/ChestDocument";
+import { ChestItem } from "#core/types/chests/ChestItem";
 import { ChestRoll } from "#core/types/chests/ChestRoll";
+import { getChestFlags } from "./getChestFlags";
+// import { getChestFlags } from "./getChestFlags";
+
+type Settings = { minAnnounceAmount: number; minAnnounceMultiplier: number };
 
 export function createRoll({
   chest,
   value,
   specialEnabled,
+  settings,
 }: {
   chest: ChestDocument;
   value: number;
   specialEnabled: boolean;
+  settings: Settings;
 }) {
   const lootIndex = getLootIndex({ chest, roll: value });
   const loot = chest.items[lootIndex];
-  const specialShow = specialEnabled; // && Math.random() < 0.8;
-  const specialSpin = specialShow && loot.special;
+
+  const specialCurry = (chestItem: ChestItem, openCost: number) =>
+    getChestFlags({
+      settings,
+      openCost,
+      chestItem,
+    }).special;
+
+  const hasEnoughSpecialItems =
+    chest.items.filter((item) => specialCurry(item, chest.openCost)).length >= 3;
+
+  const isItemSpecial = specialCurry(loot, chest.openCost);
+
+  const specialShow = specialEnabled && hasEnoughSpecialItems;
+  const specialSpin = specialShow && isItemSpecial;
 
   const spin: ChestRoll = {
     value,
@@ -23,10 +43,10 @@ export function createRoll({
     specialShow,
     specialSpin,
     reel: [
-      getRandomItemIndex({ chest, specialSpin }),
-      getRandomItemIndex({ chest, specialSpin }),
-      getRandomItemIndex({ chest, specialSpin }),
-      getRandomItemIndex({ chest, specialSpin }),
+      getRandomItemIndex({ chest, specialSpin, settings }),
+      getRandomItemIndex({ chest, specialSpin, settings }),
+      getRandomItemIndex({ chest, specialSpin, settings }),
+      getRandomItemIndex({ chest, specialSpin, settings }),
       Numbers.randomInt(9, 15),
       Numbers.randomInt(16, 22),
       Numbers.randomInt(23, 26),
@@ -54,12 +74,21 @@ function getLootIndex({ chest, roll }: { chest: ChestDocument; roll: number }) {
 function getRandomItemIndex({
   chest,
   specialSpin,
+  settings,
 }: {
   chest: ChestDocument;
   specialSpin: boolean;
+  settings: Settings;
 }) {
   const items = specialSpin
-    ? chest.items.filter((x) => x.special)
+    ? chest.items.filter(
+        (x) =>
+          getChestFlags({
+            settings,
+            openCost: chest.openCost,
+            chestItem: x,
+          }).special,
+      )
     : chest.items;
   const rValue = Numbers.randomInt(1, 1000);
   let index;

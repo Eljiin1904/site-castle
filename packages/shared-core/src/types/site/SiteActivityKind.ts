@@ -35,6 +35,7 @@ interface CaseBattleDropData {
 interface CaseDropData {
   kind:
     | "case-drop"
+    | "reward-daily-case-drop"
     | "reward-gem-case-drop"
     | "reward-holiday-case-drop"
     | "reward-level-case-drop";

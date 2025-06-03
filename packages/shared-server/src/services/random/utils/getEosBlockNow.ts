@@ -25,9 +25,7 @@ export async function getEosBlockNow() {
       );
       setLastBlock(res.data);
     } catch (e) {
-      const res = await axios.get<ResponseData>(
-        "https://eos.greymass.com/v1/chain/get_info",
-      );
+      const res = await axios.get<ResponseData>("https://eos.greymass.com/v1/chain/get_info");
       setLastBlock(res.data);
     }
   }

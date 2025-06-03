@@ -5,10 +5,12 @@ import { createRoll } from "./createRoll";
 export function getDemoRoll({
   chest,
   specialEnabled,
+  settings,
 }: {
   chest: ChestDocument;
   specialEnabled: boolean;
+  settings: { minAnnounceAmount: number; minAnnounceMultiplier: number };
 }) {
   const value = Numbers.randomInt(1, 1000000);
-  return createRoll({ chest, specialEnabled, value });
+  return createRoll({ chest, specialEnabled, value, settings });
 }

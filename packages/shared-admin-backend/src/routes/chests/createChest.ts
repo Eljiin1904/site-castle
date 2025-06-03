@@ -1,17 +1,17 @@
 import sharp from "sharp";
-import { Intimal } from "@core/services/intimal";
-import { Items } from "@core/services/items";
-import { Validation } from "@core/services/validation";
-import { Strings } from "@core/services/strings";
 import { ChestDocument } from "@core/types/chests/ChestDocument";
 import { ChestItem, ChestItemOptions } from "@core/types/chests/ChestItem";
+import { Intimal } from "@core/services/intimal";
+import { Items } from "@core/services/items";
+import { Strings } from "@core/services/strings";
+import { Validation } from "@core/services/validation";
+import { Admin } from "@server/services/admin";
+import { Chests } from "@server/services/chests";
+import { Cloud } from "@server/services/cloud";
 import { Database } from "@server/services/database";
 import { HandledError } from "@server/services/errors";
-import { Users } from "@server/services/users";
 import { Ids } from "@server/services/ids";
-import { Admin } from "@server/services/admin";
-import { Cloud } from "@server/services/cloud";
-import { Chests } from "@server/services/chests";
+import { Users } from "@server/services/users";
 import { Http } from "#app/services/http";
 
 export default Http.createApiRoute({
@@ -19,23 +19,21 @@ export default Http.createApiRoute({
   path: "/create-chest",
   file: "image",
   body: Validation.object({
-    displayName: Validation.string().required("Display name is required."),
     kind: Validation.string().oneOf(Chests.kinds).required("Kind is required."),
+    displayName: Validation.string().required("Display name is required."),
     items: Validation.array()
       .json()
       .of(
         Validation.object({
           id: Validation.string().required(),
           dropRate: Validation.number().integer().required(),
-          announce: Validation.boolean().required(),
-          jackpot: Validation.boolean().required(),
-          special: Validation.boolean().required(),
         }),
       )
       .required(),
+    edgeRate: Validation.number().min(0.01).max(0.99).required("Edge rate is required."),
   }),
-  callback: async (req, res) => {
-    const { displayName, kind } = req.body;
+  callback: async (req, res, next) => {
+    const { edgeRate, displayName, kind } = req.body;
     const slug = Strings.toSlug(displayName);
     const admin = req.user;
 
@@ -62,19 +60,24 @@ export default Http.createApiRoute({
     });
 
     const chestId = Ids.short();
-    const openCost = Intimal.ceil(Chests.getValue(items).openCost);
+    const openCost = Intimal.ceil(Chests.getValue({ edgeRate, items }).openCost);
 
-    const chest: ChestDocument = {
+    const omitChest: Omit<ChestDocument, "volatility"> = {
       _id: chestId,
       kind,
       slug,
       imageId,
       displayName,
+      edgeRate,
       items,
       openCost,
       createDate: new Date(),
       editDate: new Date(),
       disabled: true,
+    };
+    const chest: ChestDocument = {
+      ...omitChest,
+      volatility: Chests.getChestVolatility(omitChest),
     };
 
     await Database.collection("chests").insertOne(chest);

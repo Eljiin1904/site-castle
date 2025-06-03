@@ -98,7 +98,7 @@ async function startRound(round: DoubleRoundDocument) {
     return;
   }
 
-  const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
+  const { eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
 
   const rollValue = Random.getRoll({
     serverSeed: round.serverSeed,
