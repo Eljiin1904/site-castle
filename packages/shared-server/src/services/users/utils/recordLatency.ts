@@ -26,7 +26,7 @@ export async function recordLatency(
       userIdToUse = socketId ?? "anonymous";
     }
     
-    const userLatency =  await Database.collection("user-latency").findOne({ userId:userIdToUse});
+    const userLatency =  await Database.collection("user-latency").findOne({userId:userIdToUse});
     const recordingDate = new Date();
 
     // If no user latency document exists, create one

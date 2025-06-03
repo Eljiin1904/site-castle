@@ -44,7 +44,7 @@ const initialState: CrashState = {
   history: [],
   tickets: [],
   betAmount: Utility.getLocalInt("crash-bet-amount", 0),
-  targetMultiplier: Utility.getLocalFloat("crash-target-multiplier", 1),
+  targetMultiplier: undefined,
   mode: "manual",
   autoMode: "controls",
   crashEvents: [],
@@ -172,6 +172,9 @@ export const crashSlice = createSlice({
         state.crashEvents = [payload];
       }
     }),
+    resetCrashEvents: (state) => {
+      state.crashEvents = [];
+    },
     setMode: reducer<CrashMode>((state, { payload }) => {
       state.mode = payload;
     }),
@@ -221,6 +224,7 @@ export const {
   updateMultiplier,
   setProcessing,
   addCrashEvent,
+  resetCrashEvents,
   setBetAmount,
   seTargetMultiplier,
   setGameCount,

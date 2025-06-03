@@ -14,8 +14,19 @@ import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 import { Crash } from "@core/services/crash";
 import { CrashMultiplierDocument } from "@core/types/crash/CrashMultiplierDocument";
 
+/**
+ * Main entry point for the crash game server logic.
+ * Initializes the crash game, checks for existing rounds, and manages the lifecycle of crash rounds. 
+ * Handles setup, start, and completion of rounds, processes tickets, and manages automatic cashing out of tickets.
+ */
+
 export default () => System.tryCatch(main)();
 
+/**
+ * Main function to manage the crash game lifecycle.
+ * Checks for existing rounds, sets up a new round if none exists, or continues with the existing round based on its status. 
+ * @returns {Promise<void>}
+ */
 async function main() {
   const logger = getServerLogger({});
   logger.info("initializing crash game");
@@ -38,7 +49,11 @@ async function main() {
     await createRound();
   }
 }
-
+/**
+ * Creates a new crash round with an incremental ID,
+ * initializes the round with a timestamp, and sets its status to "waiting".
+ * Adds next round tickets to the current round and waits for the specified waiting time before proceeding to setup the round.
+ */
 async function createRound() {
   const roundId = await Ids.incremental({
     key: "crashRoundId",
@@ -59,7 +74,12 @@ async function createRound() {
   await Utility.wait(Crash.roundTimes.waiting);
   await setupRound(round);
 }
-
+/**
+ * Sets up a crash round by updating its status to "pending".
+ * Sets the EOS block number and the status date.
+ * Waits for a specified time before starting the round.
+ * @param round - The crash round document to be set up.
+ */
 async function setupRound(round: CrashRoundDocument) {
   const blockNow = await Random.getEosBlockNow();
   const eosBlockNum = blockNow.eosBlockNum + 4;
@@ -84,7 +104,13 @@ async function setupRound(round: CrashRoundDocument) {
   await Utility.wait(Crash.roundTimes.pending);
   await startRound(round);
 }
-
+/**
+ * The round status must be "pending".
+ * Generates a server seed, calculates the multiplier, and creates a crash multiplier document.
+ * Updates the round status to "simulating" and starts an interval for automatic cashing out of tickets at the current multiplier.
+ * @param round - The crash round document to be started.
+ * @returns 
+ */
 async function startRound(round: CrashRoundDocument) {
   if (round.status !== "pending") {
     return;
@@ -93,33 +119,49 @@ async function startRound(round: CrashRoundDocument) {
   const { eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
   const serverSeed = Ids.secret();
   const serverSeedHash = Random.hashServerSeed(serverSeed);
-
-  let multiplier = 15;
-  Random.getMultiplier({
-    serverSeed: serverSeed,
-    clientSeed: eosBlockId,
-    nonce: round._id,
-    maxValue: Crash.maxValue,
+  
+  let multiplier: number;
+  let roundTime: number;
+  const statusDate = new Date();
+  const multiplierInServer = await Database.collection("crash-multipliers").findOne({
+    roundId: round._id,
+    multiplier: { $gt: 1 },
   });
+  if (multiplierInServer) {
+    multiplier = multiplierInServer.multiplier;
+    roundTime = multiplierInServer.roundTime;
+  } 
+  else {
+    
+    multiplier = 15;
+    Random.getMultiplier({
+      serverSeed: serverSeed,
+      clientSeed: eosBlockId,
+      nonce: round._id,
+      maxValue: Crash.maxValue,
+    });
 
-  const multiplierId = await Ids.incremental({
-    key: "crashMultiplierId",
-    baseValue: 1000000,
-    batchSize: 1,
-  });
+    const multiplierId = await Ids.incremental({
+      key: "crashMultiplierId",
+      baseValue: 1000000,
+      batchSize: 1,
+    });
+
 
   const statusDate = new Date();
-  const roundTime = Crash.getTimeForMultiplier(multiplier);
-  const roundMultiplier: CrashMultiplierDocument = {
-    _id: multiplierId,
-    roundId: round._id,
-    multiplier: multiplier,
-    timestamp: statusDate,
-    serverSeed: serverSeed,
-    serverSeedHash: serverSeedHash,
-    roundTime,
-  };
-
+    roundTime = Crash.getTimeForMultiplier(multiplier);
+    const roundMultiplier: CrashMultiplierDocument = {
+      _id: multiplierId,
+      roundId: round._id,
+      multiplier: multiplier,
+      timestamp: statusDate,
+      serverSeed: serverSeed,
+      serverSeedHash: serverSeedHash,
+      roundTime
+    };
+    await Database.collection("crash-multipliers").insertOne(roundMultiplier);
+  }
+  
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
@@ -129,9 +171,8 @@ async function startRound(round: CrashRoundDocument) {
         startDate: statusDate,
       },
     },
-  );
-  await Database.collection("crash-multipliers").insertOne(roundMultiplier);
-
+  ); 
+ 
   const intervalId = setInterval(async () => {
     const currentTime = new Date();
     const timer = currentTime.getTime() - statusDate.getTime() - Crash.roundTimes.delay;
@@ -155,7 +196,15 @@ async function startRound(round: CrashRoundDocument) {
     eosBlockId,
   });
 }
-
+/**
+ * Completes a crash round by processing all tickets.
+ * Waits for a specified delay time to allow clients to end simulation.
+ * Triggers automatic cashing out of tickets at the current multiplier, processes the tickets, and updates the round status to "completed".
+ * Counts the total number of winning tickets and updates the round document accordingly.
+ * Waits for a specified completed time before creating a new round.
+ * @param round - The crash round document to be completed.
+ * @returns 
+ */
 async function completeRound(round: CrashRoundDocument) {
   if (round.status !== "simulating") {
     return;
@@ -194,7 +243,13 @@ async function completeRound(round: CrashRoundDocument) {
   await Utility.wait(Crash.roundTimes.completed);
   await createRound();
 }
-
+/**
+ * Processes all tickets for a given crash round.
+ * Checks if the round status is "completed", retrieves all unprocessed tickets for that round, and processes each ticket.
+ * Determines if the ticket won or lost based on the multiplier.
+ * @param round - The crash round document to process tickets for.
+ * @returns 
+ */
 async function processTickets(round: CrashRoundDocument) {
   if (round.status !== "completed") {
     return;
@@ -209,6 +264,14 @@ async function processTickets(round: CrashRoundDocument) {
     await System.tryCatch(processTicket)({ round, ticket });
   }
 }
+/**
+ * Processes a single crash ticket.
+ * Checks if the ticket has already been processed, calculates whether the ticket won or lost based on the multiplier.
+ * If the ticket won, calculates the won amount and updates the ticket document in the database.
+ * Creates a transaction for the user and tracks the bet and activity.
+ * @param round - The crash round document containing the multiplier and other details.
+ * @param ticket - The crash ticket document to be processed.
+ */
 async function processTicket({
   round,
   ticket,
@@ -282,6 +345,12 @@ async function processTicket({
     }
   }
 }
+/**
+ * Adds next round tickets to the current round.
+ * Retrieves all next round tickets from the database, generates a new ticket ID for each, and inserts them into the crash tickets collection with the current round ID.
+ * Deletes the next round tickets and updates the transactions with the new round ID.
+ * @param round - The crash round document to which the next round tickets will be added.
+ */
 async function addNextRoundTickets(round: CrashRoundDocument) {
   //Add next round tickets to current round
   const nextRoundTickets = await Database.collection("crash-next-tickets")
@@ -319,6 +388,14 @@ async function addNextRoundTickets(round: CrashRoundDocument) {
     { $set: { roundId: round._id } },
   );
 }
+/**
+ * Triggers the automatic cashing out of tickets for a specific crash round.
+ * Updates tickets that have not been processed, have not crashed, and have not triggered cashout.
+ * Sets their cashoutTriggered status to true, the cashoutTriggeredDate to the current date, and the multiplierCrashed to the targetMultiplier.
+ * @param roundId - The ID of the crash round for which tickets should be automatically cashed out.
+ * @param multiplier - The multiplier in a moment in time at which tickets should be cashed out automatically.
+ * @returns 
+ */
 async function triggerAutoCashTickets(roundId: string, multiplier?: number) {
   if (!multiplier || multiplier <= 1) return;
   await Database.collection("crash-tickets").updateMany(

@@ -1,0 +1,23 @@
+.Pumpit {
+
+  animation: PumpitScale 1.2s ease-in-out infinite;
+}
+
+@keyframes PumpitScale {
+  0% { 
+   transform: scale(0);
+   opacity: 0;
+  }
+  20% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  60% {    
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {    
+    transform:  scale(0);
+    opacity: 0;
+  }
+}

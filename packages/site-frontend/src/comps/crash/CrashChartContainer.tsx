@@ -54,11 +54,11 @@ export const CrashChartContainer = () => {
  
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
-      {multiplier > 10 && round.status === 'simulating' && <PumpitMemoized roundId={round._id} />}    
+      {multiplier > 10 && (round.status === 'simulating' || round.status === 'completed') && <PumpitMemoized roundId={round._id} />}    
       <CrashYAxis multiplier={multiplier} />
-      {crashEvents.map((value, index) => <CrashEvent key={index} startedLine={value.startedLine} crashColor={value.crashColor} crashPosition={value.crashPosition} startedCrashLength={value.crashLength} crashLength={value.crashLength} />)}
-      {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startedLine={true} crashColor={"bright-green"} crashPosition={0} startedCrashLength={0} crashLength={linePosition} />}
-      {round.status === 'completed' && <CrashEvent animated startedLine={true} crashColor={"double-red"} crashPosition={-chartOffset} startedCrashLength={linePosition + chartOffset} crashLength={linePosition + chartOffset} />}
+      {crashEvents.map((value, index) => <CrashEvent key={index} startAtLine={value.startAtLine} color={value.color} position={value.position} initialHeight={value.height} height={value.height} />)}
+      {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startAtLine={true} color={"bright-green"} position={0} initialHeight={0} height={linePosition} />}
+      {round.status === 'completed' && <CrashEvent animated startAtLine={true} color={"double-red"} position={-chartOffset} initialHeight={linePosition + chartOffset} height={linePosition + chartOffset} />}
       <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
       {cashout && cashoutMultiplier <= multiplier && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
       <CashoutEvents multiplier={multiplier}/>

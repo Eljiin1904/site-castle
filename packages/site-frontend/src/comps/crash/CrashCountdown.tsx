@@ -18,8 +18,14 @@ export const CrashCountdown = ({events, time}:{events: CrashEventProps[] ,time:n
   useInterval(() => {
    if(timer > 0) {
     setTimer(currentVal => currentVal - 500);
-    const newChartLine = Crash.createCrashEvent(events.length == 0, events[events.length - 1]);
-    dispatch(addCrashEvent(newChartLine));
+    let crashEvent = undefined;
+    if(events.length === 0)
+      crashEvent = Crash.createCrashEvent({startAtLine: true, color: "bright-green"});
+    else if(events.length > 0 && timer <= 500)
+      crashEvent = Crash.createCrashEvent({startAtLine: true, color: "double-red"}, events[events.length - 1]);
+    else
+      crashEvent = Crash.createCrashEvent({startAtLine: false}, events[events.length - 1]);
+    dispatch(addCrashEvent(crashEvent));
    }
   }, 500);
 
