@@ -8,12 +8,7 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     include: ["**/*.test.ts"],
-    exclude: [
-      ...configDefaults.exclude,
-      "**/ignore/**",
-      "./__tests__/integration/listeners/**",
-      // "./__tests__/integration/register/register-local.test.ts",
-    ],
+    exclude: [...configDefaults.exclude, "**/ignore/**", "./__tests__/integration/listeners/**"],
     setupFiles: ["./__tests__/vitest.setup.ts"],
     globalSetup: ["./__tests__/global-setup.ts"],
     globals: true,

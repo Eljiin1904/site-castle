@@ -15,7 +15,8 @@ export type SiteSettingObject = GeneralSettings &
   RainSettings &
   FeatureToggles &
   ThresholdSettings &
-  MarketProviderToggles;
+  MarketProviderToggles &
+  ChestSettings;
 
 interface GeneralSettings {
   version: string;
@@ -98,4 +99,9 @@ interface MarketProviderToggles {
   skinifyEnabled: boolean;
   skinsbackEnabled: boolean;
   skindeckEnabled: boolean;
+}
+
+interface ChestSettings {
+  minAnnounceAmount: number;
+  minAnnounceMultiplier: number;
 }

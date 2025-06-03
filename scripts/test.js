@@ -19,7 +19,7 @@ const packages = fs.readdirSync(packagesDir).filter((name) => {
 
 for (const pkg of packages) {
   const pkgPath = path.join(packagesDir, pkg);
-  const testCommand = 'npx vitest run --passWithNoTests';
+  const testCommand = 'npx vitest run --no-file-parallelism --passWithNoTests';
 
   console.log(`\n🔍 Running tests in ${pkg}...`);
   try {

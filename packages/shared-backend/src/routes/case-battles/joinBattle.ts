@@ -15,13 +15,14 @@ export default Http.createApiRoute({
   body: Validation.object({
     battleId: Validation.string().required("Battle ID is required."),
     seat: Validation.number().min(1).max(3).required("Seat is required."),
+    joinKey: Validation.string(),
   }),
-  callback: async (req, res) => {
-    const { battleId, seat } = req.body;
+  callback: async (req, res, next) => {
+    const { battleId, seat, joinKey } = req.body;
     const user = req.user;
 
-    await Site.validateConfirmed(user);
     await Site.validateSuspension(user);
+    await Site.validateKycTier(user, Validation.kycTiers.personalInfo);
 
     const activeBattles = await Database.collection("case-battles").countDocuments({
       players: { $elemMatch: { id: user._id } },
@@ -50,6 +51,15 @@ export default Http.createApiRoute({
     await Site.validateTokenBalance(user, battle.entryCost);
 
     const location = await Http.getLocation(req.trueIP);
+
+    const modifiers = battle.modifiers;
+
+    const privateBattle = modifiers.includes("private");
+    const friendsOnly = modifiers.includes("friends-only");
+
+    if ((privateBattle || friendsOnly) && joinKey !== battle.joinKey) {
+      throw new HandledError("This battle requires an invitation to join.");
+    }
 
     await CaseBattles.joinBattle({
       user,

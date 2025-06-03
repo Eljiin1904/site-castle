@@ -21,6 +21,7 @@ export function trimDocument(battle: CaseBattleDocument) {
     status: battle.status,
     statusDate: battle.statusDate,
     totalWon: "totalWon" in battle ? battle.totalWon : 0,
+    createDate: battle.createDate,
   };
 
   return trimmed as CaseBattleDocument;

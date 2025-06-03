@@ -105,7 +105,7 @@ async function startBattle(battle: CaseBattleDocument) {
     return;
   }
 
-  const { id: eosBlockId } = await Random.getEosBlock(battle.eosBlockNum);
+  const { eosBlockId } = await Random.getEosBlock(battle.eosBlockNum);
 
   await Database.collection("case-battles").updateOne(
     { _id: battle._id },
@@ -155,6 +155,8 @@ async function processRound(
   const chest = CaseBattles.getRoundChest(battle, roundIndex);
   let special = false;
 
+  const settings = await Site.settings.cache();
+
   for (let seat = 0; seat < battle.players.length; seat++) {
     const serverSeed = battle.serverSeed;
     const clientSeed = battle.eosBlockId;
@@ -169,6 +171,7 @@ async function processRound(
       chest,
       specialEnabled: true,
       value: rollValue,
+      settings,
     });
 
     special = special || roll.specialSpin;
@@ -202,32 +205,42 @@ async function processRound(
     const roll = round.rolls[seat];
     const loot = chest.items[roll.lootIndex];
 
-    await Chests.createDrop({
-      source: "battle",
-      user: player,
-      chest: Chests.getBasicChest(chest),
-      loot,
-    });
+    const isPrivate = battle.modifiers.includes("private");
 
-    await Site.trackActivity({
-      kind: "case-battle-drop",
-      user: player,
-      amount: loot.lootValue,
-      battleId: battle._id,
-      chest: Chests.getBasicChest(chest),
-      loot,
-    });
-
-    if (loot.announce) {
-      await Chat.createMessage({
-        agent: "system",
-        channel: null,
-        kind: "case-battle-win",
+    if (!isPrivate) {
+      await Chests.createDrop({
+        source: "battle",
         user: player,
-        battle: CaseBattles.getBasicBattle(battle),
         chest: Chests.getBasicChest(chest),
-        item: loot,
+        loot,
       });
+
+      await Site.trackActivity({
+        kind: "case-battle-drop",
+        user: player,
+        amount: loot.lootValue,
+        battleId: battle._id,
+        chest: Chests.getBasicChest(chest),
+        loot,
+      });
+
+      if (
+        Chests.getChestFlags({
+          settings,
+          openCost: chest.openCost,
+          chestItem: loot,
+        }).announce
+      ) {
+        await Chat.createMessage({
+          agent: "system",
+          channel: null,
+          kind: "case-battle-win",
+          user: player,
+          battle: CaseBattles.getBasicBattle(battle),
+          chest: Chests.getBasicChest(chest),
+          item: loot,
+        });
+      }
     }
   }
 }
@@ -243,9 +256,9 @@ async function completeBattle(battle: CaseBattleDocument) {
   const isCrazy = modifiers.includes("crazy");
   const players = battle.players as CaseBattlePlayerWithResult[];
 
-  const wonTotals = players.map(() => 0);
-  const firstTotals = players.map(() => 0);
-  const lastTotals = players.map(() => 0);
+  const wonTotals = players.map((x) => 0);
+  const firstTotals = players.map((x) => 0);
+  const lastTotals = players.map((x) => 0);
 
   for (let roundIndex = 0; roundIndex < rounds.length; roundIndex++) {
     const round = rounds[roundIndex];

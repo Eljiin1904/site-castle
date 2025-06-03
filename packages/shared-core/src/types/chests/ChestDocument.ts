@@ -5,6 +5,7 @@ import type { ChestReport } from "./ChestReport";
 export interface ChestDocument {
   _id: string;
   kind: ChestKind;
+  edgeRate: number;
   displayName: string;
   slug: string;
   imageId: string;
@@ -13,6 +14,7 @@ export interface ChestDocument {
   createDate: Date;
   editDate: Date;
   disabled: boolean;
+  volatility: number;
   popularity?: number;
 }
 

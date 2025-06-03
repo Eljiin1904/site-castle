@@ -69,6 +69,8 @@ async function processGame(game: ChestGameDocument) {
     await processCaseGame({ game, user });
   } else if (game.chest.kind === "level-case") {
     await processLevelCase({ game, user });
+  } else if (game.chest.kind === "daily-case") {
+    await processDailyCase({ game, user });
   } else if (game.chest.kind === "gem-case") {
     await processGemCase({ game, user });
   } else if (game.chest.kind === "holiday-case") {
@@ -110,7 +112,15 @@ async function processCaseGame({ game, user }: { game: ChestGameDocument; user: 
     loot: game.loot,
   });
 
-  if (game.loot.announce) {
+  const settings = await Site.settings.cache();
+
+  if (
+    Chests.getChestFlags({
+      settings,
+      openCost: game.chest.openCost,
+      chestItem: game.loot,
+    }).announce
+  ) {
     await Chat.createMessage({
       agent: "system",
       channel: null,
@@ -141,11 +151,58 @@ async function processLevelCase({ game, user }: { game: ChestGameDocument; user:
     loot: game.loot,
   });
 
-  if (game.loot.announce) {
+  const settings = await Site.settings.cache();
+
+  if (
+    Chests.getChestFlags({
+      settings,
+      openCost: game.chest.openCost,
+      chestItem: game.loot,
+    }).announce
+  ) {
     await Chat.createMessage({
       agent: "system",
       channel: null,
       kind: "level-case-win",
+      user: Users.getBasicUser(user),
+      chest: game.chest,
+      item: game.loot,
+    });
+  }
+}
+
+async function processDailyCase({ game, user }: { game: ChestGameDocument; user: UserDocument }) {
+  await Transactions.createTransaction({
+    user,
+    autoComplete: true,
+    kind: "reward-daily-case-item",
+    amount: game.loot.lootValue,
+    gameId: game._id,
+    chest: game.chest,
+    item: game.loot,
+  });
+
+  await Site.trackActivity({
+    kind: "reward-daily-case-drop",
+    user: Users.getBasicUser(user),
+    amount: game.loot.lootValue,
+    chest: game.chest,
+    loot: game.loot,
+  });
+
+  const settings = await Site.settings.cache();
+
+  if (
+    Chests.getChestFlags({
+      settings,
+      openCost: game.chest.openCost,
+      chestItem: game.loot,
+    }).announce
+  ) {
+    await Chat.createMessage({
+      agent: "system",
+      channel: null,
+      kind: "daily-case-win",
       user: Users.getBasicUser(user),
       chest: game.chest,
       item: game.loot,
@@ -172,7 +229,15 @@ async function processGemCase({ game, user }: { game: ChestGameDocument; user: U
     loot: game.loot,
   });
 
-  if (game.loot.announce) {
+  const settings = await Site.settings.cache();
+
+  if (
+    Chests.getChestFlags({
+      settings,
+      openCost: game.chest.openCost,
+      chestItem: game.loot,
+    }).announce
+  ) {
     await Chat.createMessage({
       agent: "system",
       channel: null,
@@ -203,7 +268,15 @@ async function processHolidayCase({ game, user }: { game: ChestGameDocument; use
     loot: game.loot,
   });
 
-  if (game.loot.announce) {
+  const settings = await Site.settings.cache();
+
+  if (
+    Chests.getChestFlags({
+      settings,
+      openCost: game.chest.openCost,
+      chestItem: game.loot,
+    }).announce
+  ) {
     await Chat.createMessage({
       agent: "system",
       channel: null,

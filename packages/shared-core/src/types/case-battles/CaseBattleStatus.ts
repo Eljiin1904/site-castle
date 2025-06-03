@@ -1,15 +1,8 @@
-import type {
-  CaseBattlePlayer,
-  CaseBattlePlayerWithResult,
-} from "./CaseBattlePlayer";
+import type { CaseBattlePlayer, CaseBattlePlayerWithResult } from "./CaseBattlePlayer";
 
 export type CaseBattleStatus = CaseBattleStatusData["status"];
 
-export type CaseBattleStatusData =
-  | WaitingData
-  | PendingData
-  | SimulatingData
-  | CompletedData;
+export type CaseBattleStatusData = WaitingData | PendingData | SimulatingData | CompletedData;
 
 export interface WaitingData {
   status: "waiting";

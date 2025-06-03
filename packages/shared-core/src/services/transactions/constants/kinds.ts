@@ -40,6 +40,8 @@ const kindMap: Record<TransactionKind, boolean> = {
   "reward-advent-item": true,
   "reward-boost": true,
   "reward-claim": true,
+  "reward-faucet": true,
+  "reward-daily-case-item": true,
   "reward-gem-case-item": true,
   "reward-holiday-case-item": true,
   "reward-level-case-item": true,

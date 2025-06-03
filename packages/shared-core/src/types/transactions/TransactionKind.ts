@@ -59,6 +59,8 @@ export type TransactionKindData =
   | RewardAdventItemData
   | RewardBoostData
   | RewardClaimData
+  | RewardFaucetData
+  | RewardDailyCaseWonData
   | RewardGemCaseWonData
   | RewardHolidayCaseWonData
   | RewardLevelCaseWonData
@@ -343,6 +345,13 @@ interface RewardGemCaseWonData {
   item: ChestItem;
 }
 
+interface RewardDailyCaseWonData {
+  kind: "reward-daily-case-item";
+  gameId: string;
+  chest: BasicChest;
+  item: ChestItem;
+}
+
 interface RewardLevelCaseWonData {
   kind: "reward-level-case-item";
   gameId: string;
@@ -355,6 +364,10 @@ interface RewardHolidayCaseWonData {
   gameId: string;
   chest: BasicChest;
   item: ChestItem;
+}
+
+interface RewardFaucetData {
+  kind: "reward-faucet";
 }
 
 interface RewardTokenPackData {
