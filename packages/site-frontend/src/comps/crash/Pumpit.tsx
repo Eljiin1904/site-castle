@@ -1,8 +1,9 @@
 import { Div } from "@client/comps/div/Div";
-import { Heading } from "@client/comps/heading/Heading";
 import { Img } from "@client/comps/img/Img";
-import { Video } from "@client/comps/video/Video";
+import { useSoundPlayer } from "@client/hooks/sounds/useSoundPlayer";
+
 import React, { useEffect, useState } from "react";
+import './Pumpit.scss';
 
 // Memoizing the component to prevent unnecessary re-renders
 // This will ensure that the component only re-renders when the `roundId` prop changes
@@ -11,36 +12,21 @@ const Pumpit = ({roundId}: {
 }) => {
 
   const [hide, setHide] = useState(false);
+  const playSound = useSoundPlayer("pumpit");
       
   useEffect(() => {
+    playSound("pumpit");
     const timer = setTimeout(() => {
       setHide(true);
-    }, 4000); // Hide after 2 seconds
+    }, 1000); // Hide after 1 second
     return () => clearTimeout(timer); // Cleanup the timer on unmount
   }, [roundId]);
 
   if(hide)
     return null;
 
-  return (<Div fx fy center position="absolute" style={{ bottom: '-25px', height:"calc(100% + 50px)"}} left={0} zIndex={1}>
-      <Video
-          type="mp4"
-          path="/videos/pumpit"
-          autoplay={true}
-          reset={false}
-          muted={false}
-          width="100%"
-          alt="Pumpit video"
-          controls={false}
-          playBackSpeed={1}
-          position="absolute"
-          bottom={0}
-          height="100%"
-          style={{opacity: '0.5'}}
-        />
-        <Heading as="h3" color="white" position="absolute" right={40} style={{bottom: '42px'}} textTransform="uppercase" textAlign="center" fontSize={48} zIndex={2}>
-          Pump it
-        </Heading>
+  return (<Div fx fy center position="absolute" style={{ bottom: '-25px', height:"calc(100% + 50px)"}} left={0} zIndex={12}>
+        <Img className="Pumpit" type="png" left={56} top={36} position="absolute" path="/graphics/games/crash/pumpit" width={"110px"} />
   </Div>);
 };
 

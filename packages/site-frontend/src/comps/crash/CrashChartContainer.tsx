@@ -54,7 +54,7 @@ export const CrashChartContainer = () => {
  
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
-      {multiplier > 10 && round.status === 'simulating' && <PumpitMemoized roundId={round._id} />}    
+      {multiplier > 10 && (round.status === 'simulating' || round.status === 'completed') && <PumpitMemoized roundId={round._id} />}    
       <CrashYAxis multiplier={multiplier} />
       {crashEvents.map((value, index) => <CrashEvent key={index} startAtLine={value.startAtLine} color={value.color} position={value.position} initialHeight={value.height} height={value.height} />)}
       {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startAtLine={true} color={"bright-green"} position={0} initialHeight={0} height={linePosition} />}
