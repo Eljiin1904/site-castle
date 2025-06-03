@@ -7,11 +7,11 @@ import { Crash } from "@core/services/crash";
 
 export const ProfitSection = () => {
   const betAmount = useAppSelector((x) => x.crash.betAmount || 0);
-  const multiplier = useAppSelector((x) => x.crash.targetMultiplier || 0);
+  const multiplier = useAppSelector((x) => x.crash.targetMultiplier || 1);
   const {t} = useTranslation(["games\\crash"]);
 
   const profit = Crash.getProfit({betAmount, multiplier});
-
+  
   return (
     <Div fx wrap gap={8} justify="space-between">
       <ModalLabel mb={0}>{t("profitOnWin")}</ModalLabel>
