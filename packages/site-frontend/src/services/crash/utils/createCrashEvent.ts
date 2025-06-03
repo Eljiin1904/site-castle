@@ -38,7 +38,7 @@ export function createCrashEvent(props: Partial<CrashEventProps>, prevEvent?: Cr
         position = maxHeight - height;
         if(position < 0) {
           position = 0; // if the position is less than 0, we set it to 0
-          height = prevEvent.position; // we add the position to the height to keep the height positive
+          height = Math.max(0, prevEvent.position - 4); // we add the position to the height to keep the height positive
         }
       }
     }
