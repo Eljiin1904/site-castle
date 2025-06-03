@@ -22,7 +22,7 @@ export default async function () {
   await fs.writeFile(GLOBAL_STATE_FILE, JSON.stringify({ mongoUri }), "utf-8");
 
   // Expose URI as env var
-  process.env.MONGO_URI = mongoUri;
+  process.env.MONGO_URI = mongoUri + "/?directConnection=true";
 
   // Store container instance for teardown
   (globalThis as any).__MONGO_CONTAINER__ = container;
