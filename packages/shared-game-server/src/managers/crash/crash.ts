@@ -119,32 +119,46 @@ async function startRound(round: CrashRoundDocument) {
   const { id: eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
   const serverSeed = Ids.secret();
   const serverSeedHash = Random.hashServerSeed(serverSeed);
-
-  let multiplier = 15;
-  Random.getMultiplier({
-    serverSeed: serverSeed,
-    clientSeed: eosBlockId,
-    nonce: round._id,
-    maxValue: Crash.maxValue,
-  });
-
-  const multiplierId = await Ids.incremental({
-    key: "crashMultiplierId",
-    baseValue: 1000000,
-    batchSize: 1,
-  });
-
+  
+  let multiplier: number;
+  let roundTime: number;
   const statusDate = new Date();
-  const roundTime = Crash.getTimeForMultiplier(multiplier);
-  const roundMultiplier: CrashMultiplierDocument = {
-    _id: multiplierId,
+  const multiplierInServer = await Database.collection("crash-multipliers").findOne({
     roundId: round._id,
-    multiplier: multiplier,
-    timestamp: statusDate,
-    serverSeed: serverSeed,
-    serverSeedHash: serverSeedHash,
-    roundTime
-  };
+    multiplier: { $gt: 1 },
+  });
+  if (multiplierInServer) {
+    multiplier = multiplierInServer.multiplier;
+    roundTime = multiplierInServer.roundTime;
+  } 
+  else {
+    
+    multiplier = 15;
+    Random.getMultiplier({
+      serverSeed: serverSeed,
+      clientSeed: eosBlockId,
+      nonce: round._id,
+      maxValue: Crash.maxValue,
+    });
+
+    const multiplierId = await Ids.incremental({
+      key: "crashMultiplierId",
+      baseValue: 1000000,
+      batchSize: 1,
+    });
+
+    roundTime = Crash.getTimeForMultiplier(multiplier);
+    const roundMultiplier: CrashMultiplierDocument = {
+      _id: multiplierId,
+      roundId: round._id,
+      multiplier: multiplier,
+      timestamp: statusDate,
+      serverSeed: serverSeed,
+      serverSeedHash: serverSeedHash,
+      roundTime
+    };
+    await Database.collection("crash-multipliers").insertOne(roundMultiplier);
+  }
   
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
@@ -155,8 +169,7 @@ async function startRound(round: CrashRoundDocument) {
         startDate: statusDate
       },
     },
-  );
-  await Database.collection("crash-multipliers").insertOne(roundMultiplier);
+  ); 
  
   const intervalId = setInterval(async () => {
   

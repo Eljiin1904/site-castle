@@ -8,6 +8,7 @@ import { Users } from "@server/services/users";
 import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 import { Crash } from "@server/services/crash";
+import { Crash as CoreCrash } from "@core/services/crash";
 
 describe("Crash Manager Test", () => {
   beforeAll(async () => {
@@ -31,6 +32,16 @@ describe("Crash Manager Test", () => {
     }
     await Database.createCollection("crash-tickets", {});
 
+    if (await Database.hasCollection("crash-next-tickets")) {
+      Database.collection("crash-next-tickets").drop();
+    }
+    await Database.createCollection("crash-next-tickets", {});
+
+    if (await Database.hasCollection("crash-multipliers")) {
+      Database.collection("crash-multipliers").drop();
+    }
+    await Database.createCollection("crash-multipliers", {});
+
     if (await Database.hasCollection("site-activity")) {
       Database.collection("site-activity").drop();
     }
@@ -39,48 +50,105 @@ describe("Crash Manager Test", () => {
     await Database.createCollection("chat-messages", {});
   });
 
-  it("create waiting and pending crash game", async () => {
+  it("create waiting crash game", async () => {
+
+    Managers.crash();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const crashRound = await Database.collection("crash-rounds").findOne();
+
+    expect(crashRound).not.toBeNull();
+    expect(crashRound?.status).toBe("waiting");
+    expect(crashRound?.processed).toBeUndefined();
+    expect(crashRound?.multiplier).toBeUndefined();
+    expect(crashRound?.won).toBeUndefined();
+  });
+
+  it("create crash game and move next round tickets to active round", async () => {
+
+    const nextRoundTicketId = await Ids.incremental({
+      key: "crashNextTicketId",
+      baseValue: 1000000,
+      batchSize: 100
+    });
+    
+    const user = await Database.collection("users").findOne();
+    if (!user) return;
+    
+    const nextRoundTicket: CrashTicketDocument = {
+      _id: nextRoundTicketId,
+      timestamp: new Date(),
+      roundId: "next",
+      user: Users.getBasicUser(user),
+      betAmount: 100,
+      targetMultiplier: 1
+    };
+
+    await Database.collection("crash-next-tickets").insertOne(nextRoundTicket);
+    Managers.crash();
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    const crashRound = await Database.collection("crash-rounds").findOne();
+    const nextRoundTickets = await Database.collection("crash-next-tickets").countDocuments({roundId: "next"});
+    const roundTickets = await Database.collection("crash-tickets").countDocuments({roundId: crashRound?._id});
+    expect(crashRound).not.toBeNull();
+    expect(crashRound?.status).toBe("pending");
+    expect(crashRound?.processed).toBeUndefined();
+    expect(crashRound?.multiplier).toBeUndefined();
+    expect(crashRound?.won).toBeUndefined();
+    expect(nextRoundTickets).toBe(0);
+    expect(roundTickets).toBe(1);
+  });
+
+  it("start crash round", async () => {
+    Managers.crash();
+    await new Promise((resolve) => setTimeout(resolve, 5600));
+    const crashRound = await Database.collection("crash-rounds").findOne();
+    expect(crashRound).not.toBeNull();
+    expect(crashRound?.status).toBe("simulating");
+    expect(crashRound?.processed).toBeUndefined();
+    expect(crashRound?.multiplier).toBeUndefined();
+    expect(crashRound?.won).toBeUndefined();
+    const multiplierRound = await Database.collection("crash-multipliers").findOne({roundId: crashRound?._id});
+    expect(multiplierRound).not.toBeNull();
+    expect(multiplierRound?.roundId).toBe(crashRound?._id);
+    expect(multiplierRound?.multiplier).toBeGreaterThan(1);
+    expect(multiplierRound?.timestamp).toBeDefined();
+    expect(multiplierRound?.roundTime).toBe(CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1));
+  });
+
+  it("complete crash round", async () => {
+    
     const roundId = await Ids.incremental({
       key: "crashRoundId",
       baseValue: 1000000,
       batchSize: 1,
     });
+    const multiplier = 4;
 
-    const round: CrashRoundDocument = {
-      _id: roundId,
-      timestamp: new Date(),
-      status: "waiting",
-      statusDate: new Date(),
-    };
 
-    await Database.collection("crash-rounds").insertOne(round);
-    await new Promise((resolve) => setTimeout(resolve, 350));
-    Managers.crash();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const crashRound = await Database.collection("crash-rounds").findOne({
-      _id: roundId,
-    });
-
-    expect(crashRound).not.toBeNull();
-    expect(crashRound?._id).toBe(roundId);
-    expect(crashRound?.status).toBe("pending");
-    expect(crashRound?.processed).toBeUndefined();
-    expect(crashRound?.multiplier).toBeUndefined();
-    expect(crashRound?.won).toBeUndefined();
-
+    // Managers.crash();
+    // await new Promise((resolve) => setTimeout(resolve, 5600));
+    // const crashRound = await Database.collection("crash-rounds").findOne();
+    // expect(crashRound).not.toBeNull();
+    // expect(crashRound?.status).toBe("simulating");
   });
 
   // it("crash start round", async () => {
   //   Managers.crash();
-  //   await new Promise((resolve) => setTimeout(resolve, 350));
+  //   await new Promise((resolve) => setTimeout(resolve, 5150));
   //   const crashRound = await Database.collection("crash-rounds").findOne();
-
+    
   //   expect(crashRound).not.toBeNull();
-  //   expect(crashRound?.status).toBe("waiting");
+  //   expect(crashRound?.status).toBe("simulating");
   //   expect(crashRound?.processed).toBeUndefined();
   //   expect(crashRound?.multiplier).toBeUndefined();
   //   expect(crashRound?.won).toBeUndefined();
+
+  //   const multiplierRound = await Database.collection("crash-multipliers").findOne({roundId: crashRound?._id});
+  //   expect(multiplierRound).not.toBeNull();
+  //   expect(multiplierRound?.roundId).toBe(crashRound?._id);
+  //   expect(multiplierRound?.multiplier).toBeGreaterThan(1);
+  //   expect(multiplierRound?.timestamp).toBeDefined();
+  //   expect(multiplierRound?.roundTime).toBe(CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1));
   // });
 
   // it("crash complete round", async () => {
