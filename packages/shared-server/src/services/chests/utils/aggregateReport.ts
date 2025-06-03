@@ -67,7 +67,7 @@ function createPipeline({
     {
       $addFields: {
         playerCount: { $size: "$players" },
-        ev: { $multiply: ["$chest.openCost", "$openCount", Chests.edgeRate] },
+        ev: { $multiply: ["$chest.openCost", "$openCount", "$chest.edgeRate"] },
       },
     },
     {

@@ -7,6 +7,7 @@ import { Database } from "#server/services/database";
 import { Random } from "#server/services/random";
 import { Users } from "#server/services/users";
 import { getGameId } from "./getGameId";
+import { Site } from "#server/services/site";
 
 export async function createGame({
   gameId,
@@ -21,16 +22,16 @@ export async function createGame({
   speed: ChestSpeed;
   specialEnabled: boolean;
 }) {
-  const { serverSeed, clientSeed, nonce } = await Random.nextUserNonce(
-    user._id,
-  );
+  const { serverSeed, clientSeed, nonce } = await Random.nextUserNonce(user._id);
+  const settings = await Site.settings.cache();
+
   const rollValue = Random.getRoll({
     serverSeed,
     clientSeed,
     nonce,
     maxValue: 1000000,
   });
-  const roll = Chests.createRoll({ chest, specialEnabled, value: rollValue });
+  const roll = Chests.createRoll({ chest, specialEnabled, value: rollValue, settings });
   const loot = chest.items[roll.lootIndex];
 
   if (!gameId) {

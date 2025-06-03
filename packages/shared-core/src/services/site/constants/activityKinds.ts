@@ -13,6 +13,7 @@ const kindMap: Record<SiteActivityKind, boolean> = {
   "blackjack-sidebet-win": true,
   "crash-win": true,
   "reward-boost": true,
+  "reward-daily-case-drop": true,
   "reward-gem-case-drop": true,
   "reward-holiday-case-drop": true,
   "reward-level-case-drop": true,

@@ -1,3 +1,4 @@
+import { UserCasesOpened } from "./UserCasesOpened";
 import type { UserLocation } from "./UserLocation";
 
 export interface UserMetaData {
@@ -21,4 +22,5 @@ export interface UserMetaData {
   reloadsEnabled?: boolean;
   steamTradeUrl?: string;
   wagerRequirement?: number;
+  casesOpened?: UserCasesOpened;
 }

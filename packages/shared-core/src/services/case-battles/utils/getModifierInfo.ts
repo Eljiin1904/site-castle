@@ -27,5 +27,17 @@ export function getModifierInfo(modifier: CaseBattleModifier): ModifierInfo {
         description: "The last case's item decides the winner.",
         modes: ["1v1", "3-way", "4-way", "2v2"],
       };
+    case "friends-only":
+      return {
+        label: "Friends Only",
+        description: "Anyone can spectate, but only players with an invitation can join.",
+        modes: ["1v1", "3-way", "4-way", "2v2", "2p", "3p", "4p"],
+      };
+    case "private":
+      return {
+        label: "Private",
+        description: "Only players with an invitation can spectate and join.",
+        modes: ["1v1", "3-way", "4-way", "2v2", "2p", "3p", "4p"],
+      };
   }
 }

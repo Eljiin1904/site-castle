@@ -1,10 +1,11 @@
-import { ChestGameDocument } from "@core/types/chests/ChestGameDocument";
 import { ChestDocument } from "@core/types/chests/ChestDocument";
+import { ChestGameDocument } from "@core/types/chests/ChestGameDocument";
+import { ChestSpeed } from "@core/types/chests/ChestSpeed";
 import { UserDocument } from "@core/types/users/UserDocument";
 import { UserLocation } from "@core/types/users/UserLocation";
-import { ChestSpeed } from "@core/types/chests/ChestSpeed";
 import { Chests } from "#server/services/chests";
 import { Transactions } from "#server/services/transactions";
+import { addToCasesOpened } from "./addToCasesOpened";
 
 export async function createBets({
   chest,
@@ -29,6 +30,7 @@ export async function createBets({
     await Transactions.createBet({
       user,
       kind: "case-spin",
+      edgeRate: chest.edgeRate,
       betAmount: chest.openCost,
       location,
       gameId,
@@ -45,6 +47,11 @@ export async function createBets({
 
     games.push(game);
   }
+
+  await addToCasesOpened({
+    chests: [{ ...chest, count: openCount }],
+    user,
+  });
 
   return games;
 }

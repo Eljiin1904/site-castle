@@ -74,7 +74,7 @@ async function handleFairness(raffle: RaffleDocument) {
 
   await Utility.wait(3000);
 
-  const { id: eosBlockId } = await Random.getEosBlock(eosBlockNum);
+  const { eosBlockId } = await Random.getEosBlock(eosBlockNum);
 
   await Database.collection("raffles").updateOne(
     { _id: raffle._id },
