@@ -19,7 +19,6 @@ const Pumpit = ({roundId}: {
     return () => clearTimeout(timer); // Cleanup the timer on unmount
   }, [roundId]);
 
-  console.log("Pumpit component rendered",hide);
   if(hide)
     return null;
 

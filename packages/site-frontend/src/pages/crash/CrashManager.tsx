@@ -3,7 +3,7 @@ import { usePresence } from "#app/hooks/sockets/usePresence";
 import { useSocketListener } from "#app/hooks/sockets/useSocketListener";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Crash } from "#app/services/crash";
-import { addCrashEvent } from "#app/services/crash/Crash";
+import { addCrashEvent, resetCrashEvents } from "#app/services/crash/Crash";
 
 /**
  * CrashManager component will subscribe to the crash game events
@@ -21,13 +21,16 @@ export const CrashManager = () => {
 
   useSocketListener("crash-init", (init) => {
     
-    let prevEvent = Crash.createCrashEvent(true);
+    dispatch(resetCrashEvents());
+    let prevEvent = Crash.createCrashEvent({startAtLine: true, color: "bright-green"});
     dispatch(addCrashEvent(prevEvent));
-    for(let i = 0; i < 9; i++) {
-      const newChartLine = Crash.createCrashEvent(false, prevEvent);
+    for(let i = 0; i < 7; i++) {
+      const newChartLine = Crash.createCrashEvent({startAtLine: false},  prevEvent);
       dispatch(addCrashEvent(newChartLine));
       prevEvent = newChartLine;
     }
+    prevEvent = Crash.createCrashEvent({startAtLine: true, color: "double-red", position:0}, prevEvent);
+    dispatch(addCrashEvent(prevEvent));
     dispatch(Crash.initPlayer(init));
   });
   

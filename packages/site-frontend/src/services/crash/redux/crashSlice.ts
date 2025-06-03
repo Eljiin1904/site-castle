@@ -172,6 +172,9 @@ export const crashSlice = createSlice({
         state.crashEvents = [payload];
       }
     }),
+    resetCrashEvents: (state) => {
+      state.crashEvents = [];
+    },
     setMode: reducer<CrashMode>((state, { payload }) => {
       state.mode = payload;
     }),
@@ -221,6 +224,7 @@ export const {
   updateMultiplier,
   setProcessing,
   addCrashEvent,
+  resetCrashEvents,
   setBetAmount,
   seTargetMultiplier,
   setGameCount,
