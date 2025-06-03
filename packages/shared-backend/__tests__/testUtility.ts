@@ -28,7 +28,7 @@ export async function fetchWithCookie(
       "Content-Type": "application/json",
       Cookie: `connect.sid=${sessionCookie}`, // Include the session cookie
     },
-    body: JSON.stringify(body),
+    body: method == "GET" ? null : JSON.stringify(body),
   });
 }
 

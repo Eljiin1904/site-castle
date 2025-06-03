@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "rimraf ./build && tsc",
-    "watch": "rimraf ./build && tsc -w --preserveWatchOutput"
+    "watch": "rimraf ./build && tsc -w --preserveWatchOutput",
+    "test": "vitest --run",
+    "test:sync": "vitest --run --no-file-parallelism --test-timeout=0"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.521.0",
@@ -24,6 +26,8 @@
     "nanoid": "^5.0.6",
     "rate-limiter-flexible": "^4.0.1",
     "socket.io": "^4.8.1",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.4",
     "yup": "^1.4.0"
   },
   "devDependencies": {

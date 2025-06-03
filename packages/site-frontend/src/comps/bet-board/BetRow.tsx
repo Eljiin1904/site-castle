@@ -9,6 +9,7 @@ import { BetColumn } from "./BetColumn";
 import { Numbers } from "@core/services/numbers";
 import { SiteGame } from "@core/types/site/SiteGame";
 import { Span } from "@client/comps/span/Span";
+import { capitalize } from "../../../../shared-core/src/services/strings/utils/capitalize";
 
 export const BetRow = ({
   bet,
@@ -47,9 +48,10 @@ export const BetRow = ({
           flexBasis={0}
           grow={3}
         >
-          {bet.game}
+          {capitalize(bet.game)}
         </BetColumn>
       )}
+
       <BetColumn
         flexBasis={0}
         grow={4}
@@ -94,7 +96,7 @@ export const BetRow = ({
           <Tokens
             value={bet.won ? bet.wonAmount : bet.betAmount}
             fontSize={small ? 11 : 14}
-            accent={bet.won ? "positive" : "negative"}
+            accent={bet.won ? "positive" : "neutral"}
           />
         }
       </BetColumn>
