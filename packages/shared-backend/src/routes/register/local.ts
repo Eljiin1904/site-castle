@@ -34,25 +34,25 @@ export default Http.createApiRoute({
   callback: async (req, res, next) => {
     const { username, email, password, referralCode } = req.body;
     logger.debug("adding new user via email (local)");
+    if (env == "development") {
+      try {
+        const profaneWords = await Site.validateProfanity({ text: username });
 
-    try {
-      const profaneWords = await Site.validateProfanity({ text: username });
+        if (profaneWords.length > 0) {
+          logger.warn(`Profane words detected: ${profaneWords}`);
+          const profaneWordsString = profaneWords.join(", ");
+          throw new HandledError(
+            `Unable to register user due to profanity found: ${profaneWordsString} `,
+          );
+        }
+      } catch (err: any) {
+        logger.error(`Unable to register User due to the following error ${err}`);
 
-      if (profaneWords.length > 0) {
-        logger.warn(`Profane words detected: ${profaneWords}`);
-        const profaneWordsString = profaneWords.join(", ");
-        throw new HandledError(
-          `Unable to register user due to profanity found: ${profaneWordsString} `,
-        );
+        if (err.toString().includes("Unable to register user due to profanity found"))
+          throw new HandledError(err);
+        throw new HandledError("Unable to register user at this time");
       }
-    } catch (err: any) {
-      logger.error(`Unable to register User due to the following error ${err}`);
-
-      if (err.toString().includes("Unable to register user due to profanity found"))
-        throw new HandledError(err);
-      throw new HandledError("Unable to register user at this time");
     }
-
     const existingUserByEmail = await Database.collection("users").findOne(
       { email },
       { collation: { locale: "en", strength: 2 } },
