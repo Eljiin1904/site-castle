@@ -44,7 +44,7 @@ const initialState: CrashState = {
   history: [],
   tickets: [],
   betAmount: Utility.getLocalInt("crash-bet-amount", 0),
-  targetMultiplier: Utility.getLocalFloat("crash-target-multiplier", 1),
+  targetMultiplier: undefined,
   mode: "manual",
   autoMode: "controls",
   crashEvents: [],

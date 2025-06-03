@@ -30,7 +30,7 @@ export function createCrashEvent(props: Partial<CrashEventProps>, prevEvent?: Cr
       if(startAtLine) {
 
         position = 0;
-        height = Math.min(height, prevEventFullHeight - 4);
+        height = prevEvent.position + 4;
       }
       else {
         
