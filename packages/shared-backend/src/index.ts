@@ -13,7 +13,6 @@ async function main() {
   logger.info("starting up backend");
 
   const { port } = config;
-
   await initConfig();
 
   logger.info("Initialized config.");

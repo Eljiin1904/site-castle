@@ -36,13 +36,16 @@ export async function validateProfanity({
 }
 
 export async function checkProfanityByField(fieldName: string, text: string) {
+  const { webPurityApi } = config;
+  // TODO remove when subcription license is purchased
+  if (webPurityApi.length == 0) return [];
   const profaneWords = await validateProfanity({ text });
 
   if (profaneWords.length > 0) {
     logger.warn(`Profane words detected in ${fieldName}: ${profaneWords}`);
     const profaneWordsString = profaneWords.join(", ");
     throw new HandledError(
-      `Unable to create Campaign due to profanity in ${fieldName}: ${profaneWordsString}`,
+      `Unable to create due to profanity in ${fieldName}: ${profaneWordsString}`,
     );
   }
 }
