@@ -9,6 +9,7 @@ import { HandledError } from "@server/services/errors";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 import config from "@core/config";
+import { checkProfanityByField } from "#app/services/site/Site";
 
 const rateLimiter = Security.createRateLimiter({
   keyPrefix: "local-register",
@@ -34,17 +35,10 @@ export default Http.createApiRoute({
   callback: async (req, res, next) => {
     const { username, email, password, referralCode } = req.body;
     logger.debug("adding new user via email (local)");
-    if (env == "development") {
-      try {
-        const profaneWords = await Site.validateProfanity({ text: username });
 
-        if (profaneWords.length > 0) {
-          logger.warn(`Profane words detected: ${profaneWords}`);
-          const profaneWordsString = profaneWords.join(", ");
-          throw new HandledError(
-            `Unable to register user due to profanity found: ${profaneWordsString} `,
-          );
-        }
+    if (env === "development") {
+      try {
+        await checkProfanityByField("username", username);
       } catch (err: any) {
         logger.error(`Unable to register User due to the following error ${err}`);
 
@@ -53,6 +47,7 @@ export default Http.createApiRoute({
         throw new HandledError("Unable to register user at this time");
       }
     }
+
     const existingUserByEmail = await Database.collection("users").findOne(
       { email },
       { collation: { locale: "en", strength: 2 } },

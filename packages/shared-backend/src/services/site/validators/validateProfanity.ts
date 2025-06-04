@@ -34,3 +34,15 @@ export async function validateProfanity({
     throw new HandledError("Unable to process profanity check at this time.");
   }
 }
+
+export async function checkProfanityByField(fieldName: string, text: string) {
+  const profaneWords = await validateProfanity({ text });
+
+  if (profaneWords.length > 0) {
+    logger.warn(`Profane words detected in ${fieldName}: ${profaneWords}`);
+    const profaneWordsString = profaneWords.join(", ");
+    throw new HandledError(
+      `Unable to create Campaign due to profanity in ${fieldName}: ${profaneWordsString}`,
+    );
+  }
+}
