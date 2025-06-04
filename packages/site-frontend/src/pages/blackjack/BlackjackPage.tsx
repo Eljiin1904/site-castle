@@ -19,8 +19,7 @@ export const BlackjackPage = () => {
         px={20}
         mt={40}
         mb={40}
-        title={t("games\\blackjack:betBoardHeader")}
-        game="blackjack"
+        title={t("bets.recentBets")}
       />
     </SitePage>
   );

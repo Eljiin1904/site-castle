@@ -10,6 +10,9 @@ import { Numbers } from "@core/services/numbers";
 import { SiteGame } from "@core/types/site/SiteGame";
 import { Span } from "@client/comps/span/Span";
 import { capitalize } from "../../../../shared-core/src/services/strings/utils/capitalize";
+import { Vector } from "@client/comps/vector/Vector";
+import { Games } from "#app/services/games";
+import { GameDocument } from "@core/types/game/GameDocument";
 
 export const BetRow = ({
   bet,
@@ -48,7 +51,13 @@ export const BetRow = ({
           flexBasis={0}
           grow={3}
         >
-          {capitalize(bet.game)}
+          <Div gap={small ? 8: 16}>
+          {!small && <Vector
+            as={Games.getGameIcon({name: bet.game} as GameDocument)}
+            size={20}
+          />}
+          <Span color="light-sand">{capitalize(bet.game)}</Span>
+          </Div>
         </BetColumn>
       )}
 

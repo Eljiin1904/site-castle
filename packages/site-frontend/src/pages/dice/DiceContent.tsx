@@ -40,8 +40,7 @@ const MobileContent = () => {
         px={20}
         mt={40}
         mb={40}
-        title={t("games\\dice:betBoardHeader")}
-        game="dice"
+        title={t("bets.recentBets")}
       />
     </Div>
   );
@@ -64,8 +63,7 @@ const NotMobileContent = () => {
       <BetBoard
         mt={56}
         mb={56}
-        title={t("games\\dice:betBoardHeader")}
-        game="dice"
+        title={t("bets.recentBets")}
       />
     </Div>
   );

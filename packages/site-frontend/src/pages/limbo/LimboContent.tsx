@@ -44,8 +44,7 @@ const MobileContent = () => {
         px={20}
         mt={40}
         mb={40}
-        title={t("games\\limbo:betBoardHeader")}
-        game="limbo"
+        title={t("bets.recentBets")}
       />
     </Div>
   );
@@ -69,8 +68,7 @@ const NotMobileContent = () => {
       <BetBoard
         mt={56}
         mb={56}
-        title={t("games\\limbo:betBoardHeader")}
-        game="limbo"
+        title={t("bets.recentBets")}
       />
     </Div>
   );

@@ -42,7 +42,6 @@ const MobileContent = () => {
         mt={40}
         mb={40}
         title={t("betBoardHeader")}
-        game="crash"
       />
     </Div>
   );
@@ -61,8 +60,7 @@ const NotMobileContent = () => {
     <BetBoard
       mt={56}
       mb={56}
-      title={t("betBoardHeader")}
-      game="crash"
+      title={t("bets.recentBets")}
     />
   </Fragment>);
 };
