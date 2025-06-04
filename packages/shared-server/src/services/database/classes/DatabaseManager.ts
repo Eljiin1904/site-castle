@@ -30,7 +30,8 @@ export class DatabaseManager extends TypedEventEmitter<{
 
     // reset to look at test containers if running in dev
     if (config.env.startsWith("dev")) {
-      dbUri = process.env.MONGO_URI + "/?directConnection=true";
+      // URI Passed when testing
+      if (process.env.MONGO_URI != undefined) dbUri = process.env.MONGO_URI;
     }
 
     const client = new MongoClient(dbUri, {

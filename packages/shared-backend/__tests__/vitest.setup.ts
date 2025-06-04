@@ -65,7 +65,7 @@ beforeAll(async () => {
   await Promise.all(
     settings.map((setting) =>
       Database.collection("site-settings").updateOne(
-        { _id: setting._id },
+        { _id: setting._id as any },
         {
           $set: {
             value: setting.value,
