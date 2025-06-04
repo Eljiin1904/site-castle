@@ -3,20 +3,15 @@ import * as Managers from "../managers";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 import { Random } from "@server/services/random";
-import { createTestUser } from "./testUtility";
 import { Users } from "@server/services/users";
 import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
-import { Crash } from "@server/services/crash";
 import { Crash as CoreCrash } from "@core/services/crash";
+import { CrashMultiplierDocument } from "@core/types/crash/CrashMultiplierDocument";
 
 describe("Crash Manager Test", () => {
   beforeAll(async () => {
-    const user = createTestUser();
-
-    if (await Database.hasCollection("users")) {
-      await Database.createCollection("users", {});
-    }
+    
     await Database.createCollection("site-bets", {});
     await Database.createCollection("transactions", {});
   }, 20000);
@@ -100,7 +95,7 @@ describe("Crash Manager Test", () => {
 
   it("start crash round", async () => {
     Managers.crash();
-    await new Promise((resolve) => setTimeout(resolve, 5600));
+    await new Promise((resolve) => setTimeout(resolve, 5700));
     const crashRound = await Database.collection("crash-rounds").findOne();
     expect(crashRound).not.toBeNull();
     expect(crashRound?.status).toBe("simulating");
@@ -115,144 +110,205 @@ describe("Crash Manager Test", () => {
     expect(multiplierRound?.roundTime).toBe(CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1));
   });
 
-  it("complete crash round", async () => {
+  it("complete crash round and ticket won", async () => {
     
+    const user = await Database.collection("users").findOne();
+    if (!user) return;
     const roundId = await Ids.incremental({
       key: "crashRoundId",
       baseValue: 1000000,
       batchSize: 1,
     });
-    const multiplier = 4;
+    const multiplierId = await Ids.incremental({
+      key: "crashMultiplierId",
+      baseValue: 1000000,
+      batchSize: 1,
+    });
+    const cashoutTicketId = await Ids.incremental({
+      key: "crashTicketId",
+      baseValue: 1000000,
+      batchSize: 100,
+    });
 
+    const serverSeed = Ids.secret();
+    const serverSeedHash = Random.hashServerSeed(serverSeed);
+    const blockNow = await Random.getEosBlockNow();
+    const eosBlockNum = blockNow.eosBlockNum + 4;
+    const statusDate = new Date();
+    const { eosBlockId } = await Random.getEosBlock(eosBlockNum);
 
-    // Managers.crash();
-    // await new Promise((resolve) => setTimeout(resolve, 5600));
-    // const crashRound = await Database.collection("crash-rounds").findOne();
-    // expect(crashRound).not.toBeNull();
-    // expect(crashRound?.status).toBe("simulating");
-  });
+    const multiplier = 2;
+    const multiplierTime = CoreCrash.getTimeForMultiplier(multiplier);
 
-  // it("crash start round", async () => {
-  //   Managers.crash();
-  //   await new Promise((resolve) => setTimeout(resolve, 5150));
-  //   const crashRound = await Database.collection("crash-rounds").findOne();
+    const crashRound: CrashRoundDocument = {
+      _id: roundId,
+      timestamp: new Date(),
+      status: "simulating",
+      statusDate: new Date(),
+      startDate: new Date(),
+      eosBlockId,
+      eosBlockNum,
+      multiplier: multiplier,
+      eosCommitDate: statusDate
+    };
+    const crashMultiplier: CrashMultiplierDocument = {
+      _id: multiplierId,
+      roundId: roundId,
+      multiplier: multiplier,
+      timestamp: new Date(),
+      roundTime: multiplierTime,
+      serverSeed,
+      serverSeedHash
+    };
+    const crashTicket: CrashTicketDocument = {
+      _id: cashoutTicketId,
+      timestamp: new Date(),
+      roundId: roundId,
+      user: Users.getBasicUser(user),
+      betAmount: 100,
+      targetMultiplier: multiplier,
+    };
+    await Database.collection("crash-rounds").insertOne(crashRound);
+    await Database.collection("crash-multipliers").insertOne(crashMultiplier);
+    await Database.collection("crash-tickets").insertOne(crashTicket);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    Managers.crash();
+   
+    await new Promise((resolve) => setTimeout(resolve, multiplierTime + 5000));
+    const completedCrashRound = await Database.collection("crash-rounds").findOne({
+      _id: roundId,
+    });
     
-  //   expect(crashRound).not.toBeNull();
-  //   expect(crashRound?.status).toBe("simulating");
-  //   expect(crashRound?.processed).toBeUndefined();
-  //   expect(crashRound?.multiplier).toBeUndefined();
-  //   expect(crashRound?.won).toBeUndefined();
+    expect(completedCrashRound).not.toBeNull();
+    expect(completedCrashRound?._id).toBe(roundId);
+    expect(completedCrashRound?.status).toBe("completed");
+    expect(completedCrashRound?.processed).toBe(true);
+    expect(completedCrashRound?.multiplier).toBe(multiplier);
+    expect(completedCrashRound?.won).toBe(true);
 
-  //   const multiplierRound = await Database.collection("crash-multipliers").findOne({roundId: crashRound?._id});
-  //   expect(multiplierRound).not.toBeNull();
-  //   expect(multiplierRound?.roundId).toBe(crashRound?._id);
-  //   expect(multiplierRound?.multiplier).toBeGreaterThan(1);
-  //   expect(multiplierRound?.timestamp).toBeDefined();
-  //   expect(multiplierRound?.roundTime).toBe(CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1));
-  // });
+    const crashTickets = await Database.collection("crash-tickets").find({
+      roundId: completedCrashRound?._id,
+    }).toArray();
+    expect(crashTickets).not.toBeNull();
+    expect(crashTickets.length).toBe(1);
+    expect(crashTickets[0]._id).toBe(cashoutTicketId);
+    expect(crashTickets[0].roundId).toBe(roundId);
+    expect(crashTickets[0].betAmount).toBe(100);
+    expect(crashTickets[0].targetMultiplier).toBe(multiplier);
+    expect(crashTickets[0].processed).toBeTruthy();
+    expect(crashTickets[0].won).toBeTruthy();
+    expect(crashTickets[0].cashoutTriggered).toBeTruthy();
+    expect(crashTickets[0].cashoutTriggeredDate).toBeDefined();
+    expect(crashTickets[0].multiplierCrashed).toBe(multiplier);
+    expect(crashTickets[0].autoCashedTriggered).toBeTruthy();
+    expect(crashTickets[0].cashoutTriggeredDate).toBeDefined();
 
-  // it("crash complete round", async () => {
-  //   const roundId = await Ids.incremental({
-  //     key: "crasheRoundId",
-  //     baseValue: 1000000,
-  //     batchSize: 1,
-  //   });
+    const siteBets = await Database.collection("site-bets").findOne({
+      game: "crash",
+      user: Users.getBasicUser(user),
+      betAmount: 100,
+      wonAmount: 200,
+    });
+    expect(siteBets).not.toBeNull();
+    expect(siteBets?.won).toBeTruthy();
+    expect(siteBets?.wonAmount).toBe(200);
+  }, 20000);
 
-  //   const serverSeed = Ids.secret();
-  //   const serverSeedHash = Random.hashServerSeed(serverSeed);
-  //   const multiplier = 4;
-  //   const blockNow = await Random.getEosBlockNow();
-  //   const eosBlockNum = blockNow.eosBlockNum + 4;
-  //   const statusDate = new Date();
-  //   const { id: eosBlockId } = await Random.getEosBlock(eosBlockNum);
-
-  //   const round: CrashRoundDocument = {
-  //     _id: roundId,
-  //     timestamp: new Date(),
-  //     status: "simulating",
-  //     statusDate: new Date(),
-  //     multiplier: multiplier,
-  //     eosBlockId,
-  //     eosBlockNum,
-  //     eosCommitDate: statusDate,
-  //   };
-
-  //   await Database.collection("crash-rounds").insertOne(round);
-  //   await new Promise((resolve) => setTimeout(resolve, 500));
-
-  //   const user = await Database.collection("users").findOne();
-
-  //   if (!user) return;
-
-  //   const ticketId = await Ids.incremental({
-  //     key: "crashTicketId",
-  //     baseValue: 1000000,
-  //     batchSize: 100,
-  //   });
-
-  //   const notCashTicket: CrashTicketDocument = {
-  //     _id: ticketId,
-  //     timestamp: new Date(),
-  //     roundId: roundId,
-  //     user: Users.getBasicUser(user),
-  //     betAmount: 100,
-  //     targetMultiplier: 1
-  //   };
-  //   const cashTicket: CrashTicketDocument = {
-  //     _id: ticketId,
-  //     timestamp: new Date(),
-  //     roundId: roundId,
-  //     user: Users.getBasicUser(user),
-  //     betAmount: 100,
-  //     targetMultiplier: 4
-  //   };
-
-  //   await Database.collection("crash-tickets").insertOne(notCashTicket);
-  //   await Database.collection("crash-tickets").insertOne(cashTicket);
-  //   await new Promise((resolve) => setTimeout(resolve, 500));
-  //   Managers.crash();
-  //   await new Promise((resolve) => setTimeout(resolve, 500));
-  //   const crashRound = await Database.collection("double-rounds").findOne({
-  //     _id: roundId,
-  //   });
-
-  //   expect(crashRound).not.toBeNull();
-  //   expect(crashRound?._id).toBe(roundId);
-  //   expect(crashRound?.status).toBe("completed");
-  //   expect(crashRound?.processed).toBeUndefined();
-
-  //   const crashTickets = Database.collection("crash-tickets").find({
-  //     roundId: crashRound?._id,
-  //   }).toArray();
-  //   if (!(await crashTickets).length) return;
-  //   // expect(crashTickets).not.toBeNull();
-  //   // expect(doubleTickets?.roundId).toBe(roundId);
-  //   // expect(doubleTickets?.betAmount).toBe(100);
-  //   // expect(doubleTickets?.betKind).toBe("red");
-  //   // expect(doubleTickets?.processed).toBeTruthy();
-
-  //   // const siteBets = await Database.collection("site-bets").findOne({
-  //   //   game: "double",
-  //   //   user: Users.getBasicUser(user),
-  //   //   betAmount: 100,
-  //   //   wonAmount: 200,
-  //   // });
-
-  //   // expect(siteBets).not.toBeNull();
-  //   // expect(siteBets?.won).toBeTruthy();
-  //   // expect(siteBets?.wonAmount).toBe(200);
-
-  //   // const transaction = await Database.collection("transactions").findOne({
-  //   //   gameId: ticketId,
-  //   //   category: "double",
-  //   //   kind: "double-won",
-  //   // });
-
-  //   // expect(transaction).not.toBeNull();
-  //   // expect(transaction?.amount).toBe(200);
-  // });
+  it("complete crash round and ticket lost", async () => {
+    const user = await Database.collection("users").findOne();
+    if (!user) return;
+    const roundId = await Ids.incremental({
+      key: "crashRoundId",
+      baseValue: 1000000,
+      batchSize: 1,
+    });
+    const multiplierId = await Ids.incremental({
+      key: "crashMultiplierId",
+      baseValue: 1000000,
+      batchSize: 1,
+    });
+    const cashoutTicketId = await Ids.incremental({
+      key: "crashTicketId",
+      baseValue: 1000000,
+      batchSize: 100,
+    });
+    const serverSeed = Ids.secret();
+    const serverSeedHash = Random.hashServerSeed(serverSeed);
+    const blockNow = await Random.getEosBlockNow();
+    const eosBlockNum = blockNow.eosBlockNum + 4;
+    const statusDate = new Date();
+    const { eosBlockId } = await Random.getEosBlock(eosBlockNum);
+    const multiplier = 2;
+    const multiplierTime = CoreCrash.getTimeForMultiplier(multiplier);
+    const crashRound: CrashRoundDocument = {
+      _id: roundId,
+      timestamp: new Date(),
+      status: "simulating",
+      statusDate: new Date(),
+      startDate: new Date(),
+      eosBlockId,
+      eosBlockNum,
+      multiplier: multiplier,
+      eosCommitDate: statusDate
+    };
+    const crashMultiplier: CrashMultiplierDocument = {
+      _id: multiplierId,
+      roundId: roundId,
+      multiplier: multiplier,
+      timestamp: new Date(),
+      roundTime: multiplierTime,
+      serverSeed,
+      serverSeedHash
+    };
+    const crashTicket: CrashTicketDocument = {
+      _id: cashoutTicketId,
+      timestamp: new Date(),
+      roundId: roundId,
+      user: Users.getBasicUser(user),
+      betAmount: 100,
+      targetMultiplier: multiplier+0.01, // Set target multiplier higher than actual multiplier to simulate loss
+    };
+    await Database.collection("crash-rounds").insertOne(crashRound);
+    await Database.collection("crash-multipliers").insertOne(crashMultiplier);
+    await Database.collection("crash-tickets").insertOne(crashTicket);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    Managers.crash();
+    await new Promise((resolve) => setTimeout(resolve, multiplierTime + 5000));
+    const completedCrashRound = await Database.collection("crash-rounds").findOne({
+      _id: roundId,
+    });
+    expect(completedCrashRound).not.toBeNull();
+    expect(completedCrashRound?._id).toBe(roundId);
+    expect(completedCrashRound?.status).toBe("completed");
+    expect(completedCrashRound?.processed).toBe(true);
+    expect(completedCrashRound?.multiplier).toBe(multiplier);
+    expect(completedCrashRound?.won).toBe(false);
+    const crashTickets = await Database.collection("crash-tickets").find({
+      roundId: completedCrashRound?._id,
+    }).toArray();
+    expect(crashTickets).not.toBeNull();
+    expect(crashTickets.length).toBe(1);
+    expect(crashTickets[0]._id).toBe(cashoutTicketId);
+    expect(crashTickets[0].roundId).toBe(roundId);
+    expect(crashTickets[0].betAmount).toBe(100);
+    expect(crashTickets[0].targetMultiplier).toBe(multiplier + 0.01);
+    expect(crashTickets[0].processed).toBeTruthy();
+    expect(crashTickets[0].won).toBeFalsy();
+    expect(crashTickets[0].cashoutTriggered).not.toBeDefined();
+    expect(crashTickets[0].cashoutTriggeredDate).not.toBeDefined();
+    expect(crashTickets[0].multiplierCrashed).not.toBeDefined();
+    expect(crashTickets[0].autoCashedTriggered).not.toBeDefined();
+    const siteBets = await Database.collection("site-bets").findOne({
+      game: "crash",
+      user: Users.getBasicUser(user),
+      betAmount: 100,
+      wonAmount: 0, 
+    });
+    expect(siteBets).not.toBeNull();
+    expect(siteBets?.won).toBeFalsy();
+    expect(siteBets?.wonAmount).toBe(0);
+  }, 20000);
 });
-// import { describe, it, expect, vi } from "vitest";
 // import { triggerAutoCashTickets } from "./crash";
 // import { Database } from "@server/services/database";
 

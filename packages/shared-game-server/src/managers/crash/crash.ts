@@ -121,7 +121,7 @@ async function startRound(round: CrashRoundDocument) {
   const serverSeedHash = Random.hashServerSeed(serverSeed);
   
   const statusDate = new Date();
-  const multiplier = 15;
+  const multiplier = 12;
   Random.getMultiplier({
     serverSeed: serverSeed,
     clientSeed: eosBlockId,
@@ -219,6 +219,8 @@ async function completeRound(round: CrashRoundDocument) {
         statusDate,
         completedDate: statusDate,
         multiplier: round.multiplier,
+        processed: true,
+        processedDate: statusDate,
         won: totalWins > 0,
       },
     },
@@ -396,7 +398,7 @@ async function triggerAutoCashTickets(roundId: string, multiplier?: number) {
           cashoutTriggered: true,
           cashoutTriggeredDate: new Date(),
           multiplierCrashed: "$targetMultiplier",
-          autoCashedTriggerd: true,
+          autoCashedTriggered: true,
         },
       },
     ],
