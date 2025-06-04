@@ -93,3 +93,4 @@ volumes:
     secret:
       secretName: "shared-backend-tls"
 
+webPurityApiKey: "e5408084775a10dc88915c5b314514f2"
