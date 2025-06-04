@@ -33,7 +33,6 @@ export const CrashChartContainer = () => {
       
       const timer = Site.timeSince(round.startDate ?? new Date());
       const newMultiplier = CoreCrash.getMultiplierForTime(timer);
-      console.log("New multiplier: ", newMultiplier, "Server multiplier: ", serverMultiplier, elapsedtime, timer);
       setMultiplier(Math.min(newMultiplier, serverMultiplier));
     }
     else if(round.status == 'completed'){
