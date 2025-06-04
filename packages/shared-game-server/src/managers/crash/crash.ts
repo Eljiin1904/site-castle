@@ -120,48 +120,32 @@ async function startRound(round: CrashRoundDocument) {
   const serverSeed = Ids.secret();
   const serverSeedHash = Random.hashServerSeed(serverSeed);
   
-  let multiplier: number;
-  let roundTime: number;
   const statusDate = new Date();
-  const multiplierInServer = await Database.collection("crash-multipliers").findOne({
-    roundId: round._id,
-    multiplier: { $gt: 1 },
+  const multiplier = 12;
+  Random.getMultiplier({
+    serverSeed: serverSeed,
+    clientSeed: eosBlockId,
+    nonce: round._id,
+    maxValue: Crash.maxValue,
   });
-  if (multiplierInServer) {
-    multiplier = multiplierInServer.multiplier;
-    roundTime = multiplierInServer.roundTime;
-  } 
-  else {
-    
-    multiplier = 15;
-    Random.getMultiplier({
-      serverSeed: serverSeed,
-      clientSeed: eosBlockId,
-      nonce: round._id,
-      maxValue: Crash.maxValue,
-    });
 
-    const multiplierId = await Ids.incremental({
-      key: "crashMultiplierId",
-      baseValue: 1000000,
-      batchSize: 1,
-    });
+  const multiplierId = await Ids.incremental({
+    key: "crashMultiplierId",
+    baseValue: 1000000,
+    batchSize: 1,
+  });
 
-
-  const statusDate = new Date();
-    roundTime = Crash.getTimeForMultiplier(multiplier);
-    const roundMultiplier: CrashMultiplierDocument = {
-      _id: multiplierId,
-      roundId: round._id,
-      multiplier: multiplier,
-      timestamp: statusDate,
-      serverSeed: serverSeed,
-      serverSeedHash: serverSeedHash,
-      roundTime
-    };
-    await Database.collection("crash-multipliers").insertOne(roundMultiplier);
-  }
-  
+  const roundTime = Crash.getTimeForMultiplier(multiplier);
+  const roundMultiplier: CrashMultiplierDocument = {
+    _id: multiplierId,
+    roundId: round._id,
+    multiplier: multiplier,
+    timestamp: statusDate,
+    serverSeed: serverSeed,
+    serverSeedHash: serverSeedHash,
+    roundTime
+  };
+  await Database.collection("crash-multipliers").insertOne(roundMultiplier);  
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
     {
@@ -235,6 +219,8 @@ async function completeRound(round: CrashRoundDocument) {
         statusDate,
         completedDate: statusDate,
         multiplier: round.multiplier,
+        processed: true,
+        processedDate: statusDate,
         won: totalWins > 0,
       },
     },
@@ -412,7 +398,7 @@ async function triggerAutoCashTickets(roundId: string, multiplier?: number) {
           cashoutTriggered: true,
           cashoutTriggeredDate: new Date(),
           multiplierCrashed: "$targetMultiplier",
-          autoCashedTriggerd: true,
+          autoCashedTriggered: true,
         },
       },
     ],
