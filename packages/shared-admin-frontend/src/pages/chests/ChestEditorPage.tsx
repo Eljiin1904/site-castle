@@ -23,9 +23,14 @@ import { ChestProfile } from "./editor/ChestProfile";
 import { LootTable } from "./editor/LootTable";
 import { ChestAction } from "./editor/ChestAction";
 interface ChestErrors {
+  edgeRate: string;
   image: string;
   displayName: string;
   create: string;
+  totalDropRate: string;
+  tierXp: string;
+  levelRequirement: string;
+  annualValue: string;
 }
 
 interface SerializedChest {
@@ -37,6 +42,7 @@ export const ChestEditorPage = () => {
   const params = useParams<{ action: ChestAction; chestId: string }>();
   const navigate = useNavigate();
 
+  const [edgeRate, setEdgeRate] = useState<number>(0);
   const [image, setImage] = useState<ImageInputValue>();
   const [displayName, setDisplayName] = useState<string>();
   const [kind, setKind] = useState<ChestKind>("case");
@@ -59,12 +65,17 @@ export const ChestEditorPage = () => {
 
   const chest = query.data?.chest;
   const totalDropRate = items.reduce((acc, x) => (acc += x.dropRate), 0);
-  const { estimatedValue, openCost } = Chests.getValue(items);
+
+  const { estimatedValue, openCost } = Chests.getValue({
+    edgeRate: chest?.edgeRate || edgeRate,
+    items,
+  });
 
   const schema = Validation.object({
     imageRequired: Validation.boolean(),
     displayName: Validation.string().required("Display name is required"),
     image: Validation.imageConditional(512, 512),
+    edgeRate: Validation.number().min(0.01).max(0.99).required("Edge Rate is required"),
   });
 
   useEffect(() => {
@@ -73,6 +84,7 @@ export const ChestEditorPage = () => {
       setDisplayName(chest.displayName);
       setKind(chest.kind);
       setDisabled(chest.disabled);
+      setEdgeRate(chest.edgeRate);
     }
   }, [chest]);
 
@@ -150,19 +162,31 @@ export const ChestEditorPage = () => {
     setDisabled(false);
     Toasts.success("Chest enabled.");
   }, setIsProcessing);
-
+  const convertValidationErrors = (input: object) => {
+    return Object.fromEntries(Object.entries(input).map(([field, data]) => [field, data.key]));
+  };
   const handleCreate = usePost(async () => {
     try {
       const imageRequired = action === "create";
-      await schema.validate({ imageRequired, image, displayName }, { abortEarly: false });
+      await schema.validate(
+        {
+          imageRequired,
+          image,
+          displayName,
+          edgeRate,
+          totalDropRate,
+        },
+        { abortEarly: false },
+      );
       setErrors({});
     } catch (e) {
-    const error = Validation.getErrors(schema, e);
-      return setErrors({ displayName: error.displayName?.key, image: error.image?.key });
+      const err = Validation.getErrors(schema, e);
+      console.log(err);
+      return setErrors(convertValidationErrors(err));
     }
 
-    if (Intimal.toDecimal(totalDropRate) !== 1) {
-      return setErrors({ create: "Total chance must equal 100%." });
+    if (Intimal.toDecimal(totalDropRate, 6) !== 1) {
+      return setErrors({ totalDropRate: "Total chance must equal 100%." });
     }
 
     if (items.some((x) => x.dropRate <= 0)) {
@@ -181,15 +205,13 @@ export const ChestEditorPage = () => {
     }
 
     const { chestId } = await Chests.createChest({
+      edgeRate,
       image: image?.file,
       displayName: displayName!,
       kind,
       items: items.map((x) => ({
         id: x.id,
         dropRate: x.dropRate,
-        announce: x.announce,
-        jackpot: x.jackpot,
-        special: x.special,
       })),
     });
 
@@ -211,13 +233,9 @@ export const ChestEditorPage = () => {
       chestId: chest!._id,
       image: image?.file,
       displayName: displayName!,
-      kind,
       items: items.map((x) => ({
         id: x.id,
         dropRate: x.dropRate,
-        announce: x.announce,
-        jackpot: x.jackpot,
-        special: x.special,
       })),
     });
 
@@ -231,7 +249,7 @@ export const ChestEditorPage = () => {
   if (query.error) {
     bodyContent = (
       <PageNotice
-        image="/graphics/notice-Castle-error"
+        image="/graphics/notice-chicken-error"
         title="Error"
         message="Something went wrong, please return to the chest index."
         buttonLabel="Back to Chests"
@@ -247,6 +265,7 @@ export const ChestEditorPage = () => {
         <ChestMenu
           action={action}
           disabled={disabled}
+          kind={chest?.kind}
           isLoading={isLoading}
           onCancelClick={handleCancel}
           onBackClick={handleBack}
@@ -270,6 +289,9 @@ export const ChestEditorPage = () => {
           />
         )}
         <ChestProfile
+          action={action}
+          edgeRate={edgeRate}
+          edgeRateError={errors.edgeRate}
           image={image}
           imageError={errors.image}
           displayName={displayName}
@@ -280,7 +302,9 @@ export const ChestEditorPage = () => {
           estimatedValue={estimatedValue}
           openCost={openCost}
           totalDropRate={totalDropRate}
+          totalDropRateError={errors.totalDropRate}
           setImage={setImage}
+          setEdgeRate={setEdgeRate}
           setDisplayName={setDisplayName}
           setKind={setKind}
         />
@@ -298,9 +322,6 @@ export const ChestEditorPage = () => {
                 newItems.push({
                   ...item,
                   dropRate: 0,
-                  announce: false,
-                  jackpot: false,
-                  special: false,
                 });
                 newItems.sort((a, b) => b.lootValue - a.lootValue);
                 return newItems;

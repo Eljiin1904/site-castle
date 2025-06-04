@@ -64,9 +64,7 @@ export const IndexHeader = () => {
         icon={SvgSort}
         options={limitOptions.map((x) => `${x} Battles`)}
         value={limitOptions.indexOf(limit)}
-        onChange={(x, i) =>
-          dispatch(CaseBattles.setIndexLimit(limitOptions[i]))
-        }
+        onChange={(x, i) => dispatch(CaseBattles.setIndexLimit(limitOptions[i]))}
       />
       <Button
         kind="primary"

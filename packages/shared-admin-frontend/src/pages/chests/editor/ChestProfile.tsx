@@ -13,8 +13,13 @@ import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { Strings } from "@core/services/strings";
 import { ChestKind } from "@core/types/chests/ChestKind";
 import { Chests } from "#app/services/chests";
+import { SvgPercent } from "@client/svgs/common/SvgPercent";
+import { ChestAction } from "./ChestAction";
 
 export const ChestProfile = ({
+  action,
+  edgeRate,
+  edgeRateError,
   image,
   imageError,
   displayName,
@@ -25,10 +30,15 @@ export const ChestProfile = ({
   estimatedValue,
   openCost,
   totalDropRate,
+  totalDropRateError,
+  setEdgeRate,
   setImage,
   setDisplayName,
   setKind,
 }: {
+  action: ChestAction;
+  edgeRate: number;
+  edgeRateError: string | undefined;
   image: ImageInputValue | undefined;
   imageError: string | undefined;
   displayName: string | undefined;
@@ -39,6 +49,8 @@ export const ChestProfile = ({
   estimatedValue: number;
   openCost: number;
   totalDropRate: number;
+  totalDropRateError: string | undefined;
+  setEdgeRate: (x: number) => void;
   setImage: (x: ImageInputValue | undefined) => void;
   setDisplayName: (x: string | undefined) => void;
   setKind: (x: ChestKind) => void;
@@ -49,17 +61,17 @@ export const ChestProfile = ({
   return (
     <Div
       fx
-      px={32}
-      py={24}
-      gap={32}
-      bg="brown-6"
+      px={20}
+      py={20}
+      gap={24}
+      bg="gray-7"
       border
     >
       <Input
         type="image"
         accept=".png"
-        width="256px"
-        height="256px"
+        width="220px"
+        height="220px"
         placeholder={{
           type: "png",
           path: chest ? `/chests/${chest.imageId}` : "/graphics/unknown-icon",
@@ -112,51 +124,68 @@ export const ChestProfile = ({
           <Dropdown
             type="select"
             options={Chests.kinds.map((x) => Strings.kebabToTitle(x))}
+            disabled={action === "edit"}
             value={Chests.kinds.indexOf(kind)}
             onChange={(x, i) => setKind(Chests.kinds[i])}
           />
         </ModalSection>
-        <Div
-          fx
-          gap={16}
-        >
-          <ModalSection>
-            <ModalLabel>{"Min Multiplier"}</ModalLabel>
-            <ModalField color="gray">
-              {placehold
-                ? "0"
-                : Numbers.floor(
-                    items[items.length - 1].lootValue / openCost,
-                    4,
-                  )}
-              {"x"}
-            </ModalField>
-          </ModalSection>
-          <ModalSection>
-            <ModalLabel>{"Max Multiplier"}</ModalLabel>
-            <ModalField color="gray">
-              {placehold
-                ? "0"
-                : Numbers.floor(items[0].lootValue / openCost, 1)}
-              {"x"}
-            </ModalField>
-          </ModalSection>
-        </Div>
-        <Div
-          fx
-          gap={16}
-        >
-          <ModalSection>
-            <ModalLabel>{"Item Count"}</ModalLabel>
-            <ModalField color="gray">{items.length}</ModalField>
-          </ModalSection>
-          <ModalSection>
-            <ModalLabel>{"Total Chance"}</ModalLabel>
-            <ModalField color={totalDropDecimal !== 1 ? "red" : "green"}>
-              {(totalDropDecimal * 100).toFixed(4) + "%"}
-            </ModalField>
-          </ModalSection>
-        </Div>
+        <ModalSection>
+          <ModalLabel>{"Min Multiplier"}</ModalLabel>
+          <ModalField color="gray">
+            {placehold ? "0" : Numbers.floor(items[items.length - 1].lootValue / openCost, 4)}
+            {"x"}
+          </ModalField>
+        </ModalSection>
+
+        <ModalSection>
+          <ModalLabel>{"Item Count"}</ModalLabel>
+          <ModalField color="gray">{items.length}</ModalField>
+        </ModalSection>
+      </Div>
+      <Div
+        column
+        fx
+        gap={16}
+      >
+        <ModalSection>
+          <ModalLabel>{"Edge Rate"}</ModalLabel>
+          <Div
+            center
+            flow="row"
+            gap={8}
+            justifyContent="space-between"
+          >
+            <Input
+              iconRight={SvgPercent}
+              type="decimal"
+              decimals={4}
+              placeholder={edgeRate?.toString()}
+              disabled={action === "edit"}
+              value={edgeRate * 100}
+              error={edgeRateError}
+              onChange={(x) => {
+                if (x === undefined) x = 0;
+                setEdgeRate(x / 100);
+              }}
+            />
+          </Div>
+        </ModalSection>
+        <ModalSection>
+          <ModalLabel>{"Max Multiplier"}</ModalLabel>
+          <ModalField color="gray">
+            {placehold ? "0" : Numbers.floor(items[0].lootValue / openCost, 1)}
+            {"x"}
+          </ModalField>
+        </ModalSection>
+        <ModalSection>
+          <ModalLabel>{"Total Chance"}</ModalLabel>
+          <ModalField
+            error={totalDropRateError}
+            color={totalDropDecimal !== 1 ? "red" : "green"}
+          >
+            {(totalDropDecimal * 100).toFixed(4) + "%"}
+          </ModalField>
+        </ModalSection>
       </Div>
     </Div>
   );

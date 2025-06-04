@@ -8,6 +8,10 @@ export function getModifierColor(modifier: CaseBattleModifier): Color {
       return "blue";
     case "final-draw":
       return "purple";
+    case "friends-only":
+      return "light-yellow";
+    case "private":
+      return "light-gray";
     default:
       throw new Error(`Unknown modifier, ${modifier}`);
   }
