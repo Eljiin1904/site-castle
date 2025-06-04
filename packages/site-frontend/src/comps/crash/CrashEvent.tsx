@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export const CrashEvent = ({
   height,
-  color,
+  color = "bright-green",
   width = 10,
   position = 0,
   startAtLine ,

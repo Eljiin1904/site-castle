@@ -76,7 +76,7 @@ const MobileContent = () => {
         px={24}
         >
           <DoubleFairness />
-          <BetBoard mt={40} mb={40} title={t("games\\double:betBoardHeader")} game="double" />
+          <BetBoard mt={40} mb={40} title={t("bets.recentBets")}/>
         </Div>
     </Div>
   );
@@ -118,7 +118,7 @@ const NotMobileContent = () => {
         <BetBoardGrid />
       </Div>
       <DoubleFairness />
-      <BetBoard mt={40} mb={40} title={t("games\\double:betBoardHeader")} game="double" />
+      <BetBoard mt={40} mb={40} title={t("bets.recentBets")} />
     </Div>
   );
 };

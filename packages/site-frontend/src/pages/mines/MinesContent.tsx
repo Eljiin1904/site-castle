@@ -37,7 +37,7 @@ const MobileContent = () => {
       <MinesHeader />
       <MinesView />
       <MinesMenu />
-      <BetBoard px={20} mt={40}  mb={40} title={t("betBoardHeader")} game="mines" />
+      <BetBoard px={20} mt={40}  mb={40} title={t("bets.recentBets")}/>
     </Div>
   );
 };
@@ -56,7 +56,7 @@ const NotMobileContent = () => {
         <MinesMenu />
         <MinesView />
       </Div>
-      <BetBoard mt={56} mb={56} title={t("betBoardHeader")} game="mines" />    
+      <BetBoard mt={56} mb={56} title={t("bets.recentBets")}/>    
     </Div>
   );
 };
