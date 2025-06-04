@@ -129,3 +129,5 @@ affinity: {}
 namespace: shared-backend
 
 environment: "production"
+
+webPurityApiKey: "e5408084775a10dc88915c5b314514f2"
