@@ -27,24 +27,20 @@ export const CrashChartContainer = () => {
   const elapsedtime = useAppSelector((x) => x.crash.elapsedTime) ?? 0;
   const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
   const [multiplier, setMultiplier] = useState(serverMultiplier);
-  const [timer, setTimer] = useState(elapsedtime);
   
   useInterval(() => {
     if(round.status == 'simulating' && elapsedtime > 0) {
       
+      const timer = Site.timeSince(round.startDate ?? new Date());
       const newMultiplier = CoreCrash.getMultiplierForTime(timer);
-      
       setMultiplier(Math.min(newMultiplier, serverMultiplier));
-      setTimer(currentVal => currentVal + 10);
     }
     else if(round.status == 'completed'){
       
       setMultiplier(round.multiplier ?? serverMultiplier);
-      setTimer(0);
     }
     else if(round.status == 'waiting' || round.status == 'pending') {
       setMultiplier(1.00);
-      setTimer(0);
     }
   }, 10);
 

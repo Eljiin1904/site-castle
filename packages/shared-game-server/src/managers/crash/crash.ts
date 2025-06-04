@@ -121,7 +121,7 @@ async function startRound(round: CrashRoundDocument) {
   const serverSeedHash = Random.hashServerSeed(serverSeed);
   
   const statusDate = new Date();
-  const multiplier = 12;
+  const multiplier = 15;
   Random.getMultiplier({
     serverSeed: serverSeed,
     clientSeed: eosBlockId,

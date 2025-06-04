@@ -10,6 +10,7 @@ import { CrashMode } from "@core/types/crash/CrashMode";
 import { CrashEventProps } from "#app/types/crash/CrashEventProps";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
 import { CrashMultiplierInGameDetails } from "@core/types/crash/CrashMultiplierInGameDetails";
+import { Crash } from "@core/services/crash";
 
 type PostAction = "reset" | "increase";
 
@@ -66,6 +67,10 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.elapsedTime = payload.elapsedTime ?? 0;
+      // if(payload.round.status === "simulating") {
+      //   console.log('init started')
+      //   state.round.startDate = new Date(Date.now() -  payload.elapsedTime + Crash.roundTimes.delay + 300);
+      // }
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
@@ -125,6 +130,9 @@ export const crashSlice = createSlice({
       else {
         state.round.status = "simulating";
         state.elapsedTime = elapsedTime;
+       
+        // Set the start date based on the elapsed time and add 150ms to client be behind server
+        state.round.startDate = new Date(Date.now() - elapsedTime + 150);
       }
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {
