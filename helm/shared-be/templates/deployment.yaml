@@ -45,6 +45,8 @@ spec:
               value: {{ .Values.environment }}
             - name: env
               value: {{ .Values.environment }}
+            - name: WEB_PURITY_API_KEY
+              value: {{ .Values.webPurityApiKey }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

@@ -15,3 +15,4 @@ export * from "./validators/validateVpn";
 export * from "./validators/validateWagerAmount";
 export * from "./validators/validateWagerRequirement";
 export * from "./validators/validateXP";
+export * from "./validators/validateProfanity";
