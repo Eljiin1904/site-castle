@@ -33,5 +33,7 @@ async function main() {
 
   logger.info("Initialized sockets.");
 
-  httpServer.listen(port, () => logger.info(`Site backend listening on port ${port}.`));
+  httpServer.listen(port, async () => {
+    logger.info(`Site backend listening on port ${port}.`);
+  });
 }
