@@ -8,6 +8,7 @@ import { Ids } from "@server/services/ids";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 import config from "@core/config";
+import { checkProfanityByField } from "#app/services/site/Site";
 
 const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_BACKEND });
 const { env } = config;
@@ -25,22 +26,15 @@ export default Http.createApiRoute({
     const { campaignName, campaignId } = req.body;
 
     await Site.validateToggle("affiliatesEnabled");
-    if (env == "development") {
+    if (env === "development") {
       try {
-        const profaneWords = await Site.validateProfanity({ text: campaignName });
-
-        if (profaneWords.length > 0) {
-          logger.warn(`Profane words detected: ${profaneWords}`);
-          const profaneWordsString = profaneWords.join(", ");
-          throw new HandledError(
-            `Unable to create Campaign due to profanity found: ${profaneWordsString} `,
-          );
-        }
+        await checkProfanityByField("campaignName", campaignName);
+        await checkProfanityByField("campaignId", campaignId);
       } catch (err: any) {
-        logger.error(`Unable to create Campaign due to the following error ${err}`);
-        if (err.toString().includes("Unable to create Campaign due to profanity found"))
+        logger.error(`Unable to create Campaign due to the following error: ${err}`);
+        if (err.toString().includes("Unable to create Campaign due to profanity"))
           throw new HandledError(err);
-        throw new HandledError("Unable to Create a Campaign at this time");
+        throw new HandledError("Unable to create Campaign at this time");
       }
     }
 
