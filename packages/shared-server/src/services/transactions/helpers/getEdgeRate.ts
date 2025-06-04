@@ -14,7 +14,7 @@ export function getEdgeRate(category: TransactionCategory) {
     case "case-battles":
       return Chests.edgeRate;
     case "double":
-      return;
+      return Double.edgeRate;
     case "crash":
       return Crash.edgeRate;
     case "dice":
