@@ -34,7 +34,8 @@ export default function BlackjackGameOverActions() {
     <Div
       className="BlackjackGameOverActions"
       bg="black-overlay"
-      width={400}
+      borderColor="brown-4"
+      width={200}
       py={10}
     >
       <Div

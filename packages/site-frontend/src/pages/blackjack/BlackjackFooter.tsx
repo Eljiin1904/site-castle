@@ -10,27 +10,21 @@ export const BlackjackFooter = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
 
   const { t } = useTranslation();
-  const sm = layout === "mobile";
-  const createGame = useCreateGame();
-  const processing = useProcessing();
   const game = useGame();
-  const onClick = useCallback(() => {
-    if (processing) return;
-    createGame();
-  }, []);
 
-  const inputWidth = sm ? "full" : 160;
   return (
     <Div
       fx
-      px={sm ? 20 : 24}
-      gap={sm ? 8 : 12}
-      bg="black-overlay"
-      zIndex={15}
+      zIndex={1}
       wrap
       width={"full"}
     >
-      <Div>{!game && <BlackjackInputGroup />}</Div>
+      <Div
+        alignItems="center"
+        justifyContent="center"
+      >
+        {!game && <BlackjackInputGroup />}
+      </Div>
     </Div>
   );
 };

@@ -29,7 +29,6 @@ export const BlackjackView = () => {
     <div className={className}>
       <div className="View_inner">
         <BlackjackLayout />
-
         <BlackjackGameCanvas />
       </div>
     </div>

@@ -11,8 +11,6 @@ import { Span } from "@client/comps/span/Span";
 import { Divider } from "@client/comps/divider/Divider";
 // import { useTranslation } from "#client/hooks/localization/useTranslation";
 import { Div } from "@client/comps/div/Div";
-import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useState } from "react";
 
 export const BlackjackBetTotals = () => {
@@ -21,13 +19,12 @@ export const BlackjackBetTotals = () => {
   return (
     <Div
       className="BlackjackBetTotals"
-      zIndex={10}
       gap={10}
     >
       <Div>
         <MainBetTotals />
       </Div>
-      <Div>
+      <Div width={"full"}>
         <BlackjackSidebetTotals />
       </Div>
     </Div>
@@ -35,101 +32,192 @@ export const BlackjackBetTotals = () => {
 };
 
 function MainBetTotals() {
-  const collapse = useIsMobileLayout();
   const mainLayout = useLibrarySelector((x) => x.style.mainLayout);
 
   // const { t } = useTranslation();
   const betAmounts = useDisplayBetAmounts();
-
   const mainBet = betAmounts["main-bet"];
   const sideBets = entries(betAmounts).reduce((acc, [key, val]) => {
     if (key === "main-bet") return acc;
     return acc + val;
   }, 0);
   const total = mainBet + sideBets;
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <Div fx>
+    <Div>
       {mainLayout == "desktop" || mainLayout == "laptop" ? (
-        <Span
-          className="MainBetTotals"
+        <Div
+          borderColor={"brown-4"}
+          border
+          borderWidth={1}
           fx
-          gap={16}
-          width={200}
-          bg={"black-overlay"}
         >
-          <Item
-            label={"Side Bets"}
-            value={sideBets}
-          />
-          <Divider
-            as={"div"}
-            borderColor={"brown-6"}
-          />
-          <Item
-            label={"Main Bet"}
-            value={mainBet}
-          />
+          <Span
+            className="MainBetTotals"
+            fx
+            gap={16}
+            width={200}
+            bg={"black-overlay"}
+          >
+            <Item
+              label={"Main Bet"}
+              value={Intimal.toDecimal(mainBet)}
+            />
 
-          <Divider
-            as={"div"}
-            borderColor={"brown-6"}
-          />
-          <Item
-            label={"Total Bet"}
-            value={total}
-          />
-        </Span>
+            <Divider
+              as={"div"}
+              borderColor={"brown-4"}
+            />
+
+            <Item
+              label={"Side Bets"}
+              value={Intimal.toDecimal(sideBets)}
+            />
+            <Divider
+              as={"div"}
+              borderColor={"brown-4"}
+            />
+            <Item
+              label={"Total Bet"}
+              value={Intimal.toDecimal(total)}
+            />
+          </Span>
+        </Div>
       ) : (
         <Div
-          fx
-          width={200}
+          column
+          width={"full"}
+          onClick={() => setShowMenu((prev) => !prev)}
         >
-          <Dropdown
-            type="display"
-            fx
-            size="md"
-            // placeholder={`Total Bet: ${total}`}
-            options={[
-              { label: `Total Bet: $${Intimal.toDecimal(total, 6)}` },
-              { label: `Side Bet: $${Intimal.toDecimal(sideBets, 6)}` },
-              { label: `Main Bet: $${Intimal.toDecimal(mainBet, 6)}` },
-            ]}
-            value={0}
-            collapse={collapse}
-          />
+          <Div
+            bg={showMenu ? "brown-4" : "black-overlay"}
+            width={140}
+            px={10}
+            py={10}
+            border
+            borderColor={"brown-4"}
+          >
+            <Div
+              width={"full"}
+              justify="space-between"
+            >
+              <Div color={showMenu ? "sand" : "white"}>Total: </Div>
+              <Div color="white">
+                {" "}
+                <Vector
+                  className="icon"
+                  as={SvgDollarSign}
+                  size={16}
+                  color={"light-sand"}
+                />
+                {Intimal.toDecimal(total)}
+              </Div>
+            </Div>
+          </Div>
+          <Div width={"full"}>
+            {showMenu ? (
+              <Div
+                zIndex={15}
+                width={280}
+                mt={5}
+              >
+                <MenuDropdown
+                  mainBet={Intimal.toDecimal(mainBet)}
+                  sideBets={Intimal.toDecimal(sideBets)}
+                  total={Intimal.toDecimal(total)}
+                />
+              </Div>
+            ) : null}
+          </Div>
         </Div>
       )}
     </Div>
   );
 }
 
-function Item({ label, value }: { label: string; value: number }) {
+const MenuDropdown = ({
+  mainBet,
+  sideBets,
+  total,
+}: {
+  mainBet: number;
+  sideBets: number;
+  total: number;
+}) => {
+  return (
+    <Div
+      bg="brown-4"
+      column
+      zIndex={15}
+      py={20}
+      px={10}
+      width={280}
+      gap={10}
+      border
+      borderColor="brown-4"
+    >
+      <Item
+        label={"Main Bet"}
+        value={mainBet}
+        color="dark-sand"
+      />
+
+      <Divider
+        as={"div"}
+        borderColor={"dark-brown-hover"}
+        color="dark-sand"
+      />
+
+      <Item
+        label={"Side Bets"}
+        value={sideBets}
+        color="dark-sand"
+      />
+      <Divider
+        as={"div"}
+        borderColor={"dark-brown-hover"}
+      />
+      <Item
+        label={"Total Bet"}
+        value={total}
+        color="dark-sand"
+      />
+    </Div>
+  );
+};
+function Item({ label, value, color }: { label: string; value: number; color?: Color }) {
   return (
     <Div
       className="Item"
       justifyContent="space-between"
     >
-      <Span
+      <Div
         className="label"
         color={"dark-sand"}
       >
         {label}
-      </Span>
-      <div className="value">
+      </Div>
+      <Div
+        className="value"
+        align="center"
+        justify="center"
+      >
         <Vector
           className="icon"
           as={SvgDollarSign}
           size={14}
-          color={"light-sand"}
+          color={"white"}
         />
         <Span
           className="text"
-          color={"light-sand"}
+          color={"white"}
         >
-          {Intimal.toDecimal(value)}
+          {value}
+          {/* {Intimal.toDecimal(value)}
+           */}
         </Span>
-      </div>
+      </Div>
     </Div>
   );
 }
