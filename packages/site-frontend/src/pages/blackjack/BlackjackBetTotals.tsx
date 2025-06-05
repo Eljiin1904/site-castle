@@ -214,8 +214,6 @@ function Item({ label, value, color }: { label: string; value: number; color?: C
           color={"white"}
         >
           {value}
-          {/* {Intimal.toDecimal(value)}
-           */}
         </Span>
       </Div>
     </Div>
