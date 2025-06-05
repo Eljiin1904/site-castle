@@ -26,9 +26,17 @@ export type VolumeDropdownProps = {
     | "tertiary-black-overlay"
     | "tertiary-white-overlay";
   iconColor?: Color;
+  border?: boolean;
+  borderColor?: Color;
 };
 
-export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColor }) => {
+export const VolumeDropdown: FC<VolumeDropdownProps> = ({
+  prefix,
+  kind,
+  iconColor,
+  border,
+  borderColor,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [volume, setVolume] = useSoundVolume(prefix);
 
@@ -60,6 +68,8 @@ export const VolumeDropdown: FC<VolumeDropdownProps> = ({ prefix, kind, iconColo
         <Button
           kind={kind || "tertiary-black-overlay"}
           icon={getButtonIcon()}
+          border={border}
+          borderColor={borderColor}
         />
       }
       body={

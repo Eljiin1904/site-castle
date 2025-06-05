@@ -79,12 +79,7 @@ export const BlackjackInputPlacement = ({
       width={"full"}
     >
       <ModalSection justifyContent="space-between">
-        <ModalLabel
-          width={"full"}
-          justifyContent="center"
-        >
-          {title}
-        </ModalLabel>
+        <ModalLabel width={"full"}>{title}</ModalLabel>
         <Input
           type="decimal"
           decimals={2}

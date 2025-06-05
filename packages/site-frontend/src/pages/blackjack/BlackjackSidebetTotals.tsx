@@ -33,17 +33,19 @@ export const BlackjackSidebetTotals = () => {
               flow="row"
               bg="black-overlay"
               mt={4}
-              p={sm ? 2 : 8}
+              p={sm ? 4 : 8}
               borderRadius={4}
-              width={sm ? 140 : 200}
+              width={sm ? 160 : 200}
               key={payout.title}
-              fontSize={sm ? 8 : 16}
+              fontSize={sm ? 12 : 16}
+              align="center"
+              justify="space-between"
             >
               <td className="sidebet-title">
                 {payout.title} ({payout.multiplier}x)
               </td>
               <td className="sidebet-amount">
-                <Span>+</Span>
+                <Span> + </Span>
                 <Vector
                   className="icon"
                   as={SvgDollarSign}
