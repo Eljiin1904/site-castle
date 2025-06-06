@@ -192,7 +192,7 @@ export function useAutoBet() {
       throw new Error("validations:errors.games.notEnoughTokens");
     }
     if(!targetMultiplier || targetMultiplier <= 1) {
-      throw new Error("games\\crash:targetMultiplierInvalid");
+      throw new Error("validations:errors.games.crash.invalidMultiplier");
     }
 
     await confirmBet({

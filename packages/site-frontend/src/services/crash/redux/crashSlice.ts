@@ -55,7 +55,11 @@ const initialState: CrashState = {
   lossAction: "reset",
   autoPnl: 0,
 };
-
+/**
+ * Represents the Redux slice for managing the state of the crash game player. 
+ * This slice contains actions and reducers for initializing the player, 
+ * updating rounds,managing bets, handling crash events, and configuring auto-play settings.
+ */
 export const crashSlice = createSlice({
   name: "crashPlayer",
   initialState,
@@ -67,10 +71,6 @@ export const crashSlice = createSlice({
       state.lobby = payload.round.status;
       state.initialized = true;
       state.elapsedTime = payload.elapsedTime ?? 0;
-      // if(payload.round.status === "simulating") {
-      //   console.log('init started')
-      //   state.round.startDate = new Date(Date.now() -  payload.elapsedTime + Crash.roundTimes.delay + 300);
-      // }
     }),
     changeRound: reducer<CrashRoundDocument>((state, { payload }) => {
       state.round = payload;
@@ -132,7 +132,7 @@ export const crashSlice = createSlice({
         state.elapsedTime = elapsedTime;
        
         // Set the start date based on the elapsed time and add 150ms to client be behind server
-        state.round.startDate = new Date(Date.now() - elapsedTime + 150);
+        state.round.startDate = new Date(Date.now() - elapsedTime + Crash.roundTimes.intervalFrequency);
       }
     }),
     updateBets: reducer<CrashTicketDocument>((state, { payload }) => {

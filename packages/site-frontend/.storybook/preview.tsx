@@ -150,6 +150,26 @@ const store = configureStore({
         tokenBalance: 500000000
       },
       reducers: {}
+    }).reducer,
+    crash: createSlice({
+      name: "crash",
+      initialState: {
+        round: {
+          status: 'waiting',
+          startDate: null,
+          multiplier: 1.00,
+          _id: 'test-round-id'
+        },
+        elapsedTime: 0,
+        crashEvents: [],
+        tickets: [],
+        roundTicket: null
+      },
+      reducers: {
+        addCrashEvent: (state, action) => {
+          //state.crashEvents.push(action.payload);
+        }
+      }
     }).reducer
   }
 });

@@ -9,3 +9,4 @@ export * from "./utils/getStatsFromTransaction";
 export * from "./utils/incrementReport";
 export * from "./utils/reportTransaction";
 export * from "./utils/recordLatency";
+export * from "./utils/getLatency";

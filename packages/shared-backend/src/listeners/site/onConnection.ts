@@ -18,9 +18,10 @@ export default Sockets.createListener({
 
     const userId = socket.data.userId;
 
-    setInterval(() => {
-      const start = Date.now();      
-      socket.emit("pong", () => {
+    setInterval(async () => {
+      const start = Date.now();  
+      const latency = await Users.getLatency(userId, socket.id);       
+      socket.emit("pong",latency, () => {
         
         const now = Date.now();
         const latency:UserLatencyRecording = {

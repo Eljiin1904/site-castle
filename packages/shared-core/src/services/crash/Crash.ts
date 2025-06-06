@@ -8,6 +8,5 @@ export * from "./constants/roundTimes";
 export * from "./constants/nextRoundId";
 
 export * from "./utils/getProfit";
-export * from "./utils/getTargetMinMax";
 export * from "./utils/getTimeForMultiplier";
 export * from "./utils/getMultiplierForTime";

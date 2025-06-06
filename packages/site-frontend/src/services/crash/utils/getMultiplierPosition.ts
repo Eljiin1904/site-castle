@@ -1,12 +1,14 @@
 import { Crash } from "..";
 
 /**
- * Get the position of the multiplier on the chart. Chart height is 256.
- * From 1 to 2 multiplier, the height is (multiplier -1 ) X 41 X 2 = 82px (MAX)
- * From 2 to 5 multiplier, the height is multiplier X 41px  = 202 (MAX)
- * From 5 to 100 multiplier, the height is 256 - (256/multiplier) = 256 - (51/multiplier)
- * @param multiplier 
- * @returns 
+ * Calculates the position of the multiplier on the chart based on predefined rules.
+ * Chart height is 256 pixels.
+ * - For multipliers between 1 and 2: The position is calculated as (multiplier - 1) * 41 * 2, with a maximum of 82px.
+ * - For multipliers between 2 and 5: The position is calculated as multiplier * 41px, with a maximum of 202px.
+ * - For multipliers between 5 and 100: The position is calculated as 256 - (256 / multiplier).
+ * 
+ * @param multiplier The multiplier value to calculate the position for.
+ * @returns The calculated position on the chart, ensuring it is not less than 0.
  */
 export function getMultiplierPosition(
   multiplier: number

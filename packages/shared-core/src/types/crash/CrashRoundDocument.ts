@@ -3,6 +3,10 @@ import type {
   CrashRoundsStatusData,
 } from "./CrashRoundStatus";
 
+/**
+ * Represents a document for a crash round in the database.
+ * Contains information about the round's status, timestamps, and other relevant data.
+ */
 export type CrashRoundDocument = {
   _id: string;
   timestamp: Date;

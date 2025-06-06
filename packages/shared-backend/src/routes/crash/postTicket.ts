@@ -5,14 +5,14 @@ import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Crash } from "@server/services/crash";
-import { Crash as CoreCrash } from "@core/services/crash";
+
 /**
- * 
  * This route is used to post a ticket for the Crash game.
  * It validates the request body, checks the user's balance, and creates a ticket for the specified round.
  * If the round is not in a valid state, it throws an error.
  * If the user has already posted a ticket for the round, it does not create a new ticket.
  * If the nextRound flag is set, it checks if the user has already posted a ticket for the next round and creates a ticket for the next round if not.
+ * 
  * @param {Object} req - The request object containing the body with roundId, betAmount, targetMultiplier, and nextRound.
  * @param {Object} req.body - The body of the request containing the necessary parameters.
  * @param {string} req.body.roundId - The ID of the current round. 
@@ -20,8 +20,9 @@ import { Crash as CoreCrash } from "@core/services/crash";
  * @param {string} [req.body.betToken] - The token used for the bet, if applicable.
  * @param {number} [req.body.targetMultiplier] - The target multiplier for the bet, if applicable.
  * @param {boolean} [req.body.nextRound=false] - A flag indicating if the ticket is for the next round.
- * If the nextRound flag is set, it will check that the current round state, if the current state is waiting or pending,
- * it will  create a ticket for the current round instead of the next.
+ * If the nextRound flag is set, it will check the current round state. If the current state is "waiting" or "pending",
+ * it will create a ticket for the current round instead of the next.
+ * 
  * @param {Object} res - The response object to send the created ticket or an error.
  * @returns {Promise<void>} - A promise that resolves when the ticket is created and sent in the response.
  */
