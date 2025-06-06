@@ -167,7 +167,7 @@ async function startRound(round: CrashRoundDocument) {
     }
 
     triggerAutoCashTickets(round._id, currentMultiplier);
-  }, 150);
+  }, Crash.roundTimes.intervalFrequency);
 
   await Utility.wait(roundTime);
   clearInterval(intervalId);
