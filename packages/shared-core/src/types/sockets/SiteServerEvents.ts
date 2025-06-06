@@ -81,5 +81,5 @@ export interface SiteServerEvents {
   "campaign-init": (x: UserCampaigns[]) => void;
   "campaign-insert": (campaign: UserCampaigns) => void;
   "campaign-update": (update: StreamUpdate) => void;
-  "pong": (callback: () => void) => void;
+  "pong": (latency:number, callback: () => void) => void;
 }
