@@ -8,21 +8,32 @@ import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 import { Crash } from "@core/services/crash";
 
 /**
- * Cashes out a Crash ticket. Check if the ticket is valid and if the multiplier key is correct for the
- * time of the round. If the ticket is valid, it updates the ticket with the multiplier information.
- * If the ticket is invalid, it marks the ticket as processed and cashoutTriggered for prevention of
- * double attempts.
+ * Cashes out a Crash ticket. Validates the ticket and updates it with the multiplier information if valid.
+ * If invalid, marks the ticket as processed and cashoutTriggered to prevent double attempts.
+ * 
  * Validation steps:
- * 1. Basic validations (toggle, confirmed, suspension, token balance)
- * 2. Round validations (exists, status, started)
- * 3. Ticket validations (exists, in round,  processed, cashoutTriggered)
- * 4. Multiplier event validations (exists, timestamp)
- * 5. Latency validations (between server and client, between multiplier event and round start)
- * 6. Location validation (missing)
+ * 1. Basic validations:
+ *    - Toggle validation (crashEnabled)
+ *    - User confirmation validation
+ *    - Suspension validation
+ * 2. Round validations:
+ *    - Round existence
+ *    - Round status validation (simulating or completed)
+ *    - Round start date validation
+ * 3. Ticket validations:
+ *    - Ticket existence
+ *    - Ticket association with the round
+ *    - Ticket processed/cashoutTriggered state
+ * 4. Multiplier event validations:
+ *    - Multiplier existence
+ *    - Multiplier timestamp validation
+ * 5. Latency validations:
+ *    - Between server and client
+ *    - Between multiplier event and round start
+ * 6. Location validation (currently missing)
+ * 
  * @param {string} roundId - The ID of the round.
- * @param {number} betAmount - The amount to bet.
- * @param {string} multiplierKey - The key of the multiplier.
- * @param {object} req - The request object.
+ * @param {object} req - The request object containing user and body data.
  */
 export default Http.createApiRoute({
   type: "post",
@@ -33,7 +44,6 @@ export default Http.createApiRoute({
   bet: true,
   body: Validation.object({
     roundId: Validation.string().required("validations:errors.games.crash.requiredRound"),
-    betAmount: Validation.currency("Bet amount")
   }),
   callback: async (req, res) => {
     
@@ -41,14 +51,13 @@ export default Http.createApiRoute({
     const logger = getServerLogger({});
     logger.debug("cashing Crash ticket");
 
-    const { roundId, betAmount } = req.body;
+    const { roundId } = req.body;
     const user = req.user;
 
     //Default crash game validations
     await Site.validateToggle("crashEnabled");
     await Site.validateConfirmed(user);
     await Site.validateSuspension(user);
-    await Site.validateTokenBalance(user, betAmount);
 
     //Round and Ticket Validations.
     const round = await Database.collection("crash-rounds").findOne({
@@ -82,7 +91,7 @@ export default Http.createApiRoute({
 
     //Calculate the time since the round started from the server perspective and get the multiplier for cashout
     //Substract 1 second to the current time to account for the 1 second delay in the client.
-    const currentTimerForRound = Date.now() - roundMultiplier.timestamp.getTime() - (Crash.roundTimes.delay + 150);
+    const currentTimerForRound = Date.now() - roundMultiplier.timestamp.getTime() - (Crash.roundTimes.delay + Crash.roundTimes.intervalFrequency);
     const ticketMultiplierCashout = Crash.getMultiplierForTime(currentTimerForRound);
     const truncatedMultiplier = Math.trunc(ticketMultiplierCashout * 100) / 100;
 
@@ -96,7 +105,7 @@ export default Http.createApiRoute({
       }
 
       const endedTime = (round.completedDate ?? round.statusDate).getTime();
-      if(Date.now() - endedTime > Crash.roundTimes.delay + 150) {
+      if(Date.now() - endedTime > Crash.roundTimes.delay + Crash.roundTimes.intervalFrequency) {
         invalidateTicket(ticket);
         throw new HandledError("validations:errors.games.crash.invalidEndTime");
       }
