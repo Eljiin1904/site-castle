@@ -16,7 +16,7 @@ export function getEdgeRate(category: TransactionCategory) {
     case "double":
       return Double.edgeRate;
     case "crash":
-      return Crash.edgeRate;  
+      return Crash.edgeRate;
     case "dice":
       return Dice.edgeRate;
     case "limbo":

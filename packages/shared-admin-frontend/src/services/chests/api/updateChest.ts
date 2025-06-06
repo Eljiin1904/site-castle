@@ -6,13 +6,11 @@ export function updateChest({
   chestId,
   image,
   displayName,
-  kind,
   items,
 }: {
   chestId: string;
   image: File | undefined;
   displayName: string;
-  kind: ChestKind;
   items: ChestItemOptions[];
 }) {
   const data = new FormData();
@@ -23,7 +21,6 @@ export function updateChest({
 
   data.append("chestId", chestId);
   data.append("displayName", displayName);
-  data.append("kind", kind);
   data.append("items", JSON.stringify(items));
 
   return Http.post("/chests/update-chest", data);

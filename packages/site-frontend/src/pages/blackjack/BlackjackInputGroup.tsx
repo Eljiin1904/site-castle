@@ -20,22 +20,25 @@ export const BlackjackInputGroup = () => {
 
   return (
     <Div
-      gap={10}
-      py={sm ? 12 : 16}
+      gap={20}
+      p={sm ? 12 : 16}
       wrap
-      width={"full"}
       justify="center"
       align="center"
+      borderColor={"brown-4"}
+      border
+      borderWidth={1}
       className="input-group"
+      bg="black-overlay"
     >
       <Div
         align="center"
         justify="center"
-        width={sm ? "full" : 256}
+        width={sm ? "full" : 280}
         gap={8}
         className="input-1"
       >
-        <Div width={128}>
+        <Div width={140}>
           <BlackjackInputPlacement
             index={i++}
             betType="perfect-pairs"
@@ -43,7 +46,7 @@ export const BlackjackInputGroup = () => {
             size="large"
           />
         </Div>
-        <Div width={128}>
+        <Div width={140}>
           <BlackjackInputPlacement
             index={i++}
             betType="21+3"
@@ -55,7 +58,7 @@ export const BlackjackInputGroup = () => {
       <Div
         align="center"
         justify="center"
-        width={160}
+        width={200}
         className="input-2"
       >
         <BetInputGroup
@@ -66,11 +69,11 @@ export const BlackjackInputGroup = () => {
       <Div
         align="center"
         justify="center"
-        width={sm ? "full" : 256}
+        width={sm ? "full" : 280}
         gap={8}
         className="input-3"
       >
-        <Div width={128}>
+        <Div width={140}>
           <BlackjackInputPlacement
             index={i++}
             betType="lucky-ladies"
@@ -79,7 +82,7 @@ export const BlackjackInputGroup = () => {
           />
         </Div>
 
-        <Div width={128}>
+        <Div width={140}>
           <BlackjackInputPlacement
             index={i++}
             betType="blackjack-15x"
@@ -97,7 +100,7 @@ export const BlackjackInputGroup = () => {
       >
         <Button
           type="submit"
-          kind="secondary"
+          kind="primary-green"
           size="sm"
           label="Place Bet"
           disabled={processing}

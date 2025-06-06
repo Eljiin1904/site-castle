@@ -23,7 +23,7 @@ export const BlackjackGameCanvas = () => {
       <Div
         mt={20}
         pr={20}
-        zIndex={10}
+        zIndex={12}
       >
         <BlackjackHeader />
       </Div>

@@ -105,12 +105,7 @@ export const BetInputGroup = ({
     >
       <ModalSection>
         {/* <ModalLabel>{t("fields:bets.amount")}</ModalLabel> */}
-        <ModalLabel
-          width={"full"}
-          justifyContent="center"
-        >
-          {title}
-        </ModalLabel>
+        <ModalLabel>{title}</ModalLabel>
         <Div
           align="center"
           flow="column"
@@ -132,7 +127,6 @@ export const BetInputGroup = ({
             <Button
               kind="tertiary-grey"
               label="1/2"
-              // width={40}
               flexGrow
               disabled={processing}
               onClick={() => handleMath((x) => x / 2)}
@@ -141,7 +135,6 @@ export const BetInputGroup = ({
             <Button
               kind="tertiary-grey"
               label="2X"
-              // width={40}
               flexGrow
               disabled={processing}
               onClick={() => handleMath((x) => x * 2)}
