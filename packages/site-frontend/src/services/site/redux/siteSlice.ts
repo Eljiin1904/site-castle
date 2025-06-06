@@ -30,6 +30,7 @@ interface SiteState {
   search?: string;
   filter?: Game.GameKindType;
   sortBy?: Game.GameSortType;
+  latency?: number;
 }
 
 type SettingUpdate = {
@@ -184,6 +185,9 @@ export const siteSlice = createSlice({
     updateHotGames: reducer<HotSiteGameDetails[] | undefined>((state, { payload }) => {
       state.hotGames = payload;
     }),
+    setLatency: reducer<number | undefined>((state, { payload }) => {
+      state.latency = payload;
+    })
   }),
 });
 
@@ -204,6 +208,7 @@ export const {
   setFilter,
   setSort,
   updateHotGames,
+  setLatency
 } = siteSlice.actions;
 
 const replaceBet = (bets: BetData[], game: SiteGame, bet: SiteBetDocument) => {
