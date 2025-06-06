@@ -45,6 +45,7 @@ export function createCrashEvent(props: Partial<CrashEventProps>, prevEvent?: Cr
       }
     }
   }
+  startAtLine = startAtLine || position === 0; // if the position is 0, it's a started line, otherwise it's not
   return {color, height, initialHeight: height, position, startAtLine};
 }
 
