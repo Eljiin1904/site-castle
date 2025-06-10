@@ -18,7 +18,6 @@ import { UserExclusionExtendPage } from "#app/pages/user/UserExclusionExtendPage
 import { UserReferralPage } from "#app/pages/user/UserReferralPage";
 import { UserRegisterPage } from "#app/pages/user/UserRegisterPage";
 import { UserLoginPage } from "#app/pages/user/UserLoginPage";
-import { AffiliatePage } from "#app/pages/affiliate/AffiliatePage";
 import { RewardsPage } from "#app/pages/rewards/RewardsPage";
 import { UserRedeemPage } from "#app/pages/user/UserRedeemPage";
 import { GemCasePage } from "#app/pages/rewards/GemCasePage";
@@ -147,10 +146,6 @@ export const AppRouter = () => {
       <Route
         path="/account/*"
         element={<AccountPage />}
-      />
-      <Route
-        path="/affiliate/*"
-        element={<AffiliatePage />}
       />
 
       <Route

@@ -1,6 +1,7 @@
 export interface CrashRecordDocument {
   _id: string;
-  uuid: string;
+  hash: string;
   index: number;
   timestamp: Date;
+  used: boolean;
 }
