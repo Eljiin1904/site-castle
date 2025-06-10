@@ -1,18 +1,20 @@
 import React from "react";
 import { Fragment } from "react/jsx-runtime";
-import { Circle } from "@client/comps/circle/Circle";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Site } from "#app/services/site";
+import { Vector } from "@client/comps/vector/Vector";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./NetworkStatus.scss";
-import { Site } from "#app/services/site";
 
 export const NetworkStatus = () => {
   
   const latency = useAppSelector((state) => state.site.latency) ?? 0;
-  const status = Site.network.getStatus(latency);
-  
+  const status = Site.getNetworkStatus(latency);
+  const icon = Site.getNetworkIcon(latency);
+  const color = Site.getNetworkColor(status);
+
   return (
     <Div
       className={"NetworkStatus"}
@@ -23,27 +25,17 @@ export const NetworkStatus = () => {
       top={16}
       height={40}
     >
-      <MemoizeNetworkStatus status={status} />
+      <MemoizeNetworkStatus status={status} icon={icon} color={color} />      
     </Div>
   );
 };
 
-const Status = ({status}: {status: Site.NetworkStatus}) => {
+const Status = ({status, icon, color}: {status: Site.NetworkStatus, icon: Svg, color: Color}) => {
 
   const { t } = useTranslation(["common"]);
-  const latencyColor = Site.network.getColor(status);
   
   return (<Fragment>
-      <Circle
-        as="div"
-        width={8}
-        height={8}
-        color="white"
-        alignItems="center"
-        justifyContent="center"
-        bg={latencyColor}
-        mr={5}
-      />
+      <Vector as={icon} size={16} color={color} />      
       <Span 
         color="white"
         fontSize={12}
@@ -55,5 +47,7 @@ const Status = ({status}: {status: Site.NetworkStatus}) => {
 };
 
 const MemoizeNetworkStatus = React.memo(Status, (prevProps, nextProps) => {
-  return prevProps.status === nextProps.status;
+  return prevProps.status === nextProps.status && 
+  prevProps.icon === nextProps.icon && 
+  prevProps.color === nextProps.color;
 });
