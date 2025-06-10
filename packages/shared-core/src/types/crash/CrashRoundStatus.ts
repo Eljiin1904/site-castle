@@ -12,22 +12,14 @@ interface WaitingData {
 
 interface PendingData {
   status: "pending";
-  eosBlockNum: number;
-  eosCommitDate: Date;
 }
 
 interface SimulatingData {
   status: "simulating";
   multiplier: number;
-  eosBlockNum: number;
-  eosBlockId: string;
-  eosCommitDate: Date;
 }
 
 interface CompletedData {
   status: "completed";
   multiplier: number;
-  eosBlockNum: number;
-  eosBlockId: string;
-  eosCommitDate: Date;
 }

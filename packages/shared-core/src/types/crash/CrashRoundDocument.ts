@@ -15,9 +15,6 @@ export type CrashRoundDocument = {
   statusDate: Date; 
   startDate?: Date;
   completedDate?: Date;
-  eosBlockNum?: number;
-  eosBlockId?: string;
-  eosCommitDate?: Date;
   processed?: boolean;
   processedDate?: Date;
   won?: boolean;

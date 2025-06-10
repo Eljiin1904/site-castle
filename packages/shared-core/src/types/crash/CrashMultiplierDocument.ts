@@ -10,7 +10,7 @@ export interface CrashMultiplierDocument {
   timestamp: Date;
   roundId: string;
   multiplier: number;
-  serverSeed: string;
-  serverSeedHash: string;
+  serverHash: string;
+  clientHash: string;
   roundTime: number;
 }
