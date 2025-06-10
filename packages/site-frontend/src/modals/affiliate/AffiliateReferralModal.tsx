@@ -6,7 +6,6 @@ import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { Dialogs } from "@client/services/dialogs";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
-import { Img } from "@client/comps/img/Img";
 import { Button } from "@client/comps/button/Button";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
@@ -15,6 +14,8 @@ import { Tokens } from "@client/comps/tokens/Tokens";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
 import { TipModal } from "../economy/TipModal";
+import { Vector } from "@client/comps/vector/Vector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AffiliateReferralModal = ({
   report,
@@ -22,7 +23,9 @@ export const AffiliateReferralModal = ({
   report: AffiliateReportWithMeta;
 }) => {
   const level = Users.getLevel(report.user.xp);
-
+  const {t} = useTranslation();
+  const levelIcon = Users.getLevelIcon(level);
+  const levelColor = Users.getLevelColor(level);
   return (
     <Modal
       width="sm"
@@ -56,18 +59,18 @@ export const AffiliateReferralModal = ({
             align="center"
             mt={2}
           >
-            <Img
-              type="png"
-              path={Users.getLevelBadge(level)}
-              width="20px"
+            <Vector
+              as={levelIcon}
+              size={16}
+              color={levelColor}
             />
             <Span
               size={12}
               weight="medium"
-              color="gray"
+              color={levelColor}
               ml={6}
             >
-              {`Level ${level}`}
+              {t('chat.level',{level:level})}
             </Span>
           </Div>
           <Div mt={2}>
