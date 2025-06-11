@@ -37,9 +37,11 @@ animated}: CrashEventProps & {animated?: boolean, multiplier: number}) => {
   const [initialHeight, setInitialHeight] = useState(0); // used to animate the height of the event
 
   useInterval(() => {
-    if(eventPosition > -1*Crash.chart.offset) {
-      setEventPosition(currentPosition => currentPosition - 2);
-      setInitialHeight(currentHeight => currentHeight + 2);
+    if(eventPosition >= -1*Crash.chart.offset) {
+      const newHeight = Math.min(initialHeight + 2, lineHeight);
+      const newPosition = Math.max(-Crash.chart.offset, lineHeight - Crash.chart.offset - newHeight);
+      setEventPosition(newPosition);
+      setInitialHeight(newHeight);
     }
   }, animated ? 5 : null);
   

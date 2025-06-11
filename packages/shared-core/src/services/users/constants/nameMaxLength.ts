@@ -1,1 +1,1 @@
-export const nameMaxLength = 15;
+export const nameMaxLength = 30;

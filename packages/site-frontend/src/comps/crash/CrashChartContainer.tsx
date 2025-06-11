@@ -45,7 +45,7 @@ export const CrashChartContainer = () => {
     }
   }, 10);
 
-  const linePosition = Crash.getMultiplierPosition(multiplier);
+  let linePosition =round.status === 'completed' ?  Crash.getMultiplierPosition(round.multiplier ?? 1): Crash.getMultiplierPosition(multiplier);
   const chartOffset = Crash.chart.offset;
   const time = CoreCrash.roundTimes.waiting - Site.timeSince(round.startDate ?? new Date());
  
