@@ -1,7 +1,9 @@
 import { string } from "yup";
 import { Users } from "#core/services/users";
 
-const regex = /^[a-z0-9]+$/i;
+const regexUsername = /^[a-z0-9]+$/i;
+const regexEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+const regexUsernameOrEmail = new RegExp(`^(${regexUsername.source}|${regexEmail.source})$`);
 const minLength = 2;
 const maxLength = Users.nameMaxLength;
 
@@ -19,7 +21,7 @@ export const username = (name: string = "Username") => {
       key: 'validations.username.max',
       value: {label: name, max: maxLength}
     })
-    .matches(regex, {
+    .matches(regexUsernameOrEmail, {
       key: 'validations.username.matches',
       value: name
     });
