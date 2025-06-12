@@ -1,10 +1,4 @@
-import {
-  Router,
-  Request,
-  Response,
-  RequestHandler,
-  NextFunction,
-} from "express";
+import { Router, Request, Response, RequestHandler, NextFunction } from "express";
 import { AnyObject, ObjectSchema } from "yup";
 import { Http } from "@server/services/http";
 import { HandledError } from "@server/services/errors";
@@ -16,17 +10,10 @@ import { regionHandler } from "../handlers/regionHandler";
 import { TfaOptions, tfaHandler } from "../handlers/tfaHandler";
 
 type RouteOptions<B extends AnyObject, Q extends AnyObject> = {
-  type:
-    | "all"
-    | "get"
-    | "post"
-    | "put"
-    | "delete"
-    | "patch"
-    | "options"
-    | "head";
+  type: "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
   path: string;
   secure: boolean;
+  signatureRequired?: string;
   restricted?: boolean;
   transaction?: boolean;
   captcha?: boolean;
@@ -60,6 +47,7 @@ export function createApiRoute<B extends AnyObject, Q extends AnyObject>({
   path,
   restricted,
   secure = true,
+  signatureRequired,
   transaction,
   captcha,
   tfa,

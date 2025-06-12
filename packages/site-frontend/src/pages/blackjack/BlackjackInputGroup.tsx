@@ -16,11 +16,12 @@ export const BlackjackInputGroup = () => {
   const createGame = useCreateGame();
   const processing = useProcessing();
   const sm = layout === "mobile";
+  const md = layout === "tablet";
   let i = 0;
 
   return (
     <Div
-      gap={20}
+      gap={sm ? 4 : 20}
       p={sm ? 12 : 16}
       wrap
       justify="center"
@@ -34,7 +35,7 @@ export const BlackjackInputGroup = () => {
       <Div
         align="center"
         justify="center"
-        width={sm ? "full" : 280}
+        width={sm || md ? "full" : 280}
         gap={8}
         className="input-1"
       >
@@ -58,7 +59,7 @@ export const BlackjackInputGroup = () => {
       <Div
         align="center"
         justify="center"
-        width={200}
+        width={sm || md ? 280 : 200}
         className="input-2"
       >
         <BetInputGroup
@@ -69,7 +70,7 @@ export const BlackjackInputGroup = () => {
       <Div
         align="center"
         justify="center"
-        width={sm ? "full" : 280}
+        width={sm || md ? "full" : 280}
         gap={8}
         className="input-3"
       >
@@ -92,7 +93,7 @@ export const BlackjackInputGroup = () => {
         </Div>
       </Div>
       <Div
-        mt={20}
+        mt={5}
         width={"full"}
         justify={"center"}
         align={"center"}

@@ -6,6 +6,7 @@ export type TokenKindData =
   | EmailConfirmData
   | ExcludeConfirmData
   | LinkDiscordData
+  | HubEightTokenData
   | LinkGoogleData
   | LinkSiweData
   | LinkSteamData
@@ -62,6 +63,16 @@ interface OtpLoginData {
   kind: "otp-login";
   userId: string;
   strategy: "local" | UserLinkProvider;
+}
+
+interface HubEightTokenData {
+  kind: "hub-eight-token";
+  userDetails: {
+    id: string;
+    username: string;
+    tokenBalance: number;
+  };
+  gameCode: string;
 }
 
 interface PasswordRecoverData {

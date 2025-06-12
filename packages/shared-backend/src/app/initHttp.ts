@@ -13,15 +13,20 @@ import config from "#app/config";
 import * as Routes from "#app/routes";
 
 export function initHttp(app = express()) {
-  const { env, domain, sessionSecret } = config;
+  const { env, domain, sessionSecret, hubEightApiURL } = config;
 
   app.set("trust proxy", 3);
 
   app.use(
     cors({
       origin: {
-        development: ["http://127.0.0.1:3000", "http://localhost:3000"],
-        devcloud: [`https://dev.${domain}`, `https://api.dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
+        development: ["http://127.0.0.1:3000", "http://localhost:3000", hubEightApiURL],
+        devcloud: [
+          `https://dev.${domain}`,
+          `https://api.dev.${domain}`,
+          "http://127.0.0.1:3000",
+          "http://localhost:3000",
+        ],
         staging: [`https://stage.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
       }[env],
@@ -116,6 +121,7 @@ export function initHttp(app = express()) {
   app.use("/support", Routes.support);
   app.use("/users", Routes.users);
   app.use("/verification", Routes.verification);
+  app.use("/hub-eight", Routes.hubEight);
 
   app.use((req, res) => res.status(404).send());
   app.use(Http.appErrorHandler);

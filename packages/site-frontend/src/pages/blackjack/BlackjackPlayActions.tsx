@@ -44,8 +44,11 @@ export default function BlackjackPlayActions() {
             key={i}
             gap={10}
           >
-            {actions.map((action) => (
-              <Div width={sm ? 128 : 160}>
+            {actions.map((action, i) => (
+              <Div
+                key={i}
+                width={sm ? 128 : 160}
+              >
                 <BlackjackButton
                   key={action}
                   text={action}

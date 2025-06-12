@@ -112,6 +112,13 @@ export function getDefaultReport(): TransactionReport {
     caseBattleWagerTokens: 0,
     caseBattleWinTokens: 0,
     caseBattlesEv: 0,
+
+    // HUB88
+    hubEightBetCount: 0,
+    hubEightWagerTokens: 0,
+    hubEightWinTokens: 0,
+    hugEightEv: 0,
+
     diceBetCount: 0,
     diceWagerTokens: 0,
     diceWinTokens: 0,

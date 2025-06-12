@@ -16,9 +16,9 @@ export const BlackjackGameControls = () => {
       align="center"
       justify="center"
       className="BlackjackGameControls"
-      borderColor={"brown-4"}
-      border
-      borderWidth={1}
+      // borderColor={"brown-4"}
+      // border
+      // borderWidth={1}
     >
       <BlackjackGameActions />
     </Div>
