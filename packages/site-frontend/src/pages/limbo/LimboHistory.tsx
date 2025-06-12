@@ -20,6 +20,7 @@ export const LimboHistory = () => {
         return 5;
     }
   };
+
   const reversed = [...history].reverse().slice(0, getHistoryLength());
 
   return (

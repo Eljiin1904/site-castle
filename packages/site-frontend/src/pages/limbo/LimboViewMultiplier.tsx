@@ -49,7 +49,6 @@ export const LimboViewMultiplier = () => {
 
   const shouldPlayVideo = Boolean(processing || isAutoPlaying);
   const shouldResetVideo = !processing;
-
   return (
     <Div
       className="LimboViewMultiplier"
@@ -70,11 +69,12 @@ export const LimboViewMultiplier = () => {
         loop={false}
         autoplay={false}
         muted
+        pause={!(shouldPlayVideo && ticket?.won !== undefined)}
         controls={false}
         playBackSpeed={1}
         reset={false}
         resetEnd={true}
-        play={shouldPlayVideo}
+        play={shouldPlayVideo && ticket?.won !== undefined}
       />
 
       <Div mt={32}>

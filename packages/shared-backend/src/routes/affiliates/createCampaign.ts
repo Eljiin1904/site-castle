@@ -26,6 +26,7 @@ export default Http.createApiRoute({
     const { campaignName, campaignId } = req.body;
 
     await Site.validateToggle("affiliatesEnabled");
+    // Temporary
     if (env === "development") {
       try {
         await checkProfanityByField("campaignName", campaignName);

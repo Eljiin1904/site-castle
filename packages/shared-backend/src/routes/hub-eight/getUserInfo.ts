@@ -20,8 +20,8 @@ export default Http.createApiRoute({
     options.username = user;
 
     // 1. Validate Signature Header
-    const retreivedSignature = req.headers["X-Hub88-Signature"];
-    if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    // const retreivedSignature = req.headers["X-Hub88-Signature"];
+    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
 
     // const data = Security.decrypt(,retreivedSignature)
 
