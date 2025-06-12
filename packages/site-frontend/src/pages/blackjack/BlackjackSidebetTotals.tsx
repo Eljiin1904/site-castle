@@ -32,14 +32,17 @@ export const BlackjackSidebetTotals = () => {
               grow
               flow="row"
               bg="black-overlay"
+              border
+              borderColor="brown-4"
               mt={4}
               p={sm ? 4 : 8}
               borderRadius={4}
-              width={sm ? 160 : 200}
+              width={sm ? 80 : 200}
               key={payout.title}
-              fontSize={sm ? 12 : 16}
-              align="center"
-              justify="space-between"
+              fontSize={sm ? 10 : 16}
+              align="flex-start"
+              column
+              justify="flex-start"
             >
               <td className="sidebet-title">
                 {payout.title} ({payout.multiplier}x)

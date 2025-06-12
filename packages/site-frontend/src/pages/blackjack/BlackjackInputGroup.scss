@@ -8,8 +8,23 @@
   width: 90%;
 }
 /* On small screens, move the 3rd input to the top */
-@media (max-width: 992px) {
+@media (max-width: 1075px) {
   .input-2 {
     order: 0;
   }
+  
+}
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+  .input-group {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .input-group {
+    width: 90%;
+  }
+  
+  
 }

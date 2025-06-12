@@ -61,6 +61,8 @@ async function main() {
   await insertDefault("blackjackPerfectPairsEnabled", true);
   await insertDefault("blackjack213Enabled", true);
 
+  await insertDefault("hubEightEnabled", true);
+
   await insertDefault("activityThreshold", 0.01);
   await insertDefault("betHighrollerThreshold", 100);
   await insertDefault("betLuckyThreshold", 5);

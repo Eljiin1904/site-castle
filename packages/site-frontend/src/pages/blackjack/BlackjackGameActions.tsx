@@ -22,10 +22,6 @@ export const BlackjackGameActions = () => {
       width={"full"}
       justify="center"
       align="center"
-      className="BlackjackGameActions"
-      borderColor={"brown-4"}
-      border
-      borderWidth={1}
     >
       <Conditional
         value={action}

@@ -48,6 +48,9 @@ export type TransactionKindData =
   | BlackjackSidebetBetData
   | BlackjackWonData
   | BlackjackSidebetWonData
+  | HubEightCreditData
+  | HubEightDebitData
+  | HubEightRollbackData
   | DuelBetData
   | DuelWonData
   | CrashBetData
@@ -287,6 +290,50 @@ export interface BlackjackSidebetWonData {
   gameId: string;
   title: string;
   multiplier: SidebetPayout["multiplier"];
+}
+interface HubEightCreditData {
+  kind: "hub-eight-credit";
+  transactionUUID: string;
+  supplierTransactionId: string;
+  supplierUser?: string;
+  roundClosed?: boolean;
+  round?: string;
+  rewardUUID?: string;
+  requestUUID: string;
+  referenceTransactionUUID: string;
+  isFree?: boolean;
+  isSupplierPromo?: string;
+  isAggregated?: boolean;
+  gameCode: string;
+  currency: string;
+  betData?: string; // Hub88 -> bet field
+  amount: number;
+  meta?: object | null;
+}
+
+interface HubEightDebitData {
+  kind: "hub-eight-debit";
+  transactionUUID: string;
+  supplierTransactionId: string;
+  roundClosed: boolean;
+  round: string;
+  requestUUID: string;
+  gameCode: string;
+  amount: number;
+  meta: object | null;
+}
+
+interface HubEightRollbackData {
+  kind: "hub-eight-rollback";
+  username: string;
+  transactionUUID: string;
+  supplierTransactionId: string;
+  roundClosed: boolean;
+  round: string;
+  requestUUID: string;
+  referenceTransactionUUID: string; // Transaction ID used for rolling back data
+  gameCode: string;
+  meta: object | null;
 }
 
 interface PromotionCardRedeemData {
