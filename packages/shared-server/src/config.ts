@@ -54,6 +54,7 @@ export interface ServerConfig extends CoreConfig {
   operatorId: string;
   hubEightApiURL: string;
   redisUrl: string;
+  hubEightTestUrl: string;
 }
 
 const env = process.env.env || process.env.NODE_ENV || "development";
@@ -70,9 +71,9 @@ config.dbUri = process.env.DB_URI;
 config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
-config.operatorId = process.env.OPERATOR_ID || "";
-config.hubEightApiURL = process.env.HUB_EIGHT_API_ENDPOINT || "";
 config.redisUrl = process.env.REDIS_URL || "";
+// config.operatorId = process.env.OPERATOR_ID || "";
+// config.hubEightApiURL = process.env.HUB_EIGHT_API_ENDPOINT || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
