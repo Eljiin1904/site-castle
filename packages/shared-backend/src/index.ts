@@ -5,7 +5,6 @@ import { initSockets } from "./app/initSockets";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { initSiteGames } from "./app/initGames";
-import redisClient from "./app/initRedis";
 
 main();
 
@@ -25,13 +24,13 @@ async function main() {
   //  Initialize Site Games
   await initSiteGames();
 
-  const httpServer = initHttp();
+  const httpServer = await initHttp();
 
   logger.info("Initialized http.");
 
   initSockets(httpServer);
   logger.info("Initialized sockets.");
-  console.log(await redisClient.connect());
+
   httpServer.listen(port, async () => {
     logger.info(`Site backend listening on port ${port}.`);
   });

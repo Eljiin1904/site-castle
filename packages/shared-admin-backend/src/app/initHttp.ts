@@ -11,9 +11,11 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import config from "#app/config";
 import * as Routes from "#app/routes";
+import { RedisStore } from "connect-redis";
+import { RedisService } from "@server/services/redis";
 
-export function initHttp() {
-  const { env, domain, sessionSecret } = config;
+export async function initHttp() {
+  const { env, domain, sessionSecret, redisUrl } = config;
 
   const app = express();
 
@@ -67,6 +69,8 @@ export function initHttp() {
 
   passport.use(Http.localStrategy());
 
+  const redisService = new RedisService(redisUrl);
+  const redisClient = await redisService.getClient();
   app.use(
     session({
       secret: sessionSecret,
@@ -77,13 +81,9 @@ export function initHttp() {
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24 * 30,
       },
-      store: MongoStore.create({
-        client: Database.manager.client,
-        dbName: env,
-        // 127.0.0.1 will be the dev domain for both site and admin api
-        // to avoid conflict, just use the same cookie in the dev env
-        collectionName:
-          env === "development" || env === "devcloud" ? "user-sessions" : "admin-sessions",
+      store: new RedisStore({
+        client: redisClient,
+        prefix: env === "development" || env === "devcloud" ? "user-sess:" : "admin-sess:",
       }),
     }),
   );

@@ -24,7 +24,7 @@ async function main() {
 
   console.log("Initialized database.");
 
-  const httpServer = initHttp();
+  const httpServer = await initHttp();
 
   console.log("Initialized http.");
 

@@ -22,8 +22,8 @@ export async function resetDatabase() {
     "reward-products",
     "users",
     "user-bet-sessions",
-    "user-sessions",
-    "user-latency"
+    // "user-sessions",
+    "user-latency",
   ];
 
   for (const collection of dbCollections) {
