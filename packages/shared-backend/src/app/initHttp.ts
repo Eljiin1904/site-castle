@@ -13,14 +13,19 @@ import config from "#app/config";
 import * as Routes from "#app/routes";
 
 export function initHttp(app = express()) {
-  const { env, domain, sessionSecret, hubEightApiURL } = config;
+  const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl } = config;
 
   app.set("trust proxy", 3);
 
   app.use(
     cors({
       origin: {
-        development: ["http://127.0.0.1:3000", "http://localhost:3000", hubEightApiURL],
+        development: [
+          "http://127.0.0.1:3000",
+          "http://localhost:3000",
+          hubEightApiURL,
+          hubEightTestUrl,
+        ],
         devcloud: [
           `https://dev.${domain}`,
           `https://api.dev.${domain}`,

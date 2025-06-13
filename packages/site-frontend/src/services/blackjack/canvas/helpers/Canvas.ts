@@ -27,8 +27,8 @@ export default class Canvas {
   private w = window.innerWidth;
   private h = window.innerHeight;
 
-  private adjustedHeight = this.h < 950 ? 1450 : 1000;
-  private adjustedWidth = this.w < 950 ? 1200 : 1000;
+  private adjustedHeight = this.h < 950 ? 1450 : 1100;
+  private adjustedWidth = this.w < 950 ? 1200 : 1100;
   private rect = new Rect({ width: this.adjustedWidth, height: this.adjustedHeight });
   private events: EventEmitter;
 
