@@ -33,7 +33,6 @@ const config = {
 };
 
 export function setEnvironment(env: SystemEnvironment) {
-  console.log(`[Core Config] setEnvironment called with: ${env}`);
   const oldEnv = config.env;
   config.env = env;
   if (env === "development") {
@@ -57,11 +56,17 @@ export function setEnvironment(env: SystemEnvironment) {
     config.adminURL = `https://admin.${domain}`;
     config.adminAPI = `https://aapi.${domain}`;
   }
-  console.log(`[Core Config] Environment changed from ${oldEnv} to ${config.env}. Current siteAPI: ${config.siteAPI}`);
+  console.log(
+    `[Core Config] Environment changed from ${oldEnv} to ${config.env}. Current siteAPI: ${config.siteAPI}`,
+  );
 }
 
-export function setRuntimeOverrides(overrides: Partial<Pick<CoreConfig, 'siteURL' | 'siteAPI' | 'adminURL' | 'adminAPI' | 'staticURL'>>) {
-  console.log('[Core Config] Applying runtime overrides:', overrides);
+export function setRuntimeOverrides(
+  overrides: Partial<
+    Pick<CoreConfig, "siteURL" | "siteAPI" | "adminURL" | "adminAPI" | "staticURL">
+  >,
+) {
+  console.log("[Core Config] Applying runtime overrides:", overrides);
   if (overrides.siteURL) config.siteURL = overrides.siteURL;
   if (overrides.siteAPI) config.siteAPI = overrides.siteAPI;
   if (overrides.adminURL) config.adminURL = overrides.adminURL;

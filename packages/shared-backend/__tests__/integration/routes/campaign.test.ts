@@ -57,6 +57,7 @@ describe("Test Campaign Routes", () => {
       sessionCookie,
     );
     const getCampaignResult = await getCampaignsResponse.json();
+
     const campaign = getCampaignResult.campaigns[0];
 
     expect(getCreateCampaignResponse.status).toBe(200);
