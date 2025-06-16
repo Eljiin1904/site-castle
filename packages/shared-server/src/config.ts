@@ -72,8 +72,6 @@ config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
 config.redisUrl = process.env.REDIS_URL || "";
-// config.operatorId = process.env.OPERATOR_ID || "";
-// config.hubEightApiURL = process.env.HUB_EIGHT_API_ENDPOINT || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
@@ -116,7 +114,7 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
 
     const hubSecret = await client.send(
       new GetSecretValueCommand({
-        SecretId: `castle-hub88-sandbox`,
+        SecretId: `castle-hub88-${env}`,
       }),
     );
 
