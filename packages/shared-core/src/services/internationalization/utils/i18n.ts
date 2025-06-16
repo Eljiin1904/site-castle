@@ -28,6 +28,7 @@ const options: InitOptions = {
     "games\\crash",
     "account",
     "referrals",
+    "fairness",
   ],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],

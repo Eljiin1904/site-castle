@@ -1,0 +1,26 @@
+{
+  "title": "Imparcialidad",
+  "loginToViewResults": "Inicia sesión para ver los resultados",
+  "overview": {
+    "title": "Resumen",
+    "whatsProvablyFair": "¿Qué es la imparcialidad demostrable?",
+    "whatsProvablyFairContent": "La imparcialidad demostrable significa que podemos probar que los resultados del juego se generaron antes de que alguien realizara una apuesta.",
+    "whatsProvablyFairContent2": "Además, también proporcionamos acceso de código abierto al código del juego responsable de generar resultados. Esto permite a los usuarios verificar el código por sí mismos para garantizar la imparcialidad.",
+    "howDoesThatMakeitFair": "¿Cómo hace eso que sea imparcial?",
+    "howDoesThatMakeitFairContent": "Generamos el resultado del juego antes de que realices tu apuesta.",
+    "howDoesThatMakeitFairContent2": "Una vez que hayas realizado tu apuesta, puedes verificar que el resultado coincida con el resultado pre-generado.",
+    "howDoesThatMakeitFairContent3": "Si el resultado de tu apuesta no coincide con el resultado pre-generado, indica manipulación.",
+    "howDoesThatMakeitFairContent4": "Para juegos de un solo jugador, se utiliza una semilla del cliente, una semilla del servidor y un nonce como entrada para determinar el resultado del juego.",
+    "howDoesThatMakeitFairContent5": "Para juegos multijugador, se utiliza un hash del servidor y un hash público para determinar el resultado del juego.",
+    "manageSeeds": "Administrar series"
+  },
+  "pastResults": {
+    "title": "Resultados Pasados",
+    "noResults": "No hay resultados pasados disponibles.",
+    "viewDetails": "Ver Detalles",
+    "gameType": "Tipo de Juego",
+    "betAmount": "Monto de la Apuesta",
+    "result": "Resultado",
+    "timestamp": "Marca de Tiempo"
+  }
+}
