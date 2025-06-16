@@ -17,15 +17,14 @@ export default Http.createApiRoute({
     const user = req.user;
 
     const { serverSeed } = await Random.getUserPair({ userId: user._id });
+    const filter = {
+      "players.userId": user._id,
+      completed: true
+    };
 
     const games = await Database.collection("blackjack-games")
       .find(
-        {
-          completed: true,
-          "players.userId": user._id,
-          // TODO deleting this, I think I put it for backward compat
-          // seeds: { $exists: true },
-        },
+        filter,
         {
           sort: { timestamp: -1 },
           skip: (page - 1) * limit,
@@ -35,7 +34,7 @@ export default Http.createApiRoute({
       .toArray();
 
     const results = games.map((game) => getFairnessResult(game, serverSeed));
-
-    res.json({ results });
+    const total = await Database.collection("blackjack-games").countDocuments(filter);
+    res.json({ results , total});
   },
 });

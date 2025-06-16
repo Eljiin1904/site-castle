@@ -65,6 +65,15 @@ export default Http.createApiRoute({
       results.push(result);
     }
 
-    res.json({ results });
+    const total = await Database.collection("case-battles").countDocuments({
+      players: {
+        $elemMatch: {
+          id: user._id,
+          bot: { $exists: false },
+        },
+      },
+      status: "completed",
+    });
+    res.json({ results , total});
   },
 });
