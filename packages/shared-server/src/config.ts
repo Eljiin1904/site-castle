@@ -101,15 +101,15 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
       }),
     );
     if (res.SecretString) {
-      // const splitData = res.SecretString.split("hub88Private");
-
-      // const extractedSecrets = splitData[0].slice(0, splitData[0].length - 3) + "}";
       const secrets = JSON.parse(res.SecretString ?? "") as Partial<ServerConfig>;
       for (const [key, value] of Object.entries(secrets)) {
         if (overrides[key]) {
           (config as any)[key] = overrides[key];
         } else {
-          (config as any)[key] = value;
+          const currentValue = (config as any)[key];
+          if (currentValue == null || currentValue == undefined) {
+            (config as any)[key] = value;
+          }
         }
       }
     }
