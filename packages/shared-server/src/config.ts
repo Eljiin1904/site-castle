@@ -70,8 +70,6 @@ config.dbUri = process.env.DB_URI;
 config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
-// config.operatorId = process.env.OPERATOR_ID || "";
-// config.hubEightApiURL = process.env.HUB_EIGHT_API_ENDPOINT || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
@@ -99,22 +97,22 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
       }),
     );
     if (res.SecretString) {
-      // const splitData = res.SecretString.split("hub88Private");
-
-      // const extractedSecrets = splitData[0].slice(0, splitData[0].length - 3) + "}";
       const secrets = JSON.parse(res.SecretString ?? "") as Partial<ServerConfig>;
       for (const [key, value] of Object.entries(secrets)) {
         if (overrides[key]) {
           (config as any)[key] = overrides[key];
         } else {
-          (config as any)[key] = value;
+          const currentValue = (config as any)[key];
+          if (currentValue == null || currentValue == undefined) {
+            (config as any)[key] = value;
+          }
         }
       }
     }
 
     const hubSecret = await client.send(
       new GetSecretValueCommand({
-        SecretId: `castle-hub88-sandbox`,
+        SecretId: `castle-hub88-${env}`,
       }),
     );
 
