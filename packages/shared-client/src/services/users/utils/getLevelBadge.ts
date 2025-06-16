@@ -1,7 +1,11 @@
+import { SvgDiamond } from "#client/svgs/chat/SvgDiamond";
+import { SvgStar } from "#client/svgs/chat/SvgStar";
+import { SvgCrown } from "#client/svgs/chat/SvgCrown";
+
 export function getLevelBadge(level: number) {
   if (level < 10) return "/badges/bronze-1";
   if (level < 20) return "/badges/bronze-2";
-  if (level < 30) return "/badges/bronze-3";
+  if (level < 30) return "Star";
 
   if (level < 40) return "/badges/copper-1";
   if (level < 50) return "/badges/copper-2";
@@ -9,7 +13,7 @@ export function getLevelBadge(level: number) {
 
   if (level < 70) return "/badges/silver-1";
   if (level < 80) return "/badges/silver-2";
-  if (level < 90) return "/badges/silver-3";
+  if (level < 90) return "Star";
 
   if (level < 100) return "/badges/cyan-1";
   if (level < 110) return "/badges/cyan-2";
@@ -38,4 +42,24 @@ export function getLevelBadge(level: number) {
   if (level < 290) return "/badges/gold-2";
   if (level < 300) return "/badges/gold-3";
   return "/badges/gold-4";
+};
+
+export function getLevelIcon(level: number): Svg {
+
+  if(level < 90) return SvgStar;
+  if(level < 190) return SvgCrown;
+  return SvgDiamond;
+}
+
+export function getLevelColor(level: number): Color {
+
+  if(level < 30)
+    return 'bronze';
+  if(level < 60)
+    return 'light-sand';
+  if(level < 90)
+    return 'sand';
+  if(level < 190)
+    return 'bright-green';
+  return 'diamond';
 }

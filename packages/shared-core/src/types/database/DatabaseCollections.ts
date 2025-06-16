@@ -140,7 +140,7 @@ export interface DatabaseCollections {
   ["user-holds"]: UserHoldDocument;
   ["user-reports"]: UserReportDocument;
   ["user-seed-pairs"]: UserSeedPairDocument;
-  ["user-sessions"]: UserSessionDocument;
+  // ["user-sessions"]: UserSessionDocument;
   ["user-latency"]: UserLatencyDocument;
   ["crash-rounds"]: CrashRoundDocument;
   ["crash-tickets"]: CrashTicketDocument;

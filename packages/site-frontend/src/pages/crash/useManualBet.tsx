@@ -111,8 +111,7 @@ export function useManualBet() {
       //Do some proof of work here
 
       await Crash.cashoutTicket({
-        roundId: round._id,
-        betAmount,
+        roundId: round._id
       });
   });
 

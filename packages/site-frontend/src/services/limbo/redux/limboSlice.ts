@@ -52,7 +52,7 @@ export const limboSlice = createSlice({
     }),
     updateHistory: reducer<LimboTicketDocument>((state, { payload }) => {
       const history = state.history.slice();
-      console.log(payload);
+
       history.unshift({
         _id: payload._id,
         targetValue: payload.targetValue,

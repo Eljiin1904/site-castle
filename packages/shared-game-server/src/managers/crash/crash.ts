@@ -81,8 +81,7 @@ async function createRound() {
  * @param round - The crash round document to be set up.
  */
 async function setupRound(round: CrashRoundDocument) {
-  const blockNow = await Random.getEosBlockNow();
-  const eosBlockNum = blockNow.eosBlockNum + 4;
+
   const statusDate = new Date();
 
   await Database.collection("crash-rounds").updateOne(
@@ -90,16 +89,13 @@ async function setupRound(round: CrashRoundDocument) {
     {
       $set: {
         status: "pending",
-        statusDate,
-        eosBlockNum,
-        eosCommitDate: statusDate,
+        statusDate
       },
     },
   );
 
   round.status = "pending";
   round.statusDate = statusDate;
-  round.eosBlockNum = eosBlockNum;
 
   await Utility.wait(Crash.roundTimes.pending);
   await startRound(round);
@@ -116,18 +112,20 @@ async function startRound(round: CrashRoundDocument) {
     return;
   }
 
-  const { eosBlockId } = await Random.getEosBlock(round.eosBlockNum);
-  const serverSeed = Ids.secret();
-  const serverSeedHash = Random.hashServerSeed(serverSeed);
+  const clientHash = '0000000000000000000136d4f68307bb4b9f8630e8351b6ab11fc9554cc8bbf8'; //Bitcoin Block Hash
+  const serverHash = await Database.collection('crash-records').findOne({used: false}, {sort: {index: -1}})//Random.hashServerSeed(serverSeed);
   
   const statusDate = new Date();
-  const multiplier = 15;
-  Random.getMultiplier({
-    serverSeed: serverSeed,
-    clientSeed: eosBlockId,
-    nonce: round._id,
+  const multiplier = Random.getMultiplier({
+    serverHash: serverHash?.hash ?? '',
+    clientHash,
     maxValue: Crash.maxValue,
   });
+  
+  await Database.collection('crash-records').updateOne(
+    { _id: serverHash?._id },
+    { $set: { used: true } },
+  );
 
   const multiplierId = await Ids.incremental({
     key: "crashMultiplierId",
@@ -139,10 +137,10 @@ async function startRound(round: CrashRoundDocument) {
   const roundMultiplier: CrashMultiplierDocument = {
     _id: multiplierId,
     roundId: round._id,
-    multiplier: multiplier,
+    multiplier,
     timestamp: statusDate,
-    serverSeed: serverSeed,
-    serverSeedHash: serverSeedHash,
+    serverHash: serverHash?.hash ?? '',
+    clientHash,
     roundTime
   };
   await Database.collection("crash-multipliers").insertOne(roundMultiplier);  
@@ -167,7 +165,7 @@ async function startRound(round: CrashRoundDocument) {
     }
 
     triggerAutoCashTickets(round._id, currentMultiplier);
-  }, 150);
+  }, Crash.roundTimes.intervalFrequency);
 
   await Utility.wait(roundTime);
   clearInterval(intervalId);
@@ -176,8 +174,7 @@ async function startRound(round: CrashRoundDocument) {
     ...round,
     status: "simulating",
     statusDate,
-    multiplier,
-    eosBlockId,
+    multiplier
   });
 }
 /**

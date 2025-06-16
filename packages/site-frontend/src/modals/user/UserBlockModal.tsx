@@ -3,13 +3,15 @@ import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
 import { ConfirmModal } from "@client/modals/confirm/ConfirmModal";
 import { Span } from "@client/comps/span/Span";
-import { Img } from "@client/comps/img/Img";
 import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Vector } from "@client/comps/vector/Vector";
 
 export const UserBlockModal = ({ user }: { user: BasicUser }) => {
   const level = Users.getLevel(user.xp);
   const {t} = useTranslation();
+  const levelIcon = Users.getLevelIcon(level);
+  const levelColor = Users.getLevelColor(level);
   return (
     <ConfirmModal
       heading={t("chat.blockModal.title")}
@@ -28,7 +30,6 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
           align="center"
           pb={24}
           gap={16}
-          borderBottom
           column
         >
           <Span>{t('chat.blockModal.description',{value: {username: user.name}})}</Span>
@@ -37,10 +38,9 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
             gap={4}
           >
             <Span
-              family="title"
               weight="bold"
               size={20}
-              color="white"
+              color={levelColor}
             >
               {user.name}
             </Span>
@@ -48,16 +48,13 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
               align="center"
               mt={2}
             >
-              <Img
-                type="png"
-                path={Users.getLevelBadge(level)}
-                width="20px"
-              />
+              <Vector as={levelIcon} size={16} color={levelColor} />
               <Span
                 size={12}
                 ml={6}
+                color={levelColor}
               >
-                {t('chat.level',{level: {level}})}
+                {t('chat.level',{level:level})}
               </Span>
             </Div>
           </Div>

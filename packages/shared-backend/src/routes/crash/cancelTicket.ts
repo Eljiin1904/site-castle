@@ -2,17 +2,17 @@ import { Database } from "@server/services/database";
 import { Http } from "#app/services/http";
 import { Site } from "#app/services/site";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
-import { Crash } from "@core/services/crash";
 
-/** * This route is used to cancel a Crash ticket for the user.
+/**
+ * This route is used to cancel a Crash ticket for the user.
  * It checks if the user has a ticket for the next round and removes it from the database.
  * If the user does not have a ticket for the next round, it does nothing.
+ * 
  * @param {Object} req - The request object containing the user information.
- * * @param {Object} req.user - The user object containing the user's ID and other information.
+ * @param {Object} req.user - The user object containing the user's ID and other information.
  * @param {string} req.user._id - The ID of the user.
  * @param {Object} res - The response object to send the result.
  * @returns {Promise<void>} - A promise that resolves when the ticket is canceled and sent in the response.
- * 
  */
 export default Http.createApiRoute({
   type: "post",

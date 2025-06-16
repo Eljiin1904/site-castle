@@ -25,11 +25,7 @@ export function initSockets(httpServer: HttpServer) {
     }),
   );
 
-  io.use(
-    Sockets.sessionHandler({
-      collection: "admin-sessions",
-    }),
-  );
+  io.use(Sockets.sessionHandler({ sessionType: "admin" }));
 
   Listeners.site(io);
 

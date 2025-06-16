@@ -1,6 +1,5 @@
 import {Fragment} from "react";
 import { Div } from "@client/comps/div/Div";
-import { Img } from "@client/comps/img/Img";
 import { ProgressBar } from "@client/comps/progress-bar/ProgressBar";
 import { Span } from "@client/comps/span/Span";
 import { Dialogs } from "@client/services/dialogs";
@@ -111,6 +110,8 @@ border?: boolean;
 const UserCardLevel = () => {
   const { level, levelProgress, levelGoal } = useUserLevel();
   const {t} = useTranslation(["account"]);
+  const levelIcon = Users.getLevelIcon(level);
+  const levelColor = Users.getLevelColor(level);
   return(<Div fx borderTop borderColor="brown-4" pt={16} column gap={16}>
     <Div fx justifyContent="space-between">
       <Span>{t("progress")}</Span>
@@ -128,20 +129,20 @@ const UserCardLevel = () => {
     <ProgressBar height={8}  progress={levelProgress / levelGoal} />
     <Div fx justifyContent="space-between">
       <Div gap={4}>
-        <Img
-          type="png"
-          path={Users.getLevelBadge(level)}
-          width="20px"
+        <Vector
+          as={levelIcon}
+          size={20}
+          color={levelColor}
         />
-        <Span>{level}</Span>
+        <Span color={levelColor}>{level}</Span>
       </Div>
       <Div gap={4}>
-        <Span>{level+1}</Span>
-        <Img
-          type="png"
-          path={Users.getLevelBadge(level+1)}
-          width="20px"
-        />       
+        <Span color={Users.getLevelColor(level + 1)}>{level+1}</Span>
+        <Vector
+          as={Users.getLevelIcon(level + 1)}
+          size={20}
+          color={Users.getLevelColor(level + 1)}
+        />      
       </Div>
     </Div>
   </Div>);

@@ -248,8 +248,8 @@
     "unblock": "Unblock",
     "blockModal": {
       "title": "Block User",
-      "description": "¿Estás seguro de que deseas bloquear a {{value.username}}?",
-      "confirmSuccess": "Has bloqueado a {{value.username}}."
+      "description": "¿Are you sure you want to block {{value.username}}?",
+      "confirmSuccess": "{{value.username}} has been blocked."
     },
     "level": "Level {{level}}",
     "paused": "Chat paused",

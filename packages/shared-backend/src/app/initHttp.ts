@@ -10,10 +10,13 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import { Http } from "#app/services/http";
 import config from "#app/config";
+import { RedisStore } from "connect-redis";
 import * as Routes from "#app/routes";
+import { RedisService } from "@server/services/redis";
 
-export function initHttp(app = express()) {
-  const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl } = config;
+export async function initHttp(app = express()) {
+  const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl, redisUrl } = config;
+
 
   app.set("trust proxy", 3);
 
@@ -78,6 +81,8 @@ export function initHttp(app = express()) {
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
 
+  const redisService = new RedisService(redisUrl);
+  const redisClient = await redisService.getClient();
   app.use(
     session({
       secret: sessionSecret,
@@ -88,10 +93,9 @@ export function initHttp(app = express()) {
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24 * 30,
       },
-      store: MongoStore.create({
-        client: Database.manager.client,
-        dbName: env,
-        collectionName: "user-sessions",
+      store: new RedisStore({
+        client: redisClient,
+        prefix: "user-sess:",
       }),
     }),
   );

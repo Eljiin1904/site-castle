@@ -1,10 +1,9 @@
 import { FC } from "react";
-import { Strings } from "@core/services/strings";
 import { Users } from "#client/services/users";
 import { Div } from "../div/Div";
-import { Img } from "../img/Img";
 import { Span } from "../span/Span";
 import { StyledLayoutProps } from "../styled/Styled";
+import { Vector } from "../vector/Vector";
 
 export type UserBadgeProps = StyledLayoutProps & {
   xp: number;
@@ -17,25 +16,20 @@ export const UserBadge: FC<UserBadgeProps> = ({
   ...forwardProps
 }) => {
   const level = Users.getLevel(xp);
-  const badge = Users.getLevelBadge(level);
-  const tooltip = Strings.kebabToTitle(badge.replace("/badges/", ""));
+  const icon = Users.getLevelIcon(level);
+  const color = Users.getLevelColor(level);
 
   return (
     <Div
       center
       hover="none"
-      data-tooltip-id="app-tooltip"
-      data-tooltip-content={tooltip}
       {...forwardProps}
       gap={4}
     >
-      {badge && <Img
-        type="png"
-        path={badge}
-        width={`${fontSize + 3}px`}
-      />}
+      {icon && <Vector as={icon} size={16} color={color} />}
       <Span
         size={fontSize}
+        color={color}
       >
         {level}
       </Span>

@@ -13,8 +13,9 @@ import { CrashCountdown } from "./CrashCountdown";
 import { Site } from "#app/services/site";
 import { CrashMultiplier } from "./CrashMultiplier";
 import { CrashedSimulator } from "./CrashedSimulator";
-import './CrashChartContainer.scss';
 import { PumpitMemoized } from "./Pumpit";
+import { ManageCrashEvents } from "./ManageCrashEvents";
+import './CrashChartContainer.scss';
 
 export const CrashChartContainer = () => {
   
@@ -27,7 +28,7 @@ export const CrashChartContainer = () => {
   const elapsedtime = useAppSelector((x) => x.crash.elapsedTime) ?? 0;
   const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
   const [multiplier, setMultiplier] = useState(serverMultiplier);
-  
+ 
   useInterval(() => {
     if(round.status == 'simulating' && elapsedtime > 0) {
       
@@ -44,24 +45,25 @@ export const CrashChartContainer = () => {
     }
   }, 10);
 
-  const linePosition = Crash.getMultiplierPosition(multiplier);
+  let linePosition =round.status === 'completed' ?  Crash.getMultiplierPosition(round.multiplier ?? 1): Crash.getMultiplierPosition(multiplier);
   const chartOffset = Crash.chart.offset;
   const time = CoreCrash.roundTimes.waiting - Site.timeSince(round.startDate ?? new Date());
  
   return (
     <Div className="CrashChartContainer" alignItems="flex-end" justify="flex-start" gap={4}>
+      <ManageCrashEvents />
       {multiplier >= 10 && multiplier <=11 && <PumpitMemoized roundId={round._id} />}    
       <CrashYAxis multiplier={multiplier} />
-      {crashEvents.map((value, index) => <CrashEvent key={index} startAtLine={value.startAtLine} color={value.color} position={value.position} initialHeight={value.height} height={value.height} />)}
-      {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent startAtLine={true} color={"bright-green"} position={0} initialHeight={0} height={linePosition} />}
-      {round.status === 'completed' && <CrashEvent animated startAtLine={true} color={"double-red"} position={-chartOffset} initialHeight={linePosition + chartOffset} height={linePosition + chartOffset} />}
+      {crashEvents.map((value, index) => <CrashEvent multiplier={multiplier} key={index} startAtLine={value.startAtLine} color={value.color} position={value.position} initialHeight={value.height} height={value.height} />)}
+      {(round.status === 'simulating' || round.status === 'completed') && <CrashEvent multiplier={1} startAtLine={true} color={"bright-green"} position={0} initialHeight={0} height={linePosition} />}
+      {round.status === 'completed' && <CrashEvent multiplier={1} animated startAtLine={true} color={"double-red"} position={-chartOffset} initialHeight={linePosition + chartOffset} height={linePosition + chartOffset} />}
       <CrashMultiplierLine position={linePosition} status={cashout? 'simulating' : round.status } />
       {cashout && cashoutMultiplier <= multiplier && <CrashMultiplierLine status={round.status } position={Crash.getCashoutPosition(multiplier, cashoutMultiplier)} cashout={cashoutMultiplier} />}
       <CashoutEvents multiplier={multiplier}/>
       <Conditional
         value={round.status}
-        waiting={<CrashCountdown time={time} events={crashEvents} />}
-        pending={<CrashCountdown time={time} events={crashEvents}/>}
+        waiting={<CrashCountdown time={time} />}
+        pending={<CrashCountdown time={time} />}
         simulating={<CrashMultiplier multiplier={multiplier} />}
         completed={<CrashedSimulator />}
       />

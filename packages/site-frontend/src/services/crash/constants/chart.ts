@@ -1,3 +1,7 @@
+/**
+ * Constants for the crash chart.
+ * Defines the height, offset, multiplier break point, and pixels per multiplier.
+ */
 export const chart = {
   height: 256,
   offset: 25,
