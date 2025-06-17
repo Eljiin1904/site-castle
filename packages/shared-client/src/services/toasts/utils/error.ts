@@ -8,6 +8,4 @@ export function error(err: unknown, duration: number = 8000) {
     duration,
     timestamp: new Date(),
   });
-
-  console.error(err);
 }
