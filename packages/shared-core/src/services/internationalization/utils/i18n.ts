@@ -26,6 +26,7 @@ const options: InitOptions = {
     "games\\limbo",
     "games\\dice",
     "games\\crash",
+    "games\\case-battles",
     "account",
     "referrals",
     "fairness",
