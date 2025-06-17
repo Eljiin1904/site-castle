@@ -7,7 +7,7 @@ dotenv.config();
 const DB_NAME = "development";
 const DB_URI = process.env.DB_URI || "mongodb://localhost:27778/?directConnection=true";
 
-const TOTAL_RECORDS = 500_000;
+const TOTAL_RECORDS = 200_000;
 const TOTAL_IN_BATCH = 10_000; // Number of records to insert in each batch
 const COLLECTION_NAME = "crash-records";
 
