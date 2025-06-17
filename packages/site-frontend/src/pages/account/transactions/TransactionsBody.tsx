@@ -7,9 +7,9 @@ import { Errors } from "@client/services/errors";
 import { Users } from "#app/services/users";
 import { TransactionsHeader } from "./TransactionsHeader";
 import { TransactionsTable } from "./TransactionsTable";
-import { TransactionsFooter } from "./TransactionsFooter";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { TableFooterPagination } from "#app/comps/pagination/TableFooterPagination";
 
 export const TransactionsBody = () => {
 
@@ -63,13 +63,13 @@ export const TransactionsBody = () => {
           transactions={transactions}
           isLoading={query.isLoading}
         />
-        <TransactionsFooter
+        <TableFooterPagination
           page={page}
           hasNext={transactions.length !== 0 && transactions.length % limit === 0}
-          setPage={setPage}
-          limit={limit}
           total={total}
+          limit={limit}
           inPage={transactions.length}
+          setPage={setPage}
         />
       </Div>
     </Div>
