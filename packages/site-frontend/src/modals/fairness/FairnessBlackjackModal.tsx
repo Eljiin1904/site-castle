@@ -11,32 +11,27 @@ import { Div } from "@client/comps/div/Div";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { BlackjackFairnessResult } from "@core/types/blackjack/BlackjackFairnessDocument";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-// import { BlackjackFairnessResult } from "#core/types/blackjack/BlackjackFairnessResult";
-// import { useTranslation } from "@client/hooks/localization/useTranslation";
+
 
 export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessResult }) => {
-  const { t } = useTranslation();
+  const {t} = useTranslation(["fairness"]);
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        // heading={t.gameplay("blackjack_result")}
-        heading={"Blackjack Result"}
+        heading={t('modal.title.blackjack')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
-        <Div
-          fx
-          gap={12}
-        >
+      <ModalBody pt={0}>
+        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("game_ID")} */}</ModalLabel>
-            <ModalCopyField text={result.gameId} />
+            <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
+            <ModalField>{result.gameId}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{/* {t.ui("timestamp")} */}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.date')}</ModalLabel>
             <ModalField>{Dates.toTimestamp(result.timestamp)}</ModalField>
           </ModalSection>
         </Div>
@@ -45,9 +40,9 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("win_amount")} */}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.wonAmount')}</ModalLabel>
             <ModalField>
-              <Tokens value={result.totalPayout} />
+              <Tokens value={result.totalPayout} color="dark-sand" fontSize={12} />
             </ModalField>
           </ModalSection>
         </Div>
@@ -56,16 +51,11 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("players_cards")} */}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.playerCards')}</ModalLabel>
             <ModalField>{result.playerCards}</ModalField>
           </ModalSection>
-        </Div>
-        <Div
-          fx
-          gap={12}
-        >
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("dealers_cards")} */}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.dealerCards')}</ModalLabel>
             <ModalField>{result.dealerCards}</ModalField>
           </ModalSection>
         </Div>
@@ -74,8 +64,8 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("client_seed")} */}</ModalLabel>
-            <ModalCopyField text={result.clientSeed} />
+            <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
+            <ModalCopyField text={result.clientSeed} color="light-sand" fontSize={12} lineHeight={16}/>
           </ModalSection>
         </Div>
         <Div
@@ -83,8 +73,8 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("server_seed")} */}</ModalLabel>
-            <ModalCopyField text={result.serverSeed || result.serverSeedHashed} />
+            <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
+            <ModalCopyField color={result.serverSeed ? 'light-sand': 'sand'} text={result.serverSeed || result.serverSeedHashed} fontSize={12} lineHeight={16} />
           </ModalSection>
         </Div>
         <Div
@@ -92,12 +82,12 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("nonce")} */}</ModalLabel>
-            <ModalCopyField text={result.nonce.toString()} />
+            <ModalLabel>{t('transactions.headers.nonce')}</ModalLabel>
+            <ModalCopyField text={result.nonce.toString()} color="light-sand" fontSize={12} lineHeight={16}/>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{/* {t.gameplay("step")} */}</ModalLabel>
-            <ModalCopyField text={result.step.toString()} />
+            <ModalLabel>{t('transactions.headers.step')}</ModalLabel>
+            <ModalCopyField text={result.step.toString()} color="light-sand" fontSize={12} lineHeight={16}/>
           </ModalSection>
         </Div>
       </ModalBody>

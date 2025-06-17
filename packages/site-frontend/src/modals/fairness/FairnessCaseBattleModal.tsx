@@ -10,45 +10,43 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgCopy } from "@client/svgs/common/SvgCopy";
-import { Span } from "@client/comps/span/Span";
-import { Toasts } from "@client/services/toasts";
 import { Link } from "@client/comps/link/Link";
 import { Button } from "@client/comps/button/Button";
 import { CaseBattles } from "#app/services/case-battles";
 import config from "#app/config";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 
 export const FairnessCaseBattleModal = ({
   result,
 }: {
   result: CaseBattleResult;
 }) => {
-  const handleCopy = (text: string | number) => {
-    navigator.clipboard.writeText(`${text}`);
-    Toasts.success("Copied to clipboard.");
-  };
-
+  const {t} = useTranslation(["fairness"]);
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Case Battle Result"
+        heading={t('modal.title.battles')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Link
           fx
           type="a"
           href={`${config.siteURL}/case-battles/${result.gameId}`}
           hover="none"
+          borderTop 
+          borderColor="brown-4" 
+          pt={24}
+          gap={12}
         >
           <Button
             fx
-            kind="secondary"
-            label="View Battle"
+            kind="primary-yellow"
+            label={t('games\\case-battles:viewBattle')}
           />
         </Link>
         <Div
@@ -56,79 +54,56 @@ export const FairnessCaseBattleModal = ({
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Game ID"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
             <ModalField>{result.gameId}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Timestamp"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.date')}</ModalLabel>
             <ModalField>{Dates.toTimestamp(result.timestamp)}</ModalField>
           </ModalSection>
         </Div>
+        <Div
+          fx
+          gap={12}
+        >
         <ModalSection>
-          <ModalLabel>{"Battle"}</ModalLabel>
+        <ModalLabel>{t('transactions.headers.battle')}</ModalLabel>
           <ModalField>
             {`${CaseBattles.getModeCategory(result.mode)} - ${Strings.kebabToTitle(result.mode)}`}
           </ModalField>
         </ModalSection>
         <ModalSection>
-          <ModalLabel>{"Modifiers"}</ModalLabel>
+          <ModalLabel>{t('transactions.headers.modifiers')}</ModalLabel>
           <ModalField>
             {result.modifiers.map((x) => Strings.kebabToTitle(x)).join(", ") ||
               "--"}
           </ModalField>
         </ModalSection>
+        </Div>
         <Div
           fx
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Winners"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.winners')}</ModalLabel>
             <ModalField>
               {result.winners.map((x) => `P${x + 1}`).join(",")}
             </ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Pot"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.pot')}</ModalLabel>
             <ModalField>
-              <Tokens value={result.totalWon} />
+              <Tokens value={result.totalWon} color="dark-sand" fontSize={12} />
             </ModalField>
           </ModalSection>
         </Div>
         <ModalSection>
-          <ModalLabel>{"Server Seed"}</ModalLabel>
-          <ModalField justify="space-between">
-            <Span
-              weight="medium"
-              textOverflow="ellipsis"
-            >
-              {result.serverSeed}
-            </Span>
-            <Vector
-              as={SvgCopy}
-              color="light-blue"
-              size={18}
-              hover="highlight"
-              onClick={() => handleCopy(result.serverSeed)}
-            />
-          </ModalField>
+          <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
+          <ModalCopyField text={result.serverSeed} color={'light-sand'} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
-          <ModalLabel>{"EOS Block ID"}</ModalLabel>
-          <ModalField justify="space-between">
-            <Span
-              weight="medium"
-              textOverflow="ellipsis"
-            >
-              {result.eosBlockId}
-            </Span>
-            <Vector
-              as={SvgCopy}
-              color="light-blue"
-              size={18}
-              hover="highlight"
-              onClick={() => handleCopy(result.eosBlockId)}
-            />
-          </ModalField>
+          <ModalLabel>{t('transactions.headers.eosBlockId')}</ModalLabel>
+          <ModalCopyField text={result.eosBlockId} color={'light-sand'} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>
