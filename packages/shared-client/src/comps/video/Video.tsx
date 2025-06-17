@@ -51,7 +51,7 @@ export const Video: FC<VideoProps> = ({
   objectPositionVertical = "center",
   objectPositionHorizontal = "center",
   loop = false,
-  autoplay = true,
+  autoplay = false,
   muted = true,
   controls = true,
   play = false,
@@ -161,6 +161,7 @@ export const Video: FC<VideoProps> = ({
         autoPlay={autoplay}
         muted={muted}
         loop={loop}
+        preload={"auto"}
         style={{
           objectFit,
           objectPosition: `${objectPositionHorizontal} ${objectPositionVertical}`,

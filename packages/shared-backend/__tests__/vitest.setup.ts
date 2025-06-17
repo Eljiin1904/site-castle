@@ -33,13 +33,11 @@ beforeAll(async () => {
 
   await Database.manager.init();
 
-  Database.createCollection("user-sessions", {});
-
   await initSiteGames();
 
   logger.info("Initialized database.");
 
-  httpServer = initHttp();
+  httpServer = await initHttp();
 
   logger.info("Initialized http.");
 
@@ -83,11 +81,11 @@ beforeAll(async () => {
       resolve(httpServer);
     });
   });
-  httpServer.on("error", (err) => {
-    if (err.name === "Error") {
-      console.warn(`Port ${port} already in use. Skipping server start.`);
-    }
-  });
+  // httpServer.on("error", (err) => {
+  //   if (err.name === "Error") {
+  //     console.warn(`Port ${port} already in use. Skipping server start.`);
+  //   }
+  // });
 }, 30_000);
 
 afterAll(async () => {

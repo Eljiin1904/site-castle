@@ -213,6 +213,11 @@ interface GameStats {
   caseWagerTokens: number;
   caseWinTokens: number;
   casesEv: number;
+
+  hubEightBetCount: number;
+  hubEightWagerTokens: number;
+  hubEightWinTokens: number;
+  hugEightEv: number;
 }
 
 interface AffiliateStats {

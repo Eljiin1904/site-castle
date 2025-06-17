@@ -49,6 +49,12 @@ export interface ServerConfig extends CoreConfig {
   swappedSecret: string;
   sumsubAppToken: string;
   sumsubSecretKey: string;
+  hub88PrivateKey: string;
+  hubEightPublicKey: string;
+  operatorId: string;
+  hubEightApiURL: string;
+  redisUrl: string;
+  hubEightTestUrl: string;
 }
 
 const env = process.env.env || process.env.NODE_ENV || "development";
@@ -65,6 +71,7 @@ config.dbUri = process.env.DB_URI;
 config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
+config.redisUrl = process.env.REDIS_URL || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
@@ -91,15 +98,28 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
         SecretId: `castle-server-${env}`,
       }),
     );
-
-    const secrets = JSON.parse(res.SecretString ?? "") as Partial<ServerConfig>;
-
-    for (const [key, value] of Object.entries(secrets)) {
-      if (overrides[key]) {
-        (config as any)[key] = overrides[key];
-      } else {
-        (config as any)[key] = value;
+    if (res.SecretString) {
+      const secrets = JSON.parse(res.SecretString ?? "") as Partial<ServerConfig>;
+      for (const [key, value] of Object.entries(secrets)) {
+        if (overrides[key]) {
+          (config as any)[key] = overrides[key];
+        } else {
+          const currentValue = (config as any)[key];
+          if (currentValue == null || currentValue == undefined) {
+            (config as any)[key] = value;
+          }
+        }
       }
+    }
+
+    const hubSecret = await client.send(
+      new GetSecretValueCommand({
+        SecretId: `castle-hub88-${env}`,
+      }),
+    );
+
+    if (hubSecret.SecretString) {
+      config.hub88PrivateKey = hubSecret.SecretString;
     }
   } catch (e) {
     console.error("ConfigManager.init failed.");

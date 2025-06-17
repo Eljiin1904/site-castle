@@ -225,6 +225,12 @@ function createPipeline({ minDate, maxDate }: { minDate: Date; maxDate: Date }) 
         vaultDepositTokens: "sum",
         vaultWithdrawCount: "sum",
         vaultWithdrawTokens: "sum",
+
+        // Hub Eight
+        hubEightBetCount: "sum",
+        hubEightWagerTokens: "sum",
+        hubEightWinTokens: "sum",
+        hugEightEv: "sum",
       }),
     },
     {

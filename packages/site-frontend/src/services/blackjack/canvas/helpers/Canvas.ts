@@ -24,13 +24,20 @@ export type CanvasMouseEvent = {
 export default class Canvas {
   canvas: ReturnType<typeof createCanvas>;
   ctx: CanvasRenderingContext2D;
-  private rect = new Rect({ width: 1000, height: 1000 });
+  private w = window.innerWidth;
+  private h = window.innerHeight;
+
+  private adjustedHeight = this.h < 950 ? 1450 : 1100;
+  private adjustedWidth = this.w < 950 ? 1200 : 1100;
+  private rect = new Rect({ width: this.adjustedWidth, height: this.adjustedHeight });
   private events: EventEmitter;
 
   constructor({ events, addEvents = true }: Arg) {
     this.events = events;
     const { width, height } = this.rect.dim;
+
     this.canvas = createCanvas({ width, height });
+
     const ctx = this.canvas.getContext("2d");
     if (!ctx) throw new Error("Failed to get canvas context");
 

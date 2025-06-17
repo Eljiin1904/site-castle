@@ -47,7 +47,7 @@ beforeAll(async () => {
   //
   logger.info("Initialized database.");
 
-  httpServer = initHttp();
+  httpServer = await initHttp();
 
   logger.info("Initialized http.");
 

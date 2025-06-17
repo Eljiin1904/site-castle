@@ -235,7 +235,8 @@ function getGameUpdates({
     tx.kind === "blackjack-sidebet-won" ||
     tx.kind === "reward-gem-case-item" ||
     tx.kind === "reward-holiday-case-item" ||
-    tx.kind === "reward-level-case-item"
+    tx.kind === "reward-level-case-item" ||
+    tx.kind == "hub-eight-credit"
   ) {
     $max.biggestWin = tx.value;
   }
@@ -270,6 +271,9 @@ function getGameUpdates({
     $inc.limboEv = tx.bet.ev;
   } else if (tx.kind === "limbo-won") {
     $inc.limboWinTokens = tx.value;
+  } else if (tx.kind == "hub-eight-debit") {
+    $inc.hubEightBetCount = 1;
+    $inc.hubEightWagerTokens = tx.value;
   }
   //New Games
   else if (tx.kind === "duel-bet") {
@@ -343,6 +347,11 @@ function getGameUpdates({
     $inc.blackjackPerfectPairsWinTokens = tx.value;
   } else if (tx.kind === "blackjack-sidebet-won" && tx.subKind === "21+3") {
     $inc.blackjack213WinTokens = tx.value;
+  } else if (tx.kind == "hub-eight-credit") {
+    // $inc.hubEightBetCount = tx.value;
+    $inc.hubEightBetCount = 1;
+    $inc.hubEightWagerTokens = tx.value;
+    // $inc.blackjackEv = tx.bet.ev;
   }
 }
 

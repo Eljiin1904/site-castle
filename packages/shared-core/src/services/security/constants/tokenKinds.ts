@@ -3,6 +3,7 @@ import { TokenKind } from "#core/types/security/TokenKind";
 const kindMap: Record<TokenKind, boolean> = {
   "email-confirm": true,
   "exclude-confirm": true,
+  "hub-eight-token": true,
   "link-discord": true,
   "link-google": true,
   "link-siwe": true,

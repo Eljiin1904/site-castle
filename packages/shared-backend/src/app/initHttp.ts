@@ -10,18 +10,31 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import { Http } from "#app/services/http";
 import config from "#app/config";
+import { RedisStore } from "connect-redis";
 import * as Routes from "#app/routes";
+import { RedisService } from "@server/services/redis";
 
-export function initHttp(app = express()) {
-  const { env, domain, sessionSecret } = config;
+export async function initHttp(app = express()) {
+  const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl, redisUrl } = config;
+
 
   app.set("trust proxy", 3);
 
   app.use(
     cors({
       origin: {
-        development: ["http://127.0.0.1:3000", "http://localhost:3000"],
-        devcloud: [`https://dev.${domain}`, `https://api.dev.${domain}`, "http://127.0.0.1:3000", "http://localhost:3000"],
+        development: [
+          "http://127.0.0.1:3000",
+          "http://localhost:3000",
+          hubEightApiURL,
+          hubEightTestUrl,
+        ],
+        devcloud: [
+          `https://dev.${domain}`,
+          `https://api.dev.${domain}`,
+          "http://127.0.0.1:3000",
+          "http://localhost:3000",
+        ],
         staging: [`https://stage.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
       }[env],
@@ -68,6 +81,8 @@ export function initHttp(app = express()) {
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
 
+  const redisService = new RedisService(redisUrl);
+  const redisClient = await redisService.getClient();
   app.use(
     session({
       secret: sessionSecret,
@@ -78,10 +93,9 @@ export function initHttp(app = express()) {
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24 * 30,
       },
-      store: MongoStore.create({
-        client: Database.manager.client,
-        dbName: env,
-        collectionName: "user-sessions",
+      store: new RedisStore({
+        client: redisClient,
+        prefix: "user-sess:",
       }),
     }),
   );
@@ -116,6 +130,7 @@ export function initHttp(app = express()) {
   app.use("/support", Routes.support);
   app.use("/users", Routes.users);
   app.use("/verification", Routes.verification);
+  app.use("/hub-eight", Routes.hubEight);
 
   app.use((req, res) => res.status(404).send());
   app.use(Http.appErrorHandler);

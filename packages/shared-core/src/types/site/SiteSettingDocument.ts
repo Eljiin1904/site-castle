@@ -84,6 +84,7 @@ interface FeatureToggles {
   blackjackBlackjack15xEnabled: boolean;
   blackjackPerfectPairsEnabled: boolean;
   blackjack213Enabled: boolean;
+  hubEightEnabled: boolean;
 }
 
 interface ThresholdSettings {

@@ -37,6 +37,11 @@ export const BetInputGroup = ({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
+  const layout = useAppSelector((x) => x.style.mainLayout);
+
+  const sm = layout === "mobile";
+  const md = layout === "tablet";
+
   const total = useDisplayBetAmount(betType);
   const [blackjackBetAmount, setBlackjackBetAmount] = useState<number>(0);
 
@@ -104,14 +109,14 @@ export const BetInputGroup = ({
       width={"full"}
     >
       <ModalSection>
-        {/* <ModalLabel>{t("fields:bets.amount")}</ModalLabel> */}
         <ModalLabel>{title}</ModalLabel>
         <Div
-          align="center"
-          flow="column"
+          // align="center"
+          flow={sm || md ? "row" : "column"}
         >
           <Input
             type="decimal"
+            width={"full"}
             decimals={2}
             iconLeft={SvgDollarSign}
             iconColor="dark-sand"
@@ -122,7 +127,7 @@ export const BetInputGroup = ({
           />
           <Div
             width={"full"}
-            grow
+            // grow
           >
             <Button
               kind="tertiary-grey"
