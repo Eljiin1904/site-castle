@@ -6,6 +6,7 @@ export function getLimboResults(data: {
   page: number;
 }): Promise<{
   results: LimboResult[];
+  total: number;
 }> {
   return Http.post("/fairness/get-limbo-results", data);
 }
