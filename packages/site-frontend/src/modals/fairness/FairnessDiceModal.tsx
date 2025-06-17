@@ -11,47 +11,29 @@ import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgCopy } from "@client/svgs/common/SvgCopy";
-import { Span } from "@client/comps/span/Span";
-import { Toasts } from "@client/services/toasts";
 import { Tokens } from "@client/comps/tokens/Tokens";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 
 export const FairnessDiceModal = ({ result }: { result: DiceResult }) => {
-  const handleCopy = (text: string | number) => {
-    navigator.clipboard.writeText(`${text}`);
-    Toasts.success("Copied to clipboard.");
-  };
-
+  const {t} = useTranslation(["fairness"]);
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Dice Result"
+        heading={t('modal.title.dice')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
-        <Div
-          fx
-          gap={12}
-        >
+      <ModalBody pt={0}>
+        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
           <ModalSection>
-            <ModalLabel>{"Game ID"}</ModalLabel>
-            <ModalField justify="space-between">
-              <Span>{result.gameId}</Span>
-              <Vector
-                as={SvgCopy}
-                color="light-blue"
-                size={18}
-                hover="highlight"
-                onClick={() => handleCopy(result.gameId)}
-              />
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>            
+            <ModalField>{result.gameId}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Timestamp"}</ModalLabel>
+          <ModalLabel>{t('transactions.headers.date')}</ModalLabel>
             <ModalField>{Dates.toTimestamp(result.timestamp)}</ModalField>
           </ModalSection>
         </Div>
@@ -60,16 +42,14 @@ export const FairnessDiceModal = ({ result }: { result: DiceResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Bet Amount"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.betAmount')}</ModalLabel>  
             <ModalField>
-              <Tokens value={result.betAmount} />
+              <Tokens value={result.betAmount} fontSize={12} color="dark-sand" />
             </ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Multiplier"}</ModalLabel>
-            <ModalField>
-              {Numbers.floor(Dice.getMultiplier(result), 4).toFixed(4)}
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.multiplier')}</ModalLabel>  
+            <ModalField>{Numbers.floor(Dice.getMultiplier(result), 4).toFixed(4)}</ModalField>
           </ModalSection>
         </Div>
         <Div
@@ -77,14 +57,12 @@ export const FairnessDiceModal = ({ result }: { result: DiceResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Bet Type"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.betType')}</ModalLabel>
             <ModalField>{Strings.kebabToTitle(result.targetKind)}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Bet Target"}</ModalLabel>
-            <ModalField>
-              {Numbers.round(result.targetValue / 100, 2)}
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.betAmount')}</ModalLabel>
+            <ModalField>{Numbers.round(result.targetValue / 100, 2)}</ModalField>
           </ModalSection>
         </Div>
         <Div
@@ -92,13 +70,13 @@ export const FairnessDiceModal = ({ result }: { result: DiceResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Roll"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.roll')}</ModalLabel>
             <ModalField>{Numbers.round(result.rollValue / 100, 2)}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Won"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.won')}</ModalLabel>
             <ModalField>
-              <Tokens value={result.wonAmount} />
+              <Tokens value={result.wonAmount} fontSize={12} color="dark-sand"/>
             </ModalField>
           </ModalSection>
         </Div>
@@ -107,62 +85,17 @@ export const FairnessDiceModal = ({ result }: { result: DiceResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Client Seed"}</ModalLabel>
-            <ModalField justify="space-between">
-              <Span
-                weight="medium"
-                textOverflow="ellipsis"
-              >
-                {result.clientSeed}
-              </Span>
-              <Vector
-                as={SvgCopy}
-                color="light-blue"
-                size={18}
-                hover="highlight"
-                onClick={() => handleCopy(result.clientSeed)}
-              />
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
+            <ModalCopyField text={result.clientSeed} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Nonce"}</ModalLabel>
-            <ModalField justify="space-between">
-              <Span
-                weight="medium"
-                textOverflow="ellipsis"
-              >
-                {result.nonce}
-              </Span>
-              <Vector
-                as={SvgCopy}
-                color="light-blue"
-                size={18}
-                hover="highlight"
-                onClick={() => handleCopy(result.nonce.toString())}
-              />
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.nonce')}</ModalLabel>
+            <ModalCopyField text={result.nonce.toString()} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
           </ModalSection>
         </Div>
         <ModalSection>
-          <ModalLabel>{"Server Seed"}</ModalLabel>
-          <ModalField justify="space-between">
-            <Span
-              weight="medium"
-              textOverflow="ellipsis"
-              color={result.serverSeed ? "light-blue" : "orange"}
-            >
-              {result.serverSeed || result.serverSeedHashed}
-            </Span>
-            <Vector
-              as={SvgCopy}
-              color="light-blue"
-              size={18}
-              hover="highlight"
-              onClick={() =>
-                handleCopy(result.serverSeed || result.serverSeedHashed)
-              }
-            />
-          </ModalField>
+          <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
+          <ModalCopyField text={result.serverSeed} color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>

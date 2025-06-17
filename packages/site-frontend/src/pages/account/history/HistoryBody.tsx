@@ -7,9 +7,9 @@ import { Errors } from "@client/services/errors";
 import { Users } from "#app/services/users";
 import { HistoryTable } from "./HistoryTable";
 import { HistoryHeader } from "./HistoryHeader";
-import { HistoryFooter } from "./HistoryFooter";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { TableFooterPagination } from "#app/comps/pagination/TableFooterPagination";
 
 export const HistoryBody = () => {
   const [category, setCategory] = useState<TransactionCategory | undefined>();
@@ -60,13 +60,13 @@ export const HistoryBody = () => {
           transactions={transactions}
           isLoading={query.isLoading}
         />
-        <HistoryFooter
+        <TableFooterPagination
           page={page}
           hasNext={transactions.length !== 0 && transactions.length % limit === 0}
-          setPage={setPage}
-          limit={limit}
           total={total}
+          limit={limit}
           inPage={transactions.length}
+          setPage={setPage}
         />
       </Div>      
     </Div>

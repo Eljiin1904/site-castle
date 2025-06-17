@@ -5,5 +5,6 @@ export * from "./api/getDoubleResults";
 export * from "./api/getLimboResults";
 export * from "./api/getMinesResults";
 export * from "./api/getBlackjackResults";
+export * from "./api/getCrashResults";
 export * from "./api/getSeeds";
 export * from "./api/rotateSeeds";

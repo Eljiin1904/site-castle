@@ -30,6 +30,7 @@
   "reset": "Reset",
   "increase": "Increase",
   "copy": "Copy",
+  "copyToClipboard": "Copy to Clipboard",
   "copied": "Copied",
   "more": "More details",
   "copyClipboard": "Copy to Clipboard",

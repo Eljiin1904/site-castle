@@ -6,6 +6,7 @@ export function getDoubleResults(data: {
   page: number;
 }): Promise<{
   results: DoubleResult[];
+  total: number;
 }> {
   return Http.post("/fairness/get-double-results", data);
 }

@@ -1,0 +1,148 @@
+{
+  "title": "Imparcialidad",
+  "loginToViewResults": "Inicia sesión para ver los resultados",
+  "manageSeeds": "Administrar Series",
+  "independentVerification": "Para la verificación independiente, puedes replicar los resultados de cualquier juego utilizando el enlace a continuación e ingresando la serie del servidor, la serie del cliente y el nonce proporcionados.",
+  "independentVerificationNotNonce": "Para la verificación independiente, puedes replicar los resultados de cualquier juego utilizando el enlace a continuación e ingresando la serie del servidor y la serie del cliente proporcionados.",
+   "verifyGame": "Verificar Juego",
+   "overview": {
+    "title": "Resumen",
+    "whatsProvablyFair": "¿Qué es la imparcialidad demostrable?",
+    "whatsProvablyFairContent": "La imparcialidad demostrable significa que podemos probar que los resultados del juego se generaron antes de que alguien realizara una apuesta.",
+    "whatsProvablyFairContent2": "Además, también proporcionamos acceso de código abierto al código del juego responsable de generar resultados. Esto permite a los usuarios verificar el código por sí mismos para garantizar la imparcialidad.",
+    "howDoesThatMakeitFair": "¿Cómo hace eso que sea imparcial?",
+    "howDoesThatMakeitFairContent": "Generamos el resultado del juego antes de que realices tu apuesta.",
+    "howDoesThatMakeitFairContent2": "Una vez que hayas realizado tu apuesta, puedes verificar que el resultado coincida con el resultado pre-generado.",
+    "howDoesThatMakeitFairContent3": "Si el resultado de tu apuesta no coincide con el resultado pre-generado, indica manipulación.",
+    "howDoesThatMakeitFairContent4": "Para juegos de un solo jugador, se utiliza una semilla del cliente, una semilla del servidor y un nonce como entrada para determinar el resultado del juego.",
+    "howDoesThatMakeitFairContent5": "Para juegos multijugador, se utiliza un hash del servidor y un hash público para determinar el resultado del juego."
+  },
+  "pastResults": {
+    "title": "Resultados Pasados",
+    "noResults": "No hay resultados pasados disponibles.",
+    "viewDetails": "Ver Detalles",
+    "gameType": "Tipo de Juego",
+    "betAmount": "Monto de la Apuesta",
+    "result": "Resultado",
+    "timestamp": "Marca de Tiempo"
+  },
+  "singlePlayerGames": {
+    "title": "{{game}} Imparcialidad",
+    "description1" : "Calculamos el resultado de cada juego combinando los siguientes inputs:",
+  "inputs": {
+      "clientSeed": "Serie del Cliente: una cadena aleatoria o proporcionada por el jugador.",
+      "serverSeed": "Serie del Servidor: un hash SHA-256 de 16 caracteres aleatorios.",
+      "nonce": "Nonce: un entero incrementado cada vez que se juega un juego."
+    },
+    "dice": "Cada juego, lanzamos un número del 0 al 10,000 y luego lo convertimos a decimal. Si el lanzamiento está dentro del rango objetivo, el usuario gana.",
+    "limbo": "Cada juego, lanzamos un número del 1 al 100,000,000 y luego lo convertimos a un multiplicador. Si el objetivo es menor o igual al multiplicador, el usuario gana.",
+    "mines": "Cada juego, barajamos aleatoriamente las minas en el tablero. Si el jugador revela una mina, el juego termina. Si el jugador revela una gema, su pago aumenta.",
+    "blackjack": "Cada juego, repartimos dos cartas al jugador y dos cartas al dealer. El jugador gana si su mano está más cerca de 21 que la mano del dealer sin pasarse.",
+    "cases": "Cada artículo en el caso tiene un rango de números basado en su tasa de caída. Si el lanzamiento está dentro de ese rango, se deja caer el artículo."
+  },
+  "battles": {
+    "title": "Imparcialidad de Batallas de Casos",
+    "description1": "Calculamos el resultado de cada batalla combinando los siguientes inputs:",
+    "inputs": {
+      "serverSeed": "Serie del Servidor: un hash SHA-256 de 16 caracteres aleatorios. Generamos y hacemos hash de esto al inicio de la ronda.",
+      "eosBlockId": "ID de Bloque EOS: el ID único de un bloque EOS. Nos comprometemos a un bloque futuro al inicio de la ronda y luego esperamos a que se mine el bloque. Esto asegura que no podemos manipular el resultado.",
+      "roundId": "ID de Ronda: un entero incrementado cada ronda."
+    },
+    "description2": "Cada ronda, lanzamos caídas de artículos para cada jugador. Cada artículo en cada caso tiene un rango de números basado en su tasa de caída. Si el lanzamiento está dentro de ese rango, se deja caer el artículo.",
+    "description3": "Después de que se haya jugado cada ronda, determinamos el ganador(es) sumando los resultados de cada ronda. En caso de múltiples ganadores, el bote se divide equitativamente entre ellos."
+  },
+  "double": {
+    "title": "Imparcialidad de Doble",
+    "description1" : "Calculamos el resultado de cada ronda combinando los siguientes inputs:",
+    "inputs": {
+      "serverSeed": "Serie del Servidor: un hash SHA-256 de 16 caracteres aleatorios. Generamos y hacemos hash de esto al inicio de la ronda.",
+      "eosBlockId": "ID de Bloque EOS: el ID único de un bloque EOS. Nos comprometemos a un bloque futuro al inicio de la ronda y luego esperamos a que se mine el bloque. Esto asegura que no podemos manipular el resultado.",
+      "roundId": "ID de Ronda: un entero incrementado cada ronda."
+    },
+    "description2": "Cada ronda, lanzamos un número del 0 al 10,000 y luego lo convertimos a decimal. Si el lanzamiento está dentro del rango objetivo, el usuario gana."
+  },
+  "crash": {
+    "title": "Imparcialidad de Crash",
+    "description1" : "El juego Crash utiliza un sistema de hash para determinar el resultado de cada ronda. El servidor genera una cadena de hashes SHA256 antes de que comience el juego.",
+    "description2": "Esta cadena de hashes se utiliza para determinar el punto de colapso de cada ronda. El sistema comienza con un secreto del servidor oculto y genera una cadena de 20 millones de hashes SHA256, donde cada hash se deriva de la representación hexadecimal del anterior.",
+    "description3": "Durante el juego, el sistema recorre esta cadena de hashes en orden inverso.",
+    "description4": "Calculamos el punto de colapso para cada ronda combinando los siguientes inputs:",
+    "inputs": {
+      "serverSeed": "Serie del Servidor: un hash SHA-256 derivado de la representación hexadecimal del anterior.",
+      "clientSeed": "Serie del Cliente: un hash de un bloque futuro de Bitcoin, que se utiliza para garantizar la imparcialidad del juego."
+    },
+    "description5": "Cada ronda, se genera un multiplicador basado en el hash de la serie del servidor y la serie del cliente. El multiplicador aumenta con el tiempo, y si un jugador cobra antes del punto de colapso, recibe su apuesta multiplicada por el multiplicador actual."
+  },
+  "cases": {
+    "info":"Debes usar la serie <0>{{unhashed}}</0> del servidor para verificar tus resultados. Si ves una serie <1>{{hashed}}</1> , debes rotarla en la página de información para deshacer el hash.",
+    "unhashed": "sin hash",
+    "hashed": "con hash"
+  },
+  "transactions": {
+    "notFound": "No hay transacciones disponibles.",
+    "viewInputs": "Ver Inputs",
+    "headers": {
+      "gameId": "ID del Juego",
+      "game": "Juego",
+      "result": "Resultado",
+      "date": "Fecha",
+      "target": "Target",
+      "multiplier": "Multiplicador",
+      "roll": "Lanzamiento",
+      "clientSeed": "Serie del Cliente",
+      "serverSeed": "Serie del Servidor",
+      "nonce": "Nonce",
+      "input": "Input",
+      "gridSize": "Tamano de la Grilla",
+      "mineCount": "Cantidad de Minas",
+      "revealCount": "Cantidad de Revelaciones",
+      "playerCards": "Barajas del Jugador",
+      "dealerCards": "Barajas del Dealer",
+      "winAmount": "Monto Ganado",
+      "step": "Paso",
+      "bet": "Apuesta",
+      "betType": "Tipo de Apuesta",
+      "eosBlockId": "ID de Bloque EOS",
+      "roundId": "ID de Ronda",
+      "mode": "Modo",
+      "modifiers": "Modificadores",
+      "battle": "Batalla",
+      "winners": "Ganador(es)",
+      "pot": "Bote",
+      "case": "Caso",
+      "item": "Artículo",
+      "won": "Ganado",
+      "clientHash": "Hash del Cliente",
+      "serverHash": "Hash del Servidor",
+      "roundMultiplier": "Multiplicador de Ronda",
+      "cashoutAt": "Cashout en",
+      "betAmount": "Monto de Apuesta",
+      "wonAmount": "Monto Ganado"
+    }
+  },
+  "modal": {
+    "title": {
+      "crash": "Resultados de Crash",
+      "double": "Resultados de Doble",
+      "mines": "Resultados de Minas",
+      "limbo": "Resultados de Limbo",
+      "dice": "Resultados de Dados",
+      "blackjack": "Resultados de Blackjack",
+      "cases": "Resultados de Casos",
+      "battles": "Resultados de Batallas de Casos"
+    }
+  },
+  "seedModal": {
+    "title": "Imparcialidad",
+    "activeClientSeed": "Serie del Cliente Activa",
+    "activeServerSeed": "Serie del Servidor Activa (Hashed)",
+    "betsMadeWithPair": "Apuestas realizadas con el par",
+    "rotateSeedPair": "Rotar Series",
+    "newClientSeed": "Nueva Serie del Cliente",
+    "nextServerSeed": "Próxima Serie del Servidor (Hashed)", 
+    "rotate": "Rotar",
+    "seedPairRotated": "Par de series rotado.",
+    "viewHistory": "Ver Historial",
+    "placeholder": "Ingresa una nueva serie del cliente..."
+  }
+}

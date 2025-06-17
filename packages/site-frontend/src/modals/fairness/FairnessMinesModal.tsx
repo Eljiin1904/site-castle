@@ -11,37 +11,26 @@ import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 import { Div } from "@client/comps/div/Div";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-// import { useTranslation } from "@client/hooks/localization/useTranslation";
 
 export const FairnessMinesModal = ({ result }: { result: MinesResult }) => {
-  const { t } = useTranslation();
+  const {t} = useTranslation(["fairness"]);
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        // heading={t.gameplay("mines_result")}
-        heading={"Mines Result"}
+        heading={t('modal.title.mines')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
-        <Div
-          fx
-          gap={12}
-        >
+      <ModalBody pt={0}>
+        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
           <ModalSection>
-            <ModalLabel>
-              {/* {t.gameplay("game_id")} */}
-              heading={"Game Id"}
-            </ModalLabel>
-            <ModalCopyField text={result.gameId} />
+            <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
+            <ModalField>{result.gameId}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>
-              {/* {t.ui("timestamp")} */}
-              {"Timestamp"}
-            </ModalLabel>
+            <ModalLabel>{t('transactions.headers.date')}</ModalLabel>
             <ModalField>{Dates.toTimestamp(result.timestamp)}</ModalField>
           </ModalSection>
         </Div>
@@ -50,19 +39,13 @@ export const FairnessMinesModal = ({ result }: { result: MinesResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>
-              {/* {t.gameplay("bet_amount")} */}
-              {"Bet Amount"}
-            </ModalLabel>
+            <ModalLabel>{t('transactions.headers.betAmount')}</ModalLabel>
             <ModalField>
-              <Tokens value={result.betAmount} />
+              <Tokens value={result.betAmount} color="dark-sand" fontSize={12}/>
             </ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>
-              {/* {t.gameplay("grid_size")} */}
-              {"Grid Size"}
-            </ModalLabel>
+            <ModalLabel>{t('transactions.headers.gridSize')}</ModalLabel>
             <ModalField>{result.gridSize}</ModalField>
           </ModalSection>
         </Div>
@@ -71,17 +54,11 @@ export const FairnessMinesModal = ({ result }: { result: MinesResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>
-              {/* {t.gameplay("mine_count")} */}
-              {"Mine Count"}
-            </ModalLabel>
+            <ModalLabel>{t('transactions.headers.mineCount')}</ModalLabel>
             <ModalField>{result.mineCount}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>
-              {/* {t.gameplay("reveal_count")} */}
-              "Reveal Count"
-            </ModalLabel>
+            <ModalLabel>{t('transactions.headers.revealCount')}</ModalLabel>
             <ModalField>{result.revealCount}</ModalField>
           </ModalSection>
         </Div>
@@ -90,13 +67,13 @@ export const FairnessMinesModal = ({ result }: { result: MinesResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{t.gameplay("multiplier")}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.multiplier')}</ModalLabel>
             <ModalField>{result.multiplier.toFixed(2)}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{t.gameplay("won")}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.won')}</ModalLabel>
             <ModalField>
-              <Tokens value={result.wonAmount} />
+              <Tokens value={result.wonAmount} fontSize={12} color="dark-sand" />
             </ModalField>
           </ModalSection>
         </Div>
@@ -105,17 +82,17 @@ export const FairnessMinesModal = ({ result }: { result: MinesResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{t.gameplay("client_seed")}</ModalLabel>
-            <ModalCopyField text={result.clientSeed} />
+            <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
+            <ModalCopyField text={result.clientSeed} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis" />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{t.gameplay("nonce")}</ModalLabel>
-            <ModalCopyField text={result.nonce.toString()} />
+            <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
+            <ModalCopyField text={result.nonce.toString()} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
           </ModalSection>
         </Div>
         <ModalSection>
-          <ModalLabel>{t.gameplay("server_seed")}</ModalLabel>
-          <ModalCopyField text={result.serverSeed || result.serverSeedHashed} />
+          <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
+          <ModalCopyField text={result.serverSeed || result.serverSeedHashed} color={result.serverSeed ? 'light-sand': 'sand'} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>

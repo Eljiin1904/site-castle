@@ -8,6 +8,7 @@ export function getCaseGameResults(data: {
   page: number;
 }): Promise<{
   results: ChestGameResult[];
+  total: number;
 }> {
   return Http.post("/fairness/get-case-game-results", data);
 }

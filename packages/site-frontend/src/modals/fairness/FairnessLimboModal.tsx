@@ -7,49 +7,31 @@ import { ModalSection } from "@client/comps/modal/ModalSection";
 import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalField } from "@client/comps/modal/ModalField";
 import { Div } from "@client/comps/div/Div";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgCopy } from "@client/svgs/common/SvgCopy";
-import { Span } from "@client/comps/span/Span";
-import { Toasts } from "@client/services/toasts";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Limbo } from "#app/services/limbo";
 import { LimboResult } from "@core/types/limbo/LimboResult";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 
 export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
-  const handleCopy = (text: string | number) => {
-    navigator.clipboard.writeText(`${text}`);
-    Toasts.success("Copied to clipboard.");
-  };
-
+  const {t} = useTranslation(["fairness"]);
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Limbo Result"
+        heading={t('modal.title.limbo')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody>
-        <Div
-          fx
-          gap={12}
-        >
+      <ModalBody pt={0}>
+        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
           <ModalSection>
-            <ModalLabel>{"Game ID"}</ModalLabel>
-            <ModalField justify="space-between">
-              <Span>{result.gameId}</Span>
-              <Vector
-                as={SvgCopy}
-                color="light-blue"
-                size={18}
-                hover="highlight"
-                onClick={() => handleCopy(result.gameId)}
-              />
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
+            <ModalField>{result.gameId}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Timestamp"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.date')}</ModalLabel>
             <ModalField>{Dates.toTimestamp(result.timestamp)}</ModalField>
           </ModalSection>
         </Div>
@@ -58,9 +40,9 @@ export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Bet Amount"}</ModalLabel>
+            <ModalLabel>{t('transactions.headers.betAmount')}</ModalLabel>
             <ModalField>
-              <Tokens value={result.betAmount} />
+              <Tokens value={result.betAmount} fontSize={12} color="dark-sand" />
             </ModalField>
           </ModalSection>
         </Div>
@@ -69,11 +51,11 @@ export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Roll"}</ModalLabel>
+          <ModalLabel>{t('transactions.headers.roll')}</ModalLabel>
             <ModalField>{result.rollValue}</ModalField>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Result"}</ModalLabel>
+          <ModalLabel>{t('transactions.headers.result')}</ModalLabel>
             <ModalField>
               {Limbo.getMultiplier({ targetValue: result.rollValue })}
             </ModalField>
@@ -84,62 +66,17 @@ export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{"Client Seed"}</ModalLabel>
-            <ModalField justify="space-between">
-              <Span
-                weight="medium"
-                textOverflow="ellipsis"
-              >
-                {result.clientSeed}
-              </Span>
-              <Vector
-                as={SvgCopy}
-                color="light-blue"
-                size={18}
-                hover="highlight"
-                onClick={() => handleCopy(result.clientSeed)}
-              />
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
+            <ModalCopyField text={result.clientSeed} color="light-sand" fontSize={12} lineHeight={16}/>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Nonce"}</ModalLabel>
-            <ModalField justify="space-between">
-              <Span
-                weight="medium"
-                textOverflow="ellipsis"
-              >
-                {result.nonce}
-              </Span>
-              <Vector
-                as={SvgCopy}
-                color="light-blue"
-                size={18}
-                hover="highlight"
-                onClick={() => handleCopy(result.nonce.toString())}
-              />
-            </ModalField>
+            <ModalLabel>{t('transactions.headers.nonce')}</ModalLabel>
+            <ModalCopyField text={result.nonce.toString()} color="light-sand" fontSize={12} lineHeight={16}/>
           </ModalSection>
         </Div>
         <ModalSection>
-          <ModalLabel>{"Server Seed"}</ModalLabel>
-          <ModalField justify="space-between">
-            <Span
-              weight="medium"
-              textOverflow="ellipsis"
-              color={result.serverSeed ? "light-blue" : "orange"}
-            >
-              {result.serverSeed || result.serverSeedHashed}
-            </Span>
-            <Vector
-              as={SvgCopy}
-              color="light-blue"
-              size={18}
-              hover="highlight"
-              onClick={() =>
-                handleCopy(result.serverSeed || result.serverSeedHashed)
-              }
-            />
-          </ModalField>
+          <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
+          <ModalCopyField text={result.serverSeed}  color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16}/>
         </ModalSection>
       </ModalBody>
     </Modal>
