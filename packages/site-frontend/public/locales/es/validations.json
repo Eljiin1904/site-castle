@@ -206,6 +206,9 @@
       "required": "Comisión requerida.",
       "amount": "Cantidad requerida.",
       "campaignId": "Id de campaña requerida."
+    },
+    "fairness": {
+      "invalidClientSeed": "Seed del cliente inválida."
     }
   }
 }

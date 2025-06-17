@@ -206,6 +206,9 @@
       "required": "Claim Commission is required.",
       "amount": "Claim Amount is required.",
       "campaignId": "Campaign ID is required."
+    },
+    "fairness": {
+      "invalidClientSeed": "Invalid Client Seed"
     }
   }
 }
