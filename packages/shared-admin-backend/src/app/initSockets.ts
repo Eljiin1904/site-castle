@@ -25,7 +25,13 @@ export function initSockets(httpServer: HttpServer) {
     }),
   );
 
-  io.use(Sockets.sessionHandler({ sessionType: "admin" }));
+  // TODO Make Fallback if can not connect to redis
+  io.use(
+    Sockets.sessionHandler({
+      collection: "user-sessions",
+    }),
+  );
+  // io.use(Sockets.sessionHandler({ sessionType: "admin" }));
 
   Listeners.site(io);
 
