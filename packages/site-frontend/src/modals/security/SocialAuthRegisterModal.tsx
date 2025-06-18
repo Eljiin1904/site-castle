@@ -115,7 +115,7 @@ export const SocialAuthRegisterModal = ({
         <Fragment>
           <ModalHeader />
           <Img
-            type="jpg"
+            type="png"
             path={`/graphics/login-banner`}
             width="100%"
             height={small ? "450px" : "296px"}
