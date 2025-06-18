@@ -75,16 +75,16 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
       <Div fx borderTop borderColor="brown-4" pt={24} gap={12}>
         <ModalSection>
           <ModalLabel>{t('seedModal.activeClientSeed')}</ModalLabel>
-          <ModalCopyField text={query.data?.clientSeed} fontSize={12} color="light-sand" textOverflow="ellipsis" />
+          <ModalCopyField text={query.data?.clientSeed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />
         </ModalSection>
       </Div>
       <ModalSection justify="space-between">
         <ModalLabel>{t('seedModal.activeServerSeed')}</ModalLabel>
-        <ModalCopyField text={query.data?.serverSeedHashed} fontSize={12} color="light-sand" textOverflow="ellipsis"/>
+        <ModalCopyField text={query.data?.serverSeedHashed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis"/>
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t('seedModal.betsMadeWithPair')}</ModalLabel>
-        <ModalCopyField text={Numbers.toLocaleString(query.data?.nonce || 0, 0)} fontSize={12} color="light-sand" textOverflow="ellipsis" />
+        <ModalCopyField text={Numbers.toLocaleString(query.data?.nonce || 0, 0)} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />
       </ModalSection>
       <Div
         fx
@@ -115,7 +115,7 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t('seedModal.nextServerSeed')}</ModalLabel>
-        <ModalCopyField text={query.data?.nextServerSeedHashed} fontSize={12} color="light-sand" textOverflow="ellipsis" />
+        <ModalCopyField text={query.data?.nextServerSeedHashed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />
       </ModalSection>
       {historyTo && (
         <Fragment>

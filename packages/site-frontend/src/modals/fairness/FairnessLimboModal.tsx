@@ -76,7 +76,7 @@ export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
         </Div>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-          <ModalCopyField text={result.serverSeed}  color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16}/>
+          <ModalCopyField text={result.serverSeed ?? result.serverSeedHashed}  color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16}/>
         </ModalSection>
       </ModalBody>
     </Modal>
