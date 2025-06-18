@@ -95,7 +95,7 @@ export const FairnessDiceModal = ({ result }: { result: DiceResult }) => {
         </Div>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-          <ModalCopyField text={result.serverSeed} color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.serverSeed ?? result.serverSeedHashed} color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>
