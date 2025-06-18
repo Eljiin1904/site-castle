@@ -6,6 +6,7 @@ import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Site } from "#app/services/site";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LoginModal } from "#app/modals/login/LoginModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export type SitePageProps = PageProps & {
   title?: string;
@@ -20,7 +21,7 @@ export const SitePage: FC<SitePageProps> = ({
 }) => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
   useEffect(() => {
     dispatch(Site.setTitle(title));
   }, [title]);
@@ -30,10 +31,10 @@ export const SitePage: FC<SitePageProps> = ({
   if (privileged && !authenticated) {
     bodyContent = (
       <PageNotice
-        image="/graphics/notice-chicken-login"
-        title="Login Required"
-        message="Please login to view this content."
-        buttonLabel="Login"
+        image="/graphics/login-banner"
+        title={t("signin.required")}
+        message={t("signin.viewContent")}
+        buttonLabel={t("signin.login")}
         onButtonClick={() => Dialogs.open("primary", <LoginModal />)}
       />
     );

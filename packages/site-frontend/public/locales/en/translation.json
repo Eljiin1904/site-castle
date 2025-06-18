@@ -106,7 +106,9 @@
       "redirect": "Redirect to {{provider}} login"
     },
     "success": "Welcome back, {{value.username}}!",
-    "failure": "Unable to validate linked account."
+    "failure": "Unable to validate linked account.",
+    "required": "Login Required",
+    "viewContent": "Please login to view content."
   },
   "forgot": {
     "title": "Forgot Password?",
