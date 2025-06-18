@@ -20,6 +20,7 @@ const options: InitOptions = {
     "fields",
     "common",
     "wallet",
+    "notfound",
     "games\\double",
     "games\\mines",
     "games\\blackjack",
