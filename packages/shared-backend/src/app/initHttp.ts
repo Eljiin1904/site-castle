@@ -85,26 +85,32 @@ export async function initHttp(app = express()) {
   let redisClient: RedisClientType | undefined;
   let store: RedisStore | undefined;
 
-  try {
-    redisService = new RedisService(redisUrl);
-    redisClient = await redisService.getClient(); // awaits connect internally
+  // try {
+  //   redisService = new RedisService(redisUrl);
+  //   redisClient = await redisService.getClient(); // awaits connect internally
 
-    store = new RedisStore({
-      client: redisClient,
-      prefix: "user-sess:",
-    });
+  //   store = new RedisStore({
+  //     client: redisClient,
+  //     prefix: "user-sess:",
+  //   });
 
-    console.log("Using Redis session store");
-  } catch (error) {
-    console.log("Redis unavailable, falling back to in-memory session store");
-  }
+  //   console.log("Using Redis session store");
+  // } catch (error) {
+  //   console.log("Redis unavailable, falling back to in-memory session store");
+  // }
 
   app.use(
     session({
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
-      store, // undefined falls back to MemoryStore
+      // store, // undefined falls back to MemoryStore
+
+      store: MongoStore.create({
+        client: Database.manager.client,
+        dbName: env,
+        collectionName: "user-sessions",
+      }),
       cookie: {
         secure: !(env === "development" || env === "devcloud"),
         sameSite: "lax",

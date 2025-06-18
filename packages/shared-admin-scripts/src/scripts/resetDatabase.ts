@@ -22,7 +22,7 @@ export async function resetDatabase() {
     "reward-products",
     "users",
     "user-bet-sessions",
-    // "user-sessions",
+    "user-sessions",
     "user-latency",
   ];
 
