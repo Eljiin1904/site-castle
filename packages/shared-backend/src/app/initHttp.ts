@@ -13,10 +13,10 @@ import config from "#app/config";
 import { RedisStore } from "connect-redis";
 import * as Routes from "#app/routes";
 import { RedisService } from "@server/services/redis";
+import { RedisClientType } from "redis";
 
 export async function initHttp(app = express()) {
   const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl, redisUrl } = config;
-
 
   app.set("trust proxy", 3);
 
@@ -81,22 +81,35 @@ export async function initHttp(app = express()) {
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
 
-  const redisService = new RedisService(redisUrl);
-  const redisClient = await redisService.getClient();
+  let redisService: RedisService;
+  let redisClient: RedisClientType | undefined;
+  let store: RedisStore | undefined;
+
+  try {
+    redisService = new RedisService(redisUrl);
+    redisClient = await redisService.getClient(); // awaits connect internally
+
+    store = new RedisStore({
+      client: redisClient,
+      prefix: "user-sess:",
+    });
+
+    console.log("Using Redis session store");
+  } catch (error) {
+    console.log("Redis unavailable, falling back to in-memory session store");
+  }
+
   app.use(
     session({
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
+      store, // undefined falls back to MemoryStore
       cookie: {
         secure: !(env === "development" || env === "devcloud"),
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24 * 30,
       },
-      store: new RedisStore({
-        client: redisClient,
-        prefix: "user-sess:",
-      }),
     }),
   );
 
