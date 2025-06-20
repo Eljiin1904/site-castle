@@ -3,8 +3,10 @@ import { Main } from "@client/comps/main/Main";
 import { PageNotice } from "@client/comps/page/PageNotice";
 import { Vector } from "@client/comps/vector/Vector";
 import { SvgSiteLogo } from "@client/svgs/site/SvgSiteLogo";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AppErrorNotice = ({ error }: { error: string }) => {
+  const { t } = useTranslation();
   return (
     <Main
       className="AppErrorNotice"
@@ -16,20 +18,13 @@ export const AppErrorNotice = ({ error }: { error: string }) => {
       bg="brown-7"
     >
       <PageNotice
-        image="/graphics/notice-chicken-error"
-        title="Error"
-        message="Something went wrong, please reload the page."
+        image="/graphics/login-banner"
+        title={t("404.title")}
+        message={t("404.message")}
         description={error}
-        buttonLabel="Reload Page"
+        buttonLabel={t("404.reload")}
         onButtonClick={() => window.location.reload()}
       />
-      <Div grow />
-      <Vector
-        as={SvgSiteLogo}
-        width={254}
-        height={40}
-      />
-      <Div grow />
     </Main>
   );
 };

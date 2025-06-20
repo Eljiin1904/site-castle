@@ -278,5 +278,10 @@
         "success": "Exclusion extended. You have been logged out."
       }
    }
+  },
+  "404": {
+    "title": "Error",
+    "message": "Something went wrong, please reload the page.",
+    "reload": "Reload Page"
   }
 }

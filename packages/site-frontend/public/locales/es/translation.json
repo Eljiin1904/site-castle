@@ -273,5 +273,10 @@
         "success": "Autoexclusión extendida. Has sido desconectado."
       }
     }
+  },
+  "404": {
+    "title": "Error",
+    "message": "Algo salió mal, por favor recarga la página.",
+    "reload": "Recargar página"
   }
 }
