@@ -5,5 +5,6 @@ export * from "./utils/toElapsedString";
 export * from "./utils/toFullDateString";
 export * from "./utils/toTimerString";
 export * from "./utils/toTimestamp";
+export * from "./utils/toShortTimestamp";
 export * from "./utils/toWeekdayString";
 export * from "./utils/utc";

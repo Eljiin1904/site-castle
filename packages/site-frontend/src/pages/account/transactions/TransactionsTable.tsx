@@ -89,7 +89,7 @@ export const TransactionsTable = ({
         {
           hidden: mainLayout === "mobile",
           heading: t("transactions.headers.type"),
-          grow: 3,
+          grow: 6,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span
@@ -103,7 +103,7 @@ export const TransactionsTable = ({
         {
           hidden: mainLayout === "mobile",
           heading: t("transactions.headers.id"),
-          grow: 3,
+          grow: 2,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Span
@@ -124,7 +124,7 @@ export const TransactionsTable = ({
               color="light-sand"
               size={12}
             >
-              {Dates.toTimestamp(x.timestamp)}
+              {Dates.toShortTimestamp(x.timestamp)}
             </Span>
           ),
         },
@@ -145,14 +145,14 @@ export const TransactionsTable = ({
         {
           hidden: mainLayout === "mobile" || mainLayout === "tablet",
           heading: t("transactions.headers.balanceBefore"),
-          grow: 2,
+          grow: 1,
           justify: "flex-start",
           rowRenderer: (x) => <Tokens fontSize={12} value={x.balance} />,
         },
         {
           hidden: mainLayout === "mobile",
           heading: t("transactions.headers.amount"),
-          grow: 2,
+          grow: 1,
           justify: "flex-start",
           rowRenderer: (x) => (
             <Tokens
@@ -164,7 +164,7 @@ export const TransactionsTable = ({
         {
           hidden: mainLayout === "mobile",
           heading:t("transactions.headers.balanceAfter"),
-          grow: 2,
+          grow: 1,
           justify: "flex-end",
           rowRenderer: (x) => (
             <Tokens
