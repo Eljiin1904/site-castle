@@ -45,7 +45,7 @@ export const UserMenuDesktop = () => {
     <Dropdown
       className="user-dropdown"
       type="custom"
-      menuWidth="142px"
+      menuWidth="auto"
       forceAlign="right"
       open={open}
       onToggle={setOpen}
