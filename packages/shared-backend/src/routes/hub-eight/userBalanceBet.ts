@@ -26,7 +26,7 @@ export default Http.createApiRoute({
     supplied_user: Validation.string().required("Supplied User required"),
     round_closed: Validation.boolean().required("Round is closed"),
     round: Validation.string().required("Round required"),
-    reward_uuid: Validation.string().string().nullable().notRequired(),
+    reward_uuid: Validation.string().nullable().notRequired(),
     request_uuid: Validation.string().required("Request UUID required"),
 
     is_free: Validation.boolean().nullable(),
