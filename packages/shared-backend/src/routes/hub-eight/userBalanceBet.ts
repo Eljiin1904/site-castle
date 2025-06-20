@@ -102,13 +102,14 @@ export default Http.createApiRoute({
 
         meta: meta || null,
       });
+      const newBalance = await Database.collection("users").findOne(options);
 
       res.json({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
         request_uuid: request_uuid,
         currency: "USD", // Do I always default to USD?
-        balance: userInfo?.tokenBalance, // IS token balance USD?????
+        balance: newBalance?.tokenBalance, // IS token balance USD?????
       });
     } catch (err: any) {
       logger.error(err);
