@@ -298,11 +298,11 @@ interface HubEightCreditData {
   supplierUser?: string | null;
   roundClosed?: boolean | null;
   round?: string | null;
-  rewardUUID?: string;
+  rewardUUID?: string | null;
   requestUUID: string;
   referenceTransactionUUID: string;
   isFree?: boolean | null;
-  isSupplierPromo?: string;
+  isSupplierPromo?: string | null;
   isAggregated?: boolean | null;
   gameCode: string;
   currency: string;

@@ -8,6 +8,7 @@ import { betHandler } from "../handlers/betHandler";
 import { uploadHandler } from "../handlers/uploadHandler";
 import { regionHandler } from "../handlers/regionHandler";
 import { TfaOptions, tfaHandler } from "../handlers/tfaHandler";
+import { externalTransactionHandler } from "../handlers/externalTransactionHandler";
 
 type RouteOptions<B extends AnyObject, Q extends AnyObject> = {
   type: "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
@@ -16,6 +17,8 @@ type RouteOptions<B extends AnyObject, Q extends AnyObject> = {
   signatureRequired?: string;
   restricted?: boolean;
   transaction?: boolean;
+  externalTransactionType?: "hub-eight";
+  externalTransaction?: boolean;
   captcha?: boolean;
   tfa?: true | TfaOptions;
   bet?: boolean;
@@ -49,6 +52,8 @@ export function createApiRoute<B extends AnyObject, Q extends AnyObject>({
   secure = true,
   signatureRequired,
   transaction,
+  externalTransaction,
+  externalTransactionType,
   captcha,
   tfa,
   bet,
@@ -104,6 +109,12 @@ export function createApiRoute<B extends AnyObject, Q extends AnyObject>({
     for (const handler of middleware) {
       handlers.push(handler);
     }
+  }
+  if (externalTransaction) {
+    if (!externalTransactionType) {
+      throw new Error("Unable to Process Transaction");
+    }
+    handlers.push(externalTransactionHandler(callback, externalTransactionType));
   }
 
   if (transaction) {
