@@ -23,9 +23,9 @@ export default Http.createApiRoute({
     transaction_uuid: Validation.string().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    supplied_user: Validation.string().required("Supplied User required"),
-    round_closed: Validation.boolean().required("Round is closed"),
-    round: Validation.string().required("Round required"),
+    supplied_user: Validation.string().nullable().required("Supplied User required"),
+    round_closed: Validation.boolean().nullable().required("Round is closed"),
+    round: Validation.string().nullable().required("Round required"),
     reward_uuid: Validation.string().nullable().notRequired(),
     request_uuid: Validation.string().required("Request UUID required"),
 
@@ -36,9 +36,9 @@ export default Http.createApiRoute({
     currency: Validation.string()
       .oneOf(supportedCurrencies, "Unsupported currency")
       .required("Currency is required"), // Convert to array to check for currency
-    bet: Validation.string().required("Bet Field Required"),
+    bet: Validation.string().nullable().required("Bet Field Required"),
     amount: Validation.number().required("Amount Required"),
-    meta: Validation.object().optional(),
+    meta: Validation.object().nullable().notRequired(),
   }),
   callback: async (req, res) => {
     const {
