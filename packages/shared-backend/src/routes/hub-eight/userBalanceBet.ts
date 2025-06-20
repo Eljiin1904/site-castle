@@ -28,11 +28,11 @@ export default Http.createApiRoute({
     reward_uuid: Validation.string().required("Round UUID required"),
     request_uuid: Validation.string().required("Request UUID required"),
 
-    is_free: Validation.boolean().required("Is Free Field Required"),
-    is_supplier_promo: Validation.string().required("Is Free Field Required"),
-    is_aggregated: Validation.boolean().required("Is Aggregated Field Required"),
+    is_free: Validation.boolean().nullable(),
+    is_supplier_promo: Validation.string().nullable().notRequired(),
+    is_aggregated: Validation.boolean().nullable().notRequired(),
     game_code: Validation.string().required("Game Code required"),
-    currency: Validation.string().required("Is Free Field Required"), // Convert to array to check for currency
+    currency: Validation.string().required("Currency Field Required"), // Convert to array to check for currency
     bet: Validation.string().required("Bet Field Required"),
     amount: Validation.number().required("Amount Required"),
     meta: Validation.object().optional(),
@@ -61,8 +61,8 @@ export default Http.createApiRoute({
     const options: any = {};
 
     // 1. Validate Signature Header
-    const retreivedSignature = req.headers["X-Hub88-Signature"];
-    if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    // const retreivedSignature = req.headers["X-Hub88-Signature"];
+    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
 
     // const data = Security.decrypt(,retreivedSignature)
 
