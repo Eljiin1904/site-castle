@@ -8,6 +8,7 @@ import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
 
 const logger = getServerLogger({});
+const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
 // TODO -> Create a Hub88
 // TODO add Flag for process with Private Key
@@ -25,14 +26,16 @@ export default Http.createApiRoute({
     supplied_user: Validation.string().required("Supplied User required"),
     round_closed: Validation.boolean().required("Round is closed"),
     round: Validation.string().required("Round required"),
-    reward_uuid: Validation.string().required("Round UUID required"),
+    reward_uuid: Validation.string().string().nullable().notRequired(),
     request_uuid: Validation.string().required("Request UUID required"),
 
     is_free: Validation.boolean().nullable(),
     is_supplier_promo: Validation.string().nullable().notRequired(),
     is_aggregated: Validation.boolean().nullable().notRequired(),
     game_code: Validation.string().required("Game Code required"),
-    currency: Validation.string().required("Currency Field Required"), // Convert to array to check for currency
+    currency: Validation.string()
+      .oneOf(supportedCurrencies, "Unsupported currency")
+      .required("Currency is required"), // Convert to array to check for currency
     bet: Validation.string().required("Bet Field Required"),
     amount: Validation.number().required("Amount Required"),
     meta: Validation.object().optional(),
