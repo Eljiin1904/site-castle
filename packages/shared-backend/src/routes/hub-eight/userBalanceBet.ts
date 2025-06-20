@@ -93,7 +93,7 @@ export default Http.createApiRoute({
         autoComplete: true,
         user: userInfo,
         transactionUUID: transaction_uuid,
-        amount: amount,
+        amount: -amount,
         supplierTransactionId: supplier_transaction_id,
         roundClosed: round_closed,
         round: round,
