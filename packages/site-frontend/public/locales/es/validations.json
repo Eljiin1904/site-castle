@@ -107,6 +107,9 @@
         "required": "Código de campaña requerido.",
         "unavailable": "Código de campaña no disponible."
       }
+    },
+    "selfExclusion": {
+      "required": "Confirmación de autoexclusión es requerida."
     }
   },
   "errors": {
@@ -145,7 +148,7 @@
     },
     "rateLimit": "Demasiadas solicitudes de registro.",
     "invalidCaptcha": "Falló al pasar la validación de captcha.",
-     "games": {
+    "games": {
       "invalidGameName": "Juego inválido {{value}}.",
       "notEnoughTokens": "No tienes suficientes tokens.",
       "invalidBetAmount": "Cantidad de apuesta inválida.",
@@ -209,6 +212,10 @@
     },
     "fairness": {
       "invalidClientSeed": "Seed del cliente inválida."
-    }
+    },
+    "selfExclusion": {
+      "alreadyExcluded": "Ya estás autoexcluido."
+    },
+    "banned": "Tu cuenta ha sido baneada: {{value}}"
   }
 }

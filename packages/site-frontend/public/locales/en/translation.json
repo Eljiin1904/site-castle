@@ -262,5 +262,21 @@
     "title": "Notifications",
     "all": "All Notifications",
     "noNotifications": "You don't have any notifications."
+  },
+  "selfExclusion": {
+    "suspended": "Your account is self-excluded.",
+    "extension": {
+      "title": "Extend Self-Exclusion",
+      "message": "To extend your self-exclusion, please click the button below.",
+      "buttonLabel": "Extend Self-Exclusion",
+      "modal": {
+       "longerBreak": "If you need a longer break, you can extend your self-exclusion. Once extended, you will be locked out of your account until it ends.",
+        "withdrawBalance": "While you are locked out of your account, you will not have access to your site balance. You must withdraw your balance before proceeding.",
+        "withdrawBalanceConfirmation": "I have withdrawn my balance",
+        "supportNotice": "Support will not reverse this. You must wait for your self-exclusion to end once it starts.",
+        "logoutNotice": "You will be logged out of your account.",
+        "success": "Exclusion extended. You have been logged out."
+      }
+   }
   }
 }

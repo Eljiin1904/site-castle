@@ -26,7 +26,7 @@ export const UserEmailConfirmPage = () => {
   return (
     <SitePage>
       <PageNotice
-        image="/graphics/notice-chicken-login"
+        image="/graphics/login-banner"
         title={t("register.confirm.title")}
         message={t("register.confirm.description")}
         buttonLabel={t("register.confirm.title")}

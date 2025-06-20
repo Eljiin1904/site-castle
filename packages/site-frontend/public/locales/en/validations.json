@@ -108,6 +108,9 @@
         "required": "Campaign ID is required.",
         "unavailable": "Campaign ID unavailable."
       }
+    },
+    "selfExclusion": {
+      "required": "Confirmation is required."
     }
   },
   "errors": {
@@ -209,6 +212,10 @@
     },
     "fairness": {
       "invalidClientSeed": "Invalid Client Seed"
-    }
+    },
+    "selfExclusion": {
+      "alreadyExcluded": "You are already excluded."
+    },
+    "banned": "Banned: {{value}}"
   }
 }

@@ -98,5 +98,21 @@
     "placeholder": "Ingrese el código de 6 dígitos...",
     "backupField": "Clave de respaldo",
     "backupPlaceholder": "Ingrese la clave de respaldo..."
+  },
+  "selfExclusion": {
+    "duration": {
+      "field": "Duración",
+      "placeholder": "Seleccione la duración...",
+      "options": {
+        "1d": "1 Día",
+        "1w": "1 Semana",
+        "1m": "1 Mes",
+        "3m": "3 Meses",
+        "indefinite": "Indefinido"
+      }
+    },
+    "siteBalance": {
+      "field": "Saldo del sitio"
+    }
   }
 }

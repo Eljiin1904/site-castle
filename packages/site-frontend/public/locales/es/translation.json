@@ -257,5 +257,21 @@
     "title": "Notificaciones",
     "all": "Todas las notificaciones",
     "noNotifications": "No tienes notificaciones."
+  },
+  "selfExclusion": {
+   "suspended": "Your account is self-excluded.",
+    "extension": {
+      "title": "Extender autoexclusión",
+      "message": "Para extender tu autoexclusión, haz clic en el botón de abajo.",
+      "buttonLabel": "Extender autoexclusión",
+      "modal": {
+        "longerBreak": "Si necesitas una pausa más larga, puedes extender tu autoexclusión. Una vez extendida, no podrás acceder a tu cuenta hasta que finalice.",
+        "withdrawBalance": "Mientras estés bloqueado de tu cuenta, no tendrás acceso a tu saldo del sitio. Debes retirar tu saldo antes de continuar.",
+        "withdrawBalanceConfirmation": "He retirado mi saldo",
+        "supportNotice": "El soporte no revertirá esto. Debes esperar a que tu autoexclusión finalice una vez que comience.",
+        "logoutNotice": "Serás desconectado de tu cuenta.",
+        "success": "Autoexclusión extendida. Has sido desconectado."
+      }
+    }
   }
 }

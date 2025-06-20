@@ -13,7 +13,9 @@ export async function authenticateUser(
 
   if (Users.isBanned(user.ban)) {
     await logoutUser(req);
-    throw new HandledError(`Banned: ${user.ban.reason}`);
+    const e = new HandledError(`errors.banned`);
+    e.cause = user.ban.reason;
+    throw e;
   }
 
   await trackAction({
