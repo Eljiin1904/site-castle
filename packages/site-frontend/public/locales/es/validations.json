@@ -197,7 +197,9 @@
     },
     "users": {
       "notFound": "Usuario no encontrado.",
-      "idRequired": "Id de usuario requerido."
+      "idRequired": "Id de usuario requerido.",
+      "lookupFailed": "Búsqueda de usuario fallida.",
+      "alreadyExcluded": "Ya estás autoexcluido."
     },
     "tiers": {
       "outOfRange": "Nivel fuera de rango."
@@ -212,9 +214,6 @@
     },
     "fairness": {
       "invalidClientSeed": "Seed del cliente inválida."
-    },
-    "selfExclusion": {
-      "alreadyExcluded": "Ya estás autoexcluido."
     },
     "banned": "Tu cuenta ha sido baneada: {{value}}"
   }

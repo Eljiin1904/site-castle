@@ -19,7 +19,7 @@ export default Http.createApiRoute({
     const user = req.user;
 
     if (Users.isSuspended(user.suspension)) {
-      throw new HandledError("errors.selfExclusion.alreadyExcluded");
+      throw new HandledError("errors.users.alreadyExcluded");
     }
 
     const days = [1, 7, 30, 90, 100000][timeIndex];

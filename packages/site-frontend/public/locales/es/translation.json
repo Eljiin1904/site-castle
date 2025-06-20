@@ -259,7 +259,7 @@
     "noNotifications": "No tienes notificaciones."
   },
   "selfExclusion": {
-   "suspended": "Your account is self-excluded.",
+   "suspended": "Tu cuenta está auto autoexcluida.",
     "extension": {
       "title": "Extender autoexclusión",
       "message": "Para extender tu autoexclusión, haz clic en el botón de abajo.",

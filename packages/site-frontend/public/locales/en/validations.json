@@ -197,7 +197,9 @@
     },
     "users": {
       "notFound": "User not found.",
-      "idRequired": "User id is required."
+      "idRequired": "User id is required.",
+      "lookupFailed": "User lookup failed.",
+      "alreadyExcluded": "You are already excluded."
     },
     "tiers": {
       "outOfRange": "Tier out of range."
