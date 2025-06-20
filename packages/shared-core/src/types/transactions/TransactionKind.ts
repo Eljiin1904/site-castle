@@ -302,7 +302,7 @@ interface HubEightCreditData {
   requestUUID: string;
   referenceTransactionUUID: string;
   isFree?: boolean | null;
-  isSupplierPromo?: string | null;
+  isSupplierPromo?: boolean | null;
   isAggregated?: boolean | null;
   gameCode: string;
   currency: string;

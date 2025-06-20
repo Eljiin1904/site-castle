@@ -15,18 +15,20 @@ export default Http.createApiRoute({
   type: "post",
   path: "/transaction/rollback",
   secure: false,
-  // transaction: true,
+  transaction: false,
+  externalTransaction: true,
+  externalTransactionType: "hub-eight",
   body: Validation.object({
     user: Validation.username().required("User is required."),
     transaction_uuid: Validation.string().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    round_closed: Validation.boolean().required("Round is closed"),
-    round: Validation.string().required("Round required"),
+    round_closed: Validation.boolean().nullable().required("Round closed required"),
+    round: Validation.string().nullable().required("Round required"),
     request_uuid: Validation.string().required("Request UUID required"),
     reference_transaction_uuid: Validation.string().required("Reference Transaction UUID required"),
     game_code: Validation.string().required("Game Code required"),
-    meta: Validation.object().optional(),
+    meta: Validation.object().nullable().notRequired(),
   }),
   callback: async (req, res) => {
     const {
@@ -43,9 +45,9 @@ export default Http.createApiRoute({
     } = req.body;
     const options: any = {};
 
-    // 1. Validate Signature Header
-    const retreivedSignature = req.headers["X-Hub88-Signature"];
-    if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    // // 1. Validate Signature Header
+    // const retreivedSignature = req.headers["X-Hub88-Signature"];
+    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
 
     // 2. Validate Token
     const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
@@ -75,18 +77,20 @@ export default Http.createApiRoute({
         requestUUID: request_uuid,
         gameCode: game_code,
         meta: meta || null,
-        amount: -transaction.amount,
+        amount: transaction.amount,
         transactionId: transaction._id,
         username: userInfo.username,
         referenceTransactionUUID: reference_transaction_uuid,
       });
+
+      const newBalance = await Database.collection("users").findOne(options);
 
       res.json({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
         request_uuid: request_uuid,
         currency: "USD", // Do I always default to USD?
-        balance: userInfo?.tokenBalance + transaction.amount, // IS token balance USD?????
+        balance: newBalance?.tokenBalance, // IS token balance USD?????
       });
     } catch (err: any) {
       logger.error(err);
