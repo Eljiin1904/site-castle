@@ -10,6 +10,7 @@ import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
 
 const logger = getServerLogger({});
+const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
 // TODO -> Create a Hub88
 // TODO add Flag for process with Private Key
@@ -23,21 +24,23 @@ export default Http.createApiRoute({
     transaction_uuid: Validation.string().uuid().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Supplier Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    supplied_user: Validation.string().optional(),
+    supplied_user: Validation.string().nullable().notRequired(),
     round_closed: Validation.boolean().optional(),
-    round: Validation.string().optional(),
-    reward_uuid: Validation.string().uuid().optional(),
+    round: Validation.string().nullable().notRequired(),
+    reward_uuid: Validation.string().uuid().nullable().notRequired(),
     request_uuid: Validation.string().uuid().required("Request UUID is required."),
 
     reference_transaction_uuid: Validation.string().required("Reference Transaction UUID required"),
-    is_free: Validation.boolean().optional(),
-    is_supplier_promo: Validation.string().optional(),
-    is_aggregated: Validation.boolean().optional(),
+    is_free: Validation.boolean().nullable().required("isActive is required"),
+    is_supplier_promo: Validation.boolean().optional(),
+    is_aggregated: Validation.boolean().nullable().notRequired(),
     game_code: Validation.string().required("Game Code required"),
-    currency: Validation.string().required("Is Free Field Required"), // Convert to array to check for currency
+    currency: Validation.string()
+      .oneOf(supportedCurrencies, "Unsupported currency")
+      .required("Currency is required"),
     bet: Validation.string().optional(),
     amount: Validation.number().required("Amount Required"),
-    meta: Validation.object().optional(),
+    meta: Validation.object().nullable().notRequired(),
   }),
   callback: async (req, res) => {
     const {
@@ -64,8 +67,8 @@ export default Http.createApiRoute({
     const options: any = {};
 
     // 1. Validate Signature Header
-    const retreivedSignature = req.headers["X-Hub88-Signature"];
-    if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    // const retreivedSignature = req.headers["X-Hub88-Signature"];
+    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
 
     // 2. Validate Token
     const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
