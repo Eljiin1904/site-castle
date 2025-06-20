@@ -1,8 +1,5 @@
-import { Div } from "@client/comps/div/Div";
 import { Main } from "@client/comps/main/Main";
 import { PageNotice } from "@client/comps/page/PageNotice";
-import { Vector } from "@client/comps/vector/Vector";
-import { SvgSiteLogo } from "@client/svgs/site/SvgSiteLogo";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const AppErrorNotice = ({ error }: { error: string }) => {
