@@ -16,7 +16,7 @@ export default Http.createApiRoute({
   path: "/game/round/details",
   secure: true,
   body: Validation.object({
-    transaction_uuid: Validation.string().required("Transaction UUID required"),
+    transaction_uuid: Validation.string().uuid().nullable().notRequired(),
     round: Validation.string().required("Round required"),
   }),
   callback: async (req, res) => {
@@ -31,7 +31,10 @@ export default Http.createApiRoute({
     options.operatorId = operatorId;
 
     // 2. Generate signature with Private Key
-    const hubEightSignature = Security.sign(hub88PrivateKey, operatorId);
+    const hubEightSignature = Security.sign(
+      hub88PrivateKey.replace(/\\n/g, "\n"),
+      JSON.stringify(options),
+    );
 
     // 3. Make external call to Hub8 with signed key from RSA private key
     // Make request to -> /operator/generic/v2/game/round with operator ID from config

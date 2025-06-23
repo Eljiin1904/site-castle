@@ -59,7 +59,6 @@ export default Http.createApiRoute({
 
     // 3. Credit the Previous Bet Amount
     const transaction = await Database.collection("transactions").findOne({
-      kind: "hub-eight-debit",
       transactionUUID: reference_transaction_uuid,
     });
 

@@ -31,6 +31,8 @@ export function initHttp(app = express()) {
           `https://api.dev.${domain}`,
           "http://127.0.0.1:3000",
           "http://localhost:3000",
+          hubEightApiURL,
+          hubEightTestUrl,
         ],
         staging: [`https://stage.${domain}`],
         production: [`https://${domain}`, `https://www.${domain}`],
