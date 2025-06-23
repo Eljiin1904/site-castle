@@ -50,6 +50,7 @@ export default Http.createApiRoute({
       res.json({ data: processedResult });
     } catch (err: any) {
       logger.error(err);
+      throw new Error(err);
     }
   },
 });
