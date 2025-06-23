@@ -15,37 +15,38 @@ export default Http.createApiRoute({
   callback: async (req, res) => {
     // 1. Get Operator ID and KEy from env
     const { operatorId, hub88PrivateKey, hubEightApiURL } = config;
-
+    const payload = {
+      operator_id: operatorId,
+    };
     // 2. Generate signature with Private Key
-    const hubEightSignature = Security.sign(hub88PrivateKey.replace(/\\n/g, "\n"), operatorId);
+    const hubEightSignature = Security.sign(
+      hub88PrivateKey.replace(/\\n/g, "\n"),
+      JSON.stringify(payload),
+    );
     try {
       // 3. Make external call to Hub8 with signed key from RSA private key
-      const result = await axios.post(
-        `${hubEightApiURL}`,
-        JSON.stringify({
-          operatorId,
-        }),
-        {
-          headers: {
-            "X-Hub88-Signature": hubEightSignature,
-            "Content-Type": "application/json",
-          },
+      const result = await axios.post(`${hubEightApiURL}/operator/generic/v2/game/list`, payload, {
+        headers: {
+          "X-Hub88-Signature": hubEightSignature,
+          "Content-Type": "application/json",
         },
-      );
+      });
       const processedResult = [];
       if (result.data) {
         for (let i = 0; i < result.data.length; i++) {
           let item = result.data[i];
-          processedResult.push({
-            url_thumbnail: item.url_thumb,
-            url_background: item.url_background,
-            game_code: item.game_code,
-            name: item.name,
-            release_date: item.release_date,
-          });
+          if (item.enabled) {
+            processedResult.push({
+              url_thumbnail: item.url_thumb,
+              url_background: item.url_background,
+              game_code: item.game_code,
+              name: item.name,
+              release_date: item.release_date,
+            });
+          }
         }
       }
-      // 5. Return URL data
+      // 5. Return list data
       res.json({ data: processedResult });
     } catch (err: any) {
       logger.error(err);

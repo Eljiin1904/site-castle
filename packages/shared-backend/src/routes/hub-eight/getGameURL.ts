@@ -18,11 +18,10 @@ export default Http.createApiRoute({
   secure: true,
   body: Validation.object({
     platform: Validation.string().oneOf(["GPL_DESKTOP", "GPL_MOBILE"]).required(),
-    round: Validation.string().required("Round required"),
-    game_code: Validation.string().required("Round required"),
+    game_code: Validation.string().required("Game code required"),
   }),
   callback: async (req, res) => {
-    const { platform, round, game_code } = req.body;
+    const { platform, game_code } = req.body;
     const { operatorId, hub88PrivateKey, hubEightApiURL } = config;
 
     const user = req.user;
@@ -32,8 +31,14 @@ export default Http.createApiRoute({
     // await Site.validateSuspension(user);
     // await Site.validateKycTier(user, Validation.kycTiers.email);
 
+    const payload = {
+      operator_id: operatorId,
+    };
     // 2. Generate signature with Private Key
-    const hubEightSignature = Security.sign(hub88PrivateKey, operatorId);
+    const hubEightSignature = Security.sign(
+      hub88PrivateKey.replace(/\\n/g, "\n"),
+      JSON.stringify(payload),
+    );
 
     // 3. Generate Token with User details
     const token = await Security.createToken({
@@ -56,11 +61,11 @@ export default Http.createApiRoute({
       platform,
       operator_id: operatorId,
       meta: {},
-      lobby_url: `${config.siteAPI}`, // URL of Frontend home integration Page
+      lobby_url: `${config.siteAPI}/external`, // URL of Frontend home integration Page
       lang: "en", // -> Language
       ip: req.trueIP, // IP
       game_code: game_code, // Game Code
-      deposit_url: `${config.siteAPI}/wallet`, // A place where user can deposit funds
+      deposit_url: `${config.siteAPI}`, // A place where user can deposit funds
       currency: "USD", // Confirmed that 1 Token == 1 USD
       game_currency: "USD", // Confirm that this will also be USD
       country: user.kyc.country?.code,
@@ -74,7 +79,7 @@ export default Http.createApiRoute({
         requestData,
         {
           headers: {
-            // "X-Hub88-Signature": signature,
+            "X-Hub88-Signature": hubEightSignature,
             "Content-Type": "application/json",
           },
         },
