@@ -65,8 +65,9 @@ export const AffiliateNewCampaignModal = () => {
       <ModalHeader
         heading={t("campaigns.modalTitle")}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />      
-      <ModalBody pt={0}>
+      <ModalBody>
         <Form form={form}>
           <ModalSection>            
             <ModalLabel>{t("campaigns.campaignName")}</ModalLabel>
