@@ -53,18 +53,24 @@ export default Http.createApiRoute({
     try {
       const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
       if (!userDetails) {
-        res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
+        res.status(200).json({
+          status: "RS_ERROR_INVALID_TOKEN",
+          request_uuid: request_uuid,
+        });
         return;
       }
       options.username = userDetails.username;
     } catch (err: any) {
       logger.error(err);
-      res.status(200).json({ status: err.message });
+      res.status(200).json({ status: err.message, request_uuid: request_uuid });
     }
 
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) {
-      res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER" });
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_PARTNER",
+        request_uuid: request_uuid,
+      });
       return;
     }
     // 3. Check for previous roll back
@@ -74,7 +80,10 @@ export default Http.createApiRoute({
     });
 
     if (previousRollbackTransaction) {
-      res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION" });
+      res.status(200).json({
+        status: "RS_ERROR_DUPLICATE_TRANSACTION",
+        request_uuid: request_uuid,
+      });
       return;
     }
     // 4. Credit the Previous Bet Amount
@@ -84,7 +93,10 @@ export default Http.createApiRoute({
 
     try {
       if (!transaction) {
-        res.status(200).json({ status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST" });
+        res.status(200).json({
+          status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
+          request_uuid: request_uuid,
+        });
         return;
       }
 
@@ -114,14 +126,15 @@ export default Http.createApiRoute({
         currency: "USD", // Do I always default to USD?
         balance: newBalance?.tokenBalance, // IS token balance USD?????
       });
+      return;
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        res.status(200).json({ status: err.message });
+        res.status(200).json({ status: err.message, request_uuid: request_uuid });
         return;
       }
 
-      res.status(200).json({ status: "RS_ERROR_UNKNOWN" });
+      res.status(200).json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid });
     }
   },
 });
