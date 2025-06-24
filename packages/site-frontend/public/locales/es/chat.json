@@ -77,5 +77,14 @@
     "heading": "Desbloquear Usuario",
     "description": "¿Estás seguro de que deseas desbloquear a {{value.username}}?",
     "confirmSuccess": "{{value.username}} ha sido desbloqueado."
-  }
+  },
+  "rainTipModal": {
+    "heading": "Lluvia de Propinas",
+    "action": "Propina de Lluvia",
+    "confirmSuccess": "Lluvia de propinas enviada."
+  },
+  "payoutModal": {
+    "heading": "Pago de Lluvia"
+  },
+  "tipped": "ha enviado una lluvia de propinas de "
 }

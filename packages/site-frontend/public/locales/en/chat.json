@@ -77,5 +77,19 @@
     "heading": "Unblock User",
     "description": "¿Are you sure you want to block {{value.username}}?",
     "confirmSuccess": "{{value.username}} has been unblocked."
-  }
+  },
+  "rainTipModal": {
+    "heading": "Rain Tip",
+    "action": "Tip Rain",
+    "confirmSuccess": "Rain tipped."
+  },
+  "payoutModal": {
+    "heading": "Rain Payout"
+  },
+  "joinRainModal": {
+    "heading": "Join Rain",
+    "action": "Join Rain",
+    "confirmSuccess": "Rain joined."
+  },
+  "tipped": "tipped the rain "
 }
