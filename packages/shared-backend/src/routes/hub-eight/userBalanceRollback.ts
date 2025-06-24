@@ -56,14 +56,25 @@ export default Http.createApiRoute({
 
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) throw new Error("User not found");
-
-    // 3. Credit the Previous Bet Amount
+    // 3. Check for previous roll back
+    const previousRollbackTransaction = await Database.collection("transactions").findOne({
+      kind: "hub-eight-rollback",
+      transactionUUID: reference_transaction_uuid,
+    });
+    if (previousRollbackTransaction) {
+      res.status(200).json("RS_ERROR_DUPLICATE_TRANSACTION");
+      return;
+    }
+    // 4. Credit the Previous Bet Amount
     const transaction = await Database.collection("transactions").findOne({
       transactionUUID: reference_transaction_uuid,
     });
 
     try {
-      if (!transaction) throw new Error("RS_UNKNOWN");
+      if (!transaction) {
+        res.status(200).json("RS_ERROR_TRANSACTION_DOES_NOT_EXIST");
+        return;
+      }
 
       await Transactions.createTransaction({
         kind: "hub-eight-rollback",

@@ -79,6 +79,16 @@ export default Http.createApiRoute({
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) throw new Error("User not found");
 
+    if (amount < 0) {
+      res.status(200).json("RS_ERROR_WRONG_TYPES");
+      return;
+    }
+
+    if (userInfo.tokenBalance < amount) {
+      res.status(200).json("RS_ERROR_NOT_ENOUGH_MONEY");
+      return;
+    }
+
     // 3. Deduct the Bet Amount
     const transaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
@@ -86,7 +96,10 @@ export default Http.createApiRoute({
     });
 
     try {
-      if (transaction) throw new Error("RS_ERROR_DUPLICATE_TRANSACTION");
+      if (transaction) {
+        res.status(200).json("RS_ERROR_DUPLICATE_TRANSACTION");
+        return;
+      }
 
       await Transactions.createTransaction({
         kind: "hub-eight-debit",
