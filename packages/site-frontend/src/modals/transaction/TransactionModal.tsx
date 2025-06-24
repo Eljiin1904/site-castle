@@ -6,12 +6,14 @@ import { ModalError } from "@client/comps/modal/ModalError";
 import { ModalLoading } from "@client/comps/modal/ModalLoading";
 import { Users } from "#app/services/users";
 import { TransactionBody } from "./TransactionBody";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const TransactionModal = ({
   transactionId,
 }: {
   transactionId: string;
 }) => {
+  const {t} = useTranslation(["account"]);
   const query = useQuery({
     queryKey: [transactionId],
     queryFn: () => Users.getTransaction({ transactionId }),
@@ -33,10 +35,10 @@ export const TransactionModal = ({
     <Modal
       className="TransactionModal"
       onBackdropClick={() => Dialogs.close("primary")}
-      width="sm"
+      width="md"
     >
       <ModalHeader
-        heading="Transaction"
+        heading={t('transactions.transaction',{count: 1})}
         onCloseClick={() => Dialogs.close("primary")}
       />
       {bodyContent}
