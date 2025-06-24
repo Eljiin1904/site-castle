@@ -5,6 +5,6 @@ export function getRainPayouts(data: {
   rainId: string;
   limit: number;
   page: number;
-}): Promise<{ payouts: ChatRainPayout[] }> {
+}): Promise<{ payouts: ChatRainPayout[], totalCount: number }> {
   return Http.post("/chat/get-rain-payouts", data);
 }

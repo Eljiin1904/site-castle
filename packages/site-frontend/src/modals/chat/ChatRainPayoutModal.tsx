@@ -13,11 +13,13 @@ import { Pagination } from "@client/comps/pagination/Pagination";
 import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Chat } from "#app/services/chat";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatRainPayoutModal = ({ rainId }: { rainId: string }) => {
+  const { t } = useTranslation(["chat"]);
   const limit = 10;
   const [page, setPage] = useState(1);
-
+  
   const query = useQuery({
     queryKey: [rainId, limit, page],
     queryFn: () => Chat.getRainPayouts({ rainId, limit, page }),
@@ -25,15 +27,16 @@ export const ChatRainPayoutModal = ({ rainId }: { rainId: string }) => {
   });
 
   const payouts = query.data?.payouts || [];
-
+  const totalCount = query.data?.totalCount || 0;
   return (
     <Modal
       width="sm"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Rain Payouts"
+        heading={t('rainPayoutModal.heading')}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
       <PayoutTable
         payouts={payouts}
@@ -44,6 +47,7 @@ export const ChatRainPayoutModal = ({ rainId }: { rainId: string }) => {
           page={page}
           hasNext={payouts.length !== 0 && payouts.length % limit === 0}
           setPage={setPage}
+          lastPage={Math.ceil(totalCount / limit) || 1}
         />
       </CardSection>
     </Modal>
