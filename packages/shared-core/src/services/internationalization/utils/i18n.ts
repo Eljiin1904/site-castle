@@ -31,6 +31,7 @@ const options: InitOptions = {
     "account",
     "referrals",
     "fairness",
+    "chat"
   ],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],

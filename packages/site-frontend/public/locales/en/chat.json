@@ -1,0 +1,81 @@
+{
+  "message" : "Message",
+  "earn" : "Earn",
+  "tip": "Tip",
+  "login": "Log in to Chat",
+  "english": "EN",
+  "highroller": "HighRoller",
+  "unable": "Unable to chat",
+  "highRollerRequirements": "Reach level {{level}} to chat.",
+  "generalRequirements": "You must deposit at least {{amount}} tokens to chat.",
+  "muted": "Muted: {{reason}}",
+  "blockedUsers": "Blocked Users",
+  "notUserBlocked": "No users blocked.",  
+  "search": "Search by icon",
+  "emoji": "Emojis",
+  "gifs": "GIFs",
+  "noResults": "No results found",
+  "mention": "Mention",
+  "reply": "Reply",
+  "block": "Block",
+  "unblock": "Unblock",  
+  "level": "Level {{level}}",
+  "paused": "Chat paused",
+  "notUserFound": "No users found.",
+  "moderate":"Moderate",
+  "nav": {
+    "rules": "Chat Rules",
+    "rainHowItWokrs": "Chat Rain How It Works",
+    "rain": "Chat Rain",
+    "blockedUsers": "Blocked Users"
+  },
+  "rainInfoModal": {
+    "heading": "Chat Rain",
+    "description": "Chat rain tokens are distributed to all. Boost your share by doing the following:",
+    "list": {
+      "item1": "Play. The higher your XP gained in the last 7 days, the higher your share.",
+      "item2": "Level Up. The higher your level, the higher your share.",
+      "item3": "Deposit at least 20 tokens in the last 30 days.",
+      "item4": "Wager at least 1,000 tokens in the last 30 days"
+    },
+    "requirements": "To join the rain, you must meet the following requirements:",
+    "requirementsList": {
+      "item1": "Wager at least {{value.wager}} tokens in the last 7 days.",
+      "item2": "Wager at least 1x your previous rain payout."
+    }
+  },
+  "earnModal": {
+    "heading": "Invite friends, earn tokens!",
+    "description": "Share your referral link and earn FREE tokens from every friend that signs up!"
+  },
+  "chatRulesModal": {
+    "heading": "Chat Rules",
+    "description": "Learn more about our chat rules. Any behaviour against rules might be banned.",
+    "rulesList": {
+      "item1": "Don't spam & don't use excessive capital letters when chatting.",
+      "item2": "Don't harass or be offensive to other users or Stake staff.",
+      "item3": "Don't share any personal information (including socials) of you or other players.",
+      "item4": "Don't beg or ask for loans, rains or tips.",
+      "item5": "Don't use alternative (alts) accounts on chat, that is strictly forbidden.",
+      "item6": "No suspicious behavior that can be seen as potential scams.",
+      "item7": "Don't engage in any forms of advertising/trading/selling/buying or offering services."
+    }
+  },
+  "tipModal": {
+    "heading": "Tip User",
+    "action": "Send Tip",
+    "confirmTitle": "Confirm Tip",
+    "confirmDescription": "Are you sure you want to send {{value.username}} {{value.amount}} tokens?",
+    "confirmSuccess": "You tipped {{value.username}} {{value.amount}} tokens."
+  },
+  "blockModal": {
+    "heading": "Block User",
+    "description": "¿Are you sure you want to block {{value.username}}?",
+    "confirmSuccess": "{{value.username}} has been blocked."
+  },
+  "unblockModal": {
+    "heading": "Unblock User",
+    "description": "¿Are you sure you want to block {{value.username}}?",
+    "confirmSuccess": "{{value.username}} has been unblocked."
+  }
+}

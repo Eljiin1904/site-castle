@@ -216,48 +216,6 @@
     }
   },
   "levelCongrats": "Congrats on Level {{value.level}}!",
-  "chat": {
-    "message" : "Message",
-    "earn" : "Earn",
-    "tip": "Tip",
-    "login": "Log in to Chat",
-    "english": "EN",
-    "highroller": "HighRoller",
-    "unable": "Unable to chat",
-    "highRollerRequirements": "Reach level {{level}} to chat.",
-    "generalRequirements": "You must deposit at least {{amount}} tokens to chat.",
-    "muted": "Muted: {{reason}}",
-    "blockedUsers": "Blocked Users",
-    "notUserBlocked": "No users blocked.",
-    "tipModal": {
-      "title": "Tip User",
-      "submit": "Send Tip",
-      "confirmTitle": "Confirm Tip",
-      "confirmDescription": "Are you sure you want to send {{value.username}} {{value.amount}} tokens?",
-      "confirmSuccess": "You tipped {{value.username}} {{value.amount}} tokens."
-    },
-    "earnModal": {
-      "title": "Invite friends, earn tokens!",
-      "description": "Share your referral link and earn FREE tokens from every friend that signs up!"
-    },
-    "search": "Search by icon",
-    "emoji": "Emojis",
-    "gifs": "GIFs",
-    "noResults": "No results found",
-    "mention": "Mention",
-    "reply": "Reply",
-    "block": "Block",
-    "unblock": "Unblock",
-    "blockModal": {
-      "title": "Block User",
-      "description": "¿Are you sure you want to block {{value.username}}?",
-      "confirmSuccess": "{{value.username}} has been blocked."
-    },
-    "level": "Level {{level}}",
-    "paused": "Chat paused",
-    "notUserFound": "No users found.",
-    "moderate":"Moderate"
-  },
   "notifications": {
     "title": "Notifications",
     "all": "All Notifications",
