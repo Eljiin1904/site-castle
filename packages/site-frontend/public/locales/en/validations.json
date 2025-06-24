@@ -218,6 +218,13 @@
     "selfExclusion": {
       "alreadyExcluded": "You are already excluded."
     },
-    "banned": "Banned: {{value}}"
+    "banned": "Banned: {{value}}",
+    "tips": {
+      "tooManyRequests":"You are sending tips too often.",
+      "dailyLimit": "Tip would exceed your daily limit.",
+      "recipientNotFound": "Recipient not found.",
+      "tipYourself": "You cannot tip yourself.",
+      "recipientBlocked": "Recipient is not accepting tips."
+    }
   }
 }

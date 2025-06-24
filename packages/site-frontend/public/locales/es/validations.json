@@ -215,6 +215,13 @@
     "fairness": {
       "invalidClientSeed": "Seed del cliente inválida."
     },
-    "banned": "Tu cuenta ha sido baneada: {{value}}"
+    "banned": "Tu cuenta ha sido baneada: {{value}}",
+    "tips": {
+      "tooManyRequests": "No puedes enviar propinas tan seguido.",
+      "dailyLimit": "La propina excedería tu límite diario.",
+      "recipientNotFound": "Destinatario no encontrado.",
+      "tipYourself": "No puedes enviarte una propina a ti mismo.",
+      "recipientBlocked": "El destinario no esta aceptando propinas."
+    }
   }
 }
