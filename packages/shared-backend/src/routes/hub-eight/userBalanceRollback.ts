@@ -2,7 +2,7 @@ import { Validation } from "@core/services/validation";
 import { Database } from "@server/services/database";
 import { Http } from "#app/services/http";
 import { hubStatus } from "@core/services/hub-eight/HubEight";
-import { currency } from "@core/services/validation/Validation";
+import { currency, message } from "@core/services/validation/Validation";
 import { Transactions } from "@server/services/transactions";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Security } from "@server/services/security";
@@ -50,29 +50,41 @@ export default Http.createApiRoute({
     // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
 
     // 2. Validate Token
-    const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
-    if (!userDetails) throw new Error("RS_ERROR_INVALID_TOKEN");
-    options.username = userDetails.username;
+    try {
+      const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
+      if (!userDetails) {
+        res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
+        return;
+      }
+      options.username = userDetails.username;
+    } catch (err: any) {
+      logger.error(err);
+      res.status(200).json({ status: err.message });
+    }
 
     const userInfo = await Database.collection("users").findOne(options);
-    if (!userInfo) throw new Error("User not found");
+    if (!userInfo) {
+      res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER" });
+      return;
+    }
     // 3. Check for previous roll back
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      transactionUUID: reference_transaction_uuid,
+      transactionUUID: transaction_uuid,
     });
+
     if (previousRollbackTransaction) {
-      res.status(200).json("RS_ERROR_DUPLICATE_TRANSACTION");
+      res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION" });
       return;
     }
     // 4. Credit the Previous Bet Amount
     const transaction = await Database.collection("transactions").findOne({
-      transactionUUID: transaction_uuid,
+      transactionUUID: reference_transaction_uuid,
     });
 
     try {
       if (!transaction) {
-        res.status(200).json("RS_ERROR_TRANSACTION_DOES_NOT_EXIST");
+        res.status(200).json({ status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST" });
         return;
       }
 
@@ -105,10 +117,11 @@ export default Http.createApiRoute({
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        throw new Error(err.message);
+        res.status(200).json({ status: err.message });
+        return;
       }
 
-      throw new Error("RS_ERROR_UNKNOWN");
+      res.status(200).json({ status: "RS_ERROR_UNKNOWN" });
     }
   },
 });
