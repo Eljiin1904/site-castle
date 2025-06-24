@@ -76,13 +76,14 @@ export default Http.createApiRoute({
     // 3. Check for previous roll back
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      transactionUUID: transaction_uuid,
+      transactionUUID: reference_transaction_uuid,
     });
 
     if (previousRollbackTransaction) {
       res.status(200).json({
         status: "RS_ERROR_DUPLICATE_TRANSACTION",
         request_uuid: request_uuid,
+        user: userInfo?.username,
       });
       return;
     }
@@ -96,6 +97,7 @@ export default Http.createApiRoute({
         res.status(200).json({
           status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
           request_uuid: request_uuid,
+          user: userInfo?.username,
         });
         return;
       }
@@ -130,11 +132,15 @@ export default Http.createApiRoute({
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        res.status(200).json({ status: err.message, request_uuid: request_uuid });
+        res
+          .status(200)
+          .json({ status: err.message, request_uuid: request_uuid, user: userInfo?.username });
         return;
       }
 
-      res.status(200).json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid });
+      res
+        .status(200)
+        .json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid, user: userInfo?.username });
     }
   },
 });

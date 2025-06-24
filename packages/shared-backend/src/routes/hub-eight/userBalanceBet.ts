@@ -94,12 +94,20 @@ export default Http.createApiRoute({
     }
 
     if (amount < 0) {
-      res.status(200).json({ status: "RS_ERROR_WRONG_TYPES", request_uuid: request_uuid });
+      res.status(200).json({
+        status: "RS_ERROR_WRONG_TYPES",
+        request_uuid: request_uuid,
+        user: userInfo?.username,
+      });
       return;
     }
 
     if (userInfo.tokenBalance < amount) {
-      res.status(200).json({ status: "RS_ERROR_NOT_ENOUGH_MONEY", request_uuid: request_uuid });
+      res.status(200).json({
+        status: "RS_ERROR_NOT_ENOUGH_MONEY",
+        request_uuid: request_uuid,
+        user: userInfo?.username,
+      });
       return;
     }
 
@@ -111,7 +119,11 @@ export default Http.createApiRoute({
 
     try {
       if (transaction) {
-        res.status(200).json({ status: "RS_OK", request_uuid: request_uuid });
+        res.status(200).json({
+          status: "RS_ERROR_DUPLICATE_TRANSACTION",
+          request_uuid: request_uuid,
+          user: userInfo?.username,
+        });
         return;
       }
 
@@ -138,14 +150,21 @@ export default Http.createApiRoute({
         currency: "USD", // Do I always default to USD?
         balance: newBalance?.tokenBalance, // IS token balance USD?????
       });
+      return;
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        res.status(200).json({ status: err.message, request_uuid: request_uuid });
+        res.status(200).json({
+          status: err.message,
+          request_uuid: request_uuid,
+          user: userInfo?.username,
+        });
         return;
       }
 
-      res.status(200).json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid });
+      res
+        .status(200)
+        .json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid, user: userInfo?.username });
     }
   },
 });
