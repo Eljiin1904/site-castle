@@ -86,7 +86,7 @@ export default Http.createApiRoute({
     // 3. Check if bet was Made
     const betTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
-      transactionUUID: transaction_uuid,
+      transactionUUID: reference_transaction_uuid,
     });
 
     if (!betTransaction) {

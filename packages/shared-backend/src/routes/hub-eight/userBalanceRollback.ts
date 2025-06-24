@@ -67,7 +67,7 @@ export default Http.createApiRoute({
     }
     // 4. Credit the Previous Bet Amount
     const transaction = await Database.collection("transactions").findOne({
-      transactionUUID: reference_transaction_uuid,
+      transactionUUID: transaction_uuid,
     });
 
     try {
