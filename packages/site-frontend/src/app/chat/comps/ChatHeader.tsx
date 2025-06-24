@@ -15,14 +15,15 @@ import { SvgRules } from "@client/svgs/common/SvgRules";
 import { SvgOnlineUser } from "@client/svgs/common/SvgOnlineUser";
 import classNames from "classnames";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
-import "./ChatHeader.scss";
 import { ChatRainInfoModal } from "#app/modals/chat/ChatRainInfoModal";
 import { SvgInfoCircle } from "@client/svgs/common/SvgInfoCircle";
 import { ChatRainTipModal } from "#app/modals/chat/ChatRainTipModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import "./ChatHeader.scss";
 
 export const ChatHeader = () => {
   
-  
+  const {t} = useTranslation(["chat"]);
   const toggleChat = useChatToggle();
   const small = useIsMobileLayout();
 
@@ -56,25 +57,25 @@ export const ChatHeader = () => {
       options={[
         {
           type: "action",
-          label: "Chat Rules",
+          label: t('nav.rules'),
           iconLeft: SvgRules,
           onClick: () => Dialogs.open("primary", <ChatRulesModal />)
         },
         {
           type: "action",
-          label: "Chat Rain How it Works",
+          label: t('nav.rainHowItWokrs'),
           iconLeft: SvgInfoCircle,
           onClick: () => Dialogs.open("primary", <ChatRainInfoModal />)
         },
         {
           type: "action",
-          label: "Chat Rain",
+          label: t('nav.rain'),
           iconLeft: SvgCoinStack,
           onClick: () => Dialogs.open("primary", <ChatRainTipModal />),
         },
         {
           type: "action",
-          label: "Blocked Users",
+          label:  t('nav.blockedUsers'),
           iconLeft: SvgBlock,
           onClick: () => Dialogs.open("primary", <UserManageBlockModal />),
         },

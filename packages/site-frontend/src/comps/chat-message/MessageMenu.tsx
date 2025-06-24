@@ -19,7 +19,7 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
   const role = useAppSelector((x) => x.user.role);
   const text = useAppSelector((x) => x.chat.input);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const isAdmin = Users.getPermissions(role).manageChat;
 
   if (message.agent !== "user") {
@@ -47,7 +47,7 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
           p={4}
           hover="highlight"
           data-tooltip-id="app-tooltip"
-          data-tooltip-content={t("chat.moderate")}
+          data-tooltip-content={t("moderate")}
           onClick={() =>
             Dialogs.open("primary", <ChatAdminModal message={message} />)
           }
@@ -59,7 +59,7 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
         p={4}
         hover="highlight"
         data-tooltip-id="app-tooltip"
-        data-tooltip-content={t("chat.mention")}
+        data-tooltip-content={t("mention")}
         onClick={() => {
           dispatch(Chat.setInput(text + `@${message.user.name} `));
           document.getElementById("chat-input")?.focus();
@@ -71,7 +71,7 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
         p={4}
         hover="highlight"
         data-tooltip-id="app-tooltip"
-        data-tooltip-content={t("chat.reply")}
+        data-tooltip-content={t("reply")}
         onClick={() => {
           dispatch(Chat.setReplyMessage(message));
           document.getElementById("chat-input")?.focus();
@@ -84,7 +84,7 @@ export const MessageMenu = ({ message }: { message: ChatMessageDocument }) => {
         color="double-red"
         hover="highlight"
         data-tooltip-id="app-tooltip"
-        data-tooltip-content={t("common:block")}
+        data-tooltip-content={t("block")}
         onClick={() =>
           Dialogs.open("secondary", <UserBlockModal user={message.user} />)
         }
