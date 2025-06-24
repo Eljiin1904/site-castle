@@ -16,20 +16,20 @@ export const UserUnblockModal = ({
   onConfirm?: () => void;
 }) => {
   const level = Users.getLevel(user.xp);
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const levelIcon = Users.getLevelIcon(level);
   const levelColor = Users.getLevelColor(level);
   
   return (
     <ConfirmModal
-      heading="Unblock User"
-      confirmLabel="Unblock"
+      heading={t('unblockModal.heading')}
+      confirmLabel={t('unblock')}
       onConfirm={async () => {
         await Users.setUserBlocked({
           userId: user.id,
           block: false,
         });
-        Toasts.success(`${user.name} unblocked.`);
+        Toasts.success("chat:unblockModal.confirmSuccess", 5000, {username: user.name});
         onConfirm && onConfirm();
       }}
       message={
@@ -70,7 +70,7 @@ export const UserUnblockModal = ({
                 color={levelColor}
                 ml={6}
               >
-                 {t('chat.level',{level:level})}
+                 {t('level',{level:level})}
               </Span>
             </Div>
           </Div>
