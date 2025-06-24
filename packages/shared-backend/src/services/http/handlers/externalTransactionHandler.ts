@@ -32,7 +32,7 @@ export const externalTransactionHandler = (
       }
       userId = userDetails.id;
     } catch (err) {
-      throw new HandledError("Invalid or malformed token.");
+      throw new HandledError("RS_ERROR_INVALID_TOKEN");
     }
 
     const holdId = Ids.object();

@@ -75,13 +75,16 @@ export default Http.createApiRoute({
     // 2. Validate Token
     const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
     if (!userDetails) {
-      res.status(200).json("RS_ERROR_INVALID_TOKEN");
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
       return;
     }
     options.username = userDetails.username;
 
     const userInfo = await Database.collection("users").findOne(options);
-    if (!userInfo) throw new Error("User not found");
+    if (!userInfo) {
+      res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER" });
+      return;
+    }
 
     // 3. Check if bet was Made
     const betTransaction = await Database.collection("transactions").findOne({
@@ -90,7 +93,7 @@ export default Http.createApiRoute({
     });
 
     if (!betTransaction) {
-      res.status(200).json("RS_ERROR_TRANSACTION_DOES_NOT_EXIST");
+      res.status(200).json({ status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST" });
       return;
     }
     // 4. Credit the Win Amount
@@ -101,7 +104,7 @@ export default Http.createApiRoute({
 
     try {
       if (transaction) {
-        res.status(200).json("RS_ERROR_DUPLICATE_TRANSACTION");
+        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION" });
         return;
       }
 
@@ -137,10 +140,11 @@ export default Http.createApiRoute({
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        throw new Error(err.message);
+        res.status(200).json({ status: err.message });
+        return;
       }
 
-      throw new Error("RS_ERROR_UNKNOWN");
+      res.status(200).json({ status: "RS_ERROR_UNKNOWN" });
     }
   },
 });
