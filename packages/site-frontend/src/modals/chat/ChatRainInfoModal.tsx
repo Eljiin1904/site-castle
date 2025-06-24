@@ -5,45 +5,39 @@ import { Dialogs } from "@client/services/dialogs";
 import { UnorderedList } from "@client/comps/list/UnorderedList";
 import { Paragraph } from "@client/comps/paragraph/Paragraph";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatRainInfoModal = () => {
   const wagerReq = useAppSelector((x) => x.site.settings.rainWagerRequirement);
-
+  const {t}  = useTranslation(["chat"]);
+  const small = useIsMobileLayout();
   return (
     <Modal
-      width="sm"
+      width={small ? "sm" : "lg"}
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Chat Rain"
+        heading={t('rainInfoModal.heading')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody gap={8}>
-        <Paragraph>
-          {
-            "Chat rain tokens are distributed to all. Boost your share by doing the following:"
-          }
-        </Paragraph>
+      <ModalBody alignItems="flex-start">
+        <Paragraph>{t('rainInfoModal.description')}</Paragraph>
         <UnorderedList
           fx
-          itemSize={14}
           items={[
-            "Play. The higher your XP gained in the last 7 days, the higher your share.",
-            "Level Up. The higher your level, the higher your share.",
-            "Deposit at least 20 tokens in the last 30 days.",
-            "Wager at least 1,000 tokens in the last 30 days.",
-            //"Complete KYC tier 2.",
+            t('rainInfoModal.list.item1'),
+            t('rainInfoModal.list.item2'),
+            t('rainInfoModal.list.item3'),
+            t('rainInfoModal.list.item4')
           ]}
         />
-        <Paragraph>
-          {"To join the rain, you must meet the following requirements:"}
-        </Paragraph>
+        <Paragraph>{t('rainInfoModal.requirements')}</Paragraph>
         <UnorderedList
           fx
-          itemSize={14}
           items={[
-            `Wager at least ${wagerReq} tokens in the last 7 days.`,
-            "Wager at least 1x your previous rain payout.",
+            t('rainInfoModal.requirementsList.item1', {value: {wager: wagerReq}}),
+            t('rainInfoModal.requirementsList.item2')
           ]}
         />
       </ModalBody>

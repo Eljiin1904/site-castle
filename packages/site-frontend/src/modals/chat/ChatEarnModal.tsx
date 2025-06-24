@@ -12,16 +12,17 @@ import config from "#app/config";
 import { LoginModal } from "../login/LoginModal";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { ModalSection } from "@client/comps/modal/ModalSection";
-import { TextInput } from "@client/comps/input/TextInput";
+import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 
 export const ChatEarnModal = () => {
   const [copied, setCopied] = useState(false);
   const authenticated = useAppSelector((x) => x.user.authenticated);
-  const username = useAppSelector((x) => x.user.username);
-  const bodyLayout = useAppSelector((x) => x.style.bodyLayout);
-  const {t} = useTranslation();
+  const campaigns = useAppSelector((state) => state.affiliates.campaigns);
+  const campaign = campaigns.find((x) => x.default);
+  const {t} = useTranslation(['chat']);
+  
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${config.siteURL}/r/${username}`);
+    navigator.clipboard.writeText(`${config.siteURL}/r/${campaign?.campaignId}`);
     setCopied(true);
   };
 
@@ -31,14 +32,13 @@ export const ChatEarnModal = () => {
   return (
     <Modal onBackdropClick={() => Dialogs.close("primary")}>
       <ModalHeader
-        heading={t("chat.earnModal.title")}
+        heading={t("earnModal.heading")}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Div display="block">
-          <Span>
-          {t("chat.earnModal.description")}
-          </Span>
+          <Span>{t("earnModal.description")}</Span>
           <Link
             type="router"
             to="/affiliate"
@@ -49,7 +49,7 @@ export const ChatEarnModal = () => {
           </Link>
         </Div>
         <ModalSection gap={16}>
-          <TextInput onChange={() => {}} size="lg" type="text" placeholder="Copy to Keyboard" value={`${config.siteURL}/r/${username}`} />
+          <ModalCopyField size="lg" color="light-sand" text={`${config.siteURL}/r/${campaign?.campaignId}`} />
           <Button kind={!copied? `primary-yellow`: `tertiary-grey`} size="lg" label={copied ? t('common:copied'): t('common:copyClipboard')} onClick={handleCopy}></Button>
         </ModalSection>
       </ModalBody>
