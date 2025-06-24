@@ -65,8 +65,9 @@ export const ConfirmModal: FC<ConfirmModalProps> = ({
       <ModalHeader
         heading={heading}
         onCloseClick={handleCancel}
+        noBorder
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Span textAlign="center">
           {message}
         </Span>
