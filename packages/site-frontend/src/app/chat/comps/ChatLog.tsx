@@ -19,7 +19,7 @@ export const ChatLog = () => {
   const [smooth, setSmooth] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
 
   const handleButtonClick = () => {
     setPaused(false);
@@ -101,7 +101,7 @@ export const ChatLog = () => {
             fx
             kind="primary-yellow"
             size="md"
-            label={t("chat.paused")}
+            label={t("paused")}
             labelSize={13}
             onClick={handleButtonClick}
           />
