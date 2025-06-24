@@ -28,7 +28,7 @@ export const ChatFooterField = () => {
   );
 
   const [muted, setMuted] = useState(Users.isMuted(muteData));
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const isAdmin = Users.getPermissions(role).manageChat;
   const level = Users.getLevel(xp);
   const canGeneralChat = isAdmin || depositAmount >= generalRequirement;
@@ -43,7 +43,7 @@ export const ChatFooterField = () => {
         size="md"
         fx
         labelSize={14}
-        label={t("chat.login")}
+        label={t("login")}
         onClick={() => Dialogs.open("primary", <LoginModal />)}
       />
     );
@@ -53,7 +53,7 @@ export const ChatFooterField = () => {
         message={
           <Div display="block">
             <Span color="dark-gray">
-              {t('chat.muted',{reason: Strings.kebabToTitle(muteData.reason!)})}
+              {t('muted',{reason: Strings.kebabToTitle(muteData.reason!)})}
             </Span>
             <Timestamp
               format="timer"
@@ -67,7 +67,7 @@ export const ChatFooterField = () => {
   } else if (channel.startsWith("general") && !canGeneralChat) {
     return (<Fragment>
       <FeedbackCard
-        message={t(`chat.generalRequirements`, { amount: generalRequirement })}
+        message={t(`generalRequirements`, { amount: generalRequirement })}
       />
      <ChatOptionsFooter />
    </Fragment>
@@ -76,7 +76,7 @@ export const ChatFooterField = () => {
   } else if (channel === "highroller" && !canHighrollerChat) {
     return (<Fragment>
        <FeedbackCard
-        message={t(`chat.highRollerRequirements`, { level: highrollerRequirement })}
+        message={t(`highRollerRequirements`, { level: highrollerRequirement })}
       />    
       <ChatOptionsFooter />
     </Fragment>

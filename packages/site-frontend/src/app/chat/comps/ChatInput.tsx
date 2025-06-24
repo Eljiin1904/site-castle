@@ -57,14 +57,14 @@ const ChatInputTextArea = ({disabled, setOpen}: {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const sendMessage = useSendMessage();
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
 
   return (<Div fx>
     <TextArea
       id="chat-input"
       className="ChatInput"
       forwardRef={textAreaRef}
-      placeholder={disabled ? t("chat.unable"): t("chat.message")}
+      placeholder={disabled ? t("unable"): t("message")}
       value={text}
       onChange={(x) => dispatch(Chat.setInput(x))}
       onSubmit={sendMessage}
