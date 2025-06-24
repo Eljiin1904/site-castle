@@ -38,7 +38,7 @@ export default Http.createApiRoute({
     currency: Validation.string()
       .oneOf(supportedCurrencies, "Unsupported currency")
       .required("Currency is required"), // Convert to array to check for currency
-    bet: Validation.string().nullable().required("Bet Field Required"),
+    bet: Validation.string().nullable().notRequired(),
     amount: Validation.number().required("Amount Required"),
     meta: Validation.object().nullable().notRequired(),
   }),
@@ -72,26 +72,34 @@ export default Http.createApiRoute({
     // const data = Security.decrypt(,retreivedSignature)
 
     // 2. Validate Token
-    const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
-    if (!userDetails) {
-      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
-      return;
+    try {
+      const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
+      if (!userDetails) {
+        res.status(200).json({
+          status: "RS_ERROR_INVALID_TOKEN",
+          request_uuid: request_uuid,
+        });
+        return;
+      }
+      options.username = userDetails.username;
+    } catch (err: any) {
+      logger.error(err);
+      res.status(200).json({ status: err.message, request_uuid: request_uuid });
     }
-    options.username = userDetails.username;
 
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) {
-      res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER" });
+      res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER", request_uuid: request_uuid });
       return;
     }
 
     if (amount < 0) {
-      res.status(200).json({ status: "RS_ERROR_WRONG_TYPES" });
+      res.status(200).json({ status: "RS_ERROR_WRONG_TYPES", request_uuid: request_uuid });
       return;
     }
 
     if (userInfo.tokenBalance < amount) {
-      res.status(200).json({ status: "RS_ERROR_NOT_ENOUGH_MONEY" });
+      res.status(200).json({ status: "RS_ERROR_NOT_ENOUGH_MONEY", request_uuid: request_uuid });
       return;
     }
 
@@ -103,7 +111,7 @@ export default Http.createApiRoute({
 
     try {
       if (transaction) {
-        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION" });
+        res.status(200).json({ status: "RS_OK", request_uuid: request_uuid });
         return;
       }
 
@@ -133,11 +141,11 @@ export default Http.createApiRoute({
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        res.status(200).json({ status: err.message });
+        res.status(200).json({ status: err.message, request_uuid: request_uuid });
         return;
       }
 
-      res.status(200).json({ status: "RS_ERROR_UNKNOWN" });
+      res.status(200).json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid });
     }
   },
 });
