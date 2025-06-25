@@ -7,9 +7,10 @@ import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { Paragraph } from "@client/comps/paragraph/Paragraph";
 import { Div } from "@client/comps/div/Div";
 import { ModalSection } from "@client/comps/modal/ModalSection";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatRulesModal = () => {
-  
+  const {t}  = useTranslation(["chat"]);
   const small = useIsMobileLayout();
 
   return (
@@ -18,28 +19,25 @@ export const ChatRulesModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Chat Rules"
+        heading={t('chatRulesModal.heading')}
         onCloseClick={() => Dialogs.close("primary")}
-        headerContent={ <Paragraph mt={small ? 16: 24}>
-          {"Learn more about our chat rules. Any behaviour against rules might be banned."}
-        </Paragraph>}
+        headerContent={ <Paragraph mt={small ? 16: 24}>{t('chatRulesModal.description')}</Paragraph>}
       />
-      <ModalBody pt={0}>
-        <Div fx column gap={small ? 20: 32} pt={small ? 24: 32}  borderTop borderColor="brown-4">
+      <ModalBody>
+        <Div fx column gap={small ? 20: 32}>
           <ModalSection>
             <OrderedList
               fx
-              itemSize={14}
               pl={20}
               mt={1}
               items={[
-                "Don't spam & don't use excessive capital letters when chatting.",
-                "Don't harass or be offensive to other users or Stake staff.",
-                "Don't share any personal information (including socials) of you or other players.",
-                "Don't beg or ask for loans, rains or tips.",
-                "Don't use alternative (alts) accounts on chat, that is strictly forbidden.",
-                "No suspicious behavior that can be seen as potential scams.",
-                "Don't engage in any forms of advertising/trading/selling/buying or offering services."
+                t('chatRulesModal.rulesList.item1'),
+                t('chatRulesModal.rulesList.item2'),
+                t('chatRulesModal.rulesList.item3'),
+                t('chatRulesModal.rulesList.item4'),
+                t('chatRulesModal.rulesList.item5'),
+                t('chatRulesModal.rulesList.item6'),
+                t('chatRulesModal.rulesList.item7')
               ]}
             />
           </ModalSection>

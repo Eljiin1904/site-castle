@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Validation } from "@core/services/validation";
 import { Form } from "@client/comps/form/Form";
 import { Button } from "@client/comps/button/Button";
@@ -52,10 +51,11 @@ export const TipModal = ({ sendTo }: { sendTo?: string }) => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading={t("chat.tipModal.title")}
+        heading={t("chat:tipModal.heading")}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <LimitSection />
         <Form form={form}>
           <ModalSection>
@@ -83,7 +83,7 @@ export const TipModal = ({ sendTo }: { sendTo?: string }) => {
           <Button
             type="submit"
             kind="primary-yellow"
-            label={t("chat.tipModal.submit")}
+            label={t("chat:tipModal.action")}
             fx
             loading={form.loading}
             mt={4}

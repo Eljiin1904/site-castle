@@ -14,12 +14,13 @@ export default Http.createApiRoute({
   callback: async (req, res) => {
     const { rainId, limit, page } = req.body;
 
+    const query = {
+      rainId,
+      processed: true,
+    }
     const payouts = await Database.collection("chat-rain-tickets")
       .find(
-        {
-          rainId,
-          processed: true,
-        },
+        query,
         {
           sort: { splitAmount: -1, _id: 1 },
           skip: (page - 1) * limit,
@@ -28,7 +29,8 @@ export default Http.createApiRoute({
         },
       )
       .toArray();
-
-    res.json({ payouts });
+    
+    const total = await Database.collection("chat-rain-tickets").countDocuments(query);
+    res.json({ payouts , totalCount: total});
   },
 });

@@ -6,7 +6,6 @@ import { Div } from "../div/Div";
 import { Vector } from "../vector/Vector";
 import { Span } from "../span/Span";
 import { Heading } from "../heading/Heading";
-import { Img } from "../img/Img";
 import "./ModalHeader.scss";
 import { StyledProps } from "../styled/Styled";
 
@@ -22,6 +21,7 @@ export type ModalHeaderProps = {
   heading?: string | NavOptions;
   hideClose?: boolean;
   closeColor?: StyledProps['color'];
+  noBorder?: boolean;
   onCloseClick?: () => void;
 };
 
@@ -31,6 +31,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
   heading,
   hideClose,
   closeColor = 'dark-sand',
+  noBorder = false,
   onCloseClick,
 }) => {
   const layout = useLibrarySelector((x) => x.style.bodyLayout);
@@ -44,21 +45,18 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
     content = (
       <Div
         fx
+        fy
+        alignItems="flex-start"
+        px={small ? 20 : 32}
+
       >
-        {/* <Img
-          position="absolute"
-          fx
-          fy
-          type="jpg"
-          path="/graphics/modal-header-bg"
-          width="100%"
-        /> */}
         <Div
           fx
-          fy
-          p={small ? 20 : 32}
+          fy          
           column
-          alignItems="flex-start"
+          py={small ? 20 : 32}
+          borderBottom={!noBorder}
+          borderColor="brown-4"
         >
           <Heading
             as="h2"

@@ -31,11 +31,11 @@ export default Http.createApiRoute({
     const user = await Database.collection("users").findOne({ _id: userId });
 
     if (!user) {
-      throw new HandledError("User lookup failed.");
+      throw new HandledError("errors.users.lookupFailed");
     }
 
     if (Users.isSuspended(user.suspension)) {
-      throw new HandledError("You are already excluded.");
+      throw new HandledError("errors.users.alreadyExcluded");
     }
 
     await Database.collection("users").updateOne(

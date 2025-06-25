@@ -13,7 +13,7 @@ export const MentionPopout = ({
   onMentionClick: (newText: string) => void;
 }) => {
   const usernames = useUsernames(text);
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const handleClick = (username: string) => {
     const mentions = Chat.parseMentions(text);
 
@@ -60,7 +60,7 @@ export const MentionPopout = ({
           <Span
             size={12}
           >
-            {t('chat.notUserFound')}
+            {t('notUserFound')}
           </Span>
         </Div>
       )}

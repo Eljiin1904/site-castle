@@ -42,6 +42,44 @@
       "promotion": "Promoción",     
       "vault": "Bóveda",
       "other": "Otro"
+    },
+    "modal": {
+      "inputs": {
+        "general": {
+          "transactionId": "Id de transacción",
+          "date":" Fecha",
+          "status": "Estado",
+          "updated": "Actualizado",
+          "amount": "Cantidad",
+          "balanceBefore": "Balance Antes",
+          "balanceAfter": "Balance Después"
+        },
+        "tips": {
+          "sentBy": "Enviado por",
+          "sentTo": "Enviado a"
+        },
+        "txHash": "Tx Hash",
+        "withdraw": {
+          "cryptoAmount": "Cantidad de Cripto",
+          "usdAmount": "Cantidad USD",
+          "usdRate": "Tasa USD",
+          "feeAmount": "Cantidad de Tarifa",
+          "feeUsd": "Tarifa USD",
+          "netAmount": "Cantidad Neta",
+          "netUsd": "Cantidad Neta USD"
+        },
+        "battle": "Ver Batalla",
+        "fairness": "Ver Fairness",
+        "skin": {
+          "skin": "Skin",
+          "tradeOfferId": "Id de Oferta de Intercambio"
+
+        }
+      },
+      "actions": {
+        "confirmClient": "Confirmar en Cliente",
+        "confirmBrowser": "Confirm en Navegador"
+      }
     }
   },
   "history": {

@@ -106,7 +106,9 @@
       "redirect": "Redirect to {{provider}} login"
     },
     "success": "Welcome back, {{value.username}}!",
-    "failure": "Unable to validate linked account."
+    "failure": "Unable to validate linked account.",
+    "required": "Login Required",
+    "viewContent": "Please login to view content."
   },
   "forgot": {
     "title": "Forgot Password?",
@@ -214,51 +216,30 @@
     }
   },
   "levelCongrats": "Congrats on Level {{value.level}}!",
-  "chat": {
-    "message" : "Message",
-    "earn" : "Earn",
-    "tip": "Tip",
-    "login": "Log in to Chat",
-    "english": "EN",
-    "highroller": "HighRoller",
-    "unable": "Unable to chat",
-    "highRollerRequirements": "Reach level {{level}} to chat.",
-    "generalRequirements": "You must deposit at least {{amount}} tokens to chat.",
-    "muted": "Muted: {{reason}}",
-    "blockedUsers": "Blocked Users",
-    "notUserBlocked": "No users blocked.",
-    "tipModal": {
-      "title": "Tip User",
-      "submit": "Send Tip",
-      "confirmTitle": "Confirm Tip",
-      "confirmDescription": "Are you sure you want to send {{value.username}} {{value.amount}} tokens?",
-      "confirmSuccess": "You tipped {{value.username}} {{value.amount}} tokens."
-    },
-    "earnModal": {
-      "title": "Invite friends, earn tokens!",
-      "description": "Share your referral link and earn FREE tokens from every friend that signs up!"
-    },
-    "search": "Search by icon",
-    "emoji": "Emojis",
-    "gifs": "GIFs",
-    "noResults": "No results found",
-    "mention": "Mention",
-    "reply": "Reply",
-    "block": "Block",
-    "unblock": "Unblock",
-    "blockModal": {
-      "title": "Block User",
-      "description": "¿Are you sure you want to block {{value.username}}?",
-      "confirmSuccess": "{{value.username}} has been blocked."
-    },
-    "level": "Level {{level}}",
-    "paused": "Chat paused",
-    "notUserFound": "No users found.",
-    "moderate":"Moderate"
-  },
   "notifications": {
     "title": "Notifications",
     "all": "All Notifications",
     "noNotifications": "You don't have any notifications."
+  },
+  "selfExclusion": {
+    "suspended": "Your account is self-excluded.",
+    "extension": {
+      "title": "Extend Self-Exclusion",
+      "message": "To extend your self-exclusion, please click the button below.",
+      "buttonLabel": "Extend Self-Exclusion",
+      "modal": {
+       "longerBreak": "If you need a longer break, you can extend your self-exclusion. Once extended, you will be locked out of your account until it ends.",
+        "withdrawBalance": "While you are locked out of your account, you will not have access to your site balance. You must withdraw your balance before proceeding.",
+        "withdrawBalanceConfirmation": "I have withdrawn my balance",
+        "supportNotice": "Support will not reverse this. You must wait for your self-exclusion to end once it starts.",
+        "logoutNotice": "You will be logged out of your account.",
+        "success": "Exclusion extended. You have been logged out."
+      }
+   }
+  },
+  "404": {
+    "title": "Error",
+    "message": "Something went wrong, please reload the page.",
+    "reload": "Reload Page"
   }
 }

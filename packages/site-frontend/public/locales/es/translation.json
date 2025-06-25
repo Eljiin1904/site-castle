@@ -105,7 +105,10 @@
       "noPopup": "¿No ves la ventana emergente de inicio de sesión de {{provider}}?",
       "redirect": "Redirigir al inicio de sesión de {{provider}}"
     },
-    "success": "¡Bienvenido de nuevo, {{value.username}}!"
+    "success": "¡Bienvenido de nuevo, {{value.username}}!",
+    "failure": "No se puede validar la cuenta vinculada.",
+    "required": "Inicio de sesión requerido",
+    "viewContent": "Por favor, inicie sesión para ver el contenido."
   },
   "accountSetup": {
     "title": "Configuración de la cuenta",
@@ -208,51 +211,30 @@
     }
   },
  "levelCongrats": "Felicidades, has alcanzado el nivel {{value.level}}!",
- "chat": {
-    "message": "Mensaje",
-    "earn": "Ganar",
-    "tip": "Propina",
-    "login": "Iniciar sesión para chatear",
-    "english": "EN",
-    "highroller": "Gran apostador",
-    "unable": "No se puede chatear",
-    "highRollerRequirements": "Alcanza el nivel {{level}} para chatear.",
-    "generalRequirements": "Debes depositar al menos {{amount}} tokens para chatear.",
-    "muted": "Estás silenciado: {{reason}}",
-    "blockedUsers": "Usuarios bloqueados",
-    "notUserBlocked": "No hay usuarios bloqueados.",
-    "tipModal": {
-      "title": "Enviar Propina a Usuario",
-      "submit": "Enviar propina",
-      "confirmTitle": "Confirmar Propina",
-      "confirmDescription": "¿Estás seguro de que deseas enviar {{value.username}} {{value.amount}} tokens?",
-      "confirmSuccess": "Envieaste {{value.amount}} tokens a {{value.username}} de propina."
-    },
-    "earnModal": {
-      "title": "Invita amigos, gana tokens",
-      "description": "Comparte tu enlace de referencia y gana tokens GRATIS por cada amigo que se registre!"
-    },
-    "search": "Buscar emojis y GIFs",
-    "emoji": "Emojis",
-    "gifs": "GIFs",
-    "noResults": "No se encontraron resultados",
-    "mention": "Mencionar",
-    "reply": "Responder",
-    "block": "Bloquear",
-    "unblock": "Desbloquear",
-    "blockModal": {
-      "title": "Bloquear Usuario",
-      "description": "¿Estás seguro de que deseas bloquear a {{value.username}}?",
-      "confirmSuccess": "Has bloqueado a {{value.username}}."
-    },
-    "level": "Nivel {{level}}",
-    "paused": "Chat en pausa",
-    "notUserFound": "No se encontraron usuarios.",
-    "moderate": "Moderar"
-  },
   "notifications": {
     "title": "Notificaciones",
     "all": "Todas las notificaciones",
     "noNotifications": "No tienes notificaciones."
+  },
+  "selfExclusion": {
+   "suspended": "Tu cuenta está auto autoexcluida.",
+    "extension": {
+      "title": "Extender autoexclusión",
+      "message": "Para extender tu autoexclusión, haz clic en el botón de abajo.",
+      "buttonLabel": "Extender autoexclusión",
+      "modal": {
+        "longerBreak": "Si necesitas una pausa más larga, puedes extender tu autoexclusión. Una vez extendida, no podrás acceder a tu cuenta hasta que finalice.",
+        "withdrawBalance": "Mientras estés bloqueado de tu cuenta, no tendrás acceso a tu saldo del sitio. Debes retirar tu saldo antes de continuar.",
+        "withdrawBalanceConfirmation": "He retirado mi saldo",
+        "supportNotice": "El soporte no revertirá esto. Debes esperar a que tu autoexclusión finalice una vez que comience.",
+        "logoutNotice": "Serás desconectado de tu cuenta.",
+        "success": "Autoexclusión extendida. Has sido desconectado."
+      }
+    }
+  },
+  "404": {
+    "title": "Error",
+    "message": "Algo salió mal, por favor recarga la página.",
+    "reload": "Recargar página"
   }
 }

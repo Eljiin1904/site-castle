@@ -108,6 +108,9 @@
         "required": "Campaign ID is required.",
         "unavailable": "Campaign ID unavailable."
       }
+    },
+    "selfExclusion": {
+      "required": "Confirmation is required."
     }
   },
   "errors": {
@@ -194,7 +197,9 @@
     },
     "users": {
       "notFound": "User not found.",
-      "idRequired": "User id is required."
+      "idRequired": "User id is required.",
+      "lookupFailed": "User lookup failed.",
+      "alreadyExcluded": "You are already excluded."
     },
     "tiers": {
       "outOfRange": "Tier out of range."
@@ -209,6 +214,17 @@
     },
     "fairness": {
       "invalidClientSeed": "Invalid Client Seed"
+    },
+    "selfExclusion": {
+      "alreadyExcluded": "You are already excluded."
+    },
+    "banned": "Banned: {{value}}",
+    "tips": {
+      "tooManyRequests":"You are sending tips too often.",
+      "dailyLimit": "Tip would exceed your daily limit.",
+      "recipientNotFound": "Recipient not found.",
+      "tipYourself": "You cannot tip yourself.",
+      "recipientBlocked": "Recipient is not accepting tips."
     }
   }
 }

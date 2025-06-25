@@ -5,6 +5,7 @@ import { StatsWidgets } from "./StatsWidgets";
 import { WageredChart } from "./WageredChart";
 import { PnLChart } from "./PnLChart";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { StatsManager } from "./StatsManager";
 
 export const StatsBody = () => {
   
@@ -16,6 +17,7 @@ export const StatsBody = () => {
       column
       gap={40}
     >
+      <StatsManager />
       <StatsHeader/>
       <Div fx column gap={16}>
         {chartOption === 'wagered' && <WageredChart />}
