@@ -1,0 +1,132 @@
+{
+  "title": "Política AML",
+  "version": "Versión 1.0.0 - Última actualización: {{value.date}}",
+  "privacy": {
+    "heading": "Privacidad",
+    "paragraph1": "Introducción: Castle.com (“Compañía”) es operada por World54 Holdings Limited con oficina en 2118 Guava Street, Belama Phase 1, Ciudad de Belice, Belice, Distrito de Belice. Número de registro de la compañía 000037901.",
+    "paragraph2": "Objetivo de la Política AML: La Compañía busca ofrecer la mayor seguridad a todos los usuarios y clientes. Por esa razón, se utiliza un proceso de verificación de cuenta en varios pasos para identificar adecuadamente a los usuarios. La razón por la que se identifican los usuarios es para garantizar que los datos de la persona que abre y utiliza una cuenta identifiquen al usuario real y que los métodos de depósito utilizados no sean robados ni estén siendo utilizados por otra persona. Esto constituye el marco básico de las políticas de la Compañía contra el lavado de dinero. Los pasos descritos a continuación están diseñados para proporcionar una guía general sobre cómo la Compañía llevará a cabo su política AML utilizando información cada vez más detallada para la verificación de la identidad del cliente. La Compañía se reserva el derecho, a su exclusivo criterio, de escalar los requisitos de identificación solicitando documentos más detallados antes en el proceso o solicitando documentos adicionales no enumerados a continuación. El usuario deberá proporcionar todos esos documentos cuando la Compañía los solicite. Si el usuario no proporciona todos los documentos que la Compañía solicita, la Compañía puede prohibir, cancelar, bloquear o de otro modo restringir la cuenta del usuario hasta que el usuario proporcione los documentos o la Compañía termine su relación con el usuario. La Compañía implementa medidas razonables para controlar y limitar el riesgo de lavado de dinero, incluyendo la dedicación de los medios apropiados. La Compañía está comprometida con altos estándares de lucha contra el lavado de dinero (AML) de acuerdo con las directrices de la UE. La Compañía requiere que la gerencia y los empleados hagan cumplir estos estándares para prevenir el uso de sus servicios con fines de lavado de dinero.",
+    "paragraph3": "El programa AML de Castle.com está diseñado para cumplir con:",
+    "paragraph4": "UE: \"Directiva 2015/849 del Parlamento Europeo y del Consejo de 20 de mayo de 2015 sobre la prevención del uso del sistema financiero para fines de lavado de dinero\"",
+    "paragraph5": "UE: \"Reglamento 2015/847 sobre la información que acompaña a las transferencias de fondos\"",
+    "paragraph6": "UE: Varias regulaciones que imponen sanciones o medidas restrictivas contra personas y embargos sobre ciertos bienes y tecnologías, incluidos todos los bienes de doble uso",
+    "paragraph7": "BE: \"Ley del 18 de septiembre de 2017 sobre la prevención del lavado de dinero y la limitación del uso de efectivo\""
+  },
+  "moneyLaundering": {
+    "heading": "Definición de lavado de dinero",
+    "paragraph1": "El lavado de dinero se entiende como:",
+    "list": {
+      "item1": "La conversión o transferencia de bienes, especialmente dinero, sabiendo que dichos bienes provienen de actividades delictivas o de participar en dichas actividades, con el propósito de ocultar o disfrazar el origen ilegal de los bienes o de ayudar a cualquier persona involucrada en la comisión de dichas actividades a evadir las consecuencias legales de las acciones de esa persona o empresa;",
+      "item2": "La ocultación o el disfraz de la verdadera naturaleza, origen, ubicación, disposición, movimiento, derechos sobre, o propiedad de bienes, sabiendo que dichos bienes provienen de actividades delictivas o de un acto de participación en dichas actividades;",
+      "item3": "La adquisición, posesión o uso de bienes, sabiendo, en el momento de la recepción, que dichos bienes provienen de actividades delictivas o de asistir en dichas actividades;",
+      "item4": "La participación en, asociación para cometer, intentos de cometer y ayuda, instigación, facilitación y asesoramiento en la comisión de cualquiera de las acciones mencionadas anteriormente."
+    },
+    "paragraph2": "El lavado de dinero se considerará como tal incluso cuando las actividades que generaron los bienes a lavar se hayan llevado a cabo en el territorio de otro Estado miembro o en el de un tercer país."
+  },
+  "organization": {
+    "heading": "Organización de AML para Castle.com",
+    "paragraph1": "De acuerdo con cierta legislación AML, Castle.com ha designado el “nivel más alto” para la prevención del lavado de dinero: la gestión completa de World54 Holdings Limited está a cargo.",
+    "paragraph2": "Además, un AMLCO (Oficial de Cumplimiento de Lucha contra el Lavado de Dinero) está a cargo de la aplicación de la política y los procedimientos AML dentro de la Compañía.",
+    "paragraph3": "El AMLCO está bajo la responsabilidad directa de la Gerencia General."
+  },
+  "policyChanges": {
+    "heading": "Cambios en la política AML y requisitos de implementación",
+    "paragraph1": "Cada cambio importante en la política AML de Castle.com está sujeto a la aprobación de la gerencia general de World54 Holdings Limited y del AMLCO.",
+    "subheading1": "Verificación en varios pasos",
+    "step1": "Paso Uno:",
+    "step1Paragraph1": "Cada usuario debe proporcionar una dirección de correo electrónico para abrir una cuenta. Para depositar o retirar fondos, cada usuario debe verificar esa dirección de correo electrónico y proporcionar su: nombre, dirección, ocupación, fecha de nacimiento.",
+    "step1Paragraph2": "Cada depósito y retiro hacia y desde la Compañía es escaneado por el servicio analítico elegido por la Compañía. El servicio notifica a los empleados de la Compañía sobre posibles riesgos asociados con la billetera del usuario. Dependiendo de los resultados de esos escaneos, la Compañía puede escalar el proceso de verificación.",
+    "step2": "Paso Dos:",
+    "step2Paragraph1": "La Compañía se reserva el derecho de requerir la verificación del paso dos para depósitos y retiros por cualquier motivo, incluyendo, pero no limitado a, el monto y tamaño del depósito, la frecuencia de los depósitos, actividad sospechosa. Además, cualquier usuario cuya billetera de criptomonedas active el servicio de análisis blockchain de la Compañía deberá realizar este segundo paso de verificación. La Compañía también puede, a su exclusivo criterio, requerir que cualquier usuario realice el segundo paso de verificación por cualquier motivo. La verificación del paso dos guiará al usuario a través del proceso de verificación de identidad de la Compañía, que puede incluir, pero no se limita a, proporcionar a la Compañía: una foto de la identificación gubernamental del usuario o su equivalente, selfies para ser escaneados con IA, otra información similar.",
+    "step3": "Paso Tres:",
+    "step3Paragraph1": "Si los pasos anteriores alertan a la Compañía sobre preocupaciones adicionales, o a su discreción, se puede pedir al usuario que proporcione documentación adicional, que incluye, pero no se limita a: una factura de servicios públicos, prueba del origen de los fondos, etc."
+  },
+  "kyc": {
+    "heading": "Identificación y verificación del cliente (KYC)",
+    "paragraph1": "La identificación formal de los clientes es un elemento vital, tanto para las regulaciones relacionadas con el lavado de dinero como para la política KYC.",
+    "paragraph2": "Esta identificación se basa en seguir los pasos requeridos del servicio de verificación de identidad elegido por la Compañía y cualquier solicitud adicional realizada por la Compañía."
+  },
+  "proofIdentification": {
+    "heading": "Prueba de Identificación",
+    "paragraph1": "El servicio de verificación de identificación de la Compañía, como se describe anteriormente, puede solicitar una foto de un documento de identificación emitido por el gobierno junto con cualquier combinación de notas escritas a mano, selfies y números generados aleatoriamente."
+  },
+  "proofAddress": {
+    "heading": "Prueba de Dirección",
+    "paragraph1": "La prueba de dirección también se realizará a través del servicio de verificación de identificación de la Compañía y puede incluir: diferentes verificaciones electrónicas; examen manual; factura reciente de servicios públicos enviada a su dirección registrada, emitida dentro de los últimos 3 meses; un documento oficial emitido por el gobierno que pruebe su estado de residencia.",
+    "paragraph2": "Para que el proceso de aprobación sea lo más rápido posible, asegúrese de que el documento se envíe con una resolución clara donde las cuatro esquinas del documento sean visibles y todo el texto sea legible. Un empleado puede realizar verificaciones adicionales si es necesario, según la situación."
+  },
+  "sourceOfFunds": {
+    "heading": "Fuente de fondos",
+    "paragraph1": "Si se requiere que un usuario demuestre la fuente de los fondos, ejemplos de lo que se puede requerir son:",
+    "list": {
+      "item1": "Propiedad de un negocio",
+      "item2": "Empleo",
+      "item3": "Herencia",
+      "item4": "Inversión",
+      "item5": "Familia"
+    },
+    "paragraph2": "Es fundamental que el origen y la legitimidad de esa riqueza se comprendan claramente. Si esto no es posible, un empleado puede solicitar documentos adicionales u otra prueba.",
+    "paragraph3": "La Compañía también puede requerir que el usuario realice pagos a través de medios alternativos, como transferencia bancaria o crédito, para demostrar la veracidad de los estados financieros del usuario."
+  },
+  "risk": {
+    "heading": "Gestión de riesgos",
+    "paragraph1": "Además, las tecnologías de verificación de identidad y escaneo de billeteras de la Compañía continuarán buscando comportamientos inusuales y alertarán a los empleados apropiados de la Compañía.",
+    "paragraph2": "Mientras utiliza un enfoque basado en riesgos, también se pueden realizar revisiones manuales por parte de los empleados de la Compañía.",
+    "subheading1": "Evaluación de riesgos a nivel empresarial",
+    "paragraph3": "Como parte de su enfoque basado en riesgos, la Compañía ha realizado una \"Evaluación de riesgos a nivel empresarial\" (EWRA) para identificar y comprender los riesgos específicos de sus actividades comerciales. La política de riesgos AML se determina después de identificar y documentar los riesgos inherentes a su negocio, tales como: los servicios que ofrece el sitio web; los usuarios a quienes se ofrecen los servicios; las transacciones realizadas por los usuarios; los canales de entrega utilizados por el banco; las ubicaciones geográficas de las operaciones del banco, sus clientes y sus transacciones; otros riesgos cualitativos y emergentes.",
+    "paragraph4": "La EWRA se reevalúa anualmente."
+  },
+  "ongoing": {
+    "heading": "Monitoreo continuo de transacciones",
+    "paragraph1": "El cumplimiento de AML asegura que se realice un \"monitoreo continuo de transacciones\" para detectar transacciones que sean inusuales o sospechosas en comparación con el perfil del cliente. Este monitoreo de transacciones se realiza en múltiples niveles:",
+    "paragraph2": "1) La primera línea de control:",
+    "paragraph3": "La provisión, por parte del usuario, de declaraciones de nombre, fecha de nacimiento, ubicación y ocupación son la primera línea de control. Al depositar o retirar, las billeteras de criptomonedas se escanean en busca de actividad sospechosa. Al activarse una alerta o al depositar/retirar una cierta cantidad de dinero, se requiere más información. La Compañía también trabaja únicamente con Proveedores de Servicios de Pago confiables que tienen políticas AML efectivas para prevenir que la mayoría de los depósitos sospechosos en el sitio web de la Compañía se realicen sin la ejecución adecuada de los procedimientos KYC.",
+    "paragraph4": "2) La segunda línea de control:",
+    "paragraph5": "El escaneo continuo de todos los depósitos y retiros por parte de la Compañía crea oportunidades para abordar cualquier preocupación creciente. En caso de esas preocupaciones, la Compañía utiliza un servicio de verificación de identidad. Al usar el sitio web, el usuario acepta someterse a estos servicios. La Compañía se reserva el derecho de solicitar cualquier información adicional que, a su exclusivo criterio, sea necesaria o aconsejable.",
+    "paragraph6": "Además, todas las transacciones son supervisadas por empleados que están bajo la supervisión del oficial de cumplimiento de AML, quien a su vez está bajo la supervisión de la gerencia general.",
+    "paragraph7": "Las transacciones específicas enviadas al gerente de soporte al cliente, posiblemente a través de su Gerente de Cumplimiento, también están sujetas a la debida diligencia.",
+    "paragraph8": "La determinación de la naturaleza inusual de una o más transacciones a veces depende de una evaluación subjetiva del conocimiento del empleado sobre el cliente, el comportamiento financiero del cliente, las partes de la transacción.",
+    "paragraph9": "Estas verificaciones se realizarán primero mediante un sistema automatizado, mientras que un empleado puede realizar verificaciones manuales adicionales cuando sea necesario o aconsejable.",
+    "paragraph10": "3) Tercera línea de control:",
+    "paragraph11": "Las transacciones observadas en las cuentas de los clientes para las cuales es difícil obtener una comprensión adecuada de las actividades legales y el origen de los fondos pueden identificarse como un riesgo especial, deben considerarse rápidamente y se puede realizar un análisis adicional, incluidas verificaciones manuales.",
+    "paragraph12": "Todo el personal y los empleados de la Compañía informan a la división AML sobre cualquier transacción problemática que observen."
+  },
+  "reporting": {
+    "heading": "Reporte de transacciones sospechosas",
+    "paragraph1": "Se realizan informes a las autoridades correspondientes cuando lo exige la ley.",
+    "paragraph2": "Los informes de transacciones problemáticas se analizan dentro del equipo AML de acuerdo con los procedimientos internos.",
+    "paragraph3": "Dependiendo del resultado de este examen y sobre la base de la información recopilada, el equipo AML determinará la autoridad FIU apropiada a la que se debe realizar un informe y si debe terminar su relación con el usuario.",
+    "subheading1": "Procedimientos",
+    "paragraph4": "Las reglas AML, incluidos los estándares mínimos de KYC, se traducirán en orientación operativa o procedimientos que estarán disponibles para la Compañía y sus empleados."
+  },
+  "recordKeeping": {
+    "heading": "Mantenimiento de registros",
+    "paragraph1": "Los registros de los datos obtenidos con el propósito de identificación deben mantenerse durante al menos diez años después de que haya terminado la relación comercial.",
+    "paragraph2": "Los registros de todos los datos de transacciones deben mantenerse durante al menos diez años después de la realización de las transacciones o el final de la relación comercial.",
+    "paragraph3": "Estos datos se cifrarán y almacenarán de forma segura."
+  },
+  "training": {
+    "heading": "Capacitación",
+    "paragraph1": "Los empleados de la Compañía tomarán medidas manuales basadas en un enfoque de riesgo para el cual reciben capacitación especial.",
+    "paragraph2": "Como parte del programa de capacitación y concienciación:",
+    "list": {
+      "item1": "La Compañía requiere capacitación obligatoria en AML para sus empleados que participan en el proceso de transacciones de acuerdo con las últimas evoluciones regulatorias",
+      "item2": "El contenido de este programa de capacitación se ha adaptado para coincidir con las funciones de los empleados de la Compañía."
+    }
+  },
+  "auditing": {
+    "heading": "Auditoría",
+    "paragraph1": "Se realizan auditorías internas regularmente. Se elaboran informes sobre las actividades AML de forma regular."
+  },
+  "dataSecurity": {
+    "heading": "Seguridad de datos",
+    "paragraph1": "Todos los datos proporcionados por cualquier usuario/cliente se mantendrán seguros y no se venderán ni se entregarán. Solo bajo la compulsión de la ley, o para prevenir el lavado de dinero, los datos pueden compartirse con la autoridad AML necesaria.",
+    "paragraph2": "La Compañía seguirá todas las directrices y reglas de la directiva de protección de datos Directiva 95/46/CE."
+  },
+  "contactUs": {
+    "heading": "Contáctenos",
+    "paragraph1": "Si tiene alguna pregunta o inquietud sobre nuestra Política AML y KYC, contáctenos:",
+    "list": {
+      "item1": "Por correo electrónico: support@castle.com"
+    }
+  }
+}

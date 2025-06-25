@@ -1,0 +1,42 @@
+{
+  "title": "Responsible Gaming Policy",
+  "version": "Version 1.0.0 - Last Updated: {{value.date}}",
+  "paragraph1": "Castle.com is operated by World54 Holdings Limited having its office at 2118 Guava Street, Belama Phase , Belize City, Belize Registration number 000037901 (\"Company\", \"We\", \"Us\", or \"Our\"). We advise all players to read this Responsible Gambling and Self-Exclusion Policy.",
+  "responsibleGambling": {
+    "heading": "Responsible Gambling",
+    "item1": "We are here to provide an excellent and enjoyable gambling experience, and We provide the means to help you limit your activity on the website if you feel that your activity has become problematic. We advise all players to take into account the following, and not gamble irresponsibly:",
+    "list1": {
+      "item1": "Play for entertainment, not to make money.",
+      "item2": "Avoid chasing losses.",
+      "item3": "Establish limits for yourself in both time playing and in money spent.",
+      "item4": "Do not let gambling interfere with your daily responsibilities.",
+      "item5": "Do not gamble when you are: stressed; depressed; under too much pressure; under the influence of drugs, alcohol, or medication.",
+      "item6": "Never gamble unless you can cover losses.",
+      "item7": "Take breaks.",
+      "item8": "Have only one Account. Having more than one Account is also a breach of Our Terms and Conditions."
+    },
+    "item2": "See the below questions. If your answer to the majority of them is \"YES\", we advise you to take action to prevent gambling from negatively impacting your life:",
+    "list2": {
+      "item1": "Does gambling affect your work?",
+      "item2": "Has gambling caused arguments with family/friends?",
+      "item3": "Do you always return to win back your losses?",
+      "item4": "Have you borrowed money to gamble?",
+      "item5": "Do you see gambling as a source of income?",
+      "item6": "Do you find it difficult to limit your gambling?"
+    },
+    "item3": "You also can take a self-test:",
+    "item4": "You can find additional information about gambling addictions at:",
+    "item5": "You may also contact the following, or any other, organizations committed to helping people who struggle with gambling problems:"
+  },
+  "selfExclusion": {
+    "heading": "Self Exclusion",
+    "paragraph1": "If, at any time, you feel that your gambling has gotten out of control, you agree to navigate to the  <0>{{link1}}</0> and click <1>{{link2}}</1>.",
+    "paragraph2": "When you request Self Exclusion, you will receive an email to confirm. When you confirm, your account will be placed on a 24 hour cool down immediately. Your account will be put into restricted mode, and you will not be able to deposit, play with money, or chat during this 24 hour period. You will be permitted to withdraw the value of your account. We encourage you to withdraw the total value of your account during the 24 hour cool down whether or not you have made a decision on an extension. At the end of the cool down period, you will receive an email prompting you to extend your exclusion. You will automatically be able to play again as normal, but you can click the extension in that email at any time. The extension periods you may choose from are: one day, one week, one month, three months, an indefinite length of time. You must withdraw all of the value from your account before selecting any extension period, or you forfeit all of your deposits and winnings. Upon selecting an extension period, you will be immediately logged out and be unable to log back in for the duration of the ban. If you select the indefinite period, you will not be permitted to log back in for at least three months.",
+    "paragraph3": "When you request Self Exclusion, you will also be removed from the email list so that you do not receive promotional materials. You will not receive in-app notifications during any cool down or extension period."
+  },
+  "minorProtection": {
+    "heading": "Minor Protection",
+    "paragraph1": "To use Our website, you must be 18 years or older. To avoid abuse, all Users must keep their login data away from any person below the age of 18 to prevent such persons from accessing the website. Do not leave your device unattended when logged into your account to avoid access by unregistered users, including persons under 18.",
+    "paragraph2": "We also recommend a filter program to prevent persons below the age of 18, especially children, from accessing any content on the internet that is for adults only:"
+  }
+}
