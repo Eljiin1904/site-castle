@@ -19,6 +19,7 @@ export default Http.createApiRoute({
   body: Validation.object({
     platform: Validation.string().oneOf(["GPL_DESKTOP", "GPL_MOBILE"]).required(),
     game_code: Validation.string().required("Game code required"),
+    product_code: Validation.string().notRequired(),
   }),
   callback: async (req, res) => {
     const { platform, game_code } = req.body;
@@ -32,7 +33,7 @@ export default Http.createApiRoute({
     // await Site.validateKycTier(user, Validation.kycTiers.email);
 
     const payload = {
-      operator_id: operatorId,
+      operator_id: Number(operatorId),
     };
     // 2. Generate signature with Private Key
     const hubEightSignature = Security.sign(
@@ -59,7 +60,7 @@ export default Http.createApiRoute({
       token: token,
       sub_partner_id: "castle", // Confirm that we do not have a sub partner
       platform,
-      operator_id: operatorId,
+      operator_id: Number(operatorId),
       meta: {},
       lobby_url: `${config.siteAPI}/external`, // URL of Frontend home integration Page
       lang: "en", // -> Language
@@ -89,6 +90,7 @@ export default Http.createApiRoute({
         user: req.user.username,
         url: result.data.url,
       });
+      return;
     } catch (err: any) {
       logger.error(err);
     }
