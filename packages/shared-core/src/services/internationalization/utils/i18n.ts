@@ -34,6 +34,7 @@ const options: InitOptions = {
     "chat",
     'legal',
     'legal\\terms',
+    'legal\\privacy',
   ],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
