@@ -1,0 +1,42 @@
+{
+  "title": "Política de Juego Responsable",
+  "version": "Versión 1.0.0 - Última Actualización: {{value.date}}",
+  "paragraph1": "Castle.com es operado por World54 Holdings Limited con oficina en 2118 Guava Street, Belama Phase, Ciudad de Belice, Belice, número de registro 000037901 (\"Compañía\", \"Nosotros\", \"Nuestro\"). Recomendamos a todos los jugadores leer esta Política de Juego Responsable y Autoexclusión.",
+  "responsibleGambling": {
+    "heading": "Juego Responsable",
+    "item1": "Estamos aquí para proporcionar una experiencia de juego excelente y agradable, y ofrecemos los medios para ayudarte a limitar tu actividad en el sitio web si sientes que tu actividad se ha vuelto problemática. Recomendamos a todos los jugadores tener en cuenta lo siguiente y no jugar de manera irresponsable:",
+    "list1": {
+      "item1": "Juega por entretenimiento, no para ganar dinero.",
+      "item2": "Evita perseguir pérdidas.",
+      "item3": "Establece límites para ti mismo tanto en tiempo de juego como en dinero gastado.",
+      "item4": "No permitas que el juego interfiera con tus responsabilidades diarias.",
+      "item5": "No juegues cuando estés: estresado; deprimido; bajo demasiada presión; bajo la influencia de drogas, alcohol o medicamentos.",
+      "item6": "Nunca juegues a menos que puedas cubrir las pérdidas.",
+      "item7": "Toma descansos.",
+      "item8": "Ten solo una cuenta. Tener más de una cuenta también es una violación de nuestros Términos y Condiciones."
+    },
+    "item2": "Consulta las siguientes preguntas. Si tu respuesta a la mayoría de ellas es \"SÍ\", te recomendamos tomar medidas para evitar que el juego afecte negativamente tu vida:",
+    "list2": {
+      "item1": "¿El juego afecta tu trabajo?",
+      "item2": "¿El juego ha causado discusiones con familiares/amigos?",
+      "item3": "¿Siempre vuelves para recuperar tus pérdidas?",
+      "item4": "¿Has pedido dinero prestado para jugar?",
+      "item5": "¿Ves el juego como una fuente de ingresos?",
+      "item6": "¿Te resulta difícil limitar tu juego?"
+    },
+    "item3": "También puedes realizar una autoevaluación:",
+    "item4": "Puedes encontrar información adicional sobre adicciones al juego en:",
+    "item5": "También puedes contactar a las siguientes organizaciones, u otras, comprometidas a ayudar a personas con problemas de juego:"
+  },
+  "selfExclusion": {
+    "heading": "Autoexclusión",
+    "paragraph1": "Si, en algún momento, sientes que tu juego se ha salido de control, acepta navegar a <0>{{link1}}</0> y haz clic en <1>{{link2}}</1>.",
+    "paragraph2": "Cuando solicites la Autoexclusión, recibirás un correo electrónico para confirmar. Al confirmar, tu cuenta se colocará inmediatamente en un período de enfriamiento de 24 horas. Tu cuenta estará en modo restringido y no podrás depositar, jugar con dinero ni chatear durante este período de 24 horas. Se te permitirá retirar el valor de tu cuenta. Te animamos a retirar el valor total de tu cuenta durante el período de enfriamiento de 24 horas, independientemente de si has tomado una decisión sobre una extensión. Al final del período de enfriamiento, recibirás un correo electrónico que te pedirá extender tu exclusión. Automáticamente podrás jugar nuevamente como de costumbre, pero puedes hacer clic en la extensión en ese correo electrónico en cualquier momento. Los períodos de extensión que puedes elegir son: un día, una semana, un mes, tres meses, un período indefinido. Debes retirar todo el valor de tu cuenta antes de seleccionar cualquier período de extensión, o perderás todos tus depósitos y ganancias. Al seleccionar un período de extensión, se cerrará tu sesión inmediatamente y no podrás volver a iniciar sesión durante la duración del bloqueo. Si seleccionas el período indefinido, no se te permitirá iniciar sesión durante al menos tres meses.",
+    "paragraph3": "Cuando solicites la Autoexclusión, también serás eliminado de la lista de correos electrónicos para que no recibas materiales promocionales. No recibirás notificaciones en la aplicación durante ningún período de enfriamiento o extensión."
+  },
+  "minorProtection": {
+    "heading": "Protección de Menores",
+    "paragraph1": "Para usar nuestro sitio web, debes tener 18 años o más. Para evitar abusos, todos los usuarios deben mantener sus datos de inicio de sesión alejados de cualquier persona menor de 18 años para evitar que dichas personas accedan al sitio web. No dejes tu dispositivo desatendido cuando estés conectado a tu cuenta para evitar el acceso de usuarios no registrados, incluidos menores de 18 años.",
+    "paragraph2": "También recomendamos un programa de filtro para evitar que personas menores de 18 años, especialmente niños, accedan a cualquier contenido en internet destinado solo para adultos:"
+  }
+}

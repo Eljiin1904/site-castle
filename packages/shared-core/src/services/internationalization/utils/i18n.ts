@@ -35,6 +35,8 @@ const options: InitOptions = {
     'legal',
     'legal\\terms',
     'legal\\privacy',
+    'legal\\kyc',
+    'legal\\responsible',
   ],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],
