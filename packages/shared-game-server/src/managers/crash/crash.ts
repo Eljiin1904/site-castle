@@ -202,11 +202,11 @@ async function completeRound(round: CrashRoundDocument) {
     statusDate,
   });
 
-  const totalWins = await Database.collection("crash-tickets").countDocuments({
-    roundId: round._id,
-    processed: true,
-    won: true,
-  });
+  // const totalWins = await Database.collection("crash-tickets").countDocuments({
+  //   roundId: round._id,
+  //   processed: true,
+  //   won: true,
+  // });
 
   await Database.collection("crash-rounds").updateOne(
     { _id: round._id },
@@ -218,7 +218,7 @@ async function completeRound(round: CrashRoundDocument) {
         multiplier: round.multiplier,
         processed: true,
         processedDate: statusDate,
-        won: totalWins > 0,
+        won: round.multiplier >= 2, // Assuming a win is defined as multiplier >= 2
       },
     },
   );
