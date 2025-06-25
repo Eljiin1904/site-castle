@@ -1,7 +1,11 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { Database } from "@server/services/database";
-import { createTestUser, fetchWithCookie, handleLogin } from "../../testUtility";
+// Libraries
+import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import bcrypt from "bcrypt";
+// Services
+import { Database } from "@server/services/database";
+import { Dice } from "@server/services/dice";
+// Testing + setup utilities
+import { createTestUser, fetchWithCookie, handleLogin } from "../../testUtility";
 import config from "#app/config";
 
 const BASE_URL = config.siteAPI;
@@ -169,5 +173,87 @@ describe("Test Dice Game Route", () => {
     );
     const getTicketResult = await getUserResponse.json();
     expect(getTicketResult["error"]).toBe("Target value out of range.");
+  });
+
+  it("Post Dice Ticket - Wagers outside of the accepted range should retur a handled error", async () => {
+    const user = await Database.collection("users").findOne({ username: "tester2" });
+    if (!user) return;
+    const [sessionResponse, sessionCookie] = await handleLogin(
+      config.siteAPI,
+      {
+        username: user.username,
+        password: "password123",
+      },
+      hCaptchaToken,
+    );
+
+    const betAmount = 100;
+    const targetKind = "under";
+    const range = Dice.getTargetMinMax(targetKind);
+    let targetValue = range.max + 1;
+
+    let url = BASE_URL + "/dice/post-ticket";
+    let getUserResponse = await fetchWithCookie(
+      url,
+      "POST",
+      {
+        betAmount,
+        targetValue,
+        targetKind,
+      },
+      sessionCookie,
+    );
+    let getTicketResult = await getUserResponse.json();
+    expect(getUserResponse.status).toBe(400);
+    expect(getTicketResult["error"]).toEqual("Target value out of range.");
+
+    getUserResponse = await fetchWithCookie(
+      url,
+      "POST",
+      {
+        betAmount,
+        targetValue: range.min - 1,
+        targetKind,
+      },
+      sessionCookie,
+    );
+    getTicketResult = await getUserResponse.json();
+    expect(getUserResponse.status).toBe(400);
+    expect(getTicketResult["error"]).toEqual("Target value out of range.");
+  });
+
+  it("Post Dice Ticket - Profit excedding max profit should return a handled error", async () => {
+    const maxProfit = Dice.maxProfit;
+    const spyOnDiceService = vi.spyOn(Dice, "getProfit").mockReturnValueOnce(maxProfit + 0.01);
+    const user = await Database.collection("users").findOne({ username: "tester2" });
+    if (!user) return;
+    const [sessionResponse, sessionCookie] = await handleLogin(
+      config.siteAPI,
+      {
+        username: user.username,
+        password: "password123",
+      },
+      hCaptchaToken,
+    );
+
+    const betAmount = Dice.maxValue;
+    const targetKind = "under";
+    const range = Dice.getTargetMinMax(targetKind);
+    let targetValue = range.max;
+
+    let url = BASE_URL + "/dice/post-ticket";
+    let getUserResponse = await fetchWithCookie(
+      url,
+      "POST",
+      {
+        betAmount,
+        targetValue,
+        targetKind,
+      },
+      sessionCookie,
+    );
+    let getTicketResult = await getUserResponse.json();
+    expect(getUserResponse.status).toBe(400);
+    expect(getTicketResult["error"]).toEqual("Exceeds max profit.");
   });
 });
