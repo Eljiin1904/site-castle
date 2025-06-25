@@ -175,7 +175,7 @@ describe("Test Dice Game Route", () => {
     expect(getTicketResult["error"]).toBe("Target value out of range.");
   });
 
-  it("Post Dice Ticket - Wagers outside of the accepted range should retur a handled error", async () => {
+  it("Post Dice Ticket - Wagers outside of the accepted range should return a handled error", async () => {
     const user = await Database.collection("users").findOne({ username: "tester2" });
     if (!user) return;
     const [sessionResponse, sessionCookie] = await handleLogin(
