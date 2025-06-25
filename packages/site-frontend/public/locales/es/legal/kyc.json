@@ -1,0 +1,32 @@
+{
+  "title": "Política de KYC",
+  "version": "Versión 1.0.0 - Última Actualización: {{value.date}}",
+  "paragraph1": "La Compañía se adhiere y cumple con los principios de \"Conozca a su cliente\", que tienen como objetivo prevenir el crimen financiero y el lavado de dinero mediante la identificación y diligencia debida del cliente.",
+  "paragraph2": "La Compañía se reserva el derecho, en cualquier momento, de solicitar cualquier documentación KYC que considere necesaria para determinar la identidad y ubicación de un usuario. Nos reservamos el derecho de restringir el servicio, pago o retiro hasta que la identidad sea suficientemente determinada, o por cualquier otra razón a nuestra entera discreción.",
+  "paragraph3": "Todos los clientes deben verificar su dirección de correo electrónico para abrir una cuenta. Para realizar un depósito, todos los clientes deben proporcionar su nombre, dirección, ocupación y fecha de nacimiento. Si la actividad del cliente alerta alguno de nuestros parámetros de monitoreo, el cliente debe completar las actividades requeridas por nuestro servicio de verificación de identidad. Los documentos que el servicio de verificación de identidad puede requerir incluyen, pero no se limitan a: identificación emitida por el gobierno, selfies para ser escaneados por IA. Podemos requerir documentación adicional para revisión manual, como: prueba de dirección, que incluye, entre otros, una factura de servicios públicos; prueba de fondos, que incluye, entre otros, un estado de cuenta bancaria o un cheque de pago.",
+  "guideline": {
+    "heading": "Guía para el \"Proceso de KYC\"",
+    "item1": "Prueba de Identidad",
+    "list1": {
+      "item1": "La firma está presente.",
+      "item2": "El país no es uno de los Países Restringidos, consulte los Términos y Condiciones para la lista de países."
+    },
+    "item2": "Prueba de Residencia",
+    "list2": {
+      "item1": "Estado de cuenta bancaria o factura de servicios públicos.",
+      "item2": "El país no es uno de los Países Restringidos, consulte los Términos y Condiciones para la lista de países.",
+      "item3": "El nombre completo coincide con el nombre del cliente y es el mismo que en la prueba de identidad.",
+      "item4": "La fecha de emisión es dentro de los últimos 3 meses."
+    },
+    "item3": "Selfie con Identificación",
+    "list3": {
+      "item1": "El titular es el mismo que en el documento de identificación.",
+      "item2": "El documento de identificación se usa de manera consistente; la foto y el número de identificación son los mismos."
+    }
+  },
+  "notes": {
+    "heading": "Notas sobre el \"Proceso de KYC\"",
+    "note1": "Cuando el proceso de KYC no tiene éxito, la razón se documenta y se escala.",
+    "note2": "Una vez que se proporcionen todos los documentos adecuados y se consideren satisfactorios, la cuenta será aprobada."
+  }
+}
