@@ -6,11 +6,13 @@ export type OrderedListProps = Omit<BoxProps<"ol">, "as" | "children"> & {
   type?: "a" | "i" | "1" | "A" | "I";
   items: string[];
   itemSize?: Unit;
+  start?: number;
 };
 
 export const OrderedList: FC<OrderedListProps> = ({
   type,
   itemSize = 14,
+  start = 1,
   items,
   ...forwardProps
 }) => {
@@ -20,6 +22,7 @@ export const OrderedList: FC<OrderedListProps> = ({
       type={type}
       column
       gap={20}
+      start={start}
       {...forwardProps}
     >
       {items.map((x, i) => (
