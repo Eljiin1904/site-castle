@@ -17,7 +17,6 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 tests-examples/
-__tests__/
 playwright.config.ts
 playwright/.auth
 tests
