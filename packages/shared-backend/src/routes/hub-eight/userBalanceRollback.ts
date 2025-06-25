@@ -76,7 +76,7 @@ export default Http.createApiRoute({
     // 3. Check for previous roll back
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      transactionUUID: reference_transaction_uuid,
+      transactionUUID: transaction_uuid,
     });
 
     if (previousRollbackTransaction) {

@@ -16,7 +16,7 @@ export default Http.createApiRoute({
     // 1. Get Operator ID and KEy from env
     const { operatorId, hub88PrivateKey, hubEightApiURL } = config;
     const payload = {
-      operator_id: operatorId,
+      operator_id: Number(operatorId),
     };
     // 2. Generate signature with Private Key
     const hubEightSignature = Security.sign(

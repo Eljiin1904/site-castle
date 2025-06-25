@@ -37,6 +37,11 @@ export default Http.createApiRoute({
       formattedDate = date.toISOString().split("T")[0];
     }
 
+    const formattedDob =
+      userInfo?.kyc.dob?.year && userInfo?.kyc.dob?.month && userInfo?.kyc.dob?.day
+        ? `${userInfo?.kyc.dob?.year}-${String(userInfo?.kyc.dob?.month).padStart(2, "0")}-${String(userInfo?.kyc.dob?.day).padStart(2, "0")}`
+        : "";
+
     // 3. Return User Balance
     res.json({
       user: userInfo?.username,
@@ -45,11 +50,11 @@ export default Http.createApiRoute({
       country: userInfo?.kyc.country?.code, // Make sure proper Country code sent
       jurisdiction: "MGA", // What?
       sub_partner_id: "castle", // What?
-      birth_date: `${userInfo?.kyc.dob?.year}-${userInfo?.kyc.dob?.month}-${userInfo?.kyc.dob?.day}`, // Make sure values present, proper kyc tier
+      birth_date: formattedDob, // Make sure values present, proper kyc tier
       registration_date: formattedDate,
       tags: userInfo.tags,
       sex: "MALE", // We do not currently accept this,
-      affiliate_id: userInfo.referral?.campaignId,
+      affiliate_id: userInfo.referral?.campaignId ?? "",
     });
   },
 });
