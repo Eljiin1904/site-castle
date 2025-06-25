@@ -295,18 +295,18 @@ interface HubEightCreditData {
   kind: "hub-eight-credit";
   transactionUUID: string;
   supplierTransactionId: string;
-  supplierUser?: string;
-  roundClosed?: boolean;
-  round?: string;
-  rewardUUID?: string;
+  supplierUser?: string | null;
+  roundClosed?: boolean | null;
+  round?: string | null;
+  rewardUUID?: string | null;
   requestUUID: string;
   referenceTransactionUUID: string;
-  isFree?: boolean;
-  isSupplierPromo?: string;
-  isAggregated?: boolean;
+  isFree?: boolean | null;
+  isSupplierPromo?: boolean | null;
+  isAggregated?: boolean | null;
   gameCode: string;
   currency: string;
-  betData?: string; // Hub88 -> bet field
+  betData?: string | null; // Hub88 -> bet field
   amount: number;
   meta?: object | null;
 }
@@ -315,8 +315,8 @@ interface HubEightDebitData {
   kind: "hub-eight-debit";
   transactionUUID: string;
   supplierTransactionId: string;
-  roundClosed: boolean;
-  round: string;
+  roundClosed: boolean | null;
+  round: string | null;
   requestUUID: string;
   gameCode: string;
   amount: number;

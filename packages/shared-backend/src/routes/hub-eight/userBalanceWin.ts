@@ -10,6 +10,7 @@ import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
 
 const logger = getServerLogger({});
+const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
 // TODO -> Create a Hub88
 // TODO add Flag for process with Private Key
@@ -17,27 +18,31 @@ export default Http.createApiRoute({
   type: "post",
   path: "/transaction/win",
   secure: false,
-  transaction: true,
+  transaction: false,
+  externalTransaction: true,
+  externalTransactionType: "hub-eight",
   body: Validation.object({
     user: Validation.username().min(3).required("User is required."),
     transaction_uuid: Validation.string().uuid().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Supplier Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    supplied_user: Validation.string().optional(),
-    round_closed: Validation.boolean().optional(),
-    round: Validation.string().optional(),
-    reward_uuid: Validation.string().uuid().optional(),
+    supplied_user: Validation.string().nullable().notRequired(),
+    round_closed: Validation.boolean().nullable().notRequired(),
+    round: Validation.string().nullable().notRequired(),
+    reward_uuid: Validation.string().uuid().nullable().notRequired(),
     request_uuid: Validation.string().uuid().required("Request UUID is required."),
 
     reference_transaction_uuid: Validation.string().required("Reference Transaction UUID required"),
-    is_free: Validation.boolean().optional(),
-    is_supplier_promo: Validation.string().optional(),
-    is_aggregated: Validation.boolean().optional(),
+    is_free: Validation.boolean().nullable().required("is Free is required"),
+    is_supplier_promo: Validation.boolean().optional(),
+    is_aggregated: Validation.boolean().nullable().notRequired(),
     game_code: Validation.string().required("Game Code required"),
-    currency: Validation.string().required("Is Free Field Required"), // Convert to array to check for currency
-    bet: Validation.string().optional(),
+    currency: Validation.string()
+      .oneOf(supportedCurrencies, "Unsupported currency")
+      .required("Currency is required"),
+    bet: Validation.string().nullable().required("Bet Field Required"),
     amount: Validation.number().required("Amount Required"),
-    meta: Validation.object().optional(),
+    meta: Validation.object().nullable().notRequired(),
   }),
   callback: async (req, res) => {
     const {
@@ -64,25 +69,58 @@ export default Http.createApiRoute({
     const options: any = {};
 
     // 1. Validate Signature Header
-    const retreivedSignature = req.headers["X-Hub88-Signature"];
-    if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    // const retreivedSignature = req.headers["X-Hub88-Signature"];
+    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
 
     // 2. Validate Token
-    const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
-    if (!userDetails) throw new Error("RS_ERROR_INVALID_TOKEN");
-    options.username = userDetails.username;
+    try {
+      const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
+      if (!userDetails) {
+        res.status(200).json({
+          status: "RS_ERROR_INVALID_TOKEN",
+          request_uuid: request_uuid,
+        });
+        return;
+      }
+      options.username = userDetails.username;
+    } catch (err: any) {
+      logger.error(err);
+      res.status(200).json({ status: err.message, request_uuid: request_uuid });
+    }
 
     const userInfo = await Database.collection("users").findOne(options);
-    if (!userInfo) throw new Error("User not found");
+    if (!userInfo) {
+      res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER", request_uuid: request_uuid });
+      return;
+    }
 
-    // 3. Credit the Win Amount
+    // 3. Check if bet was Made
+    const betTransaction = await Database.collection("transactions").findOne({
+      kind: "hub-eight-debit",
+      transactionUUID: reference_transaction_uuid,
+    });
+
+    if (!betTransaction) {
+      res.status(200).json({
+        status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
+        request_uuid: request_uuid,
+        user: userInfo?.username,
+      });
+      return;
+    }
+    // 4. Credit the Win Amount
     const transaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-credit",
       transactionUUID: transaction_uuid,
     });
 
     try {
-      if (transaction) throw new Error("RS_ERROR_DUPLICATE_TRANSACTION");
+      if (transaction) {
+        res
+          .status(200)
+          .json({ status: "RS_OK", request_uuid: request_uuid, user: userInfo?.username });
+        return;
+      }
 
       await Transactions.createTransaction({
         kind: "hub-eight-credit",
@@ -113,13 +151,19 @@ export default Http.createApiRoute({
         currency: "USD", // Do I always default to USD?
         balance: userInfo?.tokenBalance, // IS token balance USD?????
       });
+      return;
     } catch (err: any) {
       logger.error(err);
       if (err.message in hubStatus) {
-        throw new Error(err.message);
+        res
+          .status(200)
+          .json({ status: err.message, request_uuid: request_uuid, user: userInfo?.username });
+        return;
       }
 
-      throw new Error("RS_ERROR_UNKNOWN");
+      res
+        .status(200)
+        .json({ status: "RS_ERROR_UNKNOWN", request_uuid: request_uuid, user: userInfo?.username });
     }
   },
 });
