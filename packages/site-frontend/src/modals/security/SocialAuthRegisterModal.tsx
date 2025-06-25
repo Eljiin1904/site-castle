@@ -186,7 +186,7 @@ export const SocialAuthRegisterModal = ({
                     : undefined
                 }
                 value={form.values.username}
-                setError={(x) => form.setError("username", { key: x || "" })}
+                setError={(x) => form.setError("username", { key: x?.key || "", value: x?.value || "" })}
                 onChange={(x) => form.setValue("username", x)}
               />
             </ModalSection>

@@ -92,7 +92,7 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
             disabled={form.loading}
             error={form.errors.username?.key ? t(`${form.errors.username.key}`, {value: form.errors.username.value}) : undefined}
             value={form.values.username}
-            setError={(x) => form.setError("username", { key: x || "" })}
+            setError={(x) => form.setError("username", { key: x?.key || "", value: x?.value || "" })}
             onChange={(x) => form.setValue("username", x)}
           />
         </ModalSection>

@@ -91,7 +91,7 @@ export const AffiliateNewCampaignModal = () => {
               disabled={form.loading}
               error={form.errors.campaignId?.key ? t("validations:"+form.errors.campaignId.key, { value: form.errors.campaignId.value }): undefined}
               value={form.values.campaignId}
-              setError={(x) => form.setError("campaignId", { key: x || "" })}
+              setError={(x) => form.setError("campaignId", { key: x?.key || "", value: x?.value || "" })}
               onChange={(x) => form.setValue("campaignId", x)}
             />
           </ModalSection>
