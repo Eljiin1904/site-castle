@@ -42,9 +42,9 @@ export const AuthenticatorRecoverModal = (props: {
         heading={t("account:settings.authenticator.recoveryModal.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Form form={form}>
-          <ModalSection borderTop borderColor="brown-4" pt={24}>
+          <ModalSection>
             <NoticeCard
               kind="info"
               message={t("account:settings.authenticator.recoveryModal.description")}

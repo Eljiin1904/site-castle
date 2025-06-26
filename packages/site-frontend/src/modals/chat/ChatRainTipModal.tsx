@@ -57,7 +57,7 @@ export const ChatRainTipModal = () => {
         onCloseClick={() => Dialogs.close("primary")}
         noBorder
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Form form={form}>
           <ModalSection>
             <ModalLabel>{t('fields:tip.amount')}</ModalLabel>

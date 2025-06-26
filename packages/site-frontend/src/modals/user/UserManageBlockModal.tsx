@@ -30,13 +30,14 @@ export const UserManageBlockModal = () => {
       <ModalHeader
         heading= {t("blockedUsers")}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
       <Div
         fx
         column
         gap={small ? 20: 32}
         px={small ? 20: 32}
-        py={small ? 20: 32}
+        pb={small ? 20: 32}
       >
         {users.length === 0 && (
           <Div

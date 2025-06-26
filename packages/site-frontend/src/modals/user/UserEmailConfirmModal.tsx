@@ -50,9 +50,9 @@ export const UserEmailConfirmModal = ({
         heading={t("register.confirm.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Form form={form}>
-          <ModalSection borderTop  borderColor="brown-4" pt={24}>
+          <ModalSection>
             <NoticeCard
               kind="success"
               message={t("register.confirm.codeSent")}

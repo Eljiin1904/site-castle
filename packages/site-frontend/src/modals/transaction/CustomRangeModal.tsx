@@ -34,8 +34,8 @@ export const CustomRangeModal = () => {
         heading={t("stats.dateranges.custom")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0} overflow="visible">
-        <ModalSection borderTop borderColor="brown-4" pt={24}>
+      <ModalBody overflow="visible">
+        <ModalSection>
           <ModalLabel>{"Start Date"}</ModalLabel>
           <Div fx  gap={16}>
           <Input

@@ -29,7 +29,7 @@ export const AuthenticatorCodeForm = ({
   const {t} = useTranslation(["validations"]);
   return (
     <Form form={form}>
-      <ModalSection borderTop borderColor="brown-4" pt={24}>
+      <ModalSection>
         <ModalLabel>
           {t("fields:auth.field")}
           <Link

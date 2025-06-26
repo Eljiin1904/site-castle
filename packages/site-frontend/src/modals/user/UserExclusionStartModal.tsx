@@ -35,9 +35,9 @@ export const UserExclusionStartModal = () => {
         heading={t("account:settings.selfExclusion.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Form form={form}>
-          <ModalSection borderTop borderColor="brown-4" pt={24}>
+          <ModalSection>
             <Paragraph>
               {t("account:settings.selfExclusion.modal.description1")}
             </Paragraph>
