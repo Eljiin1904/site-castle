@@ -119,6 +119,16 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
     if (hubSecret.SecretString) {
       config.hub88PrivateKey = hubSecret.SecretString;
     }
+
+    const hubPublicKey = await client.send(
+      new GetSecretValueCommand({
+        SecretId: `castle-hub88-public-${env}`,
+      }),
+    );
+
+    if (hubPublicKey.SecretString) {
+      config.hubEightPublicKey = hubPublicKey.SecretString;
+    }
   } catch (e) {
     console.error("ConfigManager.init failed.");
     throw e; // let the process die

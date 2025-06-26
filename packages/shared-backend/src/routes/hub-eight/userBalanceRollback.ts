@@ -76,7 +76,7 @@ export default Http.createApiRoute({
     // 3. Check for previous roll back
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      transactionUUID: transaction_uuid,
+      referenceTransactionUUID: reference_transaction_uuid,
     });
 
     if (previousRollbackTransaction) {
@@ -89,6 +89,7 @@ export default Http.createApiRoute({
     }
     // 4. Credit the Previous Bet Amount
     const transaction = await Database.collection("transactions").findOne({
+      kind: "hub-eight-debit",
       transactionUUID: reference_transaction_uuid,
     });
 
