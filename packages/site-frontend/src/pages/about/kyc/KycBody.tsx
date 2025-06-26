@@ -9,7 +9,7 @@ import { Fragment } from "react";
 
 export const KycBody = () => {
 
- const { t } = useTranslation(["legal//kyc"]);
+ const { t } = useTranslation(["legal\\kyc"]);
  const small = useIsMobileLayout();
   return (
     <Fragment>
@@ -28,7 +28,7 @@ export const KycBody = () => {
 };
 
 const IntroSection = () => {
-  const { t } = useTranslation(["legal//kyc"]);
+  const { t } = useTranslation(["legal\\kyc"]);
   return (<LegalSection>
     <Paragraph>{t('paragraph1')}</Paragraph>
     <Paragraph>{t('paragraph2')}</Paragraph>
@@ -36,7 +36,7 @@ const IntroSection = () => {
   </LegalSection>);
 };
 const GuidelineSection = () => {
-  const { t } = useTranslation(["legal//kyc"]);
+  const { t } = useTranslation(["legal\\kyc"]);
   return (<LegalSection heading={t('guideline.heading')}>
    <Div fx column gap={8}>
     <OrderedList items={[t('guideline.item1')]}/>
@@ -69,7 +69,7 @@ const GuidelineSection = () => {
   </LegalSection>);
 };
 const NotesSection = () => {
-  const { t } = useTranslation(["legal//kyc"]);
+  const { t } = useTranslation(["legal\\kyc"]);
   return (<LegalSection heading={t('notes.heading')}>
     <OrderedList items={[
       t('notes.note1'),

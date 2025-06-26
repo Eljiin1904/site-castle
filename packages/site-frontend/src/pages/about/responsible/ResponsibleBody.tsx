@@ -10,7 +10,7 @@ import { Fragment } from "react";
 
 export const ResponsibleBody = () => {
 
-  const { t } = useTranslation(["legal//responsible"]);
+  const { t } = useTranslation(["legal\\responsible"]);
   const small = useIsMobileLayout();
    return (
      <Fragment>
@@ -30,7 +30,7 @@ export const ResponsibleBody = () => {
  };
  
  const ResponsibleSection = () => {
-   const { t } = useTranslation(["legal//responsible"]);
+   const { t } = useTranslation(["legal\\responsible"]);
    return (<LegalSection heading={t('responsibleGambling.heading')}>
      <Div fx column gap={8}>
       <Paragraph>{t('responsibleGambling.item1')}</Paragraph>
@@ -108,13 +108,13 @@ export const ResponsibleBody = () => {
    </LegalSection>);
  };
  const SelfExclusionSection = () => {
-   const { t } = useTranslation(["legal//responsible"]);
+   const { t } = useTranslation(["legal\\responsible","account"]);
    return (<LegalSection heading={t('selfExclusion.heading')}>
       <Paragraph>
       {
         //@ts-ignore
         <Trans
-        i18nKey="legal//responsible:selfExclusion.paragraph1"
+        i18nKey="legal\responsible:selfExclusion.paragraph1"
         values={{ link1: t("account:settings.title"),link2: t("account:settings.selfExclusion.title") }}
         components={[
           <Link
@@ -140,7 +140,7 @@ export const ResponsibleBody = () => {
    </LegalSection>);
  };
  const MinorSection = () => {
-  const { t } = useTranslation(["legal//responsible"]);
+  const { t } = useTranslation(["legal\\responsible"]);
   return (<LegalSection heading={t('minorProtection.heading')}>
      <Paragraph>{t('minorProtection.paragraph1')}</Paragraph>
      <Paragraph>{t('minorProtection.paragraph2')}</Paragraph>

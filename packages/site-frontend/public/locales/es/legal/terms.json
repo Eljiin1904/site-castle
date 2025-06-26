@@ -1,18 +1,18 @@
 {
   "title": "Condiciones y Términos de Uso",
   "version": "Versión 1.0 - Última actualización: {{value.date}}",
-  "intruduction": {
-    "title": "Introducción",
+  "introduction": {
+    "heading": "Introducción",
     "paragraph1": "Estos términos y condiciones y los documentos referidos a continuación (los \"Términos\") se aplican al uso del sitio web actual (el \"Sitio Web\") y sus servicios relacionados o conectados (colectivamente, el \"Servicio\").",
     "paragraph2": "Debe revisar cuidadosamente estos Términos, ya que contienen información importante sobre sus derechos y obligaciones con respecto al uso del Sitio Web y constituyen un acuerdo legal vinculante entre usted, nuestro cliente (el \"Cliente\"), y nosotros. Al utilizar este Sitio Web y/o acceder al Servicio, usted, ya sea como invitado o como usuario registrado con una cuenta (\"Cuenta\"), acepta estar sujeto a estos Términos, junto con cualquier enmienda que pueda publicarse de vez en cuando. Si no acepta estos Términos, debe abstenerse de acceder al Servicio y utilizar el Sitio Web.",
     "paragraph3": "El Servicio es propiedad de World54 Holdings Limited, una empresa de responsabilidad limitada registrada en Belice con el número de registro de empresa 000037901, con dirección registrada en 2118 Guava Street, Belama Phase 1, Belize City, Belice, Distrito de Belice (\"Compañía\"), licenciada en el Estado Autónomo de Anjouan bajo la Ley de Licencias de Juegos por Computadora 007 de 2005."
   },
   "generalTerms": {
-    "title": "Términos Generales",
+    "heading": "Términos Generales",
     "paragraph1": "Nos reservamos el derecho de revisar y enmendar los Términos (incluidos los documentos referidos y vinculados a continuación) en cualquier momento. Debe visitar esta página periódicamente para revisar los Términos y Condiciones. Las enmiendas serán vinculantes y efectivas inmediatamente después de su publicación en este Sitio Web. Si se opone a dichos cambios, debe dejar de usar inmediatamente el Servicio. Su uso continuado del Sitio Web tras dicha publicación indicará su acuerdo a estar sujeto a los Términos enmendados. Cualquier apuesta no resuelta antes de que entren en vigor los Términos modificados estará sujeta a los Términos preexistentes."
   },
   "obligations": {
-    "title": "Sus Obligaciones",
+    "heading": "Sus Obligaciones",
     "paragraph1": "Usted reconoce que en todo momento al acceder al Sitio Web y utilizar el Servicio:",
     "list": {
       "item1": "Tiene más de 18 años, o la edad legal a la que se permiten las actividades de apuestas o juegos según la ley o jurisdicción que le sea aplicable. Nos reservamos el derecho de solicitarle documentos que prueben su edad en cualquier momento.",
@@ -31,7 +31,7 @@
     }
   },
   "restrictedUse": {
-    "title": "Uso Restringido",
+    "heading": "Uso Restringido",
     "paragraph1": "Usted no debe utilizar el Servicio:",
     "list": {
       "item1": "Si es menor de 18 años (o por debajo de la edad de mayoría según las leyes de la jurisdicción que le sea aplicable) o si no tiene capacidad legal para celebrar un acuerdo legal vinculante con nosotros o está actuando como agente de, o en nombre, de una persona menor de 18 años (o por debajo de la edad de mayoría según las leyes de la jurisdicción que le sea aplicable);",
