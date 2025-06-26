@@ -34,7 +34,7 @@ export const DefaultReferral = () => {
     <Div fx bg={`black-hover`} gap={small ? 16: 24} p={small ? 20: 24} column={small}>
       <ModalSection>
         <ModalLabel>{t('referralCode')}</ModalLabel>
-        <ModalCopyField color="light-sand" fontSize={12} text={campaign.campaignId} />
+        <ModalCopyField color="light-sand" text={campaign.campaignId} />
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t('referralLink')}</ModalLabel>

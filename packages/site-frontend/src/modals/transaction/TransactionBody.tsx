@@ -94,7 +94,7 @@ export const TransactionBody = ({
       )}
       {tx.kind === "tip-send" && (
         <ModalSection>
-          <ModalLabel>{t('transactions.modal.inputs.tips.sendTo')}</ModalLabel>
+          <ModalLabel>{t('transactions.modal.inputs.tips.sentTo')}</ModalLabel>
           <ModalField>{tx.receiver.name}</ModalField>
         </ModalSection>
       )}

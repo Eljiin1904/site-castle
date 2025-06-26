@@ -69,15 +69,15 @@ export const FairnessDoubleModal = ({ result }: { result: DoubleResult }) => {
         </Div>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.roundId')}</ModalLabel>
-          <ModalCopyField text={result.roundId} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.roundId} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.eosBlockId')}</ModalLabel>
-          <ModalCopyField text={result.eosBlockId} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.eosBlockId} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-          <ModalCopyField text={result.serverSeed} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.serverSeed} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>
