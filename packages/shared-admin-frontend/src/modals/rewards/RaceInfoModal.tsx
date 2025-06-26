@@ -84,14 +84,14 @@ export const RaceInfoModal = ({ race }: { race: RaceDocument }) => {
             >
               <Span
                 size={13}
-                color="gold"
+                color="sand"
               >
                 {"Copy to New"}
               </Span>
               <Vector
                 as={SvgCopy}
                 size={14}
-                color="gold"
+                color="sand"
               />
             </Div>
           </Div>

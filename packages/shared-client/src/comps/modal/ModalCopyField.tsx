@@ -14,12 +14,14 @@ export const ModalCopyField: FC<ModalCopyFieldProps> = ({
   ...forwardProps
 }) => {
   const {size, ...spanProps} = forwardProps;
+  const fontSize =  size === "lg" ? 14 : 12;
+  const lineHeight = size === "lg" ? 20 : 16;
   return (
     <ModalField
       justify="space-between"
       size={size}
     >
-      <Span textOverflow="ellipsis" {...spanProps}>{text}</Span>
+      <Span textOverflow="ellipsis" fontSize={fontSize} lineHeight={lineHeight} {...spanProps}>{text}</Span>
       <Vector
         as={SvgCopy}
         size={14}

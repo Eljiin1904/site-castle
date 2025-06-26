@@ -25,7 +25,6 @@ export const AffiliateHowItWorksModal = () => {
         headerContent={ <Paragraph mt={small ? 16: 24}>
          {t("howItWorks.modal.description")}
         </Paragraph>}
-        noBorder
       />
       <ModalBody>
         <Div fx column gap={small ? 20: 32}>

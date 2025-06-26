@@ -66,11 +66,11 @@ export const FairnessCrashModal = ({ result }: { result: CrashResult }) => {
         </Div>       
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverHash')}</ModalLabel>
-          <ModalCopyField text={result.serverHash} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.serverHash} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.clientHash')}</ModalLabel>
-          <ModalCopyField text={result.clientHash} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.clientHash} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>

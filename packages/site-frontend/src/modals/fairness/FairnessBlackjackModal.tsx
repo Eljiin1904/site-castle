@@ -65,7 +65,7 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
         >
           <ModalSection>
             <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
-            <ModalCopyField text={result.clientSeed} color="light-sand" fontSize={12} lineHeight={16}/>
+            <ModalCopyField text={result.clientSeed} color="light-sand"/>
           </ModalSection>
         </Div>
         <Div
@@ -74,7 +74,7 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
         >
           <ModalSection>
             <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-            <ModalCopyField color={result.serverSeed ? 'light-sand': 'sand'} text={result.serverSeed || result.serverSeedHashed} fontSize={12} lineHeight={16} />
+            <ModalCopyField color={result.serverSeed ? 'light-sand': 'sand'} text={result.serverSeed || result.serverSeedHashed} />
           </ModalSection>
         </Div>
         <Div
@@ -83,11 +83,11 @@ export const FairnessBlackjackModal = ({ result }: { result: BlackjackFairnessRe
         >
           <ModalSection>
             <ModalLabel>{t('transactions.headers.nonce')}</ModalLabel>
-            <ModalCopyField text={result.nonce.toString()} color="light-sand" fontSize={12} lineHeight={16}/>
+            <ModalCopyField text={result.nonce.toString()} color="light-sand"/>
           </ModalSection>
           <ModalSection>
             <ModalLabel>{t('transactions.headers.step')}</ModalLabel>
-            <ModalCopyField text={result.step.toString()} color="light-sand" fontSize={12} lineHeight={16}/>
+            <ModalCopyField text={result.step.toString()} color="light-sand"/>
           </ModalSection>
         </Div>
       </ModalBody>
