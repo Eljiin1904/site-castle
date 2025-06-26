@@ -11,7 +11,7 @@ import { Fragment } from "react";
 
 export const AmlBody = () => {
 
- const { t } = useTranslation(["legal//aml"]);
+ const { t } = useTranslation(["legal\\aml"]);
  const small = useIsMobileLayout();
   return (
     <Fragment>
@@ -49,7 +49,7 @@ export const AmlBody = () => {
 };
 
 const MoneyLaunderingSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('moneyLaundering.heading')}>
     <Paragraph>{t('moneyLaundering.paragraph1')}</Paragraph>
     <UnorderedList items={[
@@ -63,7 +63,7 @@ const MoneyLaunderingSection = () => {
   </LegalSection>);
 };
 const OrganizationSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('organization.heading')}>
     <Paragraph>{t('organization.paragraph1')}</Paragraph>
     <Paragraph>{t('organization.paragraph2')}</Paragraph>
@@ -71,7 +71,7 @@ const OrganizationSection = () => {
   </LegalSection>);
 };
 const PolicyChangesSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('policyChanges.heading')}>
     <Paragraph>{t('policyChanges.paragraph1')}</Paragraph>
     <Heading as="h4">{t('policyChanges.subheading1')}</Heading>
@@ -91,27 +91,27 @@ const PolicyChangesSection = () => {
   </LegalSection>);
 };
 const KYCSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('kyc.heading')}>
     <Paragraph>{t('kyc.paragraph1')}</Paragraph>
     <Paragraph>{t('kyc.paragraph2')}</Paragraph>
   </LegalSection>);
 };
 const ProofidentificationSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('proofIdentification.heading')}>
     <Paragraph>{t('proofIdentification.paragraph1')}</Paragraph>
   </LegalSection>);
 };
 const ProofAddressSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('proofAddress.heading')}>
     <Paragraph>{t('proofAddress.paragraph1')}</Paragraph>
     <Paragraph>{t('proofAddress.paragraph2')}</Paragraph>
   </LegalSection>);
 };
 const SourceOfFundsSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('sourceOfFunds.heading')}>
     <Paragraph>{t('sourceOfFunds.paragraph1')}</Paragraph>
     <UnorderedList items={[
@@ -127,7 +127,7 @@ const SourceOfFundsSection = () => {
   </LegalSection>);
 };
 const RiskSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('risk.heading')}>
     <Paragraph>{t('risk.paragraph1')}</Paragraph>
     <Paragraph>{t('risk.paragraph2')}</Paragraph>
@@ -137,7 +137,7 @@ const RiskSection = () => {
   </LegalSection>);  
 };
 const OngoingSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('ongoing.heading')}>
     <Paragraph>{t('ongoing.paragraph1')}</Paragraph>
     <Paragraph>{t('ongoing.paragraph2')}</Paragraph>
@@ -154,7 +154,7 @@ const OngoingSection = () => {
   </LegalSection>);
 };
 const ReportingSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('reporting.heading')}>
     <Paragraph>{t('reporting.paragraph1')}</Paragraph>
     <Paragraph>{t('reporting.paragraph2')}</Paragraph>
@@ -164,7 +164,7 @@ const ReportingSection = () => {
   </LegalSection>);
 };
 const RecordKeepingSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('recordKeeping.heading')}>
     <Paragraph>{t('recordKeeping.paragraph1')}</Paragraph>
     <Paragraph>{t('recordKeeping.paragraph2')}</Paragraph>
@@ -172,7 +172,7 @@ const RecordKeepingSection = () => {
   </LegalSection>);
 };
 const TrainingSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('training.heading')}>
     <Paragraph>{t('training.paragraph1')}</Paragraph>
     <Paragraph>{t('training.paragraph2')}</Paragraph>
@@ -184,20 +184,20 @@ const TrainingSection = () => {
   </LegalSection>);
 };
 const AuditingSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('auditing.heading')}>
     <Paragraph>{t('auditing.paragraph1')}</Paragraph>
   </LegalSection>);
 };
 const DataSecuritySection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('dataSecurity.heading')}>
     <Paragraph>{t('dataSecurity.paragraph1')}</Paragraph>
     <Paragraph>{t('dataSecurity.paragraph2')}</Paragraph>
   </LegalSection>);
 };
 const ContactSection = () => {
-  const { t } = useTranslation(["legal//aml"]);
+  const { t } = useTranslation(["legal\\aml"]);
   return (<LegalSection heading={t('contactUs.heading')}>
     <Paragraph>{t('contactUs.paragraph1')}</Paragraph>
     <UnorderedList items={[
