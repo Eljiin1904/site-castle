@@ -1,0 +1,8 @@
+{
+  "title": "Región Restringida",
+  "paragraph1": "Castle.com no está disponible en tu región. No tendrás acceso a ninguna de nuestras funciones.",
+  "notInRestrictedRegion": "¿No estás en una región restringida?",
+  "paragraph2": "Si estás utilizando un servicio de VPN o proxy, intenta desactivarlo o cambiar a una región compatible.",
+  "help": "Si necesitas ayuda, por favor contacta a nuestro <0>{{link}}</0>.",
+  "liveSupport": "Soporte en Vivo"
+}
