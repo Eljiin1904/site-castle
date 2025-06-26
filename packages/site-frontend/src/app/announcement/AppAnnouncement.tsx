@@ -13,10 +13,10 @@ export const AppAnnouncement = () => {
       className="AppAnnouncement"
       fx
       center
-      p={8}
-      bg="dark-orange"
+      p={12}
+      bg="brown-7"
     >
-      <Span color="white">{announcement}</Span>
+      <Span color="light-sand">{announcement}</Span>
     </Div>
   );
 };

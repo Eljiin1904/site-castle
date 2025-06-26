@@ -19,8 +19,9 @@ export const AuthenticatorDisableModal = () => {
       <ModalHeader
         heading={t("account:settings.authenticator.disableModal.header")}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <AuthenticatorCodeForm
           onSubmit={async (values) => {
             await Security.authenticatorDisable(values);

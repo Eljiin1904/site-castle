@@ -54,8 +54,8 @@ export const UserExclusionExtendModal = () => {
         heading={t("selfExclusion.extension.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
-        <Form form={form} pt={24} borderTop borderColor="brown-4">
+      <ModalBody>
+        <Form form={form}>
           <ModalSection>
             <Paragraph>{t("selfExclusion.extension.modal.longerBreak")}</Paragraph>
           </ModalSection>

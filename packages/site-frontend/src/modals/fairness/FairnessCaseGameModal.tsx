@@ -31,11 +31,8 @@ export const FairnessCaseGameModal = ({
        heading={t('modal.title.case')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Div
-          borderTop
-          borderColor="brown-4"
-          pt={24}
           fx
           gap={12}
         >

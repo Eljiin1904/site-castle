@@ -71,8 +71,8 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
   }, setProcessing);
 
   return (
-    <ModalBody pt={0}>
-      <Div fx borderTop borderColor="brown-4" pt={24} gap={12}>
+    <ModalBody>
+      <Div fx gap={12}>
         <ModalSection>
           <ModalLabel>{t('seedModal.activeClientSeed')}</ModalLabel>
           <ModalCopyField text={query.data?.clientSeed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />

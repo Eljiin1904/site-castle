@@ -67,7 +67,7 @@ export const AffiliateNewCampaignModal = () => {
         onCloseClick={() => Dialogs.close("primary")}
         noBorder
       />      
-      <ModalBody>
+      <ModalBody pt={0}>
         <Form form={form}>
           <ModalSection>            
             <ModalLabel>{t("campaigns.campaignName")}</ModalLabel>

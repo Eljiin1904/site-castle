@@ -32,15 +32,12 @@ export const FairnessCaseBattleModal = ({
         heading={t('modal.title.battles')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Link
           fx
           type="a"
           href={`${config.siteURL}/case-battles/${result.gameId}`}
           hover="none"
-          borderTop 
-          borderColor="brown-4" 
-          pt={24}
           gap={12}
         >
           <Button
