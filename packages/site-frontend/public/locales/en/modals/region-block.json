@@ -1,0 +1,8 @@
+{
+  "title": "Region Restricted",
+  "paragraph1": "Castle.com is unavailable in your region. You will not have access to any of our features.",
+  "notInRestrictedRegion": "Not in a restricted region?",
+  "paragraph2": "If you are using a VPN or proxy service, try turning it off or switching to a supported region..",
+  "help": "If you need help, please contact our <0>{{link}}</0>.",
+  "liveSupport": "Live Support"
+}

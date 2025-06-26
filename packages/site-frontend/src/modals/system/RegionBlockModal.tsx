@@ -1,4 +1,4 @@
-import { useIntercom } from "react-use-intercom";
+import { useIntercomManager } from "#app/hooks/support/useIntercomManager";
 import { Heading } from "@client/comps/heading/Heading";
 import { Link } from "@client/comps/link/Link";
 import { Modal } from "@client/comps/modal/Modal";
@@ -7,56 +7,81 @@ import { ModalHeader } from "@client/comps/modal/ModalHeader";
 import { ModalSection } from "@client/comps/modal/ModalSection";
 import { Paragraph } from "@client/comps/paragraph/Paragraph";
 import { Dialogs } from "@client/services/dialogs";
+import { Div } from "@client/comps/div/Div";
+import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { RegionBlockBanner } from "./RegionBlockBanner";
+import { Trans, useTranslation } from "@core/services/internationalization/internationalization";
+import { Span } from "@client/comps/span/Span";
+import "./RegionBlockModal.scss";
 
 export const RegionBlockModal = () => {
-  const intercom = useIntercom();
-
+  const intercom = useIntercomManager();
+  const {t} = useTranslation(["modals\\region-block"]);
+  const bodyLayout = useAppSelector((state) => state.style.bodyLayout);
+  const small = bodyLayout === "mobile" || bodyLayout === "tablet";
+  
   const handleHelp = () => {
-    intercom.show();
+    intercom.handleOpen();
     Dialogs.close("primary");
   };
-
+  
   return (
     <Modal
-      width="sm"
-      disableMobileFullscreen
+      className="RegionBlockModal"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Region Restricted"
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody gap={16}>
-        <ModalSection>
-          <Paragraph>
-            {
-              "Castle.com is unavailable in your region. You will not have access to any of our features."
-            }
-          </Paragraph>
-        </ModalSection>
-        <ModalSection mt={4}>
-          <Heading>{"Not in a restricted region?"}</Heading>
-          <Paragraph mt={12}>
-            {
-              "If you are using a VPN or proxy service, try turning it off or switching to a supported region."
-            }
-          </Paragraph>
-        </ModalSection>
-        <ModalSection
-          borderTop
-          pt={16}
+      <Div fy>
+        {['laptop','desktop'].includes(bodyLayout) ? <RegionBlockBanner/> : null}
+        <Div
+          className={`${`region-block`}-content`}
+          column
         >
-          <Paragraph>
-            {"If you need help, please contact our "}
-            <Link
-              type="action"
-              onClick={handleHelp}
-            >
-              {"live support"}
-            </Link>
-          </Paragraph>
-        </ModalSection>
-      </ModalBody>
+          <ModalBody justifyContent={'flex-start'}>
+            <ModalSection>
+              <Heading
+                as="h2"
+                size={small ? 20 : 24}
+                fontWeight="regular"
+                textTransform="uppercase"
+              >
+                {t("title")}
+              </Heading>
+            </ModalSection>
+            <ModalSection>
+              <Paragraph>{t('paragraph1')}</Paragraph>
+            </ModalSection>
+            <ModalSection gap={8}>
+              <Heading
+                  as="h3"
+                  fontWeight="regular"
+                  size={small ? 20 : 24}
+                >
+                {t("notInRestrictedRegion")}
+                </Heading>
+              <Paragraph>{t('paragraph2')}</Paragraph>
+            </ModalSection>
+            <ModalSection>
+            <Span>
+              {
+                //@ts-ignore
+                <Trans
+                  i18nKey="modals\region-block:help"
+                  values={{ link: t("liveSupport")}}
+                  components={[
+                    <Link type="action" fontSize={14} color="sand" onClick={handleHelp}>
+                      {t('liveSupport')}
+                    </Link>
+                  ]}
+                />
+              }
+            </Span>
+            </ModalSection>
+          </ModalBody>
+        </Div>
+      </Div>
     </Modal>
   );
 };
