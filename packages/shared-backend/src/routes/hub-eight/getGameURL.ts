@@ -93,6 +93,7 @@ export default Http.createApiRoute({
       return;
     } catch (err: any) {
       logger.error(err);
+      throw err;
     }
   },
 });
