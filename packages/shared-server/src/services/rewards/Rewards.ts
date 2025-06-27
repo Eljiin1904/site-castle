@@ -10,6 +10,7 @@ export * from "./utils/createRace";
 export * from "./utils/createRaffle";
 export * from "./utils/getActiveHoliday";
 export * from "./utils/getActiveRace";
+export * from "./utils/getActiveRaces";
 export * from "./utils/getActiveRaffle";
 export * from "./utils/getAdventInfo";
 export * from "./utils/getBoostEvent";
