@@ -1,5 +1,6 @@
 import config, { initConfig } from "./config";
 import { Database } from "@server/services/database";
+import { RedisService } from "@server/services/redis/RedisService";
 import { initHttp } from "./app/initHttp";
 import { initSockets } from "./app/initSockets";
 import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
@@ -29,7 +30,14 @@ async function main() {
   logger.info("Initialized http.");
 
   initSockets(httpServer);
+
   logger.info("Initialized sockets.");
+
+  logger.info("Initializing Redis.");
+
+  await RedisService.initialize();
+
+  logger.info("Initialized Redis.");
 
   httpServer.listen(port, async () => {
     logger.info(`Site backend listening on port ${port}.`);
