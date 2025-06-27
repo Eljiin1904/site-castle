@@ -77,6 +77,8 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu = fals
         className="label"
         color={labelColor}
         fontWeight="medium"
+        size={14}
+        lineHeight={16}
       >
         {label}
       </Span>

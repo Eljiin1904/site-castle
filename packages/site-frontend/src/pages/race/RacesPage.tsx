@@ -8,14 +8,14 @@ import { Rewards } from "#app/services/rewards";
 import { LeaderGrid } from "./LeaderGrid";
 import { RaceBanner } from "./RaceBanner";
 
-export const RacePage = () => {
+export const RacesPage = () => {
   const query = useQuery({
     queryKey: ["race"],
     queryFn: () => Rewards.getActiveRaces(),
     placeholderData: (prev) => prev,
   });
 
-  const race = query.data?.state;
+  const races = query.data?.state;
 
   let content;
 
@@ -30,13 +30,13 @@ export const RacePage = () => {
         onButtonClick={query.refetch}
       />
     );
-  } else if (!race) {
+  } else if (!races) {
     content = <PageLoading />;
   } else {
     content = (
       <Fragment>
-        <RaceBanner race={race} />
-        <LeaderGrid race={race} />
+        {/* <RaceBanner race={race} />
+        <LeaderGrid race={race} /> */}
       </Fragment>
     );
   }
