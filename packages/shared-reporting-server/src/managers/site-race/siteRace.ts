@@ -34,27 +34,4 @@ async function main() {
       }),
     });
   }
-
-
-  // if (race) {
-  //   if (race._id !== meta.race?.id) {
-  //     await Site.setMeta({
-  //       key: "race",
-  //       value: {
-  //         id: race._id,
-  //         displayName: race.displayName,
-  //         startDate: race.startDate,
-  //         endDate: race.endDate,
-  //         totalPayout: race.totalPayout,
-  //       },
-  //     });
-  //   }
-  // } else {
-  //   if (meta.race) {
-  //     await Site.setMeta({
-  //       key: "race",
-  //       value: null,
-  //     });
-  //   }
-  // }
 }
