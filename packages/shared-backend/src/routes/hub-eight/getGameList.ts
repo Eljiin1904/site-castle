@@ -24,16 +24,26 @@ export default Http.createApiRoute({
       hub88PrivateKey.replace(/\\n/g, "\n"),
       JSON.stringify(payload),
     );
-    try {
-      const savedGameList = await RedisService.getObject(gameListKey);
 
-      // Already Saved in Cache
+    try {
+      let savedGameList = null;
+
+      // Try to get from Redis, but don't fail if Redis is down
+      try {
+        if (RedisService.connected) {
+          savedGameList = await RedisService.getObject(gameListKey);
+        }
+      } catch (redisErr) {
+        logger.warn(`Redis unavailable, skipping cache read: ${redisErr}`);
+      }
+
       if (savedGameList) {
-        logger.info("Retreived Game List from Cache");
+        logger.info("Retrieved Game List from Cache");
         res.json({ data: savedGameList });
         return;
       }
-      // 3. Make external call to Hub8 with signed key from RSA private key
+
+      // Make external call to Hub8
       const result = await axios.post(`${hubEightApiURL}/operator/generic/v2/game/list`, payload, {
         headers: {
           "X-Hub88-Signature": hubEightSignature,
@@ -59,13 +69,20 @@ export default Http.createApiRoute({
         },
         {},
       );
-      // Caches Game List for a Day
-      await RedisService.setObject(gameListKey, sections, 86400);
-      // 5. Return list data
+
+      // Try to cache in Redis, but don’t block response if it fails
+      try {
+        if (RedisService.connected) {
+          await RedisService.setObject(gameListKey, sections, 86400); // TTL = 1 day
+        }
+      } catch (redisErr) {
+        logger.warn(`Failed to write to Redis cache: ${redisErr}`);
+      }
+
       res.json({ data: sections });
     } catch (err: any) {
-      logger.error(`Issue Processing Error: ${err}`);
-      throw new Error("Unable to process request at this time");
+      logger.error(`Issue Processing Request: ${err}`);
+      res.status(500).json({ error: "Unable to process request at this time" });
     }
   },
 });
