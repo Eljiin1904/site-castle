@@ -1,18 +1,33 @@
 // RedisService.ts
 import { createClient, RedisClientType } from "redis";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import config from "#server/config";
 
 const logger = getServerLogger({});
-export class RedisService {
-  private client: RedisClientType;
-  private isConnected = false;
 
-  constructor(redisUrl: string = "redis://localhost:6379") {
-    this.client = createClient({
+export class RedisService {
+  private static _client: RedisClientType;
+  private static isConnected = false;
+
+  // Ability to retrive Raw Client
+  static get client() {
+    if (!this.isConnected || !this.client) {
+      throw new Error("Redis not initialized.");
+    }
+    return this._client;
+  }
+
+  static async initialize() {
+    if (this.isConnected) {
+      throw new Error("Redis already initialized.");
+    }
+    const { redisUrl } = config;
+
+    this._client = createClient({
       url: redisUrl,
       socket: {
         reconnectStrategy: (retries) => {
-          if (retries > 1) {
+          if (retries > 3) {
             logger.error("Redis reconnect failed after 3 attempts. Giving up.");
             return new Error("Retry attempts exhausted");
           }
@@ -24,52 +39,43 @@ export class RedisService {
       },
     });
 
-    this.client.on("connect", () => {
+    this._client.on("connect", () => {
+      this.isConnected = true;
       logger.info("Redis Client Connected");
     });
 
-    this.client.on("error", (err) => {
+    this._client.on("error", (err: any) => {
       this.logRedisError("Redis Client Error", err);
     });
 
-    this.client.connect().catch((err) => {
+    this._client.connect().catch((err: any) => {
       this.logRedisError("Initial Redis connection failed", err);
     });
   }
-  private async connect(): Promise<void> {
-    if (!this.isConnected) {
-      try {
-        await this.client.connect();
-        this.isConnected = true;
-      } catch (error) {
-        this.logRedisError("Redis connection failed", error);
-        throw error; // Re-throw so caller can decide to fallback or fail
-      }
-    }
-  }
-
-  // Ability to retrive Raw Client
-  public async getClient(): Promise<RedisClientType> {
-    await this.connect();
-    return this.client;
-  }
+  // private async connect(): Promise<void> {
+  //   if (!this.isConnected) {
+  //     try {
+  //       await this.client.connect();
+  //       this.isConnected = true;
+  //     } catch (error) {
+  //       this.logRedisError("Redis connection failed", error);
+  //       throw error; // Re-throw so caller can decide to fallback or fail
+  //     }
+  //   }
+  // }
 
   // STRING / OBJECT
-  public async setString(key: string, value: string, ttlSeconds?: number): Promise<void> {
+  static async setString(key: string, value: string, ttlSeconds?: number) {
     try {
-      await this.connect();
-      ttlSeconds
-        ? await this.client.setEx(key, ttlSeconds, value)
-        : await this.client.set(key, value);
+      ttlSeconds ? this._client.setEx(key, ttlSeconds, value) : this._client.set(key, value);
     } catch (error) {
       this.logRedisError(`Failed to set string for key "${key}"`, error);
     }
   }
 
-  public async getString(key: string): Promise<string | null> {
+  static async getString(key: string) {
     try {
-      await this.connect();
-      const result = await this.client.get(key);
+      const result = this._client.get(key);
       return result ?? null; // Ensures no undefined is returned
     } catch (error) {
       this.logRedisError(`Failed to get string for key "${key}"`, error);
@@ -77,7 +83,7 @@ export class RedisService {
     }
   }
 
-  public async setObject<T>(key: string, obj: T, ttlSeconds?: number): Promise<void> {
+  static async setObject<T>(key: string, obj: T, ttlSeconds?: number) {
     try {
       const json = JSON.stringify(obj);
       await this.setString(key, json, ttlSeconds);
@@ -86,7 +92,7 @@ export class RedisService {
     }
   }
 
-  public async getObject<T>(key: string): Promise<T | null> {
+  static async getObject<T>(key: string) {
     try {
       const json = await this.getString(key);
       return json ? (JSON.parse(json) as T) : null;
@@ -97,39 +103,35 @@ export class RedisService {
   }
 
   // HASH
-  public async setHash(key: string, data: Record<string, string>): Promise<void> {
-    await this.connect();
-    await this.client.hSet(key, data);
+  static async setHash(key: string, data: Record<string, string>) {
+    this._client.hSet(key, data);
   }
 
-  public async getHash(key: string): Promise<Record<string, string>> {
-    await this.connect();
-    return await this.client.hGetAll(key);
+  static async getHash(key: string): Promise<Record<string, string>> {
+    return this._client.hGetAll(key);
   }
 
-  public async deleteHashField(key: string, field: string): Promise<void> {
-    await this.connect();
-    await this.client.hDel(key, field);
+  static async deleteHashField(key: string, field: string) {
+    this._client.hDel(key, field);
   }
 
   // DELETE
-  public async deleteKey(key: string): Promise<void> {
+  static async deleteKey(key: string): Promise<void> {
     try {
-      await this.connect();
-      await this.client.del(key);
+      this.client.del(key);
     } catch (error) {
       this.logRedisError(`Failed to delete key "${key}"`, error);
     }
   }
 
-  public async disconnect(): Promise<void> {
-    if (this.isConnected) {
-      await this.client.disconnect();
-      this.isConnected = false;
-    }
-  }
+  // public async disconnect(): Promise<void> {
+  //   if (this.isConnected) {
+  //     await this.client.disconnect();
+  //     this.isConnected = false;
+  //   }
+  // }
 
-  private logRedisError(message: string, error: unknown): void {
+  private static logRedisError(message: string, error: unknown): void {
     if (error instanceof AggregateError) {
       for (const subError of error.errors) {
         logger.error(`${message}: ${subError.message}  : ${subError}`);
