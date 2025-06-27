@@ -10,11 +10,11 @@ import { SvgTransaction } from "@client/svgs/common/SvgTransaction";
 import { SvgFast } from "@client/svgs/common/SvgFast";
 import { SvgGem } from "@client/svgs/common/SvgGem";
 import { SvgTeam } from "@client/svgs/common/SvgTeam";
-import { SvgFlag } from "@client/svgs/common/SvgFlag";
 import { SvgCoinStack } from "@client/svgs/common/SvgCoinStack";
 import { SvgStar } from "@client/svgs/common/SvgStar";
 import { SvgTicket } from "@client/svgs/common/SvgTicket";
 import { SvgRifle } from "@client/svgs/common/SvgRifle";
+import {SvgRace} from "@client/svgs/common/SvgRace";
 
 const items = [
   { icon: SvgChart, label: "Dashboard", to: "/dashboard" },
@@ -31,7 +31,7 @@ const items = [
   { icon: SvgCertificate, label: "Promotions", to: "/promotions" },
   { icon: SvgFast, label: "Boosts", to: "/boosts" },
   { icon: SvgGem, label: "Gem Store", to: "/gems" },
-  { icon: SvgFlag, label: "Races", to: "/races" },
+  { icon: SvgRace, label: "Races", to: "/races" },
   { icon: SvgTicket, label: "Raffles", to: "/raffles" },
   { icon: SvgLive, label: "Logs", to: "/logs" },
 ];

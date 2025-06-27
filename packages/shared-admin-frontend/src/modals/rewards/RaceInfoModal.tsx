@@ -58,12 +58,12 @@ export const RaceInfoModal = ({ race }: { race: RaceDocument }) => {
               <Div display="block">
                 <Span
                   weight="semi-bold"
-                  color="white"
+                  color="light-sand"
                 >
                   {"Payouts "}
                 </Span>
                 <Span>{"["}</Span>
-                <Span color="light-blue">{race.payouts.length}</Span>
+                <Span color="sand">{race.payouts.length}</Span>
                 <Span>{"]"}</Span>
               </Div>
               <Tokens
@@ -113,7 +113,6 @@ export const RaceInfoModal = ({ race }: { race: RaceDocument }) => {
                 >
                   <Span
                     size={13}
-                    color="dark-gray"
                   >{`#${index + 1}`}</Span>
                 </Div>
               </ModalField>

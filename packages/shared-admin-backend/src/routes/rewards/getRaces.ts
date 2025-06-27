@@ -15,6 +15,7 @@ export default Http.createApiRoute({
     limit: Validation.limit(),
     page: Validation.page(),
   }),
+  supportAccess: true,
   callback: async (req, res) => {
     const { searchText, searchIndex, sortIndex, limit, page } = req.body;
 

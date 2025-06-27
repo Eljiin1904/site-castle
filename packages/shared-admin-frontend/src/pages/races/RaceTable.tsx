@@ -4,10 +4,10 @@ import { Span } from "@client/comps/span/Span";
 import { Table } from "@client/comps/table/Table";
 import { Div } from "@client/comps/div/Div";
 import { Vector } from "@client/comps/vector/Vector";
-import { SvgFlag } from "@client/svgs/common/SvgFlag";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { Dialogs } from "@client/services/dialogs";
 import { RaceInfoModal } from "#app/modals/rewards/RaceInfoModal";
+import SvgRace from "@client/svgs/common/SvgRace";
 
 export const RaceTable = ({
   races,
@@ -33,13 +33,13 @@ export const RaceTable = ({
           rowRenderer: (x) => (
             <Div>
               <Vector
-                as={SvgFlag}
-                color={x.kind === "holiday" ? "purple" : "gold"}
+                as={SvgRace}
+                color={x.kind === "holiday" ? "bright-green" : "sand"}
                 mr={8}
               />
               <Span
                 weight="medium"
-                color="light-gray"
+               
                 mr={4}
               >
                 {x.displayName}
@@ -66,7 +66,7 @@ export const RaceTable = ({
           rowRenderer: (x) => (
             <Span
               weight="medium"
-              color="white"
+              color="light-sand"
             >
               {Dates.toTimestamp(x.startDate)}
             </Span>
@@ -79,7 +79,7 @@ export const RaceTable = ({
           rowRenderer: (x) => (
             <Span
               weight="medium"
-              color="white"
+              color="light-sand"
             >
               {Dates.toTimestamp(x.endDate)}
             </Span>
