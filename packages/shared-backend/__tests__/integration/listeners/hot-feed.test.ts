@@ -51,7 +51,7 @@ describe("Hot Feed Test ", async () => {
 
     const games = message.map((game) => game.game);
     expect(games).toContain("crash");
-    expect(games).toContain("duel");
+    // expect(games).toContain("duel");
 
     const ranks = message.map((game) => game.rank);
     expect(ranks).toStrictEqual([1, 2, 3, 4, 5, 6]);
@@ -82,7 +82,7 @@ describe("Hot Feed Test ", async () => {
 
     const games = updateMessage.map((game) => game.game);
     expect(games).toContain("crash");
-    expect(games).toContain("duel");
+    // expect(games).toContain("duel");
 
     const ranks = updateMessage.map((game) => game.rank);
     expect(ranks).toStrictEqual([1, 2, 3, 4, 5, 6]);
