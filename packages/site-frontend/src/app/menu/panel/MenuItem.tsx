@@ -65,14 +65,14 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu = fals
     }
   };
 
-  return (<Div fx alignItems="center" gap={16} onClick={handleClose}>
+  return (<Div fx alignItems="center" gap={16} onClick={handleClose} pr={small ? 20 : 24}>
     {iconLeft && <Vector
       className="icon"
       as={iconLeft}
-      size={20}
+      size={16}
       color={labelColor}
     />}
-    <Div column className="fade-content">
+    <Div fx gap={8} className="fade-content" justifyContent="space-between">
       <Span
         className="label"
         color={labelColor}
@@ -80,7 +80,7 @@ const MenuItemContent = ({iconLeft, labelColor, label, subText, isSubMenu = fals
       >
         {label}
       </Span>
-      {/* {subText} */}
+      {subText}
     </Div>
     {isSubMenu && <Vector
       className="icon fade-content"
