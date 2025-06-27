@@ -1,12 +1,15 @@
 // Libraries
-import { beforeAll, expect, describe, afterAll, it, vi, beforeEach } from "vitest";
+import { beforeAll, expect, describe, it } from "vitest";
+// Dice Setup
 import * as Managers from "../../src/managers";
+// Services
 import { Database } from "@server/services/database";
-import { createTestUser, resetDatabaseConnections, createDiceTestTicket } from "../testUtility";
-import { Random } from "@server/services/random";
-import { createTicket, targetKinds } from "@server/services/dice/Dice";
 import { Dice } from "@core/services/dice";
-
+import { Random } from "@server/services/random";
+// Helpers
+import { createTicket } from "@server/services/dice/Dice";
+// Testing helpers
+import { createTestUser, resetDatabaseConnections } from "../testUtility";
 // Data for tests
 import { bets } from "./data/dice";
 
@@ -58,5 +61,29 @@ describe("Dice Fairness", () => {
       });
       expect(diceRollSimulation).toEqual(rollValue);
     }
+  });
+
+  it("Should compare a roll with pre-determined client and server seeds, and a changing pre-determined user nonce", () => {
+    const serverSeed = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    const clientSeed = "BBBBBBBBBBBB";
+    let nonce = 0;
+    const diceRollSimulation = Random.getRoll({
+      serverSeed,
+      clientSeed,
+      nonce,
+      minValue: 0,
+      maxValue: Dice.maxValue + 1,
+    });
+    expect(diceRollSimulation).toEqual(9044);
+    nonce++;
+    expect(
+      Random.getRoll({
+        serverSeed,
+        clientSeed,
+        nonce,
+        minValue: 0,
+        maxValue: Dice.maxValue + 1,
+      }),
+    ).toEqual(3635);
   });
 });
