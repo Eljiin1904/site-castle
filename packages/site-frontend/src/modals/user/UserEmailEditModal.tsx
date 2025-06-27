@@ -43,9 +43,9 @@ export const UserEmailEditModal = () => {
         heading={t("account:settings.email.description")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <CaptchaForm form={form}>
-          <ModalSection borderTop  borderColor="brown-4" pt={24}>
+          <ModalSection>
             <ModalLabel>{t("fields:currentEmail.field")}</ModalLabel>
             <ModalField>{currentEmail}</ModalField>
           </ModalSection>

@@ -70,6 +70,11 @@ export function useForm<T extends AnyObject>({
         Toasts.error(err);
       } else if (isMounted()) {
         
+        //if the error is the instance of string, use it as key
+        if (typeof err === "string") {
+          setSubmitError(t(err));
+          return;
+        }
         const errorCause = (err as Error)?.cause;
         const errorKey  = (err as Error).message;
         setSubmitError(t(errorKey, {value: errorCause}));

@@ -12,7 +12,7 @@ import { useState } from "react";
 import config from "#app/config";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useTranslation, Trans } from "@core/services/internationalization/internationalization";
-import { ModalField } from "@client/comps/modal/ModalField";
+import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 
 export const AffiliateReferAFriendModal = ({campaignId, commissionRate} : {
   campaignId: string,
@@ -68,7 +68,7 @@ export const AffiliateReferAFriendModal = ({campaignId, commissionRate} : {
           </Paragraph>
           </ModalSection>
           <ModalSection gap={16}>
-            {copied ? <Span>{t('inviteModal.linkCopied')}</Span>: <ModalField color="light-sand" size="lg">{referralLink}</ModalField>}
+          {copied ? <Span>{t('inviteModal.linkCopied')}</Span>:<ModalCopyField size="lg" color="light-sand" text={referralLink} />}
             <Button kind="tertiary-grey" size="lg" label={t('inviteModal.copyLink')} onClick={handleCopy}></Button>
           </ModalSection>
       </ModalBody>

@@ -9,7 +9,8 @@
     "start": "node ./build/index.js",
     "deploy-staging": "npm run build && eb deploy chicken-shared-backend-staging",
     "deploy-production": "npm run build && eb deploy chicken-shared-backend-production",
-    "test": "vitest --no-file-parallelism"
+    "test": "vitest --no-file-parallelism",
+    "test-coverage": "vitest --no-file-parallelism --coverage"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.521.0",
@@ -70,6 +71,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/passport-steam": "1.0.1",
     "@types/socket.io-client": "^1.4.36",
+    "@vitest/coverage-v8": "^3.0.8",
     "mongodb": "^6.14.2",
     "rollup": "^4.21.2",
     "rollup-plugin-delete": "^2.0.0",

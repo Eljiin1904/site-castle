@@ -16,11 +16,11 @@ import { useTranslation } from "@core/services/internationalization/internationa
 
 export const ChatOptionsFooter = () =>  {
 
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
 
   return(<Div fx gap={8}>
-      <Button size="xssso" label={t('chat.earn')} kind="tertiary-grey" iconLeft={SvgMoney} onClick={() => Dialogs.open("primary", <ChatEarnModal />)} />
-      <Button size="xssso" flexGrow label={t('chat.tip')} kind="tertiary-grey" iconLeft={SvgBets} onClick={() => Dialogs.open("primary", <TipModal />)} />
+      <Button size="xssso" label={t('earn')} kind="tertiary-grey" iconLeft={SvgMoney} onClick={() => Dialogs.open("primary", <ChatEarnModal />)} />
+      <Button size="xssso" flexGrow label={t('tip')} kind="tertiary-grey" iconLeft={SvgBets} onClick={() => Dialogs.open("primary", <TipModal />)} />
       <ChatDrowdown />
   </Div>);
 };
@@ -30,7 +30,7 @@ const ChatDrowdown = () => {
   const [open, setOpen] = useState(false);
   const channel = useAppSelector((x) => x.chat.channel);
   const dispatch = useDispatch();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const options = Chat.channels.map(Chat.getChannelInfo);
   const value = Chat.channels.indexOf(channel);
   const onChange = (x: string, i: number) => {
@@ -50,7 +50,7 @@ const ChatDrowdown = () => {
           gap={8}
           size="xssso"
           kind="tertiary-grey"
-          label={t(`chat.${options[value].label.toLocaleLowerCase()}`)}
+          label={t(`${options[value].label.toLocaleLowerCase()}`)}
           iconLeft={options[value].icon}
         >
         </Button>

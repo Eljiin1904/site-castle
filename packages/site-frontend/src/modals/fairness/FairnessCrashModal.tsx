@@ -23,8 +23,8 @@ export const FairnessCrashModal = ({ result }: { result: CrashResult }) => {
         heading={t('modal.title.crash')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
-        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
+      <ModalBody>
+        <Div fx gap={12}>
           <ModalSection>
             <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
             <ModalField>{result.gameId}</ModalField>
@@ -66,11 +66,11 @@ export const FairnessCrashModal = ({ result }: { result: CrashResult }) => {
         </Div>       
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverHash')}</ModalLabel>
-          <ModalCopyField text={result.serverHash} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.serverHash} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.clientHash')}</ModalLabel>
-          <ModalCopyField text={result.clientHash} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.clientHash} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>

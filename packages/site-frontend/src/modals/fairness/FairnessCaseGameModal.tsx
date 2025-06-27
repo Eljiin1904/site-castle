@@ -31,11 +31,8 @@ export const FairnessCaseGameModal = ({
        heading={t('modal.title.case')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Div
-          borderTop
-          borderColor="brown-4"
-          pt={24}
           fx
           gap={12}
         >
@@ -110,11 +107,11 @@ export const FairnessCaseGameModal = ({
         >
           <ModalSection>
             <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
-            <ModalCopyField text={result.clientSeed} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+            <ModalCopyField text={result.clientSeed} textOverflow="ellipsis"/>
           </ModalSection>
           <ModalSection>
             <ModalLabel>{t('transactions.headers.nonce')}</ModalLabel>
-            <ModalCopyField text={result.nonce.toString()} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+            <ModalCopyField text={result.nonce.toString()} textOverflow="ellipsis"/>
           </ModalSection>
         </Div>
         <ModalSection>
@@ -122,8 +119,6 @@ export const FairnessCaseGameModal = ({
           <ModalCopyField
             text={result.serverSeed || result.serverSeedHashed}
             color={result.serverSeed ? "light-sand" : "sand"}
-            fontSize={12}
-            lineHeight={16}
             textOverflow="ellipsis"
           />
         </ModalSection>

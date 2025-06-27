@@ -1,0 +1,37 @@
+
+.RegionBlockModal {
+  
+  .modal-inner {
+    padding: 0;
+    width: unset;
+    max-width: unset !important;
+    overflow: hidden;
+  }
+
+  .region-block-banner {
+    width: 369px;
+    min-width: 369px;
+
+    .overlay {
+      background: linear-gradient(180deg, rgba(20, 22, 34, 0) 58%, var(--brown-8-color) 100%);
+    }
+  }
+
+  .region-block-content {
+    width: 450px;
+    max-width: 450px;
+    height: 518px;
+  }
+
+  .AppBody.mobile & {
+    .modal-inner {
+      width: 100%;
+    }
+
+    .region-block-content {
+      width: 100%;
+      max-width: unset;
+      height: unset;
+    }
+  }
+}

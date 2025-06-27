@@ -37,9 +37,9 @@ export const UserPasswordEditModal = () => {
         heading={t("account:settings.password.header")}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <CaptchaForm form={form}>
-          <ModalSection borderTop  borderColor="brown-4" pt={24}>
+          <ModalSection>
             <ModalLabel>{t("fields:password.currentPassword")}</ModalLabel>
             <Input
               type="password"

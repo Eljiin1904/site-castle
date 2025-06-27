@@ -11,6 +11,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Dialogs } from "@client/services/dialogs";
 import { AffiliateReferAFriendModal } from "#app/modals/affiliate/AffiliateReferAFriendModal";
 import config from "#app/config";
+import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 
 /**
  * Display the default campaign code and link for the user. Copy link to clipboard functionality is included.
@@ -33,7 +34,7 @@ export const DefaultReferral = () => {
     <Div fx bg={`black-hover`} gap={small ? 16: 24} p={small ? 20: 24} column={small}>
       <ModalSection>
         <ModalLabel>{t('referralCode')}</ModalLabel>
-        <ModalField color="light-sand">{campaign.campaignId}</ModalField>
+        <ModalCopyField color="light-sand" text={campaign.campaignId} />
       </ModalSection>
       <ModalSection>
         <ModalLabel>{t('referralLink')}</ModalLabel>

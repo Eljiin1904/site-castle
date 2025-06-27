@@ -77,8 +77,8 @@ export const AuthenticatorEnableModal = () => {
         heading={t('account:settings.authenticator.enableModal.header')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
-        <ModalSection borderTop borderColor="brown-4" pt={24}>
+      <ModalBody>
+        <ModalSection>
           <Span>{t('account:settings.authenticator.enableModal.description')}</Span>
         </ModalSection>
         <Form form={form}>

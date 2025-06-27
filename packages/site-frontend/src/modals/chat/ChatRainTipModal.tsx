@@ -15,6 +15,7 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LoginModal } from "../login/LoginModal";
 import { UserEmailConfirmModal } from "../user/UserEmailConfirmModal";
 import { VerificationModal } from "../verification/VerificationModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatRainTipModal = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -22,17 +23,17 @@ export const ChatRainTipModal = () => {
   const tokenBalance = useAppSelector((x) => x.user.tokenBalance);
   const kycTier = useAppSelector((x) => x.user.kyc.tier);
   const rainId = useAppSelector((x) => x.chat.rain?._id || "");
-
+  const {t} = useTranslation(["validations"]);
   const form = useForm({
     schema: Validation.object({
-      tipAmount: Validation.currency("Tip amount").max(
+      tipAmount: Validation.currency(t('fields:tip.amount')).max(
         tokenBalance,
-        "You do not have enough tokens.",
+        t("validations:errors.games.notEnoughTokens"),
       ),
     }),
     onSubmit: async (values) => {
       await Chat.tipRain({ ...values, rainId });
-      Toasts.success("Rain tipped.");
+      Toasts.success("chat:rainTipModal.confirmSuccess", 5000);
       Dialogs.close("primary");
     },
   });
@@ -52,26 +53,27 @@ export const ChatRainTipModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Tip Rain"
+        heading={t('chat:rainTipModal.heading')}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
-      <ModalBody>
+      <ModalBody pt={0}>
         <Form form={form}>
           <ModalSection>
-            <ModalLabel>{"Tip Amount"}</ModalLabel>
+            <ModalLabel>{t('fields:tip.amount')}</ModalLabel>
             <Input
               type="currency"
-              placeholder="Enter tip amount..."
+              placeholder={t('fields:tip.amountPlaceholder')}
               disabled={form.loading}
-              error={form.errors.tipAmount}
+              error={form.errors.tipAmount?.key ? t(form.errors.tipAmount.key, {value: form.errors.tipAmount.value}) : undefined}
               value={form.values.tipAmount}
               onChange={(x) => form.setValue("tipAmount", x)}
             />
           </ModalSection>
           <Button
             type="submit"
-            kind="primary"
-            label="Tip Rain"
+            kind="primary-yellow"
+            label={t('chat:rainTipModal.action')}
             fx
             mt={4}
             loading={form.loading}

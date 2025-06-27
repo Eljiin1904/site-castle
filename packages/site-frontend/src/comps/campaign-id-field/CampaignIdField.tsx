@@ -11,13 +11,14 @@ import { SvgCancel } from "@client/svgs/common/SvgCancel";
 import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Affiliates } from "#app/services/affiliates";
+import { Validation } from "@core/services/validation";
 
 export type UsernameFieldProps = {
   placeholder: string;
   value: string | undefined;
   disabled?: boolean;
   error?: string;
-  setError: (x: string | undefined) => void;
+  setError: (error: Validation.TTransErrorKeyValue | undefined) => void;
   onChange: (value: string | undefined) => void;
 };
 
@@ -41,12 +42,12 @@ export const CampaignIdField: FC<UsernameFieldProps> = ({
     placeholderData: (prev) => prev,
   });
 
-  const queryError = query.error;
+  const queryError = query.error as unknown as Validation.TTransErrorKeyValue | undefined;
   const isValid = currentValue && query.data?.isAvailable;
 
   useEffect(() => {
     if (queryError) {
-      setError(Errors.getMessage(queryError));
+      setError(queryError);
     } else {
       setError(undefined);
     }

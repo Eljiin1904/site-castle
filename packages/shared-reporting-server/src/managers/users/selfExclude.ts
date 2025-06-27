@@ -9,7 +9,7 @@ export default () =>
 async function main() {
   const user = await Database.collection("users").findOneAndUpdate(
     {
-      "suspension.reason": "self-exclude",
+      "suspension.reason": "selfExclusion.suspended",
       "suspension.endDate": {
         $gt: new Date(0),
         $lt: new Date(),

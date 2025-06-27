@@ -14,6 +14,8 @@ export const WageredChart = () => {
   const maxDate = useAppSelector((state) => state.account.userStatsMaxDate);
   const game = useAppSelector((state) => state.account.userStatsCategory);
   const small = useIsMobileLayout();
+
+  console.log("WageredChart", { minDate, maxDate, game });
   
   const query = useQuery({
     queryKey: ["history", minDate, maxDate, game],

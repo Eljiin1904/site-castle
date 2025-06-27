@@ -10,7 +10,7 @@ const rateLimiter = Security.createRateLimiter({
   keyPrefix: "send-tip",
   points: 1,
   durationSeconds: 2,
-  errorMessage: "You are sending tips too often.",
+  errorMessage: "errors.tips.tooManyRequests",
 });
 
 export default Http.createApiRoute({
@@ -23,8 +23,8 @@ export default Http.createApiRoute({
     settingKey: "withdraw2fa",
   },
   body: Validation.object({
-    lookup: Validation.string().required("Username or email"),
-    tipAmount: Validation.currency("Tip amount"),
+    lookup: Validation.string().required("validations.tip.recipientRequired"),
+    tipAmount: Validation.currency("fields:tip.amount"),
   }),
   callback: async (req, res) => {
     const { lookup, tipAmount } = req.body;
@@ -43,7 +43,7 @@ export default Http.createApiRoute({
       const newUsage = tipUsage + tipAmount;
 
       if (newUsage > sender.meta.tipLimit) {
-        throw new HandledError("Tip would exceed your daily limit.");
+        throw new HandledError("errors.tips.dailyLimit");
       }
     }
 
@@ -53,13 +53,13 @@ export default Http.createApiRoute({
     );
 
     if (!receiver) {
-      throw new HandledError("Recipient not found.");
+      throw new HandledError("errors.tips.recipientNotFound");
     }
     if (receiver._id === sender._id) {
-      throw new HandledError("You can't tip yourself.");
+      throw new HandledError("errors.tips.tipYourself");
     }
     if (!receiver.settings.receiveTips) {
-      throw new HandledError("Recipient is not accepting tips.");
+      throw new HandledError("errors.tips.recipientBlocked");
     }
 
     const location = await Http.getLocation(req.trueIP);

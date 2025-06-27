@@ -12,17 +12,19 @@ import { Chat } from "#app/services/chat";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LoginModal } from "../login/LoginModal";
 import { UserEmailConfirmModal } from "../user/UserEmailConfirmModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const ChatRainJoinModal = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const emailConfirmed = useAppSelector((x) => x.user.emailConfirmed);
   const rainId = useAppSelector((x) => x.chat.rain?._id || "");
-
+  const {t} = useTranslation(["chat"]);
   const form = useCaptchaForm({
     schema: Validation.object({}),
     onSubmit: async (values) => {
       await Chat.joinRain({ ...values, rainId });
       Toasts.success("Rain joined.");
+      Toasts.success("chat:joinRainModal.confirmSuccess", 5000);
       Dialogs.close("primary");
     },
   });
@@ -52,8 +54,8 @@ export const ChatRainJoinModal = () => {
         >
           <Button
             type="submit"
-            kind="primary"
-            label="Join Rain"
+            kind="primary-yellow"
+            label={t('joinRainModal.action')}
             fx
             mt={4}
             loading={form.loading}

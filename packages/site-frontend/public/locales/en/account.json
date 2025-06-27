@@ -42,6 +42,44 @@
       "promotion": "Promotion",     
       "vault": "Vault",
       "other": "Other"
+    },
+    "modal": {
+      "inputs": {
+        "general": {
+          "transactionId": "Transaction ID",
+          "date":"Date",
+          "status": "Status",
+          "updated": "Updated",
+          "amount": "Amount",
+          "balanceBefore": "Balance Before",
+          "balanceAfter": "Balance After"
+        },
+        "tips": {
+          "sentBy": "Sent By",
+          "sentTo": "Sent To"
+        },
+        "txHash": "Transaction Hash",
+        "withdraw": {
+          "cryptoAmount": "Crypto Amount",
+          "usdAmount": "USD Amount",
+          "usdRate": "USD Rate",
+          "feeAmount": "Fee Amount",
+          "feeUsd": "Fee USD Amount",
+          "netAmount": "Net Amount",
+          "netUsd": "Net USD Amount"
+        },
+        "battle": "View Battle",
+        "fairness": "View Fairness",
+        "skin": {
+          "skin": "Skin",
+          "tradeOfferId": "Trade Offer ID"
+
+        }
+      },
+      "actions": {
+        "confirmClient": "Confirm Client",
+        "confirmBrowser": "Confirm in Browser"
+      }
     }
   },
   "history": {

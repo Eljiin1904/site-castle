@@ -131,6 +131,7 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
     if (hubPublicKey.SecretString) {
       config.hubEightPublicKey = hubPublicKey.SecretString;
     }
+
   } catch (e) {
     console.error("ConfigManager.init failed.");
     throw e; // let the process die

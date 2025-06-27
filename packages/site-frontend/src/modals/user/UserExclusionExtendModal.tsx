@@ -18,15 +18,17 @@ import { Users } from "#app/services/users";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { LoginModal } from "../login/LoginModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserExclusionExtendModal = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation();
+  
   const form = useForm({
     schema: Validation.object({
       timeIndex: Validation.integer("Duration").min(0).max(4),
-      confirmed: Validation.boolean().oneOf([true], "Confirmation is required."),
+      confirmed: Validation.boolean().oneOf([true],t("validations:validations.selfExclusion.required")),
     }),
     initialValues: {
       timeIndex: 0,
@@ -35,7 +37,7 @@ export const UserExclusionExtendModal = () => {
     onSubmit: async (values) => {
       await Users.extendExclusion(values);
       dispatch(Users.resetUser());
-      Toasts.success("Exclusion extended. You have been logged out.", 8000);
+      Toasts.success("selfExclusion.extension.modal.success", 8000);
       Dialogs.close("primary");
     },
   });
@@ -49,41 +51,39 @@ export const UserExclusionExtendModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Extend Self-Exclusion"
+        heading={t("selfExclusion.extension.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Form form={form}>
           <ModalSection>
-            <Paragraph>
-              {
-                "If you need a longer break, you can extend your self-exclusion. Once extended, you will be locked out of your account until it ends."
-              }
-            </Paragraph>
+            <Paragraph>{t("selfExclusion.extension.modal.longerBreak")}</Paragraph>
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Duration"}</ModalLabel>
+            <ModalLabel>{t("fields:selfExclusion.duration.field")}</ModalLabel>
             <Dropdown
               type="select"
               fx
-              options={["1 Day", "1 Week", "1 Month", "3 Months", "Indefinite"]}
+              options={[
+                t("fields:selfExclusion.duration.options.1d"), 
+                t("fields:selfExclusion.duration.options.1w"), 
+                t("fields:selfExclusion.duration.options.1m"), 
+                t("fields:selfExclusion.duration.options.3m"), 
+                t("fields:selfExclusion.duration.options.indefinite"), 
+                ]}
               disabled={form.loading}
               value={form.values.timeIndex || 0}
               onChange={(x, i) => form.setValue("timeIndex", i)}
             />
           </ModalSection>
           <ModalSection>
-            <ModalLabel>{"Site Balance"}</ModalLabel>
-            <Paragraph mb={12}>
-              {
-                "While you are locked out of your account, you will not have access to your site balance. You must withdraw your balance before proceeding."
-              }
-            </Paragraph>
+            <ModalLabel>{t("fields:selfExclusion.siteBalance.field")}</ModalLabel>
+            <Paragraph mb={12}>{t("selfExclusion.extension.modal.withdrawBalance")}</Paragraph>
             <Checkbox
               bg
-              label="I have withdrawn my balance"
+              label={t("selfExclusion.extension.modal.withdrawBalanceConfirmation")}
               disabled={form.loading}
-              error={form.errors.confirmed}
+              error={form.errors.confirmed?.key ? t(form.errors.confirmed.key, {value: form.errors.confirmed.value}) : undefined}
               value={form.values.confirmed}
               onChange={(x) => form.setValue("confirmed", x)}
             />
@@ -95,17 +95,17 @@ export const UserExclusionExtendModal = () => {
           >
             <NoticeCard
               kind="warning"
-              message="Support will not reverse this. You must wait for your self-exclusion to end once it starts."
+              message={t("selfExclusion.extension.modal.supportNotice")}
             />
             <NoticeCard
               kind="info"
-              message="You will be logged out of your account."
+              message={t("selfExclusion.extension.modal.logoutNotice")}
             />
           </Div>
           <Button
             type="submit"
-            kind="primary"
-            label="Extend Self-Exclusion"
+            kind="primary-yellow"
+            label={t("selfExclusion.extension.title")}
             fx
             loading={form.loading}
           />

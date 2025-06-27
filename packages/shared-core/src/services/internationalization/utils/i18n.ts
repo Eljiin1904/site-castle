@@ -3,10 +3,11 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 
+const IS_DEV =  process.env.NODE_ENV === "development";
 //"https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
 const locizeOptions = {
   referenceLng: "en",
-  loadPath: "https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
+  loadPath: IS_DEV ? "http://127.0.0.1:3000/locales/{{lng}}/{{ns}}.json": "https://font.brickrax.com/locales/{{lng}}/{{ns}}.json",
   crossDomain: true,
 };
 
@@ -20,16 +21,7 @@ const options: InitOptions = {
     "fields",
     "common",
     "wallet",
-    "games\\double",
-    "games\\mines",
-    "games\\blackjack",
-    "games\\limbo",
-    "games\\dice",
-    "games\\crash",
-    "games\\case-battles",
-    "account",
-    "referrals",
-    "fairness",
+    "chat"
   ],
   fallbackNS: ["translation"],
   defaultNS: ["translation"],

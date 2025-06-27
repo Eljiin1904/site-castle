@@ -107,6 +107,9 @@
         "required": "Código de campaña requerido.",
         "unavailable": "Código de campaña no disponible."
       }
+    },
+    "selfExclusion": {
+      "required": "Confirmación de autoexclusión es requerida."
     }
   },
   "errors": {
@@ -145,7 +148,7 @@
     },
     "rateLimit": "Demasiadas solicitudes de registro.",
     "invalidCaptcha": "Falló al pasar la validación de captcha.",
-     "games": {
+    "games": {
       "invalidGameName": "Juego inválido {{value}}.",
       "notEnoughTokens": "No tienes suficientes tokens.",
       "invalidBetAmount": "Cantidad de apuesta inválida.",
@@ -194,7 +197,9 @@
     },
     "users": {
       "notFound": "Usuario no encontrado.",
-      "idRequired": "Id de usuario requerido."
+      "idRequired": "Id de usuario requerido.",
+      "lookupFailed": "Búsqueda de usuario fallida.",
+      "alreadyExcluded": "Ya estás autoexcluido."
     },
     "tiers": {
       "outOfRange": "Nivel fuera de rango."
@@ -209,6 +214,14 @@
     },
     "fairness": {
       "invalidClientSeed": "Seed del cliente inválida."
+    },
+    "banned": "Tu cuenta ha sido baneada: {{value}}",
+    "tips": {
+      "tooManyRequests": "No puedes enviar propinas tan seguido.",
+      "dailyLimit": "La propina excedería tu límite diario.",
+      "recipientNotFound": "Destinatario no encontrado.",
+      "tipYourself": "No puedes enviarte una propina a ti mismo.",
+      "recipientBlocked": "El destinario no esta aceptando propinas."
     }
   }
 }

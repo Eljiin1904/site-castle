@@ -6,41 +6,49 @@ import { Span } from "@client/comps/span/Span";
 import { Users } from "#app/services/users";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { Vector } from "@client/comps/vector/Vector";
+import { UserIcon } from "#app/comps/user-icon/UserIcon";
 
 export const UserBlockModal = ({ user }: { user: BasicUser }) => {
   const level = Users.getLevel(user.xp);
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const levelIcon = Users.getLevelIcon(level);
   const levelColor = Users.getLevelColor(level);
   return (
     <ConfirmModal
-      heading={t("chat.blockModal.title")}
+      heading={t("blockModal.heading")}
       disableMobileFullscreen={false}
-      confirmLabel="chat.block"
+      confirmLabel={t("block")}
       onConfirm={async () => {
         await Users.setUserBlocked({
           userId: user.id,
           block: true,
         });
-        Toasts.success("chat.blockModal.confirmSuccess", 5000, {value: {username: user.name}});
+        Toasts.success("chat:blockModal.confirmSuccess", 5000, {username: user.name});
       }}
       message={
         <Div
-          fx
-          align="center"
-          pb={24}
-          gap={16}
-          column
-        >
-          <Span>{t('chat.blockModal.description',{value: {username: user.name}})}</Span>
-          
+        fx
+        align="center"
+        pb={24}
+        gap={16}
+        column
+      >
+        <Span>{t('blockModal.description',{value: {username: user.name}})}</Span>
+        <Div gap={16}  align="center">
+          <UserIcon
+            avatarId={user.avatarId}
+            avatarIndex={user.avatarIndex}
+            width="80px"
+          />
           <Div
+            column
             gap={4}
           >
             <Span
+              family="title"
               weight="bold"
               size={20}
-              color={levelColor}
+              color="light-sand"
             >
               {user.name}
             </Span>
@@ -48,17 +56,22 @@ export const UserBlockModal = ({ user }: { user: BasicUser }) => {
               align="center"
               mt={2}
             >
-              <Vector as={levelIcon} size={16} color={levelColor} />
-              <Span
-                size={12}
-                ml={6}
+              <Vector
+                as={levelIcon}
+                size={16}
                 color={levelColor}
+              />
+              <Span
+                size={12}                
+                color={levelColor}
+                ml={6}
               >
-                {t('chat.level',{level:level})}
+                {t('level',{level:level})}
               </Span>
             </Div>
           </Div>
         </Div>
+      </Div>
       }
     />
   );

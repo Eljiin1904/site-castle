@@ -21,7 +21,7 @@ export const EmojiMenu = ({onClick}: {
   const search = useAppSelector((x) => x.chat.search);
   const activeTab = useAppSelector((x) => x.chat.activeTab);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
 
   return (<ChatModalBottom px={0} py={16}>
     <Div 
@@ -38,7 +38,7 @@ export const EmojiMenu = ({onClick}: {
           kind="chat-background"
           type="text"
           id="game-search"
-          placeholder={t('chat.search')}
+          placeholder={t('search')}
           value={search}
           onChange={(search) => dispatch(setSearch(search ?? ''))}
           onIconRightClick={() => dispatch(setSearch(''))}
@@ -64,9 +64,9 @@ const EmojiMenuOption = ({label}: {
 
   const activeTab = useAppSelector((x) => x.chat.activeTab);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const selected = activeTab === label;
-  return (<Span cursor="pointer" pb={8} borderWidth={selected ? 2: 1} borderBottom borderColor={selected ? `sand`:`dark-brown-hover`} flexGrow textAlign="center" size={12} color={selected ? 'sand' : 'dark-sand'} fontWeight="semi-bold" onClick={() => dispatch(setActiveTab(label)) } textTransform="uppercase">{t(`chat.${label}`)}</Span>)
+  return (<Span cursor="pointer" pb={8} borderWidth={selected ? 2: 1} borderBottom borderColor={selected ? `sand`:`dark-brown-hover`} flexGrow textAlign="center" size={12} color={selected ? 'sand' : 'dark-sand'} fontWeight="semi-bold" onClick={() => dispatch(setActiveTab(label)) } textTransform="uppercase">{t(`${label}`)}</Span>)
 };
 
 const Emojis = ({onClick}: {

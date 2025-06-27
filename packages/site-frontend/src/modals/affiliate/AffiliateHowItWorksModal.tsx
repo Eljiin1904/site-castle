@@ -17,6 +17,7 @@ export const AffiliateHowItWorksModal = () => {
     <Modal
       width={small ? "sm" : "md"}
       onBackdropClick={() => Dialogs.close("primary")}
+
     >
       <ModalHeader
         heading={t("howItWorks.modal.title")}
@@ -25,8 +26,8 @@ export const AffiliateHowItWorksModal = () => {
          {t("howItWorks.modal.description")}
         </Paragraph>}
       />
-      <ModalBody pt={0}>
-        <Div fx column gap={small ? 20: 32} pt={small ? 24: 32}  borderTop borderColor="brown-4">
+      <ModalBody>
+        <Div fx column gap={small ? 20: 32}>
           <ModalSection>
           <Heading as="h3" size={small ? 20: 16} fontWeight="regular" textTransform="uppercase">
           {t("howItWorks.modal.list.item1.title")}

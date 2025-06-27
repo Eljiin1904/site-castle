@@ -24,8 +24,8 @@ export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
         heading={t('modal.title.limbo')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
-        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
+      <ModalBody>
+        <Div fx gap={12}>
           <ModalSection>
             <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
             <ModalField>{result.gameId}</ModalField>
@@ -67,16 +67,16 @@ export const FairnessLimboModal = ({ result }: { result: LimboResult }) => {
         >
           <ModalSection>
             <ModalLabel>{t('transactions.headers.clientSeed')}</ModalLabel>
-            <ModalCopyField text={result.clientSeed} color="light-sand" fontSize={12} lineHeight={16}/>
+            <ModalCopyField text={result.clientSeed} color="light-sand"/>
           </ModalSection>
           <ModalSection>
             <ModalLabel>{t('transactions.headers.nonce')}</ModalLabel>
-            <ModalCopyField text={result.nonce.toString()} color="light-sand" fontSize={12} lineHeight={16}/>
+            <ModalCopyField text={result.nonce.toString()} color="light-sand"/>
           </ModalSection>
         </Div>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-          <ModalCopyField text={result.serverSeed ?? result.serverSeedHashed}  color={result.serverSeed ? "light-sand" : "sand"} fontSize={12} lineHeight={16}/>
+          <ModalCopyField text={result.serverSeed ?? result.serverSeedHashed}  color={result.serverSeed ? "light-sand" : "sand"}/>
         </ModalSection>
       </ModalBody>
     </Modal>

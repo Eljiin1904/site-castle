@@ -10,9 +10,10 @@ import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
 import { UserUnblockModal } from "./UserUnblockModal";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
 export const UserManageBlockModal = () => {
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   const query = useQuery({
     queryKey: ["blocked-users"],
     queryFn: () => Users.getBlockedUsers(),
@@ -20,27 +21,29 @@ export const UserManageBlockModal = () => {
   });
   const queryClient = useQueryClient();  
   const users = query.data?.users || [];
-  
+  const small = useIsMobileLayout();
   return (
     <Modal
       width="sm"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading= {t("chat.blockedUsers")}
+        heading= {t("blockedUsers")}
         onCloseClick={() => Dialogs.close("primary")}
+        noBorder
       />
       <Div
         fx
         column
+        gap={small ? 20: 32}
+        px={small ? 20: 32}
+        pb={small ? 20: 32}
       >
         {users.length === 0 && (
           <Div
-            center
-            p={16}
           >
             <Span>
-              {t("chat.notUserBlocked")}
+              {t("notUserBlocked")}
             </Span>
           </Div>
         )}
@@ -78,11 +81,10 @@ const UserCard = ({
   user: BasicUser;
   onUnblockClick: () => void;
 }) => {
-  const {t} = useTranslation();
+  const {t} = useTranslation(['chat']);
   return (
     <Div
       fx
-      p={16}
       gap={6}
       align="center"
       justify="space-between"
@@ -100,7 +102,7 @@ const UserCard = ({
         type="button"
         size="sm"
         kind="primary-yellow"
-        label={t("chat.unblock")}
+        label={t("unblock")}
         onClick={onUnblockClick}
       />
     </Div>

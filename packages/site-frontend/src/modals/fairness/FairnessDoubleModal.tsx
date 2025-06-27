@@ -24,8 +24,8 @@ export const FairnessDoubleModal = ({ result }: { result: DoubleResult }) => {
         heading={t('modal.title.double')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
-        <Div borderTop borderColor="brown-4" pt={24} fx gap={12}>
+      <ModalBody>
+        <Div fx gap={12}>
           <ModalSection>
             <ModalLabel>{t('transactions.headers.gameId')}</ModalLabel>
             <ModalField>{result.gameId}</ModalField>
@@ -69,15 +69,15 @@ export const FairnessDoubleModal = ({ result }: { result: DoubleResult }) => {
         </Div>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.roundId')}</ModalLabel>
-          <ModalCopyField text={result.roundId} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.roundId} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.eosBlockId')}</ModalLabel>
-          <ModalCopyField text={result.eosBlockId} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.eosBlockId} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-          <ModalCopyField text={result.serverSeed} color="light-sand" fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.serverSeed} color="light-sand" textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>

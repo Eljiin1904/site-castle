@@ -98,5 +98,21 @@
     "placeholder": "Enter 6-digit code...",
     "backupField": "Backup Key",
     "backupPlaceholder": "Enter backup key..."
+  },
+  "selfExclusion": {
+    "duration": {
+      "field": "Duration",
+      "placeholder": "Select duration...",
+      "options": {
+        "1d": "1 Day",
+        "1w": "1 Week",
+        "1m": "1 Month",
+        "3m": "3 Months",
+        "indefinite": "Indefinite"
+      }
+    },
+    "siteBalance": {
+      "field": "Site Balance"
+    }
   }
 }

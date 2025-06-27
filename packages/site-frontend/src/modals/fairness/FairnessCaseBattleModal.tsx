@@ -32,15 +32,12 @@ export const FairnessCaseBattleModal = ({
         heading={t('modal.title.battles')}
         onCloseClick={() => Dialogs.close("primary")}
       />
-      <ModalBody pt={0}>
+      <ModalBody>
         <Link
           fx
           type="a"
           href={`${config.siteURL}/case-battles/${result.gameId}`}
           hover="none"
-          borderTop 
-          borderColor="brown-4" 
-          pt={24}
           gap={12}
         >
           <Button
@@ -99,11 +96,11 @@ export const FairnessCaseBattleModal = ({
         </Div>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.serverSeed')}</ModalLabel>
-          <ModalCopyField text={result.serverSeed} color={'light-sand'} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.serverSeed} color={'light-sand'} textOverflow="ellipsis"/>
         </ModalSection>
         <ModalSection>
           <ModalLabel>{t('transactions.headers.eosBlockId')}</ModalLabel>
-          <ModalCopyField text={result.eosBlockId} color={'light-sand'} fontSize={12} lineHeight={16} textOverflow="ellipsis"/>
+          <ModalCopyField text={result.eosBlockId} color={'light-sand'} textOverflow="ellipsis"/>
         </ModalSection>
       </ModalBody>
     </Modal>
