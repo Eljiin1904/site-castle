@@ -14,8 +14,10 @@
   "include": [
     "src", 
     "../shared-core/build", 
-    "../shared-server/build"
-  ],
+    "../shared-server/build",
+    "__tests__/*",
+    "__tests__"
+ ],
   "exclude": [
     "node_modules"
   ],
