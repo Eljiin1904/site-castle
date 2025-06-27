@@ -15,24 +15,24 @@ import { ModalLabel } from "@client/comps/modal/ModalLabel";
 import { ModalCopyField } from "@client/comps/modal/ModalCopyField";
 import { Link } from "@client/comps/link/Link";
 import { SvgExternal } from "@client/svgs/common/SvgExternal";
-import { Heading } from "@client/comps/heading/Heading";
 import { Fairness } from "#app/services/fairness";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { LoginModal } from "../login/LoginModal";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const FairnessSeedModal = ({ historyTo }: { historyTo?: string }) => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
+  const { t } = useTranslation(["fairness"]);
   if (!authenticated) {
     return <LoginModal />;
   }
   return (
     <Modal
-      width="sm"
+      width="md"
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Fairness"
+        heading={t('seedModal.title')}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <UserContent historyTo={historyTo} />
@@ -45,6 +45,7 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
   const [processing, setProcessing] = useState(false);
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["fairness"]);
 
   const query = useQuery({
     enabled: authenticated,
@@ -54,7 +55,7 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
 
   const handleRotate = usePost(async () => {
     if (!newClientSeed) {
-      Toasts.error(new Error("Invalid client seed."));
+      Toasts.error(new Error('validations:errors.fairness.invalidClientSeed'));
       return;
     }
 
@@ -66,53 +67,55 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
 
     setNewClientSeed(undefined);
 
-    Toasts.success("Seed pair rotated.");
+    Toasts.success("fairness:seedModal.seedPairRotated");
   }, setProcessing);
 
   return (
-    <ModalBody>
-      <ModalSection>
-        <ModalLabel>{"Active Client Seed"}</ModalLabel>
-        <ModalCopyField text={query.data?.clientSeed} />
-      </ModalSection>
+    <ModalBody pt={0}>
+      <Div fx borderTop borderColor="brown-4" pt={24} gap={12}>
+        <ModalSection>
+          <ModalLabel>{t('seedModal.activeClientSeed')}</ModalLabel>
+          <ModalCopyField text={query.data?.clientSeed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />
+        </ModalSection>
+      </Div>
       <ModalSection justify="space-between">
-        <ModalLabel>{"Active Server Seed (Hashed)"}</ModalLabel>
-        <ModalCopyField text={query.data?.serverSeedHashed} />
+        <ModalLabel>{t('seedModal.activeServerSeed')}</ModalLabel>
+        <ModalCopyField text={query.data?.serverSeedHashed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis"/>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Bets made with pair"}</ModalLabel>
-        <ModalCopyField
-          text={Numbers.toLocaleString(query.data?.nonce || 0, 0)}
-        />
+        <ModalLabel>{t('seedModal.betsMadeWithPair')}</ModalLabel>
+        <ModalCopyField text={Numbers.toLocaleString(query.data?.nonce || 0, 0)} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />
       </ModalSection>
       <Div
         fx
         borderBottom
+        borderColor="brown-4"
       />
       <Div fx>
-        <Heading>{"Rotate Seed Pair"}</Heading>
+        <ModalLabel>{t('seedModal.rotateSeedPair')}</ModalLabel>
       </Div>
       <ModalSection>
-        <ModalLabel>{"New Client Seed"}</ModalLabel>
+        <ModalLabel>{t('seedModal.newClientSeed')}</ModalLabel>
         <Div fx>
           <Input
             type="text"
-            placeholder="Enter new client seed..."
+            placeholder=""
             value={newClientSeed}
             onChange={setNewClientSeed}
           />
           <Button
-            kind="primary"
-            label="Rotate"
+            kind="tertiary-grey"
+            label={t('seedModal.rotate')}
             width={100}
             disabled={processing || query.isFetching}
             onClick={handleRotate}
+            size="xssso"
           />
         </Div>
       </ModalSection>
       <ModalSection>
-        <ModalLabel>{"Next Server Seed (Hashed)"}</ModalLabel>
-        <ModalCopyField text={query.data?.nextServerSeedHashed} />
+        <ModalLabel>{t('seedModal.nextServerSeed')}</ModalLabel>
+        <ModalCopyField text={query.data?.nextServerSeedHashed} fontSize={12} lineHeight={16} color="light-sand" textOverflow="ellipsis" />
       </ModalSection>
       {historyTo && (
         <Fragment>
@@ -128,8 +131,8 @@ const UserContent = ({ historyTo }: { historyTo?: string }) => {
           >
             <Button
               fx
-              kind="secondary"
-              label="View History"
+              kind="tertiary-grey"
+              label={t('seedModal.viewHistory')}
               iconRight={SvgExternal}
               onClick={() => Dialogs.close("primary")}
             />

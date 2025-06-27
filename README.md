@@ -29,6 +29,9 @@ You can either create a free cluster on [MongoDB] or run a local Docker containe
          ```bash
          docker run -d -p 27778:27017 -h $(hostname) --name mongo-pidwin mongo:latest --replSet=dbrs && sleep 5 && docker exec mongo-pidwin mongosh --quiet --eval "rs.initiate();"
          ```
+         ```bash
+            docker run --name redis-pidwin -p 6379:6379 -d redis
+         ```
          - Verify the cluster status is healthy.
          ```bash
          docker exec mongo-pidwin mongosh --quiet --eval "rs.status()"

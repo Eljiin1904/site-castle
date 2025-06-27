@@ -1,0 +1,61 @@
+replicaCount: 1
+
+environment: "staging"
+
+image:
+  app:
+    repository: "183631306381.dkr.ecr.us-east-1.amazonaws.com/pidwin/castle-reporting-server"
+    pullPolicy: Always
+    tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "shared-reporting-server"
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 3000
+  tls: []
+
+ingress:
+  enabled: false
+
+secrets:
+  app: "shared-reporting-server"
+
+resources: {}
+
+livenessProbe: {}
+
+readinessProbe: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+namespace: shared-reporting-server
+
+# Explicit labels to ensure consistency
+labels:
+  app: shared-reporting-server

@@ -57,7 +57,6 @@ export default Http.createApiRoute({
         "user already linked - email: " + email + " username: " + existingUserByEmail.username,
       );
       throw new HandledError();
-      throw new UserLinkedElsewhereError(existingUserByEmail._id, email);
     }
 
     const existingUserByUsername = await Database.collection("users").findOne(

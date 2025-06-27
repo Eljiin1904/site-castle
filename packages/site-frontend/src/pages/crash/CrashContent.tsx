@@ -1,3 +1,24 @@
+/**
+ * CrashContent component renders the main content for the Crash game page.
+ * It conditionally displays content based on the application's initialization state
+ * and the current layout (mobile, tablet, laptop, or desktop).
+ *
+ * @returns {JSX.Element} The rendered CrashContent component.
+ */
+
+/**
+ * MobileContent component renders the layout for mobile and tablet devices.
+ * It includes the CrashView, CrashMenu, and BetBoard components.
+ *
+ * @returns {JSX.Element} The rendered MobileContent component.
+ */
+
+/**
+ * NotMobileContent component renders the layout for laptop and desktop devices.
+ * It includes the CrashMenu, CrashView, and BetBoard components with a different arrangement.
+ *
+ * @returns {JSX.Element} The rendered NotMobileContent component.
+ */
 import { PageLoading } from "@client/comps/page/PageLoading";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Div } from "@client/comps/div/Div";
@@ -48,7 +69,7 @@ const MobileContent = () => {
 };
 
 const NotMobileContent = () => {
-  const { t } = useTranslation(["games\\crash"]);
+  const { t } = useTranslation();
   return (<Fragment>
     <Div
       fx

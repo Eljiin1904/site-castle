@@ -1,0 +1,149 @@
+{
+  "title": "Fairness",
+  "loginToViewResults": "Login to View Results",
+  "manageSeeds": "Manage Seeds",
+  "independentVerification": "For independent verification, you may replicate the results of any game by using the link below and entering the provided server seed, client seed, and nonce.",
+  "independentVerificationNotNonce": "For independent verification, you may replicate the results of any game by using the link below and entering the provided server seed, client seed.",
+  "verifyGame": "Verify Game",
+  "overview": {
+    "title": "Overview",
+    "whatsProvablyFair": "What is Provably Fair?",
+    "whatsProvablyFairContent": "Provably fair means we can prove that the game's results were generated before anyone placed a bet.",
+    "whatsProvablyFairContent2": "Additionally, we also provide open-source access to the game's code responsible for generating results. This allows users to check the code themselves to ensure fairness.",
+    "howDoesThatMakeitFair":"How does that make it fair?",
+    "howDoesThatMakeitFairContent": "We generate the game's result before you place your bet.",
+    "howDoesThatMakeitFairContent2": "Once you've made your bet, you can verify that the outcome matches the pre-generated result.",
+    "howDoesThatMakeitFairContent3": "If the outcome of your bet doesn't match the pre-generated result, it indicates manipulation.",
+    "howDoesThatMakeitFairContent4": "For single player games, a client seed, a server seed and a nonce are used as input to determine the outcome of the game.",
+    "howDoesThatMakeitFairContent5": "For multiplayer games, a server hash and a public hash are used to determine the outcome of the game."  
+  },
+  "pastResults": {
+    "title": "Past Results",
+    "noResults": "No past results available.",
+    "viewDetails": "View Details",
+    "gameType": "Game Type",
+    "betAmount": "Bet Amount",
+    "result": "Result",
+    "timestamp": "Timestamp"
+  },
+  "singlePlayerGames": {
+    "title": "{{game}} Fairness",
+    "description1" : "We calculate the result for each game by hashing the combination of the following inputs:",
+    "inputs": {
+      "clientSeed": "Client Seed: a random or player provided string.",
+      "serverSeed": "Server Seed: a SHA-256 hash of 16 random characters.",
+      "nonce": "Nonce: an integer incremented every time a game is played."
+    },
+    "dice": "Every game, we roll a number from 0 to 10,000 then convert it to a decimal. If the roll is within the target range, then the user wins.",
+    "limbo": "Every game, we roll a number from 1 to 100,000,000 then convert it to a multiplier. If the target is less than or equal to the multiplier, then the user wins.",
+    "mines": "Every game, we randomly shuffle the mines on the board. If the player reveals a mine, the game is over. If the player reveals a gem, their payout is increased.",
+    "blackjack": "Every game, we deal two cards to the player and two cards to the dealer. The player wins if their hand is closer to 21 than the dealer's hand without going over.",
+    "cases": "Every item in the case has a range of numbers based on its drop rate. If the roll is within that range, the item is dropped.",
+    "cases2": "You must use the unhashed server seed to verify your results. If you see a hashed server seed, you must rotate it on the info page to unhash it."
+  },
+  "battles": {
+    "title": "Case Battles Fairness",
+    "description1": "We calculate the result for each battle by hashing the combination of the following inputs:",
+    "inputs": {
+      "serverSeed": "Server Seed: a SHA-256 hash of 16 random characters. We generate and hash this at the start of the round.",
+      "eosBlockId": "EOS Block ID: the unique ID of an EOS block. We commit to a future block at the start of the round then wait for the block to be mined. This ensures we cannot manipulate the result.",
+      "roundId": "Round ID: an integer incremented every round."
+    },
+    "description2": "Every round, we roll item drops for each player. Every item in each case has a range of numbers based on its drop rate. If the roll is within that range, the item is dropped.",
+    "description3": "After every round has been played, we determine the winner(s) by adding up the results from each round. In the case of multiple winners, the pot is split evenly amongst them."
+  },
+  "double": {
+    "title": "Double Fairness",
+    "description1" : "We calculate the result for each round by hashing the combination of the following inputs:",
+    "inputs": {
+      "serverSeed": "Server Seed: a SHA-256 hash of 16 random characters. We generate and hash this at the start of the round.",
+      "eosBlockId": "EOS Block ID: the unique ID of an EOS block. We commit to a future block at the start of the round then wait for the block to be mined. This ensures we cannot manipulate the result.",
+      "roundId": "Round ID: an integer incremented every round."
+    },
+    "description2": "Every round, we roll a number from 1 to 15. We determine the the result by assigning each number in that range a color based on it's multiplier."
+  },
+  "crash": {
+    "title": "Crash Fairness",
+    "description1" : "To ensure provable fairness in crash games, the system begins with a hidden server secret. From this secret, it generates a chain of 20 million SHA256 hashes, where each hash is derived from the hexadecimal representation of the preceding one.",
+    "description2": " The very last hash in this chain is made public to all players. This pre-commitment prevents the casino from substituting an alternative SHA256 chain once the game begins.",
+    "description3": "During gameplay, the system traverses this hash chain in reverse order.",
+    "description4": "We calculate the crash point for each round by hashing the combination of the following inputs:",
+    "inputs": {
+      "serverSeed": "Server Seed: a SHA-256 hash derived from the hexadecimal representation of the preceding one. ",
+      "clientSeed": "Client Seed: a hash of a future Bitcoin block, which is used to ensure the fairness of the game."
+    },
+    "description5": "Every round, a multiplier is generated based on the hash of the server seed and client seed. The multiplier increases over time, and if a player cashes out before the crash point, they receive their bet multiplied by the current multiplier."
+  },
+  "cases": {
+    "info": "You must use the <0>{{unhashed}}</0> server seed to verify your results. If you see a <1>{{hashed}}</1> server seed, you must rotate it on the info page to unhash it.",
+    "unhashed": "unhashed",
+    "hashed": "hashed"
+  },
+  "transactions": {
+    "notFound": "No transactions found.",
+    "viewInputs": "Click to view inputs",
+    "headers": {
+      "gameId": "Game Id",
+      "game": "Game",
+      "result": "Result",
+      "date": "Date",
+      "target": "Target",
+      "multiplier": "Multiplier",
+      "roll": "Roll",
+      "clientSeed": "Client Seed",
+      "serverSeed": "Server Seed",
+      "nonce": "Nonce",
+      "input": "Input",
+      "gridSize": "Grid Size",
+      "mineCount": "Mine Count",
+      "revealCount": "Reveal Count",
+      "playerCards": "Player Cards",
+      "dealerCards": "Dealer Cards",
+      "winAmount": "Win Amount",
+      "step": "Step",
+      "bet": "Bet",
+      "betType": "Bet Type",
+      "eosBlockId": "EOS Block ID",
+      "roundId": "Round ID",
+      "mode": "Mode",
+      "modifiers": "Modifiers",
+      "battle": "Battle",
+      "winners": "Winner(s)",
+      "pot": "Pot",
+      "case": "Case",
+      "item": "Item",
+      "won": "Won",
+      "clientHash": "Client Hash",
+      "serverHash": "Server Hash",
+      "roundMultiplier": "Round Multiplier",
+      "cashoutAt": "Cashout at",
+      "betAmount": "Bet Amount",
+      "wonAmount": "Won Amount"
+    }
+  },
+  "modal": {
+    "title": {
+      "crash": "Crash Results",
+      "double": "Double Results",
+      "mines": "Mines Results",
+      "limbo": "Limbo Results",
+      "dice": "Dice Results",
+      "blackjack": "Blackjack Results",
+      "cases": "Cases Results",
+      "battles": "Case Battles Results"
+    }
+  },
+  "seedModal": {
+    "title": "Fairness",
+    "activeClientSeed": "Active Server Seed",
+    "activeServerSeed": "Active Server Seed (Hashed)",
+    "betsMadeWithPair": "Bets made with pair",
+    "rotateSeedPair": "Rotate Seed Pair",
+    "newClientSeed": "New Client Seed",
+    "nextServerSeed": "Next Server Seed(Hashed)",
+    "rotate": "Rotate",
+    "seedPairRotated": "Seed pair rotated.",
+    "viewHistory": "View History",
+    "placeholder": "Enter new client seed..."
+  }
+}

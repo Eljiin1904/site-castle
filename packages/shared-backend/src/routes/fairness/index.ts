@@ -8,6 +8,7 @@ import getLimboResults from "./getLimboResults";
 import rotateSeeds from "./rotateSeeds";
 import getBlackjackResults from "./getBlackjackResults";
 import getMinesResults from "./getMinesResults";
+import getCrashResults from "./getCrashResults";
 
 const router = Router();
 
@@ -18,6 +19,7 @@ getDiceResults(router);
 getLimboResults(router);
 getMinesResults(router);
 getBlackjackResults(router);
+getCrashResults(router);
 getSeeds(router);
 rotateSeeds(router);
 

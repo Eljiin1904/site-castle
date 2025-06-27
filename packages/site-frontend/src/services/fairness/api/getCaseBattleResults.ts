@@ -6,6 +6,7 @@ export function getCaseBattleResults(data: {
   page: number;
 }): Promise<{
   results: CaseBattleResult[];
+  total: number;
 }> {
   return Http.post("/fairness/get-case-battle-results", data);
 }

@@ -23,11 +23,13 @@ export function initSockets(httpServer: HttpServer) {
   );
 
   logger.info("connecting socket.io to session handler");
+  //  Create Fallback if Redis Cannot Connect
   io.use(
     Sockets.sessionHandler({
       collection: "user-sessions",
     }),
   );
+  // io.use(Sockets.sessionHandler({ sessionType: "user" }));
 
   try {
     Listeners.activityFeed(io);

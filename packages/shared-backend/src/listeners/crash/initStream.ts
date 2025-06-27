@@ -1,3 +1,43 @@
+/**
+ * Initializes the crash game streams and sets up socket listeners for various events.
+ * This listener handles the following streams:
+ * - `roundStream`: Emits events for round insertions and updates.
+ * - `ticketStream`: Emits events for ticket insertions and updates.
+ * - `multiplierStream`: Emits events for multiplier insertions and manages active round updates.
+ *
+ * @module initStream
+ * @action init
+ * @callback
+ * @param io - The socket.io server instance used for broadcasting events.
+ *
+ * ### Streams and Events:
+ * #### `roundStream`
+ * - **Event:** `insert`
+ *   - Emits `crash-round-insert` with the inserted round document.
+ * - **Event:** `update`
+ *   - Emits `crash-round-update` to individual sockets after calculating latency delay.
+ *
+ * #### `ticketStream`
+ * - **Event:** `insert`
+ *   - Emits `crash-bet-insert` with the inserted ticket document if the round ID does not match the next round ID.
+ * - **Event:** `update`
+ *   - Emits `crash-bet-update` with the updated ticket document.
+ *
+ * #### `multiplierStream`
+ * - **Event:** `insert`
+ *   - Emits `crash-active-round` updates at regular intervals based on the multiplier time.
+ *   - Handles latency delay for individual sockets and manages interval-based updates.
+ *
+ * ### Constants:
+ * - `GAME_DELAY`: Delay time for the game round, retrieved from `CoreCrash.roundTimes.delay`.
+ * - `FREQUENCY`: Interval frequency for multiplier updates, retrieved from `CoreCrash.roundTimes.intervalFrequency`.
+ *
+ * ### Logging:
+ * - Logs debug messages for each stream event using the server logger.
+ *
+ * ### Error Handling:
+ * - Wraps all stream event handlers in `System.tryCatch` to ensure proper error handling.
+ */
 import { System } from "@server/services/system";
 import { Sockets } from "#app/services/sockets";
 import { roundStream } from "./helpers/roundStream";
@@ -7,6 +47,8 @@ import { Crash as CoreCrash } from "@core/services/crash";
 import { Crash } from "@server/services/crash";
 import { multiplierStream } from "./helpers/multiplierStream";
 const GAME_DELAY = CoreCrash.roundTimes.delay;
+const FREQUENCY = CoreCrash.roundTimes.intervalFrequency;
+
 const logger = getServerLogger({});
 
 export default Sockets.createListener({
@@ -83,8 +125,8 @@ export default Sockets.createListener({
                 return;
               }
               broadcaster.emit("crash-active-round", {elapsedTime: elapsedTime});
-              elapsedTime += 150;
-            }, 150);
+              elapsedTime += FREQUENCY;
+            }, FREQUENCY);
           },GAME_DELAY - latencyDelay);
         }
       }

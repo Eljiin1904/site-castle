@@ -23,7 +23,7 @@ export async function resetDatabase() {
     "users",
     "user-bet-sessions",
     "user-sessions",
-    "user-latency"
+    "user-latency",
   ];
 
   for (const collection of dbCollections) {

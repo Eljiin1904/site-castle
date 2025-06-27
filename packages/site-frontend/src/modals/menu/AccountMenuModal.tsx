@@ -10,7 +10,7 @@ import { MenuSeparator } from "#app/app/menu/panel/MenuSeparator";
 export const AccountMenuModal = ({items}: {
   items: {
     label: string;
-    icon: any;
+    icon?: any;
     to: string;
   }[];
 }) => {

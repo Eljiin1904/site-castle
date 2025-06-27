@@ -3,9 +3,10 @@ import { Toasts } from "@client/services/toasts";
 import { Div } from "@client/comps/div/Div";
 import { ConfirmModal } from "@client/modals/confirm/ConfirmModal";
 import { Span } from "@client/comps/span/Span";
-import { Img } from "@client/comps/img/Img";
 import { UserIcon } from "#app/comps/user-icon/UserIcon";
 import { Users } from "#app/services/users";
+import { Vector } from "@client/comps/vector/Vector";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const UserUnblockModal = ({
   user,
@@ -15,7 +16,10 @@ export const UserUnblockModal = ({
   onConfirm?: () => void;
 }) => {
   const level = Users.getLevel(user.xp);
-
+  const {t} = useTranslation();
+  const levelIcon = Users.getLevelIcon(level);
+  const levelColor = Users.getLevelColor(level);
+  
   return (
     <ConfirmModal
       heading="Unblock User"
@@ -34,7 +38,6 @@ export const UserUnblockModal = ({
           align="center"
           pb={24}
           gap={16}
-          borderBottom
         >
           <UserIcon
             avatarId={user.avatarId}
@@ -49,7 +52,7 @@ export const UserUnblockModal = ({
               family="title"
               weight="bold"
               size={20}
-              color="white"
+              color="light-sand"
             >
               {user.name}
             </Span>
@@ -57,18 +60,17 @@ export const UserUnblockModal = ({
               align="center"
               mt={2}
             >
-              <Img
-                type="png"
-                path={Users.getLevelBadge(level)}
-                width="20px"
+              <Vector
+                as={levelIcon}
+                size={16}
+                color={levelColor}
               />
               <Span
-                size={12}
-                weight="medium"
-                color="gray"
+                size={12}                
+                color={levelColor}
                 ml={6}
               >
-                {`Level ${level}`}
+                 {t('chat.level',{level:level})}
               </Span>
             </Div>
           </Div>

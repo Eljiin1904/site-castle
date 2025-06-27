@@ -1,71 +1,78 @@
 import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from "uuid";
 import * as dotenv from "dotenv";
+import { createHash } from "crypto";
 dotenv.config();
 
 const DB_NAME = "development";
 const DB_URI = process.env.DB_URI || "mongodb://localhost:27778/?directConnection=true";
 
-const TOTAL_RECORDS = 20_000_000;
-const BATCH_SIZE = 10_000;
-const CONCURRENCY = 4;
+const TOTAL_RECORDS = 200_000;
+const TOTAL_IN_BATCH = 10_000; // Number of records to insert in each batch
 const COLLECTION_NAME = "crash-records";
 
-export interface CrashRecordDocument {
-  uuid: string;
-  index: number;
-  timestamp: Date;
+// This function hashes the server seed using SHA-256 and returns a new hash.
+function hashServerSeed(prevSeed: string) {
+  return createHash("sha256").update(prevSeed).digest("hex");
 }
+
+export interface CrashRecordDocument {
+  hash: string;
+  index: number;
+  used: boolean; // Indicates whether the record has been used
+  timestamp: Date;
+};
 
 async function insertCrashRecords() {
   const client = new MongoClient(DB_URI);
-
+  let initialHash = createHash("sha256").update(uuidv4()).digest("hex"); // Generate an initial SHA-256 hash value
+  let index = 1; // Start index for the batch
   try {
     await client.connect();
     const db = client.db(DB_NAME);
     const collection = db.collection<CrashRecordDocument>(COLLECTION_NAME);
 
-    // Remove Previous Collection
-    await collection.drop().catch((err) => {
-      console.error(err);
-    });
+    // If there are existing records, get the last hash to continue the chain
+    const lastRecord = await collection.findOne({}, { sort: { index: -1 } });
+    if (lastRecord) {
+      console.log(`Last record found with hash: ${lastRecord.hash}`);
+      // Use the last record's hash as the starting point for the next batch
+      initialHash = lastRecord.hash;
+      index = lastRecord.index + 1; // Start from the next index
 
-    // Create Index for easy retreival
-    await collection.createIndex({ uuid: 1 }, { unique: true });
-    await collection.createIndex({ index: 1 }, { unique: true });
+    } else {
+      console.log("No existing records found, starting with a new initial hash.");
+      await collection.createIndex({ hash: 1 }, { unique: true });
+      await collection.createIndex({ index: 1 }, { unique: true });
+    }
+    // Uncomment the following line to drop the collection if you want to start fresh
+    // await collection.drop().catch((err) => {
+    //   console.error(err);
+    // });
 
-    const timestamp = new Date();
-
-    // Split into Batches for insertion
-    const totalBatches = Math.ceil(TOTAL_RECORDS / BATCH_SIZE);
-    const batchIndexes = Array.from({ length: totalBatches }, (_, i) => i);
-
+    // Create Index for easy retrieval
     console.log(`Inserting ${TOTAL_RECORDS.toLocaleString()} documents...`);
 
     const start = Date.now();
-
-    for (let i = 0; i < totalBatches; i += CONCURRENCY) {
-      const parallelBatches = batchIndexes.slice(i, i + CONCURRENCY);
-
-      await Promise.all(
-        parallelBatches.map(async (batchNum) => {
-          const startIndex = batchNum * BATCH_SIZE;
-          const count = Math.min(BATCH_SIZE, TOTAL_RECORDS - startIndex);
-
-          const batch: CrashRecordDocument[] = Array.from({ length: count }, (_, j) => ({
-            uuid: uuidv4(),
-            index: startIndex + j,
-            timestamp,
-          }));
-
-          await collection.insertMany(batch);
-
-          if ((startIndex + count) % 100_000 === 0) {
-            console.log(`$Inserted ${startIndex + count} / ${TOTAL_RECORDS}`);
-          }
-        }),
-      );
+   
+    let hashBatch:CrashRecordDocument[] = [];
+    for (let i = index, j = 0; i < TOTAL_RECORDS; i += 1, j += 1) {
+      const hash = hashServerSeed(initialHash);
+      hashBatch.push({
+        hash,
+        index: i,
+        used: false, // Mark as unused initially
+        timestamp: new Date(), // Increment timestamp by 1 second for each record
+      });
+      initialHash = hash; // Update the initial hash for the next record
+      if (j >= TOTAL_IN_BATCH) {
+        await collection.insertMany(hashBatch);
+        hashBatch = []; // Reset the batch
+        j = 0; // Reset the counter
+      }
     }
+    
+    console.log(`Inserted ${TOTAL_RECORDS.toLocaleString()} documents in ${((Date.now() - start) / 1000).toFixed(2)} seconds.`);
   } catch (err) {
     console.error("Error during insertion: ", err);
   } finally {

@@ -13,12 +13,13 @@ export const ModalCopyField: FC<ModalCopyFieldProps> = ({
   text,
   ...forwardProps
 }) => {
+  const {size, ...spanProps} = forwardProps;
   return (
     <ModalField
       justify="space-between"
-      {...forwardProps}
+      size={size}
     >
-      <Span textOverflow="ellipsis">{text}</Span>
+      <Span textOverflow="ellipsis" {...spanProps}>{text}</Span>
       <Vector
         as={SvgCopy}
         size={14}
@@ -26,7 +27,7 @@ export const ModalCopyField: FC<ModalCopyFieldProps> = ({
         hover="highlight"
         onClick={() => {
           navigator.clipboard.writeText(`${text}`);
-          Toasts.success("Copied to clipboard.");
+          Toasts.success("copyToClipboard");
         }}
       />
     </ModalField>

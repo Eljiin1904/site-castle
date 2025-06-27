@@ -2,7 +2,6 @@ import { beforeAll, expect, describe, afterAll, it, vi, beforeEach } from "vites
 import * as Managers from "../managers";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
-import { Random } from "@server/services/random";
 import { Users } from "@server/services/users";
 import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
@@ -130,13 +129,7 @@ describe("Crash Manager Test", () => {
       batchSize: 100,
     });
 
-    const serverSeed = Ids.secret();
-    const serverSeedHash = Random.hashServerSeed(serverSeed);
-    const blockNow = await Random.getEosBlockNow();
-    const eosBlockNum = blockNow.eosBlockNum + 4;
-    const statusDate = new Date();
-    const { eosBlockId } = await Random.getEosBlock(eosBlockNum);
-
+    const serverHash = Ids.secret();
     const multiplier = 2;
     const multiplierTime = CoreCrash.getTimeForMultiplier(multiplier);
 
@@ -146,10 +139,7 @@ describe("Crash Manager Test", () => {
       status: "simulating",
       statusDate: new Date(),
       startDate: new Date(),
-      eosBlockId,
-      eosBlockNum,
-      multiplier: multiplier,
-      eosCommitDate: statusDate
+      multiplier: multiplier
     };
     const crashMultiplier: CrashMultiplierDocument = {
       _id: multiplierId,
@@ -157,8 +147,8 @@ describe("Crash Manager Test", () => {
       multiplier: multiplier,
       timestamp: new Date(),
       roundTime: multiplierTime,
-      serverSeed,
-      serverSeedHash
+      serverHash,
+      clientHash: Ids.secret(),
     };
     const crashTicket: CrashTicketDocument = {
       _id: cashoutTicketId,
@@ -232,12 +222,7 @@ describe("Crash Manager Test", () => {
       baseValue: 1000000,
       batchSize: 100,
     });
-    const serverSeed = Ids.secret();
-    const serverSeedHash = Random.hashServerSeed(serverSeed);
-    const blockNow = await Random.getEosBlockNow();
-    const eosBlockNum = blockNow.eosBlockNum + 4;
-    const statusDate = new Date();
-    const { eosBlockId } = await Random.getEosBlock(eosBlockNum);
+    const serverHash = Ids.secret();
     const multiplier = 2;
     const multiplierTime = CoreCrash.getTimeForMultiplier(multiplier);
     const crashRound: CrashRoundDocument = {
@@ -246,10 +231,7 @@ describe("Crash Manager Test", () => {
       status: "simulating",
       statusDate: new Date(),
       startDate: new Date(),
-      eosBlockId,
-      eosBlockNum,
-      multiplier: multiplier,
-      eosCommitDate: statusDate
+      multiplier: multiplier
     };
     const crashMultiplier: CrashMultiplierDocument = {
       _id: multiplierId,
@@ -257,8 +239,8 @@ describe("Crash Manager Test", () => {
       multiplier: multiplier,
       timestamp: new Date(),
       roundTime: multiplierTime,
-      serverSeed,
-      serverSeedHash
+      serverHash,
+      clientHash: Ids.secret(),
     };
     const crashTicket: CrashTicketDocument = {
       _id: cashoutTicketId,

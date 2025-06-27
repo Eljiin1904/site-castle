@@ -5,10 +5,10 @@ metadata:
   labels:
     app: shared-reporting-server
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.type | default "ClusterIP" }}
   ports:
     - name: http
-      port: {{ .Values.service.port }}
+      port: {{ .Values.service.port | default 3000 }}
       targetPort: http
       protocol: TCP
   selector:

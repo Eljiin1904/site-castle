@@ -53,6 +53,7 @@ export interface ServerConfig extends CoreConfig {
   hubEightPublicKey: string;
   operatorId: string;
   hubEightApiURL: string;
+  redisUrl: string;
   hubEightTestUrl: string;
 }
 
@@ -70,6 +71,7 @@ config.dbUri = process.env.DB_URI;
 config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
+config.redisUrl = process.env.REDIS_URL || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {

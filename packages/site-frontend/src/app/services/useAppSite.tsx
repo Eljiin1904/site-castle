@@ -25,5 +25,11 @@ export function useAppSite() {
     Site.time.offset = serverTime - Date.now();
   });
 
+  useSocketListener("pong", (latency, callback) => {
+    
+    callback();
+    dispatch(Site.setLatency(latency));    
+  });
+
   return null;
 }

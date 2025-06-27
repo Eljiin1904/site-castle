@@ -38,7 +38,7 @@ export async function validateProfanity({
 export async function checkProfanityByField(fieldName: string, text: string) {
   const { webPurityApi } = config;
   // TODO remove when subcription license is purchased
-  if (webPurityApi.length == 0) return [];
+  if (!webPurityApi || webPurityApi.length == 0) return [];
   const profaneWords = await validateProfanity({ text });
 
   if (profaneWords.length > 0) {

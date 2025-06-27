@@ -2,71 +2,62 @@ import { FairnessSeedModal } from "#app/modals/fairness/FairnessSeedModal";
 import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { Heading } from "@client/comps/heading/Heading";
+import { PageTitle } from "@client/comps/page/PageTitle";
 import { Paragraph } from "@client/comps/paragraph/Paragraph";
 import { Dialogs } from "@client/services/dialogs";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const InfoGuide = () => {
+  const { t } = useTranslation(["fairness"]);
   return (
     <Div
       fx
       column
-      gap={24}
+      gap={40}
     >
       <Div
         column
         gap={16}
       >
-        <Heading
-          as="h1"
-          size={24}
-        >
-          {"What is Provably Fair?"}
-        </Heading>
+        <PageTitle
+          heading={t('overview.whatsProvablyFair')}
+        />       
         <Paragraph>
-          {
-            '"Provably fair" means we can prove that the game\'s results were generated before anyone placed a bet.'
-          }
+          {t('overview.whatsProvablyFairContent')}
         </Paragraph>
         <Paragraph>
-          {
-            "Additionally, we also provide open-source access to the game's code responsible for generating results. This allows users to check the code themselves to ensure fairness."
-          }
+        {t('overview.whatsProvablyFairContent2')}
         </Paragraph>
       </Div>
       <Div
         column
         gap={16}
       >
-        <Heading
-          as="h1"
-          size={24}
-        >
-          {"How does that make it fair?"}
-        </Heading>
+        <PageTitle
+          heading={t('overview.howDoesThatMakeitFair')}
+        />
         <Paragraph>
-          {"We generate the game's result before you place your bet."}
+          {t('overview.howDoesThatMakeitFairContent')}
         </Paragraph>
         <Paragraph>
           {
-            "Once you've made your bet, you can verify that the outcome matches the pre-generated result."
+           t('overview.howDoesThatMakeitFairContent2')
           }
         </Paragraph>
         <Paragraph>
           {
-            "If the outcome of your bet doesn't match the pre-generated result, it indicates manipulation."
+            t('overview.howDoesThatMakeitFairContent3')
           }
         </Paragraph>
       </Div>
-      <Div borderTop />
       <Paragraph>
         {
-          "For singleplayer games, a client seed, a server seed and a nonce are used as input to determine the outcome of the game."
+         t('overview.howDoesThatMakeitFairContent4')
         }
       </Paragraph>
-      <Div borderTop />
       <Button
-        kind="primary"
-        label="Manage Seeds"
+        kind="primary-yellow"
+        label={t('overview.manageSeeds')}
         onClick={() => Dialogs.open("primary", <FairnessSeedModal />)}
       />
     </Div>

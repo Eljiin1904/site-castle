@@ -13,25 +13,22 @@ import crypto from "crypto";
  * This formula ensures that higher multipliers are less likely to be generated because smaller random 
  * numbers produce larger multipliers. Since the random number is uniformly distributed, this inversion
  * scales the distribution of multipliers to be more uniform.
- * @param param0 serverSeed
- * @param param0 clientSeed
+ * @param param0 serverHash
+ * @param param0 clientHash
  * @param param0 nonce
  * @returns 
  */
 export function getMultiplier({
-  serverSeed,
-  clientSeed,
-  nonce,
+  serverHash,
+  clientHash,
   maxValue
 }: {
-  serverSeed: string;
-  clientSeed: number | string;
-  nonce: number | string;
+  serverHash: string;
+  clientHash: string;
   maxValue: number;
 }) {
   
-  const seed = `${serverSeed}-${clientSeed}-${nonce}`;
-  const hash = crypto.createHmac("sha256", seed).digest("hex");
+  const hash = crypto.createHmac("sha256", serverHash).update(clientHash).digest("hex");
   const subHash = hash.substring(0, 8); 
   const number = Math.abs(Number.parseInt(subHash, 16));
   const maxInt32 = Math.pow(2, 32);

@@ -3,6 +3,7 @@ import { CrashViewSlider } from "./CrashViewSlider";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { CrashHistory } from "./CrashHistory";
 import { CrashHeader } from "./CrashHeader";
+import { NetworkStatus } from "#app/comps/network-status/NetworkStatus";
 
 export const CrashView = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);  
@@ -21,6 +22,7 @@ export const CrashView = () => {
       }}
     >
       <Div fx position="relative" grow>
+        <NetworkStatus />      
         <CrashHeader />
         <CrashHistory />
         <CrashViewSlider />

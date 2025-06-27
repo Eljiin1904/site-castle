@@ -15,12 +15,13 @@ export default Http.createApiRoute({
     const { limit, page } = req.body;
     const user = req.user;
 
+    const filter = {
+      "user.id": user._id,
+      processed: true,
+    };
     const tickets = await Database.collection("double-tickets")
       .find(
-        {
-          "user.id": user._id,
-          processed: true,
-        },
+        filter,
         {
           sort: { timestamp: -1 },
           skip: (page - 1) * limit,
@@ -61,7 +62,8 @@ export default Http.createApiRoute({
 
       results.push(result);
     }
-
-    res.json({ results });
+    
+    const total = await Database.collection("double-tickets").countDocuments(filter);
+    res.json({ results , total});
   },
 });

@@ -79,6 +79,8 @@ export const colors = {
   "green-arrow": "#274C2F",
   "chat-system": '#E15E58',
   "auto-gem": "#C7C5BD",
-  "orange": "#E9A23B"
+  "orange": "#E9A23B",
+  "bronze": "#CC7C2E",
+  "diamond": "#6A97FF"
 } as const;
 

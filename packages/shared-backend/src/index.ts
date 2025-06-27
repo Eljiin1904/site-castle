@@ -24,12 +24,11 @@ async function main() {
   //  Initialize Site Games
   await initSiteGames();
 
-  const httpServer = initHttp();
+  const httpServer = await initHttp();
 
   logger.info("Initialized http.");
 
   initSockets(httpServer);
-
   logger.info("Initialized sockets.");
 
   httpServer.listen(port, async () => {
