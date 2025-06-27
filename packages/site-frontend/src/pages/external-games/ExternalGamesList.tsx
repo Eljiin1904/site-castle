@@ -50,7 +50,10 @@ export const ExternalGamesList = ({ games }: { games: ExternalGame[] }) => {
   return (
     <Div>
       <div className="game-grid">
+        {/* {games.map((game) => (
+
         {games.map((game) => (
+
           <div
             className="game-card"
             key={game.game_code}
@@ -66,7 +69,9 @@ export const ExternalGamesList = ({ games }: { games: ExternalGame[] }) => {
             </div>
           </div>
           // </div>
-        ))}
+
+        ))} */}
+
       </div>
     </Div>
   );

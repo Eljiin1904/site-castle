@@ -10,10 +10,10 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import { Http } from "#app/services/http";
 import config from "#app/config";
-import { RedisStore } from "connect-redis";
+// import { RedisStore } from "connect-redis";
 import * as Routes from "#app/routes";
-import { RedisService } from "@server/services/redis";
-import { RedisClientType } from "redis";
+// import { RedisService } from "@server/services/redis";
+// import { RedisClientType } from "redis";
 
 export async function initHttp(app = express()) {
   const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl, redisUrl } = config;
@@ -83,9 +83,9 @@ export async function initHttp(app = express()) {
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
 
-  let redisService: RedisService;
-  let redisClient: RedisClientType | undefined;
-  let store: RedisStore | undefined;
+  // let redisService: RedisService;
+  // let redisClient: RedisClientType | undefined;
+  // let store: RedisStore | undefined;
 
   // try {
   //   redisService = new RedisService(redisUrl);
