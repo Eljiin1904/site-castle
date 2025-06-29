@@ -54,6 +54,8 @@ export interface ServerConfig extends CoreConfig {
   operatorId: string;
   hubEightApiURL: string;
   redisUrl: string;
+  redisHost: string;
+  redisPort: number;
   hubEightTestUrl: string;
   ldClientKey: string;
 }
@@ -73,6 +75,8 @@ config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
 config.redisUrl = process.env.REDIS_URL || "";
+config.redisHost = process.env.REDIS_HOST || "";
+config.redisPort = Number(process.env.REDIS_PORT) || 6379;
 config.ldClientKey = process.env.LD_SDK_KEY || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
