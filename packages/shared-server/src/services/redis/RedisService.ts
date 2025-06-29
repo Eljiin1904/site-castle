@@ -27,11 +27,11 @@ export class RedisService {
       return;
     }
 
-    const { redisUrl } = config;
+    const { redisHost } = config;
 
     try {
       this._client = createClient({
-        url: redisUrl,
+        url: redisHost,
         socket: {
           reconnectStrategy: (retries) => {
             if (retries > 3) {
