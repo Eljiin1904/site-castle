@@ -1,31 +1,29 @@
 import { RaceState } from "@core/types/rewards/RaceState";
 import { Div } from "@client/comps/div/Div";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { LeaderCard, LeaderCardHeader } from "./LeaderCard";
+import { RaceHeader } from "./RaceHeader";
+import { RaceTable } from "./RaceTable";
 
 export const LeaderGrid = ({ race }: { race: RaceState }) => {
   const userId = useAppSelector((x) => x.user._id);
 
+  let leaders = [...race.leaders];
+  if(race.local && !race.leaders.find((x) => x.user.id === userId)) 
+  leaders.push(race.local);
+
+  if(!leaders.length) 
+    return null;
   return (
     <Div
       fx
       column
-      gap={12}
+      gap={32}
     >
-      <LeaderCardHeader />
-      {race.leaders.map((leader) => (
-        <LeaderCard
-          key={leader.user.id}
-          leader={leader}
-          local={leader.user.id === userId}
-        />
-      ))}
-      {race.local && !race.leaders.find((x) => x.user.id === userId) && (
-        <LeaderCard
-          leader={race.local}
-          local
-        />
-      )}
+      
+      <RaceHeader />
+      <Div fx column gap={16}>
+        <RaceTable leaders={leaders}/>
+      </Div>
     </Div>
   );
 };

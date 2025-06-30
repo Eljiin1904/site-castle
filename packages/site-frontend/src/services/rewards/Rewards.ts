@@ -3,6 +3,7 @@ export * from "@core/services/rewards/Rewards";
 export * from "./api/boost";
 export * from "./api/buyProduct";
 export * from "./api/claim";
+export * from "./api/getActiveRace";
 export * from "./api/getActiveRaces";
 export * from "./api/getAdventInfo";
 export * from "./api/getBoostDates";
