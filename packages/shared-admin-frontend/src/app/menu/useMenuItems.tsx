@@ -14,7 +14,7 @@ import { SvgCoinStack } from "@client/svgs/common/SvgCoinStack";
 import { SvgStar } from "@client/svgs/common/SvgStar";
 import { SvgTicket } from "@client/svgs/common/SvgTicket";
 import { SvgRifle } from "@client/svgs/common/SvgRifle";
-import {SvgRace} from "@client/svgs/common/SvgRace";
+import SvgRace from "@client/svgs/common/SvgRace";
 
 const items = [
   { icon: SvgChart, label: "Dashboard", to: "/dashboard" },
