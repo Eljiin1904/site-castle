@@ -217,6 +217,10 @@ export const AppRouter = () => {
         element={<MarketRouter />}
       />
       <Route
+        path="/race/:slug"
+        element={<RacePage />}
+      />
+      <Route
         path="/races"
         element={<RacesPage />}
       />
