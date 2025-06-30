@@ -28,7 +28,7 @@ export default Http.createApiRoute({
     options.username = req.user.username;
     options.transaction_uuid = transaction_uuid;
     options.round = round;
-    options.operatorId = operatorId;
+    options.operatorId = Number(operatorId);
 
     // 2. Generate signature with Private Key
     const hubEightSignature = Security.sign(
@@ -55,7 +55,8 @@ export default Http.createApiRoute({
         url: result.data.url,
       });
     } catch (err: any) {
-      logger.error(err);
+      logger.error(`Issue Processing Game Round Details, Error: ${err}`);
+      throw new Error("Unable to process request at this time");
     }
   },
 });

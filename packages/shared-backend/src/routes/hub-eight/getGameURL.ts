@@ -69,7 +69,7 @@ export default Http.createApiRoute({
       deposit_url: `${config.siteAPI}`, // A place where user can deposit funds
       currency: "USD", // Confirmed that 1 Token == 1 USD
       game_currency: "USD", // Confirm that this will also be USD
-      country: user.kyc.country?.code,
+      country: "EE",
     };
 
     // 4. Make request to -> /operator/generic/v2/game/url with operator ID from config
@@ -92,8 +92,8 @@ export default Http.createApiRoute({
       });
       return;
     } catch (err: any) {
-      logger.error(err);
-      throw err;
+      logger.error(`Issue Processing getting Game Url, Error: ${err}`);
+      throw new Error("Unable to process request at this time");
     }
   },
 });
