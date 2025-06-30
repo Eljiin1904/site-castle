@@ -17,40 +17,50 @@ export class RedisService {
     return this._client;
   }
 
+  static get connected() {
+    return this.isConnected;
+  }
+
   static async initialize() {
     if (this.isConnected) {
-      throw new Error("Redis already initialized.");
+      logger.warn("Redis already initialized. Skipping reinitialization.");
+      return;
     }
-    const { redisUrl } = config;
 
-    this._client = createClient({
-      url: redisUrl,
-      socket: {
-        reconnectStrategy: (retries) => {
-          if (retries > 3) {
-            logger.error("Redis reconnect failed after 3 attempts. Giving up.");
-            return new Error("Retry attempts exhausted");
-          }
+    const { redisHost } = config;
 
-          const delay = Math.min(retries * 100, 1000); // exponential backoff
-          logger.warn(`Redis reconnect attempt ${retries}, retrying in ${delay}ms...`);
-          return delay; // retry after delay
+    try {
+      this._client = createClient({
+        url: redisHost,
+        socket: {
+          reconnectStrategy: (retries) => {
+            if (retries > 3) {
+              logger.error("Redis reconnect failed after 3 attempts. Giving up.");
+              return new Error("Retry attempts exhausted");
+            }
+
+            const delay = Math.min(retries * 100, 1000); // exponential backoff
+            logger.warn(`Redis reconnect attempt ${retries}, retrying in ${delay}ms...`);
+            return delay;
+          },
         },
-      },
-    });
+      });
 
-    this._client.on("connect", () => {
-      this.isConnected = true;
-      logger.info("Redis Client Connected");
-    });
+      this._client.on("connect", () => {
+        this.isConnected = true;
+        logger.info("Redis Client Connected");
+      });
 
-    this._client.on("error", (err: any) => {
-      this.logRedisError("Redis Client Error", err);
-    });
+      this._client.on("error", (err: any) => {
+        this.logRedisError("Redis Client Error", err);
+      });
 
-    this._client.connect().catch((err: any) => {
+      await this._client.connect();
+    } catch (err: any) {
+      this.isConnected = false;
       this.logRedisError("Initial Redis connection failed", err);
-    });
+      logger.warn("Continuing without Redis. Some features may be unavailable.");
+    }
   }
   // private async connect(): Promise<void> {
   //   if (!this.isConnected) {

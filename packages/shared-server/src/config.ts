@@ -54,7 +54,10 @@ export interface ServerConfig extends CoreConfig {
   operatorId: string;
   hubEightApiURL: string;
   redisUrl: string;
+  redisHost: string;
+  redisPort: number;
   hubEightTestUrl: string;
+  ldClientKey: string;
 }
 
 const env = process.env.env || process.env.NODE_ENV || "development";
@@ -72,6 +75,9 @@ config.awsId = process.env.AWS_ID;
 config.awsSecret = process.env.AWS_SECRET;
 config.awsRegion = process.env.AWS_REGION;
 config.redisUrl = process.env.REDIS_URL || "";
+config.redisHost = process.env.REDIS_HOST || "";
+config.redisPort = Number(process.env.REDIS_PORT) || 6379;
+config.ldClientKey = process.env.LD_SDK_KEY || "";
 
 export async function loadSecrets(overrides: Record<string, string> = {}) {
   try {
@@ -131,7 +137,6 @@ export async function loadSecrets(overrides: Record<string, string> = {}) {
     if (hubPublicKey.SecretString) {
       config.hubEightPublicKey = hubPublicKey.SecretString;
     }
-
   } catch (e) {
     console.error("ConfigManager.init failed.");
     throw e; // let the process die

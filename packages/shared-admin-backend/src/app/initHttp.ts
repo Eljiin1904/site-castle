@@ -11,9 +11,9 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import config from "#app/config";
 import * as Routes from "#app/routes";
-import { RedisStore } from "connect-redis";
-import { RedisService } from "@server/services/redis";
-import { RedisClientType } from "redis";
+// import { RedisStore } from "connect-redis";
+// import { RedisService } from "@server/services/redis";
+// import { RedisClientType } from "redis";
 
 export async function initHttp() {
   const { env, domain, sessionSecret, redisUrl } = config;
