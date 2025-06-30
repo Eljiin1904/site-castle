@@ -2,7 +2,7 @@ import { differenceInMinutes, isFuture } from "date-fns";
 import { Timestamp } from "@client/comps/timestamp/Timestamp";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { MenuItem } from "./MenuItem";
-import SvgRace from "@client/svgs/common/SvgRace";
+import {SvgRaceFirst} from "@client/svgs/common/SvgRace";
 import { SiteRace } from "@core/types/site/SiteRace";
 
 export const MenuRace = ({ collapsed }: { collapsed: boolean }) => {
@@ -26,7 +26,7 @@ const RaceItem = ({race, collapsed}:{
   const endingSoon = isFuture(race.endDate) && differenceInMinutes(race.endDate, Date.now()) < 60;
   return (
     <MenuItem
-      icon={SvgRace}
+      icon={SvgRaceFirst}
       label={race.displayName}
       subText={
         <Timestamp
