@@ -1,4 +1,3 @@
-import { SvgRedo } from "@client/svgs/common/SvgRedo";
 import { Button } from "@client/comps/button/Button";
 import { Div } from "@client/comps/div/Div";
 import { useTranslation } from "@core/services/internationalization/internationalization";
