@@ -27,7 +27,7 @@ export class RedisService {
       return;
     }
 
-    const { redisHost, redisPort } = config;
+    const { redisUrl } = config;
     logger.info(`Attempting to connect with the following url ${redisUrl}`);
     try {
       this._client = createClient({
