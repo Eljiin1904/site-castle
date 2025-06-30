@@ -1,0 +1,14 @@
+{
+  "title": "Race",
+  "description": "Wager the most to win huge prizes. Bet big and bet fast, or get left.",
+  "endTime": "Ends in ",
+  "leaders": "Leaders",
+  "viewWins": "View Wins",
+  "headers": {
+    "rank": "Rank",
+    "player": "Player",
+    "xp": "XP",
+    "wager": "Wager",
+    "prize": "Prize"
+  }
+}

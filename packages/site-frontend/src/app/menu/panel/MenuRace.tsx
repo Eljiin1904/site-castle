@@ -1,36 +1,45 @@
 import { differenceInMinutes, isFuture } from "date-fns";
-import { SvgFlag } from "@client/svgs/common/SvgFlag";
 import { Timestamp } from "@client/comps/timestamp/Timestamp";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { MenuItem } from "./MenuItem";
+import {SvgRaceFirst} from "@client/svgs/common/SvgRace";
+import { SiteRace } from "@core/types/site/SiteRace";
 
 export const MenuRace = ({ collapsed }: { collapsed: boolean }) => {
-  const race = useAppSelector((x) => x.site.meta.race);
-
-  if (!race) {
+  const races = useAppSelector((x) => x.site.meta.races);
+ 
+  if (!races || races.length === 0) {
     return null;
   }
 
-  const endingSoon =
-    isFuture(race.endDate) &&
-    differenceInMinutes(race.endDate, Date.now()) < 60;
+  return (
+    <>
+    {races.map(race => <RaceItem key={race.id} race={race} collapsed={collapsed} />)}
+    </>);
+};
 
+const RaceItem = ({race, collapsed}:{
+  race: SiteRace,
+  collapsed: boolean
+}) => {
+
+  const endingSoon = isFuture(race.endDate) && differenceInMinutes(race.endDate, Date.now()) < 60;
   return (
     <MenuItem
-      icon={SvgFlag}
+      icon={SvgRaceFirst}
       label={race.displayName}
       subText={
         <Timestamp
           className="fade-content"
           format="timer"
-          color={endingSoon ? "light-red" : "dark-gray"}
-          size={12}
+          color={endingSoon ? "double-red" : "dark-sand"}
+          size={10}
           date={race.endDate}
         />
       }
-      to="/race"
+      to={`race/${race.slug}`}
       type="nav"
       showLabel={!collapsed}
     />
   );
-};
+}

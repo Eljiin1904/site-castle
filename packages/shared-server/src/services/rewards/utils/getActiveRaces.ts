@@ -1,24 +1,22 @@
 import { RaceDocument } from "@core/types/rewards/RaceDocument";
 import { Database } from "#server/services/database";
 
-export async function getActiveRace(
-  slug: string,
+export async function getActiveRaces(
   projection?: Partial<Record<keyof RaceDocument, 0 | 1>>,
 ) {
-  let race = await Database.collection("races").findOne(
+  let races = await Database.collection("races").find(
     {
       endDate: { $gte: new Date() },
       startDate: { $lte: new Date() },
-      slug,
       kind: { $ne: "holiday" },
     },
     {
       projection,
     },
-  );
+  ).toArray();
 
-  if (!race) {
-    race = await Database.collection("races").findOne(
+  if (!races.length) {
+    races = await Database.collection("races").find(
       {
         endDate: { $lte: new Date() },
         kind: { $ne: "holiday" },
@@ -27,8 +25,8 @@ export async function getActiveRace(
         sort: { endDate: -1 },
         projection,
       },
-    );
+    ).toArray();
   }
 
-  return race;
+  return races;
 }

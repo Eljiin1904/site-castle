@@ -22,7 +22,7 @@ export async function getReferer({
     });
 
     if (!affiliate) {
-      throw new HandledError("validations:errors.invalidReferralCode");
+      throw new HandledError("validations:errors.invalidReferral");
     }
 
     const user = await Database.collection("users").findOne({ _id: affiliate.userId });
@@ -43,7 +43,7 @@ export async function getReferer({
   //     },
   //   );
   //   if (!affiliate) {
-  //     throw new HandledError("validations:errors.invalidReferralCode");
+  //     throw new HandledError("validations:errors.invalidReferral");
   //   }
   //   return {
   //     kind: affiliate.tags.includes("sponsored") ? "sponsored" : "user",

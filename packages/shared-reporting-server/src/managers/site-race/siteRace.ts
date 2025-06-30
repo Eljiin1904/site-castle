@@ -6,30 +6,32 @@ export default () => setInterval(System.tryCatch(main), 5000);
 
 async function main() {
   const meta = await Site.meta.cache();
-  const race = await Rewards.getActiveRace({
+  const activeRaces = await Rewards.getActiveRaces({
     reports: 0,
     leaders: 0,
   });
 
-  if (race) {
-    if (race._id !== meta.race?.id) {
+  if(!activeRaces)
+  {
+    if(meta.races?.length)
       await Site.setMeta({
-        key: "race",
-        value: {
+        key: 'races',
+        value: null,
+      });
+  }
+  else if (activeRaces.length > 0) {
+    await Site.setMeta({
+      key: 'races',
+      value: activeRaces.map(race => {
+        return {
           id: race._id,
           displayName: race.displayName,
           startDate: race.startDate,
           endDate: race.endDate,
           totalPayout: race.totalPayout,
-        },
-      });
-    }
-  } else {
-    if (meta.race) {
-      await Site.setMeta({
-        key: "race",
-        value: null,
-      });
-    }
+          slug: race.slug
+        }
+      }),
+    });
   }
 }

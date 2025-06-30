@@ -59,7 +59,7 @@ export const LocalRegisterBody = ({ setAction }: { setAction: (x: LoginAction) =
         if (
           !showReferralCode &&
           err instanceof Error &&
-          err.message.startsWith("errors.invalidReferralCode")
+          err.message.startsWith("errors.invalidReferral")
         ) {
           removeReferralCode();
           setShowReferralCode(true);

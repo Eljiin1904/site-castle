@@ -18,7 +18,7 @@ export const Span: FC<SpanProps> = ({
   fontSize = size,
   family,
   fontFamily = family,
-  weight,
+  weight = "medium",
   fontWeight = weight,
   lineHeight,
   ...forwardProps

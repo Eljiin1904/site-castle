@@ -6,15 +6,19 @@ import { Button } from "@client/comps/button/Button";
 import { Link } from "@client/comps/link/Link";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { PageBanner } from "#app/comps/site-page/PageBanner";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
-export const RaceBanner = ({ race }: { race: RaceState }) => {
+export const RaceBannerOld = ({ race }: { race: RaceState }) => {
+  
+  const {t} = useTranslation(['pages/race'])
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
+  
   return (
     <PageBanner
-      image="/graphics/race-banner"
+      image="/graphics/race-tile"
       heading={`${race.displayName}!`}
-      description="Wager the most to win huge prizes. Bet big and bet fast, or get left behind!"
+      description={t('description')}
       content={
         <Div gap={8}>
           <Div
@@ -48,4 +52,28 @@ export const RaceBanner = ({ race }: { race: RaceState }) => {
       }
     />
   );
+};
+
+/**
+ * Race Banner, contains the banner image, the race name and description,
+ * Show how much time is left on the race.
+ * @returns 
+ */
+export const RaceBanner = ({ race }: { race: RaceState }) => {
+
+  const {t} = useTranslation(['pages/race']);
+  const small = useIsMobileLayout();
+  
+  return (<PageBanner image={`/graphics/race-tile`} height={184} smallHeight={small ? 160: 120} heading={race.displayName} description={t('description')} content={<Div pt={small? 0: 4} alignItems="center" justifyContent="space-between">
+    <Div gap={8}>
+          <Span size={small? 12: 16} color="dark-brown" >{t('endTime')}</Span>
+          <Timestamp
+              format="timer"
+              date={race.endDate}
+              color="dark-brown"
+              fontSize={small? 12: 16}
+            />
+        </Div>
+    </Div>
+  }/>);
 };
