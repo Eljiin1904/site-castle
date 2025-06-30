@@ -27,11 +27,11 @@ export class RedisService {
       return;
     }
 
-    const { redisHost } = config;
-    logger.info(`Attempting to connect with the following url ${redisHost}`);
+    const { redisHost, redisPort } = config;
+    logger.info(`Attempting to connect with the following url redis://${redisUrl}`);
     try {
       this._client = createClient({
-        url: redisHost,
+        url: `redis://${redisUrl}`,
         socket: {
           reconnectStrategy: (retries) => {
             if (retries > 3) {
@@ -52,14 +52,14 @@ export class RedisService {
       });
 
       this._client.on("error", (err: any) => {
-        logger.info(`Attempting to connect with the following url ${redisHost}`);
+        logger.info(`Attempting to connect with the following url redis://${redisUrl}`);
         this.logRedisError("Redis Client Error", err);
       });
 
       await this._client.connect();
     } catch (err: any) {
       this.isConnected = false;
-      logger.info(`Attempting to connect with the following url ${redisHost}`);
+      logger.info(`Attempting to connect with the following url redis://${redisUrl}`);
       this.logRedisError("Initial Redis connection failed", err);
       logger.warn("Continuing without Redis. Some features may be unavailable.");
     }
