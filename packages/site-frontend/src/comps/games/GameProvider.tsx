@@ -1,26 +1,41 @@
+import React from "react";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { GameSorts } from "@core/services/game/Game";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { Site } from "#app/services/site";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
+import { useQuery } from "@tanstack/react-query";
+import { HubEight } from "#app/services/hubEight";
 
-export const GameProvider = () => {
-
-  const currentSort = useAppSelector((x) => x.site.sortBy);
+export const GameProvider = ({
+  selectedProviders,
+  setSelectedProviders
+}: {
+  selectedProviders?: string[];
+  setSelectedProviders?: (providers: string[]) => void;
+}) => {
+  
   const small = useIsMobileLayout();
-  const dispatch = useAppDispatch();
- 
   const {t} = useTranslation(['games']);
 
+  const query = useQuery({
+    queryKey: ["game-providers"],
+    queryFn: () => HubEight.getProductList(),
+    placeholderData: (prev) => prev,
+  });
+
+  const providers = query.data?.products || [];
+  if(!providers.length) 
+  return null;
+  
   return (<Dropdown
-    type="select"
-    fx={small}
-    size="lg"
-    tag={t('provider.title')}
-    options={GameSorts.map((sort) => t(`sort.${sort}`))}
-    value={GameSorts.indexOf(currentSort ?? GameSorts[0])}
-    onChange={(x, i) => dispatch(Site.setSort(GameSorts[i]))}
-  />);
+      type="multiselect"
+      fx={small}
+      size="lg"
+      tag={t('provider.title')}
+      options={providers.map((p) => {return {label: p.product, description: p.count}})}
+      value={selectedProviders}
+      onChange={(product) => {
+        setSelectedProviders(prev => prev.includes(product) ? prev.filter(p => p !== product) : [...prev, product]);      
+      }}
+    />);
 };
