@@ -9,5 +9,5 @@ export function getGameList(data: {
   new_release?: boolean;
   products?: string[];
 }): Promise<HubEightGameDocument[]> {
-  return Http.post("/hub-eight/game/list", data);
+  return Http.post("/hub-eight/games/list", data);
 }

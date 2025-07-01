@@ -3,14 +3,14 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Validation } from "@core/services/validation";
 import { externalGameCategories } from "@core/types/hub-eight/GameInformation";
 import { Database } from "@server/services/database";
+
 import { subDays } from "date-fns";
 
 const logger = getServerLogger({});
 
 export default Http.createApiRoute({
   type: "post",
-  path: "/game/list",
-  secure: true,
+  path: "/games/list",
   body: Validation.object({
     category: Validation.string().oneOf(externalGameCategories).required(),
     products: Validation.array().of(Validation.string()).optional(),

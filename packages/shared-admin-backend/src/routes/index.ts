@@ -12,3 +12,4 @@ export { default as system } from "./system";
 export { default as transactions } from "./transactions";
 export { default as users } from "./users";
 export { default as verification } from "./verification";
+export { default as hubEight } from "./hub-eight";

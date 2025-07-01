@@ -3,34 +3,48 @@ import { Database } from "@server/services/database";
 import { initHttp } from "./app/initHttp";
 import { initSockets } from "./app/initSockets";
 import { initTestAdmin } from "./app/initTestAdmin";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { LOG_MODULE_CONSTANTS } from "@core/services/logging/constants/LogConstant";
+import { RedisService } from "@server/services/redis/RedisService";
 
 main();
 
 async function main() {
+  const logger = getServerLogger({ module: LOG_MODULE_CONSTANTS.LOG_SHARED_ADMIN_BACKEND });
+
   const { port, env } = config;
 
-  console.log("Starting admin backend...");
+  logger.info("Starting admin backend...");
 
   await initConfig();
 
-  console.log("Initialized config.");
+  logger.info("Initialized config.");
 
   await Database.manager.init();
 
-  if (env == "development" || env == "devcloud") {
-    console.log("Creating Admin");
-    await initTestAdmin();
+  if (env == "development" || env == "devcloud" || env == "staging") {
+    logger.info("Creating Admin");
+    try {
+      await initTestAdmin();
+      logger.info("Created Test Admin -> testAdmin@pidwin.com");
+    } catch {
+      logger.error("Unable to create Test Admin");
+    }
   }
 
-  console.log("Initialized database.");
+  logger.info("Initialized database.");
 
   const httpServer = await initHttp();
 
-  console.log("Initialized http.");
+  logger.info("Initialized http.");
 
   initSockets(httpServer);
 
-  console.log("Initialized sockets.");
+  logger.info("Initialized sockets.");
+
+  logger.info("Initializing Redis.");
+
+  await RedisService.initialize();
 
   httpServer.listen(port, () => console.log(`Admin backend listening on port ${port}.`));
 }

@@ -73,7 +73,7 @@ export default Http.createApiRoute({
       });
       return;
     }
-    // 3. Check for previous roll back
+    // 3. Check if roll back was already processed
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
       referenceTransactionUUID: reference_transaction_uuid,
@@ -87,7 +87,7 @@ export default Http.createApiRoute({
       });
       return;
     }
-    // 4. Credit the Previous Bet Amount
+    // 4. Check if the transaction amount was removed prior
     const transaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: reference_transaction_uuid,
@@ -102,7 +102,7 @@ export default Http.createApiRoute({
         });
         return;
       }
-
+      // 5. Credit the Previous Bet Amount
       await Transactions.createTransaction({
         kind: "hub-eight-rollback",
         autoComplete: true,
@@ -122,16 +122,17 @@ export default Http.createApiRoute({
 
       const newBalance = await Database.collection("users").findOne(options);
 
+      // Return user information with updated balance
       res.json({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
         request_uuid: request_uuid,
-        currency: "USD", // Do I always default to USD?
-        balance: newBalance?.tokenBalance, // IS token balance USD?????
+        currency: "USD",
+        balance: newBalance?.tokenBalance,
       });
       return;
     } catch (err: any) {
-      logger.error(err);
+      logger.error(`Error processing Rollback ${err}`);
       if (err.message in hubStatus) {
         res
           .status(200)
