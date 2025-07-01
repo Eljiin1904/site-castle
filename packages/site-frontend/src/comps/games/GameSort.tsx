@@ -1,16 +1,17 @@
-import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { GameSorts } from "@core/services/game/Game";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { Site } from "#app/services/site";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
-export const GameSort = () => {
+export const GameSort = ({
+  sortBy,
+  setSortBy
+}: {
+  sortBy: string | undefined;
+  setSortBy: (sort: string) => void;
+}) => {
 
-  const currentSort = useAppSelector((x) => x.site.sortBy);
   const small = useIsMobileLayout();
-  const dispatch = useAppDispatch();
   const {t} = useTranslation(['games']);
 
   return (<Dropdown
@@ -19,7 +20,7 @@ export const GameSort = () => {
     fx={small}
     tag={t('sort.title')}
     options={GameSorts.map((sort) => t(`sort.${sort}`))}
-    value={GameSorts.indexOf(currentSort ?? GameSorts[0])}
-    onChange={(x, i) => dispatch(Site.setSort(GameSorts[i]))}
+    value={GameSorts.indexOf(sortBy ?? GameSorts[0])}
+    onChange={(x, i) => setSortBy(GameSorts[i])}
   />);
 };
