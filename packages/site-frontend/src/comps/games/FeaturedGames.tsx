@@ -19,7 +19,7 @@ export const FeaturedGames = ({items, showSection}: {items: GameDocument[],showS
       gap={small ? 24 : 40}
     >
       <PageTitle
-        heading={t('games.featured', {count: 2})}
+        heading={t('featured', {count: 2})}
       />
       <Div
         gap={small ? 20 : 24}

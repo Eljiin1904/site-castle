@@ -13,7 +13,6 @@ import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
 import { GamesSection } from "#app/comps/games/GamesSection";
 import { Div } from "@client/comps/div/Div";
-import { useEffect } from "react";
 
 export const HomePage = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -52,7 +51,7 @@ export const HomePage = () => {
           />
         }
         original={<OriginalGames />}
-        slots={<GamesSection category="slots" />}
+        slot={<GamesSection category="slot" />}
         live_casino={<GamesSection category="live_casino" />}
         game_shows={<GamesSection category="game_shows" />}
       />
@@ -89,7 +88,7 @@ const RecentlyAddedSlider = () => {
 
   return (
     <GamesSlider
-      title={t("games.recentlyAdded")}
+      title={t("recentlyAdded")}
       items={items}
       type="game"
     />
@@ -110,7 +109,7 @@ const HotGamesSlider = () => {
 
   return (
     <GamesSlider
-      title={t("games.hot")}
+      title={t("hot")}
       items={items}
       type="game"
     />
@@ -137,12 +136,12 @@ const ProvidersSection = () => {
   );
 };
 const CategoriesSection = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['games']);
 
   const items = Game.kinds.map((x) => {
     return {
       image: `/graphics/categories/${x}`,
-      heading: t(`games.${x}`, { count: 1 }),
+      heading: t(`${x}`, { count: 1 }),
       to: `/${x.replaceAll("_", "-")}`,
     };
   });

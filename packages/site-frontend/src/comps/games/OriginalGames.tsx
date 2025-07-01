@@ -11,10 +11,10 @@ export const OriginalGames = () => {
     return {
       image: `/graphics/games/${x.name}`,
       heading: t(`games:${x.name}`),
-      subheading: t('games.original',{count: 1}),
+      subheading: t('original',{count: 1}),
       to: `/${x.name}`
     };
   });
 
-  return (<GamesSlider title={t('games.original', {count: 2})} items={items} type="game"/>);
+  return (<GamesSlider title={t('original', {count: 2})} items={items} type="game"/>);
 };

@@ -33,29 +33,6 @@
       "logout": "Cerrar sesión"
     }
   },
-  "games": {
-    "all": "Todos los juegos",
-    "featured_one": "Destacados",
-    "featured_other": "Juegos destacados",
-    "slots": "Tragamonedas",
-    "live_casino": "Casino en vivo",
-    "game_shows": "Programas",
-    "original_one": "Juego Original",
-    "original_other": "Juegos Originales",
-    "hot": "Juegos populares",
-    "recentlyAdded": "Recién agregados",
-    "sort": {
-      "title": "Ordenar por",
-      "popular": "Popular",
-      "featured": "Destacados",
-      "az": "A-Z",
-      "za": "Z-A"
-    },
-    "provider": {
-      "title": "Proveedor",
-      "all": "Todos"
-    }
-  },
   "providers": {
     "title": "Proveedores",
     "evolution": "Evolución",

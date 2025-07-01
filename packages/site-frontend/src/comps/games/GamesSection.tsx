@@ -9,12 +9,12 @@ export const GamesSection = ({category}: {
   const games = useAppSelector((x) => x.site.games) || [];
   const {t} = useTranslation(["games"]);
 
-  const header =  t(`games.${category}`);
+  const header =  t(`${category}`);
 
   const items = games?.filter((x) => x.category === category).map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
+      heading: t(`${x.name}`),
       subheading: header,
       to: `/${x.name}`
     };

@@ -11,14 +11,14 @@ export const GameSort = () => {
   const currentSort = useAppSelector((x) => x.site.sortBy);
   const small = useIsMobileLayout();
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['games']);
 
   return (<Dropdown
     type="select"
     size="lg"
     fx={small}
-    tag={t('games.sort.title')}
-    options={GameSorts.map((sort) => t(`games.sort.${sort}`))}
+    tag={t('sort.title')}
+    options={GameSorts.map((sort) => t(`sort.${sort}`))}
     value={GameSorts.indexOf(currentSort ?? GameSorts[0])}
     onChange={(x, i) => dispatch(Site.setSort(GameSorts[i]))}
   />);
