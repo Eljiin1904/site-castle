@@ -4,13 +4,15 @@ import { FilterDropdown, FilterDropdownProps } from "./FilterDropdown";
 import { MenuDropdown, MenuDropdownProps } from "./MenuDropdown";
 import { SelectDropdown, SelectDropdownProps } from "./SelectDropdown";
 import { DisplayDropdown, DisplayDropdownProps } from "./DisplayDropdown";
+import { MultiselectDropdown, MultiselectDropdownProps } from "./MultiselectDropdown";
 
 export type DropdownProps =
   | ({ type: "custom" } & CustomDropdownProps)
   | ({ type: "filter" } & FilterDropdownProps)
   | ({ type: "menu" } & MenuDropdownProps)
   | ({ type: "display" } & DisplayDropdownProps)
-  | ({ type: "select" } & SelectDropdownProps);
+  | ({ type: "select" } & SelectDropdownProps)
+  | ({ type: "multiselect" } & MultiselectDropdownProps);
 
 export const Dropdown: FC<DropdownProps> = (props) => {
   if (props.type === "custom") {
@@ -25,7 +27,11 @@ export const Dropdown: FC<DropdownProps> = (props) => {
   } else if (props.type === "display") {
     const { type, ...forwardProps } = props;
     return <DisplayDropdown {...forwardProps} />;
-  } else {
+  } else if (props.type === "multiselect") {
+    const { type, ...forwardProps } = props;
+    return <MultiselectDropdown {...forwardProps} />;
+  }
+  else {
     const { type, ...forwardProps } = props;
     return <SelectDropdown {...forwardProps} />;
   }
