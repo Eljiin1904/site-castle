@@ -29,5 +29,6 @@
   "provider": {
     "title": "Provider",
     "all": "All"
-  }
+  },
+  "notGames": "No games found"
 }
