@@ -81,4 +81,5 @@ export const dbCollectionsMapping: Readonly<Record<keyof DatabaseCollections, db
   ["crash-rounds"]: config.env,
   ["crash-multipliers"]: config.env,
   ["crash-next-tickets"]: config.env,
+  ["hub-eight-games"]: config.env,
 };

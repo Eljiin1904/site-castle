@@ -8,6 +8,7 @@ import getGameList from "./getGameList";
 import getGameRound from "./getGameRound";
 import getGameURL from "./getGameURL";
 import testSetToken from "./testSetToken";
+import getGroupedProducts from "./getGroupedProducts";
 
 const router = Router();
 
@@ -20,5 +21,6 @@ getGameURL(router);
 getGameRound(router);
 getGameList(router);
 testSetToken(router);
+getGroupedProducts(router);
 
 export default router;
