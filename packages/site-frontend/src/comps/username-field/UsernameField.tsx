@@ -3,7 +3,6 @@ import { useDebounceCallback } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@client/comps/input/Input";
 import { SvgCheck } from "@client/svgs/common/SvgCheck";
-import { Errors } from "@client/services/errors";
 import { Div } from "@client/comps/div/Div";
 import { Vector } from "@client/comps/vector/Vector";
 import { Spinner } from "@client/comps/spinner/Spinner";
@@ -41,12 +40,13 @@ export const UsernameField: FC<UsernameFieldProps> = ({
     placeholderData: (prev) => prev,
   });
 
-  const queryError = query.error as unknown as Validation.TTransErrorKeyValue | undefined;
+  const queryError = query.error;
   const isValid = currentValue && query.data?.isAvailable;
-
+  
   useEffect(() => {
+    console.log(`UsernameField query error ${queryError}`);
     if (queryError) {
-      setError(queryError);
+      setError({key: queryError.message, value: queryError.cause as Record<string, string> | undefined});
     } else {
       setError(undefined);
     }

@@ -121,7 +121,8 @@
       "disposable": "Dominio de correo electrónico inválido."
     },
     "username": {
-      "taken": "El nombre de usuario ya está registrado."
+      "taken": "El nombre de usuario ya está registrado.",
+      "profanity": "El nombre de usuario contiene lenguaje inapropiado."
     },
     "token": {
       "invalid": "Token {{value}} inválido.",

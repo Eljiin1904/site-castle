@@ -15,10 +15,6 @@ export async function post<T = any>(
     Dates.parseDates(result.data);
     return result.data;
   } catch (err) {
-    if( axios.isAxiosError(err) && err.response && err.response.data) {
-      // If the error response contains a message, use it
-     throw getRequestError(err.response.data.error || err.message);
-    };
     throw getRequestError(err);
   }
 }
