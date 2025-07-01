@@ -11,7 +11,7 @@ export class RedisService {
 
   // Ability to retrive Raw Client
   static get client() {
-    if (!this.isConnected || !this.client) {
+    if (!this.isConnected || !this._client) {
       throw new Error("Redis not initialized.");
     }
     return this._client;
@@ -27,11 +27,11 @@ export class RedisService {
       return;
     }
 
-    const { redisHost } = config;
-
+    const { redisUrl } = config;
+    logger.info(`Attempting to connect with the following url ${redisUrl}`);
     try {
       this._client = createClient({
-        url: redisHost,
+        url: redisUrl,
         socket: {
           reconnectStrategy: (retries) => {
             if (retries > 3) {
@@ -49,35 +49,30 @@ export class RedisService {
       this._client.on("connect", () => {
         this.isConnected = true;
         logger.info("Redis Client Connected");
+        logger.info("Initialized Redis.");
       });
 
       this._client.on("error", (err: any) => {
+        logger.info(`Attempting to connect with the following url ${redisUrl}`);
         this.logRedisError("Redis Client Error", err);
       });
 
       await this._client.connect();
     } catch (err: any) {
       this.isConnected = false;
+      logger.info(`Attempting to connect with the following url ${redisUrl}`);
       this.logRedisError("Initial Redis connection failed", err);
       logger.warn("Continuing without Redis. Some features may be unavailable.");
     }
   }
-  // private async connect(): Promise<void> {
-  //   if (!this.isConnected) {
-  //     try {
-  //       await this.client.connect();
-  //       this.isConnected = true;
-  //     } catch (error) {
-  //       this.logRedisError("Redis connection failed", error);
-  //       throw error; // Re-throw so caller can decide to fallback or fail
-  //     }
-  //   }
-  // }
 
-  // STRING / OBJECT
   static async setString(key: string, value: string, ttlSeconds?: number) {
     try {
-      ttlSeconds ? this._client.setEx(key, ttlSeconds, value) : this._client.set(key, value);
+      if (ttlSeconds) {
+        await this._client.setEx(key, ttlSeconds, value);
+      } else {
+        await this._client.set(key, value);
+      }
     } catch (error) {
       this.logRedisError(`Failed to set string for key "${key}"`, error);
     }
@@ -85,7 +80,7 @@ export class RedisService {
 
   static async getString(key: string) {
     try {
-      const result = this._client.get(key);
+      const result = await this._client.get(key);
       return result ?? null; // Ensures no undefined is returned
     } catch (error) {
       this.logRedisError(`Failed to get string for key "${key}"`, error);
@@ -114,32 +109,40 @@ export class RedisService {
 
   // HASH
   static async setHash(key: string, data: Record<string, string>) {
-    this._client.hSet(key, data);
+    try {
+      await this._client.hSet(key, data);
+    } catch (error) {
+      this.logRedisError(`Failed to set hash for key "${key}"`, error);
+    }
   }
 
   static async getHash(key: string): Promise<Record<string, string>> {
-    return this._client.hGetAll(key);
+    try {
+      const result = await this._client.hGetAll(key);
+      return result;
+    } catch (error) {
+      this.logRedisError(`Failed to get Hash with key "${key}"`, error);
+      return {};
+    }
   }
 
   static async deleteHashField(key: string, field: string) {
-    this._client.hDel(key, field);
+    try {
+      await this._client.hDel(key, field);
+    } catch (error) {
+      this.logRedisError(`Failed to delete Hash with key "${key}"`, error);
+      return {};
+    }
   }
 
   // DELETE
   static async deleteKey(key: string): Promise<void> {
     try {
-      this.client.del(key);
+      await this.client.del(key);
     } catch (error) {
       this.logRedisError(`Failed to delete key "${key}"`, error);
     }
   }
-
-  // public async disconnect(): Promise<void> {
-  //   if (this.isConnected) {
-  //     await this.client.disconnect();
-  //     this.isConnected = false;
-  //   }
-  // }
 
   private static logRedisError(message: string, error: unknown): void {
     if (error instanceof AggregateError) {
@@ -150,6 +153,14 @@ export class RedisService {
       logger.error(`${message}: ${error.message} : ${error}`);
     } else {
       logger.error(`${message}: ${String(error)}`);
+    }
+  }
+
+  public static async disconnect(): Promise<void> {
+    if (this.isConnected && this._client) {
+      await this._client.disconnect();
+      this.isConnected = false;
+      logger.info("Redis Client Disconnected");
     }
   }
 }

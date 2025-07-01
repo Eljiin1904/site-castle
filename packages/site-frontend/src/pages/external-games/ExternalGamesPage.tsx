@@ -7,13 +7,13 @@ export const ExternalGamesPage = () => {
   const [gameList, setGameList] = useState([]);
 
   useEffect(() => {
-    getGameList()
-      .then((res) => {
-        setGameList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // getGameList({ category: "live" })
+    //   .then((res) => {
+    //     setGameList(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }, []);
 
   return (

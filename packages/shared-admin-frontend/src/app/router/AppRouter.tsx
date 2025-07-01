@@ -18,6 +18,7 @@ import { DevPage } from "#app/pages/dev/DevPage";
 import { RafflesRouter } from "#app/pages/raffles/RafflesRouter";
 import { HolidayRouter } from "#app/pages/holiday/HolidayRouter";
 import { SkinsPage } from "#app/pages/skins/SkinsPage";
+import { HubEightIndexPage } from "../../pages/hub-eight/HubEightIndexPage";
 
 export function AppRouter() {
   return (
@@ -59,6 +60,7 @@ export function AppRouter() {
         path="/crypto"
         element={<CryptoPage />}
       />
+
       <Route
         path="/skins"
         element={<SkinsPage />}
@@ -94,6 +96,10 @@ export function AppRouter() {
       <Route
         path="/holidays/*"
         element={<HolidayRouter />}
+      />
+      <Route
+        path="/hub-eight"
+        element={<HubEightIndexPage />}
       />
       <Route
         path="/logs/*"

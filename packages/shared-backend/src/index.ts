@@ -38,13 +38,9 @@ async function main() {
 
   await RedisService.initialize();
 
-  logger.info("Initialized Redis.");
-
   logger.info("Initializing Launch Darkly.");
 
   await LaunchDarklyService.initialize();
-
-  logger.info("Initialized Launch Darkly.");
 
   httpServer.listen(port, async () => {
     logger.info(`Site backend listening on port ${port}.`);

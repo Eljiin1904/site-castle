@@ -26,6 +26,7 @@ export function initHttp() {
 
   app.get("/", (req, res) => res.send());
 
+  app.use("/coinalch", Routes.coinalch);
   app.use("/fireblocks", Routes.fireblocks);
   app.use("/skinify", Routes.skinify);
   app.use("/skinsback", Routes.skinsback);

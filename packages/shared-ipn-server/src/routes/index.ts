@@ -1,3 +1,4 @@
+export { default as coinalch } from "./coinalch";
 export { default as fireblocks } from "./fireblocks";
 export { default as skindeck } from "./skindeck";
 export { default as skinify } from "./skinify";

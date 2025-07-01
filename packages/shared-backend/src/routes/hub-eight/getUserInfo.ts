@@ -31,6 +31,7 @@ export default Http.createApiRoute({
 
     let registrationDate = userInfo?.registerDate;
     let formattedDate;
+
     if (registrationDate) {
       const date = new Date(registrationDate);
       // Format to YYYY-MM-DD
@@ -47,7 +48,7 @@ export default Http.createApiRoute({
       user: userInfo?.username,
       status: hubStatus.RS_OK,
       request_uuid: request_uuid,
-      country: userInfo?.kyc.country?.code, // Make sure proper Country code sent
+      country: "EE", // Make sure proper Country code sent
       jurisdiction: "MGA", // What?
       sub_partner_id: "castle", // What?
       birth_date: formattedDob, // Make sure values present, proper kyc tier

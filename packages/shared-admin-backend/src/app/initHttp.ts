@@ -16,7 +16,7 @@ import * as Routes from "#app/routes";
 // import { RedisClientType } from "redis";
 
 export async function initHttp() {
-  const { env, domain, sessionSecret, redisUrl } = config;
+  const { env, domain, sessionSecret } = config;
 
   const app = express();
 
@@ -128,6 +128,7 @@ export async function initHttp() {
   app.use("/transactions", Routes.transactions);
   app.use("/users", Routes.users);
   app.use("/verification", Routes.verification);
+  app.use("/hub-eight", Routes.hubEight);
 
   app.use((req, res) => res.status(404).send());
   app.use(Http.appErrorHandler);
