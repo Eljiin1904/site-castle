@@ -2,7 +2,7 @@ import { AnyObject, ObjectSchema, ValidationError } from "yup";
 
 export type TTransErrorKeyValue = {
   key : string;
-  value?: string;
+  value?: string | Record<string, string> | undefined ;
 };
 
 /**
