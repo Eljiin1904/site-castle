@@ -1,7 +1,7 @@
 // import { beforeAll, expect, describe, afterAll, it, vi } from "vitest";
-// import * as Managers from "../managers";
+// import * as Managers from "../src/managers";
 // import { Database } from "@server/services/database";
-// import { createTestTicket, createTestUser } from "./testUtility";
+// import { createDiceTestTicket, createTestUser } from "./testUtility";
 // import { Users } from "@server/services/users";
 
 // describe("Dice Manager Test", () => {
@@ -35,7 +35,7 @@
 
 //     if (!user) return;
 
-//     const ticket = await createTestTicket({
+//     const ticket = await createDiceTestTicket({
 //       user,
 //       targetKind: "over",
 //       targetValue: 4,
@@ -74,7 +74,7 @@
 
 //     if (!user) return;
 
-//     const ticket = await createTestTicket({
+//     const ticket = await createDiceTestTicket({
 //       user,
 //       targetKind: "under",
 //       targetValue: 4,
