@@ -122,7 +122,8 @@
       "disposable": "Invalid email domain."
     },
     "username": {
-      "taken": "Username is already taken."
+      "taken": "Username is already taken.",
+      "profanity": "Username contains profanity."
     },
     "token": {
       "invalid": "{{value}} Token invalid.",
