@@ -32,9 +32,9 @@ export default Http.createApiRoute({
         },
       ];
 
-      const result = await Database.collection("hub-eight-games").aggregate(pipeline).toArray();
+      const products = await Database.collection("hub-eight-games").aggregate(pipeline).toArray();
 
-      res.json({ products: result });
+      res.json({products});
     } catch (err) {
       logger.error(`Unable to retreive products: ${err}`);
       res.status(500).json({ message: "Unable to handle request at this time" });

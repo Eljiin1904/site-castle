@@ -47,7 +47,7 @@ export default Http.createApiRoute({
 
       const games = await Database.collection("hub-eight-games").find(query).toArray();
 
-      res.json({ data: games });
+      res.json({games});
     } catch (err: any) {
       logger.error(`Issue retreiving games: ${err}`);
       res.status(500).json({ error: "Unable to process request at this time" });
