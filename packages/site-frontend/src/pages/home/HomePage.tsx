@@ -115,7 +115,7 @@ const HotGamesSlider = () => {
     />
   );
 };
-const ProvidersSection = () => {
+export const ProvidersSection = () => {
   const { t } = useTranslation();
 
   const providers: GameSlideProps[] = [
