@@ -12,7 +12,7 @@ export const GamesGrid = ({games}: {
   const layout = useAppSelector((x) => x.style.mainLayout);
   const {t} = useTranslation(["games"]);
   return (<Div
-      className="SearchResults"
+      wrap
       gap={layout === 'mobile' ? 20 : 24}
       fx
     >
