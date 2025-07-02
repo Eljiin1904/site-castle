@@ -12,6 +12,6 @@ export function getGameList(data: {
   sortIndex?: number;
   page?: number;
   limit?: number;
-}): Promise<{games: HubEightGameDocument[]}> {
+}): Promise<{games: HubEightGameDocument[], total: number}> {
   return Http.post("/hub-eight/game/list", data);
 }
