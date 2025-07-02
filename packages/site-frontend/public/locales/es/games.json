@@ -1,4 +1,6 @@
 {
+  "game_one": "juego",
+  "game_other": "juegos",
   "all_games": "Todos los Juegos",
   "crash": "Crash",
   "duel": "Duelos",
@@ -9,7 +11,27 @@
   "cases": "Cofres",
   "case_battles": "Batalla de Cofres",
   "double": "Doble",
-  "slots": "Tragamonedas",
+  "slot": "Tragamonedas",
+  "live": "Casino en vivo",
   "live_casino": "Casino en vivo",
-  "game_shows": "Programas"
+  "game_shows": "Programas",
+  "original_one": "Juego Original",
+  "original_other": "Juegos Originales",
+  "featured_one": "Destacados",
+  "featured_other": "Juegos destacados",
+  "hot": "Juegos populares",
+  "recommended": "Juegos recomendados",
+  "recentlyAdded": "Recién agregados",
+  "sort": {
+    "title": "Ordenar por",
+    "popular": "Popular",
+    "featured": "Destacados",
+    "az": "A-Z",
+    "za": "Z-A"
+  },
+  "provider": {
+    "title": "Proveedor",
+    "all": "Todos"
+  },
+  "notGames": "No se encontraron juegos"
 }

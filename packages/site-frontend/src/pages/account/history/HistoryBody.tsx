@@ -67,6 +67,7 @@ export const HistoryBody = () => {
           limit={limit}
           inPage={transactions.length}
           setPage={setPage}
+          label={t("account:transactions.transaction",{count: total})}
         />
       </Div>      
     </Div>

@@ -5,12 +5,13 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { GameHeader } from "../GameHeader";
 import { TableFooterPagination } from "#app/comps/pagination/TableFooterPagination";
 import { CrashTable } from "./CrashTable";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const CrashBody = () => {
   const limit = 10;
   const [page, setPage] = useState(1);
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
+  const {t} = useTranslation();
   const query = useQuery({
     enabled: authenticated,
     queryKey: ["crash-results", limit, page],
@@ -37,6 +38,7 @@ export const CrashBody = () => {
         limit={limit}
         inPage={results.length}
         setPage={setPage}
+        label={t("account:transactions.transaction",{count: query.data?.total || 0})}
       />
     </Fragment>
   );

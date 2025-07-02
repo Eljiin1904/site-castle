@@ -1,4 +1,6 @@
 {
+  "game_one": "game",
+  "game_other": "games",
   "all_games": "All Games",
   "crash": "Crash",
   "duel": "Duel Game",
@@ -9,7 +11,27 @@
   "cases": "Cases",
   "case_battles": "Cases Battles",
   "double": "Double",
-  "slots": "Slots",
+  "slot": "Slots",
+  "live": "Live Casino",
   "live_casino": "Live Casino",
-  "game_shows": "Game Shows"
+  "game_shows": "Game Shows",
+  "original_one": "Original Game",
+  "original_other": "Original Games",
+  "featured_one": "Featured",
+  "featured_other": "Featured Games",
+  "hot": "Hot Games",
+  "recommended": "Recommended Games",
+  "recentlyAdded": "Recently Added",
+  "sort": {
+    "title": "Sort By",
+    "popular": "Popular",
+    "featured": "Featured",
+    "az": "A-Z",
+    "za": "Z-A"
+  },
+  "provider": {
+    "title": "Provider",
+    "all": "All"
+  },
+  "notGames": "No games found"
 }

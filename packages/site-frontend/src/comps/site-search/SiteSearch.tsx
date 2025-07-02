@@ -11,6 +11,9 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { SvgTimes } from "@client/svgs/common/SvgTimes";
 import './SiteSearch.scss'
+import { useQuery } from "@tanstack/react-query";
+import { HubEight } from "#app/services/hubEight";
+import { GamesGrid } from "#app/pages/games/GamesGrid";
 
 interface EventTarget  {
   blur: () => void;
@@ -77,32 +80,44 @@ const SearchResults = () => {
 
   const {t,i18n} = useTranslation(["home"]);
   const currentSearch = useAppSelector((x) => x.site.search);
-  const searchLength = currentSearch?.length || 0;
   const games = useAppSelector((x) => x.site.games) || [];
   const layout = useAppSelector((x) => x.style.mainLayout);
-
-  if(searchLength < 3) return null;
+ 
+  const query = useQuery({
+    queryKey: ["games-results", currentSearch],
+    queryFn: () => HubEight.getGameList({searchText: currentSearch,limit: 100}),
+    placeholderData: (prev) => prev,
+  });
 
   const translated: any = i18n.store.data[i18n.language].games;
-  const gamesKeys = Object.keys(translated).filter((key) => translated[key].toLocaleLowerCase().includes(currentSearch?.toLocaleLowerCase()));
+  const gameKeys = Object.keys(translated).filter((key) => typeof translated[key] === 'string' && translated[key].length > 0);
+  const searchLength = currentSearch?.length || 0;
+  if(searchLength < 3 || gameKeys.length == 0) return null;  
+  const gamesKeys = gameKeys.filter((key) => {
+
+    return translated[key].toLocaleLowerCase().includes(currentSearch?.toLocaleLowerCase());
+  });
 
   const result = games.filter((x) => gamesKeys.includes(x.name));
-  if(result.length === 0) return <Span>{t('searchNotFound')}</Span>;
-  
-   const items = result?.map((x) => {
-      return {
-        image: `/graphics/games/${x.name}`,
-        heading: translated[x.name],
-        subheading: '',
-        to: `/${x.name}`
-      };
-    });
+  const data = query.data?.games || [];
 
-    return (<Div
+  if(result.length === 0 && data.length === 0) return <Span>{t('searchNotFound')}</Span>;
+  
+  const items = result?.map((x) => {
+    return {
+      image: `/graphics/games/${x.name}`,
+      heading: translated[x.name],
+      subheading: '',
+      to: `/games/${x.name}`
+    };
+  });
+
+  return (<Div
       className="SearchResults"
       gap={layout === 'mobile' ? 20 : 24}
       fx
     >
       {items.map((x, i) => <GameBanner key={`${x.heading}-${i}`} ratio={layout === 'mobile' ? "150 / 160" : "168 / 180"} {...x}/>)}
+      {data.length > 0 && <GamesGrid games={data} />}
     </Div>);
 };

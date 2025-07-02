@@ -10,12 +10,13 @@ import { CaseBattlesInfoCard } from "./CaseBattlesInfoCard";
 import { CaseBattlesTable } from "./CaseBattleTable";
 import { GameHeader } from "../GameHeader";
 import { TableFooterPagination } from "#app/comps/pagination/TableFooterPagination";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const CaseBattlesBody = () => {
   const limit = 10;
   const [page, setPage] = useState(1);
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
+  const {t} = useTranslation();
   const query = useQuery({
     enabled: authenticated,
     queryKey: ["case-battle-results", limit, page],
@@ -42,6 +43,7 @@ export const CaseBattlesBody = () => {
           limit={limit}
           inPage={results.length}
           setPage={setPage}
+          label={t("account:transactions.transaction",{count: query.data?.total || 0})}
         />
       </Fragment>
     );
