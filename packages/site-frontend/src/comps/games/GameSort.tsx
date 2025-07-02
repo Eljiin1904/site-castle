@@ -1,5 +1,5 @@
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
-import { GameSorts } from "@core/services/game/Game";
+import { GameSorts, GameSortType } from "@core/services/game/Game";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 
@@ -7,8 +7,8 @@ export const GameSort = ({
   sortBy,
   setSortBy
 }: {
-  sortBy: string | undefined;
-  setSortBy: (sort: string) => void;
+  sortBy: GameSortType | undefined;
+  setSortBy: React.Dispatch<React.SetStateAction<GameSortType>>
 }) => {
 
   const small = useIsMobileLayout();
