@@ -122,7 +122,6 @@ export default Http.createApiRoute({
         gameCode: game_code,
         meta: meta || null,
         amount: rollbackAmount,
-        transactionId: priorTransaction._id,
         username: userInfo.username,
         referenceTransactionUUID: reference_transaction_uuid,
       });
