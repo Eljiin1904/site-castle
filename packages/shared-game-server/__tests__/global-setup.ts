@@ -1,6 +1,5 @@
 // test/global-setup.ts
-import { MongoDBContainer, StartedMongoDBContainer } from "@testcontainers/mongodb";
-import { GenericContainer } from "testcontainers";
+import { MongoDBContainer } from "@testcontainers/mongodb";
 
 import fs from "fs/promises";
 import path from "path";
@@ -12,23 +11,6 @@ const GLOBAL_STATE_FILE = path.resolve(__dirname, "global-setup.json");
 let teardownHappened = false;
 
 export default async function () {
-  // Redis
-  const redisContainer = await new GenericContainer("redis").withExposedPorts(6379).start();
-
-  const redisPort = redisContainer.getMappedPort(6379);
-  const redisHost = redisContainer.getHost();
-
-  const redisUri = `redis://${redisHost}:${redisPort}`;
-
-  // Save Redis URI for other files/tests
-  await fs.writeFile(GLOBAL_STATE_FILE, JSON.stringify({ redisUri }), "utf-8");
-
-  // Expose URI as env var
-  process.env.REDIS_URL = redisUri;
-
-  // Store container instance for teardown
-  (globalThis as any).__REDIS_CONTAINER__ = redisContainer;
-
   const container = await new MongoDBContainer("mongo:8.0.5")
     .withStartupTimeout(6000)
     .withCommand(["--replSet", "rs0"])
@@ -60,7 +42,6 @@ export default async function () {
     if (rContainer) {
       await rContainer.stop();
     }
-
     try {
       await fs.unlink(GLOBAL_STATE_FILE);
       console.log(`Tearing Down, Deleted Global State File -> ${GLOBAL_STATE_FILE}`);
