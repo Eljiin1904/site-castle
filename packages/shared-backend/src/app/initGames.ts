@@ -3,10 +3,7 @@ import { SiteGameDisplayDocument } from "@core/types/site/SiteGameDisplayDocumen
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 
-export const initSiteGames = async () => {// if (await Database.hasCollection("site-games")) {
-  //   await Database.collection("site-games").drop();
-  //   await Database.createCollection("site-games", {});
-  // }
+export const initSiteGames = async () => {
   if (!(await Database.hasCollection("site-games"))) {
     await Database.createCollection("site-games", {});
   }

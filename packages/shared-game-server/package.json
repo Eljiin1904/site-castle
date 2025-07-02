@@ -6,13 +6,15 @@
     "build": "rollup -c --bundleConfigAsCjs",
     "dev-start": "rollup -c -w --bundleConfigAsCjs",
     "start": "node ./build/index.js",
-    "test": "vitest",
+    "test": "vitest --no-file-parallelism",
+    "test-coverage": "vitest --no-file-parallelism --coverage",
     "deploy-staging": "npm run build && eb deploy chicken-game-staging",
     "deploy-production": "npm run build && eb deploy chicken-game-production"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.592.0",
     "@slack/web-api": "^7.2.0",
+    "@testcontainers/mongodb": "^11.0.3",
     "axios": "^1.6.7",
     "customerio-node": "^4.1.1",
     "date-fns": "^4.1.0",
@@ -21,7 +23,8 @@
     "fireblocks-sdk": "^5.26.0",
     "mongodb": "^6.3.0",
     "nanoid": "^5.0.6",
-    "rate-limiter-flexible": "^4.0.1"
+    "rate-limiter-flexible": "^4.0.1",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^5.1.0",

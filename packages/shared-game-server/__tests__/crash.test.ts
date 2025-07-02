@@ -1,5 +1,5 @@
 import { beforeAll, expect, describe, afterAll, it, vi, beforeEach } from "vitest";
-import * as Managers from "../managers";
+import * as Managers from "./../src/managers";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 import { Users } from "@server/services/users";
@@ -10,7 +10,6 @@ import { CrashMultiplierDocument } from "@core/types/crash/CrashMultiplierDocume
 
 describe("Crash Manager Test", () => {
   beforeAll(async () => {
-    
     await Database.createCollection("site-bets", {});
     await Database.createCollection("transactions", {});
   }, 20000);
@@ -45,7 +44,6 @@ describe("Crash Manager Test", () => {
   });
 
   it("create waiting crash game", async () => {
-
     Managers.crash();
     await new Promise((resolve) => setTimeout(resolve, 100));
     const crashRound = await Database.collection("crash-rounds").findOne();
@@ -58,31 +56,34 @@ describe("Crash Manager Test", () => {
   });
 
   it("create crash game and move next round tickets to active round", async () => {
-
     const nextRoundTicketId = await Ids.incremental({
       key: "crashNextTicketId",
       baseValue: 1000000,
-      batchSize: 100
+      batchSize: 100,
     });
-    
+
     const user = await Database.collection("users").findOne();
     if (!user) return;
-    
+
     const nextRoundTicket: CrashTicketDocument = {
       _id: nextRoundTicketId,
       timestamp: new Date(),
       roundId: "next",
       user: Users.getBasicUser(user),
       betAmount: 100,
-      targetMultiplier: 1
+      targetMultiplier: 1,
     };
 
     await Database.collection("crash-next-tickets").insertOne(nextRoundTicket);
     Managers.crash();
     await new Promise((resolve) => setTimeout(resolve, 5000));
     const crashRound = await Database.collection("crash-rounds").findOne();
-    const nextRoundTickets = await Database.collection("crash-next-tickets").countDocuments({roundId: "next"});
-    const roundTickets = await Database.collection("crash-tickets").countDocuments({roundId: crashRound?._id});
+    const nextRoundTickets = await Database.collection("crash-next-tickets").countDocuments({
+      roundId: "next",
+    });
+    const roundTickets = await Database.collection("crash-tickets").countDocuments({
+      roundId: crashRound?._id,
+    });
     expect(crashRound).not.toBeNull();
     expect(crashRound?.status).toBe("pending");
     expect(crashRound?.processed).toBeUndefined();
@@ -101,16 +102,19 @@ describe("Crash Manager Test", () => {
     expect(crashRound?.processed).toBeUndefined();
     expect(crashRound?.multiplier).toBeUndefined();
     expect(crashRound?.won).toBeUndefined();
-    const multiplierRound = await Database.collection("crash-multipliers").findOne({roundId: crashRound?._id});
+    const multiplierRound = await Database.collection("crash-multipliers").findOne({
+      roundId: crashRound?._id,
+    });
     expect(multiplierRound).not.toBeNull();
     expect(multiplierRound?.roundId).toBe(crashRound?._id);
     expect(multiplierRound?.multiplier).toBeGreaterThan(1);
     expect(multiplierRound?.timestamp).toBeDefined();
-    expect(multiplierRound?.roundTime).toBe(CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1));
+    expect(multiplierRound?.roundTime).toBe(
+      CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1),
+    );
   });
 
   it("complete crash round and ticket won", async () => {
-    
     const user = await Database.collection("users").findOne();
     if (!user) return;
     const roundId = await Ids.incremental({
@@ -139,7 +143,7 @@ describe("Crash Manager Test", () => {
       status: "simulating",
       statusDate: new Date(),
       startDate: new Date(),
-      multiplier: multiplier
+      multiplier: multiplier,
     };
     const crashMultiplier: CrashMultiplierDocument = {
       _id: multiplierId,
@@ -163,12 +167,12 @@ describe("Crash Manager Test", () => {
     await Database.collection("crash-tickets").insertOne(crashTicket);
     await new Promise((resolve) => setTimeout(resolve, 500));
     Managers.crash();
-   
+
     await new Promise((resolve) => setTimeout(resolve, multiplierTime + 5000));
     const completedCrashRound = await Database.collection("crash-rounds").findOne({
       _id: roundId,
     });
-    
+
     expect(completedCrashRound).not.toBeNull();
     expect(completedCrashRound?._id).toBe(roundId);
     expect(completedCrashRound?.status).toBe("completed");
@@ -176,9 +180,11 @@ describe("Crash Manager Test", () => {
     expect(completedCrashRound?.multiplier).toBe(multiplier);
     expect(completedCrashRound?.won).toBe(true);
 
-    const crashTickets = await Database.collection("crash-tickets").find({
-      roundId: completedCrashRound?._id,
-    }).toArray();
+    const crashTickets = await Database.collection("crash-tickets")
+      .find({
+        roundId: completedCrashRound?._id,
+      })
+      .toArray();
     expect(crashTickets).not.toBeNull();
     expect(crashTickets.length).toBe(1);
     expect(crashTickets[0]._id).toBe(cashoutTicketId);
@@ -231,7 +237,7 @@ describe("Crash Manager Test", () => {
       status: "simulating",
       statusDate: new Date(),
       startDate: new Date(),
-      multiplier: multiplier
+      multiplier: multiplier,
     };
     const crashMultiplier: CrashMultiplierDocument = {
       _id: multiplierId,
@@ -248,7 +254,7 @@ describe("Crash Manager Test", () => {
       roundId: roundId,
       user: Users.getBasicUser(user),
       betAmount: 100,
-      targetMultiplier: multiplier+0.01, // Set target multiplier higher than actual multiplier to simulate loss
+      targetMultiplier: multiplier + 0.01, // Set target multiplier higher than actual multiplier to simulate loss
     };
     await Database.collection("crash-rounds").insertOne(crashRound);
     await Database.collection("crash-multipliers").insertOne(crashMultiplier);
@@ -265,9 +271,11 @@ describe("Crash Manager Test", () => {
     expect(completedCrashRound?.processed).toBe(true);
     expect(completedCrashRound?.multiplier).toBe(multiplier);
     expect(completedCrashRound?.won).toBe(false);
-    const crashTickets = await Database.collection("crash-tickets").find({
-      roundId: completedCrashRound?._id,
-    }).toArray();
+    const crashTickets = await Database.collection("crash-tickets")
+      .find({
+        roundId: completedCrashRound?._id,
+      })
+      .toArray();
     expect(crashTickets).not.toBeNull();
     expect(crashTickets.length).toBe(1);
     expect(crashTickets[0]._id).toBe(cashoutTicketId);
@@ -284,7 +292,7 @@ describe("Crash Manager Test", () => {
       game: "crash",
       user: Users.getBasicUser(user),
       betAmount: 100,
-      wonAmount: 0, 
+      wonAmount: 0,
     });
     expect(siteBets).not.toBeNull();
     expect(siteBets?.won).toBeFalsy();

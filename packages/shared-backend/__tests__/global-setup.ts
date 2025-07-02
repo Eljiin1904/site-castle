@@ -61,6 +61,16 @@ export default async function () {
       await rContainer.stop();
     }
 
+    try {
+      await fs.unlink(GLOBAL_STATE_FILE);
+      console.log(`Deleted ${GLOBAL_STATE_FILE}`);
+    } catch (err: any) {
+      if (err.code !== "ENOENT") {
+        // Only ignore error if file does not exist
+        console.error("Error deleting file:", err);
+      }
+    }
+
     await sleep(25);
   };
 }

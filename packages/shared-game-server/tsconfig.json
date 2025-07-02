@@ -2,19 +2,23 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "./src",
     "outDir": "./build",
     "noEmit": true,
     "paths": {
       "@core/*": ["../shared-core/src/*"],
       "@server/*": ["../shared-server/src/*"],
       "#app/*": ["./src/*"],
-    }
+    },
+    "types": ["vitest"]
+    
   },
   "include": [
+    "__tests__",
+    "vitest.config.ts",
     "src", 
     "../shared-core/build", 
-    "../shared-server/build"
+    "../shared-server/build",
+    "__tests__/vitest.setup.ts"
   ],
   "exclude": [
     "node_modules"
