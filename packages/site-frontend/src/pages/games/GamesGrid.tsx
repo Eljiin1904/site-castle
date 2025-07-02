@@ -20,7 +20,7 @@ export const GamesGrid = ({games}: {
         <Span>{t('notGames')}</Span>
       </Div> :
       games.map((x, i) => <GameHubEight key={`${x._id}-${i}`}
-      image={x.url_background ?? undefined}
+      image={x.url_thumb ?? x.url_background }
       heading={x.name} 
       to={`/games/${x.game_code}`}
       subheading={x.product}
