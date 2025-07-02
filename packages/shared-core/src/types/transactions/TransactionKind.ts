@@ -328,8 +328,8 @@ interface HubEightRollbackData {
   username: string;
   transactionUUID: string;
   supplierTransactionId: string;
-  roundClosed: boolean;
-  round: string;
+  roundClosed?: boolean | null;
+  round?: string | null;
   requestUUID: string;
   referenceTransactionUUID: string; // Transaction ID used for rolling back data
   gameCode: string;

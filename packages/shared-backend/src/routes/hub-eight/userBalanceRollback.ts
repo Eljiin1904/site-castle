@@ -21,14 +21,14 @@ export default Http.createApiRoute({
   body: Validation.object({
     user: Validation.username().required("User is required."),
     transaction_uuid: Validation.string().required("Transaction UUID required"),
-    supplier_transaction_id: Validation.string().required("Transaction UUID required"),
+    supplier_transaction_id: Validation.string().required("Supplier Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    round_closed: Validation.boolean().nullable().required("Round closed required"),
-    round: Validation.string().nullable().required("Round required"),
+    round_closed: Validation.boolean().nullable().default(null),
+    round: Validation.string().nullable().default(null),
     request_uuid: Validation.string().required("Request UUID required"),
     reference_transaction_uuid: Validation.string().required("Reference Transaction UUID required"),
     game_code: Validation.string().required("Game Code required"),
-    meta: Validation.object().nullable().notRequired(),
+    meta: Validation.object().nullable().default(null),
   }),
   callback: async (req, res) => {
     const {
