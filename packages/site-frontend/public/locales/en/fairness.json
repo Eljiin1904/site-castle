@@ -135,7 +135,7 @@
   },
   "seedModal": {
     "title": "Fairness",
-    "activeClientSeed": "Active Server Seed",
+    "activeClientSeed": "Active Client Seed",
     "activeServerSeed": "Active Server Seed (Hashed)",
     "betsMadeWithPair": "Bets made with pair",
     "rotateSeedPair": "Rotate Seed Pair",
