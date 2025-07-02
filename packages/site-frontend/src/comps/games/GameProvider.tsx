@@ -1,25 +1,26 @@
-import React from "react";
-import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Dropdown } from "@client/comps/dropdown/Dropdown";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useQuery } from "@tanstack/react-query";
 import { HubEight } from "#app/services/hubEight";
+import { ExternalGameCategory } from "@core/types/hub-eight/GameInformation";
 
 export const GameProvider = ({
   selectedProviders,
-  setSelectedProviders
+  setSelectedProviders,
+  category
 }: {
-  selectedProviders?: string[];
-  setSelectedProviders?: (providers: string[]) => void;
+  selectedProviders: string[];
+  setSelectedProviders: React.Dispatch<React.SetStateAction<string[]>>
+  category?: ExternalGameCategory;
 }) => {
   
   const small = useIsMobileLayout();
   const {t} = useTranslation(['games']);
 
   const query = useQuery({
-    queryKey: ["game-providers"],
-    queryFn: () => HubEight.getProductList(),
+    queryKey: ["game-providers",category],
+    queryFn: () => HubEight.getProductList({category}),
     placeholderData: (prev) => prev,
   });
 
@@ -32,10 +33,14 @@ export const GameProvider = ({
       fx={small}
       size="lg"
       tag={t('provider.title')}
-      options={providers.map((p) => {return {label: p.product, description: p.count}})}
+      options={providers.map((p) => {return {label: p.product, description: p.count.toString()}})}
       value={selectedProviders}
-      onChange={(product) => {
-        setSelectedProviders(prev => prev.includes(product) ? prev.filter(p => p !== product) : [...prev, product]);      
-      }}
+      onChange={(product) =>  setSelectedProviders(prev => {
+        if (prev.includes(product)) {
+          return prev.filter((p) => p !== product);
+        } else {
+          return [...prev, product];
+        }
+      })}
     />);
 };
