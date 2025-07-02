@@ -64,8 +64,10 @@ export default Http.createApiRoute({
       } else if (sortIndex === 3) {
         sort = { "name": -1 };
       }
-      const games = await Database.collection("hub-eight-games").find(query,{sort: { ...sort, _id: 1 }}).toArray();
-      res.json({games});
+      const total = await Database.collection("hub-eight-games").countDocuments(query);
+      const games = await Database.collection("hub-eight-games").find(query,{sort: { ...sort, _id: 1 },skip: (page - 1) * limit,
+      limit}).toArray();
+      res.json({games, total});
     } catch (err: any) {
       logger.error(`Issue retreiving games: ${err}`);
       res.status(500).json({ error: "Unable to process request at this time" });
