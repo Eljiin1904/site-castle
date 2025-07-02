@@ -65,6 +65,7 @@ export default Http.createApiRoute({
       res.status(200).json({ status: err.message, request_uuid: request_uuid });
     }
 
+    // 3. Check if a Valid User
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) {
       res.status(200).json({
@@ -73,7 +74,7 @@ export default Http.createApiRoute({
       });
       return;
     }
-    // 3. Check if roll back was already processed
+    // 4.. Check if roll back was already processed
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
       referenceTransactionUUID: reference_transaction_uuid,
@@ -87,14 +88,16 @@ export default Http.createApiRoute({
       });
       return;
     }
-    // 4. Check if the transaction amount was removed prior
-    const transaction = await Database.collection("transactions").findOne({
-      kind: "hub-eight-debit",
+    // 5. Check if Hub Eighty Eight took out money for the specificed reference transaction id
+    // Can be either a debit or credit
+    // If it was a credit, deduct the amount
+    // IF it was a debit, provide the money back
+    const priorTransaction = await Database.collection("transactions").findOne({
       transactionUUID: reference_transaction_uuid,
     });
 
     try {
-      if (!transaction) {
+      if (!priorTransaction) {
         res.status(200).json({
           status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
           request_uuid: request_uuid,
@@ -102,7 +105,11 @@ export default Http.createApiRoute({
         });
         return;
       }
-      // 5. Credit the Previous Bet Amount
+      // If it was a deduction, make it an addition
+      // If it was an addition, make it a deduction
+      const rollbackAmount = -priorTransaction.amount;
+
+      // 5. Rollbak basedon the amount
       await Transactions.createTransaction({
         kind: "hub-eight-rollback",
         autoComplete: true,
@@ -114,8 +121,8 @@ export default Http.createApiRoute({
         requestUUID: request_uuid,
         gameCode: game_code,
         meta: meta || null,
-        amount: transaction.amount,
-        transactionId: transaction._id,
+        amount: rollbackAmount,
+        transactionId: priorTransaction._id,
         username: userInfo.username,
         referenceTransactionUUID: reference_transaction_uuid,
       });
