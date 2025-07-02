@@ -30,7 +30,10 @@ export default Http.createApiRoute({
 
     // 2. Validate Token
     const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
-    if (!userDetails) throw new Error("RS_ERROR_INVALID_TOKEN");
+    if (!userDetails) {
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN", request_uuid: request_uuid });
+      return;
+    }
     options.username = userDetails.username;
 
     // 3. Validate User Exist

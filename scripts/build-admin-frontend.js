@@ -1,4 +1,3 @@
-
 const child = require("child_process");
 const run = (cmd) => child.execSync(cmd, { stdio: "inherit" });
 

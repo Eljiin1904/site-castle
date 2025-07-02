@@ -25,22 +25,22 @@ export default Http.createApiRoute({
     transaction_uuid: Validation.string().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    supplier_user: Validation.string().nullable().required("Supplied User required"),
-    round_closed: Validation.boolean().nullable().required("Round is closed"),
-    round: Validation.string().nullable().required("Round required"),
+    supplier_user: Validation.string().nullable().default(null),
+    round_closed: Validation.boolean().nullable().default(null),
+    round: Validation.string().nullable().default(null),
     reward_uuid: Validation.string().nullable().notRequired(),
     request_uuid: Validation.string().required("Request UUID required"),
 
-    is_free: Validation.boolean().nullable().required("Is Free Required"),
+    is_free: Validation.boolean().nullable().default(null),
     is_supplier_promo: Validation.string().nullable().notRequired(),
-    is_aggregated: Validation.boolean().nullable().notRequired(),
+    is_aggregated: Validation.boolean().nullable().default(null),
     game_code: Validation.string().required("Game Code required"),
     currency: Validation.string()
       .oneOf(supportedCurrencies, "Unsupported currency")
       .required("Currency is required"), // Convert to array to check for currency
-    bet: Validation.string().nullable().notRequired(),
+    bet: Validation.string().nullable().default(null),
     amount: Validation.number().required("Amount Required"),
-    meta: Validation.object().nullable().notRequired(),
+    meta: Validation.object().nullable().default(null),
   }),
   callback: async (req, res) => {
     const {
@@ -84,7 +84,8 @@ export default Http.createApiRoute({
       options.username = userDetails.username;
     } catch (err: any) {
       logger.error(err);
-      res.status(200).json({ status: err.message, request_uuid: request_uuid });
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN", request_uuid: request_uuid });
+      return;
     }
 
     const userInfo = await Database.collection("users").findOne(options);
@@ -112,17 +113,20 @@ export default Http.createApiRoute({
     }
 
     // 3. Deduct the Bet Amount
-    const transaction = await Database.collection("transactions").findOne({
+    const previousBetTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: transaction_uuid,
     });
 
     try {
-      if (transaction) {
+      // Idempotent Bet Check -> Process the first bet only
+      if (previousBetTransaction) {
         res.status(200).json({
-          status: "RS_ERROR_DUPLICATE_TRANSACTION",
+          status: "RS_OK",
           request_uuid: request_uuid,
           user: userInfo?.username,
+          balance: userInfo.tokenBalance,
+          currency: "USD",
         });
         return;
       }
@@ -147,8 +151,8 @@ export default Http.createApiRoute({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
         request_uuid: request_uuid,
-        currency: "USD", // Do I always default to USD?
-        balance: newBalance?.tokenBalance, // IS token balance USD?????
+        currency: "USD", // It was discussed to use USD
+        balance: newBalance?.tokenBalance,
       });
       return;
     } catch (err: any) {

@@ -26,23 +26,23 @@ export default Http.createApiRoute({
     transaction_uuid: Validation.string().uuid().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Supplier Transaction UUID required"),
     token: Validation.string().required("Token required"),
-    supplied_user: Validation.string().nullable().notRequired(),
-    round_closed: Validation.boolean().nullable().notRequired(),
-    round: Validation.string().nullable().notRequired(),
+    supplier_user: Validation.string().nullable().default(null),
+    round_closed: Validation.boolean().nullable().default(null),
+    round: Validation.string().nullable().default(null),
     reward_uuid: Validation.string().uuid().nullable().notRequired(),
     request_uuid: Validation.string().uuid().required("Request UUID is required."),
 
     reference_transaction_uuid: Validation.string().required("Reference Transaction UUID required"),
-    is_free: Validation.boolean().nullable().required("is Free is required"),
+    is_free: Validation.boolean().nullable().default(null),
     is_supplier_promo: Validation.boolean().optional(),
     is_aggregated: Validation.boolean().nullable().notRequired(),
     game_code: Validation.string().required("Game Code required"),
     currency: Validation.string()
       .oneOf(supportedCurrencies, "Unsupported currency")
       .required("Currency is required"),
-    bet: Validation.string().nullable().required("Bet Field Required"),
+    bet: Validation.string().nullable().default(null),
     amount: Validation.number().required("Amount Required"),
-    meta: Validation.object().nullable().notRequired(),
+    meta: Validation.object().nullable().default(null),
   }),
   callback: async (req, res) => {
     const {
@@ -50,7 +50,7 @@ export default Http.createApiRoute({
       transaction_uuid,
       supplier_transaction_id,
       token,
-      supplied_user,
+      supplier_user,
       round_closed,
       round,
       reward_uuid,
@@ -94,13 +94,20 @@ export default Http.createApiRoute({
       return;
     }
 
-    // 3. Check if bet was Made
+    // 3. Check if bet was Made or if it was rolled back
     const betTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: reference_transaction_uuid,
     });
 
-    if (!betTransaction) {
+    const previousRollbackTransaction = await Database.collection("transactions").findOne({
+      kind: "hub-eight-rollback",
+      referenceTransactionUUID: reference_transaction_uuid,
+    });
+
+    // If No bet was made, dont provide win
+    // If bet was rolled back, dont provide win
+    if (!betTransaction || previousRollbackTransaction) {
       res.status(200).json({
         status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
         request_uuid: request_uuid,
@@ -109,17 +116,36 @@ export default Http.createApiRoute({
       return;
     }
     // 4. Credit the Win Amount
-    const transaction = await Database.collection("transactions").findOne({
+    const previousWinTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-credit",
-      transactionUUID: transaction_uuid,
+      referenceTransactionUUID: reference_transaction_uuid,
     });
 
     try {
-      if (transaction) {
-        res
-          .status(200)
-          .json({ status: "RS_OK", request_uuid: request_uuid, user: userInfo?.username });
-        return;
+      // Idempotent Win Check -> Process the first win only
+      // Criteria 1: If transaction uuid match a previous
+      // Return Duplicate Transaction
+
+      // Criteria 2 : If reference transaction uuid match a previous rollback
+      // Return OK
+      if (previousWinTransaction?.kind === "hub-eight-credit") {
+        const { transactionUUID, referenceTransactionUUID } = previousWinTransaction;
+
+        const responseBase = {
+          request_uuid,
+          user: userInfo?.username,
+          balance: userInfo.tokenBalance,
+        };
+
+        if (transactionUUID === transaction_uuid) {
+          res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
+          return;
+        }
+
+        if (referenceTransactionUUID === reference_transaction_uuid) {
+          res.status(200).json({ status: "RS_OK", ...responseBase });
+          return;
+        }
       }
 
       await Transactions.createTransaction({
@@ -128,7 +154,7 @@ export default Http.createApiRoute({
         autoComplete: true,
         transactionUUID: transaction_uuid,
         supplierTransactionId: supplier_transaction_id,
-        supplierUser: supplied_user,
+        supplierUser: supplier_user,
         roundClosed: round_closed,
         round: round,
         rewardUUID: reward_uuid,
@@ -148,8 +174,8 @@ export default Http.createApiRoute({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
         request_uuid: request_uuid,
-        currency: "USD", // Do I always default to USD?
-        balance: userInfo?.tokenBalance, // IS token balance USD?????
+        currency: "USD", // Confirmed always USD
+        balance: userInfo?.tokenBalance,
       });
       return;
     } catch (err: any) {

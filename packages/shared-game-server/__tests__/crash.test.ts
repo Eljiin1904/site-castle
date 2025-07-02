@@ -1,5 +1,5 @@
 import { beforeAll, expect, describe, afterAll, it, vi, beforeEach } from "vitest";
-import * as Managers from "../managers";
+import * as Managers from "./../src/managers";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 import { Users } from "@server/services/users";

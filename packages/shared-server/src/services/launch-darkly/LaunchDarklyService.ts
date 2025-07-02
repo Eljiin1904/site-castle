@@ -19,7 +19,7 @@ export class LaunchDarklyService {
 
   static async initialize() {
     if (this.isConnected) {
-      throw new Error("Launch Darkly already initialized.");
+      logger.info("Launch Darkly already initialized.");
     }
 
     this._client = await this._client.waitForInitialization();
