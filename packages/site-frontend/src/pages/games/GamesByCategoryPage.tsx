@@ -12,21 +12,28 @@ import { HubEight } from "#app/services/hubEight";
 import { ExternalGameCategory } from "@core/types/hub-eight/GameInformation";
 import { GamesGrid } from "./GamesGrid";
 import { GameSortType } from "@core/services/game/Game";
+import { TableFooterPagination } from "#app/comps/pagination/TableFooterPagination";
+import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
+import { Site } from "#app/services/site";
 
 
 export const GamesByCategoryPage = ({category}: {
   category: ExternalGameCategory;
 }) => {
   
+  const dispatch = useAppDispatch();
   const [sortBy, setSortBy] = useState<GameSortType>("featured");
-  const [selectedProviders, setSelectedProviders] = useState<string[]>([]);  
+  const [selectedProviders, setSelectedProviders] = useState<string[]>([]); 
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(40); 
   const small = useIsMobileLayout();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['games']);
 
   useEffect(() => {
     // Reset sort and providers when category changes
     setSortBy("featured");
     setSelectedProviders([]);
+    dispatch(Site.setSearch(''));
   }, [category]);
 
   let sortIndex = 0;
@@ -45,13 +52,13 @@ export const GamesByCategoryPage = ({category}: {
       break;
   }
   const query = useQuery({
-    queryKey: ["games-results",category, sortBy, selectedProviders],
-    queryFn: () => HubEight.getGameList({ category, products: selectedProviders, sortIndex}),
+    queryKey: ["games-results",category, sortBy, selectedProviders, page],
+    queryFn: () => HubEight.getGameList({ category, products: selectedProviders, page,limit, sortIndex}),
     placeholderData: (prev) => prev,
   });
 
   const games = query.data?.games || [];
-
+  const total = query.data?.total || 0;
   return (<Fragment>
     <PageBanner image={`/graphics/${category}-games-tile`} heading={t(`games:${category}`)} description="" content={<></>}/> 
     <SitePage
@@ -64,7 +71,17 @@ export const GamesByCategoryPage = ({category}: {
       <GameProvider selectedProviders={selectedProviders} setSelectedProviders={setSelectedProviders} category={category} />
       <GameSort sortBy={sortBy} setSortBy={setSortBy} />
     </Div>
+    
     <GamesGrid games={games}/>
+    <TableFooterPagination 
+      page={page} 
+      total={total} 
+      limit={limit} 
+      inPage={games.length}
+      setPage={setPage}
+      hasNext={games.length !== 0 && games.length % limit === 0}
+      label={t("game",{count: query.data?.total || 0})}
+      />
     </SitePage>
   </Fragment>
   );
