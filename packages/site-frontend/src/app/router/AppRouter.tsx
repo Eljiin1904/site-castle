@@ -35,6 +35,7 @@ import { ReferralsPage } from "#app/pages/referrals/ReferralsPage";
 import { BlackjackPage } from "#app/pages/blackjack/BlackjackPage";
 import { CrashPage } from "#app/pages/crash/CrashPage";
 import { ExternalGamesPage } from "../../pages/external-games/ExternalGamesPage";
+import { Game } from "#app/pages/games/Game";
 
 export const AppRouter = () => {
   const { pathname } = useLocation();
@@ -82,11 +83,11 @@ export const AppRouter = () => {
       />
       <Route
         path="/slots"
-        element={<GamesByCategoryPage category="slots" />}
+        element={<GamesByCategoryPage category="slot" />}
       />
       <Route
         path="/live-casino"
-        element={<GamesByCategoryPage category="live_casino" />}
+        element={<GamesByCategoryPage category="live" />}
       />
       <Route
         path="/game-shows"
@@ -96,7 +97,10 @@ export const AppRouter = () => {
         path="/games/*"
         element={<GamesRoute />}
       />
-
+      <Route
+        path="/games/:gameId"
+        element={<Game />}
+      />
       <Route
         path="/auth/:provider"
         element={<AuthReturnPage />}
