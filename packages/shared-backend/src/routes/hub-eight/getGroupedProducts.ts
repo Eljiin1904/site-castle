@@ -1,5 +1,7 @@
 import { Http } from "#app/services/http";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
+import { Validation } from "@core/services/validation";
+import { externalGameCategories } from "@core/types/hub-eight/GameInformation";
 import { Database } from "@server/services/database";
 import { RedisService } from "@server/services/redis/RedisService";
 // import { Http } from "@server/services/http";
@@ -11,9 +13,14 @@ export default Http.createApiRoute({
   type: "post",
   path: "/games/products",
   secure: true,
+  body: Validation.object({
+    category: Validation.string().oneOf(externalGameCategories).optional()
+  }),
   callback: async (req, res) => {
+    const { category } = req.body;
     try {
       const pipeline = [
+        { $match: category ? {site_category: category} : {} },
         {
           $group: {
             _id: "$product",
@@ -31,7 +38,6 @@ export default Http.createApiRoute({
           $sort: { product: 1 },
         },
       ];
-
       const products = await Database.collection("hub-eight-games").aggregate(pipeline).toArray();
 
       res.json({products});
