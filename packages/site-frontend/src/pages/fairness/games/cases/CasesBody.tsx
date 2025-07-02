@@ -7,13 +7,14 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { CaseGameTable } from "./CaseGameTable";
 import { CaseGameHeader } from "./CaseGameHeader";
 import { TableFooterPagination } from "#app/comps/pagination/TableFooterPagination";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const CasesBody = ({ kind }: { kind: ChestKind }) => {
   const limit = 10;
   const [kindIndex, setKindIndex] = useState(Chests.kinds.indexOf(kind));
   const [page, setPage] = useState(1);
   const authenticated = useAppSelector((x) => x.user.authenticated);
-
+  const {t} = useTranslation();
   useEffect(() => {
     setKindIndex(Chests.kinds.indexOf(kind));
   }, [kind]);
@@ -53,6 +54,7 @@ export const CasesBody = ({ kind }: { kind: ChestKind }) => {
         limit={limit}
         inPage={results.length}
         setPage={setPage}
+        label={t("account:transactions.transaction",{count: query.data?.total || 0})}
       />
     </Fragment>
   );
