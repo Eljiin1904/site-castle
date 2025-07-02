@@ -94,13 +94,18 @@ export default Http.createApiRoute({
       return;
     }
 
-    // 3. Check if bet was Made
+    // 3. Check if bet was Made or if it was rolled back
     const betTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: reference_transaction_uuid,
     });
 
-    if (!betTransaction) {
+    const previousRollbackTransaction = await Database.collection("transactions").findOne({
+      kind: "hub-eight-rollback",
+      transactionUUID: transaction_uuid,
+    });
+
+    if (!betTransaction || previousRollbackTransaction) {
       res.status(200).json({
         status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
         request_uuid: request_uuid,
@@ -116,9 +121,12 @@ export default Http.createApiRoute({
 
     try {
       if (transaction) {
-        res
-          .status(200)
-          .json({ status: "RS_OK", request_uuid: request_uuid, user: userInfo?.username });
+        res.status(200).json({
+          status: "RS_ERROR_DUPLICATE_TRANSACTION",
+          request_uuid: request_uuid,
+          user: userInfo?.username,
+          balance: userInfo.tokenBalance,
+        });
         return;
       }
 
