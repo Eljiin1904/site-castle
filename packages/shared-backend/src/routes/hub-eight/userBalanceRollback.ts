@@ -77,14 +77,15 @@ export default Http.createApiRoute({
     // 4.. Check if roll back was already processed
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      referenceTransactionUUID: reference_transaction_uuid,
+      transactionUUID: transaction_uuid,
     });
 
     if (previousRollbackTransaction) {
       res.status(200).json({
-        status: "RS_ERROR_DUPLICATE_TRANSACTION",
+        status: "RS_OK",
         request_uuid: request_uuid,
         user: userInfo?.username,
+        balance: userInfo.tokenBalance,
       });
       return;
     }

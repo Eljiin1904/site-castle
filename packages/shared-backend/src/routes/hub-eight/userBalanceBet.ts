@@ -84,7 +84,8 @@ export default Http.createApiRoute({
       options.username = userDetails.username;
     } catch (err: any) {
       logger.error(err);
-      res.status(200).json({ status: err.message, request_uuid: request_uuid });
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN", request_uuid: request_uuid });
+      return;
     }
 
     const userInfo = await Database.collection("users").findOne(options);
@@ -120,9 +121,10 @@ export default Http.createApiRoute({
     try {
       if (transaction) {
         res.status(200).json({
-          status: "RS_ERROR_DUPLICATE_TRANSACTION",
+          status: "RS_OK",
           request_uuid: request_uuid,
           user: userInfo?.username,
+          balance: userInfo.tokenBalance,
         });
         return;
       }
