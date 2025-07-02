@@ -74,11 +74,12 @@ export default Http.createApiRoute({
       });
       return;
     }
-    // 4.. Check if roll back was already processed
+    // 4.. Check if roll back was already processed for referenced transaction
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      transactionUUID: transaction_uuid,
+      referenceTransactionUUID: reference_transaction_uuid,
     });
+
     // Idempotent Win Check -> Process the first rollback only
     // Criteria 1: If transaction uuid match a previous
     // Return Duplicate Transaction
