@@ -45,27 +45,25 @@ export const SingleGameInfoCard = ({game, verificationLink}: {
       >
         {t('verifyGame')}
       </Link>
-      {game === "cases" && 
-        <Div fx display="block" fontSize={14}>
-          {//@ts-ignore
-          <Trans
-            i18nKey="fairness:cases.info"
-            values={{ unhashed: t("cases.unhashed"), hashed: t("cases.hashed") }}
-            components={[
-              <Span
-                color="light-sand"
-              >
-                {t("cases.unhashed")}
-              </Span>,
-              <Span
-                color="sand"
-              >
-                {t("cases.hashed")}
-              </Span>,
-            ]}
-          />}
-        </Div>
-      }
+      <Div fx display="block" fontSize={14}>
+        {//@ts-ignore
+        <Trans
+          i18nKey="fairness:cases.info"
+          values={{ unhashed: t("cases.unhashed"), hashed: t("cases.hashed") }}
+          components={[
+            <Span
+              color="light-sand"
+            >
+              {t("cases.unhashed")}
+            </Span>,
+            <Span
+              color="sand"
+            >
+              {t("cases.hashed")}
+            </Span>,
+          ]}
+        />}
+      </Div>
     </Div>
   );
 };
