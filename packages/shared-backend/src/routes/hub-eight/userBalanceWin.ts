@@ -118,7 +118,7 @@ export default Http.createApiRoute({
     // 4. Credit the Win Amount
     const previousWinTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-credit",
-      transactionUUID: transaction_uuid,
+      referenceTransactionUUID: reference_transaction_uuid,
     });
 
     try {

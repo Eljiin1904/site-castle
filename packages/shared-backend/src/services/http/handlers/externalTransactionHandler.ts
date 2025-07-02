@@ -25,14 +25,20 @@ export const externalTransactionHandler = (
       });
       //  When more external transaction added, configure to adapt to their error types
       // For now Hug Eight, this is the valid error for invalid token
-      if (!userDetails) throw new Error("RS_ERROR_INVALID_TOKEN");
+      if (!userDetails) {
+        // throw new Error("RS_ERROR_INVALID_TOKEN");
+        res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
+        return;
+      }
 
       if (!userDetails.id) {
         throw new Error("Not a valid user");
       }
       userId = userDetails.id;
     } catch (err) {
-      throw new HandledError("RS_ERROR_INVALID_TOKEN");
+      // throw new HandledError("RS_ERROR_INVALID_TOKEN");
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
+      return;
     }
 
     const holdId = Ids.object();
@@ -52,7 +58,7 @@ export const externalTransactionHandler = (
     );
 
     if (!result) {
-      throw new HandledError("Failed to process transaction hold.");
+      throw new HandledError("Failed to process transaction .");
     }
     if (result._id !== holdId) {
       throw new HandledError("A previous transaction is still pending.");
