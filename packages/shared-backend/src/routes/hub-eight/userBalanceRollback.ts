@@ -79,16 +79,32 @@ export default Http.createApiRoute({
       kind: "hub-eight-rollback",
       transactionUUID: transaction_uuid,
     });
+    // Idempotent Win Check -> Process the first rollback only
+    // Criteria 1: If transaction uuid match a previous
+    // Return Duplicate Transaction
 
-    if (previousRollbackTransaction) {
-      res.status(200).json({
-        status: "RS_OK",
-        request_uuid: request_uuid,
+    // Criteria 2 : If reference transaction uuid match a previous rollback
+    // Return OK
+    if (previousRollbackTransaction?.kind === "hub-eight-rollback") {
+      const { transactionUUID, referenceTransactionUUID } = previousRollbackTransaction;
+
+      const responseBase = {
+        request_uuid,
         user: userInfo?.username,
         balance: userInfo.tokenBalance,
-      });
-      return;
+      };
+
+      if (transactionUUID === transaction_uuid) {
+        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
+        return;
+      }
+
+      if (referenceTransactionUUID === reference_transaction_uuid) {
+        res.status(200).json({ status: "RS_OK", ...responseBase });
+        return;
+      }
     }
+
     // 5. Check if Hub Eighty Eight took out money for the specificed reference transaction id
     // Can be either a debit or credit
     // If it was a credit, deduct the amount

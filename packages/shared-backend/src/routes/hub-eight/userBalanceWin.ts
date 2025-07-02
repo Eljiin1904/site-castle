@@ -102,9 +102,11 @@ export default Http.createApiRoute({
 
     const previousRollbackTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-rollback",
-      transactionUUID: transaction_uuid,
+      referenceTransactionUUID: reference_transaction_uuid,
     });
 
+    // If No bet was made, dont provide win
+    // If bet was rolled back, dont provide win
     if (!betTransaction || previousRollbackTransaction) {
       res.status(200).json({
         status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
@@ -114,20 +116,36 @@ export default Http.createApiRoute({
       return;
     }
     // 4. Credit the Win Amount
-    const transaction = await Database.collection("transactions").findOne({
+    const previousWinTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-credit",
       transactionUUID: transaction_uuid,
     });
 
     try {
-      if (transaction) {
-        res.status(200).json({
-          status: "RS_ERROR_DUPLICATE_TRANSACTION",
-          request_uuid: request_uuid,
+      // Idempotent Win Check -> Process the first win only
+      // Criteria 1: If transaction uuid match a previous
+      // Return Duplicate Transaction
+
+      // Criteria 2 : If reference transaction uuid match a previous rollback
+      // Return OK
+      if (previousWinTransaction?.kind === "hub-eight-credit") {
+        const { transactionUUID, referenceTransactionUUID } = previousWinTransaction;
+
+        const responseBase = {
+          request_uuid,
           user: userInfo?.username,
           balance: userInfo.tokenBalance,
-        });
-        return;
+        };
+
+        if (transactionUUID === transaction_uuid) {
+          res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
+          return;
+        }
+
+        if (referenceTransactionUUID === reference_transaction_uuid) {
+          res.status(200).json({ status: "RS_OK", ...responseBase });
+          return;
+        }
       }
 
       await Transactions.createTransaction({
