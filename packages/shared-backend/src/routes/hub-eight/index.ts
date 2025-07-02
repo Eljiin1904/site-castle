@@ -9,6 +9,7 @@ import getGameRound from "./getGameRound";
 import getGameURL from "./getGameURL";
 import testSetToken from "./testSetToken";
 import getGroupedProducts from "./getGroupedProducts";
+import getGameDetails from "./getGameDetails";
 
 const router = Router();
 
@@ -22,5 +23,6 @@ getGameRound(router);
 getGameList(router);
 testSetToken(router);
 getGroupedProducts(router);
+getGameDetails(router);
 
 export default router;

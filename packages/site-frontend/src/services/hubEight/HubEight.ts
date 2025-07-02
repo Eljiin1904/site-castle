@@ -3,3 +3,4 @@
 export * from "./api/getHubGameList";
 export * from "./api/getHubGameLauncher";
 export * from "./api/getHubProducts";
+export * from "./api/getHubGameDetails";
