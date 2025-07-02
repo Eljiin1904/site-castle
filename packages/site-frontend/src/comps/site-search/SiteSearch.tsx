@@ -80,40 +80,39 @@ const SearchResults = () => {
 
   const {t,i18n} = useTranslation(["home"]);
   const currentSearch = useAppSelector((x) => x.site.search);
-  const searchLength = currentSearch?.length || 0;
   const games = useAppSelector((x) => x.site.games) || [];
   const layout = useAppSelector((x) => x.style.mainLayout);
-  const translated: any = i18n.store.data[i18n.language].games;
-  const gameKeys = Object.keys(translated).filter((key) => typeof translated[key] === 'string' && translated[key].length > 0);
-  if(searchLength < 3 || gameKeys.length == 0) return null;
-
-  const gamesKeys = gameKeys.filter((key) => {
-
-    console.log(key, translated[key], currentSearch);
-    return translated[key].toLocaleLowerCase().includes(currentSearch?.toLocaleLowerCase());
-  });
-
-  const result = games.filter((x) => gamesKeys.includes(x.name));
+ 
   const query = useQuery({
     queryKey: ["games-results", currentSearch],
     queryFn: () => HubEight.getGameList({searchText: currentSearch,limit: 100}),
     placeholderData: (prev) => prev,
   });
 
+  const translated: any = i18n.store.data[i18n.language].games;
+  const gameKeys = Object.keys(translated).filter((key) => typeof translated[key] === 'string' && translated[key].length > 0);
+  const searchLength = currentSearch?.length || 0;
+  if(searchLength < 3 || gameKeys.length == 0) return null;  
+  const gamesKeys = gameKeys.filter((key) => {
+
+    return translated[key].toLocaleLowerCase().includes(currentSearch?.toLocaleLowerCase());
+  });
+
+  const result = games.filter((x) => gamesKeys.includes(x.name));
   const data = query.data?.games || [];
 
   if(result.length === 0 && data.length === 0) return <Span>{t('searchNotFound')}</Span>;
   
-   const items = result?.map((x) => {
-      return {
-        image: `/graphics/games/${x.name}`,
-        heading: translated[x.name],
-        subheading: '',
-        to: `/games/${x.name}`
-      };
-    });
+  const items = result?.map((x) => {
+    return {
+      image: `/graphics/games/${x.name}`,
+      heading: translated[x.name],
+      subheading: '',
+      to: `/games/${x.name}`
+    };
+  });
 
-    return (<Div
+  return (<Div
       className="SearchResults"
       gap={layout === 'mobile' ? 20 : 24}
       fx
