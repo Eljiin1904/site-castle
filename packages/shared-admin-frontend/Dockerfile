@@ -22,7 +22,7 @@ COPY packages/shared-admin-frontend/index.html /tmp/index_test_copy.html
 # Explicitly copy entrypoint.sh to a known temp location in build stage
 COPY packages/shared-admin-frontend/entrypoint.sh /tmp/entrypoint.sh
 
-RUN npm run build-site-frontend
+RUN npm run build-admin-frontend
 
 # Stage 2: Production image using NGINX to serve the built static assets
 FROM nginx:stable-alpine
