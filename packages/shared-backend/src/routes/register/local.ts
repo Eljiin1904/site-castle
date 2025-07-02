@@ -44,7 +44,7 @@ export default Http.createApiRoute({
 
         if (err.toString().includes("Unable to register user due to profanity found"))
           throw new HandledError(err);
-        throw new HandledError("Unable to register user at this time");
+        throw new HandledError("errors.username.profanity");
       }
     }
 
@@ -56,7 +56,7 @@ export default Http.createApiRoute({
       logger.error(
         "user already linked - email: " + email + " username: " + existingUserByEmail.username,
       );
-      throw new HandledError();
+      throw new HandledError("errors.email.taken");
     }
 
     const existingUserByUsername = await Database.collection("users").findOne(
@@ -64,7 +64,7 @@ export default Http.createApiRoute({
       { collation: { locale: "en", strength: 2 } },
     );
     if (existingUserByUsername) {
-      throw new HandledError();
+      throw new HandledError("errors.username.taken");
     }
 
     if (env != "development") await rateLimiter.consume(req.trueIP, 1);

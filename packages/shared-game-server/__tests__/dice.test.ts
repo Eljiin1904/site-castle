@@ -1,8 +1,8 @@
-import { beforeAll, expect, describe, afterAll, it, vi } from "vitest";
+import { beforeAll, expect, describe, it, assert } from "vitest";
 import * as Managers from "./../src/managers";
 import { Database } from "@server/services/database";
 import { Users } from "@server/services/users";
-import { createTestTicket, createTestUser } from "./testUtility";
+import { createDiceTestTicket, createTestUser } from "./testUtility";
 
 describe("Dice Manager Test", () => {
   beforeAll(async () => {
@@ -30,9 +30,11 @@ describe("Dice Manager Test", () => {
     const user = await Database.collection("users").findOne();
     expect(user).toBeDefined();
 
-    if (!user) return;
+    if (!user) {
+      assert.fail("User not found failure"); // Asseting failure
+    }
 
-    const ticket = await createTestTicket({
+    const ticket = await createDiceTestTicket({
       user,
       targetKind: "over",
       targetValue: 4,
@@ -54,7 +56,7 @@ describe("Dice Manager Test", () => {
 
     // The start change has a 500 ms wait before populating collection
 
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     const transaction = await Database.collection("transactions").findOne({
       kind: "dice-won",
       gameId: ticket._id,
@@ -69,11 +71,12 @@ describe("Dice Manager Test", () => {
 
   it("create a dice game bet (lose)", async () => {
     const user = await Database.collection("users").findOne();
+    if (!user) {
+      assert.fail("User not found failure");
+    }
     expect(user).toBeDefined();
 
-    if (!user) return;
-
-    const ticket = await createTestTicket({
+    const ticket = await createDiceTestTicket({
       user,
       targetKind: "under",
       targetValue: 4,

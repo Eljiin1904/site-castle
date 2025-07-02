@@ -8,6 +8,8 @@ export const LastRoundCounter = ({ color, bait }: { color: DoubleColor; bait: bo
   const history = useAppSelector((x) => x.double.history);
 
   const matches = history.filter((roll) => {
+    
+    if(!roll) return false;
     if (bait) {
       return roll.color === color && roll.bait === bait;
     } else {

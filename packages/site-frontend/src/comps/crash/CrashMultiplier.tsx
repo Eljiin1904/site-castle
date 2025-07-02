@@ -19,7 +19,6 @@ export const CrashMultiplier = ({multiplier}:{multiplier: number}) => {
           className="Multiplier"
           family="number"
           color="bright-green"
-          fontWeight="bold"
           textAlign="right"
           >
           {Numbers.floor(multiplier, 2).toFixed(2)}

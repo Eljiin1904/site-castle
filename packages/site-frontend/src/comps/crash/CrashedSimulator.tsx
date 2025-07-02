@@ -43,7 +43,6 @@ export const CrashedSimulator = () => {
             className="Multiplier"
             family="number"
             color={won ? "bright-green" : "double-red"}
-            fontWeight="bold"
             textAlign="right"
             >
             {Numbers.floor(round.multiplier, 2).toFixed(2)}

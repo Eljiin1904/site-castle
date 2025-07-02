@@ -17,6 +17,7 @@ import { ChestDocument } from "@core/types/chests/ChestDocument";
 import { ChestGameDocument } from "@core/types/chests/ChestGameDocument";
 import { getGameId } from "@server/services/chests/Chests";
 import { Chests } from "@server/services/chests";
+import { DatabaseCollections } from "@core/types/database/DatabaseCollections";
 
 export const createTestUser = (
   username: string = "tester",
@@ -83,7 +84,7 @@ export const createTestUser = (
   };
 };
 
-export const createTestTicket = async ({
+export const createDiceTestTicket = async ({
   user,
   targetKind,
   targetValue,
@@ -189,6 +190,20 @@ export async function buildTestItems(options: ChestItemOptions[]) {
 
   return items;
 }
+
+export const resetDatabaseConnection = async (collection: keyof DatabaseCollections) => {
+  if (await Database.hasCollection(collection)) {
+    Database.collection(collection).drop();
+  }
+  await Database.createCollection(collection, {});
+};
+
+export const resetDatabaseConnections = async (collections: (keyof DatabaseCollections)[]) => {
+  const promises = collections.map((collection) => {
+    return resetDatabaseConnection(collection);
+  });
+  await Promise.allSettled(promises);
+};
 
 // export const createTestChestItem = ({
 //   symbol,

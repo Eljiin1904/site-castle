@@ -27,6 +27,7 @@ export type TableProps<T extends DataSchema> = StyledLayoutProps & {
   autoScroll?: boolean;
   hideHeader?: boolean;
   onRowProps?: (x: T, i: number) => LinkProps;
+  onRowClassName?: (x: T, i: number) => string | undefined;
 };
 
 export function Table<T extends DataSchema>({
@@ -42,6 +43,7 @@ export function Table<T extends DataSchema>({
     hover: "none",
     onClick: () => {},
   }),
+  onRowClassName = () => undefined,
   ...forwardProps
 }: TableProps<T>) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,10 +69,10 @@ export function Table<T extends DataSchema>({
        align="center"
        gap={24}
        py={12}
-       borderWidth={1}
-       borderColor="brown-4"
-       borderTop
-       borderBottom
+      //  borderWidth={1}
+      //  borderColor="brown-4"
+      //  borderTop
+      //  borderBottom
        fx
       >
         {columns.map((x, i) => (
@@ -118,14 +120,15 @@ export function Table<T extends DataSchema>({
             item,
             itemIndex,
           );
+          const rowClassName = onRowClassName(item, itemIndex);
           return (
             <Link
               key={"_id" in item ? item._id : itemIndex}
-              className={classNames("table-item", rowName)}
+              className={classNames("table-item", rowName, rowClassName)}
               gap={24}
               hover="none"
-              borderTop
-              borderColor="brown-4"
+              // borderTop
+              // borderColor="brown-4"
               {...rowProps}
             >
               {columns.map((column, columnIndex) => (

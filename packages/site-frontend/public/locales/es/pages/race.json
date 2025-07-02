@@ -1,0 +1,14 @@
+{
+  "title": "Carrera",
+  "description": "Apuesta lo máximo para ganar grandes premios. Apuesta en grande y rápido, o quédate atrás.",
+  "endTime": "Termina en ",
+  "leaders": "Líderes",
+  "viewWins": "Ver Ganancias",
+  "headers": {
+    "rank": "Rango",
+    "player": "Jugador",
+    "xp": "XP",
+    "wager": "Apuesta",
+    "prize": "Premio"
+  }
+}

@@ -4,6 +4,7 @@ export * from "./api/boost";
 export * from "./api/buyProduct";
 export * from "./api/claim";
 export * from "./api/getActiveRace";
+export * from "./api/getActiveRaces";
 export * from "./api/getAdventInfo";
 export * from "./api/getBoostDates";
 export * from "./api/getClaims";

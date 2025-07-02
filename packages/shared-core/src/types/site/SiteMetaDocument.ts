@@ -13,7 +13,7 @@ export type SiteMetaValue = SiteMetaObject[SiteMetaId];
 
 export interface SiteMetaObject {
   activeCount: number;
-  race: SiteRace | null;
+  races: SiteRace[] | null;
   holiday: HolidayEvent | null;
   market: {
     totalCount: number;

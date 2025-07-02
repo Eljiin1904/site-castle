@@ -9,7 +9,7 @@ import { Img } from "@client/comps/img/Img";
 export const NotFoundPage = () => {
   const navigate = useNavigate();
   const small = useIsMobileLayout();
-  const {t} = useTranslation(["notfound"]);
+  const {t} = useTranslation(["notices/notfound"]);
   return (
     <SitePage
       className="NotFoundPage"

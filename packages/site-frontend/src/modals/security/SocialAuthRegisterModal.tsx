@@ -95,7 +95,7 @@ export const SocialAuthRegisterModal = ({
         if (
           !showReferralCode &&
           err instanceof Error &&
-          err.message.startsWith("errors.invalidReferralCode")
+          err.message.startsWith("errors.invalidReferral")
         ) {
           removeReferralCode();
           setShowReferralCode(true);

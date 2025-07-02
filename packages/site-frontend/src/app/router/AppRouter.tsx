@@ -25,6 +25,7 @@ import { LevelCasePage } from "#app/pages/rewards/LevelCasePage";
 import { FairnessPage } from "#app/pages/fairness/FairnessPage";
 import { MarketRouter } from "#app/pages/market/MarketRouter";
 import { RacePage } from "#app/pages/race/RacePage";
+import { RacesPage } from "#app/pages/race/RacesPage";
 import { HolidayRouter } from "#app/pages/holiday/HolidayRouter";
 import { BetsPage } from "#app/pages/bets/BetsPage";
 import { GamesRoute } from "#app/pages/games/GamesRouter";
@@ -216,8 +217,12 @@ export const AppRouter = () => {
         element={<MarketRouter />}
       />
       <Route
-        path="/race"
+        path="/race/:slug"
         element={<RacePage />}
+      />
+      <Route
+        path="/races"
+        element={<RacesPage />}
       />
       <Route
         path="/holiday/*"

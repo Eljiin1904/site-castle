@@ -25,8 +25,8 @@ export default Http.createApiRoute({
       kind: forHoliday ? "holiday" : "custom",
       displayName,
       payouts,
-      startDate: startOfHour(startDate),
-      endDate: endOfHour(endDate),
+      startDate,
+      endDate,
     });
 
     await Admin.log({
