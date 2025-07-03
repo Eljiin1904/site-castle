@@ -7,8 +7,8 @@ export const GameSort = ({
   sortBy,
   setSortBy
 }: {
-  sortBy: GameSortType | undefined;
-  setSortBy: React.Dispatch<React.SetStateAction<GameSortType>>
+  sortBy: number;
+  setSortBy: React.Dispatch<React.SetStateAction<number>>
 }) => {
 
   const small = useIsMobileLayout();
@@ -20,7 +20,7 @@ export const GameSort = ({
     fx={small}
     tag={t('sort.title')}
     options={GameSorts.map((sort) => t(`sort.${sort}`))}
-    value={GameSorts.indexOf(sortBy ?? GameSorts[0])}
-    onChange={(x, i) => setSortBy(GameSorts[i])}
+    value={sortBy ?? 0}
+    onChange={(x, i) => setSortBy(i)}
   />);
 };
