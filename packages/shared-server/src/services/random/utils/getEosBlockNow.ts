@@ -7,7 +7,7 @@ interface ResponseData {
   head_block_time: string;
 }
 
-interface BlockInfo {
+export interface BlockInfo {
   eosBlockId: string;
   eosBlockNum: number;
   eosBlockDate: Date;
