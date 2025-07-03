@@ -2,20 +2,21 @@ import { beforeAll, expect, describe, it, assert } from "vitest";
 import * as Managers from "./../src/managers";
 import { Database } from "@server/services/database";
 import { Users } from "@server/services/users";
-import { createDiceTestTicket, createTestUser } from "./testUtility";
+import { createDiceTestTicket, createTestUser, resetDatabaseConnections } from "./testUtility";
 
 describe("Dice Manager Test", () => {
   beforeAll(async () => {
     const user = createTestUser();
 
     // Initialize Server DB
-    await Database.createCollection("users", {});
-    await Database.createCollection("dice-tickets", {});
-    await Database.createCollection("site-bets", {});
-    await Database.createCollection("transactions", {});
+    await Promise.allSettled([
+      resetDatabaseConnections(["dice-tickets", "site-bets", "transactions"]),
+      Database.collection("users").deleteOne({
+        _id: user._id,
+      }),
+    ]);
 
     await Database.collection("users").insertOne(user);
-
     Managers.dice();
   }, 20000);
 

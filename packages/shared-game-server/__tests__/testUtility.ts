@@ -193,9 +193,10 @@ export async function buildTestItems(options: ChestItemOptions[]) {
 
 export const resetDatabaseConnection = async (collection: keyof DatabaseCollections) => {
   if (await Database.hasCollection(collection)) {
-    Database.collection(collection).drop();
+    Database.collection(collection).deleteMany({});
+  } else {
+    await Database.createCollection(collection, {});
   }
-  await Database.createCollection(collection, {});
 };
 
 export const resetDatabaseConnections = async (collections: (keyof DatabaseCollections)[]) => {
