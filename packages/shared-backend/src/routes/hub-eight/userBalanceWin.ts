@@ -122,12 +122,7 @@ export default Http.createApiRoute({
     });
 
     try {
-      // Idempotent Win Check -> Process the first win only
-      // Criteria 1: If transaction uuid match a previous
-      // Return Duplicate Transaction
-
-      // Criteria 2 : If reference transaction uuid match a previous rollback
-      // Return OK
+      // Duplicate Checks -> For sure same transaction uuid if found.
       if (previousWinTransaction?.kind === "hub-eight-credit") {
         const { transactionUUID, referenceTransactionUUID } = previousWinTransaction;
 
@@ -137,13 +132,22 @@ export default Http.createApiRoute({
           balance: userInfo.tokenBalance,
         };
 
-        if (transactionUUID === transaction_uuid) {
-          res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
+        // Idempotent Win Check -> Process the first win only
+        // Criteria 1: If transaction uuid match a previous
+        // Return OK
+        if (
+          transactionUUID === transaction_uuid &&
+          previousWinTransaction.round == round &&
+          previousWinTransaction.amount == amount
+        ) {
+          res.status(200).json({ status: "RS_OK", ...responseBase });
           return;
         }
 
+        // Criteria 2 : If reference transaction uuid match a previous rollback
+        // Return Duplicate Transaction
         if (referenceTransactionUUID === reference_transaction_uuid) {
-          res.status(200).json({ status: "RS_OK", ...responseBase });
+          res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
           return;
         }
       }

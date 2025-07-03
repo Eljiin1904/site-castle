@@ -18,15 +18,28 @@ export default Http.createApiRoute({
   }),
   callback: async (req, res) => {
     const { user, request_uuid, game_code, token } = req.body;
-    const { hub88PrivateKey } = config;
+    const { hubEightPublicKey } = config;
     const options: any = {};
 
     // // 1. Validate Signature Header
-    // const retreivedSignature = req.headers["X-Hub88-Signature"] as string;
-    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
-    // const resEncodedMessage = new TextEncoder().encode(retreivedSignature);
+    const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
-    // const data = Security.decrypt(hub88PrivateKey, resEncodedMessage);
+    if (!retreivedSignature) {
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
+    const originalMessage = JSON.stringify(req.body);
+    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    if (!isValid) {
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
 
     // 2. Validate Token
     const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });

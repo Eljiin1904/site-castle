@@ -80,12 +80,7 @@ export default Http.createApiRoute({
       referenceTransactionUUID: reference_transaction_uuid,
     });
 
-    // Idempotent Win Check -> Process the first rollback only
-    // Criteria 1: If transaction uuid match a previous
-    // Return Duplicate Transaction
-
-    // Criteria 2 : If reference transaction uuid match a previous rollback
-    // Return OK
+    // Duplicate Checks -> For sure same transaction uuid if found.
     if (previousRollbackTransaction?.kind === "hub-eight-rollback") {
       const { transactionUUID, referenceTransactionUUID } = previousRollbackTransaction;
 
@@ -93,15 +88,23 @@ export default Http.createApiRoute({
         request_uuid,
         user: userInfo?.username,
         balance: userInfo.tokenBalance,
+        currency: "USD",
       };
-
-      if (transactionUUID === transaction_uuid) {
-        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
+      // Idempotent Win Check -> Process the first rollback only
+      // Criteria 1: If transaction uuid match a previous
+      // Return RS_OK Transaction, processed already
+      if (
+        transactionUUID === transaction_uuid &&
+        previousRollbackTransaction.round == round &&
+        previousRollbackTransaction.referenceTransactionUUID == referenceTransactionUUID
+      ) {
+        res.status(200).json({ status: "RS_OK", ...responseBase });
         return;
       }
-
+      // Criteria 2 : If reference transaction uuid match a previous rollback
+      // Return Duplicate
       if (referenceTransactionUUID === reference_transaction_uuid) {
-        res.status(200).json({ status: "RS_OK", ...responseBase });
+        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
         return;
       }
     }
