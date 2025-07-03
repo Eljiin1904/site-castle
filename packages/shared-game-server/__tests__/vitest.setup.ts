@@ -38,7 +38,7 @@ beforeAll(async () => {
   Managers.blackjack();
   Managers.races();
   Managers.raffles();
-  Managers.crash();
+  // Managers.crash();
 
   console.log("Initialized managers.");
 

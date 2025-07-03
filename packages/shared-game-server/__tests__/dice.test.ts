@@ -17,7 +17,6 @@ describe("Dice Manager Test", () => {
     ]);
 
     await Database.collection("users").insertOne(user);
-    Managers.dice();
   }, 20000);
 
   it("test manager initialization", async () => {

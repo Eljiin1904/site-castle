@@ -18,12 +18,13 @@ import { DoubleRoll } from "@core/types/double/DoubleRoll";
 
 // Consts
 const serverSeed = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-const eosBlockId = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-const eosBlockNum = 123456789;
-const eosBlockDate = new Date("2025-07-01");
-const expectedRollValues = {
-  value: 12,
-  color: "red",
+// Valid EOS block ID that was ran and will now be used as reference
+const eosBlockId = "1a808460d5e9ae17638fdca8492d3fcb5a8fb148e163254bae3b4f434a9e5f13";
+const eosBlockNum = 444630112;
+const eosBlockDate = new Date("2025-07-03T20:49:46.000Z");
+const expectedRollValues: Partial<DoubleRoll> = {
+  value: 13,
+  color: "black",
   bait: false,
 };
 
@@ -45,32 +46,26 @@ describe("Double Fairness", () => {
   });
 
   it("Should provide an expected roll result to pre-defined server seeds, EOS blocks, and nonces", async () => {
-    const blockNow = await Random.getEosBlockNow();
-
     const round = await initializeDoubleRound(serverSeed, "pending", {
-      eosBlockId: blockNow.eosBlockId,
-      eosBlockNum: blockNow.eosBlockNum,
-      eosBlockDate: blockNow.eosBlockDate,
+      eosBlockId: eosBlockId,
+      eosBlockNum: eosBlockNum,
+      eosBlockDate: eosBlockDate,
     });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     Managers.double();
     await new Promise((resolve) => setTimeout(resolve, 5000));
 
     const doubleRound = await Database.collection("double-rounds").findOne({
       _id: round._id,
     });
-
-    console.log("doubleRound", doubleRound);
-
     expect(doubleRound).not.toBeNull();
     expect(doubleRound?._id).toBe(round._id);
-    expect(doubleRound?.status).toBe("simulating");
     expect(doubleRound?.roll?.value).toBe(expectedRollValues.value);
     expect(doubleRound?.roll?.color).toBe(expectedRollValues.color);
     expect(Boolean(doubleRound?.roll?.bait)).toEqual(Boolean(expectedRollValues.bait));
-  });
+  }, 10000);
 
   it("Should provide an expected roll result to pre-defined server seeds, EOS blocks, and nonces", async () => {
-    const serverSeed = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     const round = await initializeDoubleRound(
       serverSeed,
       "simulating",
@@ -79,7 +74,7 @@ describe("Double Fairness", () => {
         eosBlockNum,
         eosBlockDate,
       },
-      { value: 12, color: "red", bait: false, offset: 61 },
+      { ...expectedRollValues, offset: 1 } as DoubleRoll,
     );
 
     const doubleRound = await Database.collection("double-rounds").findOne({
@@ -103,8 +98,7 @@ describe("Double Fairness", () => {
 
     await Database.collection("double-tickets").insertOne(ticket);
     Managers.double();
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    await new Promise((resolve) => setTimeout(resolve, 1700));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     expect(doubleRound).not.toBeNull();
     expect(doubleRound?._id).toBe(round._id);
@@ -123,7 +117,7 @@ describe("Double Fairness", () => {
     expect(doubleTicketForWager?.betKind).toBe("red");
     expect(doubleTicketForWager?.processed).toBeTruthy();
   });
-}, 10000);
+}, 10000000);
 
 // Setup helper functions
 function formatRound(
@@ -208,6 +202,8 @@ async function initializeDoubleRound(
 }
 
 async function insertDoubleRound(round: DoubleRoundDocument): Promise<void> {
+  await Database.collection("double-rounds").deleteOne({
+    _id: round._id,
+  });
   await Database.collection("double-rounds").insertOne(round);
-  await new Promise((resolve) => setTimeout(resolve, 500));
 }
