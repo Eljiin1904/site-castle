@@ -1,110 +1,115 @@
-// import { beforeAll, expect, describe, afterAll, it, vi } from "vitest";
-// import * as Managers from "../managers";
-// import { Database } from "@server/services/database";
-// import { Ids } from "@server/services/ids";
-// import { createTestLimboTicket, createTestUser } from "./testUtility";
-// import { Limbo } from "@core/services/limbo";
-// import { Numbers } from "@core/services/numbers";
-// import { Intimal } from "@core/services/intimal";
-// import { Users } from "@server/services/users";
+import { beforeAll, expect, describe, afterAll, it, vi } from "vitest";
+import * as Managers from "../src/managers";
+import { Database } from "@server/services/database";
+import { Ids } from "@server/services/ids";
+import { createTestLimboTicket, createTestUser, resetDatabaseConnections } from "./testUtility";
+import { Limbo } from "@core/services/limbo";
+import { Intimal } from "@core/services/intimal";
+import { Users } from "@server/services/users";
 
-// describe("Dice Manager Test", () => {
-//   beforeAll(async () => {
-//     const user = createTestUser();
+describe("Limbo Manager Test", () => {
+  beforeAll(async () => {
+    const user = createTestUser();
 
-//     // Initialize Server DB
-//     await Database.createCollection("users", {});
-//     await Database.createCollection("limbo-tickets", {});
-//     await Database.createCollection("site-bets", {});
-//     await Database.createCollection("transactions", {});
-//     await Database.collection("users").insertOne(user);
+    // Initialize Server DB
+    await Promise.allSettled([
+      Database.collection("users").deleteOne({
+        _id: user._id,
+      }),
+      resetDatabaseConnections(["limbo-tickets", "site-bets", "transactions"]),
+    ]);
 
-//     Managers.limbo();
-//   }, 20000);
+    await Database.collection("users").insertOne(user);
 
-//   it("test manager initialization", async () => {
-//     expect(await Database.hasCollection("limbo-tickets")).toBeTruthy();
-//     expect(await Database.hasCollection("users")).toBeTruthy();
-//     expect(await Database.hasCollection("site-bets")).toBeTruthy();
-//     expect(await Database.hasCollection("transactions")).toBeTruthy();
-//   });
+    Managers.limbo();
+  }, 20000);
 
-//   it("create a limbo game bet (win)", async () => {
-//     const user = await Database.collection("users").findOne();
-//     expect(user).toBeDefined();
+  it("test manager initialization", async () => {
+    expect(await Database.hasCollection("limbo-tickets")).toBeTruthy();
+    expect(await Database.hasCollection("users")).toBeTruthy();
+    expect(await Database.hasCollection("site-bets")).toBeTruthy();
+    expect(await Database.hasCollection("transactions")).toBeTruthy();
+  });
 
-//     if (!user) return;
+  it("create a limbo game bet (win)", async () => {
+    const user = await Database.collection("users").findOne();
+    expect(user).toBeDefined();
 
-//     const betAmount = Intimal.fromDecimal(10);
-//     const { min, max } = Limbo.getTargetMinMax();
-//     const targetValue = Numbers.randomInt(min, max);
-//     const limboTicket = await createTestLimboTicket({
-//       betAmount,
-//       rollValue: 5,
-//       targetValue,
-//       user,
-//     });
+    if (!user) return;
 
-//     await Database.collection("limbo-tickets").insertOne(limboTicket);
-//     // The start change has a 500 ms wait before populating collection
-//     setTimeout(() => {}, 500);
-//     const siteBite = await Database.collection("site-bets").findOne({
-//       game: "limbo",
-//       user: Users.getBasicUser(user),
-//       betAmount: betAmount,
-//     });
+    const betAmount = Intimal.fromDecimal(10);
+    const { min, max } = Limbo.getTargetMinMax();
+    const limboTicket = await createTestLimboTicket({
+      betAmount,
+      rollValue: max,
+      targetValue: min,
+      user,
+    });
 
-//     expect(siteBite?.betAmount).not.toBeNull();
-//     const transaction = await Database.collection("transactions").findOne({
-//       category: "limbo",
-//       status: "completed",
-//       kind: "limbo-won",
-//     });
+    await Database.collection("limbo-tickets").insertOne(limboTicket);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const siteBite = await Database.collection("site-bets").findOne({
+      game: "limbo",
+      user: Users.getBasicUser(user),
+      betAmount: betAmount,
+    });
 
-//     expect(transaction).toBeDefined();
-//     expect(transaction?.kind).toBe("limbo-won");
-//   });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-//   it("create a limbo game bet (lose)", async () => {
-//     const user = await Database.collection("users").findOne();
-//     expect(user).toBeDefined();
+    expect(siteBite?.betAmount).not.toBeNull();
+    const transaction = await Database.collection("transactions").findOne({
+      category: "limbo",
+      status: "completed",
+      kind: "limbo-won",
+    });
 
-//     if (!user) return;
+    expect(transaction).toBeDefined();
+    expect(transaction?.kind).toBe("limbo-won");
+    expect(+Number(transaction?.amount).toFixed(2)).toBe(
+      +Number(betAmount * limboTicket.multiplier).toFixed(2),
+    );
+  }, 10000);
 
-//     const ticketId = await Ids.incremental({
-//       key: "limboTicketId",
-//       baseValue: 1000001,
-//       batchSize: 100,
-//     });
+  it("create a limbo game bet (lose)", async () => {
+    const user = await Database.collection("users").findOne();
+    expect(user).toBeDefined();
 
-//     const rollValue = 4;
-//     const betAmount = 250;
-//     const targetValue = 6;
+    if (!user) return;
 
-//     const limboTicket = await createTestLimboTicket({
-//       rollValue,
-//       user,
-//       betAmount,
-//       targetValue,
-//     });
+    const ticketId = await Ids.incremental({
+      key: "limboTicketId",
+      baseValue: 1000001,
+      batchSize: 100,
+    });
 
-//     await Database.collection("limbo-tickets").insertOne(limboTicket);
+    const rollValue = 4;
+    const betAmount = 250;
+    const targetValue = 6;
 
-//     await new Promise((resolve) => setTimeout(resolve, 750));
+    const limboTicket = await createTestLimboTicket({
+      rollValue,
+      user,
+      betAmount,
+      targetValue,
+    });
 
-//     const siteBets = await Database.collection("site-bets").findOne({
-//       game: "limbo",
-//       user: Users.getBasicUser(user),
-//       betAmount: betAmount,
-//     });
+    await Database.collection("limbo-tickets").insertOne(limboTicket);
 
-//     expect(siteBets).not.toBeNull();
-//     const transaction = await Database.collection("transactions").findOne({
-//       _id: ticketId,
-//       category: "limbo",
-//       status: "completed",
-//     });
+    await new Promise((resolve) => setTimeout(resolve, 750));
 
-//     expect(transaction).toBeNull();
-//   });
-// });
+    const siteBets = await Database.collection("site-bets").findOne({
+      game: "limbo",
+      user: Users.getBasicUser(user),
+      betAmount: betAmount,
+    });
+
+    expect(siteBets).not.toBeNull();
+    const transaction = await Database.collection("transactions").findOne({
+      _id: ticketId,
+      category: "limbo",
+      status: "completed",
+    });
+
+    expect(transaction).toBeNull();
+  });
+});
