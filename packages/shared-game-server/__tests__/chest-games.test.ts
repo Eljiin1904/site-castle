@@ -1,4 +1,4 @@
-// import { beforeAll, expect, describe, afterAll, it } from "vitest";
+import { beforeAll, expect, describe, afterAll, it } from "vitest";
 // import * as Managers from "../managers";
 // import { Database } from "@server/services/database";
 // import { Ids } from "@server/services/ids";
@@ -436,3 +436,9 @@
 //     expect(processedChatMessage.kind).toBe("holiday-case-win");
 //   });
 // });
+
+describe("", () => {
+  it("", () => {
+    expect(1 + 1).toBe(2);
+  });
+});
