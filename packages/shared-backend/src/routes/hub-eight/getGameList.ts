@@ -17,15 +17,18 @@ export default Http.createApiRoute({
     new_release: Validation.boolean().optional(),
     bonus_buy: Validation.boolean().optional(),
     live: Validation.boolean().optional(),
+    featured: Validation.boolean().nullable().default(null),
   }),
   callback: async (req, res) => {
-    const { category, products, new_release, bonus_buy, live } = req.body;
+    const { category, products, new_release, bonus_buy, live, featured } = req.body;
     try {
       // Games release less than 60 days ago considered "new"
       const sixtyDaysAgo = subDays(new Date(), 60);
 
       // Build query dynamically
       const query: any = {};
+
+      query.enabled = true;
 
       if (category) {
         query.site_category = category;
@@ -43,6 +46,9 @@ export default Http.createApiRoute({
 
       if (bonus_buy === true) {
         query.bonus_buy = true;
+      }
+      if (featured) {
+        query.featured = featured; // Filter for featured games if true/false
       }
 
       const games = await Database.collection("hub-eight-games").find(query).toArray();

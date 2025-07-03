@@ -10,6 +10,6 @@ export function determineSiteCategory(category: string): string {
   if (cat.includes("game show")) {
     return "game_show";
   }
-  // Default: keep original category (or convert to lowercase if you want consistency)
-  return category;
+
+  return "casino";
 }
