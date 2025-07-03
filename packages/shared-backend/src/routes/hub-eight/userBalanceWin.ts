@@ -8,6 +8,7 @@ import { Ids } from "@server/services/ids";
 // import { Transaction } from "ethers";
 import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
+import config from "@server/config";
 
 const logger = getServerLogger({});
 const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
@@ -67,10 +68,32 @@ export default Http.createApiRoute({
       meta,
     } = req.body;
     const options: any = {};
+    const { hubEightPublicKey } = config;
 
-    // 1. Validate Signature Header
-    // const retreivedSignature = req.headers["X-Hub88-Signature"];
-    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    logger.info(`Bet Payload Received from Hubb88: ${req.body} `);
+
+    // // 1. Validate Signature Header
+    const retreivedSignature = req.headers["x-hub88-signature"] as string;
+
+    if (!retreivedSignature) {
+      logger.error(`Signature not provided for Request Id ${request_uuid}`);
+
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
+    const originalMessage = JSON.stringify(req.body);
+    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    if (!isValid) {
+      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
 
     // 2. Validate Token
     try {
@@ -94,6 +117,10 @@ export default Http.createApiRoute({
       return;
     }
 
+    logger.info(
+      `Retreived User: ${userInfo.username}, Transaction UUID: ${transaction_uuid}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${request_uuid} `,
+    );
+
     // 3. Check if bet was Made or if it was rolled back
     const betTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
@@ -108,6 +135,16 @@ export default Http.createApiRoute({
     // If No bet was made, dont provide win
     // If bet was rolled back, dont provide win
     if (!betTransaction || previousRollbackTransaction) {
+      if (!betTransaction)
+        logger.error(
+          `In Win, previous Bet was not found for User: ${userInfo.username} with Transaction UUID: ${transaction_uuid}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${request_uuid} `,
+        );
+
+      if (previousRollbackTransaction && previousRollbackTransaction.kind == "hub-eight-rollback")
+        logger.error(
+          `In Win, transaction was already rolled back for User: ${userInfo.username}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${previousRollbackTransaction.requestUUID} `,
+        );
+
       res.status(200).json({
         status: "RS_ERROR_TRANSACTION_DOES_NOT_EXIST",
         request_uuid: request_uuid,
@@ -141,13 +178,32 @@ export default Http.createApiRoute({
           previousWinTransaction.round == round &&
           previousWinTransaction.amount == amount
         ) {
+          logger.error(
+            `Bet was already rolled back for User: ${userInfo.username}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${previousWinTransaction.requestUUID} `,
+          );
           res.status(200).json({ status: "RS_OK", ...responseBase });
           return;
         }
 
-        // Criteria 2 : If reference transaction uuid match a previous rollback
+        // Criteria 2 : If reference transaction uuid match a previous rollback but using different transaction uuid
+        // Return RS_OK
+        if (
+          referenceTransactionUUID === reference_transaction_uuid &&
+          transactionUUID != transaction_uuid
+        ) {
+          logger.error(
+            `Win was already processed for User: ${userInfo.username} for  Reference Transaction: ${reference_transaction_uuid} but with a different Transaction UUID, Previous Win Transaction UUID ${transactionUUID} and Current Transaction UUID ${transaction_uuid}, returning current balance  `,
+          );
+          res.status(200).json({ status: "RS_OK", ...responseBase });
+          return;
+        }
+
+        // Criteria 3 : If reference transaction uuid match a previous win
         // Return Duplicate Transaction
         if (referenceTransactionUUID === reference_transaction_uuid) {
+          logger.error(
+            `Win was already processed for User: ${userInfo.username} with the same  Reference Transaction: ${reference_transaction_uuid} as before `,
+          );
           res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
           return;
         }
@@ -184,7 +240,7 @@ export default Http.createApiRoute({
       });
       return;
     } catch (err: any) {
-      logger.error(err);
+      logger.error(`Error process Win Transaction due to Error ${err}`);
       if (err.message in hubStatus) {
         res
           .status(200)

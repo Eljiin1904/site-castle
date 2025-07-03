@@ -23,6 +23,7 @@ import { useIsMobileLayout } from '#app/hooks/style/useIsMobileLayout';
 import { useAppSelector } from '#app/hooks/store/useAppSelector';
 import { Games } from '#app/services/games';
 import { SvgPromotions } from '#app/svgs/common/SvgPromotions';
+import { SvgAllGames } from '@client/svgs/common/SvgAllGames';
 
 export const BaseMenu = ({collapsed}: {
   collapsed: boolean;
@@ -68,6 +69,13 @@ export const BaseMenu = ({collapsed}: {
     type="nav"
   />
   <OriginalGames collapsed={!collapsed} />    
+  <MenuItem
+    icon={SvgAllGames}
+    label={t("games")}
+    to="/games"
+    showLabel={!collapsed}
+    type="nav"
+  />
   <MenuItem
       icon={SvgSlots}
       label={t("games:slot")}

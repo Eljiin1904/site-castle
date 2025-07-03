@@ -4,8 +4,10 @@ import { Http } from "#app/services/http";
 import { hubStatus } from "@core/services/hub-eight/HubEight";
 import { Security } from "@server/services/security";
 import config from "@server/config";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
-// TODO -> Create a Hub88
+const logger = getServerLogger({});
+
 export default Http.createApiRoute({
   type: "post",
   path: "/user/balance",
@@ -25,6 +27,7 @@ export default Http.createApiRoute({
     const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
     if (!retreivedSignature) {
+      logger.error(`Signature not provided for Request Id ${request_uuid}`);
       res.status(200).json({
         status: "RS_ERROR_INVALID_SIGNATURE",
         request_uuid: request_uuid,
@@ -34,6 +37,7 @@ export default Http.createApiRoute({
     const originalMessage = JSON.stringify(req.body);
     const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
     if (!isValid) {
+      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
       res.status(200).json({
         status: "RS_ERROR_INVALID_SIGNATURE",
         request_uuid: request_uuid,
