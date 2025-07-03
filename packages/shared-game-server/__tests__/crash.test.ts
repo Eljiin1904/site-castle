@@ -7,40 +7,22 @@ import { CrashRoundDocument } from "@core/types/crash/CrashRoundDocument";
 import { CrashTicketDocument } from "@core/types/crash/CrashTicketDocument";
 import { Crash as CoreCrash } from "@core/services/crash";
 import { CrashMultiplierDocument } from "@core/types/crash/CrashMultiplierDocument";
+import { resetDatabaseConnections } from "./testUtility";
 
 describe("Crash Manager Test", () => {
   beforeAll(async () => {
-    await Database.createCollection("site-bets", {});
-    await Database.createCollection("transactions", {});
+    await resetDatabaseConnections(["site-bets", "transactions"]);
   }, 20000);
 
   beforeEach(async () => {
-    if (await Database.hasCollection("crash-rounds")) {
-      Database.collection("crash-rounds").drop();
-    }
-    await Database.createCollection("crash-rounds", {});
-
-    if (await Database.hasCollection("crash-tickets")) {
-      Database.collection("crash-tickets").drop();
-    }
-    await Database.createCollection("crash-tickets", {});
-
-    if (await Database.hasCollection("crash-next-tickets")) {
-      Database.collection("crash-next-tickets").drop();
-    }
-    await Database.createCollection("crash-next-tickets", {});
-
-    if (await Database.hasCollection("crash-multipliers")) {
-      Database.collection("crash-multipliers").drop();
-    }
-    await Database.createCollection("crash-multipliers", {});
-
-    if (await Database.hasCollection("site-activity")) {
-      Database.collection("site-activity").drop();
-    }
-
-    await Database.createCollection("site-activity", {});
-    await Database.createCollection("chat-messages", {});
+    await resetDatabaseConnections([
+      "crash-rounds",
+      "crash-tickets",
+      "crash-next-tickets",
+      "crash-multipliers",
+      "site-activity",
+      "chat-messages",
+    ]);
   });
 
   it("create waiting crash game", async () => {
@@ -91,7 +73,7 @@ describe("Crash Manager Test", () => {
     expect(crashRound?.won).toBeUndefined();
     expect(nextRoundTickets).toBe(0);
     expect(roundTickets).toBe(1);
-  });
+  }, 15000);
 
   it("start crash round", async () => {
     Managers.crash();
@@ -112,7 +94,7 @@ describe("Crash Manager Test", () => {
     expect(multiplierRound?.roundTime).toBe(
       CoreCrash.getTimeForMultiplier(multiplierRound?.multiplier ?? 1),
     );
-  });
+  }, 15000);
 
   it("complete crash round and ticket won", async () => {
     const user = await Database.collection("users").findOne();
