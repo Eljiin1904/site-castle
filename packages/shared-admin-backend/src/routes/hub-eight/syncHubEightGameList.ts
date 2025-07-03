@@ -116,6 +116,7 @@ export default Http.createApiRoute({
                 },
                 $setOnInsert: {
                   enabled: false,
+                  featured: false,
                   _id: Ids.object(),
                 },
               },

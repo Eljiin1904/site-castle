@@ -3,8 +3,11 @@ import { Database } from "@server/services/database";
 import { Http } from "#app/services/http";
 import { hubStatus } from "@core/services/hub-eight/HubEight";
 import config from "@server/config";
+import { Security } from "@server/services/security";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
-// TODO add Flag for process with Private Key
+const logger = getServerLogger({});
+
 export default Http.createApiRoute({
   type: "post",
   path: "/user/info",
@@ -14,16 +17,35 @@ export default Http.createApiRoute({
     request_uuid: Validation.string().required("Request UUID required"),
   }),
   callback: async (req, res) => {
-    const { hub88PrivateKey } = config;
+    const { hubEightPublicKey } = config;
     const { user, request_uuid } = req.body;
     const options: any = {};
     options.username = user;
 
-    // 1. Validate Signature Header
-    // const retreivedSignature = req.headers["X-Hub88-Signature"];
-    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    logger.info(`Bet Payload Received from Hubb88: ${req.body} `);
 
-    // const data = Security.decrypt(,retreivedSignature)
+    // // 1. Validate Signature Header
+    const retreivedSignature = req.headers["x-hub88-signature"] as string;
+
+    if (!retreivedSignature) {
+      logger.error(`Signature not provided for Request Id ${request_uuid}`);
+
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
+    const originalMessage = JSON.stringify(req.body);
+    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    if (!isValid) {
+      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
 
     // 2. Validate Token
     const userInfo = await Database.collection("users").findOne(options);
