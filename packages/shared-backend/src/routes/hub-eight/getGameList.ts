@@ -56,7 +56,7 @@ export default Http.createApiRoute({
       }
 
       if (sortIndex === 0) {
-        sort = { "featured": -1 };
+        sort = { "featured": -1 , "release_date": -1 };
       } else if (sortIndex === 1) {
         sort = { "popular": 1 };
       } else if (sortIndex === 2) {
@@ -64,6 +64,8 @@ export default Http.createApiRoute({
       } else if (sortIndex === 3) {
         sort = { "name": -1 };
       }
+
+      console.log("Querying games ordered by", sortIndex, "with query", query);
       const total = await Database.collection("hub-eight-games").countDocuments(query);
       const games = await Database.collection("hub-eight-games").find(query,{sort: { ...sort, _id: 1 },skip: (page - 1) * limit,
       limit}).toArray();
