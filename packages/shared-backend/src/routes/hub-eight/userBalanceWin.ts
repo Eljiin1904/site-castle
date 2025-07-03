@@ -130,6 +130,7 @@ export default Http.createApiRoute({
           request_uuid,
           user: userInfo?.username,
           balance: userInfo.tokenBalance,
+          currency: "USD",
         };
 
         // Idempotent Win Check -> Process the first win only

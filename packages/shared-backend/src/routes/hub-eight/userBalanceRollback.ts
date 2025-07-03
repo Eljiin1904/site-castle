@@ -101,7 +101,18 @@ export default Http.createApiRoute({
         res.status(200).json({ status: "RS_OK", ...responseBase });
         return;
       }
-      // Criteria 2 : If reference transaction uuid match a previous rollback
+
+      // Criteria 2 : If reference transaction uuid match a previous rollback but using different transaction uuid
+      // Return RS_OK
+      if (
+        referenceTransactionUUID === reference_transaction_uuid &&
+        transactionUUID != transaction_uuid
+      ) {
+        res.status(200).json({ status: "RS_OK", ...responseBase });
+        return;
+      }
+
+      // Criteria 3 : If reference transaction uuid match a previous rollback
       // Return Duplicate
       if (referenceTransactionUUID === reference_transaction_uuid) {
         res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
