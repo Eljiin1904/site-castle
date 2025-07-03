@@ -20,22 +20,12 @@ describe("Double Manager Test", () => {
   }, 20000);
 
   beforeEach(async () => {
-    if (await Database.hasCollection("double-rounds")) {
-      Database.collection("double-rounds").drop();
-    }
-    await Database.createCollection("double-rounds", {});
-
-    if (await Database.hasCollection("double-tickets")) {
-      Database.collection("double-tickets").drop();
-    }
-    await Database.createCollection("double-tickets", {});
-
-    if (await Database.hasCollection("site-activity")) {
-      Database.collection("site-activity").drop();
-    }
-
-    await Database.createCollection("site-activity", {});
-    await Database.createCollection("chat-messages", {});
+    await resetDatabaseConnections([
+      "double-rounds",
+      "double-tickets",
+      "site-activity",
+      "chat-messages",
+    ]);
   });
 
   it("create waiting double game", async () => {
