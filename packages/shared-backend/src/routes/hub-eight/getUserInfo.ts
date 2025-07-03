@@ -22,7 +22,7 @@ export default Http.createApiRoute({
     const options: any = {};
     options.username = user;
 
-    logger.info(`Bet Payload Received from Hubb88: ${req.body} `);
+    logger.info(`Bet Payload Received from Hubb88:  ${JSON.stringify(req.body)} `);
 
     // // 1. Validate Signature Header
     const retreivedSignature = req.headers["x-hub88-signature"] as string;

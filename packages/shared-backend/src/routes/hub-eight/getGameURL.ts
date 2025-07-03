@@ -36,7 +36,7 @@ export default Http.createApiRoute({
     const token = await Security.createToken({
       kind: "hub-eight-token",
       token: Ids.long(),
-      expires: addMinutes(Date.now(), 60),
+      expires: addMinutes(Date.now(), 180),
       userDetails: {
         id: user._id,
         username: user.username,

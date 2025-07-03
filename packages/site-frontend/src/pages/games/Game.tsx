@@ -82,7 +82,7 @@ const GameLaunch = ({
 }) => {
   const query = useQuery({
     queryKey: ["game", game_code],
-    queryFn: () => HubEight.getGameLauncher({ platform, game_code: game_code! }),
+    queryFn: () => HubEight.getGameLauncher({ platform, game_code }),
     placeholderData: (prev) => prev,
   });
 
