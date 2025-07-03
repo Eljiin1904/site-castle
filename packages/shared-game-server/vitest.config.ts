@@ -7,7 +7,7 @@ process.env.NODE_ENV = "development"; // force development mode
 export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
-    include: ["**/*.test.ts"],
+    include: ["**/*.test.ts", "__tests__/*.test.ts"],
     exclude: [...configDefaults.exclude, "**/ignore/**"],
     setupFiles: ["./__tests__/vitest.setup.ts"],
     globalSetup: ["./__tests__/global-setup.ts"],
