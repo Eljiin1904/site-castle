@@ -98,10 +98,6 @@ export const AppRouter = () => {
         element={<GamesRoute />}
       />
       <Route
-        path="/games/:gameId"
-        element={<Game />}
-      />
-      <Route
         path="/auth/:provider"
         element={<AuthReturnPage />}
       />
