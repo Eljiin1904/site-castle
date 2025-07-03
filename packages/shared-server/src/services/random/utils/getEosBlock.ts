@@ -34,7 +34,8 @@ export async function getEosBlock(eosBlockNum: number): Promise<BlockInfo> {
   try {
     const res = await axios.post<ResponseData>(nownodes, data);
     eosBlockId = res.data.id;
-  } catch {
+  } catch (err) {
+    console.error("Eos Error ", err);
     try {
       const res = await axios.post<ResponseData>(greymass, data);
       eosBlockId = res.data.id;

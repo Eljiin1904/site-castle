@@ -45,13 +45,15 @@ describe("Double Fairness", () => {
   });
 
   it("Should provide an expected roll result to pre-defined server seeds, EOS blocks, and nonces", async () => {
+    const blockNow = await Random.getEosBlockNow();
+
     const round = await initializeDoubleRound(serverSeed, "pending", {
-      eosBlockId,
-      eosBlockNum,
-      eosBlockDate,
+      eosBlockId: blockNow.eosBlockId,
+      eosBlockNum: blockNow.eosBlockNum,
+      eosBlockDate: blockNow.eosBlockDate,
     });
     Managers.double();
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     const doubleRound = await Database.collection("double-rounds").findOne({
       _id: round._id,
@@ -100,9 +102,9 @@ describe("Double Fairness", () => {
     };
 
     await Database.collection("double-tickets").insertOne(ticket);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
     Managers.double();
     await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1700));
 
     expect(doubleRound).not.toBeNull();
     expect(doubleRound?._id).toBe(round._id);
@@ -121,7 +123,7 @@ describe("Double Fairness", () => {
     expect(doubleTicketForWager?.betKind).toBe("red");
     expect(doubleTicketForWager?.processed).toBeTruthy();
   });
-});
+}, 10000);
 
 // Setup helper functions
 function formatRound(

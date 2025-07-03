@@ -31,7 +31,7 @@ beforeAll(async () => {
   Managers.caseBattles();
   Managers.chestGames();
   Managers.chatRain();
-  Managers.double();
+  // Managers.double();
   Managers.dice();
   Managers.limbo();
   Managers.mines();
