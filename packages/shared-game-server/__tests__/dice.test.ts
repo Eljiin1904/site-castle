@@ -1,5 +1,4 @@
 import { beforeAll, expect, describe, it, assert } from "vitest";
-import * as Managers from "./../src/managers";
 import { Database } from "@server/services/database";
 import { Users } from "@server/services/users";
 import { createDiceTestTicket, createTestUser, resetDatabaseConnections } from "./testUtility";

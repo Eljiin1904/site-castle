@@ -1,4 +1,4 @@
-import { beforeAll, expect, describe, afterAll, it, vi, beforeEach } from "vitest";
+import { beforeAll, expect, describe, it, beforeEach } from "vitest";
 import * as Managers from "../src/managers";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
@@ -81,12 +81,7 @@ describe("Double Manager Test", () => {
 
     const serverSeed = Ids.secret();
     const serverSeedHash = Random.hashServerSeed(serverSeed);
-    const roll = {
-      value: 5,
-      color: "red",
-      bait: false,
-      offset: 1,
-    };
+
     const blockNow = await Random.getEosBlockNow();
     const eosBlockNum = blockNow.eosBlockNum + 4;
     const statusDate = new Date();
