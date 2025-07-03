@@ -53,7 +53,6 @@ export default Http.createApiRoute({
       round,
       reward_uuid,
       request_uuid,
-
       is_free,
       is_supplier_promo,
       is_aggregated,
@@ -119,16 +118,39 @@ export default Http.createApiRoute({
     });
 
     try {
+      // Duplicate Checks -> For sure same transaction uuid if found.
+
       // Idempotent Bet Check -> Process the first bet only
-      if (previousBetTransaction) {
-        res.status(200).json({
-          status: "RS_OK",
-          request_uuid: request_uuid,
-          user: userInfo?.username,
-          balance: userInfo.tokenBalance,
-          currency: "USD",
-        });
-        return;
+      // If exact request -> Transaction uuid,round etc. Process first win only
+      if (previousBetTransaction && previousBetTransaction.kind == "hub-eight-debit") {
+        if (
+          previousBetTransaction.round == round &&
+          previousBetTransaction.roundClosed == round_closed
+        ) {
+          res.status(200).json({
+            status: "RS_OK",
+            request_uuid: request_uuid,
+            user: userInfo?.username,
+            balance: userInfo.tokenBalance,
+            currency: "USD",
+          });
+          return;
+        }
+
+        // Duplicate Bet Check -> Same Transaction UUID but different details
+        if (
+          previousBetTransaction.round != round &&
+          previousBetTransaction.roundClosed != round_closed
+        ) {
+          res.status(200).json({
+            status: "RS_ERROR_DUPLICATE_TRANSACTION",
+            request_uuid: request_uuid,
+            user: userInfo?.username,
+            balance: userInfo.tokenBalance,
+            currency: "USD",
+          });
+          return;
+        }
       }
 
       await Transactions.createTransaction({
