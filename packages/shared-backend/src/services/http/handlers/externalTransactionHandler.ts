@@ -5,16 +5,21 @@ import { HandledError } from "@server/services/errors";
 import { Database } from "@server/services/database";
 import { Ids } from "@server/services/ids";
 import { Security } from "@server/services/security";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
+const logger = getServerLogger({});
 export const externalTransactionHandler = (
   callback: (req: Request & any, res: Response, next: NextFunction) => void | Promise<void>,
   externalTransactionType: "hub-eight",
 ) => {
   return Http.createHandler(async (req, res, next) => {
     const token = req.body?.token;
-
+    const request_uuid = req.body?.request_uuid;
+    const user = req.body?.user;
     if (!token) {
-      throw new HandledError("Missing token in request body.");
+      logger.error(`Missing Token , Transaction Type: ${externalTransactionType}`);
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN", request_uuid, user });
+      return;
     }
 
     let userId;
@@ -26,8 +31,8 @@ export const externalTransactionHandler = (
       //  When more external transaction added, configure to adapt to their error types
       // For now Hug Eight, this is the valid error for invalid token
       if (!userDetails) {
-        // throw new Error("RS_ERROR_INVALID_TOKEN");
-        res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
+        logger.error(`Invalid token validation , Transaction Type: ${externalTransactionType}`);
+        res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN", request_uuid, user });
         return;
       }
 
@@ -36,8 +41,8 @@ export const externalTransactionHandler = (
       }
       userId = userDetails.id;
     } catch (err) {
-      // throw new HandledError("RS_ERROR_INVALID_TOKEN");
-      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN" });
+      logger.error(`Error process token validation , Error: ${err}`);
+      res.status(200).json({ status: "RS_ERROR_INVALID_TOKEN", request_uuid, user });
       return;
     }
 

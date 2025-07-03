@@ -2,10 +2,10 @@ import { Validation } from "@core/services/validation";
 import { Database } from "@server/services/database";
 import { Http } from "#app/services/http";
 import { hubStatus } from "@core/services/hub-eight/HubEight";
-import { currency } from "@core/services/validation/Validation";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
+import config from "@server/config";
 
 const logger = getServerLogger({});
 const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
@@ -53,7 +53,6 @@ export default Http.createApiRoute({
       round,
       reward_uuid,
       request_uuid,
-
       is_free,
       is_supplier_promo,
       is_aggregated,
@@ -64,12 +63,32 @@ export default Http.createApiRoute({
       meta,
     } = req.body;
     const options: any = {};
+    const { hubEightPublicKey } = config;
 
-    // 1. Validate Signature Header
-    // const retreivedSignature = req.headers["X-Hub88-Signature"];
-    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    logger.info(`Bet Payload Received from Hubb88: ${req.body} `);
 
-    // const data = Security.decrypt(,retreivedSignature)
+    // // 1. Validate Signature Header
+    const retreivedSignature = req.headers["x-hub88-signature"] as string;
+
+    if (!retreivedSignature) {
+      logger.error(`Signature not provided for Request Id ${request_uuid}`);
+
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
+    const originalMessage = JSON.stringify(req.body);
+    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    if (!isValid) {
+      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
 
     // 2. Validate Token
     try {
@@ -119,16 +138,42 @@ export default Http.createApiRoute({
     });
 
     try {
+      // Duplicate Checks -> For sure same transaction uuid if found.
+
       // Idempotent Bet Check -> Process the first bet only
-      if (previousBetTransaction) {
-        res.status(200).json({
-          status: "RS_OK",
-          request_uuid: request_uuid,
-          user: userInfo?.username,
-          balance: userInfo.tokenBalance,
-          currency: "USD",
-        });
-        return;
+      // If same exact request -> Transaction uuid,round etc. Process first win only
+      if (previousBetTransaction && previousBetTransaction.kind == "hub-eight-debit") {
+        if (previousBetTransaction.round == round) {
+          logger.error(
+            `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID} , Round Id ${previousBetTransaction.round} `,
+          );
+          res.status(200).json({
+            status: "RS_OK",
+            request_uuid: request_uuid,
+            user: userInfo?.username,
+            balance: userInfo.tokenBalance,
+            currency: "USD",
+          });
+          return;
+        }
+
+        // Duplicate Bet Check -> Same Transaction UUID but different details
+        if (
+          previousBetTransaction.round != round ||
+          previousBetTransaction.roundClosed != round_closed
+        ) {
+          logger.error(
+            `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID}, Previous Round Id ${previousBetTransaction.round}, Current Round Id ${round} `,
+          );
+          res.status(200).json({
+            status: "RS_ERROR_DUPLICATE_TRANSACTION",
+            request_uuid: request_uuid,
+            user: userInfo?.username,
+            balance: userInfo.tokenBalance,
+            currency: "USD",
+          });
+          return;
+        }
       }
 
       await Transactions.createTransaction({

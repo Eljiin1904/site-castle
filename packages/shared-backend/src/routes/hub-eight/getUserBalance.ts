@@ -4,8 +4,10 @@ import { Http } from "#app/services/http";
 import { hubStatus } from "@core/services/hub-eight/HubEight";
 import { Security } from "@server/services/security";
 import config from "@server/config";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
-// TODO -> Create a Hub88
+const logger = getServerLogger({});
+
 export default Http.createApiRoute({
   type: "post",
   path: "/user/balance",
@@ -18,15 +20,30 @@ export default Http.createApiRoute({
   }),
   callback: async (req, res) => {
     const { user, request_uuid, game_code, token } = req.body;
-    const { hub88PrivateKey } = config;
+    const { hubEightPublicKey } = config;
     const options: any = {};
 
     // // 1. Validate Signature Header
-    // const retreivedSignature = req.headers["X-Hub88-Signature"] as string;
-    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
-    // const resEncodedMessage = new TextEncoder().encode(retreivedSignature);
+    const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
-    // const data = Security.decrypt(hub88PrivateKey, resEncodedMessage);
+    if (!retreivedSignature) {
+      logger.error(`Signature not provided for Request Id ${request_uuid}`);
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
+    const originalMessage = JSON.stringify(req.body);
+    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    if (!isValid) {
+      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
 
     // 2. Validate Token
     const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });

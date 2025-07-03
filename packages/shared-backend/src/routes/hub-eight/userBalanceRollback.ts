@@ -6,6 +6,7 @@ import { currency, message } from "@core/services/validation/Validation";
 import { Transactions } from "@server/services/transactions";
 import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Security } from "@server/services/security";
+import config from "@server/config";
 
 const logger = getServerLogger({});
 
@@ -44,10 +45,32 @@ export default Http.createApiRoute({
       meta,
     } = req.body;
     const options: any = {};
+    const { hubEightPublicKey } = config;
+
+    logger.info(`Bet Payload Received from Hubb88: ${req.body} `);
 
     // // 1. Validate Signature Header
-    // const retreivedSignature = req.headers["X-Hub88-Signature"];
-    // if (!retreivedSignature) throw new Error(hubStatus.RS_ERROR_INVALID_SIGNATURE);
+    const retreivedSignature = req.headers["x-hub88-signature"] as string;
+
+    if (!retreivedSignature) {
+      logger.error(`Signature not provided for Request Id ${request_uuid}`);
+
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
+    const originalMessage = JSON.stringify(req.body);
+    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    if (!isValid) {
+      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
+      res.status(200).json({
+        status: "RS_ERROR_INVALID_SIGNATURE",
+        request_uuid: request_uuid,
+      });
+      return;
+    }
 
     // 2. Validate Token
     try {
@@ -80,12 +103,7 @@ export default Http.createApiRoute({
       referenceTransactionUUID: reference_transaction_uuid,
     });
 
-    // Idempotent Win Check -> Process the first rollback only
-    // Criteria 1: If transaction uuid match a previous
-    // Return Duplicate Transaction
-
-    // Criteria 2 : If reference transaction uuid match a previous rollback
-    // Return OK
+    // Duplicate Checks -> For sure same transaction uuid if found.
     if (previousRollbackTransaction?.kind === "hub-eight-rollback") {
       const { transactionUUID, referenceTransactionUUID } = previousRollbackTransaction;
 
@@ -93,15 +111,43 @@ export default Http.createApiRoute({
         request_uuid,
         user: userInfo?.username,
         balance: userInfo.tokenBalance,
+        currency: "USD",
       };
-
-      if (transactionUUID === transaction_uuid) {
-        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
+      // Idempotent Win Check -> Process the first rollback only
+      // Criteria 1: If transaction uuid match a previous
+      // Return RS_OK Transaction, processed already
+      if (
+        transactionUUID === transaction_uuid &&
+        previousRollbackTransaction.round == round &&
+        previousRollbackTransaction.referenceTransactionUUID == referenceTransactionUUID
+      ) {
+        logger.error(
+          `Bet was already rolled back for User: ${userInfo.username}, Same Reference Transaction: ${reference_transaction_uuid},  Transaction UUID as previous ${transaction_uuid} and Round Id ${previousRollbackTransaction.round}, Current Request ID ${request_uuid} `,
+        );
+        res.status(200).json({ status: "RS_OK", ...responseBase });
         return;
       }
 
-      if (referenceTransactionUUID === reference_transaction_uuid) {
+      // Criteria 2 : If reference transaction uuid match a previous rollback but using different transaction uuid
+      // Return RS_OK
+      if (
+        referenceTransactionUUID === reference_transaction_uuid &&
+        transactionUUID != transaction_uuid
+      ) {
+        logger.error(
+          `Bet was already rolled back for User: ${userInfo.username}, Reference Transaction: ${reference_transaction_uuid}, Round Id ${previousRollbackTransaction.round}, different Transaction UUID ->  Previous: ${transactionUUID} and Current: ${transaction_uuid} `,
+        );
         res.status(200).json({ status: "RS_OK", ...responseBase });
+        return;
+      }
+
+      // Criteria 3 : If reference transaction uuid match a previous rollback
+      // Return Duplicate
+      if (referenceTransactionUUID === reference_transaction_uuid) {
+        logger.error(
+          `Bet was already rolled back for User: ${userInfo.username}, Reference Transaction: ${reference_transaction_uuid}`,
+        );
+        res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
         return;
       }
     }

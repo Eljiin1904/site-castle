@@ -94,7 +94,8 @@ export const externalGameCategories = [
   "slot",
   "live",
   "game_shows",
-  ...hubEightGameCategories,
+  "casino",
+  // ...hubEightGameCategories,
 ] as const;
 
 export type ExternalGameCategory = (typeof externalGameCategories)[number];
