@@ -16,7 +16,7 @@ export const OriginalGamesPage = () => {
   const featuredGames = games?.filter((x) => x.featured);
   
   return (<Fragment>
-    <PageBanner image="/graphics/original-games-tile" heading={t('games.original',{count: 2})} description="" content={<></>}/> 
+    <PageBanner image="/graphics/original-games-tile" heading={t('original',{count: 2})} description="" content={<></>}/> 
     <SitePage
       className="GamesPage"
       gap={small ? 32: 56}
