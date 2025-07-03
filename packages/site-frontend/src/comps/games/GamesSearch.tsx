@@ -18,7 +18,7 @@ export const GameSearch = ({home = false}: {
   const small = useIsMobileLayout();
   const {t} = useTranslation(["home"]);
 
-  const gameOptions = [t('games.all'), ...Game.kinds.map((x) => t(`games.${x}`, {count: 2}))];
+  const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
   const gameValues: GameKindType[] = ['all', ...Game.kinds];
   
   const value = gameValues.indexOf(currentFilter || 'all');

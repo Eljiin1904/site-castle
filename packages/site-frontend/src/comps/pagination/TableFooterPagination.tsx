@@ -7,6 +7,7 @@ import { useTranslation } from "@core/services/internationalization/internationa
 export const TableFooterPagination = ({
   page,
   total,
+  label,
   limit,
   inPage,
   hasNext,
@@ -14,6 +15,7 @@ export const TableFooterPagination = ({
 }: {
   page: number;
   total: number;
+  label: string;
   limit: number;
   inPage: number;
   hasNext: boolean;
@@ -29,7 +31,7 @@ export const TableFooterPagination = ({
   return (
     <Div fx center>
       {!small && <Span position="absolute" left={0}>
-         {(page - 1)*limit + inPage}/{total} {t("transactions.transaction",{count: total})}
+         {(page - 1)*limit + inPage}/{total} {label}
       </Span>}
       <Pagination
         page={page}

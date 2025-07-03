@@ -2,6 +2,7 @@ import { CategoryBanner } from "#app/app/banner/CategoryBanner";
 import { GameBanner } from "#app/app/banner/GameBanner";
 import { ProviderBanner } from "#app/app/banner/ProviderBanner";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
+import { GameHubEight } from "#app/pages/games/GameHubEight";
 import { Button } from "@client/comps/button/Button";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { Div } from "@client/comps/div/Div";
@@ -22,7 +23,7 @@ export type GameSlideProps = {
 export const GamesSlider = ({title, items, type }: {
   title: string,
   items : GameSlideProps[],
-  type: "category" | "game" | "provider"
+  type: "category" | "game" | "provider" | "hub-eight"
 }) => {
 
   const [index, setIndex] = useState(0);
@@ -82,6 +83,7 @@ export const GamesSlider = ({title, items, type }: {
         {items.map((x, i) => <Conditional
           value={type}
           key={`${type} ${title} ${x.heading}`}
+          hub-eight={<GameHubEight  image={x.image ?? undefined} heading={x.heading} to={x.to} subheading={x.subheading} />}
           game={<GameBanner objectPositionHorizontal="right" key={`${title} ${x.heading}`} ratio={layout === 'mobile' ? "150 / 160" : "168 / 180"} {...x}/>}
           provider={<ProviderBanner key={`${title} ${x.heading}`} image={x.image} />}
           category={<CategoryBanner ratio={layout === 'mobile'  ? "150 / 154" : "206 / 88"}  objectPositionHorizontal="80%" {...x}/>}

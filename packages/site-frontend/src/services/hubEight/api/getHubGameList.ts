@@ -3,11 +3,15 @@ import { ExternalGameCategory } from "@core/types/hub-eight/GameInformation";
 import { HubEightGameDocument } from "@core/types/hub-eight/HubEightGameDocument";
 
 export function getGameList(data: {
-  category: ExternalGameCategory;
+  category?: ExternalGameCategory;
   live?: boolean;
   bonus_buy?: boolean;
   new_release?: boolean;
   products?: string[];
-}): Promise<HubEightGameDocument[]> {
+  searchText?: string;
+  sortIndex?: number;
+  page?: number;
+  limit?: number;
+}): Promise<{games: HubEightGameDocument[], total: number}> {
   return Http.post("/hub-eight/game/list", data);
 }

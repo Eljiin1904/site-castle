@@ -1,7 +1,7 @@
 export const kinds = [
   "featured",
   "original",
-  "slots",
+  "slot",
   "live_casino",
   "game_shows",
 ] as const;

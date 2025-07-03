@@ -70,6 +70,7 @@ export const TransactionsBody = () => {
           limit={limit}
           inPage={transactions.length}
           setPage={setPage}
+          label={t("account:transactions.transaction",{count: total})}
         />
       </Div>
     </Div>

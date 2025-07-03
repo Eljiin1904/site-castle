@@ -70,7 +70,7 @@ export const BaseMenu = ({collapsed}: {
   <OriginalGames collapsed={!collapsed} />    
   <MenuItem
       icon={SvgSlots}
-      label={t("games:slots")}
+      label={t("games:slot")}
       to="/slots"
       showLabel={!collapsed}
       type="nav"
@@ -151,7 +151,7 @@ export const OriginalGames = ({collapsed} : {collapsed: boolean}) => {
       icon={SvgOriginalGames}
       isSubMenu={true}
       open={open}
-      label={t("games.original",{count: 2})}
+      label={t("games:original",{count: 2})}
       onClick={onClickMenu}
       showLabel={collapsed}
       type="action"

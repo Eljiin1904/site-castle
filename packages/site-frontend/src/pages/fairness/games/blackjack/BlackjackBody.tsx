@@ -11,7 +11,7 @@ export const BlackjackBody = () => {
   const limit = 10;
   const [page, setPage] = useState(1);
   const authenticated = useAppSelector((x) => x.user.authenticated);
-  const { t } = useTranslation(["fairness"]);
+  const { t } = useTranslation();
   const query = useQuery({
     enabled: authenticated,
     queryKey: ["blackjack-results", limit, page],
@@ -38,6 +38,7 @@ export const BlackjackBody = () => {
       limit={limit}
       inPage={results.length}
       setPage={setPage}
+      label={t("account:transactions.transaction",{count: query.data?.total || 0})}
     />
   </Fragment>);
 };
