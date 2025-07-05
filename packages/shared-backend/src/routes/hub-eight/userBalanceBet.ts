@@ -6,6 +6,7 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
 import config from "@server/config";
+import { validateSignature } from "./utils/validateSignature";
 
 const logger = getServerLogger({});
 const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
@@ -16,10 +17,10 @@ export default Http.createApiRoute({
   type: "post",
   path: "/transaction/bet",
   secure: false,
-  signatureRequired: "hubEight",
   transaction: false,
   externalTransaction: true,
   externalTransactionType: "hub-eight",
+  signatureRequired: true,
   body: Validation.object({
     user: Validation.username().required("User is required."),
     transaction_uuid: Validation.string().required("Transaction UUID required"),
@@ -68,27 +69,36 @@ export default Http.createApiRoute({
     logger.info(`Bet Payload Received from Hubb88: ${JSON.stringify(req.body)} `);
 
     // // 1. Validate Signature Header
-    const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
-    if (!retreivedSignature) {
-      logger.error(`Signature not provided for Request Id ${request_uuid}`);
-
+    // 1. Validate Signature Header
+    if (!validateSignature(req, "x-hub88-signature", hubEightPublicKey)) {
       res.status(200).json({
         status: "RS_ERROR_INVALID_SIGNATURE",
-        request_uuid: request_uuid,
+        request_uuid,
       });
       return;
     }
-    const originalMessage = JSON.stringify(req.body);
-    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
-    if (!isValid) {
-      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
-      res.status(200).json({
-        status: "RS_ERROR_INVALID_SIGNATURE",
-        request_uuid: request_uuid,
-      });
-      return;
-    }
+    // const retreivedSignature = req.headers["x-hub88-signature"] as string;
+
+    // if (!retreivedSignature) {
+    //   logger.error(`Signature not provided for Request Id ${request_uuid}`);
+
+    //   res.status(200).json({
+    //     status: "RS_ERROR_INVALID_SIGNATURE",
+    //     request_uuid: request_uuid,
+    //   });
+    //   return;
+    // }
+    // const originalMessage = JSON.stringify(req.body);
+    // const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
+    // if (!isValid) {
+    //   logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
+    //   res.status(200).json({
+    //     status: "RS_ERROR_INVALID_SIGNATURE",
+    //     request_uuid: request_uuid,
+    //   });
+    //   return;
+    // }
 
     // 2. Validate Token
     try {
