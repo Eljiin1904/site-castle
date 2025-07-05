@@ -69,6 +69,8 @@ export default Http.createApiRoute({
       JSON.stringify(payload),
     );
 
+    logger.info(`Sending following Payload for URL -> ${JSON.stringify(payload)}`);
+
     // 5. Make request to -> /operator/generic/v2/game/url with operator ID from config
     // Return Game URL
     try {
