@@ -31,17 +31,17 @@ export default Http.createApiRoute({
 
     const { env } = config;
 
-    const location = await Http.getLocation(req.ip);
-    if (!location.countryCode && env != "development")
-      throw new HandledError("Need Valid Location to play");
+    // const location = await Http.getLocation(req.ip);
+    // if (!location.countryCode && env != "development")
+    //   throw new HandledError("Need Valid Location to play");
 
     // Build query dynamically
     const query: any = {};
 
     // Exclude games blocked in the user's country
-    if (location.countryCode) {
-      query.blocked_countries = { $nin: [location.countryCode] };
-    }
+    // if (location.countryCode) {
+    //   query.blocked_countries = { $nin: [location.countryCode] };
+    // }
 
     let sort: Sort = {};
 
