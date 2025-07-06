@@ -6,24 +6,29 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
 import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { PageBanner } from "#app/comps/site-page/PageBanner";
+import { Div } from "@client/comps/div/Div";
+import { GameSearch } from "#app/comps/games/GamesSearch";
+import { GameProvider } from "#app/comps/games/GameProvider";
+import { GameSort } from "#app/comps/games/GameSort";
+import { GamesByCategory } from "./GamesByCategoryPage";
 
 
-export const OriginalGamesPage = () => {
+export const HubEightGames = () => {
   
   const games = useAppSelector((x) => x.site.games) || [];
   const small = useIsMobileLayout();
-  const {t} = useTranslation();
+  const {t} = useTranslation(['games']);
   const featuredGames = games?.filter((x) => x.featured);
   
   return (<Fragment>
-    <PageBanner image="/graphics/original-games-tile" heading={t('original',{count: 2})} description="" content={<></>}/> 
+    <PageBanner image="/graphics/original-games-tile" heading={t('game',{count: 2})} description="" content={<></>}/> 
     <SitePage
       className="GamesPage"
       gap={small ? 32: 56}
       pb={small ? 32: 56}
     >
       <FeaturedGames items={featuredGames} showSection={true} />
-      <OriginalGames/>
+      <GamesByCategory category={undefined} />
     </SitePage>
   </Fragment>
   );
