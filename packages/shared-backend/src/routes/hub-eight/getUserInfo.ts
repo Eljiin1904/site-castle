@@ -34,6 +34,9 @@ export default Http.createApiRoute({
       });
       return;
     }
+
+    logger.info(`Signature Verified in User Info `);
+
     // const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
     // if (!retreivedSignature) {

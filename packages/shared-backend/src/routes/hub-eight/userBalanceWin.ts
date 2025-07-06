@@ -14,15 +14,13 @@ import { validateSignature } from "./utils/validateSignature";
 const logger = getServerLogger({});
 const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
-// TODO -> Create a Hub88
-// TODO add Flag for process with Private Key
 export default Http.createApiRoute({
   type: "post",
   path: "/transaction/win",
   secure: false,
   transaction: false,
-  externalTransaction: true,
-  externalTransactionType: "hub-eight",
+  // externalTransaction: true,
+  // externalTransactionType: "hub-eight",
   signatureRequired: true,
   body: Validation.object({
     user: Validation.username().min(3).required("User is required."),
@@ -82,27 +80,6 @@ export default Http.createApiRoute({
       });
       return;
     }
-    // const retreivedSignature = req.headers["x-hub88-signature"] as string;
-
-    // if (!retreivedSignature) {
-    //   logger.error(`Signature not provided for Request Id ${request_uuid}`);
-
-    //   res.status(200).json({
-    //     status: "RS_ERROR_INVALID_SIGNATURE",
-    //     request_uuid: request_uuid,
-    //   });
-    //   return;
-    // }
-    // const originalMessage = JSON.stringify(req.body);
-    // const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
-    // if (!isValid) {
-    //   logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
-    //   res.status(200).json({
-    //     status: "RS_ERROR_INVALID_SIGNATURE",
-    //     request_uuid: request_uuid,
-    //   });
-    //   return;
-    // }
 
     // 2. Validate Token
     try {
@@ -130,7 +107,7 @@ export default Http.createApiRoute({
       `Retreived User: ${userInfo.username}, Transaction UUID: ${transaction_uuid}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${request_uuid} `,
     );
 
-    // 3. Check if bet was Made or if it was rolled back
+    // 3. Check if bet was made or if it was rolled back
     const betTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: reference_transaction_uuid,
@@ -161,6 +138,7 @@ export default Http.createApiRoute({
       });
       return;
     }
+
     // 4. Credit the Win Amount
     const previousWinTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-credit",
@@ -188,7 +166,7 @@ export default Http.createApiRoute({
           previousWinTransaction.amount == amount
         ) {
           logger.error(
-            `Bet was already rolled back for User: ${userInfo.username}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${previousWinTransaction.requestUUID} `,
+            `Win was already processed for User: ${userInfo.username}, Reference Transaction: ${reference_transaction_uuid}, Request Id ${previousWinTransaction.requestUUID}, contains same Transaction UUID, round and amount `,
           );
           res.status(200).json({ status: "RS_OK", ...responseBase });
           return;
@@ -211,13 +189,14 @@ export default Http.createApiRoute({
         // Return Duplicate Transaction
         if (referenceTransactionUUID === reference_transaction_uuid) {
           logger.error(
-            `Win was already processed for User: ${userInfo.username} with the same  Reference Transaction: ${reference_transaction_uuid} as before `,
+            `Win was already processed for User: ${userInfo.username} with the same Reference Transaction: ${reference_transaction_uuid} that was previously utilized `,
           );
           res.status(200).json({ status: "RS_ERROR_DUPLICATE_TRANSACTION", ...responseBase });
           return;
         }
       }
 
+      // 5. Credit the Win Amount
       await Transactions.createTransaction({
         kind: "hub-eight-credit",
         user: userInfo,
@@ -240,15 +219,19 @@ export default Http.createApiRoute({
         meta: meta,
       });
 
+      // 6. Return OK response
+      const newBalance = await Database.collection("users").findOne(options);
+
       res.json({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
         request_uuid: request_uuid,
         currency: "USD", // Confirmed always USD
-        balance: userInfo?.tokenBalance,
+        balance: newBalance?.tokenBalance,
       });
       return;
     } catch (err: any) {
+      // Handle Errors
       logger.error(`Error process Win Transaction due to Error ${err}`);
       if (err.message in hubStatus) {
         res

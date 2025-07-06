@@ -28,7 +28,9 @@ export default Http.createApiRoute({
 
     // 1. Check KYC and Suspension status
     // TODO -> Check if game enabled
+    // TODO -> Check if the game category is enabled
     // await Site.validateToggle("hubEightEnabled");
+    // await Site.validateConfirmed(user);
     // await Site.validateSuspension(user);
     // await Site.validateKycTier(user, Validation.kycTiers.email);
 
