@@ -117,6 +117,9 @@ export default Http.createApiRoute({
       return;
     }
 
+    // 3. Get current User information
+    // Check if suspended, self ban, kyc etc
+
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) {
       res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER", request_uuid: request_uuid });
@@ -141,7 +144,7 @@ export default Http.createApiRoute({
       return;
     }
 
-    // 3. Deduct the Bet Amount
+    // 4. Check previous bets. Transaction UUID should be unique and no duplicates are allowed
     const previousBetTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: transaction_uuid,
@@ -153,27 +156,9 @@ export default Http.createApiRoute({
       // Idempotent Bet Check -> Process the first bet only
       // If same exact request -> Transaction uuid,round etc. Process first win only
       if (previousBetTransaction && previousBetTransaction.kind == "hub-eight-debit") {
-        if (previousBetTransaction.round == round) {
+        if (previousBetTransaction.transactionUUID == transaction_uuid) {
           logger.error(
             `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID} , Round Id ${previousBetTransaction.round} `,
-          );
-          res.status(200).json({
-            status: "RS_OK",
-            request_uuid: request_uuid,
-            user: userInfo?.username,
-            balance: userInfo.tokenBalance,
-            currency: "USD",
-          });
-          return;
-        }
-
-        // Duplicate Bet Check -> Same Transaction UUID but different details
-        if (
-          previousBetTransaction.round != round ||
-          previousBetTransaction.roundClosed != round_closed
-        ) {
-          logger.error(
-            `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID}, Previous Round Id ${previousBetTransaction.round}, Current Round Id ${round} `,
           );
           res.status(200).json({
             status: "RS_ERROR_DUPLICATE_TRANSACTION",
@@ -184,8 +169,40 @@ export default Http.createApiRoute({
           });
           return;
         }
-      }
 
+        // if (previousBetTransaction.round == round) {
+        //   logger.error(
+        //     `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID} , Round Id ${previousBetTransaction.round} `,
+        //   );
+        //   res.status(200).json({
+        //     status: "RS_OK",
+        //     request_uuid: request_uuid,
+        //     user: userInfo?.username,
+        //     balance: userInfo.tokenBalance,
+        //     currency: "USD",
+        //   });
+        //   return;
+        // }
+
+        // Duplicate Bet Check -> Same Transaction UUID but different details
+        // if (
+        //   previousBetTransaction.round != round ||
+        //   previousBetTransaction.roundClosed != round_closed
+        // ) {
+        //   logger.error(
+        //     `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID}, Previous Round Id ${previousBetTransaction.round}, Current Round Id ${round} `,
+        //   );
+        //   res.status(200).json({
+        //     status: "RS_ERROR_DUPLICATE_TRANSACTION",
+        //     request_uuid: request_uuid,
+        //     user: userInfo?.username,
+        //     balance: userInfo.tokenBalance,
+        //     currency: "USD",
+        //   });
+        //   return;
+        // }
+      }
+      // 5. Create new Bet and deduct amount
       await Transactions.createTransaction({
         kind: "hub-eight-debit",
         autoComplete: true,
@@ -201,7 +218,7 @@ export default Http.createApiRoute({
         meta: meta || null,
       });
       const newBalance = await Database.collection("users").findOne(options);
-
+      // 6. Return Response
       res.json({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
@@ -211,6 +228,7 @@ export default Http.createApiRoute({
       });
       return;
     } catch (err: any) {
+      // Handle Errors
       logger.error(err);
       if (err.message in hubStatus) {
         res.status(200).json({
