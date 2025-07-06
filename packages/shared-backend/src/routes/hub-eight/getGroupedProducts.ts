@@ -3,24 +3,21 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Validation } from "@core/services/validation";
 import { externalGameCategories } from "@core/types/hub-eight/GameInformation";
 import { Database } from "@server/services/database";
-import { RedisService } from "@server/services/redis/RedisService";
-// import { Http } from "@server/services/http";
 
 const logger = getServerLogger({});
-const PROGRESS_KEY = "import:games:progress";
 
 export default Http.createApiRoute({
   type: "post",
   path: "/games/products",
   secure: true,
   body: Validation.object({
-    category: Validation.string().oneOf(externalGameCategories).optional()
+    category: Validation.string().oneOf(externalGameCategories).optional(),
   }),
   callback: async (req, res) => {
     const { category } = req.body;
     try {
       const pipeline = [
-        { $match: category ? {site_category: category} : {} },
+        { $match: category ? { site_category: category } : {} },
         {
           $group: {
             _id: "$product",
@@ -40,7 +37,7 @@ export default Http.createApiRoute({
       ];
       const products = await Database.collection("hub-eight-games").aggregate(pipeline).toArray();
 
-      res.json({products});
+      res.json({ products });
     } catch (err) {
       logger.error(`Unable to retreive products: ${err}`);
       res.status(500).json({ message: "Unable to handle request at this time" });

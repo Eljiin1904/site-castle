@@ -11,15 +11,13 @@ import { validateSignature } from "./utils/validateSignature";
 const logger = getServerLogger({});
 const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
-// TODO -> Create a Hub88
-// TODO add Flag for process with Private Key
 export default Http.createApiRoute({
   type: "post",
   path: "/transaction/bet",
   secure: false,
   transaction: false,
-  externalTransaction: true,
-  externalTransactionType: "hub-eight",
+  // externalTransaction: true,
+  // externalTransactionType: "hub-eight",
   signatureRequired: true,
   body: Validation.object({
     user: Validation.username().required("User is required."),
@@ -79,28 +77,6 @@ export default Http.createApiRoute({
 
     logger.info(`Signature Verified in Bet `);
 
-    // const retreivedSignature = req.headers["x-hub88-signature"] as string;
-
-    // if (!retreivedSignature) {
-    //   logger.error(`Signature not provided for Request Id ${request_uuid}`);
-
-    //   res.status(200).json({
-    //     status: "RS_ERROR_INVALID_SIGNATURE",
-    //     request_uuid: request_uuid,
-    //   });
-    //   return;
-    // }
-    // const originalMessage = JSON.stringify(req.body);
-    // const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
-    // if (!isValid) {
-    //   logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
-    //   res.status(200).json({
-    //     status: "RS_ERROR_INVALID_SIGNATURE",
-    //     request_uuid: request_uuid,
-    //   });
-    //   return;
-    // }
-
     // 2. Validate Token
     try {
       const { userDetails } = await Security.getToken({ kind: "hub-eight-token", token });
@@ -120,6 +96,12 @@ export default Http.createApiRoute({
 
     // 3. Get current User information
     // Check if suspended, self ban, kyc etc
+    // TODO -> Check if game enabled
+    // TODO -> Check if the game category is enabled
+    // await Site.validateToggle("hubEightEnabled");
+    // await Site.validateConfirmed(user);
+    // await Site.validateSuspension(user);
+    // await Site.validateKycTier(user, Validation.kycTiers.email);
 
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) {
@@ -136,6 +118,7 @@ export default Http.createApiRoute({
       return;
     }
 
+    //  await Site.validateTokenBalance(user, betAmount);, use try catch  and return proper status
     if (userInfo.tokenBalance < amount) {
       res.status(200).json({
         status: "RS_ERROR_NOT_ENOUGH_MONEY",
