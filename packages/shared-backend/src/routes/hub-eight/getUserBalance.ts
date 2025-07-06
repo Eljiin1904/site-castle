@@ -25,6 +25,8 @@ export default Http.createApiRoute({
     const { hubEightPublicKey } = config;
     const options: any = {};
 
+    logger.info(`Get User Balance for Hubb88: ${JSON.stringify(req.body)} `);
+
     // 1. Validate Signature Header
     if (!validateSignature(req, "x-hub88-signature", hubEightPublicKey)) {
       res.status(200).json({
@@ -33,6 +35,9 @@ export default Http.createApiRoute({
       });
       return;
     }
+
+    logger.info(`Signature Verified in Balance `);
+
     // const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
     // if (!retreivedSignature) {
