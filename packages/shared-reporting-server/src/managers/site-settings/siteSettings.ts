@@ -73,6 +73,12 @@ async function main() {
   await insertDefault("skinifyEnabled", true);
   await insertDefault("skinsbackEnabled", true);
   await insertDefault("skindeckEnabled", true);
+
+  //Hubb88 Site Category Toggles
+  await insertDefault("slotEnabled", true);
+  await insertDefault("liveGameEnabled", true);
+  await insertDefault("gameShowEnabled", true);
+  await insertDefault("casinoEnabled", true);
 }
 
 async function insertDefault<K extends SiteSettingId>(_id: K, value: SiteSettingObject[K]) {

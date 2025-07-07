@@ -145,7 +145,7 @@ export default Http.createApiRoute({
       logger.error(`Issue Processing Request: ${err}`);
       res.status(500).json({ error: "Unable to process request at this time" });
     } finally {
-      // Remove Progres, Lock when completed or if it fails
+      // Remove Progress, Lock when completed or if it fails
       await RedisService.deleteKey(LOCK_KEY);
       // await RedisService.deleteKey(PROGRESS_KEY);
     }
