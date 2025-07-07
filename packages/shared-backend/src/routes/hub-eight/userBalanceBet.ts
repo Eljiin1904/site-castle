@@ -15,9 +15,6 @@ export default Http.createApiRoute({
   type: "post",
   path: "/transaction/bet",
   secure: false,
-  transaction: false,
-  // externalTransaction: true,
-  // externalTransactionType: "hub-eight",
   signatureRequired: true,
   body: Validation.object({
     user: Validation.username().required("User is required."),
@@ -61,10 +58,11 @@ export default Http.createApiRoute({
       amount,
       meta,
     } = req.body;
-    const options: any = {};
 
     const { hubEightPublicKey } = config;
-    logger.info(`Bet Payload Received from Hubb88: ${JSON.stringify(req.body)} `);
+    const options: any = {};
+
+    logger.info(`Bet Payload for Hubb88: ${JSON.stringify(req.body)} `);
 
     // 1. Validate Signature Header
     if (!validateSignature(req, "x-hub88-signature", hubEightPublicKey)) {

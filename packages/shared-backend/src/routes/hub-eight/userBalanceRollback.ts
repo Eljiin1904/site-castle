@@ -15,9 +15,6 @@ export default Http.createApiRoute({
   type: "post",
   path: "/transaction/rollback",
   secure: false,
-  transaction: false,
-  // externalTransaction: true,
-  // externalTransactionType: "hub-eight",
   signatureRequired: true,
   body: Validation.object({
     user: Validation.username().required("User is required."),
