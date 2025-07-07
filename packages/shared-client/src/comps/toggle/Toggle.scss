@@ -16,7 +16,15 @@
   }
 
   &:not(.active) {
+   
     background: var(--brown-4-color);
+  
+    &.secondary {
+      background: var(--black-hover-color);
+    }
+    &.tertiary {
+      background: var(--dark-brown-color);
+    }
 
     .knob {
       color: var(--light-sand-color);
