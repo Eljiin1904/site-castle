@@ -54,6 +54,8 @@ describe("Dice Game Test ", async () => {
     const user = await Database.collection("users").findOne({ username: "diceTester1" });
     if (!user) return;
 
+    socket.emit("dice-join", user._id);
+
     // Create and Insert Ticket for Dice
     let ticket = await createTestTicket({
       user,
@@ -61,9 +63,6 @@ describe("Dice Game Test ", async () => {
       targetValue: 4,
       rollValue: 5,
     });
-    await Database.collection("dice-tickets").insertOne(ticket);
-
-    await new Promise((resolve) => setTimeout(resolve, 200));
 
     if (socket == null) return;
 
@@ -73,6 +72,9 @@ describe("Dice Game Test ", async () => {
         resolve(message);
       });
     });
+
+    await Database.collection("dice-tickets").insertOne(ticket);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const message = await handleSocketEvents;
 
