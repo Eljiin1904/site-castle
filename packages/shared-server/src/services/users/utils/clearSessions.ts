@@ -35,7 +35,7 @@ export async function clearSessions(user: UserDocument, excludeSessionId?: strin
 
       return { deletedCount };
     } catch (err) {
-      logger.error("Redis error while clearing sessions, falling back to MongoDB:", err);
+      logger.error(`Redis error while clearing sessions, falling back to MongoDB: ${err}`);
     }
   }
 
