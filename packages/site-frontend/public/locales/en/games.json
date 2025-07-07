@@ -34,5 +34,11 @@
     "title": "Provider",
     "all": "All"
   },
-  "notGames": "No games found"
+  "notGames": "No games found",
+  "demoMode": "Demo Mode",
+  "gameModes": {
+    "theatre": "Theatre Mode",
+    "standard": "Standard Mode",
+    "fullscreen": "Fullscreen Mode"
+  }
 }
