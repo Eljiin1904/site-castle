@@ -8,4 +8,4 @@ export { default as mines } from "./mines/mines";
 export { default as blackjack } from "./blackjack/blackjack";
 export { default as races } from "./races/races";
 export { default as raffles } from "./raffles/raffles";
-export {default as crash } from "./crash/crash";
+export { default as crash } from "./crash/crash";
