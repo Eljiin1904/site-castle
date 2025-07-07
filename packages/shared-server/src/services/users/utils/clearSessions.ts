@@ -1,8 +1,11 @@
 import { UserDocument } from "@core/types/users/UserDocument";
 import { Database } from "#server/services/database";
 import { RedisService } from "#server/services/redis/RedisService";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 const SESSION_PREFIX = "user-sessions:";
+const logger = getServerLogger({});
+
 export async function clearSessions(user: UserDocument, excludeSessionId?: string) {
   const client = RedisService.client;
   let deletedCount = 0;
@@ -26,13 +29,13 @@ export async function clearSessions(user: UserDocument, excludeSessionId?: strin
             deletedCount++;
           }
         } catch (err) {
-          console.warn(`Failed to parse session ${key}`, err);
+          logger.error(`Failed to parse session ${key} - ${err}`);
         }
       }
 
       return { deletedCount };
     } catch (err) {
-      console.error("Redis error while clearing sessions, falling back to MongoDB:", err);
+      logger.error("Redis error while clearing sessions, falling back to MongoDB:", err);
     }
   }
 
