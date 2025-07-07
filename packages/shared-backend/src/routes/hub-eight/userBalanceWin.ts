@@ -18,9 +18,6 @@ export default Http.createApiRoute({
   type: "post",
   path: "/transaction/win",
   secure: false,
-  transaction: false,
-  // externalTransaction: true,
-  // externalTransactionType: "hub-eight",
   signatureRequired: true,
   body: Validation.object({
     user: Validation.username().min(3).required("User is required."),
