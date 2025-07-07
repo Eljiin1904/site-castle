@@ -4,6 +4,7 @@ import { getLayout } from "../utils/getLayout";
 export interface StyleState {
   bodyLayout: Layout;
   mainLayout: Layout;
+  theatreMode?: boolean;
 }
 
 const defaultLayout = getLayout(window.innerWidth);
@@ -11,6 +12,7 @@ const defaultLayout = getLayout(window.innerWidth);
 const initialState: StyleState = {
   bodyLayout: defaultLayout,
   mainLayout: defaultLayout,
+  theatreMode: false,
 };
 
 export const styleSlice = createSlice({
@@ -23,7 +25,10 @@ export const styleSlice = createSlice({
     setMainLayout: reducer<Layout>((state, { payload }) => {
       state.mainLayout = payload;
     }),
+    setTheatreMode: reducer<boolean>((state, { payload }) => {
+      state.theatreMode = payload;
+    })
   }),
 });
 
-export const { setBodyLayout, setMainLayout } = styleSlice.actions;
+export const { setBodyLayout, setMainLayout , setTheatreMode} = styleSlice.actions;

@@ -9,7 +9,7 @@ const logger = getServerLogger({});
 export default Http.createApiRoute({
   type: "post",
   path: "/games/products",
-  secure: true,
+  secure:false,
   body: Validation.object({
     category: Validation.string().oneOf(externalGameCategories).optional(),
   }),

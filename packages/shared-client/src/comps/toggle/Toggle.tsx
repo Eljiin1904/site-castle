@@ -9,6 +9,7 @@ import "./Toggle.scss";
 export type ToggleProps = StyledLayoutProps & {
   value: boolean | undefined;
   disabled?: boolean;
+  kind?: "primary" | "secondary" | "tertiary";
   children?: any;
   onChange: (v: boolean) => void;
 };
@@ -18,12 +19,13 @@ export const Toggle: FC<ToggleProps> = ({
   value,
   children,
   disabled,
+  kind = "primary",
   onChange,
   ...forwardProps
 }) => {
   return (
     <Div
-      className={classNames("Toggle", className, { active: value, disabled })}
+      className={classNames("Toggle", className, kind,  { active: value, disabled })}
       onClick={disabled ? undefined : () => onChange(!value)}
       {...forwardProps}
     >
