@@ -67,7 +67,7 @@ export default Http.createApiRoute({
     const options: any = {};
     const { hubEightPublicKey } = config;
 
-    logger.info(`Bet Payload Received from Hubb88:  ${JSON.stringify(req.body)} `);
+    logger.info(`Win Payload Received from Hubb88:  ${JSON.stringify(req.body)} `);
 
     // 1. Validate Signature Header
     if (!validateSignature(req, "x-hub88-signature", hubEightPublicKey)) {
