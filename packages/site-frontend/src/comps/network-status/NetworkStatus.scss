@@ -1,5 +1,7 @@
 .NetworkStatus {
-  background-color:rgba(var(--dark-brown-rgb-color), 0.7);
-  // position: absolute;
+  &.original {
+    background-color:rgba(var(--dark-brown-rgb-color), 0.7);
+    position: absolute;
+  }
   z-index: 1;
 }

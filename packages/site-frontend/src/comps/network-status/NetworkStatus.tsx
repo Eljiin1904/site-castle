@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Fragment } from "react/jsx-runtime";
 import { Div } from "@client/comps/div/Div";
 import { Span } from "@client/comps/span/Span";
@@ -9,9 +10,9 @@ import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./NetworkStatus.scss";
 
 export const NetworkStatus = ({
-  position = "absolute",
+  original = true,
 }: {
-  position?: "absolute" | "fixed" | "relative" | "static";
+  original?: boolean;
 }) => {
   
   const latency = useAppSelector((state) => state.site.latency) ?? 0;
@@ -21,14 +22,13 @@ export const NetworkStatus = ({
 
   return (
     <Div
-      className={"NetworkStatus"}
+      className={classNames("NetworkStatus", {original})}
       align="center"
       justify="center"
-      px={12}
-      left={position === 'absolute' ?  16: 0}
-      top={position === 'absolute' ? 16: 0}
+      px={original ? 12: 0}
+      left={original ?  16: 0}
+      top={original ? 16: 0}
       height={40}
-      position={position}
     >
       <MemoizeNetworkStatus status={status} icon={icon} color={color} />      
     </Div>
