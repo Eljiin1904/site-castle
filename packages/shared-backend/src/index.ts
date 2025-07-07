@@ -26,6 +26,10 @@ async function main() {
   //  Initialize Site Games
   await initSiteGames();
 
+  logger.info("Initializing Redis.");
+
+  await RedisService.initialize();
+
   const httpServer = await initHttp();
 
   logger.info("Initialized http.");
@@ -33,10 +37,6 @@ async function main() {
   initSockets(httpServer);
 
   logger.info("Initialized sockets.");
-
-  logger.info("Initializing Redis.");
-
-  await RedisService.initialize();
 
   logger.info("Initializing Launch Darkly.");
 

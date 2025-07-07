@@ -11,10 +11,11 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import config from "#app/config";
 import * as Routes from "#app/routes";
-// import { RedisStore } from "connect-redis";
-// import { RedisService } from "@server/services/redis";
-// import { RedisClientType } from "redis";
+import { RedisStore } from "connect-redis";
+import { RedisService } from "@server/services/redis/RedisService";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
+const logger = getServerLogger({});
 export async function initHttp() {
   const { env, domain, sessionSecret } = config;
 
@@ -70,42 +71,46 @@ export async function initHttp() {
 
   passport.use(Http.localStrategy());
 
-  // let redisService: RedisService;
-  // let redisClient: RedisClientType | undefined;
-  // let store: RedisStore | undefined;
+  const isDev = env === "development" || env === "devcloud";
+  const redisPrefix = isDev ? "user-sessions:" : "admin-sessions:";
+  const collectionName = isDev ? "user-sessions" : "admin-sessions";
 
-  // try {
-  //   redisService = new RedisService(redisUrl);
-  //   redisClient = await redisService.getClient(); // awaits connect internally
+  let store;
 
-  //   store = new RedisStore({
-  //     client: redisClient,
-  //     prefix: env === "development" || env === "devcloud" ? "user-sess:" : "admin-sess:",
-  //   });
-
-  //   console.log("Using Redis session store");
-  // } catch (error) {
-  //   console.log("Redis unavailable, falling back to in-memory session store");
-  // }
+  if (RedisService.connected) {
+    try {
+      store = new RedisStore({
+        client: RedisService.client,
+        prefix: redisPrefix,
+      });
+      logger.info("Using Redis session store");
+    } catch (err) {
+      logger.error("Failed to initialize Redis store, using MongoDB instead");
+      store = MongoStore.create({
+        client: Database.manager.client,
+        dbName: env,
+        collectionName,
+      });
+    }
+  } else {
+    logger.error("Redis not connected, using MongoDB session store");
+    store = MongoStore.create({
+      client: Database.manager.client,
+      dbName: env,
+      collectionName,
+    });
+  }
 
   app.use(
     session({
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
-      // store, // undefined falls back to MemoryStore
-      store: MongoStore.create({
-        client: Database.manager.client,
-        dbName: env,
-        // 127.0.0.1 will be the dev domain for both site and admin api
-        // to avoid conflict, just use the same cookie in the dev env
-        collectionName:
-          env === "development" || env === "devcloud" ? "user-sessions" : "admin-sessions",
-      }),
+      store,
       cookie: {
-        secure: !(env === "development" || env === "devcloud"),
+        secure: !isDev,
         sameSite: "lax",
-        maxAge: 1000 * 60 * 60 * 24 * 30,
+        maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
       },
     }),
   );

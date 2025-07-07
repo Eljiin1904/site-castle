@@ -9,12 +9,13 @@ import { uploadHandler } from "../handlers/uploadHandler";
 import { regionHandler } from "../handlers/regionHandler";
 import { TfaOptions, tfaHandler } from "../handlers/tfaHandler";
 import { externalTransactionHandler } from "../handlers/externalTransactionHandler";
+import express from "express";
 
 type RouteOptions<B extends AnyObject, Q extends AnyObject> = {
   type: "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
   path: string;
   secure: boolean;
-  signatureRequired?: string;
+  signatureRequired?: boolean;
   restricted?: boolean;
   transaction?: boolean;
   externalTransactionType?: "hub-eight";
@@ -92,7 +93,10 @@ export function createApiRoute<B extends AnyObject, Q extends AnyObject>({
   if (bet) {
     handlers.push(betHandler);
   }
-
+  // If signature is required, parse raw body
+  if (signatureRequired) {
+    handlers.push(express.raw({ type: "*/*" }));
+  }
   handlers.push(
     Http.createHandler(async (req, res, next) => {
       if (query) {

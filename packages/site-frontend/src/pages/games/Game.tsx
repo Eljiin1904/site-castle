@@ -26,20 +26,18 @@ import { Style } from "@client/services/style";
 
 
 export const Game = () => {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const small = useIsMobileLayout();
   const authenticated = useAppSelector((x) => x.user.authenticated);
   const mainLayout = useAppSelector((state) => state.style.mainLayout);
-  const gameId = useParams().gameId;
-  const platform = small ? 'GPL_MOBILE': 'GPL_DESKTOP';
+  const gameId = useParams().gameId;const platform = small ? 'GPL_MOBILE': 'GPL_DESKTOP';
   const theatreMode = useAppSelector((state) => state.style.theatreMode);
  
   return (<SitePage
-      className="GamesPage"
-      gap={small ? 32: 56}
-      pb={small ? 32: 56}
-    >
+    className="GamesPage"
+    gap={small ? 32 : 56}
+    pb={small ? 32 : 56}
+  >
     <Div fx column gap={40}>
       <GameLaunch game_code={ gameId! } platform={platform}/>
       <GameDetails game_code={ gameId! } />
@@ -58,13 +56,13 @@ export const Game = () => {
   </SitePage>)
 };
 
-const GameDetails = ({game_code}: {game_code: string}) => {
-
+const GameDetails = ({ game_code }: { game_code: string }) => {
   const query = useQuery({
-    queryKey: ["game-details",game_code],
-    queryFn: () => HubEight.getGameDetails({game_code}),
+    queryKey: ["game-details", game_code],
+    queryFn: () => HubEight.getGameDetails({ game_code }),
     placeholderData: (prev) => prev,
   });
+  
   const game = query.data?.game as HubEightGameDocument;
   const theatreMode = useAppSelector((state) => state.style.theatreMode);
   const mainLayout = useAppSelector((state) => state.style.mainLayout);
@@ -74,9 +72,20 @@ const GameDetails = ({game_code}: {game_code: string}) => {
   return (<Div column fx alignItems="flex-start" gap={16} px={!theatreMode ? 0: Style.responsive(mainLayout, [20, 24, 40, 0])}>
     <PageTitle heading={game.name} />
     <Span>{game.category}</Span>
-  </Div>)
+  </Div>);
 };
-const GameLaunch = ({game_code, platform}: {game_code: string, platform: "GPL_DESKTOP" | "GPL_MOBILE"}) => {
+const GameLaunch = ({
+  game_code,
+  platform,
+}: {
+  game_code: string;
+  platform: "GPL_DESKTOP" | "GPL_MOBILE";
+}) => {
+  const query = useQuery({
+    queryKey: ["game", game_code],
+    queryFn: () => HubEight.getGameLauncher({ platform, game_code }),
+    placeholderData: (prev) => prev,
+  });
 
   const {t} = useTranslation(['games']);
   const theatreMode = useAppSelector((state) => state.style.theatreMode);

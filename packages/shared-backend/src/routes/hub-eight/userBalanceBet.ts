@@ -6,20 +6,16 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 import { Transactions } from "@server/services/transactions";
 import { Security } from "@server/services/security";
 import config from "@server/config";
+import { validateSignature } from "./utils/validateSignature";
 
 const logger = getServerLogger({});
 const supportedCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
-// TODO -> Create a Hub88
-// TODO add Flag for process with Private Key
 export default Http.createApiRoute({
   type: "post",
   path: "/transaction/bet",
   secure: false,
-  signatureRequired: "hubEight",
-  transaction: false,
-  externalTransaction: true,
-  externalTransactionType: "hub-eight",
+  signatureRequired: true,
   body: Validation.object({
     user: Validation.username().required("User is required."),
     transaction_uuid: Validation.string().required("Transaction UUID required"),
@@ -62,33 +58,22 @@ export default Http.createApiRoute({
       amount,
       meta,
     } = req.body;
-    const options: any = {};
+
     const { hubEightPublicKey } = config;
+    const options: any = {};
 
-    logger.info(`Bet Payload Received from Hubb88: ${req.body} `);
+    logger.info(`Bet Payload for Hubb88: ${JSON.stringify(req.body)} `);
 
-    // // 1. Validate Signature Header
-    const retreivedSignature = req.headers["x-hub88-signature"] as string;
-
-    if (!retreivedSignature) {
-      logger.error(`Signature not provided for Request Id ${request_uuid}`);
-
+    // 1. Validate Signature Header
+    if (!validateSignature(req, "x-hub88-signature", hubEightPublicKey)) {
       res.status(200).json({
         status: "RS_ERROR_INVALID_SIGNATURE",
-        request_uuid: request_uuid,
+        request_uuid,
       });
       return;
     }
-    const originalMessage = JSON.stringify(req.body);
-    const isValid = Security.verify(hubEightPublicKey, originalMessage, retreivedSignature);
-    if (!isValid) {
-      logger.error(`Invalid Signature provided for Request Id ${request_uuid}`);
-      res.status(200).json({
-        status: "RS_ERROR_INVALID_SIGNATURE",
-        request_uuid: request_uuid,
-      });
-      return;
-    }
+
+    logger.info(`Signature Verified in Bet `);
 
     // 2. Validate Token
     try {
@@ -107,6 +92,15 @@ export default Http.createApiRoute({
       return;
     }
 
+    // 3. Get current User information
+    // Check if suspended, self ban, kyc etc
+    // TODO -> Check if game enabled
+    // TODO -> Check if the game category is enabled
+    // await Site.validateToggle("hubEightEnabled");
+    // await Site.validateConfirmed(user);
+    // await Site.validateSuspension(user);
+    // await Site.validateKycTier(user, Validation.kycTiers.email);
+
     const userInfo = await Database.collection("users").findOne(options);
     if (!userInfo) {
       res.status(200).json({ status: "RS_ERROR_INVALID_PARTNER", request_uuid: request_uuid });
@@ -122,6 +116,7 @@ export default Http.createApiRoute({
       return;
     }
 
+    //  await Site.validateTokenBalance(user, betAmount);, use try catch  and return proper status
     if (userInfo.tokenBalance < amount) {
       res.status(200).json({
         status: "RS_ERROR_NOT_ENOUGH_MONEY",
@@ -131,7 +126,7 @@ export default Http.createApiRoute({
       return;
     }
 
-    // 3. Deduct the Bet Amount
+    // 4. Check previous bets. Transaction UUID should be unique and no duplicates are allowed
     const previousBetTransaction = await Database.collection("transactions").findOne({
       kind: "hub-eight-debit",
       transactionUUID: transaction_uuid,
@@ -143,27 +138,9 @@ export default Http.createApiRoute({
       // Idempotent Bet Check -> Process the first bet only
       // If same exact request -> Transaction uuid,round etc. Process first win only
       if (previousBetTransaction && previousBetTransaction.kind == "hub-eight-debit") {
-        if (previousBetTransaction.round == round) {
+        if (previousBetTransaction.transactionUUID == transaction_uuid) {
           logger.error(
             `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID} , Round Id ${previousBetTransaction.round} `,
-          );
-          res.status(200).json({
-            status: "RS_OK",
-            request_uuid: request_uuid,
-            user: userInfo?.username,
-            balance: userInfo.tokenBalance,
-            currency: "USD",
-          });
-          return;
-        }
-
-        // Duplicate Bet Check -> Same Transaction UUID but different details
-        if (
-          previousBetTransaction.round != round ||
-          previousBetTransaction.roundClosed != round_closed
-        ) {
-          logger.error(
-            `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID}, Previous Round Id ${previousBetTransaction.round}, Current Round Id ${round} `,
           );
           res.status(200).json({
             status: "RS_ERROR_DUPLICATE_TRANSACTION",
@@ -174,8 +151,40 @@ export default Http.createApiRoute({
           });
           return;
         }
-      }
 
+        // if (previousBetTransaction.round == round) {
+        //   logger.error(
+        //     `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID} , Round Id ${previousBetTransaction.round} `,
+        //   );
+        //   res.status(200).json({
+        //     status: "RS_OK",
+        //     request_uuid: request_uuid,
+        //     user: userInfo?.username,
+        //     balance: userInfo.tokenBalance,
+        //     currency: "USD",
+        //   });
+        //   return;
+        // }
+
+        // Duplicate Bet Check -> Same Transaction UUID but different details
+        // if (
+        //   previousBetTransaction.round != round ||
+        //   previousBetTransaction.roundClosed != round_closed
+        // ) {
+        //   logger.error(
+        //     `Bet was already made for User: ${userInfo.username}, Transaction: ${previousBetTransaction.transactionUUID}, Request Id ${previousBetTransaction.requestUUID}, Previous Round Id ${previousBetTransaction.round}, Current Round Id ${round} `,
+        //   );
+        //   res.status(200).json({
+        //     status: "RS_ERROR_DUPLICATE_TRANSACTION",
+        //     request_uuid: request_uuid,
+        //     user: userInfo?.username,
+        //     balance: userInfo.tokenBalance,
+        //     currency: "USD",
+        //   });
+        //   return;
+        // }
+      }
+      // 5. Create new Bet and deduct amount
       await Transactions.createTransaction({
         kind: "hub-eight-debit",
         autoComplete: true,
@@ -191,7 +200,7 @@ export default Http.createApiRoute({
         meta: meta || null,
       });
       const newBalance = await Database.collection("users").findOne(options);
-
+      // 6. Return Response
       res.json({
         user: userInfo?.username,
         status: hubStatus.RS_OK,
@@ -201,6 +210,7 @@ export default Http.createApiRoute({
       });
       return;
     } catch (err: any) {
+      // Handle Errors
       logger.error(err);
       if (err.message in hubStatus) {
         res.status(200).json({

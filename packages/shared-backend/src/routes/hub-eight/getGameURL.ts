@@ -10,7 +10,6 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 const logger = getServerLogger({});
 
-// TODO add Flag for process with Private Key
 // The idea will be to display all transaction and allow user to click and get details regarding that transaction
 export default Http.createApiRoute({
   type: "post",
@@ -28,24 +27,18 @@ export default Http.createApiRoute({
     const user = req.user;
 
     // 1. Check KYC and Suspension status
+    // TODO -> Check if game enabled
+    // TODO -> Check if the game category is enabled
     // await Site.validateToggle("hubEightEnabled");
+    // await Site.validateConfirmed(user);
     // await Site.validateSuspension(user);
     // await Site.validateKycTier(user, Validation.kycTiers.email);
 
-    const payload = {
-      operator_id: Number(operatorId),
-    };
-    // 2. Generate signature with Private Key
-    const hubEightSignature = Security.sign(
-      hub88PrivateKey.replace(/\\n/g, "\n"),
-      JSON.stringify(payload),
-    );
-
-    // 3. Generate Token with User details
+    // 2. Generate Token with User details
     const token = await Security.createToken({
       kind: "hub-eight-token",
       token: Ids.long(),
-      expires: addMinutes(Date.now(), 60),
+      expires: addMinutes(Date.now(), 180),
       userDetails: {
         id: user._id,
         username: user.username,
@@ -54,8 +47,8 @@ export default Http.createApiRoute({
       gameCode: game_code,
     });
 
-    // 4. Construct Request Data
-    const requestData = {
+    // 3. Construct Payload
+    const payload = {
       user: user.username,
       token: token,
       sub_partner_id: "castle", // Confirm that we do not have a sub partner
@@ -69,22 +62,26 @@ export default Http.createApiRoute({
       deposit_url: `${config.siteAPI}`, // A place where user can deposit funds
       currency: "USD", // Confirmed that 1 Token == 1 USD
       game_currency: "USD", // Confirm that this will also be USD
-      country: "EE",
+      country: "EE", // Grab from Ip, if not able too throw Error?
     };
 
-    // 4. Make request to -> /operator/generic/v2/game/url with operator ID from config
+    // 4. Generate signature with Private Key
+    const hubEightSignature = Security.sign(
+      hub88PrivateKey.replace(/\\n/g, "\n"),
+      JSON.stringify(payload),
+    );
+
+    logger.info(`Sending following Payload for URL -> ${JSON.stringify(payload)}`);
+
+    // 5. Make request to -> /operator/generic/v2/game/url with operator ID from config
     // Return Game URL
     try {
-      const result = await axios.post(
-        `${hubEightApiURL}/operator/generic/v2/game/url`,
-        requestData,
-        {
-          headers: {
-            "X-Hub88-Signature": hubEightSignature,
-            "Content-Type": "application/json",
-          },
+      const result = await axios.post(`${hubEightApiURL}/operator/generic/v2/game/url`, payload, {
+        headers: {
+          "X-Hub88-Signature": hubEightSignature,
+          "Content-Type": "application/json",
         },
-      );
+      });
 
       res.json({
         user: req.user.username,
