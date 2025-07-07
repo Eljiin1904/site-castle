@@ -113,11 +113,6 @@ const GameLaunch = ({
     }
   };
 
-  // const query = useQuery({
-  //   queryKey: ["game",gameId],
-  //   queryFn: () => HubEight.getGameLauncher({ platform, game_code: gameId! }),
-  //   placeholderData: (prev) => prev,
-  // });
   const gameLauncher = `https://casino.nolimitcdn.com/loader/game-loader.html?game=TheBorder&operator=DAMA500K&language=en&lobbyUrl=https%3A%2F%2Fshock.com&device=${platform}`;//query.data || [];
   //const gameLauncher = 'https://cdntr.a8r.rip/index.html?options=eyJ0YXJnZXRfZWxlbWVudCI6ImdhbWVfd3JhcHBlciIsImxhdW5jaF9vcHRpb25zIjp7ImdhbWVfbGF1bmNoZXJfdXJsIjoiaHR0cHM6Ly9jZG50ci5hOHIucmlwL2luZGV4Lmh0bWwiLCJzdHJhdGVneSI6ImlmcmFtZSIsImdhbWVfdXJsIjoiaHR0cHM6Ly9kZW1vZ2FtZXNmcmVlLm1ycXZ5dHJzamQubmV0L2dzMmMvb3BlbkdhbWUuZG8%2FZ2FtZVN5bWJvbD12czIwb2x5bXBnYXRlJmxhbmc9ZW4mbG9iYnlVcmw9aHR0cHM6Ly9zaG9jay5jb20mc3R5bGVuYW1lPXNmd3Nfc2hvY2tzdyZqdXJpc2RpY3Rpb249OTkmdHJlcT1yU3h4Y3FtWm1XUDN6UFdwZTdLODFrSWI2RzBpQlhzeVVRdlhxOVdFU0xLMUFEMTdCUmtGTmg5UTgxUkJTc0VEJmlzR2FtZVVybEFwaUNhbGxlZD10cnVlJnVzZXJJZD1ndWVzdCJ9fQ%3D%3D';//query.data || [];
   
