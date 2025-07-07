@@ -50,7 +50,7 @@ const BarContent = () => {
         icon={SvgCasino}
         label={t("menu.casino")}
         type="nav"
-        to="/casino"
+        to="/live-casino"
       />
       <MenuItem
         icon={SvgBets}
