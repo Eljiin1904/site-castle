@@ -28,7 +28,9 @@ export default Http.createApiRoute({
 
     // 1. Check KYC and Suspension status
     // TODO -> Check if game enabled
+    // TODO -> Check if the game category is enabled
     // await Site.validateToggle("hubEightEnabled");
+    // await Site.validateConfirmed(user);
     // await Site.validateSuspension(user);
     // await Site.validateKycTier(user, Validation.kycTiers.email);
 
@@ -68,6 +70,8 @@ export default Http.createApiRoute({
       hub88PrivateKey.replace(/\\n/g, "\n"),
       JSON.stringify(payload),
     );
+
+    logger.info(`Sending following Payload for URL -> ${JSON.stringify(payload)}`);
 
     // 5. Make request to -> /operator/generic/v2/game/url with operator ID from config
     // Return Game URL
