@@ -81,16 +81,18 @@ const GameLaunch = ({
   game_code: string;
   platform: "GPL_DESKTOP" | "GPL_MOBILE";
 }) => {
+
+   const theatreMode = useAppSelector((state) => state.style.theatreMode);
+  const small = useIsMobileLayout();
+  const dispatch = useDispatch();
+  const [demoMode, setDemoMode] = useState(true);
+  const {t} = useTranslation(['games']);
+   
   const query = useQuery({
     queryKey: ["game", game_code],
     queryFn: () => HubEight.getGameLauncher({ platform, game_code }),
     placeholderData: (prev) => prev,
   });
-
-  const {t} = useTranslation(['games']);
-  const theatreMode = useAppSelector((state) => state.style.theatreMode);
-  const dispatch = useDispatch();
-  const [demoMode, setDemoMode] = useState(true);
 
   useEffect(() => {
 
@@ -120,16 +122,16 @@ const GameLaunch = ({
     <Div  className={classNames("GameWrapper", { theatreMode: theatreMode})} column fx justifyContent="center">
       <iframe ref={iframeRef} src={gameLauncher} allowFullScreen height="100%" width="100%" title="Game Launcher" allow="fullscreen; camera; microphone; autoplay" />
     </Div>
-    <Div fx bg="black-hover" borderTop borderColor="brown-4" px={32} py={24} justifyContent="space-between" alignItems="center">
-      <Div gap={24} alignItems="center" flexGrow={1} fx>
-        <NetworkStatus position="relative"  />
+    <Div fx bg="black-hover" column={small} borderTop borderColor="brown-4" px={32} py={24} justifyContent="space-between" alignItems="center">
+      <Div gap={24} alignItems="center" flexGrow={1} fx >
+        <NetworkStatus original={false} />
         <Button data-tooltip-id="app-tooltip" data-tooltip-content={theatreMode ? t('gameModes.standard'):  t('gameModes.theatre')} onClick={handleTheatreMode} className="GameLaunchButton" size="sm" kind="menu-item" icon={SvgFullTheatherMode} />
         <Button data-tooltip-id="app-tooltip" data-tooltip-content={t('gameModes.fullscreen')} onClick={handleFullscreen} className="GameLaunchButton" size="icon" kind="menu-item" icon={SvgFullScreen} /> 
       </Div>
-      <Div justifyContent="flex-end" gap={12} fx alignItems="center">
+      {!small && <Div justifyContent="flex-end" gap={12} fx alignItems="center">
         <Span>{t('demoMode')}</Span>
         <Toggle id="login2fa" kind="secondary" value={demoMode} onChange={(e) => setDemoMode(!demoMode)} />
-      </Div>
+      </Div>}
     </Div>
   </Div>);
 };
