@@ -8,7 +8,11 @@ import { Vector } from "@client/comps/vector/Vector";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import "./NetworkStatus.scss";
 
-export const NetworkStatus = () => {
+export const NetworkStatus = ({
+  position = "absolute",
+}: {
+  position?: "absolute" | "fixed" | "relative" | "static";
+}) => {
   
   const latency = useAppSelector((state) => state.site.latency) ?? 0;
   const status = Site.getNetworkStatus(latency);
@@ -21,9 +25,10 @@ export const NetworkStatus = () => {
       align="center"
       justify="center"
       px={12}
-      left={16}
-      top={16}
+      left={position === 'absolute' ?  16: 0}
+      top={position === 'absolute' ? 16: 0}
       height={40}
+      position={position}
     >
       <MemoizeNetworkStatus status={status} icon={icon} color={color} />      
     </Div>
