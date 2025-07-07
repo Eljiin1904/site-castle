@@ -65,7 +65,7 @@ describe("Double Fairness", () => {
     expect(Boolean(doubleRound?.roll?.bait)).toEqual(Boolean(expectedRollValues.bait));
   }, 10000);
 
-  it("Should provide an expected roll result to pre-defined server seeds, EOS blocks, and nonces", async () => {
+  it("Should provide an expected roll result to pre-defined server seeds, EOS blocks, and nonces, and compare against wager", async () => {
     const round = await initializeDoubleRound(
       serverSeed,
       "simulating",
