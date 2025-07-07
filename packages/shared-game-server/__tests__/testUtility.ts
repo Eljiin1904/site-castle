@@ -299,3 +299,52 @@ export const resetDatabaseConnections = async (collections: (keyof DatabaseColle
 
 //   return game;
 // };
+
+export function parseMongoExport(input: unknown): any {
+  if (Array.isArray(input)) {
+    return input.map(parseMongoExport);
+  }
+
+  if (input && typeof input === "object") {
+    const obj = input as Record<string, unknown>;
+    const keys = Object.keys(obj);
+
+    if (keys.length === 1 && keys[0].startsWith("$") && typeof obj[keys[0]] !== "object") {
+      const [key, value] = [keys[0], obj[keys[0]]];
+
+      switch (true) {
+        case key === "$date" && typeof value === "string" && !isNaN(Date.parse(value)):
+          return new Date(value);
+
+        case key === "$numberInt" && typeof value === "string" && /^\d+$/.test(value):
+          return parseInt(value, 10);
+
+        case key === "$numberLong" && typeof value === "string" && /^\d+$/.test(value):
+          return BigInt(value);
+
+        case key === "$numberDouble" && typeof value === "string" && !isNaN(+value):
+          return parseFloat(value);
+
+        case key === "$oid" && typeof value === "string":
+          return value; // optionally wrap with ObjectId
+
+        case key === "$regex" && typeof value === "string":
+          return new RegExp(value, typeof obj["$options"] === "string" ? obj["$options"] : "");
+
+        case key === "$binary" &&
+          typeof value === "object" &&
+          value !== null &&
+          "base64" in value &&
+          typeof (value as any).base64 === "string":
+          return Buffer.from((value as any).base64, "base64");
+
+        default:
+          return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, parseMongoExport(v)]));
+      }
+    }
+
+    return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, parseMongoExport(v)]));
+  }
+
+  return input;
+}
