@@ -10,11 +10,12 @@ import { HandledError } from "@server/services/errors";
 import { Users } from "@server/services/users";
 import { Http } from "#app/services/http";
 import config from "#app/config";
-// import { RedisStore } from "connect-redis";
+import { RedisStore } from "connect-redis";
 import * as Routes from "#app/routes";
-// import { RedisService } from "@server/services/redis";
-// import { RedisClientType } from "redis";
+import { RedisService } from "@server/services/redis/RedisService";
+import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
+const logger = getServerLogger({});
 export async function initHttp(app = express()) {
   const { env, domain, sessionSecret, hubEightApiURL, hubEightTestUrl, redisUrl } = config;
 
@@ -83,36 +84,34 @@ export async function initHttp(app = express()) {
   passport.use(Http.siweStrategy());
   passport.use(Http.steamStrategy());
 
-  // let redisService: RedisService;
-  // let redisClient: RedisClientType | undefined;
-  // let store: RedisStore | undefined;
+  let store;
 
-  // try {
-  //   redisService = new RedisService(redisUrl);
-  //   redisClient = await redisService.getClient(); // awaits connect internally
+  try {
+    if (!RedisService.connected) throw Error("Redis not connected");
+    const redisClient = RedisService.client;
 
-  //   store = new RedisStore({
-  //     client: redisClient,
-  //     prefix: "user-sess:",
-  //   });
+    store = new RedisStore({
+      client: redisClient,
+      prefix: "user-sessions:",
+    });
 
-  //   console.log("Using Redis session store");
-  // } catch (error) {
-  //   console.log("Redis unavailable, falling back to in-memory session store");
-  // }
+    logger.info("Using Redis session store");
+  } catch (error) {
+    logger.error("Redis unavailable, falling back to MongoDB session store");
+
+    store = MongoStore.create({
+      client: Database.manager.client,
+      dbName: env,
+      collectionName: "user-sessions",
+    });
+  }
 
   app.use(
     session({
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
-      // store, // undefined falls back to MemoryStore
-
-      store: MongoStore.create({
-        client: Database.manager.client,
-        dbName: env,
-        collectionName: "user-sessions",
-      }),
+      store,
       cookie: {
         secure: !(env === "development" || env === "devcloud"),
         sameSite: "lax",
