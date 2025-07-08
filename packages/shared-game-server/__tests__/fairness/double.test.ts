@@ -117,7 +117,7 @@ describe("Double Fairness", () => {
     expect(doubleTicketForWager?.betKind).toBe("red");
     expect(doubleTicketForWager?.processed).toBeTruthy();
   });
-}, 10000000);
+}, 10000);
 
 // Setup helper functions
 function formatRound(
