@@ -17,15 +17,13 @@ import { SvgFullScreen } from "#app/svgs/common/SvgFullScreen";
 import { SvgFullTheatherMode } from "#app/svgs/common/SvgFullTheatherMode";
 import { useEffect, useRef, useState } from "react";
 import { NetworkStatus } from "#app/comps/network-status/NetworkStatus";
-import { Toggle } from "@client/comps/toggle/Toggle";
 import { useDispatch } from "react-redux";
 import classNames from "classnames";
 import { setTheatreMode } from "@client/services/style/Style";
 import { Style } from "@client/services/style";
 import { NotFoundPage } from "../not-found/NotFoundPage";
+import { DemoToggle } from "#app/comps/demo/DemoToggle";
 import './Game.scss';
-import { Dialogs } from "@client/services/dialogs";
-import { LoginModal } from "#app/modals/login/LoginModal";
 
 export const Game = () => {
   const { t } = useTranslation();
@@ -54,7 +52,7 @@ export const Game = () => {
     gap={small ? 32 : 56}
     pb={small ? 32 : 56}
   >
-    <GameLaunch game_code={ gameCode } platform={platform} demo_available={game.demo_game_support}/>
+    <GameLaunch gameCode={ gameCode } platform={platform} demoAvailable={game.demo_game_support}/>
     <Div fx column gap={small ? 32: 56} px={!theatreMode ? 0: Style.responsive(mainLayout, [20, 24, 40, 0])}>
       <GameDetails game={ game } />
       <RecommendedGames />
@@ -79,36 +77,32 @@ const GameDetails = ({ game }: { game: HubEightGameDocument }) => {
 };
 
 const GameLaunch = ({
-  game_code,
-  demo_available,
+  gameCode,
+  demoAvailable,
   platform,
 }: {
-  game_code: string;
-  demo_available?: boolean;
+  gameCode: string;
+  demoAvailable?: boolean;
   platform: "GPL_DESKTOP" | "GPL_MOBILE";
 }) => {
 
-  const authenticated = useAppSelector((x) => x.user.authenticated);
   const theatreMode = useAppSelector((state) => state.style.theatreMode);
   const small = useIsMobileLayout();
   const dispatch = useDispatch();
-  const [demoMode, setDemoMode] = useState(false);
   const {t} = useTranslation(['games']);
    
   const query = useQuery({
-    queryKey: ["game", game_code],
-    queryFn: () => HubEight.getGameLauncher({ platform, game_code }),
+    queryKey: ["game", gameCode],
+    queryFn: () => HubEight.getGameLauncher({ platform, game_code:gameCode }),
     placeholderData: (prev) => prev,
   });
 
   useEffect(() => {
 
-    setDemoMode(!authenticated);
-
     return () => {
       dispatch(setTheatreMode(false));
     }
-  },[authenticated]);
+  },[]);
 
   const handleTheatreMode = () => {
     dispatch(setTheatreMode(!theatreMode));
@@ -124,21 +118,6 @@ const GameLaunch = ({
     }
   };
 
-  /**
-   * Handle change of demo mode. If game doesnt support demo mode, do nothing.
-   * If demo mode is on, only change if authenticated, if not authenticated show login modal.
-   * If demo mode is off, toggle it on.
-   * @returns void
-   */
-  const handleChangeDemoMode = () => {
-
-    if(!demo_available)
-      return;
-    if(demoMode && !authenticated)
-      return Dialogs.open("primary", <LoginModal />);
-    setDemoMode(!demoMode);
-  }
-
   const gameLauncher = `https://casino.nolimitcdn.com/loader/game-loader.html?game=TheBorder&operator=DAMA500K&language=en&lobbyUrl=https%3A%2F%2Fshock.com&device=${platform}`;//query.data || [];
   //const gameLauncher = 'https://cdntr.a8r.rip/index.html?options=eyJ0YXJnZXRfZWxlbWVudCI6ImdhbWVfd3JhcHBlciIsImxhdW5jaF9vcHRpb25zIjp7ImdhbWVfbGF1bmNoZXJfdXJsIjoiaHR0cHM6Ly9jZG50ci5hOHIucmlwL2luZGV4Lmh0bWwiLCJzdHJhdGVneSI6ImlmcmFtZSIsImdhbWVfdXJsIjoiaHR0cHM6Ly9kZW1vZ2FtZXNmcmVlLm1ycXZ5dHJzamQubmV0L2dzMmMvb3BlbkdhbWUuZG8%2FZ2FtZVN5bWJvbD12czIwb2x5bXBnYXRlJmxhbmc9ZW4mbG9iYnlVcmw9aHR0cHM6Ly9zaG9jay5jb20mc3R5bGVuYW1lPXNmd3Nfc2hvY2tzdyZqdXJpc2RpY3Rpb249OTkmdHJlcT1yU3h4Y3FtWm1XUDN6UFdwZTdLODFrSWI2RzBpQlhzeVVRdlhxOVdFU0xLMUFEMTdCUmtGTmg5UTgxUkJTc0VEJmlzR2FtZVVybEFwaUNhbGxlZD10cnVlJnVzZXJJZD1ndWVzdCJ9fQ%3D%3D';//query.data || [];
   
@@ -146,15 +125,14 @@ const GameLaunch = ({
     <Div  className={classNames("GameWrapper", { theatreMode: theatreMode})} column fx justifyContent="center">
       <iframe ref={iframeRef} src={gameLauncher} allowFullScreen height="100%" width="100%" title="Game Launcher" allow="fullscreen; camera; microphone; autoplay" />
     </Div>
-    <Div fx bg="black-hover" column={small} borderTop borderColor="brown-4" px={32} py={24} justifyContent="space-between" alignItems="center">
+    <Div fx bg="black-hover" column={small} gap={small? 16: 0} borderTop borderColor="brown-4" px={32} py={24} justifyContent="space-between" alignItems="center">
       <Div gap={24} alignItems="center" flexGrow={1} fx >
         <NetworkStatus original={false} />
         <Button data-tooltip-id="app-tooltip" data-tooltip-content={theatreMode ? t('gameModes.standard'):  t('gameModes.theatre')} onClick={handleTheatreMode} className="GameLaunchButton" size="sm" kind="menu-item" icon={SvgFullTheatherMode} />
         <Button data-tooltip-id="app-tooltip" data-tooltip-content={t('gameModes.fullscreen')} onClick={handleFullscreen} className="GameLaunchButton" size="icon" kind="menu-item" icon={SvgFullScreen} /> 
       </Div>
-      {!small && demo_available && <Div justifyContent="flex-end" gap={12} fx alignItems="center">
-        <Span>{t('demoMode')}</Span>
-        <Toggle id="login2fa" kind="secondary" value={demoMode} onChange={handleChangeDemoMode} />
+      {demoAvailable && <Div justifyContent={small? 'flex-start': 'flex-end'} fx>
+        <DemoToggle />
       </Div>}
     </Div>
   </Div>);
