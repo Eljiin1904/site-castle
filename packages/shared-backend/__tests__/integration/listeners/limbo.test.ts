@@ -92,9 +92,9 @@ describe("Listener Game Test ", async () => {
     await handleInitSocketEvents;
 
     const range = Limbo.getTargetMinMax();
-    let url = BASE_URL + "/limbo/post-ticket";
+    const url = BASE_URL + "/limbo/post-ticket";
 
-    let getLimbo = await fetchWithCookie(
+    const getLimbo = await fetchWithCookie(
       url,
       "POST",
       {

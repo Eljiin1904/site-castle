@@ -84,7 +84,7 @@ describe("Mines Game Test ", async () => {
     if (!user) return;
 
     let url = BASE_URL + "/mines/create-manual-game";
-    let getManualMine = await fetchWithCookie(
+    const getManualMine = await fetchWithCookie(
       url,
       "POST",
       {
@@ -102,7 +102,7 @@ describe("Mines Game Test ", async () => {
     });
 
     url = BASE_URL + "/mines/reveal-tile";
-    let revealATileRequest = await fetchWithCookie(
+    const revealATileRequest = await fetchWithCookie(
       url,
       "POST",
       {
@@ -160,7 +160,7 @@ describe("Mines Game Test ", async () => {
     if (!user) return;
 
     let url = BASE_URL + "/mines/create-manual-game";
-    let getManualMine = await fetchWithCookie(
+    const getManualMine = await fetchWithCookie(
       url,
       "POST",
       {
@@ -179,7 +179,7 @@ describe("Mines Game Test ", async () => {
     });
 
     url = BASE_URL + "/mines/reveal-tile";
-    let revealATileRequest = await fetchWithCookie(
+    const revealATileRequest = await fetchWithCookie(
       url,
       "POST",
       {

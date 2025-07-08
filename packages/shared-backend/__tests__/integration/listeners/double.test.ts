@@ -130,8 +130,8 @@ describe("Double Game Test ", async () => {
       });
     });
 
-    let url = BASE_URL + "/double/post-ticket";
-    let createDoubleTicket = await fetchWithCookie(
+    const url = BASE_URL + "/double/post-ticket";
+    const createDoubleTicket = await fetchWithCookie(
       url,
       "POST",
       {

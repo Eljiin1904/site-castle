@@ -50,7 +50,7 @@ describe("Bet Feed Test ", async () => {
     if (socket == null) return;
 
     //  Create and insert Bet
-    let betTimestamp = new Date();
+    const betTimestamp = new Date();
     const bet: SiteBetDocument = {
       _id: Ids.object(),
       user: Users.getBasicUser(user),
@@ -102,7 +102,7 @@ describe("Bet Feed Test ", async () => {
     if (socket == null) return;
 
     //  Create and insert Bet
-    let betTimestamp = new Date();
+    const betTimestamp = new Date();
     const bet: SiteBetDocument = {
       _id: Ids.object(),
       user: Users.getBasicUser(user),
