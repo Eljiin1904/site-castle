@@ -41,8 +41,6 @@ describe("Limbo Fairness", () => {
     ]);
 
     await Database.collection("users").insertOne(limboFairnesssTester);
-
-    Managers.limbo();
     await addTicketsToDatabase();
   });
 
