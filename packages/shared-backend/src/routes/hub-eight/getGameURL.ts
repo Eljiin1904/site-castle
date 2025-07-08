@@ -17,14 +17,16 @@ export default Http.createApiRoute({
   body: Validation.object({
     platform: Validation.string().oneOf(["GPL_DESKTOP", "GPL_MOBILE"]).required(),
     game_code: Validation.string().required("Game code required"),
+    demo: Validation.boolean().required("Demo field is required"),
     product_code: Validation.string().notRequired(),
   }),
+
   callback: async (req, res) => {
-    const { platform, game_code } = req.body;
+    const { platform, game_code, demo } = req.body;
     const { operatorId, hub88PrivateKey, hubEightApiURL } = config;
 
     const user = req.user;
-    const isDemo = !user;
+    const isDemo = !user || demo; // Checks if user didnt pass authentication or if the flag is set to demo
 
     // 1. Check KYC and Suspension status, if User is authenticated
     // IF user is not authenticated, still have to check if game is enabled
@@ -66,7 +68,7 @@ export default Http.createApiRoute({
       deposit_url: `${config.siteAPI}`, // A place where user can deposit funds
       currency: "USD", // Confirmed that 1 Token == 1 USD
       game_currency: "USD", // Confirm that this will also be USD
-      country: "EE", // Grab from Ip, if not able too throw Error?
+      country: "FR", // Grab from Ip, if not able too throw Error?
     };
 
     // 4. Generate signature with Private Key

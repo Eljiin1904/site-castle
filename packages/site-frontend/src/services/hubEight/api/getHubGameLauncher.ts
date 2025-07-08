@@ -5,6 +5,7 @@ type Platform = "GPL_DESKTOP" | "GPL_MOBILE";
 interface GameLauncherRequest {
   platform: Platform;
   game_code: string;
+  demo: boolean;
 }
 
 interface GameLauncherResponse {
