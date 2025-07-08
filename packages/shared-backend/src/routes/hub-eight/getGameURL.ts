@@ -10,11 +10,10 @@ import { getServerLogger } from "@core/services/logging/utils/serverLogger";
 
 const logger = getServerLogger({});
 
-// The idea will be to display all transaction and allow user to click and get details regarding that transaction
 export default Http.createApiRoute({
   type: "post",
   path: "/game/launch",
-  secure: true,
+  secure: false,
   body: Validation.object({
     platform: Validation.string().oneOf(["GPL_DESKTOP", "GPL_MOBILE"]).required(),
     game_code: Validation.string().required("Game code required"),
@@ -25,8 +24,11 @@ export default Http.createApiRoute({
     const { operatorId, hub88PrivateKey, hubEightApiURL } = config;
 
     const user = req.user;
+    const isDemo = !user;
 
-    // 1. Check KYC and Suspension status
+    // 1. Check KYC and Suspension status, if User is authenticated
+    // IF user is not authenticated, still have to check if game is enabled
+
     // TODO -> Check if game enabled
     // TODO -> Check if the game category is enabled
     // await Site.validateToggle("hubEightEnabled");
@@ -34,31 +36,33 @@ export default Http.createApiRoute({
     // await Site.validateSuspension(user);
     // await Site.validateKycTier(user, Validation.kycTiers.email);
 
-    // 2. Generate Token with User details
-    const token = await Security.createToken({
-      kind: "hub-eight-token",
-      token: Ids.long(),
-      expires: addMinutes(Date.now(), 180),
-      userDetails: {
-        id: user._id,
-        username: user.username,
-        tokenBalance: user.tokenBalance,
-      },
-      gameCode: game_code,
-    });
-
+    let token;
+    if (!isDemo) {
+      // 2. Generate Token with User details
+      token = await Security.createToken({
+        kind: "hub-eight-token",
+        token: Ids.long(),
+        expires: addMinutes(Date.now(), 180),
+        userDetails: {
+          id: user._id,
+          username: user.username,
+          tokenBalance: user.tokenBalance,
+        },
+        gameCode: game_code,
+      });
+    }
     // 3. Construct Payload
     const payload = {
-      user: user.username,
-      token: token,
+      ...(!isDemo && { user: user.username }), // If not authenticated, omit and it will be considered a DEMO
+      ...(!isDemo && { token: token }), // If not authenticated, omit and it will be considered a DEMO
       sub_partner_id: "castle", // Confirm that we do not have a sub partner
       platform,
       operator_id: Number(operatorId),
       meta: {},
       lobby_url: `${config.siteAPI}/external`, // URL of Frontend home integration Page
-      lang: "en", // -> Language
-      ip: req.trueIP, // IP
-      game_code: game_code, // Game Code
+      lang: "en",
+      ip: req.trueIP,
+      game_code: game_code,
       deposit_url: `${config.siteAPI}`, // A place where user can deposit funds
       currency: "USD", // Confirmed that 1 Token == 1 USD
       game_currency: "USD", // Confirm that this will also be USD
@@ -84,7 +88,6 @@ export default Http.createApiRoute({
       });
 
       res.json({
-        user: req.user.username,
         url: result.data.url,
       });
       return;
