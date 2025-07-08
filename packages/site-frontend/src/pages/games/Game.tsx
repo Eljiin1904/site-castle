@@ -15,7 +15,7 @@ import { HubEightGameDocument } from "@core/types/hub-eight/HubEightGameDocument
 import { Button } from "@client/comps/button/Button";
 import { SvgFullScreen } from "#app/svgs/common/SvgFullScreen";
 import { SvgFullTheatherMode } from "#app/svgs/common/SvgFullTheatherMode";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { NetworkStatus } from "#app/comps/network-status/NetworkStatus";
 import { useDispatch } from "react-redux";
 import classNames from "classnames";
@@ -64,8 +64,9 @@ export const Game = () => {
             title={t("bets.recentBets")}
           />
         )}
-    </Div>
-  </SitePage>)
+      </Div>
+    </SitePage>
+  );
 };
 
 const GameDetails = ({ game }: { game: HubEightGameDocument }) => {
@@ -85,31 +86,32 @@ const GameLaunch = ({
   demoAvailable?: boolean;
   platform: "GPL_DESKTOP" | "GPL_MOBILE";
 }) => {
-
+  
   const theatreMode = useAppSelector((state) => state.style.theatreMode);
+  const demo = useAppSelector((state) => state.user.demoMode) ?? false;
   const small = useIsMobileLayout();
   const dispatch = useDispatch();
   const {t} = useTranslation(['games']);
-   
   const query = useQuery({
-    queryKey: ["game", gameCode],
-    queryFn: () => HubEight.getGameLauncher({ platform, game_code:gameCode }),
+    queryKey: ["game", gameCode, demo],
+    queryFn: () => HubEight.getGameLauncher({ platform, game_code:gameCode, demo}),
     placeholderData: (prev) => prev,
   });
 
   useEffect(() => {
-
+    const gameUrl = query.data || [];
+    console.log("Attempting to get Game Url ", gameUrl);
     return () => {
       dispatch(setTheatreMode(false));
-    }
-  },[]);
+    };
+  }, []);
 
   const handleTheatreMode = () => {
     dispatch(setTheatreMode(!theatreMode));
   };
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  
+
   const handleFullscreen = () => {
     if (iframeRef.current) {
       if (iframeRef.current.requestFullscreen) {
@@ -118,7 +120,7 @@ const GameLaunch = ({
     }
   };
 
-  const gameLauncher = `https://casino.nolimitcdn.com/loader/game-loader.html?game=TheBorder&operator=DAMA500K&language=en&lobbyUrl=https%3A%2F%2Fshock.com&device=${platform}`;//query.data || [];
+  const gameLauncher = `https://casino.nolimitcdn.com/loader/game-loader.html?game=TheBorder&operator=DAMA500K&language=en&lobbyUrl=https%3A%2F%2Fshock.com&device=${platform}`; //query.data || [];
   //const gameLauncher = 'https://cdntr.a8r.rip/index.html?options=eyJ0YXJnZXRfZWxlbWVudCI6ImdhbWVfd3JhcHBlciIsImxhdW5jaF9vcHRpb25zIjp7ImdhbWVfbGF1bmNoZXJfdXJsIjoiaHR0cHM6Ly9jZG50ci5hOHIucmlwL2luZGV4Lmh0bWwiLCJzdHJhdGVneSI6ImlmcmFtZSIsImdhbWVfdXJsIjoiaHR0cHM6Ly9kZW1vZ2FtZXNmcmVlLm1ycXZ5dHJzamQubmV0L2dzMmMvb3BlbkdhbWUuZG8%2FZ2FtZVN5bWJvbD12czIwb2x5bXBnYXRlJmxhbmc9ZW4mbG9iYnlVcmw9aHR0cHM6Ly9zaG9jay5jb20mc3R5bGVuYW1lPXNmd3Nfc2hvY2tzdyZqdXJpc2RpY3Rpb249OTkmdHJlcT1yU3h4Y3FtWm1XUDN6UFdwZTdLODFrSWI2RzBpQlhzeVVRdlhxOVdFU0xLMUFEMTdCUmtGTmg5UTgxUkJTc0VEJmlzR2FtZVVybEFwaUNhbGxlZD10cnVlJnVzZXJJZD1ndWVzdCJ9fQ%3D%3D';//query.data || [];
   
   return (<Div fx fy column  border borderColor="brown-4">
@@ -135,5 +137,6 @@ const GameLaunch = ({
         <DemoToggle />
       </Div>}
     </Div>
-  </Div>);
+    </Div>
+  );
 };
