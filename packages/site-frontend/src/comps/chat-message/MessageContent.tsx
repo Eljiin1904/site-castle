@@ -12,6 +12,7 @@ import { DiceWinContent } from "./content/DiceWinContent";
 import { LimboWinContent } from "./content/LimboWinContent";
 import { AdventContent } from "./content/AdventContent";
 import { CrashWinContent } from "./content/CrashWinContent";
+import { BlackjackWinContent } from "./content/BlackjackWinContent";
 
 export const MessageContent = ({ message }: { message: ChatMessageDocument }) => {
   if (message.kind === "text") {
