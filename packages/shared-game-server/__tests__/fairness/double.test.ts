@@ -53,7 +53,7 @@ describe("Double Fairness", () => {
     });
     await new Promise((resolve) => setTimeout(resolve, 1000));
     Managers.double();
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 6000));
 
     const doubleRound = await Database.collection("double-rounds").findOne({
       _id: round._id,

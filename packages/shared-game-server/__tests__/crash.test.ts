@@ -77,7 +77,7 @@ describe("Crash Manager Test", () => {
 
   it("start crash round", async () => {
     Managers.crash();
-    await new Promise((resolve) => setTimeout(resolve, 5700));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     const crashRound = await Database.collection("crash-rounds").findOne();
     expect(crashRound).not.toBeNull();
     expect(crashRound?.status).toBe("simulating");
