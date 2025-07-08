@@ -38,6 +38,15 @@ export default Http.createApiRoute({
 
     logger.info(`Signature Verified in Balance `);
 
+    if (!user) {
+      // User not provided, its a DEMO
+      res.json({
+        status: hubStatus.RS_OK,
+        request_uuid: request_uuid,
+        currency: "USD",
+      });
+    }
+
     // const retreivedSignature = req.headers["x-hub88-signature"] as string;
 
     // if (!retreivedSignature) {
