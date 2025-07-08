@@ -9,8 +9,12 @@ export function useDisplayBetAmounts() {
   const playerBetAmounts = player?.displayBetAmounts;
   const cardsDealt = useAppSelector((state) => state.blackjack.cardsDealt);
   const [betAmounts, setBetAmounts] = useState(playerBetAmounts || originalBetAmounts);
-
+  const game = useAppSelector((state) => state.blackjack.game);
   useEffect(() => {
+    if(game && game.completed) {
+      setBetAmounts(originalBetAmounts)
+      return;
+    }
     if (cardsDealt) {
       setBetAmounts(playerBetAmounts || originalBetAmounts);
     } else if (!playerBetAmounts) {
