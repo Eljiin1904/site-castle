@@ -30,81 +30,81 @@ describe("Test Mines Game Route", () => {
       await Database.createCollection("mines-games", {});
     }
   });
-  // it("Create Manual Mine", async () => {
-  //   const user = await Database.collection("users").findOne({ username: "mineTester" });
-  //   if (!user) return;
+  it("Create Manual Mine", async () => {
+    const user = await Database.collection("users").findOne({ username: "mineTester" });
+    if (!user) return;
 
-  //   let url = BASE_URL + "/mines/create-manual-game";
-  //   let getManualMine = await fetchWithCookie(
-  //     url,
-  //     "POST",
-  //     {
-  //       betAmount: 500,
-  //       gridSize: 2,
-  //       mineCount: 1,
-  //     },
-  //     globalSessionCookie,
-  //   );
-  //   const getMineState = await getManualMine.json();
+    let url = BASE_URL + "/mines/create-manual-game";
+    let getManualMine = await fetchWithCookie(
+      url,
+      "POST",
+      {
+        betAmount: 500,
+        gridSize: 2,
+        mineCount: 1,
+      },
+      globalSessionCookie,
+    );
+    const getMineState = await getManualMine.json();
 
-  //   expect(getManualMine.status).toBe(200);
-  //   expect(getMineState.state.betAmount).toBe(500);
-  //   expect(getMineState.state.gridSize).toBe(2);
-  //   expect(getMineState.state.mineCount).toBe(1);
+    expect(getManualMine.status).toBe(200);
+    expect(getMineState.state.betAmount).toBe(500);
+    expect(getMineState.state.gridSize).toBe(2);
+    expect(getMineState.state.mineCount).toBe(1);
 
-  //   const mineTransaction = await Database.collection("transactions").findOne({
-  //     gameId: getMineState.state.gameId,
-  //     kind: "mines-bet",
-  //   });
+    const mineTransaction = await Database.collection("transactions").findOne({
+      gameId: getMineState.state.gameId,
+      kind: "mines-bet",
+    });
 
-  //   expect(mineTransaction?.category).toBe("mines");
-  //   expect(mineTransaction?.value).toBe(500);
-  //   expect(mineTransaction?.kind).toBe("mines-bet");
-  // });
+    expect(mineTransaction?.category).toBe("mines");
+    expect(mineTransaction?.value).toBe(500);
+    expect(mineTransaction?.kind).toBe("mines-bet");
+  });
 
-  // it("Create Bad Manual Mine : Bad Bet Amount", async () => {
-  //   const user = await Database.collection("users").findOne({ username: "mineTester" });
-  //   if (!user) return;
+  it("Create Bad Manual Mine : Bad Bet Amount", async () => {
+    const user = await Database.collection("users").findOne({ username: "mineTester" });
+    if (!user) return;
 
-  //   let url = BASE_URL + "/mines/create-manual-game";
-  //   let getManualMine = await fetchWithCookie(
-  //     url,
-  //     "POST",
-  //     {
-  //       betAmount: -1,
-  //       gridSize: 2,
-  //       mineCount: 1,
-  //     },
-  //     globalSessionCookie,
-  //   );
-  //   const getMineState = await getManualMine.json();
+    let url = BASE_URL + "/mines/create-manual-game";
+    let getManualMine = await fetchWithCookie(
+      url,
+      "POST",
+      {
+        betAmount: -1,
+        gridSize: 2,
+        mineCount: 1,
+      },
+      globalSessionCookie,
+    );
+    const getMineState = await getManualMine.json();
 
-  //   expect(getManualMine.status).toBe(500);
-  //   expect(getMineState["error"]["key"]).toBe("validations.number.min");
-  //   expect(getMineState["error"]["value"]["label"]).toBe("betAmount");
-  //   expect(getMineState["error"]["value"]["min"]).toBe(0);
-  // });
+    expect(getManualMine.status).toBe(500);
+    expect(getMineState["error"]["key"]).toBe("validations.number.min");
+    expect(getMineState["error"]["value"]["label"]).toBe("betAmount");
+    expect(getMineState["error"]["value"]["min"]).toBe(0);
+  });
 
-  // it("Create Bad Manual Mine : Bad Grid Size", async () => {
-  //   const user = await Database.collection("users").findOne({ username: "mineTester" });
-  //   if (!user) return;
+  it("Create Bad Manual Mine : Bad Grid Size", async () => {
+    const user = await Database.collection("users").findOne({ username: "mineTester" });
+    if (!user) return;
 
-  //   let url = BASE_URL + "/mines/create-manual-game";
-  //   let getManualMine = await fetchWithCookie(
-  //     url,
-  //     "POST",
-  //     {
-  //       betAmount: 0,
-  //       gridSize: -1,
-  //       mineCount: 1,
-  //     },
-  //     globalSessionCookie,
-  //   );
-  //   const getMineState = await getManualMine.json();
+    let url = BASE_URL + "/mines/create-manual-game";
+    let getManualMine = await fetchWithCookie(
+      url,
+      "POST",
+      {
+        betAmount: 0,
+        gridSize: -1,
+        mineCount: 1,
+      },
+      globalSessionCookie,
+    );
+    const getMineState = await getManualMine.json();
 
-  //   expect(getManualMine.status).toBe(500);
-  //   expect(getMineState["error"]).toBe("Invalid grid size.");
-  // });
+    expect(getManualMine.status).toBe(500);
+    expect(getMineState["error"]).toBe("Invalid grid size.");
+  });
 
   it("Create Bad Manual Mine : Bad Mine Count", async () => {
     const user = await Database.collection("users").findOne({ username: "mineTester" });
