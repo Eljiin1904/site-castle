@@ -17,7 +17,7 @@ export default Http.createApiRoute({
   secure: false,
   signatureRequired: true,
   body: Validation.object({
-    user: Validation.username().required("User is required."),
+    user: Validation.username().optional().default(undefined), // If not provided its DEMO
     transaction_uuid: Validation.string().required("Transaction UUID required"),
     supplier_transaction_id: Validation.string().required("Supplier Transaction UUID required"),
     token: Validation.string().required("Token required"),
@@ -53,6 +53,17 @@ export default Http.createApiRoute({
         request_uuid,
       });
       return;
+    }
+
+    logger.info(`Signature Verified in Rollback `);
+
+    if (!user) {
+      // User not provided, its a DEMO
+      res.json({
+        status: hubStatus.RS_OK,
+        request_uuid: request_uuid,
+        currency: "USD",
+      });
     }
 
     // 2. Validate Token

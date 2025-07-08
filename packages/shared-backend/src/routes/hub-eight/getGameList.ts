@@ -24,7 +24,7 @@ const buildSort = (sortIndex?: number): Record<string, 1 | -1> => {
 export default Http.createApiRoute({
   type: "post",
   path: "/game/list",
-  secure: true,
+  secure: false,
   body: Validation.object({
     category: Validation.string().oneOf(externalGameCategories).optional(),
     products: Validation.array().of(Validation.string()).optional(),

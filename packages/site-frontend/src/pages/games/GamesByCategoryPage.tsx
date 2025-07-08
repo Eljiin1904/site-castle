@@ -65,8 +65,10 @@ export const GamesByCategory = ({category}: {category: ExternalGameCategory | un
   return (<Fragment>
       <Div fx justifyContent="space-between" alignItems="center" gap={small ? 16: 24} column={small}>
         <GameSearch />
-        <GameProvider selectedProviders={selectedProviders} setSelectedProviders={setSelectedProviders} category={category} />
-        <GameSort sortBy={sortIndex} setSortBy={setSortIndex} />
+        <Div fx={small} gap={small ? 16: 24}>
+          <GameProvider selectedProviders={selectedProviders} setSelectedProviders={setSelectedProviders} category={category} />
+          <GameSort sortBy={sortIndex} setSortBy={setSortIndex} />
+        </Div>
       </Div>
       
       <GamesGrid games={games}/>

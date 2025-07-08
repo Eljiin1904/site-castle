@@ -11,6 +11,17 @@
   justify-content: start;
   display: flex;
 
+  .AppBody.mobile & {
+    min-width: 100px;
+    padding: 0 16px;
+    gap: 10px;
+
+    span {
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+
   .icon {
     color: var(--dark-sand-color);
   }

@@ -7,7 +7,7 @@ const logger = getServerLogger({});
 export default Http.createApiRoute({
   type: "post",
   path: "/game/details",
-  secure: true,
+  secure: false,
   body: Validation.object({
     game_code: Validation.string().required("Game code required")
   }),
