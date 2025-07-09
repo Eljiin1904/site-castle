@@ -66,7 +66,7 @@
   },
   "cookies": "Este sitio web utiliza cookies para mejorar su experiencia. Al utilizar este sitio, acepta nuestro uso de cookies.",
   "signin": {
-    "title": "Iniciar sesión en SandCasino",    
+    "title": "Iniciar sesión en Castle",    
     "forgot": "¿Olvidaste tu contraseña?",
     "login": "Iniciar sesión",
     "remember": "Recuérdame",
@@ -124,7 +124,7 @@
     "linkFailure": "No se puede validar la cuenta vinculada."
   },
   "register": {
-    "title": "Crear una cuenta en SandCasino",
+    "title": "Crear una cuenta en Castle",
     "form": {
       "username": "Nombre de usuario",
       "usernamePlaceholder": "Ingrese el nombre de usuario...",
@@ -157,11 +157,11 @@
     "emailConfirmed": "Correo electrónico confirmado.",
     "social": {
       "title": "Configura tu nombre de usuario",
-      "description": "¡Para continuar usando sandcasino, por favor configura tu nombre de usuario!",
+      "description": "¡Para continuar usando Castle, por favor configura tu nombre de usuario!",
       "submit": "Crear Cuenta",
       "success": {
-        "title": "¡Bienvenido a SandCasino!",
-        "description": "Gracias por registrarte en SandCasino. ¡Explora nuestros juegos y carreras!",
+        "title": "¡Bienvenido a Castle!",
+        "description": "Gracias por registrarte en Castle. ¡Explora nuestros juegos y carreras!",
         "action": "Continuar"
       }
     },

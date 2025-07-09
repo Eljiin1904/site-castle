@@ -84,40 +84,40 @@ test.describe('Mines User not logged Scenarios', () => {
     await expect(page.getByText('My Bets')).not.toBeVisible();
   });
   test('login modal when play is clicked', async ({ page }) => {
-    // if Play button is clicked, it should show a modal with the text "Sign In to SandCasino"
+    // if Play button is clicked, it should show a modal with the text "Sign In to Castle"
     await page.click('text=Play');
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
   });
   test('login modal when amount is added', async ({ page }) => {
-    // if any of the amount buttons are clicked, it should show a modal with the text "Sign In to SandCasino"
+    // if any of the amount buttons are clicked, it should show a modal with the text "Sign In to Castle"
     // close the modal after each button click
     await page.getByRole('button', { name: '1/2' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
 
     await page.getByRole('button', { name: '2X', exact: true }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
 
     await page.getByRole('button', { name: 'Max' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
 
     //Check modal is show when amount is added to the input and focus is lost
     //Fill the input with an amount
     await page.getByRole('textbox', { name: 'Enter amount...' }).fill('10');
     //Blur the input
     await page.getByRole('textbox', { name: 'Enter amount...' }).blur();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     //Close the modal
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
   });
   test('login modal when auto play', async ({ page }) => {
-    // if Start Auto button is clicked, it should show a modal with the text "Sign In to SandCasino"
+    // if Start Auto button is clicked, it should show a modal with the text "Sign In to Castle"
     // select auto menu
     await page.click('text=Auto');
    
@@ -130,37 +130,37 @@ test.describe('Mines User not logged Scenarios', () => {
     await expect(secondCell).toHaveClass(/auto/);
     // CLick the Start Auto
     await page.click('text=Start Auto Play');
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
   });
   test('login modal when amount is added (Auto)', async ({ page }) => {
     // select auto menu
     await page.click('text=Auto');
-    // if any of the amount buttons are clicked, it should show a modal with the text "Sign In to SandCasino"
+    // if any of the amount buttons are clicked, it should show a modal with the text "Sign In to Castle"
     // close the modal after each button click
     await page.getByRole('button', { name: '1/2' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
 
     await page.getByRole('button', { name: '2X', exact: true }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
 
     await page.getByRole('button', { name: 'Max' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
 
     //Check modal is show when amount is added to the input and focus is lost
     //Fill the input with an amount
     await page.getByRole('textbox', { name: 'Enter amount...' }).fill('10');
     //Blur the input
     await page.getByRole('textbox', { name: 'Enter amount...' }).blur();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     //Close the modal
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
   });  
 });
 

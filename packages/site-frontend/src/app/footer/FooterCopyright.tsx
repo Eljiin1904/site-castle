@@ -5,7 +5,7 @@ export const FooterCopyright = () => {
   const {t} = useTranslation();
   return (
     <Span size={12}>
-      {`Copyright © 2025 SandCasino. ${t('footer.copyright')}`}
+      {`Copyright © 2025 Castle. ${t('footer.copyright')}`}
     </Span>
   );
 };
