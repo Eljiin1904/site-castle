@@ -37,11 +37,19 @@ spec:
             - name: PORT
               value: "{{ .Values.app.port }}"
             - name: NODE_ENV
-              value: {{ .Values.environment }}
-            - name: APP_ENV
-              value: {{ .Values.environment }}
-            - name: BUILD_ENV
-              value: {{ .Values.environment }}
+              value: {{ .Values.environment | quote }}
+            - name: APP_ENV_NAME
+              value: {{ .Values.runtimeConfig.appEnvName | quote }}
+            - name: SITE_URL_RUNTIME
+              value: {{ .Values.runtimeConfig.siteUrl | quote }}
+            - name: SITE_API_RUNTIME
+              value: {{ .Values.runtimeConfig.siteApi | quote }}
+            - name: ADMIN_URL_RUNTIME
+              value: {{ .Values.runtimeConfig.adminUrl | quote }}
+            - name: ADMIN_API_RUNTIME
+              value: {{ .Values.runtimeConfig.adminApi | quote }}
+            - name: STATIC_URL_RUNTIME
+              value: {{ .Values.runtimeConfig.staticUrl | quote }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

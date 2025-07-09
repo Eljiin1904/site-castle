@@ -9,17 +9,25 @@ export function useDisplayBetAmount(type: BlackjackBetType) {
   const curTotal = useTryDisplayBetAmount(type);
   const cardsDealt = useAppSelector((state) => state.blackjack.cardsDealt);
   const total = Blackjack.hasVal(curTotal) ? curTotal : originalTotal;
+  const game = useAppSelector((state) => state.blackjack.game);
   const [amount, setAmount] = useState(total);
 
   useEffect(() => {
-    if (cardsDealt) {
+    
+    if(game && game.completed) {
+      setAmount(originalTotal);
+      return;
+    }
+    if(cardsDealt) {
+
       const total = Blackjack.hasVal(curTotal) ? curTotal : originalTotal;
       setAmount(total);
-    } else if (!Blackjack.hasVal(curTotal)) {
+    }
+    else if (!Blackjack.hasVal(curTotal)) {
       // game cleared
       setAmount(originalTotal);
     }
-  }, [cardsDealt, originalTotal, curTotal]);
+  }, [cardsDealt,originalTotal, curTotal, type]);
 
   return amount;
 }

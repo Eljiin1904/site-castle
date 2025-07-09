@@ -14,6 +14,7 @@ interface UserState extends AuthenticatedUser {
   authenticated: boolean | undefined;
   restricted: boolean | undefined;
   betSession?: BetSession;
+  demoMode?: boolean;
 }
 
 type UserInitialState = {
@@ -25,6 +26,7 @@ const initialState = {
   initialized: false,
   authenticated: false,
   restricted: false,
+  demoMode: false,
   stats: {},
   settings: {},
   chestKeys: {},
@@ -70,7 +72,10 @@ export const userSlice = createSlice({
         initialized: true,
       };
     },
+    setDemoMode: reducer<boolean>((state, { payload }) => {
+      state.demoMode = payload;
+    })
   }),
 });
 
-export const { initUser, updateUser, setRestricted, setBetToken, resetUser } = userSlice.actions;
+export const { initUser, updateUser, setRestricted, setBetToken, resetUser, setDemoMode } = userSlice.actions;
