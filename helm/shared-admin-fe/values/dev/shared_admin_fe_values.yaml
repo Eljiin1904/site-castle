@@ -8,6 +8,15 @@ image:
     pullPolicy: Always
     tag: "latest"
 
+# New section for runtime configuration values
+runtimeConfig:
+  appEnvName: "devcloud"
+  siteUrl: "https://dev.brickrax.com"
+  siteApi: "https://api.dev.brickrax.com"
+  adminUrl: "https://admin.dev.brickrax.com"
+  adminApi: "https://aapi.dev.brickrax.com"
+  staticUrl: "https://font.brickrax.com"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
