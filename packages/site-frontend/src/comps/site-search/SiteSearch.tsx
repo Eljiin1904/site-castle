@@ -40,7 +40,7 @@ export const SiteSearch = () => {
     
   },[]);
 
-  return (<Div fx zIndex={13} position="static">
+  return (<Div fx zIndex={12} position="static">
       {open && <Div className="SearchOverlay" fx fy position="fixed" top={0} left={0} onClick={() => setOpen(false)}/>}
       <Input
       iconLeft={SvgSearch}
