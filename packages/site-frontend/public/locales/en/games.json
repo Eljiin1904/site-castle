@@ -40,5 +40,7 @@
     "theatre": "Theatre Mode",
     "standard": "Standard Mode",
     "fullscreen": "Fullscreen Mode"
-  }
+  },
+  "playDemo": "Play Demo",
+  "demoModeInfo": "You can play games in demo mode when bet amount is set to 0.00. "
 }
