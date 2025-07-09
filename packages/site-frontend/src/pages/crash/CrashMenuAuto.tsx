@@ -22,6 +22,7 @@ import { ButtonNav } from "@client/comps/button/ButtonNav";
 import { CrashControlMode } from "@core/types/crash/CrashControlMode";
 import { useIsMobileLayout } from "#app/hooks/style/useIsMobileLayout";
 import { useProcessingTicket } from "./useProcessingTicket";
+import { DemoNotice } from "#app/comps/demo/DemoNotice";
 
 export const CrashMenuAuto = () => {
   
@@ -91,10 +92,12 @@ const ActionButton = ({handleAutoStart} : {
 }) => {
   
   const autoPlaying = useAppSelector((x) => x.crash.autoPlaying);
+  const betAmount = useAppSelector((x) => x.crash.betAmount);
   const dispatch = useAppDispatch();
   const {overMax} = useProfit();
   const isProcessing = useProcessingTicket();
   const { t } = useTranslation(["games\\crash"]);
+  const gameLabel = betAmount === 0 ? t('games:autoPlayDemo') :t("startAutoPlay");
 
   if (autoPlaying) {
     return (
@@ -106,16 +109,17 @@ const ActionButton = ({handleAutoStart} : {
       />
     );
   } else {
-    return (
+    return (<Fragment>
       <Button
         fx
         kind="primary-green"
-        label={overMax ? t("exceedMaxBet") : t("startAutoPlay")}
+        label={overMax ? t("exceedMaxBet") :gameLabel}
         disabled={overMax || isProcessing}
         onClick={handleAutoStart}
-        className="flex-shrink-0"
+        flexShrink
       />
-    );
+      { betAmount === 0 && <DemoNotice />}
+    </Fragment>);
   }
 };
 

@@ -10,8 +10,8 @@ import { Div } from "@client/comps/div/Div";
 import { useProfit } from "./useProfit";
 import { useProcessingTicket } from "./useProcessingTicket";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
-import { Crash } from "#app/services/crash";
 import { Conditional } from "@client/comps/conditional/Conditional";
+import { DemoNotice } from "#app/comps/demo/DemoNotice";
 
 export const CrashMenuManual = () => {
   
@@ -69,13 +69,14 @@ const ActionButton = () => {
   
   const roundStatus = useAppSelector((x) => x.crash.round.status);
   const betNextRound = useAppSelector((x) => x.crash.betNextRound);
+  const betAmount = useAppSelector((x) => x.crash.betAmount);
   const {handleBet, handleCashout, handleCancelBet, allowCashout} = useManualBet();
   const isProcessing = useProcessingTicket();
-  const dispatch = useAppDispatch();
+  
   const {t} = useTranslation(["games\\crash"]);
   const { overMax } = useProfit();
   
-  let label = roundStatus === "pending" ? t('starting') : overMax ? t('exceedMaxBet') :  t("placeBet");
+  let label = roundStatus === "pending" ? t('starting') : overMax ? t('exceedMaxBet') : (betAmount === 0 ? t("games:playDemo") :  t("placeBet"));
  
   const allowNextRound = roundStatus === "simulating" || roundStatus === "completed";
   const isDisabled = overMax || roundStatus === 'pending' || isProcessing;
@@ -95,13 +96,16 @@ const ActionButton = () => {
       onClick={handleCancelBet}
     />);  
   else  
-    return (<Button
+    return (<Fragment>
+      <Button
       fx
       kind="primary-green"
       label={label}
       disabled={isDisabled}
       onClick={handleBet}
     >
-    {allowNextRound && <Div fontWeight="regular" fontSize={16} lineHeight={24} color="dark-brown">({t('nextRound')})</Div>}
-    </Button>);
+    {allowNextRound && betAmount! > 0 && <Div fontWeight="regular" fontSize={16} lineHeight={24} color="dark-brown">({t('nextRound')})</Div>}
+    </Button>
+    {betAmount === 0 && <DemoNotice />}
+    </Fragment>);
 };
