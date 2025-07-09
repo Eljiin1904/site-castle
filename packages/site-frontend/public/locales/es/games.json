@@ -42,5 +42,6 @@
     "fullscreen": "Modo Pantalla Completa"
   },
   "playDemo": "Jugar en modo demo",
+  "autoPlayDemo": "Iniciar Auto Juego Modo Demo",
   "demoModeInfo": "Puedes jugar juegos en modo demo cuando la cantidad de apuesta es 0.00."
 }
