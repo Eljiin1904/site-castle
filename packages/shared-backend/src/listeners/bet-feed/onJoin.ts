@@ -38,7 +38,7 @@ export default Sockets.createListener({
       // Retreive all Site Bets for specific user in order
       results["all"] = documents = await Database.collection("site-bets")
         .find(
-          { "user.id": socket.data.userId },
+          { "user.id": socket.data.userId , betAmount: { $gt: 0 } },
           {
             sort: { timestamp: -1 },
             limit: Site.betLogSize,

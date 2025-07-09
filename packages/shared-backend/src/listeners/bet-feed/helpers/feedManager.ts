@@ -30,7 +30,7 @@ type QueueScopeMap = {
 
 type SiteBetMatch = {
   "user.id"?: string;
-  betAmount?: { $gte: number };
+  betAmount?: { $gt : number  } | { $gte : number  };
   wonAmount?: { $gte: number };
 };
 
@@ -103,7 +103,9 @@ export class FeedManager extends TypedEventEmitter<{
     // Retreive Latest Bets no matter the game type
     this._log["all"]["all"] = await Database.collection("site-bets")
       .find(
-        {},
+        {
+          betAmount: { $gt: 0 }
+        },
         {
           limit: Site.betLogSize,
           sort: { timestamp: -1 },
@@ -171,6 +173,9 @@ export class FeedManager extends TypedEventEmitter<{
     const highrollerThreshold = await this.highrollerThreshold();
     const luckyThreshold = await this.luckyThreshold();
 
+    if(document.betAmount <= 0) {
+      return; // Ignore bets with zero or negative amounts
+    }
     queues["all"].unshift(document);
     if (queues["all"].length > Site.betLogSize) {
       queues["all"].length = Site.betLogSize;
@@ -223,11 +228,14 @@ export class FeedManager extends TypedEventEmitter<{
     const query = [];
     const match: SiteBetMatch = {};
 
+    match["betAmount"] = { $gt: 0 };
+
     if (user_id) {
       match["user.id"] = user_id;
     }
 
-    if (highroller) {
+    if (highroller && highrollerThreshold > 0) {
+    // If highroller is true, filter bets with betAmount greater than or equal to the threshold
       match["betAmount"] = { $gte: highrollerThreshold };
     }
 
@@ -264,7 +272,6 @@ export class FeedManager extends TypedEventEmitter<{
       },
     );
     const results = await Database.collection("site-bets").aggregate(query).toArray();
-
     return results;
   }
 
