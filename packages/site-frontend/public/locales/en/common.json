@@ -49,5 +49,8 @@
   "code": "Code",
   "save": "Save",
   "perPage": "Per Page",
-  "hidden": "Hidden"
+  "hidden": "Hidden",
+  "debug": "Debug",
+  "yes": "Yes",
+  "no": "No"
 }

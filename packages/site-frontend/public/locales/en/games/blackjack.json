@@ -1,5 +1,25 @@
 {
+  "title": "Blackjack",
+  "inputs": {
+    "perfectPairs": "Perfect Pairs",
+    "21Plus3": "21 + 3",
+    "mainBet": "Main Bet",
+    "luckyLadies": "Lucky Ladies",
+    "blackjack": "Blackjack"
+  },
+  "actions": {
+    "split": "Split",
+    "double": "Double",
+    "hit": "Hit",
+    "stand": "Stand"
+  },
+  "totals": {
+    "total": "Total Bet",
+    "sideBets": "Side Bets",
+    "mainBet": "Main Bet"
+  },
   "placeBet": "Place Bet",
+  "insurance": "Buy insurance for  <0>{{insurance}}</0>?",
   "betPlaced": "Bet Placed",
   "betBoardHeader": "Blackjack Game Bets",
   "bet_zero": "{{count}} Bet",

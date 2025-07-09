@@ -12,6 +12,7 @@ import { Divider } from "@client/comps/divider/Divider";
 // import { useTranslation } from "#client/hooks/localization/useTranslation";
 import { Div } from "@client/comps/div/Div";
 import { useState } from "react";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BlackjackBetTotals = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -33,8 +34,8 @@ export const BlackjackBetTotals = () => {
 
 function MainBetTotals() {
   const mainLayout = useLibrarySelector((x) => x.style.mainLayout);
-
-  // const { t } = useTranslation();
+  const {t} = useTranslation('games\\blackjack');
+ 
   const betAmounts = useDisplayBetAmounts();
   const mainBet = betAmounts["main-bet"];
   const sideBets = entries(betAmounts).reduce((acc, [key, val]) => {
@@ -57,11 +58,11 @@ function MainBetTotals() {
             className="MainBetTotals"
             fx
             gap={16}
-            width={200}
+            width={256}
             bg={"black-overlay"}
           >
             <Item
-              label={"Main Bet"}
+              label={t('totals.mainBet')}
               value={Intimal.toDecimal(mainBet)}
             />
 
@@ -71,7 +72,7 @@ function MainBetTotals() {
             />
 
             <Item
-              label={"Side Bets"}
+               label={t('totals.sideBets')}
               value={Intimal.toDecimal(sideBets)}
             />
             <Divider
@@ -79,7 +80,7 @@ function MainBetTotals() {
               borderColor={"brown-4"}
             />
             <Item
-              label={"Total Bet"}
+              label={t('totals.total')}
               value={Intimal.toDecimal(total)}
             />
           </Span>

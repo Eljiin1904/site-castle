@@ -176,6 +176,13 @@
         "invalidEndTime": "Invalid end time.",
         "ticketAlreadyProcessed": "Ticket already processed.",
         "maxBetAmount": "The max bet amount is {{value}}." 
+      },
+      "blackjack": {
+        "noElementId": "No element with id 'blackjack-game'",
+        "blackjack15Disabled": "Blackjack 15 is disabled.",
+        "blackjack21Plus3Disabled": "Blackjack 21 + 3 is disabled.",
+        "blackjackPerfectPairsDisabled": "Blackjack Perfect Pairs is disabled.",
+        "blackjackLuckyLadiesDisabled": "Blackjack Lucky Ladies is disabled."
       }
     },
     "wallet": {

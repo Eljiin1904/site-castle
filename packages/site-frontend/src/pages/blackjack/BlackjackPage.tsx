@@ -19,7 +19,7 @@ export const BlackjackPage = () => {
   return (
     <SitePage
       className="BlackjackPage"
-      title={"Blackjack"}
+      title={t('title')}
     >
       <BlackjackManager />
       <BlackjackView />

@@ -14,6 +14,9 @@ import { Input } from "@client/comps/input/Input";
 import { SvgDollarSign } from "@client/svgs/common/SvgDollarSign";
 import { useProcessing } from "#app/services/blackjack/Blackjack";
 import { Div } from "@client/comps/div/Div";
+import { useTranslation } from "@core/services/internationalization/internationalization";
+import { Dialogs } from "@client/services/dialogs";
+import { LoginModal } from "#app/modals/login/LoginModal";
 
 export const BlackjackInputPlacement = ({
   index,
@@ -27,7 +30,7 @@ export const BlackjackInputPlacement = ({
   size?: "large" | "";
 }) => {
   const dispatch = useDispatch();
-  const total = useDisplayBetAmount(betType);
+  const total = useDisplayBetAmount(betType) ?? 0;
   const [blackjackBetAmount, setBlackjackBetAmount] = useState<number>(0);
 
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -37,23 +40,24 @@ export const BlackjackInputPlacement = ({
   const _213 = useAppSelector((x) => x.site.settings.blackjack213Enabled);
   const perfectPairs = useAppSelector((x) => x.site.settings.blackjackPerfectPairsEnabled);
   const luckyLadies = useAppSelector((x) => x.site.settings.blackjackLuckyLadiesEnabled);
+  const {t} = useTranslation();
 
   const onSelect = useCallback(() => {
     if (!blackjack15x && betType === "blackjack-15x") {
-      return void Toasts.warning("Blackjack 15x is disabled");
+      return void Toasts.warning(t('validations:errors.game.blackjack.blackjack15Disabled'));
     }
     if (!_213 && betType === "21+3") {
-      return void Toasts.warning("21+3 is disabled");
+      return void Toasts.warning(t('validations:errors.game.blackjack.blackjack21Plus3Disabled'));
     }
     if (!perfectPairs && betType === "perfect-pairs") {
-      return void Toasts.warning("Perfect Pairs is disabled");
+      return void Toasts.warning(t('validations:errors.game.blackjack.blackjackPerfectPairsDisabled'));
     }
     if (!luckyLadies && betType === "lucky-ladies") {
-      return void Toasts.warning("Lucky Ladies is disabled");
+      return void Toasts.warning(t('validations:errors.game.blackjack.blackjackLuckyLadiesDisabled'));
     }
 
     if (!authenticated) {
-      return void Toasts.warning("Please login to place a bet");
+      return Dialogs.open("primary", <LoginModal />);
     }
 
     let amount = Intimal.fromDecimal(blackjackBetAmount);
@@ -64,7 +68,7 @@ export const BlackjackInputPlacement = ({
   const onChange = useCallback(
     (val: number) => {
       if (!authenticated) {
-        return void Toasts.warning("Please login to place a bet");
+        return Dialogs.open("primary", <LoginModal />);
       }
       setBlackjackBetAmount(val);
       const amount = setWarnBetTotal({ betType, amount: val });

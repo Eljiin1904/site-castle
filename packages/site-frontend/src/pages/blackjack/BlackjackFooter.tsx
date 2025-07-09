@@ -1,15 +1,9 @@
 import { Div } from "@client/comps/div/Div";
-import { useAppSelector } from "#app/hooks/store/useAppSelector";
-import { useTranslation } from "@core/services/internationalization/internationalization";
-import { useCreateGame } from "#app/services/blackjack/hooks/useCreateGame";
-import { useGame, useProcessing } from "#app/services/blackjack/redux/selectors";
-import { useCallback } from "react";
+import { useGame } from "#app/services/blackjack/redux/selectors";
 import { BlackjackInputGroup } from "./BlackjackInputGroup";
 
 export const BlackjackFooter = () => {
-  const layout = useAppSelector((x) => x.style.mainLayout);
 
-  const { t } = useTranslation();
   const game = useGame();
 
   return (

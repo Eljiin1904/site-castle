@@ -3,12 +3,13 @@ import { BlackjackAction } from "@core/types/blackjack/BlackjackAction";
 import { useSubmitAction } from "#app/services/blackjack/hooks/useSubmitAction";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BlackjackButton } from "./BlackjackButton";
-// import { useTranslation } from "#client/hooks/localization/useTranslation";
 import { Div } from "@client/comps/div/Div";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export default function BlackjackPlayActions() {
-  // const { t } = useTranslation();
+
   const layout = useAppSelector((x) => x.style.mainLayout);
+  const {t} = useTranslation('games\\blackjack');
 
   const allowedActions = useAllowedActions();
   const hasAction = (action: BlackjackAction) => allowedActions.includes(action);
@@ -51,7 +52,7 @@ export default function BlackjackPlayActions() {
               >
                 <BlackjackButton
                   key={action}
-                  text={action}
+                  text={t(`actions.${action}`)}
                   icon={action}
                   enabled={hasAction(action) && !processing}
                   onClick={() => submitAction({ action })}

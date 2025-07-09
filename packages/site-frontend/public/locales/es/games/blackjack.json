@@ -1,5 +1,25 @@
 {
+  "title": "Blackjack",
+  "inputs": {
+    "perfectPairs": "Parejas Perfectas",
+    "21Plus3": "21 + 3",
+    "mainBet": "Apuesta Principal",
+    "luckyLadies": "Damas de la Suerte",
+    "blackjack": "Blackjack"
+  },
+  "actions": {
+    "split": "Dividir",
+    "double": "Doblar",
+    "hit": "Pedir",
+    "stand": "Plantarse"
+  },
+  "totals": {
+    "total": "Apuesta Total",
+    "sideBets": "Apuestas Secundarias",
+    "mainBet": "Apuesta Principal"
+  },
   "placeBet": "Apostar",
+  "insurance": "¿Comprar seguro por <0>{{insurance}}</0>?",
   "betPlaced": "Apostado",
   "betBoardHeader": "Veintiuna Juego Dados",
   "bet_zero": "{{count}} Apuesta",
