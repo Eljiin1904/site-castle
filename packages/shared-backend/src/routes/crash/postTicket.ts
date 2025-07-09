@@ -35,7 +35,7 @@ export default Http.createApiRoute({
   bet: true,
   body: Validation.object({
     roundId: Validation.string().required("validations:errors.games.crash.requiredRound"),
-    betAmount: Validation.currency("Bet amount"),
+    betAmount: Validation.number().integer().min(0).required("validations:errors.games.double.invalidAmount"),
     betToken: Validation.string().optional(),
     targetMultiplier: Validation.number().optional(),
     nextRound: Validation.boolean().optional().default(false),
