@@ -19,9 +19,9 @@ export const BlackjackDebugModal = () => {
   const onSubmit = useCallback(
     () => {
       const split = val.split(",").map((s) => s.trim());
-      if (!split.length) return void Toasts.error("No cards entered");
+      if (!split.length) return void Toasts.error(t('debugModal.error'));
       postMockCards({ cardAbbrevAr: split }).then(() => {
-        Toasts.info("Mock cards set");
+        Toasts.info(t('debugModal.success'));
         Dialogs.close("primary");
       });
     },
@@ -72,7 +72,6 @@ export const BlackjackDebugModal = () => {
         <Button
           kind="primary-yellow"
           onClick={onSubmit}
-          fx
         >
          {t('common:submit')}
         </Button>
