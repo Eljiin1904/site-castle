@@ -67,10 +67,6 @@ export const FairnessMinesModal = ({ result }: { result: MinesResult }) => {
           gap={12}
         >
           <ModalSection>
-            <ModalLabel>{t('transactions.headers.multiplier')}</ModalLabel>
-            <ModalField>{result.multiplier.toFixed(2)}</ModalField>
-          </ModalSection>
-          <ModalSection>
             <ModalLabel>{t('transactions.headers.won')}</ModalLabel>
             <ModalField>
               <Tokens value={result.wonAmount} fontSize={12} color="dark-sand" />
