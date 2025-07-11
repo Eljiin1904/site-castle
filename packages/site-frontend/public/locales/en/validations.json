@@ -162,7 +162,8 @@
         "invalidRoundId": "Invalid round id.",
         "invalidRoundStatus": "Invalid round status.",
         "invalidCombination": "Invalid bet combination.",
-        "maxBetAmount": "The max bet amount is {{value}}."       
+        "maxBetAmount": "The max bet amount is {{value}}.", 
+        "invalidAmount": "Invalid bet amount."   
       },
       "crash": {
         "requiredRound": "Round is required.",

@@ -107,6 +107,7 @@ export type StyledLayoutProps = {
   display?: StyledProps["display"];
   flexBasis?: 0;
   flexGrow?: boolean | 1 | 2 | 3 | 4 | 5;
+  flexShrink?: boolean | 1 | 2 | 3 | 4 | 5;
   width?: "full" | Unit;
   height?: "full" | Unit;
   fx?: boolean;

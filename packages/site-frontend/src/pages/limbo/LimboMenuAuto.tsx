@@ -15,6 +15,7 @@ import { BetInputGroup } from "./BetInputGroup";
 import { useAutoBet } from "./useAutoBet";
 import { useProfit } from "./useProfit";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { DemoNotice } from "#app/comps/demo/DemoNotice";
 
 export const LimboMenuAuto = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -51,10 +52,11 @@ const NotMobileContent = () => {
 const ActionButton = () => {
   const processing = useAppSelector((x) => x.limbo.processing);
   const autoPlaying = useAppSelector((x) => x.limbo.autoPlaying);
+  const betAmount = useAppSelector((x) => x.limbo.betAmount);
   const { t } = useTranslation(["games\\limbo"]);
   const dispatch = useAppDispatch();
   const { overMax } = useProfit();
-
+  const gameLabel = betAmount === 0 ? t('games:autoPlayDemo') :t("games\\limbo:startAutoPlay");
   const handleStartAuto = useAutoBet();
 
   if (autoPlaying) {
@@ -67,15 +69,17 @@ const ActionButton = () => {
       />
     );
   } else {
-    return (
+    return (<Fragment>
       <Button
         fx
         kind="primary-green"
-        label={overMax ? t("games\\limbo:exceedMaxBet") : t("games\\limbo:startAutoPlay")}
+        label={overMax ? t("games\\limbo:exceedMaxBet") :gameLabel}
         disabled={overMax || processing}
         onClick={handleStartAuto}
+        flexShrink
       />
-    );
+      {betAmount === 0 && <DemoNotice />}
+    </Fragment>);
   }
 };
 

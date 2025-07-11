@@ -14,8 +14,6 @@ import { ModalField } from "@client/comps/modal/ModalField";
 import { Vector } from "@client/comps/vector/Vector";
 import { Tokens } from "@client/comps/tokens/Tokens";
 import { SvgCancel } from "@client/svgs/common/SvgCancel";
-import { SvgCategory } from "@client/svgs/common/SvgCategory";
-import { SvgChicken } from "@client/svgs/common/SvgChicken";
 import { Span } from "@client/comps/span/Span";
 import { Mines } from "#app/services/mines";
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
@@ -25,6 +23,7 @@ import { MineCountSlider } from "./MineCountSlider";
 import { MinesGridSizeSelector } from "./MinesGridSizeSelector";
 import { useAutoBet } from "./useAutoBet";
 import { useTranslation } from "@core/services/internationalization/internationalization";
+import { DemoNotice } from "#app/comps/demo/DemoNotice";
 
 export const MinesMenuAuto = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -67,8 +66,8 @@ const ActionButton = () => {
   const processing = useAppSelector((x) => x.mines.processing);
   const dispatch = useAppDispatch();
   const {t} = useTranslation(["games\\mines"]);
-
   const handleStartAuto = useAutoBet();
+  const gameLabel = betAmount === 0 ? t('games:autoPlayDemo') :t("games\\mines:startAutoPlay");
 
   if (autoPlaying) {
     return (
@@ -93,15 +92,17 @@ const ActionButton = () => {
     const hasMaxProfit = profit >= Mines.maxProfit;
     const disabled = processing || revealCount === 0 || hasMaxProfit;
   
-    return (
+    return (<Fragment>
       <Button
         fx
         kind="primary-green"
-        label={hasMaxProfit ? t('games\\mines:exceedMaxBet') : t('games\\mines:startAutoPlay')}
+        label={hasMaxProfit ? t('games\\mines:exceedMaxBet') : gameLabel}
         disabled={disabled}
         onClick={handleStartAuto}
+        flexShrink
       />
-    );
+      {betAmount === 0 && <DemoNotice />}
+    </Fragment>);
   }
 };
 

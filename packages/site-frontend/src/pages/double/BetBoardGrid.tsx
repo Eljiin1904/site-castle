@@ -1,22 +1,26 @@
+import { Fragment } from "react";
 import { DoubleBetKind } from "@core/types/double/DoubleBetKind";
 import { Div } from "@client/comps/div/Div";
 import { Conditional } from "@client/comps/conditional/Conditional";
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { BetBoardButton } from "./BetBoardButton";
 import { BetBoardTicketGrid } from "./BetBoardTicketGrid";
+import { DemoNotice } from "#app/comps/demo/DemoNotice";
+
 
 export const BetBoardGrid = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
-
-  return (
+  const betAmount = useAppSelector((x) => x.double.betAmount);
+  return (<Fragment>
+    {betAmount === 0 && <DemoNotice />}
     <Conditional
       value={layout}
       mobile={<MobileContent />}
       tablet={<LaptopDesktopContent />}
       laptop={<LaptopDesktopContent />}
       desktop={<LaptopDesktopContent />}
-    />
-  );
+    />    
+  </Fragment>);
 };
 
 const MobileContent = () => {

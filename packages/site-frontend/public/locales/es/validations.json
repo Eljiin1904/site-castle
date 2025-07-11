@@ -162,7 +162,8 @@
         "invalidRoundId": "Id de ronda inválido.",
         "invalidRoundStatus": "Estado de ronda inválido.",
         "invalidCombination": "Combinación de apuesta inválida.",
-        "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."       
+        "maxBetAmount": "La cantidad máxima de apuesta es {{value}}.",
+        "invalidAmount": "Cantidad de apuesta inválida."        
       },
       "crash": {
         "requiredRound": "Ronda requerida.",

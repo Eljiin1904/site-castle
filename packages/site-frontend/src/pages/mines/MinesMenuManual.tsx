@@ -18,6 +18,7 @@ import { useManualBet } from "./useManualBet";
 import { usePlaying } from "./usePlaying";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import classNames from "classnames";
+import { DemoNotice } from "#app/comps/demo/DemoNotice";
 
 export const MinesMenuManual = () => {
   const layout = useAppSelector((x) => x.style.mainLayout);
@@ -58,6 +59,7 @@ const NotMobileContent = () => {
 
 const ActionButton = () => {
   const processing = useAppSelector((x) => x.mines.processing);
+  const betAmount = useAppSelector((x) => x.mines.betAmount);
   const revealCount = useAppSelector((x) => x.mines.game?.revealCount) || 0;
   const game = useAppSelector((x) => x.mines.game);
   const { payout } = Mines.getPayout(game ?? {
@@ -71,7 +73,7 @@ const ActionButton = () => {
   const handleBet = useManualBet();
   const handleCashout = useCashout();
   const {t} = useTranslation(["games\\mines"]);
-
+ 
   if (playing) {
     return (
       <Button
@@ -86,14 +88,17 @@ const ActionButton = () => {
     );
   }
   return (
-    <Button
+    <Fragment>
+      <Button
       fx
       kind="primary-green"
-      label={t("games\\mines:placeBet")}
+      label={betAmount === 0 ? t('games:playDemo') : t("games\\mines:placeBet")}
       loading={processing}
       disabled={processing}
       onClick={handleBet}
     />
+    {betAmount === 0 && <DemoNotice />}
+    </Fragment>
   );
 };
 
