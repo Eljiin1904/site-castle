@@ -26,14 +26,14 @@ export const CrashChartContainer = () => {
   const cashout = roundTicket?.cashoutTriggered;
   const cashoutMultiplier = cashout ? roundTicket?.multiplierCrashed ?? 1 : 1;
   const elapsedtime = useAppSelector((x) => x.crash.elapsedTime) ?? 0;
-  const serverMultiplier = CoreCrash.getMultiplierForTime(elapsedtime);
+  const serverMultiplier = Math.max(1, CoreCrash.getMultiplierForTime(elapsedtime));
   const [multiplier, setMultiplier] = useState(serverMultiplier);
  
   useInterval(() => {
     if(round.status == 'simulating' && elapsedtime > 0) {
       
       const timer = Site.timeSince(round.startDate ?? new Date());
-      const newMultiplier = CoreCrash.getMultiplierForTime(timer);
+      const newMultiplier = Math.max(1, CoreCrash.getMultiplierForTime(timer));
       setMultiplier(Math.min(newMultiplier, serverMultiplier));
       if(newMultiplier  === Infinity) {
         setMultiplier(1.00);
