@@ -11,8 +11,14 @@ import { GameSearch } from "#app/comps/games/GamesSearch";
 import { GameSlideProps, GamesSlider } from "#app/comps/games/GamesSlider";
 import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
-import { GamesSection } from "#app/comps/games/GamesSection";
 import { Div } from "@client/comps/div/Div";
+import { GamesByCategory } from "../games/GamesByCategoryPage";
+import { PageTitle } from "@client/comps/page/PageTitle";
+import { ExternalGameCategory } from "@core/types/hub-eight/GameInformation";
+
+const friendlyUrl = (game: string) => {
+  return game.replaceAll("_", "-").toLowerCase();
+};
 
 export const HomePage = () => {
   const authenticated = useAppSelector((x) => x.user.authenticated);
@@ -51,9 +57,9 @@ export const HomePage = () => {
           />
         }
         original={<OriginalGames />}
-        slot={<GamesSection category="slot" />}
-        live_casino={<GamesSection category="live_casino" />}
-        game_shows={<GamesSection category="game_shows" />}
+        slot={<HubEightSection category="slot" />}
+        live={<HubEightSection category="live"/>}
+        game_shows={<HubEightSection category="game_shows"/>}
       />
 
       <HotGamesSlider />
@@ -82,7 +88,7 @@ const RecentlyAddedSlider = () => {
       image: `/graphics/games/${x.name}`,
       heading: t(`games:${x.name}`),
       subheading: "",
-      to: `/${x.name}`,
+      to: `/${friendlyUrl(x.name)}`,
     };
   });
 
@@ -103,7 +109,7 @@ const HotGamesSlider = () => {
       image: `/graphics/games/${x.game}`,
       heading: t(`games:${x.game}`),
       subheading: "",
-      to: `/${x.game}`,
+      to: `/${friendlyUrl(x.game)}`,
     };
   });
 
@@ -141,10 +147,12 @@ const CategoriesSection = () => {
   const items = Game.kinds.map((x) => {
     return {
       image: `/graphics/categories/${x}`,
-      heading: t(`${x}`, { count: 1 }),
-      to: `/${x.replaceAll("_", "-")}`,
+      heading: t(`${x}`, { count: 2 }),
+      to: x === 'slot' ? '/slots' : x === 'live' ? '/live-casino' : x === 'game_shows' ? '/game-shows' : `/${x}`,
     };
   });
+  // const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
+  //   const gameValues: GameKindType[] = ['all', ...Game.kinds];
   return (
     <GamesSlider
       type="category"
@@ -153,3 +161,16 @@ const CategoriesSection = () => {
     />
   );
 };
+
+const HubEightSection = ({category}: {category: ExternalGameCategory}) => {
+
+  const small = useIsMobileLayout();
+  const { t } = useTranslation(['games']);
+
+  return (
+    <Div fx justifyContent="center" alignItems="center" column  gap={small ? 24 : 40}>
+      <PageTitle heading={t(`${category}`)}></PageTitle>
+      <GamesByCategory category={category} filterOff/>
+    </Div>
+  );
+}
