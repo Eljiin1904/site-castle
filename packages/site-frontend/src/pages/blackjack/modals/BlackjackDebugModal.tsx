@@ -1,16 +1,19 @@
 import postMockCards from "#app/services/blackjack/api/postMockCards";
-import { Button } from "#client/comps/button/Button";
-import { Div } from "#client/comps/div/Div";
-import { TextInput } from "#client/comps/input/TextInput";
-import { UnorderedList } from "#client/comps/list/UnorderedList";
-import { Modal } from "#client/comps/modal/Modal";
-import { ModalBody } from "#client/comps/modal/ModalBody";
-import { ModalHeader } from "#client/comps/modal/ModalHeader";
-import { Dialogs } from "#client/services/dialogs";
-import { Toasts } from "#client/services/toasts";
+import { Button } from "@client/comps/button/Button";
+import { Div } from "@client/comps/div/Div";
+import { TextInput } from "@client/comps/input/TextInput";
+import { UnorderedList } from "@client/comps/list/UnorderedList";
+import { Modal } from "@client/comps/modal/Modal";
+import { ModalBody } from "@client/comps/modal/ModalBody";
+import { ModalHeader } from "@client/comps/modal/ModalHeader";
+import { Dialogs } from "@client/services/dialogs";
+import { Toasts } from "@client/services/toasts";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 import { useCallback, useState } from "react";
 
 export const BlackjackDebugModal = () => {
+  
+  const {t} = useTranslation("games\\blackjack");
   const [val, setVal] = useState("");
 
   const onSubmit = useCallback(
@@ -39,25 +42,23 @@ export const BlackjackDebugModal = () => {
       onBackdropClick={() => Dialogs.close("primary")}
     >
       <ModalHeader
-        heading="Blackjack Debugger - Mock Cards"
+        heading={t("debugModal.title")}
         onCloseClick={() => Dialogs.close("primary")}
       />
       <ModalBody>
         <Div>
-          Used to stack the deck with specific cards only for your player. Cards are defined as "AS"
-          for Ace of Spades. Separated by commas, spaces trimmed. If mock cards run out the game
-          will switch back to nonce rolled cards.
+        {t("debugModal.description")}
         </Div>
         <UnorderedList
           fx
           itemSize={14}
           items={[
-            `card #1: Player's first card`,
-            `card #2: Dealer's first card`,
-            `card #3: Player's second card`,
-            `card #4: Dealer's second card (hidden)`,
-            `cards #5-n: Additional cards go to player, unless stand or player/dealer blackjack`,
-            `cards #n+: Remaining cards go to dealer`,
+            t("debugModal.list.card1"),
+            t("debugModal.list.card2"),
+            t("debugModal.list.card3"),
+            t("debugModal.list.card4"),
+            t("debugModal.list.card5"),
+            t("debugModal.list.cardn")
           ]}
         />
 
@@ -69,10 +70,11 @@ export const BlackjackDebugModal = () => {
         />
 
         <Button
-          kind="primary"
+          kind="primary-yellow"
           onClick={onSubmit}
+          fx
         >
-          Submit
+         {t('common:submit')}
         </Button>
       </ModalBody>
     </Modal>
