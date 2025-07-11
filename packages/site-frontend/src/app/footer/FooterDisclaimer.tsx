@@ -8,7 +8,7 @@ export const FooterDisclaimer = ({mt = 32} : {mt?: Unit}) => {
   return (
     <Span size={12}>
       {
-        `Sand Casino ${t('footer.disclaimer')}`
+        `Castle ${t('footer.disclaimer')}`
       }
       <Div
         gap={24}

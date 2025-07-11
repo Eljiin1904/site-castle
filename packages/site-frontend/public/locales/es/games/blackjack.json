@@ -52,6 +52,8 @@
       "card4": "carta #4: Segunda carta del crupier",
       "card5": "cartas #5-n: Cartas adicionales van al jugador, a menos que se plante o haya blackjack del jugador/crupier",
       "cardn": "cartas #n+: Las cartas restantes van al crupier"
-    }
+    },
+    "success": "Cartas simuladas establecidas.",
+    "error": "No se ingresaron cartas."
   }
 }

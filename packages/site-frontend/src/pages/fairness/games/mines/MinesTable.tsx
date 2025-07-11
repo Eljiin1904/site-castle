@@ -89,13 +89,6 @@ const MobileTable = ({ results, isLoading }: MinesTableProps) => {
               gap={2}
             >
               <Div gap={8}>
-                <Span
-                  color="light-sand"
-                  size={12}
-                >
-                  {Numbers.toLocaleString(x.multiplier, 2)}
-                  {"x"}
-                </Span>
                 <Tokens
                   fontSize={12}
                   value={x.wonAmount}
@@ -164,33 +157,7 @@ const TabletTable = ({ results, isLoading }: MinesTableProps) => {
               {x.mineCount}
             </Span>
           ),
-        },
-        {
-          heading: t("transactions.headers.multiplier"),
-          grow: 2,
-          justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span
-              color="light-sand"
-              textOverflow="ellipsis"
-            >
-              {Numbers.toLocaleString(x.multiplier, 2)}
-              {"x"}
-            </Span>
-          ),
-        },
-        {
-          heading: t("transactions.headers.light-sand"),
-          grow: 1,
-          justify: "flex-end",
-          rowRenderer: (x) => (
-            <Button
-              kind="tertiary-grey"
-              size="xs"
-              icon={SvgExternal}
-            />
-          ),
-        },
+        }
       ]}
     />
   );
@@ -245,21 +212,6 @@ const LaptopDesktopTable = ({ results, isLoading }: MinesTableProps) => {
               size={12}
             >
               {x.mineCount}
-            </Span>
-          ),
-        },
-        {
-          heading: t("transactions.headers.multiplier"),
-          grow: 2,
-          justify: "flex-start",
-          rowRenderer: (x) => (
-            <Span
-              color="light-sand"
-              textOverflow="ellipsis"
-              size={12}
-            >
-              {Numbers.toLocaleString(x.multiplier, 2)}
-              {"x"}
             </Span>
           ),
         },

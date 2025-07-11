@@ -52,6 +52,8 @@
       "card4": "card #4: Dealer's second card",
       "card5": "cards #5-n: Additional cards go to player, unless stand or player/dealer blackjack",
       "cardn": "cards #n+: Remaining cards go to dealer"
-    }
+    },
+    "success": "Mock cards set.",
+    "error": "No cards entered."
   }
 }
