@@ -176,6 +176,13 @@
         "invalidEndTime": "Hora de finalización inválida.",
         "ticketAlreadyProcessed": "Ticket ya procesado.",
         "maxBetAmount": "La cantidad máxima de apuesta es {{value}}."
+      },
+      "blackjack": {
+        "noElementId": "No hay elemento con id 'blackjack-game'.",
+        "blackjack15Disabled": "Blackjack 15 está deshabilitado.",
+        "blackjack21Plus3Disabled": "Blackjack 21 + 3 está deshabilitado.",
+        "blackjackPerfectPairsDisabled": "Blackjack Parejas Perfectas está deshabilitado.",
+        "blackjackLuckyLadiesDisabled": "Blackjack Damas de la Suerte está deshabilitado."
       }
     },
     "wallet": {

@@ -17,7 +17,6 @@ import config from "#app/config";
 import { useTranslation } from "@core/services/internationalization/internationalization";
 import { BlackjackBetTotals } from "./BlackjackBetTotals";
 import { SvgEllipsisV } from "@client/svgs/common/SvgEllipsisV";
-// import { useTranslation } from "@client/hooks/localization/useTranslation";
 
 export const BlackjackHeader = () => {
   const mainLayout = useAppSelector((x) => x.style.mainLayout);
@@ -41,7 +40,7 @@ export const BlackjackHeader = () => {
 };
 
 const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Div
       fx
@@ -73,14 +72,14 @@ const MobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
           options={[
             {
               type: "action",
-              label: "Fairness",
+              label: t("menu.fairness"),
               iconLeft: SvgCheckCircle,
               onClick: () =>
                 Dialogs.open("primary", <FairnessSeedModal historyTo="/fairness/blackjack" />),
             },
             {
               type: "action",
-              label: "Rules",
+              label:  t("common:rules"),
               iconLeft: SvgInfoCircle,
               onClick: () => Dialogs.open("primary", <BlackjackInfoModal />),
             },
@@ -117,7 +116,7 @@ const NotMobileHeader = ({ toggleTheme }: { toggleTheme: () => void }) => {
         {["development", "staging"].includes(config.env) && (
           <Button
             kind="secondary"
-            label="Debug"
+          label= {t("common:debug")}
             onClick={() => Dialogs.open("primary", <BlackjackDebugModal />)}
           />
         )}

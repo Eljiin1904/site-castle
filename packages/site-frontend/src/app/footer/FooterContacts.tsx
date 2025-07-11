@@ -17,7 +17,7 @@ export const FooterContacts = () => {
           color="light-sand"
           weight="medium"
         >
-          {"support@sandcasino.com"}
+          {"support@castle.com"}
         </Span>
       </Div>
       <Div gap={2}>
@@ -30,7 +30,7 @@ export const FooterContacts = () => {
           color="light-sand"
           weight="medium"
         >
-          {"partners@sandcasino.com"}
+          {"partners@castle.com"}
         </Span>
       </Div>
       <Div gap={2}>
@@ -38,7 +38,7 @@ export const FooterContacts = () => {
            {t("footer.press")}
         </Span>
         <Span size={12}>
-          {"press@sandcasino.com"}
+          {"press@castle.com"}
         </Span>
       </Div>
     </Div>);

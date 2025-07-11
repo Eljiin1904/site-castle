@@ -201,7 +201,8 @@ export const blackjackSlice = createSlice({
     }>((state, { payload }) => {
       const { betType, amount } = payload;
       const { betAmounts } = state.betting;
-      betAmounts[betType] = amount;
+      betAmounts[betType] = !Number.isNaN(amount) ? amount : 0;
+      console.log(betAmounts[betType], betType);
       state.betting.history = [];
     }),
 

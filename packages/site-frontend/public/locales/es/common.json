@@ -49,5 +49,8 @@
   "code": "Código",
   "save": "Guardar",
   "perPage": "Por página",
-  "hidden": "Oculto"
+  "hidden": "Oculto",
+  "debug": "Depurar",
+  "yes": "Sí",
+  "no": "No"
 }

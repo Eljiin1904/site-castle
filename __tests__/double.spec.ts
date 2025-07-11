@@ -37,42 +37,42 @@ test.describe('Double Basic Scenarios', () => {
   });
 
   test('needs user to be logged for place bet', async ({ page }) => {
-    // if Place bet button is clicked, it should show a modal with the text "Sign In to SandCasino"
+    // if Place bet button is clicked, it should show a modal with the text "Sign In to Castle"
     await page.click('text=Place Bet');
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
   });
 
   test('needs user to logged for enter amount', async ({ page }) => {
-    // if any of the amount buttons are clicked, it should show a modal with the text "Sign In to SandCasino"
+    // if any of the amount buttons are clicked, it should show a modal with the text "Sign In to Castle"
     // close the modal after each button click
     await page.getByRole('button', { name: 'Clear' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
     await page.getByRole('button', { name: '+1', exact: true }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
     await page.getByRole('button', { name: '+10', exact: true }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
     await page.getByRole('button', { name: '+100' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
     await page.getByRole('button', { name: '/2' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
     await page.getByRole('button', { name: '2X', exact: true }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
     await page.getByRole('button', { name: 'Max' }).click();
-    await expect(page.getByText('Sign In to SandCasino')).toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).toBeVisible();
     await page.locator('svg').first().click();
-    await expect(page.getByText('Sign In to SandCasino')).not.toBeVisible();
+    await expect(page.getByText('Sign In to Castle')).not.toBeVisible();
   });
 
 });

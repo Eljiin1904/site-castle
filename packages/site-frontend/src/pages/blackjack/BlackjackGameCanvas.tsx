@@ -3,18 +3,18 @@ import { useWorld } from "../../services/blackjack/redux/selectors";
 import { useEffect } from "react";
 import { BlackjackHeader } from "./BlackjackHeader";
 import { Div } from "@client/comps/div/Div";
-import { BlackjackBetTotals } from "./BlackjackBetTotals";
 import { BlackjackFooter } from "./BlackjackFooter";
 import { BlackjackGameControls } from "./BlackjackGameControls";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export const BlackjackGameCanvas = () => {
   const world = useWorld();
-
+  const {t} = useTranslation();
   // skipping authenticated prop here because world can draw regardless
 
   useEffect(() => {
     const e = document.getElementById("blackjack-game");
-    if (!e) throw new Error("No element with id 'blackjack-game'");
+    if (!e) throw new Error(t("validations:errors.games.blackjack.noElementId"));
     world.draw(e);
   }, [world]); // currently doesn't change
 
