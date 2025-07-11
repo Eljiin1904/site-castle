@@ -9,7 +9,42 @@ import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
 import { Users } from "@core/services/users";
 import { UserRole } from "@core/types/users/UserRole";
 import { UserSuspensionData } from "@core/types/users/UserSuspensionData";
+import { expect } from "vitest";
+import { DatabaseCollections } from "@core/types/database/DatabaseCollections";
+import { Database } from "@server/services/database";
+import { BlackjackBetAmounts } from "@core/types/blackjack/BlackjackBetAmounts";
+import { BlackjackGameDocument } from "@core/types/blackjack/BlackjackGameDocument";
 
+// Testing functions
+export const findUserOrFailTest = async (username: string) => {
+  const collection = Database.collection("users");
+  const user = await collection.findOne({ username });
+  if (!user) {
+    return expect.fail();
+  }
+  return { user };
+};
+
+// Database functions
+export const resetDatabaseConnection = async (collection: keyof DatabaseCollections) => {
+  if (await Database.hasCollection(collection)) {
+    Database.collection(collection).deleteMany({});
+  } else {
+    await Database.createCollection(collection, {});
+  }
+};
+
+// Use this function for cleanup
+// Resets collections in parallel
+export const resetDatabaseConnections = async (collections: (keyof DatabaseCollections)[]) => {
+  const promises = collections.map((collection) => {
+    return resetDatabaseConnection(collection);
+  });
+  await Promise.allSettled(promises);
+};
+
+// General functions
+// Fetching / Requests
 export function parseCookie(cookieString: string) {
   const cookies = cookieString.split(";");
   const sessionCookie = cookies.find((cookie) => cookie.trim().startsWith("connect.sid="));
@@ -46,28 +81,7 @@ export async function handleFetch(
   });
 }
 
-export async function handleLogin(
-  base_url: string,
-  login_details: { username: string; password: string },
-  captchaToken: string,
-): Promise<[Response, string]> {
-  let url = base_url + "/auth/local";
-  const response = await handleFetch(url, "POST", { ...login_details, captchaToken });
-  const result = await response.json();
-
-  const setCookieHeader: string = response.headers.get("set-cookie") || "";
-  const sessionCookie: string = parseCookie(setCookieHeader) || "";
-
-  url = base_url + "/auth/session";
-  let sessionResponse = await fetchWithCookie(
-    url,
-    "POST",
-    { userId: result.user._id },
-    sessionCookie,
-  );
-  return [sessionResponse, sessionCookie];
-}
-
+// User
 export const createTestUser = (
   username: string = "tester",
   email: string = "test@gmail.com",
@@ -148,6 +162,52 @@ export const createTestUser = (
   };
 };
 
+// Login
+export async function handleLogin(
+  base_url: string,
+  login_details: { username: string; password: string },
+  captchaToken: string,
+): Promise<[Response, string]> {
+  let url = base_url + "/auth/local";
+  const response = await handleFetch(url, "POST", { ...login_details, captchaToken });
+  const result = await response.json();
+
+  const setCookieHeader: string = response.headers.get("set-cookie") || "";
+  const sessionCookie: string = parseCookie(setCookieHeader) || "";
+
+  url = base_url + "/auth/session";
+  let sessionResponse = await fetchWithCookie(
+    url,
+    "POST",
+    { userId: result.user._id },
+    sessionCookie,
+  );
+  return [sessionResponse, sessionCookie];
+}
+
+type HandleUserLoginArgs = {
+  user: Pick<UserDocument, "username">;
+  password?: string;
+  siteAPI: string;
+  hCaptchaToken: string;
+};
+export const handleUserLogin = async (args: HandleUserLoginArgs) => {
+  const { user, siteAPI, hCaptchaToken, password = "password123" } = args;
+  const [sessionResponse, sessionCookie] = await handleLogin(
+    siteAPI,
+    {
+      username: user.username,
+      password,
+    },
+    hCaptchaToken,
+  );
+  return {
+    sessionResponse,
+    sessionCookie,
+  };
+};
+
+// Dice functions
 export const createTestTicket = async ({
   user,
   targetKind,
@@ -189,3 +249,85 @@ export const createTestTicket = async ({
     wonAmount,
   };
 };
+
+// Blackjack functions
+export async function createBlackjackGame(
+  URL: string,
+  sessionCookie: string,
+  betAmounts: BlackjackBetAmounts,
+) {
+  const getManualBlackjack = await fetchWithCookie(URL, "POST", { betAmounts }, sessionCookie);
+  const getBlackjackState = await getManualBlackjack.json();
+  return {
+    getManualBlackjack,
+    getBlackjackState,
+  };
+}
+
+type PerformBlackjackActionArgs = {
+  action: "hit" | "stand" | "double" | "split";
+  gameId: string;
+  syncIndex: number;
+};
+
+export async function performBlackjackAction(
+  URL: string,
+  sessionCookie: string,
+  args: PerformBlackjackActionArgs,
+) {
+  await fetchWithCookie(URL, "POST", args, sessionCookie);
+}
+
+type VirtualCard = {
+  suit: "spades" | "hearts" | "clubs" | "diamonds";
+  value: number | "A" | "J" | "Q" | "K";
+};
+
+function getCardValuesFromSimulationObject(
+  cards: {
+    orderIndex: number;
+    data: VirtualCard[];
+  }[],
+) {
+  return cards.map((card) => {
+    return card.data;
+  });
+}
+
+export function resolveBlackjackSimulationValues(
+  gameCreationSimulationWithSeeds: any,
+  userId: String,
+) {
+  // "gameCreationSimulationWithSeeds" is of an undefined type before the game gets saved to database
+  return {
+    dealer: getCardValuesFromSimulationObject(
+      gameCreationSimulationWithSeeds.dealer.hands?.[0]?.cards ?? [],
+    ),
+    player: getCardValuesFromSimulationObject(
+      // @ts-expect-error
+      gameCreationSimulationWithSeeds.players.find((player) => player.userId === userId)?.hands?.[0]
+        ?.cards ?? [],
+    ),
+  } as unknown as {
+    dealer: VirtualCard[];
+    player: VirtualCard[];
+  };
+}
+
+export async function lookupBlackjackGame(
+  userId: string,
+  gameId?: string,
+): Promise<BlackjackGameDocument | null> {
+  if (gameId) {
+    return await Database.collection("blackjack-games").findOne({
+      _id: gameId,
+    });
+  }
+  return await Database.collection("blackjack-games").findOne({
+    players: {
+      $elemMatch: {
+        userId,
+      },
+    },
+  });
+}
