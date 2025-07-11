@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
 import { Database } from "@server/services/database";
-import { createTestUser, handleLogin, fetchWithCookie } from "../../testUtility";
+import {
+  createTestUser,
+  handleLogin,
+  fetchWithCookie,
+  findUserOrFailTest,
+} from "../../testUtility";
 import { io, Socket } from "socket.io-client";
 import config from "#app/config";
 import bcrypt from "bcrypt";
@@ -8,6 +13,8 @@ import { Ids } from "@server/services/ids";
 
 let socket: Socket;
 const BASE_URL = config.siteAPI;
+const CREATE_GAME_URL = BASE_URL + "/mines/create-manual-game";
+const REVEAL_TILE_URL = BASE_URL + "/mines/reveal-tile";
 const hCaptchaToken = "10000000-aaaa-bbbb-cccc-000000000001"; // from hCatcha's integration test guidance
 let globalSessionCookie: string;
 
@@ -80,39 +87,18 @@ describe("Mines Game Test ", async () => {
   });
 
   it("Test Insert and Leaving Mines Feed", async () => {
-    const user = await Database.collection("users").findOne({ username: "minesListenerTester" });
-    if (!user) return;
-
-    let url = BASE_URL + "/mines/create-manual-game";
-    const getManualMine = await fetchWithCookie(
-      url,
-      "POST",
-      {
-        betAmount: 500,
-        gridSize: 2,
-        mineCount: 1,
-      },
-      globalSessionCookie,
-    );
-    const getMineState = await getManualMine.json();
+    await findUserOrFailTest("minesListenerTester");
+    const { getMineState } = await createGame({
+      betAmount: 500,
+      gridSize: 2,
+      mineCount: 1,
+    });
     if (socket == null) return;
 
     const minesGameDB = await Database.collection("mines-games").findOne({
       _id: getMineState.state.gameId,
     });
-
-    url = BASE_URL + "/mines/reveal-tile";
-    const revealATileRequest = await fetchWithCookie(
-      url,
-      "POST",
-      {
-        revealIndex: minesGameDB?.mines[0],
-      },
-      globalSessionCookie,
-    );
-
-    const getRevealTileResponse = await revealATileRequest.json();
-
+    const { getRevealTileResponse } = await revealTile(minesGameDB?.mines[0] ?? 0);
     const game = getRevealTileResponse.state;
     await Database.collection("mines-events").insertOne({
       _id: Ids.object(),
@@ -156,21 +142,12 @@ describe("Mines Game Test ", async () => {
   }, 10000);
 
   it("Test Leaving Mines Feed", async () => {
-    const user = await Database.collection("users").findOne({ username: "minesListenerTester" });
-    if (!user) return;
-
-    let url = BASE_URL + "/mines/create-manual-game";
-    const getManualMine = await fetchWithCookie(
-      url,
-      "POST",
-      {
-        betAmount: 500,
-        gridSize: 2,
-        mineCount: 1,
-      },
-      globalSessionCookie,
-    );
-    const getMineState = await getManualMine.json();
+    await findUserOrFailTest("minesListenerTester");
+    const { getMineState } = await createGame({
+      betAmount: 500,
+      gridSize: 2,
+      mineCount: 1,
+    });
 
     if (socket == null) return;
 
@@ -178,17 +155,7 @@ describe("Mines Game Test ", async () => {
       _id: getMineState.state.gameId,
     });
 
-    url = BASE_URL + "/mines/reveal-tile";
-    const revealATileRequest = await fetchWithCookie(
-      url,
-      "POST",
-      {
-        revealIndex: minesGameDB?.mines[0],
-      },
-      globalSessionCookie,
-    );
-
-    const getRevealTileResponse = await revealATileRequest.json();
+    const { getRevealTileResponse } = await revealTile(minesGameDB?.mines[0] ?? 0);
     socket.emit("mines-leave");
 
     const game = getRevealTileResponse.state;
@@ -217,3 +184,28 @@ describe("Mines Game Test ", async () => {
     await expect(handleInsertSocketEvent).rejects.toThrow("Message not received on insert");
   }, 10000);
 });
+
+async function createGame(wager: { betAmount: number; gridSize: number; mineCount: number }) {
+  const getManualMine = await fetchWithCookie(CREATE_GAME_URL, "POST", wager, globalSessionCookie);
+  const getMineState = await getManualMine.json();
+  return {
+    getManualMine,
+    getMineState,
+  };
+}
+
+async function revealTile(revealIndex: number) {
+  const revealATileRequest = await fetchWithCookie(
+    REVEAL_TILE_URL,
+    "POST",
+    {
+      revealIndex,
+    },
+    globalSessionCookie,
+  );
+  const getRevealTileResponse = await revealATileRequest.json();
+  return {
+    revealATileRequest,
+    getRevealTileResponse,
+  };
+}
