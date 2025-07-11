@@ -1,9 +1,9 @@
+import { externalGameCategories } from "#core/types/hub-eight/GameInformation";
+
 export const kinds = [
   "featured",
   "original",
-  "slot",
-  "live_casino",
-  "game_shows",
+  ...externalGameCategories
 ] as const;
 
 export type GameKindType = typeof kinds[number] | 'all';

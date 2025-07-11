@@ -36,7 +36,7 @@ export const GamesByCategoryPage = ({category}: {
   );
 };
 
-export const GamesByCategory = ({category}: {category: ExternalGameCategory | undefined}) => {
+export const GamesByCategory = ({category, filterOff}: {category: ExternalGameCategory | undefined, filterOff?: boolean}) => {
   
   const [sortIndex, setSortIndex] = useState<number>(0);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
@@ -63,13 +63,13 @@ export const GamesByCategory = ({category}: {category: ExternalGameCategory | un
   const total = query.data?.total || 0;
 
   return (<Fragment>
-      <Div fx justifyContent="space-between" alignItems="center" gap={small ? 16: 24} column={small}>
+      {!filterOff &&<Div fx justifyContent="space-between" alignItems="center" gap={small ? 16: 24} column={small}>
         <GameSearch />
         <Div fx={small} gap={small ? 16: 24}>
           <GameProvider selectedProviders={selectedProviders} setSelectedProviders={setSelectedProviders} category={category} />
           <GameSort sortBy={sortIndex} setSortBy={setSortIndex} />
         </Div>
-      </Div>
+      </Div>}
       
       <GamesGrid games={games}/>
       <TableFooterPagination 
