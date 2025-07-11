@@ -89,6 +89,13 @@ const MobileTable = ({ results, isLoading }: MinesTableProps) => {
               gap={2}
             >
               <Div gap={8}>
+                <Span
+                  color="light-sand"
+                  size={12}
+                >
+                  {Numbers.toLocaleString(x.multiplier ?? 1, 2)}
+                  {"x"}
+                </Span>
                 <Tokens
                   fontSize={12}
                   value={x.wonAmount}
@@ -157,7 +164,21 @@ const TabletTable = ({ results, isLoading }: MinesTableProps) => {
               {x.mineCount}
             </Span>
           ),
-        }
+        },
+        {
+          heading: t("transactions.headers.multiplier"),
+          grow: 2,
+          justify: "flex-start",
+          rowRenderer: (x) => (
+            <Span
+              color="light-sand"
+              textOverflow="ellipsis"
+            >
+              {Numbers.toLocaleString(x.multiplier ?? 1, 2)}
+              {"x"}
+            </Span>
+          ),
+        },
       ]}
     />
   );
@@ -212,6 +233,21 @@ const LaptopDesktopTable = ({ results, isLoading }: MinesTableProps) => {
               size={12}
             >
               {x.mineCount}
+            </Span>
+          ),
+        },
+        {
+          heading: t("transactions.headers.multiplier"),
+          grow: 2,
+          justify: "flex-start",
+          rowRenderer: (x) => (
+            <Span
+              color="light-sand"
+              textOverflow="ellipsis"
+              size={12}
+            >
+              {Numbers.toLocaleString(x.multiplier ?? 1, 2)}
+              {"x"}
             </Span>
           ),
         },
