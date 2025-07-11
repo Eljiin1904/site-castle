@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Database } from "@server/services/database";
-import { createTestTicket, createTestUser } from "../../testUtility";
+import { createTestTicket, createTestUser, findUserOrFailTest } from "../../testUtility";
 import { io, Socket } from "socket.io-client";
 import config from "#app/config";
 import { DiceTicketDocument } from "@core/types/dice/DiceTicketDocument";
@@ -32,10 +32,7 @@ afterAll(() => {
 describe("Dice Game Test ", async () => {
   it("Join Dice Game Feed", async () => {
     if (socket == null) return;
-
-    const user = await Database.collection("users").findOne({ username: "diceTester1" });
-
-    if (!user) return;
+    const { user } = await findUserOrFailTest("diceTester1");
 
     const handleSocketEvents = new Promise((resolve) => {
       socket.on("dice-init", (message) => {
@@ -51,8 +48,7 @@ describe("Dice Game Test ", async () => {
   });
 
   it("Test Insert and Leaving Dice Ticket Feed", async () => {
-    const user = await Database.collection("users").findOne({ username: "diceTester1" });
-    if (!user) return;
+    const { user } = await findUserOrFailTest("diceTester1");
 
     socket.emit("dice-join", user._id);
 

@@ -50,12 +50,11 @@ describe("Bet Feed Test ", async () => {
     if (socket == null) return;
 
     //  Create and insert Bet
-    const betTimestamp = new Date();
     const bet: SiteBetDocument = {
       _id: Ids.object(),
       user: Users.getBasicUser(user),
       game: "dice",
-      timestamp: betTimestamp,
+      timestamp: new Date(),
       multiplier: 0.5,
       betAmount: 1000,
       won: true,
@@ -102,12 +101,11 @@ describe("Bet Feed Test ", async () => {
     if (socket == null) return;
 
     //  Create and insert Bet
-    const betTimestamp = new Date();
     const bet: SiteBetDocument = {
       _id: Ids.object(),
       user: Users.getBasicUser(user),
       game: "dice",
-      timestamp: betTimestamp,
+      timestamp: new Date(),
       multiplier: 0.5,
       betAmount: 1000,
       won: true,
