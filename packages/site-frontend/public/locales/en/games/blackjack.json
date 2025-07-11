@@ -41,5 +41,17 @@
     "rule3": "Max profit is {{max}} tokens.",
     "rule4": "RTP is {{percent}}%.",
     "rule5": "1.00 tokens wagered = {{exp}} XP."
+  },
+  "debugModal": {
+    "title": "Blackjack Debugger - Mock Cards",
+    "description": "Used to stack the deck with specific cards only for your player. Cards are defined as \"AS\" for Ace of Spades. Separated by commas, spaces trimmed. If mock cards run out the game will switch back to nonce rolled cards.",
+    "list": {
+      "card1": "card #1: Player's first card",
+      "card2": "card #2: Dealer's first card",
+      "card3": "card #3: Player's second card",
+      "card4": "card #4: Dealer's second card",
+      "card5": "cards #5-n: Additional cards go to player, unless stand or player/dealer blackjack",
+      "cardn": "cards #n+: Remaining cards go to dealer"
+    }
   }
 }

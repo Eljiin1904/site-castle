@@ -41,5 +41,17 @@
     "rule3": "La ganancia máxima es de {{max}} tokens.",
     "rule4": "RTP es {{percent}}%.",
     "rule5": "1.00 tokens apostados = {{exp}} XP."
+  },
+  "debugModal": {
+    "title": "Depurador de Blackjack - Cartas Simuladas",
+    "description": "Se utiliza para apilar el mazo con cartas específicas solo para tu jugador. Las cartas se definen como \"AS\" para As de Espadas. Separadas por comas, espacios eliminados. Si las cartas simuladas se agotan, el juego volverá a usar cartas generadas por nonce.",
+    "list": {
+      "card1": "carta #1: Primera carta del jugador",
+      "card2": "carta #2: Primera carta del crupier",
+      "card3": "carta #3: Segunda carta del jugador",
+      "card4": "carta #4: Segunda carta del crupier",
+      "card5": "cartas #5-n: Cartas adicionales van al jugador, a menos que se plante o haya blackjack del jugador/crupier",
+      "cardn": "cartas #n+: Las cartas restantes van al crupier"
+    }
   }
 }
