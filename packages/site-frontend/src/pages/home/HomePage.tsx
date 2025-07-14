@@ -43,23 +43,15 @@ export const HomePage = () => {
         value={filterGames}
         all={
           <>
-            <FeaturedGames
-              items={featuredGames}
-              showSection={true}
-            />
+            <FeaturedGames items={featuredGames} />
             <OriginalGames />
           </>
         }
-        featured={
-          <FeaturedGames
-            items={featuredGames}
-            showSection={true}
-          />
-        }
+        featured={<FeaturedGames items={featuredGames} />}
         original={<OriginalGames />}
         slot={<HubEightSection category="slot" />}
-        live={<HubEightSection category="live"/>}
-        game_shows={<HubEightSection category="game_shows"/>}
+        live={<HubEightSection category="live" />}
+        game_shows={<HubEightSection category="game_shows" />}
       />
 
       <HotGamesSlider />
@@ -142,13 +134,20 @@ export const ProvidersSection = () => {
   );
 };
 const CategoriesSection = () => {
-  const { t } = useTranslation(['games']);
+  const { t } = useTranslation(["games"]);
 
   const items = Game.kinds.map((x) => {
     return {
       image: `/graphics/categories/${x}`,
       heading: t(`${x}`, { count: 2 }),
-      to: x === 'slot' ? '/slots' : x === 'live' ? '/live-casino' : x === 'game_shows' ? '/game-shows' : `/${x}`,
+      to:
+        x === "slot"
+          ? "/slots"
+          : x === "live"
+            ? "/live-casino"
+            : x === "game_shows"
+              ? "/game-shows"
+              : `/${x}`,
     };
   });
   // const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
@@ -162,15 +161,23 @@ const CategoriesSection = () => {
   );
 };
 
-const HubEightSection = ({category}: {category: ExternalGameCategory}) => {
-
+const HubEightSection = ({ category }: { category: ExternalGameCategory }) => {
   const small = useIsMobileLayout();
-  const { t } = useTranslation(['games']);
+  const { t } = useTranslation(["games"]);
 
   return (
-    <Div fx justifyContent="center" alignItems="center" column  gap={small ? 24 : 40}>
+    <Div
+      fx
+      justifyContent="center"
+      alignItems="center"
+      column
+      gap={small ? 24 : 40}
+    >
       <PageTitle heading={t(`${category}`)}></PageTitle>
-      <GamesByCategory category={category} filterOff/>
+      <GamesByCategory
+        category={category}
+        filterOff
+      />
     </Div>
   );
-}
+};
