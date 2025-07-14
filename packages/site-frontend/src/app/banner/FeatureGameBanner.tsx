@@ -13,8 +13,8 @@ export const FeatureGameBanner = ({
   heading,
   to,
   ratio,
-  objectPositionHorizontal ="center",
-  objectPositionVertical = "center"
+  objectPositionHorizontal = "center",
+  objectPositionVertical = "center",
 }: {
   image: string;
   heading?: string;
@@ -26,7 +26,6 @@ export const FeatureGameBanner = ({
   const layout = useAppSelector((x) => x.style.mainLayout);
   const small = layout === "mobile";
 
-  
   return (
     <Link
       className="FeatureGameBanner ScaleBanner"
@@ -49,17 +48,17 @@ export const FeatureGameBanner = ({
           position="relative"
           style={{ minHeight: small ? "160px" : "240px" }}
           overflow="hidden"
-          >
-            <Img
-          type="jpg"
-          path={image}
-          skeleton
-          width="100%"
-          aspectRatio={ratio ?? "186 / 260"}
-          height={small ? "160px" : "240px"}
-          objectPositionHorizontal={objectPositionHorizontal}
-          objectPositionVertical={objectPositionVertical}
-        />     
+        >
+          <Img
+            type="jpg"
+            path={image}
+            skeleton
+            width="100%"
+            aspectRatio={ratio ?? "186 / 260"}
+            height={small ? "160px" : "240px"}
+            objectPositionHorizontal={objectPositionHorizontal}
+            objectPositionVertical={objectPositionVertical}
+          />
         </Div>
         <Div
           position={small ? "relative" : "absolute"}
@@ -80,32 +79,31 @@ export const FeatureGameBanner = ({
   );
 };
 
-const MobileHeader = ({heading}: {
-  heading: string | undefined;
-}) => {
-  return (<Heading
-    as={"h2"}
-    color={"white"}
-    size={20}
-    lineHeight={24}
-    fontWeight="regular"
-  >
-    {heading}
-  </Heading>);
+const MobileHeader = ({ heading }: { heading: string | undefined }) => {
+  return (
+    <Heading
+      as={"h2"}
+      size={20}
+      lineHeight={24}
+      fontWeight="regular"
+    >
+      {heading}
+    </Heading>
+  );
 };
 
-const NotMobileHeader = ({heading}: {
-  heading: string | undefined;
-}) => {
-  return (<Heading
-    as={"h2"}
-    color={"black"}
-    size={ 48}
-    lineHeight={40}
-    style={{ maxWidth: "100px" }}
-    fontWeight="regular"
-    textTransform="uppercase"
-  >
-    {heading}
-  </Heading>);
+const NotMobileHeader = ({ heading }: { heading: string | undefined }) => {
+  return (
+    <Heading
+      as={"h2"}
+      color={"black"}
+      size={48}
+      lineHeight={40}
+      style={{ maxWidth: "100px" }}
+      fontWeight="regular"
+      textTransform="uppercase"
+    >
+      {heading}
+    </Heading>
+  );
 };

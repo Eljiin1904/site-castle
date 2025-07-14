@@ -11,7 +11,6 @@ export const FeaturedGames = ({ items }: { items: GameDocument[] }) => {
 
   return (
     <Div
-      id="home-games"
       column
       fx
       gap={small ? 24 : 40}
@@ -23,7 +22,7 @@ export const FeaturedGames = ({ items }: { items: GameDocument[] }) => {
             key={x.name}
             ratio={small ? "150 / 160" : "552 / 240"}
             objectPositionHorizontal="80%"
-            heading={t(`games:${x.name}`)}
+            heading={t(`${x.name}`)}
             to={`/${x.name}`}
             image={`/graphics/games/${x.name}`}
           />
