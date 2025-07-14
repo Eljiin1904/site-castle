@@ -1,27 +1,30 @@
 import { useMemo } from "react";
 import { HeroBannerSlideProps } from "./HeroBannerSlide";
+import { useTranslation } from "@core/services/internationalization/internationalization";
 
 export function useHeroSlides() {
+  const { t, i18n } = useTranslation(["pages/home"]);
+  const lang = i18n.language;
   const slides: HeroBannerSlideProps[] = useMemo(
     () => [
       {
         type: "router",
         to: "/limbo",
         image: "/heroes/hero-banner",
-        heading: "Play First Game Ever",
-        description: "Play your first game and receive bonus tokens for  your other game!",
-        button: "Start Playing",
+        heading: t("banners.1.heading"),
+        description: t("banners.1.description"),
+        button: t("banners.1.button"),
       },
       {
         type: "router",
         to: "/crash",
         image: "/heroes/shitcoin-crash-banner",
-        heading: "Shitcoin Crash",
-        description: "Ride the pump and cash out before the dump!",
-        button: "Play Crash",
-      }
+        heading: t("banners.2.heading"),
+        description: t("banners.2.description"),
+        button: t("banners.2.button"),
+      },
     ],
-    [],
+    [lang],
   );
 
   return slides;
