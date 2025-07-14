@@ -8,7 +8,7 @@ import { Conditional } from "@client/comps/conditional/Conditional";
 import { HeroBanner } from "#app/app/banner/HeroBanner";
 import { Game } from "@core/services/game";
 import { GameSearch } from "#app/comps/games/GamesSearch";
-import { GameSlideProps, GamesSlider } from "#app/comps/games/GamesSlider";
+import { SlideProps, Slider } from "#app/comps/games/Slider";
 import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
 import { Div } from "@client/comps/div/Div";
@@ -78,14 +78,14 @@ const RecentlyAddedSlider = () => {
   const items = games?.map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
+      heading: t(`${x.name}`),
       subheading: "",
       to: `/${friendlyUrl(x.name)}`,
     };
   });
 
   return (
-    <GamesSlider
+    <Slider
       title={t("recentlyAdded")}
       items={items}
       type="game"
@@ -99,14 +99,14 @@ const HotGamesSlider = () => {
   const items = games?.map((x) => {
     return {
       image: `/graphics/games/${x.game}`,
-      heading: t(`games:${x.game}`),
+      heading: t(`${x.game}`),
       subheading: "",
       to: `/${friendlyUrl(x.game)}`,
     };
   });
 
   return (
-    <GamesSlider
+    <Slider
       title={t("hot")}
       items={items}
       type="game"
@@ -116,7 +116,7 @@ const HotGamesSlider = () => {
 export const ProvidersSection = () => {
   const { t } = useTranslation();
 
-  const providers: GameSlideProps[] = [
+  const providers: SlideProps[] = [
     { image: "/graphics/providers/evolution", heading: t("providers.evolution"), to: "" },
     { image: "/graphics/providers/pragmatic", heading: t("providers.pragmaticPlay"), to: "" },
     { image: "/graphics/providers/playngo", heading: t("providers.playngo"), to: "" },
@@ -126,7 +126,7 @@ export const ProvidersSection = () => {
   ];
 
   return (
-    <GamesSlider
+    <Slider
       type="provider"
       title={t("providers.title")}
       items={providers}
@@ -153,7 +153,7 @@ const CategoriesSection = () => {
   // const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
   //   const gameValues: GameKindType[] = ['all', ...Game.kinds];
   return (
-    <GamesSlider
+    <Slider
       type="category"
       title={t("menu.categories")}
       items={items}

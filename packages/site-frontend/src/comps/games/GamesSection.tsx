@@ -1,24 +1,29 @@
 import { useAppSelector } from "#app/hooks/store/useAppSelector";
 import { useTranslation } from "@core/services/internationalization/internationalization";
-import { GamesSlider } from "./GamesSlider";
+import { Slider } from "./Slider";
 
-export const GamesSection = ({category}: {
-  category: string;
-}) => {
-  
+export const GamesSection = ({ category }: { category: string }) => {
   const games = useAppSelector((x) => x.site.games) || [];
-  const {t} = useTranslation(["games"]);
+  const { t } = useTranslation(["games"]);
 
-  const header =  t(`${category}`);
+  const header = t(`${category}`);
 
-  const items = games?.filter((x) => x.category === category).map((x) => {
-    return {
-      image: `/graphics/games/${x.name}`,
-      heading: t(`${x.name}`),
-      subheading: header,
-      to: `/${x.name}`
-    };
-  });
+  const items = games
+    ?.filter((x) => x.category === category)
+    .map((x) => {
+      return {
+        image: `/graphics/games/${x.name}`,
+        heading: t(`${x.name}`),
+        subheading: header,
+        to: `/${x.name}`,
+      };
+    });
 
-  return (<GamesSlider title={header} items={items} type="game"/>);
+  return (
+    <Slider
+      title={header}
+      items={items}
+      type="game"
+    />
+  );
 };
