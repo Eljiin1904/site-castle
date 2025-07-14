@@ -1,0 +1,14 @@
+{
+  "banners": {
+    "1": {
+      "heading": "Juega tu Primer Juego",
+      "description": "¡Juega tu primer juego y recibe tokens de bonificación para tus otros juegos!",
+      "button": "Comenzar a Jugar"
+    },
+    "2": {
+      "heading": "Crash de Shitcoin",
+      "description": "¡Aprovecha la subida y retira antes de la caída!",
+      "button": "Jugar Crash"
+    }
+  }
+}
