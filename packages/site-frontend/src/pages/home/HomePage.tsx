@@ -150,8 +150,6 @@ const CategoriesSection = () => {
               : `/${x}`,
     };
   });
-  // const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
-  //   const gameValues: GameKindType[] = ['all', ...Game.kinds];
   return (
     <Slider
       type="category"
