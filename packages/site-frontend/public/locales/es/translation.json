@@ -33,15 +33,6 @@
       "logout": "Cerrar sesión"
     }
   },
-  "providers": {
-    "title": "Proveedores",
-    "evolution": "Evolución",
-    "pragmaticPlay": "Pragmático",
-    "playngo": "Jugar n ir",
-    "netent": "NetEnt",
-    "bigTimeGaming": "Gran momento",
-    "hackSawGaming": "Sierra de hack"
-  },
   "footer": {
     "socials": "Redes sociales",
     "platform": "Plataforma",

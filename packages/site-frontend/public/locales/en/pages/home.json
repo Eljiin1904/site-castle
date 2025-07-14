@@ -1,0 +1,14 @@
+{
+  "banners": {
+    "1": {
+      "heading": "Play First Game Ever",
+      "description": "Play your first game and receive bonus tokens for  your other game!",
+      "button": "Start Playing"
+    },
+    "2": {
+      "heading": "Shitcoin Crash",
+      "description": "Ride the pump and cash out before the dump!",
+      "button": "Play Crash"
+    }
+  }
+}

@@ -9,20 +9,17 @@ import { useTranslation } from "@core/services/internationalization/internationa
 import { Site } from "#app/services/site";
 import { GameKindType } from "@core/services/game/Game";
 
-export const GameSearch = ({home = false}: {
-  home?: boolean;
-}) => {
-  
+export const GameSearch = ({ home = false }: { home?: boolean }) => {
   const currentFilter = useAppSelector((x) => x.site.filter);
   const dispatch = useAppDispatch();
   const small = useIsMobileLayout();
-  const {t} = useTranslation(["home"]);
+  const { t } = useTranslation(["games"]);
 
-  const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
-  const gameValues: GameKindType[] = ['all', ...Game.kinds];
-  
-  const value = gameValues.indexOf(currentFilter || 'all');
-  
+  const gameOptions = [t("all_games"), ...Game.kinds.map((x) => t(`${x}`, { count: 2 }))];
+  const gameValues: GameKindType[] = ["all", ...Game.kinds];
+
+  const value = gameValues.indexOf(currentFilter || "all");
+
   return (
     <Div
       fx
@@ -32,13 +29,15 @@ export const GameSearch = ({home = false}: {
       position="static"
     >
       <SiteSearch />
-      {home && <ButtonGroup
+      {home && (
+        <ButtonGroup
           options={gameOptions}
           size={small ? "sm" : "md"}
           gap={small ? 12 : 16}
-          value={value}  
+          value={value}
           setValue={(x) => dispatch(Site.setFilter(gameValues[x]))}
-      />}
+        />
+      )}
     </Div>
   );
 };

@@ -17,7 +17,7 @@ export const SupportToggle = () => {
     <Div
       bottom={40}
       right={80}
-      boxShadow={3}
+      zIndex={10}
     >
       <Button
         kind="primary-yellow"

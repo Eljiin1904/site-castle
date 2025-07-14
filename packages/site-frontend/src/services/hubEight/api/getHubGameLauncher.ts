@@ -12,6 +12,6 @@ interface GameLauncherResponse {
   url: string;
 }
 
-export function getGameLauncher(data: GameLauncherRequest): Promise<GameLauncherResponse[]> {
+export function getGameLauncher(data: GameLauncherRequest): Promise<GameLauncherResponse> {
   return Http.post("/hub-eight/game/launch", data);
 }

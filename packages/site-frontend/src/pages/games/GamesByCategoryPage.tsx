@@ -15,40 +15,48 @@ import { TableFooterPagination } from "#app/comps/pagination/TableFooterPaginati
 import { useAppDispatch } from "#app/hooks/store/useAppDispatch";
 import { Site } from "#app/services/site";
 
-
-export const GamesByCategoryPage = ({category}: {
-  category: ExternalGameCategory;
-}) => {
-  
+export const GamesByCategoryPage = ({ category }: { category: ExternalGameCategory }) => {
   const small = useIsMobileLayout();
-  const {t} = useTranslation(['games']);
- 
-  return (<Fragment>
-    <PageBanner image={`/graphics/${category}-games-tile`} heading={t(`games:${category}`)} description="" content={<></>}/> 
-    <SitePage
-      className="GamesPage"
-      gap={small ? 32: 56}
-      pb={small ? 32: 56}
-    >
-      <GamesByCategory category={category} />
-    </SitePage>
-  </Fragment>
+  const { t } = useTranslation(["games"]);
+
+  return (
+    <Fragment>
+      <PageBanner
+        image={`/graphics/${category}-games-tile`}
+        heading={t(`games:${category}`)}
+        description=""
+        content={<></>}
+      />
+      <SitePage
+        className="GamesPage"
+        gap={small ? 32 : 56}
+        pb={small ? 32 : 56}
+      >
+        <GamesByCategory category={category} />
+      </SitePage>
+    </Fragment>
   );
 };
 
-export const GamesByCategory = ({category, filterOff}: {category: ExternalGameCategory | undefined, filterOff?: boolean}) => {
-  
+export const GamesByCategory = ({
+  category,
+  filterOff,
+}: {
+  category: ExternalGameCategory | undefined;
+  filterOff?: boolean;
+}) => {
   const [sortIndex, setSortIndex] = useState<number>(0);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
-  const {t} = useTranslation(['games']); 
+  const { t } = useTranslation(["games"]);
   const [page, setPage] = useState(1);
   const dispatch = useAppDispatch();
   const small = useIsMobileLayout();
   const limit = 40;
 
   const query = useQuery({
-    queryKey: ["games-results",category, sortIndex, selectedProviders, page],
-    queryFn: () => HubEight.getGameList({ category, products: selectedProviders, page,limit, sortIndex}),
+    queryKey: ["games-results", category, sortIndex, selectedProviders, page],
+    queryFn: () =>
+      HubEight.getGameList({ category, products: selectedProviders, page, limit, sortIndex }),
     placeholderData: (prev) => prev,
   });
 
@@ -56,31 +64,51 @@ export const GamesByCategory = ({category, filterOff}: {category: ExternalGameCa
     // Reset sort and providers when category changes
     setSortIndex(0);
     setSelectedProviders([]);
-    dispatch(Site.setSearch(''));
+    dispatch(Site.setSearch(""));
   }, [category]);
 
   const games = query.data?.games || [];
   const total = query.data?.total || 0;
+  const isLoading = query.isLoading || query.isFetching;
 
-  return (<Fragment>
-      {!filterOff &&<Div fx justifyContent="space-between" alignItems="center" gap={small ? 16: 24} column={small}>
-        <GameSearch />
-        <Div fx={small} gap={small ? 16: 24}>
-          <GameProvider selectedProviders={selectedProviders} setSelectedProviders={setSelectedProviders} category={category} />
-          <GameSort sortBy={sortIndex} setSortBy={setSortIndex} />
+  return (
+    <Fragment>
+      {!filterOff && (
+        <Div
+          fx
+          justifyContent="space-between"
+          alignItems="center"
+          gap={small ? 16 : 24}
+          column={small}
+        >
+          <GameSearch />
+          <Div
+            fx={small}
+            gap={small ? 16 : 24}
+          >
+            <GameProvider
+              selectedProviders={selectedProviders}
+              setSelectedProviders={setSelectedProviders}
+              category={category}
+            />
+            <GameSort
+              sortBy={sortIndex}
+              setSortBy={setSortIndex}
+            />
+          </Div>
         </Div>
-      </Div>}
-      
-      <GamesGrid games={games}/>
-      <TableFooterPagination 
-        page={page} 
-        total={total} 
-        limit={limit} 
+      )}
+
+      {!isLoading && <GamesGrid games={games} />}
+      <TableFooterPagination
+        page={page}
+        total={total}
+        limit={limit}
         inPage={games.length}
         setPage={setPage}
         hasNext={games.length !== 0 && games.length % limit === 0}
-        label={t("game",{count: query.data?.total || 0})}
-        />
-  </Fragment>
+        label={t("game", { count: query.data?.total || 0 })}
+      />
+    </Fragment>
   );
-}
+};

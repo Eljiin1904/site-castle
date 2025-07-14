@@ -8,7 +8,7 @@ import { Conditional } from "@client/comps/conditional/Conditional";
 import { HeroBanner } from "#app/app/banner/HeroBanner";
 import { Game } from "@core/services/game";
 import { GameSearch } from "#app/comps/games/GamesSearch";
-import { GameSlideProps, GamesSlider } from "#app/comps/games/GamesSlider";
+import { SlideProps, Slider } from "#app/comps/games/Slider";
 import { OriginalGames } from "#app/comps/games/OriginalGames";
 import { FeaturedGames } from "#app/comps/games/FeaturedGames";
 import { Div } from "@client/comps/div/Div";
@@ -43,23 +43,15 @@ export const HomePage = () => {
         value={filterGames}
         all={
           <>
-            <FeaturedGames
-              items={featuredGames}
-              showSection={true}
-            />
+            <FeaturedGames items={featuredGames} />
             <OriginalGames />
           </>
         }
-        featured={
-          <FeaturedGames
-            items={featuredGames}
-            showSection={true}
-          />
-        }
+        featured={<FeaturedGames items={featuredGames} />}
         original={<OriginalGames />}
         slot={<HubEightSection category="slot" />}
-        live={<HubEightSection category="live"/>}
-        game_shows={<HubEightSection category="game_shows"/>}
+        live={<HubEightSection category="live" />}
+        game_shows={<HubEightSection category="game_shows" />}
       />
 
       <HotGamesSlider />
@@ -86,14 +78,14 @@ const RecentlyAddedSlider = () => {
   const items = games?.map((x) => {
     return {
       image: `/graphics/games/${x.name}`,
-      heading: t(`games:${x.name}`),
+      heading: t(`${x.name}`),
       subheading: "",
       to: `/${friendlyUrl(x.name)}`,
     };
   });
 
   return (
-    <GamesSlider
+    <Slider
       title={t("recentlyAdded")}
       items={items}
       type="game"
@@ -107,14 +99,14 @@ const HotGamesSlider = () => {
   const items = games?.map((x) => {
     return {
       image: `/graphics/games/${x.game}`,
-      heading: t(`games:${x.game}`),
+      heading: t(`${x.game}`),
       subheading: "",
       to: `/${friendlyUrl(x.game)}`,
     };
   });
 
   return (
-    <GamesSlider
+    <Slider
       title={t("hot")}
       items={items}
       type="game"
@@ -122,9 +114,9 @@ const HotGamesSlider = () => {
   );
 };
 export const ProvidersSection = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["games"]);
 
-  const providers: GameSlideProps[] = [
+  const providers: SlideProps[] = [
     { image: "/graphics/providers/evolution", heading: t("providers.evolution"), to: "" },
     { image: "/graphics/providers/pragmatic", heading: t("providers.pragmaticPlay"), to: "" },
     { image: "/graphics/providers/playngo", heading: t("providers.playngo"), to: "" },
@@ -134,27 +126,32 @@ export const ProvidersSection = () => {
   ];
 
   return (
-    <GamesSlider
+    <Slider
       type="provider"
-      title={t("providers.title")}
+      title={t("providers.title", { count: 2 })}
       items={providers}
     />
   );
 };
 const CategoriesSection = () => {
-  const { t } = useTranslation(['games']);
+  const { t } = useTranslation(["games"]);
 
   const items = Game.kinds.map((x) => {
     return {
       image: `/graphics/categories/${x}`,
       heading: t(`${x}`, { count: 2 }),
-      to: x === 'slot' ? '/slots' : x === 'live' ? '/live-casino' : x === 'game_shows' ? '/game-shows' : `/${x}`,
+      to:
+        x === "slot"
+          ? "/slots"
+          : x === "live"
+            ? "/live-casino"
+            : x === "game_shows"
+              ? "/game-shows"
+              : `/${x}`,
     };
   });
-  // const gameOptions = [t('games:all_games'), ...Game.kinds.map((x) => t(`games:${x}`, {count: 2}))];
-  //   const gameValues: GameKindType[] = ['all', ...Game.kinds];
   return (
-    <GamesSlider
+    <Slider
       type="category"
       title={t("menu.categories")}
       items={items}
@@ -162,15 +159,23 @@ const CategoriesSection = () => {
   );
 };
 
-const HubEightSection = ({category}: {category: ExternalGameCategory}) => {
-
+const HubEightSection = ({ category }: { category: ExternalGameCategory }) => {
   const small = useIsMobileLayout();
-  const { t } = useTranslation(['games']);
+  const { t } = useTranslation(["games"]);
 
   return (
-    <Div fx justifyContent="center" alignItems="center" column  gap={small ? 24 : 40}>
+    <Div
+      fx
+      justifyContent="center"
+      alignItems="center"
+      column
+      gap={small ? 24 : 40}
+    >
       <PageTitle heading={t(`${category}`)}></PageTitle>
-      <GamesByCategory category={category} filterOff/>
+      <GamesByCategory
+        category={category}
+        filterOff
+      />
     </Div>
   );
-}
+};

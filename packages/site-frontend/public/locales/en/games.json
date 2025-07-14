@@ -13,6 +13,7 @@
   "case_battles": "Cases Battles",
   "double": "Double",
   "slot": "Slots",
+  "slots": "Slots",
   "live": "Live Casino",
   "live_casino": "Live Casino",
   "game_shows": "Game Shows",
@@ -30,9 +31,16 @@
     "az": "A-Z",
     "za": "Z-A"
   },
-  "provider": {
-    "title": "Provider",
-    "all": "All"
+  "providers": {
+    "title_one": "Provider",
+    "title_other": "Providers",
+    "all": "All",
+    "evolution": "Evolution",
+    "pragmaticPlay": "Pragmatic Play",
+    "playngo": "Play'n Go",
+    "netent": "NetEnt",
+    "bigTimeGaming": "Big Time Gaming",
+    "hackSawGaming": "HackSaw Gaming"
   },
   "notGames": "No games found",
   "demoMode": "Demo Mode",

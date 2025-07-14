@@ -27,19 +27,19 @@ export const MinesBody = () => {
         isLoading={query.isFetching}
         onRefreshClick={() => (page === 1 ? query.refetch() : setPage(1))}
       />
-    <MinesTable
-      results={results}
-      isLoading={query.isLoading}
-    />
-    <TableFooterPagination
-      page={page}
-      hasNext={results.length !== 0 && results.length % limit === 0}
-      total={query.data?.total || 0}
-      limit={limit}
-      inPage={results.length}
-      setPage={setPage}
-      label={t("account:transactions.transaction",{count: query.data?.total || 0})}
-    />
-  </Fragment>
+      <MinesTable
+        results={results}
+        isLoading={query.isLoading}
+      />
+      <TableFooterPagination
+        page={page}
+        hasNext={results.length !== 0 && results.length % limit === 0}
+        total={query.data?.total || 0}
+        limit={limit}
+        inPage={results.length}
+        setPage={setPage}
+        label={t("account:transactions.transaction", { count: query.data?.total || 0 })}
+      />
+    </Fragment>
   );
 };
