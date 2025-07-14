@@ -33,15 +33,6 @@
       "logout": "Logout"
     }
   },
-  "providers": {
-    "title": "Providers",
-    "evolution": "Evolution",
-    "pragmaticPlay": "Pragmatic Play",
-    "playngo": "Play'n Go",
-    "netent": "NetEnt",
-    "bigTimeGaming": "Big Time Gaming",
-    "hackSawGaming": "HackSaw Gaming"
-  },
   "footer": {
     "socials": "Socials",
     "platform": "Platform",
