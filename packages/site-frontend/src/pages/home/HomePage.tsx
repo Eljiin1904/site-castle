@@ -114,7 +114,7 @@ const HotGamesSlider = () => {
   );
 };
 export const ProvidersSection = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["games"]);
 
   const providers: SlideProps[] = [
     { image: "/graphics/providers/evolution", heading: t("providers.evolution"), to: "" },
@@ -128,7 +128,7 @@ export const ProvidersSection = () => {
   return (
     <Slider
       type="provider"
-      title={t("providers.title")}
+      title={t("providers.title", { count: 2 })}
       items={providers}
     />
   );
