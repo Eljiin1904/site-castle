@@ -11,8 +11,14 @@
     "eslint:fix": "eslint ./packages --ext .ts,.tsx --fix",
     "prettier-check": "prettier ./**/*.{ts,tsx} --check",
     "prettier-write": "prettier **/*.{ts,tsx} --write",
-    "tests": "node ./scripts/test.js"
+    "tests": "node ./scripts/test.js",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
   },
+  
+  
   "dependencies": {
     "aws-sdk": "^2.1692.0",
     "dotenv": "^16.5.0",
@@ -33,7 +39,7 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.1",
+    "@playwright/test": "^1.54.1",
     "@storybook/addon-docs": "^8.6.10",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^29.5.14",
@@ -68,6 +74,7 @@
       "react": {
         "version": "^18.2.0"
       }
+}
     },
     "rules": {
       "no-multiple-empty-lines": "off",
@@ -112,4 +119,4 @@
       "vite-env.d.ts"
     ]
   }
-}
+

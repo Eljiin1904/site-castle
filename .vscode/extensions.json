@@ -2,6 +2,7 @@
   "recommendations": [
     "gruntfuggly.todo-tree",
     "esbenp.prettier-vscode",
-    "antiantisepticeye.vscode-color-picker"
+    "antiantisepticeye.vscode-color-picker",
+    "anthropic.claude-code"
   ]
 }

